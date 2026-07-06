@@ -20,6 +20,27 @@
     return path.charAt(0) === "/" ? path : "/" + path;
   }
 
+  // Partial HTML is authored with root-relative paths (missao.html, images/...).
+  // Rewrite to site-root absolute so links/assets work from any subdirectory.
+  function rewritePartialPaths(html) {
+    return html.replace(
+      /(\s(?:href|src|action)=["'])((?!\/|https?:|mailto:|#|javascript:|data:)[^"']*)/gi,
+      function (_match, prefix, url) {
+        return prefix + "/" + url.replace(/^\.\//, "");
+      }
+    );
+  }
+
+  function mountPartialHtml(target, html) {
+    target.innerHTML = rewritePartialPaths(html);
+    // Keep modal overlays at body level — avoids stacking/position issues when
+    // the partial is injected inside #site-a11y or #site-cookie wrappers.
+    var modals = target.querySelectorAll(".ck-modal-overlay");
+    for (var i = 0; i < modals.length; i++) {
+      document.body.appendChild(modals[i]);
+    }
+  }
+
   var PARTIALS = [
     { url: rootPath("partials/header.html"), target: "site-header" },
     { url: rootPath("partials/accessibility-toolbar.html"), target: "site-a11y" },
@@ -44,7 +65,7 @@
         return res.text();
       })
       .then(function (html) {
-        target.innerHTML = html;
+        mountPartialHtml(target, html);
       })
       .catch(function (err) {
         console.error("[partials-loader] Falha ao carregar", item.url, err);

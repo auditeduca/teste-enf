@@ -58,6 +58,11 @@
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Pages using partials-loader.js (#site-header) already inject header, a11y,
+  // footer and cookies from /partials/*.html — skip legacy global-body-elements
+  // to avoid duplicate #barraAcessibilidade IDs and conflicting chrome.
+  if (document.getElementById("site-header")) return;
+
   fetch(window.__FETCH_PREFIX + "menu-global.html").then(e => e.ok ? e.text() : Promise.reject("Ficheiro menu-global.html não encontrado")).then(e => {
     const o = document.getElementById("global-header-container");
     if (o) {
