@@ -121,6 +121,7 @@
   }
 
   function init() {
+    ensureChromeStyles();
     Promise.all(PARTIALS.map(fetchPartial)).then(function () {
       loadDependentScriptsInOrder(0);
     });

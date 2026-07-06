@@ -59,8 +59,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   // Pages using partials-loader.js (#site-header) already inject header, a11y,
-  // footer and cookies from /partials/*.html — skip legacy global-body-elements
-  // to avoid duplicate #barraAcessibilidade IDs and conflicting chrome.
+  // footer and cookies from /partials/*.html.
   if (document.getElementById("site-header")) return;
 
   fetch(window.__FETCH_PREFIX + "menu-global.html").then(e => e.ok ? e.text() : Promise.reject("Ficheiro menu-global.html não encontrado")).then(e => {
@@ -72,13 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }).catch(e => console.warn("Não foi possível carregar o menu global:", e));
-
-  fetch(window.__FETCH_PREFIX + "global-body-elements.html").then(e => e.ok ? e.text() : Promise.reject("Ficheiro global-body-elements.html não encontrado")).then(e => {
-    window.requestAnimationFrame(() => {
-      document.body.insertAdjacentHTML("beforeend", e);
-      initializeGlobalFunctions();
-    });
-  }).catch(e => console.warn("Não foi possível carregar os elementos globais do corpo:", e));
 
 // Função para carregar o Seletor de Idiomas (consolidado e com fallback)
 

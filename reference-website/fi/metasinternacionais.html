@@ -555,7 +555,6 @@ window.scrollTo({ top: 0, behavior: "smooth" }),
 }
 });
 </script>
-<div id="global-body-elements-container"></div>
 <script>
 // Função auxiliar para carregar HTML modular
 function fetchHTML(url, containerId) {
@@ -577,11 +576,6 @@ console.warn(`Container com ID '${containerId}' não encontrado.`);
 .catch((error) => console.error(`Erro ao buscar ${url}:`, error));
 }    document.addEventListener("DOMContentLoaded", () => {
 fetchHTML("/_language_selector.html", "language-dropdown-wrapper");
-
-fetchHTML(
-"/global-body-elements.html",
-"global-body-elements-container"
-);
 });
 </script>
 <div id="site-footer"></div>
