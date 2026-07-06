@@ -1359,943 +1359,922 @@ if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.locat
 <!-- ================= MÓDULOS CARREGADOS VIA fetch() (ver js/partials-loader.js) ================= -->
 <div id="site-header"></div>
 <div id="site-a11y"></div>
-    <nav class="tpl-breadcrumb" aria-label="Breadcrumb">
-      <a href="../index.html">Home</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <a href="../index.html#calculadoras">Tools</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <span class="current" aria-current="page">Nursing Calculators, Practice Exams and Clinical Scales</span>
-    </nav>
-    <div class="tool-header">
-      <div class="tool-header-main">
-        <div class="tool-icon-badge" aria-hidden="true">
-          <svg class="icon"><use href="#i-calculator"/></svg>
-        </div>
-        <div>
-          <span class="tool-category-badge">Tools</span>
-          <h1>Nursing Calculators, Practice Exams and Clinical Scales</h1>
-        </div>
-      </div>
-      <div class="tool-actions">
-        <button type="button" class="btn-icon" id="calcFavoriteBtn" aria-pressed="false">
-          <svg class="icon"><use href="#i-bookmark"/></svg> Favorite
-        </button>
-        <button type="button" class="btn-icon" id="calcShareBtn">
-          <svg class="icon"><use href="#i-share"/></svg> Share
-        </button>
-        <button type="button" class="btn-icon" onclick="window.print()">
-          <svg class="icon"><use href="#i-printer"/></svg> Print
-        </button>
-      </div>
-    </div>
 <!-- Header, faixa de acessibilidade e modal de preferências agora vêm de partials/header.html e
      partials/accessibility-toolbar.html, injetados nos placeholders #site-header/#site-a11y acima
      via js/partials-loader.js. -->
 <main id="main-content">
-<!-- ================= HERO ================= -->
-<section aria-label="Platform Presentation" class="rd-container">
-<div class="rd rd">
-<div>
-<span class="rd-container"><i class="fa fa"></i> <span data-i18n="hero.eyebrow">Nursing Global Platform</span></span>
-<h1 data-i18n="hero.title">Technology and knowledge for a more efficient <span class="accent">and sustainable nursing practice.</span></h1>
-<p class="lead" data-i18n="hero.lead">The Nursing Calculators Global Platform offers tools, content, and digital solutions to transform professional practice and generate a positive impact on health.</p>
-<div class="rd-container">
-<a class="rd rd" href="#ferramentas"><span data-i18n="hero.btn1">Explore tools</span> <i class="fa fa"></i></a>
-<a class="rd rd" data-i18n="hero.btn2" href="#plataforma">Learn about the platform</a>
-</div>
-</div>
-<div class="rd-container">
-<img alt="Nursing professional using the Nursing Calculators platform" decoding="sync" fetchpriority="high" height="900" loading="eager" src="assets/image-hero/Gemini_Generated_Image_1slu0n1slu0n1slu.png" width="1280"/>
-</div>
-</div>
-</section>
-<!-- ================= COMPONENTE: BARRA DE BUSCA SEMÂNTICA (entre Hero e Main) ================= -->
-<div class="rd-container">
-<div class="rd-container">
-<div class="rd-container">
-<h2 data-i18n="herosearch.titulo">What do you need today?</h2>
-<form action="busca.html" class="rd-container" method="get" onsubmit="return handleSearch(event)">
-<div class="rd-container">
-<i aria-hidden="true" class="fa fa"></i>
-<input aria-label="Search the site" data-i18n-aria="aria.buscarInput" data-i18n-placeholder="herosearch.placeholder" name="q" placeholder="Ex.: Drip rate, Braden Scale, Insulin, SAE..." type="text"/>
-</div>
-<button class="rd-container" type="submit"><i aria-hidden="true" class="fa fa"></i> <span data-i18n="busca.btn">Search</span></button>
-</form>
-</div>
-</div>
-</div>
-<!-- Bloco oculto para SEO/acessibilidade (conteúdo original preservado) -->
-<div class="sr">
-<h1 data-i18n="seo.h1">Nursing Calculators, Practice Exams and Clinical Scales</h1>
-<p data-i18n="seo.desc">Complete platform with nursing calculators, clinical scales, medication dosage calculation, and practice exams for public tenders. Ideal for students, technicians, and nurses seeking to optimize daily practice, enhance patient safety, and prepare for exams.</p>
-</div>
-<!-- ================= SOLUÇÕES / SOBRE A PLATAFORMA ================= -->
-<section aria-label="About the Platform" class="rd-container" id="plataforma">
-<div class="rd-container">
-<div class="rd-container">
-<span class="rd-container"><i class="fa fa"></i> <span data-i18n="sol.eyebrow">About the platform</span></span>
-<h2 data-i18n="sol.titulo">Solutions for every moment of your practice</h2>
-<p data-i18n="sol.desc">Clinical tools, protocols, scales, and educational content for students, nurses, managers, and healthcare institutions — with digital responsibility and measurable impact.</p>
-</div>
-<div class="rd-container">
-<div class="rd-container">
-<div class="rd-container"><i class="fa fa"></i></div>
-<h3 data-i18n="sol.card1.titulo">Global Reach</h3>
-<p data-i18n="sol.card1.desc">Translation into more than 28 languages, covering over 195 countries.</p>
-</div>
-<div class="rd-container">
-<div class="rd-container"><i class="fa fa"></i></div>
-<h3 data-i18n="sol.card2.titulo">Clinical Scales</h3>
-<p data-i18n="sol.card2.desc">Over 128 automated clinical and care tools.</p>
-</div>
-<div class="rd-container">
-<div class="rd-container"><i class="fa fa"></i></div>
-<h3 data-i18n="sol.card3.titulo">Calculators</h3>
-<p data-i18n="sol.card3.desc">Over 97 care calculators to solve routine professional calculations.</p>
-</div>
-<div class="rd-container">
-<div class="rd-container"><i class="fa fa"></i></div>
-<h3 data-i18n="sol.card4.titulo">Simulations</h3>
-<p data-i18n="sol.card4.desc">Interactive practice exams from major exam boards, divided by topics with time and accuracy assessment.</p>
-</div>
-<div class="rd-container">
-<div class="rd-container"><i class="fa fa"></i></div>
-<h3 data-i18n="sol.card5.titulo">Library</h3>
-<p data-i18n="sol.card5.desc">Complete collection with literary content, articles, and exclusive nursing publications.</p>
-</div>
-<div class="rd-container">
-<div class="rd-container"><i class="fa fa"></i></div>
-<h3 data-i18n="sol.card6.titulo">Education</h3>
-<p data-i18n="sol.card6.desc">Commitment to education through the development of exclusive literary content.</p>
-</div>
-<div class="rd-container">
-<div class="rd-container"><i class="fa fa"></i></div>
-<h3 data-i18n="sol.card7.titulo">Responsibility</h3>
-<p data-i18n="sol.card7.desc">Credits to literature and use of bibliographic references to guide scales and content.</p>
-</div>
-<div class="rd-container">
-<div class="rd-container"><i class="fa fa"></i></div>
-<h3 data-i18n="sol.card8.titulo">Security and Privacy</h3>
-<p data-i18n="sol.card8.desc">Information protection and data governance across all platform tools.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- ================= FERRAMENTAS MAIS UTILIZADAS (acesso rápido) ================= -->
-<section aria-label="Most used tools" class="rd rd" id="ferramentas">
-<div class="rd-container">
-<div class="rd-container">
-<div class="rd rd">
-<span class="rd-container"><i class="fa fa"></i> <span data-i18n="quick.eyebrow">Quick access</span></span>
-<h2 data-i18n="quick.titulo">Most used tools</h2>
-<p data-i18n="quick.desc">Access validated calculators and resources that facilitate your daily routine.</p>
-</div>
-<a class="rd-container" href="#calculadoras"><span data-i18n="quick.link">View all tools</span> <i class="fa fa"></i></a>
-</div>
-<div class="rd-container">
-<a class="rd-container" href="../medicamentos.html"><i class="fa fa"></i><span data-i18n="quick.card1">Medication Calculation</span></a>
-<a class="rd-container" href="../gotejamento.html"><i class="fa fa"></i><span data-i18n="quick.card2">IV Drip Rate</span></a>
-<a class="rd-container" href="#escalas"><i class="fa fa"></i><span data-i18n="quick.card3">Indices and Scales</span></a>
-<a class="rd-container" href="../balancohidrico.html"><i class="fa fa"></i><span data-i18n="quick.card4">Fluid Balance</span></a>
-<a class="rd-container" href="../exames_laboratoriais.html"><i class="fa fa"></i><span data-i18n="quick.card5">Laboratory Tests</span></a>
-<a class="rd-container" href="../insulina.html"><i class="fa fa"></i><span data-i18n="quick.card6">Insulin Calculation</span></a>
-<a class="rd-container" href="../imc.html"><i class="fa fa"></i><span data-i18n="quick.card7">BMI Calculation</span></a>
-<a class="rd is" href="#calculadoras"><i class="fa fa"></i><span data-i18n="quick.card8">All Tools</span></a>
-</div>
-</div>
-</section>
-<!-- ================= EDUCAÇÃO / GESTÃO ================= -->
-<section aria-label="Education and Management" class="rd rd" id="educacao">
-<div class="rd rd">
-<div class="rd-container">
-<span class="rd-container"><i class="fa fa"></i> <span data-i18n="edu.eyebrow">Education</span></span>
-<h3 data-i18n="edu.titulo">Education that transforms</h3>
-<p data-i18n="edu.desc">Updated, evidence-based content developed by specialists.</p>
-<ul class="rd-container">
-<li><a href="../biblioteca-provas.html"><i class="fa fa"></i> <span data-i18n="edu.list1">Nursing exam library</span></a></li>
-<li><a href="../flashcards_quiz.html"><i class="fa fa"></i> <span data-i18n="edu.list2">Interactive question quiz</span></a></li>
-<li><a href="../simulado-de-enfermagem.html"><i class="fa fa"></i> <span data-i18n="edu.list3">Practice exams by exam board and institution</span></a></li>
-<li><a href="../diagnosticosnanda.html"><i class="fa fa"></i> <span data-i18n="edu.list4">Nursing Diagnoses — NANDA</span></a></li>
-</ul>
-<a class="rd rd" href="#simulados"><span data-i18n="edu.btn">Access content</span> <i class="fa fa"></i></a>
-</div>
-<div class="rd-container" id="gestao">
-<span class="rd-container"><i class="fa fa"></i> <span data-i18n="gestao.eyebrow">Management</span></span>
-<h3 data-i18n="gestao.titulo">Management that generates impact</h3>
-<p data-i18n="gestao.desc">Resources and indicators to support leaders and healthcare institutions.</p>
-<ul class="rd-container">
-<li><a href="../dimensionamento.html"><i class="fa fa"></i> <span data-i18n="gestao.list1">Nursing staff sizing</span></a></li>
-<li><a href="../fugulin.html"><i class="fa fa"></i> <span data-i18n="gestao.list2">Fugulin Scale — care complexity</span></a></li>
-<li><a href="../perroca.html"><i class="fa fa"></i> <span data-i18n="gestao.list3">Patient classification — Perroca (SCP)</span></a></li>
-<li><a href="../sbar.html"><i class="fa fa"></i> <span data-i18n="gestao.list4">SBAR — shift handover</span></a></li>
-</ul>
-<a class="rd rd" href="../dimensionamento.html"><span data-i18n="gestao.btn">Learn about solutions</span> <i class="fa fa"></i></a>
-</div>
-</div>
-</section>
-<!-- ================= CALCULADORAS ================= -->
-<section aria-label="Nursing Calculators" class="rd rd" id="calculadoras">
-<div class="rd-container">
-<div class="rd-container">
-<div>
-<span class="rd-container" data-i18n="cat.calc.eyebrow">Support tools</span>
-<h2 data-i18n="cat.calc.titulo">Calculators — Practical Nursing</h2>
-</div>
-<div class="rd-container"><i class="fa fa"></i></div>
-</div>
-<ul class="rd-container">
-<li>
-<a aria-label="Access fluid balance calculator" class="rd-container" href="../balancohidrico.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.balancohidrico.titulo">Calculate Fluid Balance</h3>
-<p data-i18n="tool.balancohidrico.desc">Precise fluid control.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access staffing calculator" class="rd-container" href="../dimensionamento.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.dimensionamento.titulo">Nursing Staff Sizing</h3>
-<p data-i18n="tool.dimensionamento.desc">Organize your nursing team.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access laboratory tests calculator" class="rd-container" href="../exames_laboratoriais.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.exames_laboratoriais.titulo">Laboratory Test Calculator</h3>
-<p data-i18n="tool.exames_laboratoriais.desc">Calculate laboratory test results.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access blood gas analysis calculator" class="rd-container" href="../gasometria.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.gasometria.titulo">Arterial Blood Gas Calculator</h3>
-<p data-i18n="tool.gasometria.desc">Arterial blood gas interpretation</p>
-</a>
-</li>
-<li>
-<a aria-label="Access drip rate calculator" class="rd-container" href="../gotejamento.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.gotejamento.titulo">Drip Rate Calculator</h3>
-<p data-i18n="tool.gotejamento.desc">Calculate infusion rate.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access gestational age and EDD calculator" class="rd-container" href="../gestacional.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.gestacional.titulo">Gestational Age and EDD</h3>
-<p data-i18n="tool.gestacional.desc">Calculate gestational age and estimated due date.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access BMI calculator" class="rd-container" href="../imc.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.imc.titulo">BMI Calculation</h3>
-<p data-i18n="tool.imc.desc">Body Mass Index.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access insulin calculator" class="rd-container" href="../insulina.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.insulina.titulo">Insulin Calculation</h3>
-<p data-i18n="tool.insulina.desc">Insulin dose calculation.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access medication calculator" class="rd-container" href="../medicamentos.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.medicamentos.titulo">Medication Calculation</h3>
-<p data-i18n="tool.medicamentos.desc">Drug doses and dilutions.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access child vaccine calculator" class="rd-container" href="../calculadoravacina.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.calculadoravacina.titulo">Childhood Vaccines</h3>
-<p data-i18n="tool.calculadoravacina.desc">Automated vaccine schedule.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access compulsory notification diseases tool" class="rd-container" href="../notificacao-compulsoria.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.notificacao-compulsoria.titulo">Compulsory Notification Diseases</h3>
-<p data-i18n="tool.notificacao-compulsoria.desc">Interactive list of Compulsory Notification Diseases and Conditions from the Ministry of Health.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access NANDA Nursing Diagnoses" class="rd-container" href="../diagnosticosnanda.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.diagnosticosnanda.titulo">Nursing Diagnoses - NANDA</h3>
-<p data-i18n="tool.diagnosticosnanda.desc">List of nursing diagnoses - NANDA (2018).</p>
-</a>
-</li>
-<li>
-<a aria-label="SBAR Form - Shift handover" class="rd-container" href="../sbar.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.sbar.titulo">SBAR - Shift Handover Form</h3>
-<p data-i18n="tool.sbar.desc">Digital SBAR form for nurses, fill and print.</p>
-</a>
-</li>
-<li>
-<a aria-label="Vacation pay form for nursing" class="rd-container" href="../calculo-de-ferias.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.calculo-de-ferias.titulo">Vacation Calculator (Nursing)</h3>
-<p data-i18n="tool.calculo-de-ferias.desc">How much to receive on vacation?.</p>
-</a>
-</li>
-<li>
-<a aria-label="Night shift differential calculation form for nursing" class="rd-container" href="../adicional-noturno.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.adicional-noturno.titulo">Night Shift Differential Calculator (Nursing)</h3>
-<p data-i18n="tool.adicional-noturno.desc">Calculate your night shift differential.</p>
-</a>
-</li>
-<li>
-<a aria-label="Overtime value calculation form for nursing" class="rd-container" href="../calculo-hora-extra.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.calculo-hora-extra.titulo">Overtime Pay Calculator (Nursing)</h3>
-<p data-i18n="tool.calculo-hora-extra.desc">Calculate the value of your overtime pay.</p>
-</a>
-</li>
-<li>
-<a aria-label="Nursing Severance Pay Calculation Form" class="rd-container" href="../calculo-rescisao.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.calculo-rescisao.titulo">Severance Pay Calculator (Nursing)</h3>
-<p data-i18n="tool.calculo-rescisao.desc">Calculate the value of your Contract Termination.</p>
-</a>
-</li>
-</ul>
-<!-- ================= SIMULADOS ================= -->
-<div class="rd-container" id="simulados">
-<div>
-<span class="rd-container" data-i18n="cat.sim.eyebrow">Preparatory</span>
-<h2 data-i18n="cat.sim.titulo">Nursing Practice Exams — Exam Boards and Institutions</h2>
-</div>
-<div class="rd-container"><i class="fa fa"></i></div>
-</div>
-<ul class="rd-container">
-<li>
-<a aria-label="Access 1st Nursing Technician Mock Exam" class="rd-container" href="../simulado-de-enfermagem.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado-de-enfermagem.titulo">1st Mock Exam for Nursing Technicians</h3>
-<p data-i18n="tool.simulado-de-enfermagem.desc">50 questions from major exam boards and institutions: With timer and final percentage score evaluation.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access 2nd Nursing Technician Mock Exam" class="rd-container" href="../simulado-de-enfermagem4.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado-de-enfermagem4.titulo">2nd (New) Mock Exam for Nursing Technicians</h3>
-<p data-i18n="tool.simulado-de-enfermagem4.desc">Over 50 new questions from major exam boards and institutions: With timer and final percentage score evaluation.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access 1st Mock Exam for Nurses" class="rd-container" href="../simulado-de-enfermagem2.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado-de-enfermagem2.titulo">1st Mock Exam for Nurses</h3>
-<p data-i18n="tool.simulado-de-enfermagem2.desc">50 questions from major exam boards and institutions: With timer and final percentage score evaluation.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access 2nd Mock Exam for Nurses" class="rd-container" href="../simulado-de-enfermagem3.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado-de-enfermagem3.titulo">2nd (New) Mock Exam for Nurses</h3>
-<p data-i18n="tool.simulado-de-enfermagem3.desc">Over 50 new questions from major exam boards and institutions: With timer and final percentage score evaluation.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Patient Safety Core Mock Exam" class="rd-container" href="../simulado-de-enfermagem-nucleo-de-seguranca-do-paciente.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado-de-enfermagem-nucleo-de-seguranca-do-paciente.titulo">Mock Exam on Patient Safety</h3>
-<p data-i18n="tool.simulado-de-enfermagem-nucleo-de-seguranca-do-paciente.desc">50 questions from MS, IBSP, ANVISA, ISMP: With timer and final percentage score evaluation.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access 1st Compulsory Notification Mock Exam" class="rd-container" href="../simulado-de-enfermagem-doencas-de-notificacao-compulsoria.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado-de-enfermagem-doencas-de-notificacao-compulsoria.titulo">Mock Exam on Compulsory Notifiable Diseases</h3>
-<p data-i18n="tool.simulado-de-enfermagem-doencas-de-notificacao-compulsoria.desc">50 questions from Ordinance GM/MS No. 6,734/2025.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access 1st Vaccination Mock Exam" class="rd-container" href="../simulado_vacinacao.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado_vacinacao.titulo">Mock Exam on Vaccines</h3>
-<p data-i18n="tool.simulado_vacinacao.desc">30 questions on vaccination. (MS and SBIM)</p>
-</a>
-</li>
-<li>
-<a aria-label="Access CPR (Cardiopulmonary Arrest) Mock Exam" class="rd-container" href="../simulado_pcr.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado_pcr.titulo">Mock Exam on CPR</h3>
-<p data-i18n="tool.simulado_pcr.desc">30 questions on Cardiopulmonary Arrest (Exam Boards/AHA and SBC).</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Surgical Block, CME, and PACU Mock Exam" class="rd-container" href="../simulado_bloco-operatorio.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.simulado_bloco-operatorio.titulo">Mock Exam on Operating Room</h3>
-<p data-i18n="tool.simulado_bloco-operatorio.desc">30 questions on Operating Room (Exam Boards/SOBECC/COFEN).</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Interactive Nursing Quiz" class="rd-container" href="../flashcards_quiz.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.flashcards_quiz.titulo">Interactive Nursing Questions Quiz</h3>
-<p data-i18n="tool.flashcards_quiz.desc">Interactive questions on various nursing topics.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Exam Library" class="rd-container" href="../biblioteca-provas.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.biblioteca-provas.titulo">Nursing Exam Library</h3>
-<p data-i18n="tool.biblioteca-provas.desc">Access to a vast collection of nursing exams and exercises.</p>
-</a>
-</li>
-</ul>
-<!-- ================= ESCALAS ================= -->
-<div class="rd-container" id="escalas">
-<div>
-<span class="rd-container" data-i18n="cat.esc.eyebrow">Protocols</span>
-<h2 data-i18n="cat.esc.titulo">Assessment Scales — Patient Assessment</h2>
-</div>
-<div class="rd-container"><i class="fa fa"></i></div>
-</div>
-<ul class="rd-container">
-<li>
-<a aria-label="Access Aldrete and Kroulik Scale" class="rd-container" href="../aldrete.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.aldrete.titulo">Aldrete and Kroulik Scale</h3>
-<p data-i18n="tool.aldrete.desc">Patient assessment in PACU.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access APACHE II Scale" class="rd-container" href="../apache.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.apache.titulo">APACHE II Score</h3>
-<p data-i18n="tool.apache.desc">Severity assessment of critically ill patients.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access APGAR Scale" class="rd-container" href="../apgar.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.apgar.titulo">Apgar Score</h3>
-<p data-i18n="tool.apgar.desc">Newborn assessment.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access ASA Perioperative Risk" class="rd-container" href="../asa.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.asa.titulo">Perioperative Risk - ASA</h3>
-<p data-i18n="tool.asa.desc">Preoperative physical status classification.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Ballard Scale" class="rd-container" href="../ballard.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.ballard.titulo">Ballard Scale</h3>
-<p data-i18n="tool.ballard.desc">Assessment of neuromuscular and physical maturity of the newborn.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Barthel Scale" class="rd-container" href="../barthel.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.barthel.titulo">Barthel Scale</h3>
-<p data-i18n="tool.barthel.desc">Assesses patient's functional dependence level.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access BPS Pain Scale" class="rd-container" href="../bps.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.bps.titulo">Behavioral Pain Scale (BPS)</h3>
-<p data-i18n="tool.bps.desc">Pain assessment in mechanically ventilated patients.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access BERG Scale" class="rd-container" href="../berg.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.berg.titulo">Berg Balance Scale (BBS)</h3>
-<p data-i18n="tool.berg.desc">Assesses static and dynamic balance of a patient.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Bishop Score" class="rd-container" href="../bishop.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.bishop.titulo">Bishop Score</h3>
-<p data-i18n="tool.bishop.desc">Assess cervical maturity and readiness for labor.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Braden Scale" class="rd-container" href="../braden.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.braden.titulo">Braden Scale</h3>
-<p data-i18n="tool.braden.desc">Pressure injury risk.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access CAM-ICU Scale" class="rd-container" href="../cam.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.cam.titulo">CAM-ICU Scale</h3>
-<p data-i18n="tool.cam.desc">Delirium assessment in ICU.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Capurro Method" class="rd-container" href="../capurro.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.capurro.titulo">Capurro Method</h3>
-<p data-i18n="tool.capurro.desc">Method to estimate gestational age of newborns.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Cincinnati Scale" class="rd-container" href="../cincinnati.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.cincinnati.titulo">Cincinnati Scale</h3>
-<p data-i18n="tool.cincinnati.desc">Stroke assessment.</p>
-</a>
-</li>
-<li>
-<a aria-label="Copenhagen 2 Questionnaire" class="rd-container" href="../copsoq.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.copsoq.titulo">COPSOQ II</h3>
-<p data-i18n="tool.copsoq.desc">Psychosocial risk management (NR-1).</p>
-</a>
-</li>
-<li>
-<a aria-label="Copenhagen 3 Questionnaire" class="rd-container" href="../copsoq3.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.copsoq3.titulo">COPSOQ III</h3>
-<p data-i18n="tool.copsoq3.desc">Psychosocial risk management (NR-1).</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Cornell Scale" class="rd-container" href="../cornell.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.cornell.titulo">Cornell Scale</h3>
-<p data-i18n="tool.cornell.desc">Depression classification in patients with dementia.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access CRIES Scale" class="rd-container" href="../cries.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.cries.titulo">CRIES Scale</h3>
-<p data-i18n="tool.cries.desc">Pain assessment in newborns.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access CURB-65 Scale" class="rd-container" href="../curb65.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.curb-65.titulo">CURB-65 Scale</h3>
-<p data-i18n="tool.curb-65.desc">Severity Assessment in Community-Acquired Pneumonia.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Downton Scale" class="rd-container" href="../downton.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.downton.titulo">Downton Scale</h3>
-<p data-i18n="tool.downton.desc">Assesses fall risk in elderly patients.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access ELPO Scale" class="rd-container" href="../elpo.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.elpo.titulo">ELPO Scale</h3>
-<p data-i18n="tool.elpo.desc">Pressure injury assessment in the operating room.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access FAST Scale" class="rd-container" href="../fast.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.fast.titulo">FAST Scale</h3>
-<p data-i18n="tool.fast.desc">Stroke risk assessment.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access FLACC Scale" class="rd-container" href="../flacc.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.flacc.titulo">FLACC Scale</h3>
-<p data-i18n="tool.flacc.desc">Pain assessment in non-verbal children.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access FOUR Score" class="rd-container" href="../four.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.four.titulo">FOUR Score</h3>
-<p data-i18n="tool.four.desc">Neurological assessment.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Fugulin Scale" class="rd-container" href="../fugulin.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.fugulin.titulo">Fugulin Scale (SCP)</h3>
-<p data-i18n="tool.fugulin.desc">Assessment of patient complexity level.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access GDS Scale" class="rd-container" href="../gds.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.gds.titulo">GDS Scale</h3>
-<p data-i18n="tool.gds.desc">Depression in geriatric patients.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Glasgow Coma Scale" class="rd-container" href="../glasgow.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.glasgow.titulo">Glasgow Coma Scale</h3>
-<p data-i18n="tool.glasgow.desc">Level of consciousness.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Gosnell Scale" class="rd-container" href="../gosnell.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.gosnell.titulo">Gosnell Scale</h3>
-<p data-i18n="tool.gosnell.desc">Pressure injury risk.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Hamilton Scale" class="rd-container" href="../hamilton.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.hamilton.titulo">Hamilton Scale</h3>
-<p data-i18n="tool.hamilton.desc">Assesses severity of Anxiety symptoms.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Hendrich Scale" class="rd-container" href="../hendrich.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.hendrich.titulo">Hendrich II Scale</h3>
-<p data-i18n="tool.hendrich.desc">Assesses Fall Risk.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Humpty Dumpty Scale" class="rd-container" href="../humpty.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.humpty.titulo">Humpty Dumpty Scale</h3>
-<p data-i18n="tool.humpty.desc">Fall risk in pediatric patients.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Johns Scale" class="rd-container" href="../johns.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.johns.titulo">Johns Scale</h3>
-<p data-i18n="tool.johns.desc">Assesses fall risk.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Jouvet Scale" class="rd-container" href="../jouvet.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.jouvet.titulo">Jouvet Scale</h3>
-<p data-i18n="tool.jouvet.desc">Coma/consciousness scale.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Katz Scale" class="rd-container" href="../katz.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.katz.titulo">Katz Index</h3>
-<p data-i18n="tool.katz.desc">Assessment of autonomy in basic ADLs.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Lachs Scale" class="rd-container" href="../lachs.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.lachs.titulo">Lachs Scale</h3>
-<p data-i18n="tool.lachs.desc">Functional capacity assessment of the elderly.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access LANSS Scale" class="rd-container" href="../lanss.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.lanss.titulo">LANSS Scale</h3>
-<p data-i18n="tool.lanss.desc">Neuropathic pain assessment.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Lawton Scale" class="rd-container" href="../lawton.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.lawton.titulo">Lawton Scale</h3>
-<p data-i18n="tool.lawton.desc">Measures degree of independence in IADLs in the elderly.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Manchester Triage System" class="rd-container" href="../manchester.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.manchester.titulo">Manchester Triage System</h3>
-<p data-i18n="tool.manchester.desc">Patient care priority in emergency units.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access MEEM Scale" class="rd-container" href="../meem.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.meem.titulo">MMSE Scale</h3>
-<p data-i18n="tool.meem.desc">Cognitive screening for deficits.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access MEOWS Scale" class="rd-container" href="../meows.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.meows.titulo">MEOWS Scale</h3>
-<p data-i18n="tool.meows.desc">Modified Early Obstetric Warning Score / Assesses clinical deterioration.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access MoCA Scale" class="rd-container" href="../moca.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.moca.titulo">MoCA Scale</h3>
-<p data-i18n="tool.moca.desc">Screening for mild cognitive impairment (MCI).</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Morse Scale" class="rd-container" href="../morse.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.morse.titulo">Morse Scale</h3>
-<p data-i18n="tool.morse.desc">Fall risk.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access NEWS Scale" class="rd-container" href="../news2.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.news.titulo">NEWS Scale</h3>
-<p data-i18n="tool.news.desc">National Early Warning Score / Assesses clinical deterioration.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access NIHSS Scale" class="rd-container" href="../nihss.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.nihss.titulo">NIHSS Scale</h3>
-<p data-i18n="tool.nihss.desc">Stroke assessment.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access NIPS Scale" class="rd-container" href="../nips.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.nips.titulo">NIPS Scale</h3>
-<p data-i18n="tool.nips.desc">Tool to assess pain in newborns.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Norton Scale" class="rd-container" href="../norton.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.norton.titulo">Norton Scale</h3>
-<p data-i18n="tool.norton.desc">Pressure injury risk.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Numeric Pain Rating Scale" class="rd-container" href="../escalanumerica.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.escalanumerica.titulo">Numeric Pain Rating Scale</h3>
-<p data-i18n="tool.escalanumerica.desc">Numeric Pain Rating Scale.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access OFRAS Scale" class="rd-container" href="../ofras.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.ofras.titulo">OFRAS Scale</h3>
-<p data-i18n="tool.ofras.desc">Risk of falls in obstetric patients.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access PAINAD Scale" class="rd-container" href="../painad.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.painad.titulo">PAINAD Scale</h3>
-<p data-i18n="tool.painad.desc">Pain Assessment in Advanced Dementia.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access PELOD Scale" class="rd-container" href="../pelod.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.pelod.titulo">PELOD Scale</h3>
-<p data-i18n="tool.pelod.desc">Early severity and risk in children in the PICU.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access PEWS Scale" class="rd-container" href="../pews.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.pews.titulo">PEWS Scale</h3>
-<p data-i18n="tool.pews.desc">Pediatric early warning score/Assesses clinical deterioration.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Perroca Classification" class="rd-container" href="../perroca.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.perroca.titulo">Perroca Patient Classification (SCP)</h3>
-<p data-i18n="tool.perroca.desc">Patient classification according to complexity.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access PRISM Scale" class="rd-container" href="../prism.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.prism.titulo">PRISM Scale</h3>
-<p data-i18n="tool.prism.desc">Mortality risk in PICU.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access qSOFA Scale" class="rd-container" href="../qsofa.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.qsofa.titulo">qSOFA Scale</h3>
-<p data-i18n="tool.qsofa.desc">Rapid screening for sepsis.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Ramsay Scale" class="rd-container" href="../ramsay.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.ramsay.titulo">Ramsay Scale</h3>
-<p data-i18n="tool.ramsay.desc">Sedation assessment in patients.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Rancho Los Amigos Scale" class="rd-container" href="../rancholosamigos.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.rancholosamigos.titulo">Rancho Los Amigos Scale</h3>
-<p data-i18n="tool.rancholosamigos.desc">Cognitive and behavioral patterns in patients with brain injury.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Richmond Scale" class="rd-container" href="../rass.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.richmond.titulo">Richmond Scale</h3>
-<p data-i18n="tool.richmond.desc">Sedation and agitation.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access SAPS III Scale" class="rd-container" href="../saps.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.saps.titulo">SAPS III Scale</h3>
-<p data-i18n="tool.saps.desc">Percentage of ICU mortality index.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Silverman and Anderson Score" class="rd-container" href="../silverman-andersen.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.silverman.titulo">Silverman and Anderson Score</h3>
-<p data-i18n="tool.silverman.desc">Degree of respiratory distress in newborns.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access SOFA Scale" class="rd-container" href="../sofa.html">
-<i class="fas fa"></i>
-<h3 data-i18n="tool.sofa.titulo">SOFA Scale</h3>
-<p data-i18n="tool.sofa.desc">Organ dysfunction in sepsis.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Tinetti Scale" class="rd-container" href="../tinetti.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.tinetti.titulo">Tinetti Scale (POMA)</h3>
-<p data-i18n="tool.tinetti.desc">Assesses fall risk in elderly by observing gait and balance.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Waterlow Scale" class="rd-container" href="../waterlow.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.waterlow.titulo">Waterlow Scale</h3>
-<p data-i18n="tool.waterlow.desc">Pressure injury risk.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Wood and Downes Scale" class="rd-container" href="../downes.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.downes.titulo">Wood and Downes Scale</h3>
-<p data-i18n="tool.downes.desc">Respiratory distress in newborns.</p>
-</a>
-</li>
-<li>
-<a aria-label="Access Zarit Scale" class="rd-container" href="../zarit.html">
-<i class="fa fa"></i>
-<h3 data-i18n="tool.zarit.titulo">Zarit Scale</h3>
-<p data-i18n="tool.zarit.desc">Assessment of caregiver burden.</p>
-</a>
-</li>
-</ul>
-</div>
-</section>
-<!-- ================= PLATAFORMA GLOBAL ================= -->
-<section aria-label="A global platform" class="rd rd" id="recursos">
-<div class="rd-container">
-<div class="rd-container">
-<div>
-<span class="rd-container"><i class="fa fa"></i> <span data-i18n="global.eyebrow">Community</span></span>
-<h2 data-i18n="global.titulo">A global platform</h2>
-<p data-i18n="global.desc">We connect professionals, institutions, and knowledge in over 195 countries, promoting a stronger, collaborative, and sustainable nursing.</p>
-<a class="rd rd" href="#institucional"><span data-i18n="global.link">Our journey</span> <i class="fa fa"></i></a>
-<div class="rd-container">
-<div><strong>195+</strong><span data-i18n="global.stat1">Connected countries</span></div>
-<div><strong>Millions</strong><span data-i18n="global.stat2">Professionals impacted</span></div>
-<div><strong>28+</strong><span data-i18n="global.stat3">Available languages</span></div>
-</div>
-</div>
-<div class="rd-container">
-<i class="fa fa"></i>
-<i class="rd fa fa" class="rd-container"></i>
-<i class="rd fa fa" class="rd-container"></i>
-<i class="rd fa fa" class="rd-container"></i>
-</div>
-</div>
-</div>
-</section>
-<!-- ================= NEWSLETTER ================= -->
-<section class="rd rd" aria-label="Additional Resources">
-<div class="rd-container">
-<div class="rd-container">
-<div class="rd-container">
-<span class="rd-container"><i class="fa fa"></i></span>
-<div>
-<h3 data-i18n="newsletter2.titulo">Receive news and exclusive content</h3>
-<p data-i18n="newsletter2.desc">Stay updated on updates, news, and releases.</p>
-</div>
-</div>
-<form class="rd-container" id="rd-newsletter-form-main" class="rd-container">
-<div class="rd-container">
-<input aria-label="Your email" data-i18n-aria="footer.email-ph" data-i18n-placeholder="footer.email-ph" placeholder="Your email" required="" type="email"/>
-<button class="rd rd" type="submit"><span class="btn-icon" data-i18n="footer.inscrever">Subscribe</span></button>
-</div>
-<label class="rd-container">
-<input aria-label="Checkbox" required="" type="checkbox"/>
-<span data-i18n="newsletter2.consent">I agree to receive communications by email and accept the <a href="../politica-privacidade.html" style="text-decoration:underline">Privacy Policy</a>.</span>
-</label>
-</form>
-</div>
-</div>
-</section>
-<!-- ═══ Integrated Tools Base44 ═══ -->
-<section class="rd rd rd" aria-label="Integrated Tools">
-<h2 class="section-head">Integrated Tools</h2>
-<p class="section-head">Intelligent platforms connected to the Nursing Intelligence System ecosystem</p>
-<div class="rd-container">
-<a class="tool" href="../plano-enf.html">
-<div class="tool-footer-zone"><div class="tool-tags"><i class="fa fa"></i></div>
-<h3>PlanoEnf</h3>
-<p>Care plans integrating NANDA-I, NIC, and NOC with intelligent assistance.</p>
-<span class="tool-category-badge">Assistance</span>
-</a>
-<a class="tool" href="../plantao-certo.html">
-<div class="tool"><i class="fa fa"></i></div>
-<h3>Plantão Certo</h3>
-<p>Management of schedules, vacations, and absences with Brazilian labor compliance.</p>
-<span class="tool-category-badge">Management</span>
-</a>
-<a class="tool" href="../enferma-cv.html">
-<div class="tool"><i class="fa fa"></i></div>
-<h3>EnfermaCV</h3>
-<p>Specialized resume builder for nursing professionals.</p>
-<span class="tool-category-badge">Career</span>
-</a>
-</div>
-</section>
 
-<div class="tool-footer-zone">
-  <div class="tool-tags">
-    <a href="../index.html#calculadoras" class="tool-tag">#Nursing</a>
-    <a href="../biblioteca.html" class="tool-tag">#Library</a>
-    <a href="../simulados.html" class="tool-tag">#SimulatedExams</a>
-    <a href="../flashcards.html" class="tool-tag">#Flashcards</a>
-  </div>
-  <div class="related-tools"></div>
-</div>
+      <!-- ================= HERO ================= -->
+      <section class="rd-hero" aria-label="Apresentação da Plataforma">
+        <div class="rd-container rd-hero-grid">
+          <div>
+            <span class="rd-eyebrow"><i class="fa-solid fa-sparkles"></i> <span data-i18n="hero.eyebrow">Nursing Global Platform</span></span>
+            <h1 data-i18n="hero.title">Tecnologia e conhecimento para uma enfermagem <span class="accent">mais eficiente e sustentável.</span></h1>
+            <p class="lead" data-i18n="hero.lead">A Calculadoras de Enfermagem Global Platform oferece ferramentas, conteúdos e soluções digitais para transformar a prática profissional e gerar impacto positivo na saúde.</p>
+            <div class="rd-hero-ctas">
+              <a href="#ferramentas" class="rd-btn rd-btn-blue"><span data-i18n="hero.btn1">Explorar ferramentas</span> <i class="fa-solid fa-arrow-right"></i></a>
+              <a href="#plataforma" class="rd-btn rd-btn-outline-light" data-i18n="hero.btn2">Conhecer a plataforma</a>
+            </div>
+          </div>
+
+          <div class="rd-hero-visual">
+            <img src="../assets/image-hero/Gemini_Generated_Image_1slu0n1slu0n1slu.png" alt="Profissional de enfermagem utilizando a plataforma Calculadoras de Enfermagem" width="1280" height="900" fetchpriority="high" loading="eager" decoding="sync" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= COMPONENTE: BARRA DE BUSCA SEMÂNTICA (entre Hero e Main) ================= -->
+      <div class="rd-hero-search-wrap">
+        <div class="rd-container">
+          <div class="rd-hero-search">
+            <h2 data-i18n="herosearch.titulo">O que você precisa hoje?</h2>
+            <form class="rd-hero-search-form" action="busca.html" method="get" onsubmit="return handleSearch(event)">
+              <div class="rd-hero-search-input-wrap">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input type="text" name="q" placeholder="Ex.: Gotejamento, Escala Braden, Insulina, SAE..." aria-label="Buscar no site" data-i18n-placeholder="herosearch.placeholder" data-i18n-aria="aria.buscarInput" />
+              </div>
+              <button type="submit" class="rd-hero-search-btn"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span data-i18n="busca.btn">Buscar</span></button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloco oculto para SEO/acessibilidade (conteúdo original preservado) -->
+      <div class="sr-only">
+        <h1 data-i18n="seo.h1">Calculadoras de Enfermagem, Simulados e Escalas Clínicas</h1>
+        <p data-i18n="seo.desc">Plataforma completa com calculadoras de enfermagem, escalas clínicas, cálculo de dosagem de medicamentos e simulados de concursos públicos. Ideal para estudantes, técnicos e enfermeiros que buscam otimizar a prática diária, reforçar a segurança do paciente e se preparar para provas.</p>
+      </div>
+
+      <!-- ================= SOLUÇÕES / SOBRE A PLATAFORMA ================= -->
+      <section class="rd-section" id="plataforma" aria-label="Sobre a Plataforma">
+        <div class="rd-container">
+          <div class="rd-section-head">
+            <span class="rd-eyebrow"><i class="fa-solid fa-layer-group"></i> <span data-i18n="sol.eyebrow">Sobre a plataforma</span></span>
+            <h2 data-i18n="sol.titulo">Soluções para cada momento da sua prática</h2>
+            <p data-i18n="sol.desc">Ferramentas clínicas, protocolos, escalas e conteúdo educacional para estudantes, enfermeiros, gestores e instituições de saúde — com responsabilidade digital e impacto mensurável.</p>
+          </div>
+          <div class="rd-solutions-grid">
+            <div class="rd-solution-card">
+              <div class="rd-solution-icon"><i class="fa-solid fa-earth-americas"></i></div>
+              <h3 data-i18n="sol.card1.titulo">Alcance Global</h3>
+              <p data-i18n="sol.card1.desc">Tradução para mais de 18 idiomas, abrangendo mais de 140 países.</p>
+            </div>
+            <div class="rd-solution-card">
+              <div class="rd-solution-icon"><i class="fa-solid fa-notes-medical"></i></div>
+              <h3 data-i18n="sol.card2.titulo">Escalas Clínicas</h3>
+              <p data-i18n="sol.card2.desc">Mais de 60 escalas clínicas e assistenciais automatizadas.</p>
+            </div>
+            <div class="rd-solution-card">
+              <div class="rd-solution-icon"><i class="fa-solid fa-calculator"></i></div>
+              <h3 data-i18n="sol.card3.titulo">Calculadoras</h3>
+              <p data-i18n="sol.card3.desc">Mais de 15 calculadoras assistenciais para resolver cálculos da rotina da profissão.</p>
+            </div>
+            <div class="rd-solution-card">
+              <div class="rd-solution-icon"><i class="fa-solid fa-laptop-medical"></i></div>
+              <h3 data-i18n="sol.card4.titulo">Simulados</h3>
+              <p data-i18n="sol.card4.desc">Simulados interativos das principais bancas, divididos por temas com avaliação de tempo e acertos.</p>
+            </div>
+            <div class="rd-solution-card">
+              <div class="rd-solution-icon"><i class="fa-solid fa-book-open"></i></div>
+              <h3 data-i18n="sol.card5.titulo">Biblioteca</h3>
+              <p data-i18n="sol.card5.desc">Acervo em construção para servir de base exclusiva de conteúdos literários em enfermagem.</p>
+            </div>
+            <div class="rd-solution-card">
+              <div class="rd-solution-icon"><i class="fa-solid fa-user-graduate"></i></div>
+              <h3 data-i18n="sol.card6.titulo">Ensino</h3>
+              <p data-i18n="sol.card6.desc">Compromisso com o ensino através do desenvolvimento de conteúdos literários exclusivos.</p>
+            </div>
+            <div class="rd-solution-card">
+              <div class="rd-solution-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+              <h3 data-i18n="sol.card7.titulo">Responsabilidade</h3>
+              <p data-i18n="sol.card7.desc">Créditos à literaturas e uso de referências bibliográficas para direcionar escalas e conteúdos.</p>
+            </div>
+            <div class="rd-solution-card">
+              <div class="rd-solution-icon"><i class="fa-solid fa-shield-heart"></i></div>
+              <h3 data-i18n="sol.card8.titulo">Segurança e Privacidade</h3>
+              <p data-i18n="sol.card8.desc">Proteção de informações e governança de dados em todas as ferramentas da plataforma.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FERRAMENTAS MAIS UTILIZADAS (acesso rápido) ================= -->
+      <section class="rd-section" style="padding-top:0" id="ferramentas" aria-label="Ferramentas mais utilizadas">
+        <div class="rd-container">
+          <div class="rd-section-head-row">
+            <div class="rd-section-head" style="margin-bottom:0">
+              <span class="rd-eyebrow"><i class="fa-solid fa-bolt"></i> <span data-i18n="quick.eyebrow">Acesso rápido</span></span>
+              <h2 data-i18n="quick.titulo">Ferramentas mais utilizadas</h2>
+              <p data-i18n="quick.desc">Acesse calculadoras e recursos validados que facilitam o seu dia a dia.</p>
+            </div>
+            <a href="#calculadoras" class="rd-link-arrow"><span data-i18n="quick.link">Ver todas as ferramentas</span> <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <div class="rd-quick-grid">
+            <a href="../medicamentos.html" class="rd-quick-card"><i class="fa-solid fa-syringe"></i><span data-i18n="quick.card1">Cálculo de Medicação</span></a>
+            <a href="../gotejamento.html" class="rd-quick-card"><i class="fa-solid fa-hand-holding-water"></i><span data-i18n="quick.card2">Gotejamento de Soros</span></a>
+            <a href="#escalas" class="rd-quick-card"><i class="fa-solid fa-clipboard-list"></i><span data-i18n="quick.card3">Índices e Escalas</span></a>
+            <a href="../balancohidrico.html" class="rd-quick-card"><i class="fa-solid fa-droplet"></i><span data-i18n="quick.card4">Balanço Hídrico</span></a>
+            <a href="../exames_laboratoriais.html" class="rd-quick-card"><i class="fa-solid fa-flask"></i><span data-i18n="quick.card5">Exames Laboratoriais</span></a>
+            <a href="../insulina.html" class="rd-quick-card"><i class="fa-solid fa-syringe"></i><span data-i18n="quick.card6">Cálculo de Insulina</span></a>
+            <a href="../imc.html" class="rd-quick-card"><i class="fa-solid fa-weight-scale"></i><span data-i18n="quick.card7">Cálculo de IMC</span></a>
+            <a href="#calculadoras" class="rd-quick-card is-cta"><i class="fa-solid fa-grip"></i><span data-i18n="quick.card8">Todas as Ferramentas</span></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= EDUCAÇÃO / GESTÃO ================= -->
+      <section class="rd-section" style="padding-top:0" id="educacao" aria-label="Educação e Gestão">
+        <div class="rd-container rd-split-grid">
+          <div class="rd-split-card">
+            <span class="rd-eyebrow"><i class="fa-solid fa-graduation-cap"></i> <span data-i18n="edu.eyebrow">Educação</span></span>
+            <h3 data-i18n="edu.titulo">Educação que transforma</h3>
+            <p data-i18n="edu.desc">Conteúdos atualizados, baseados em evidências e desenvolvidos por especialistas.</p>
+            <ul class="rd-split-list">
+              <li><a href="../biblioteca-provas.html"><i class="fa-solid fa-check"></i> <span data-i18n="edu.list1">Biblioteca de provas de enfermagem</span></a></li>
+              <li><a href="../flashcards_quiz.html"><i class="fa-solid fa-check"></i> <span data-i18n="edu.list2">Quiz interativo de questões</span></a></li>
+              <li><a href="../simulado-de-enfermagem.html"><i class="fa-solid fa-check"></i> <span data-i18n="edu.list3">Simulados por banca e instituição</span></a></li>
+              <li><a href="../diagnosticosnanda.html"><i class="fa-solid fa-check"></i> <span data-i18n="edu.list4">Diagnósticos de Enfermagem — NANDA</span></a></li>
+            </ul>
+            <a href="#simulados" class="rd-btn rd-btn-blue"><span data-i18n="edu.btn">Acessar conteúdos</span> <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <div class="rd-split-card" id="gestao">
+            <span class="rd-eyebrow"><i class="fa-solid fa-chart-line"></i> <span data-i18n="gestao.eyebrow">Gestão</span></span>
+            <h3 data-i18n="gestao.titulo">Gestão que gera impacto</h3>
+            <p data-i18n="gestao.desc">Recursos e indicadores para apoiar líderes e instituições de saúde.</p>
+            <ul class="rd-split-list">
+              <li><a href="../dimensionamento.html"><i class="fa-solid fa-check"></i> <span data-i18n="gestao.list1">Dimensionamento de equipe de enfermagem</span></a></li>
+              <li><a href="../fugulin.html"><i class="fa-solid fa-check"></i> <span data-i18n="gestao.list2">Escala de Fugulin — complexidade assistencial</span></a></li>
+              <li><a href="../perroca.html"><i class="fa-solid fa-check"></i> <span data-i18n="gestao.list3">Classificação de paciente — Perroca (SCP)</span></a></li>
+              <li><a href="../sbar.html"><i class="fa-solid fa-check"></i> <span data-i18n="gestao.list4">SBAR — passagem de plantão</span></a></li>
+            </ul>
+            <a href="../dimensionamento.html" class="rd-btn rd-btn-primary"><span data-i18n="gestao.btn">Conhecer soluções</span> <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CALCULADORAS ================= -->
+      <section class="rd-section" style="padding-top:0" id="calculadoras" aria-label="Calculadoras de Enfermagem">
+        <div class="rd-container">
+          <div class="rd-cat-banner">
+            <div>
+              <span class="rd-eyebrow" data-i18n="cat.calc.eyebrow">Ferramentas de apoio</span>
+              <h2 data-i18n="cat.calc.titulo">Calculadoras — Enfermagem Prática</h2>
+            </div>
+            <div class="rd-cat-banner-icon"><i class="fa-solid fa-calculator"></i></div>
+          </div>
+
+          <ul class="rd-tool-grid">
+            <li>
+              <a href="../balancohidrico.html" class="rd-tool-card" aria-label="Acessar calculadora de Balanço Hídrico">
+                <i class="fas fa-tint"></i>
+                <h3 data-i18n="tool.balancohidrico.titulo">Calcule o Balanço Hídrico</h3>
+                <p data-i18n="tool.balancohidrico.desc">Controle preciso de líquidos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../dimensionamento.html" class="rd-tool-card" aria-label="Acessar calculadora de Dimensionamento de Equipe">
+                <i class="fas fa-users-cog"></i>
+                <h3 data-i18n="tool.dimensionamento.titulo">Dimensionamento de Enfermagem</h3>
+                <p data-i18n="tool.dimensionamento.desc">Organize sua equipe de enfermagem.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../exames_laboratoriais.html" class="rd-tool-card" aria-label="Acessar calculadora de Exames Laboratoriais">
+                <i class="fa-solid fa-vial-circle-check"></i>
+                <h3 data-i18n="tool.exames_laboratoriais.titulo">Calculadora de Exames Laboratoriais</h3>
+                <p data-i18n="tool.exames_laboratoriais.desc">Calcule os resultados de exames laboratoriais.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../gasometria.html" class="rd-tool-card" aria-label="Acessar calculadora de Gasometria">
+                <i class="fa-solid fa-vial"></i>
+                <h3 data-i18n="tool.gasometria.titulo">Calculadora de Gasometria Arterial</h3>
+                <p data-i18n="tool.gasometria.desc">Interpretação de gasometria arterial</p>
+              </a>
+            </li>
+            <li>
+              <a href="../gotejamento.html" class="rd-tool-card" aria-label="Acessar calculadora de Gotejamento">
+                <i class="fas fa-hand-holding-water"></i>
+                <h3 data-i18n="tool.gotejamento.titulo">Cálculadora de Gotejamento</h3>
+                <p data-i18n="tool.gotejamento.desc">Calcule a Velocidade de infusão.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../gestacional.html" class="rd-tool-card" aria-label="Acessar calculadora de Idade Gestacional e DPP">
+                <i class="fas fa-baby"></i>
+                <h3 data-i18n="tool.gestacional.titulo">Idade Gestacional e DPP</h3>
+                <p data-i18n="tool.gestacional.desc">Calcule a idade gestacional e Data provável do parto.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../imc.html" class="rd-tool-card" aria-label="Acessar calculadora de IMC">
+                <i class="fas fa-weight"></i>
+                <h3 data-i18n="tool.imc.titulo">Cálculo de IMC</h3>
+                <p data-i18n="tool.imc.desc">Índice de Massa Corporal.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../insulina.html" class="rd-tool-card" aria-label="Acessar calculadora de Insulina">
+                <i class="fas fa-syringe"></i>
+                <h3 data-i18n="tool.insulina.titulo">Cálculo de Insulina</h3>
+                <p data-i18n="tool.insulina.desc">Cálculo de doses de insulina.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../medicamentos.html" class="rd-tool-card" aria-label="Acessar calculadora de Medicamentos">
+                <i class="fas fa-pills"></i>
+                <h3 data-i18n="tool.medicamentos.titulo">Cálculo de Medicamentos</h3>
+                <p data-i18n="tool.medicamentos.desc">Doses e diluições de fármacos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../calculadoravacina.html" class="rd-tool-card" aria-label="Acessar calculadora de Vacinas da Criança">
+                <i class="fa-solid fa-syringe"></i>
+                <h3 data-i18n="tool.calculadoravacina.titulo">Vacinas da Criança</h3>
+                <p data-i18n="tool.calculadoravacina.desc">Tabela de vacinas automatizadas.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../notificacao-compulsoria.html" class="rd-tool-card" aria-label="Acessar ferramenta de Doenças de Notificação Compulsória">
+                <i class="fa-solid fa-comment-medical"></i>
+                <h3 data-i18n="tool.notificacao-compulsoria.titulo">Doenças de Notificação Compulsória</h3>
+                <p data-i18n="tool.notificacao-compulsoria.desc">Lista interativa das Doenças e Agravos de Notificação Compulsória do MS.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../diagnosticosnanda.html" class="rd-tool-card" aria-label="Acessar Diagnósticos de Enfermagem NANDA">
+                <i class="fa-solid fa-book-medical"></i>
+                <h3 data-i18n="tool.diagnosticosnanda.titulo">Diagnósticos de Enfermagem - NANDA</h3>
+                <p data-i18n="tool.diagnosticosnanda.desc">Lista de diagnósticos de enfermagem - NANDA (2018).</p>
+              </a>
+            </li>
+            <li>
+              <a href="../sbar.html" class="rd-tool-card" aria-label="Formulário de SBAR - Passagem de plantão">
+                <i class="fa-solid fa-stethoscope"></i>
+                <h3 data-i18n="tool.sbar.titulo">SBAR - Formulário de Passagem de Plantão</h3>
+                <p data-i18n="tool.sbar.desc">Formulário digital de SBAR para Enfermeiros, preencha e imprima.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../calculo-de-ferias.html" class="rd-tool-card" aria-label="Formulário de férias a receber pela enfermagem">
+                <i class="fa-solid fa-champagne-glasses"></i>
+                <h3 data-i18n="tool.calculo-de-ferias.titulo">Calculadora de Férias (Enfermagem)</h3>
+                <p data-i18n="tool.calculo-de-ferias.desc">Qual o valor a receber nas férias?.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../adicional-noturno.html" class="rd-tool-card" aria-label="Formulário calculo de adicional noturno de enfermagem">
+                <i class="fa-solid fa-percent"></i>
+                <h3 data-i18n="tool.adicional-noturno.titulo">Calculadora de Adicional Noturno (Enfermagem)</h3>
+                <p data-i18n="tool.adicional-noturno.desc">Calcule o valor do seu adicional noturno.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../calculo-hora-extra.html" class="rd-tool-card" aria-label="Formulário calculo de valor de horas extras feitos pela enfermagem">
+                <i class="fa-solid fa-clock"></i>
+                <h3 data-i18n="tool.calculo-hora-extra.titulo">Calculadora de Horas Extras a Receber (Enfermagem)</h3>
+                <p data-i18n="tool.calculo-hora-extra.desc">Calcule o valor de suas horas extras a receber.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../calculo-rescisao.html" class="rd-tool-card" aria-label="Formulário calculo de valor de rescisao enfermagem">
+                <i class="fa-solid fa-handshake-angle"></i>
+                <h3 data-i18n="tool.calculo-rescisao.titulo">Calculadora do Valor da Rescisão (Enfermagem)</h3>
+                <p data-i18n="tool.calculo-rescisao.desc">Calcule o valor da sua Rescisão Contratual.</p>
+              </a>
+            </li>
+          </ul>
+
+          <!-- ================= SIMULADOS ================= -->
+          <div class="rd-cat-banner" id="simulados">
+            <div>
+              <span class="rd-eyebrow" data-i18n="cat.sim.eyebrow">Preparatório</span>
+              <h2 data-i18n="cat.sim.titulo">Simulados de Enfermagem — Bancas e Instituições</h2>
+            </div>
+            <div class="rd-cat-banner-icon"><i class="fa-solid fa-book-medical"></i></div>
+          </div>
+
+          <ul class="rd-tool-grid">
+            <li>
+              <a href="../simulado-de-enfermagem.html" class="rd-tool-card" aria-label="Acessar 1º Simulado de Técnico de enfermagem">
+                <i class="fa-solid fa-book-medical"></i>
+                <h3 data-i18n="tool.simulado-de-enfermagem.titulo">1º Simulado para Técnicos de enfermagem</h3>
+                <p data-i18n="tool.simulado-de-enfermagem.desc">50 questões das pricipais bancas e instituiçoes: Com cronometro e avaliação final de porcentagem de acertos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../simulado-de-enfermagem4.html" class="rd-tool-card" aria-label="Acessar 2° Simulado de Técnico de Enfermagem">
+                <i class="fa-solid fa-book-medical"></i>
+                <h3 data-i18n="tool.simulado-de-enfermagem4.titulo">2º (Novo) Simulado para Técnicos de enfermagem</h3>
+                <p data-i18n="tool.simulado-de-enfermagem4.desc">Mais de 50 questões novas das pricipais bancas e instituiçoes: Com cronometro e avaliação final de porcentagem de acertos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../simulado-de-enfermagem2.html" class="rd-tool-card" aria-label="Acessar 1° Simulado para Enfermeiros">
+                <i class="fa-solid fa-user-nurse"></i>
+                <h3 data-i18n="tool.simulado-de-enfermagem2.titulo">1º Simulado para Enfermeiros</h3>
+                <p data-i18n="tool.simulado-de-enfermagem2.desc">50 questões das pricipais bancas e instituiçoes: Com cronometro e avaliação final de porcentagem de acertos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../simulado-de-enfermagem3.html" class="rd-tool-card" aria-label="Acessar 2° Simulado para Enfermeiros">
+                <i class="fa-solid fa-user-nurse"></i>
+                <h3 data-i18n="tool.simulado-de-enfermagem3.titulo">2º (Novo) Simulado para Enfermeiros</h3>
+                <p data-i18n="tool.simulado-de-enfermagem3.desc">Mais de 50 questões novas das pricipais bancas e instituiçoes: Com cronometro e avaliação final de porcentagem de acertos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../simulado-de-enfermagem-nucleo-de-seguranca-do-paciente.html" class="rd-tool-card" aria-label="Acessar simulado de nucleo de segurança do paciente">
+                <i class="fa-solid fa-hand-holding-medical"></i>
+                <h3 data-i18n="tool.simulado-de-enfermagem-nucleo-de-seguranca-do-paciente.titulo">Simulado sobre Segurança do Paciente</h3>
+                <p data-i18n="tool.simulado-de-enfermagem-nucleo-de-seguranca-do-paciente.desc">50 questões do MS, IBSP, ANVISA, ISMP: Com cronometro e avaliação final de porcentagem de acertos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../simulado-de-enfermagem-doencas-de-notificacao-compulsoria.html" class="rd-tool-card" aria-label="Acessar 1° Simulado de notificação compulsória">
+                <i class="fa-solid fa-viruses"></i>
+                <h3 data-i18n="tool.simulado-de-enfermagem-doencas-de-notificacao-compulsoria.titulo">Simulado sobre Doenças de Notificação Compulsória</h3>
+                <p data-i18n="tool.simulado-de-enfermagem-doencas-de-notificacao-compulsoria.desc">50 questões da Portaria Portaria GM/MS Nº 6.734/2025.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../simulado_vacinacao.html" class="rd-tool-card" aria-label="Acessar 1° Simulado de Vacinação">
+                <i class="fa-solid fa-syringe"></i>
+                <h3 data-i18n="tool.simulado_vacinacao.titulo">Simulado sobre Vacinas</h3>
+                <p data-i18n="tool.simulado_vacinacao.desc">30 questões sobre vacinação. (MS e SBIM)</p>
+              </a>
+            </li>
+            <li>
+              <a href="../simulado_pcr.html" class="rd-tool-card" aria-label="Acessar Simulado de PCR (Parada Cardiorespiratória)">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <h3 data-i18n="tool.simulado_pcr.titulo">Simulado sobre PCR</h3>
+                <p data-i18n="tool.simulado_pcr.desc">30 questões sobre Parada Cardiorespiratória (Bancas/AHA e SBC).</p>
+              </a>
+            </li>
+            <li>
+              <a href="../simulado_bloco-operatorio.html" class="rd-tool-card" aria-label="Acessar Simulado de Bloco Cirúrgico, CME e Sala de recuperação pós anestésica">
+                <i class="fa-solid fa-hospital"></i>
+                <h3 data-i18n="tool.simulado_bloco-operatorio.titulo">Simulado sobre Bloco Operatório</h3>
+                <p data-i18n="tool.simulado_bloco-operatorio.desc">30 questões sobre Bloco Operatório (Bancas/SOBECC/COFEN).</p>
+              </a>
+            </li>
+            <li>
+              <a href="../flashcards_quiz.html" class="rd-tool-card" aria-label="Acessar Quiz interativo de Questões de Enfermagem">
+                <i class="fa-solid fa-question-circle"></i>
+                <h3 data-i18n="tool.flashcards_quiz.titulo">Quiz interativo de Questões de Enfermagem</h3>
+                <p data-i18n="tool.flashcards_quiz.desc">Questões interativas sobre diversos temas de enfermagem.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../biblioteca-provas.html" class="rd-tool-card" aria-label="Acessar Biblioteca de Provas">
+                <i class="fa-solid fa-book"></i>
+                <h3 data-i18n="tool.biblioteca-provas.titulo">Biblioteca de Provas de Enfermagem</h3>
+                <p data-i18n="tool.biblioteca-provas.desc">Acesso a uma vasta coleção de provas e exercícios de enfermagem.</p>
+              </a>
+            </li>
+          </ul>
+
+          <!-- ================= ESCALAS ================= -->
+          <div class="rd-cat-banner" id="escalas">
+            <div>
+              <span class="rd-eyebrow" data-i18n="cat.esc.eyebrow">Protocolos</span>
+              <h2 data-i18n="cat.esc.titulo">Escalas para Avaliação — Avaliação de Pacientes</h2>
+            </div>
+            <div class="rd-cat-banner-icon"><i class="fa-solid fa-user-nurse"></i></div>
+          </div>
+
+          <ul class="rd-tool-grid">
+            <li>
+              <a href="../aldrete.html" class="rd-tool-card" aria-label="Acessar Escala de Aldrete e Kroulik">
+                <i class="fas fa-notes-medical"></i>
+                <h3 data-i18n="tool.aldrete.titulo">Escala de Aldrete e Kroulik</h3>
+                <p data-i18n="tool.aldrete.desc">Avaliação do paciente em SRPA.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../apache.html" class="rd-tool-card" aria-label="Acessar Escala de APACHE II">
+                <i class="fa-solid fa-receipt"></i>
+                <h3 data-i18n="tool.apache.titulo">Escala de APACHE II</h3>
+                <p data-i18n="tool.apache.desc">Avaliação de gravidade do paciente em estado grave.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../apgar.html" class="rd-tool-card" aria-label="Acessar Escala de Apgar">
+                <i class="fas fa-baby-carriage"></i>
+                <h3 data-i18n="tool.apgar.titulo">Escala de Apgar</h3>
+                <p data-i18n="tool.apgar.desc">Avaliação de recém-nascidos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../asa.html" class="rd-tool-card" aria-label="Acessar Risco Perioperatório ASA">
+                <i class="fas fa-notes-medical"></i>
+                <h3 data-i18n="tool.asa.titulo">Risco Perioperatório - ASA</h3>
+                <p data-i18n="tool.asa.desc">Classificação do estado físico pré operatório.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../ballard.html" class="rd-tool-card" aria-label="Acessar Escala de Ballard">
+                <i class="fas fa-baby-carriage"></i>
+                <h3 data-i18n="tool.ballard.titulo">Escala de Ballard</h3>
+                <p data-i18n="tool.ballard.desc">Avaliação da maturidade neuromuscular e física do recém-nascido.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../barthel.html" class="rd-tool-card" aria-label="Acessar Escala de Barthel">
+                <i class="fas fa-walking"></i>
+                <h3 data-i18n="tool.barthel.titulo">Escala de Barthel</h3>
+                <p data-i18n="tool.barthel.desc">Avalia grau de dependência funcional do paciente.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../bps.html" class="rd-tool-card" aria-label="Acessar Escala de dor BPS">
+                <i class="fa-solid fa-mask-face"></i>
+                <h3 data-i18n="tool.bps.titulo">Escala de dor de Behavioural (BPS)</h3>
+                <p data-i18n="tool.bps.desc">Avaliação de dor em pacientes sob ventilação mecânica.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../berg.html" class="rd-tool-card" aria-label="Acessar Escala de BERG">
+                <i class="fa-solid fa-person"></i>
+                <h3 data-i18n="tool.berg.titulo">Escala de BERG (BBS)</h3>
+                <p data-i18n="tool.berg.desc">Avalia o equilíbrio estático e dinâmico de um paciente.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../bishop.html" class="rd-tool-card" aria-label="Acessar Índice de Bishop">
+                <i class="fa-solid fa-user-doctor"></i>
+                <h3 data-i18n="tool.bishop.titulo">Índice de Bishop</h3>
+                <p data-i18n="tool.bishop.desc">Avaliar a maturidade do colo do útero e a prontidão para o trabalho de parto.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../braden.html" class="rd-tool-card" aria-label="Acessar Escala de Braden">
+                <i class="fas fa-bed"></i>
+                <h3 data-i18n="tool.braden.titulo">Escala de Braden</h3>
+                <p data-i18n="tool.braden.desc">Risco de lesão por pressão.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../cam.html" class="rd-tool-card" aria-label="Acessar Escala CAM-ICU">
+                <i class="fas fa-hospital-alt"></i>
+                <h3 data-i18n="tool.cam.titulo">Escala CAM-ICU</h3>
+                <p data-i18n="tool.cam.desc">Avaliação de delirium em UTI.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../capurro.html" class="rd-tool-card" aria-label="Acessar Método de Capurro">
+                <i class="fas fa-baby-carriage"></i>
+                <h3 data-i18n="tool.capurro.titulo">Método de Capurro</h3>
+                <p data-i18n="tool.capurro.desc">Método para estimar a idade gestacional de de RN's.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../cincinnati.html" class="rd-tool-card" aria-label="Acessar Escala de Cincinnati">
+                <i class="fas fa-hospital-user"></i>
+                <h3 data-i18n="tool.cincinnati.titulo">Escala de Cincinnati</h3>
+                <p data-i18n="tool.cincinnati.desc">Avaliação de AVE.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../copsoq.html" class="rd-tool-card" aria-label="Questionário de Copenhagnen 2">
+                <i class="fa-solid fa-brain"></i>
+                <h3 data-i18n="tool.copsoq.titulo">COPSOQ II</h3>
+                <p data-i18n="tool.copsoq.desc">Gestão de riscos psicossociais (NR-1).</p>
+              </a>
+            </li>
+            <li>
+              <a href="../copsoq3.html" class="rd-tool-card" aria-label="Questionário de Copenhagnen 3">
+                <i class="fa-solid fa-brain"></i>
+                <h3 data-i18n="tool.copsoq3.titulo">COPSOQ III</h3>
+                <p data-i18n="tool.copsoq3.desc">Gestão de riscos psicossociais (NR-1).</p>
+              </a>
+            </li>
+            <li>
+              <a href="../cornell.html" class="rd-tool-card" aria-label="Acessar Escala de Cornell">
+                <i class="fas fa-notes-medical"></i>
+                <h3 data-i18n="tool.cornell.titulo">Escala de Cornell</h3>
+                <p data-i18n="tool.cornell.desc">Classificação de depressão em paciente com demência.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../cries.html" class="rd-tool-card" aria-label="Acessar Escala de CRIES">
+                <i class="fa-solid fa-child"></i>
+                <h3 data-i18n="tool.cries.titulo">Escala de CRIES</h3>
+                <p data-i18n="tool.cries.desc">Avaliação de dor dos recém-nascidos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../curb65.html" class="rd-tool-card" aria-label="Acessar Escala de CURB-65">
+                <i class="fa-solid fa-lungs-virus"></i>
+                <h3 data-i18n="tool.curb-65.titulo">Escala de CURB-65</h3>
+                <p data-i18n="tool.curb-65.desc">Avaliação de Gravidade em Pneumonia Adquirida na Comunidade.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../downton.html" class="rd-tool-card" aria-label="Acessar Escala de Downton">
+                <i class="fa-solid fa-shower"></i>
+                <h3 data-i18n="tool.downton.titulo">Escala de Downton</h3>
+                <p data-i18n="tool.downton.desc">Avalia o risco de queda em pacientes idosos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../elpo.html" class="rd-tool-card" aria-label="Acessar Escala de ELPO">
+                <i class="fas fa-child"></i>
+                <h3 data-i18n="tool.elpo.titulo">Escala de ELPO</h3>
+                <p data-i18n="tool.elpo.desc">Avaliação lesão por pressão em bloco operatório</p>
+              </a>
+            </li>
+            <li>
+              <a href="../fast.html" class="rd-tool-card" aria-label="Acessar Escala de FAST">
+                <i class="fa-solid fa-person-walking-with-cane"></i>
+                <h3 data-i18n="tool.fast.titulo">Escala de FAST</h3>
+                <p data-i18n="tool.fast.desc">Avaliação de risco de AVE.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../flacc.html" class="rd-tool-card" aria-label="Acessar Escala de FLACC">
+                <i class="fas fa-hospital-alt"></i>
+                <h3 data-i18n="tool.flacc.titulo">Escala de FLACC</h3>
+                <p data-i18n="tool.flacc.desc">Avaliação de dor em crianças não verbal.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../four.html" class="rd-tool-card" aria-label="Acessar Escala de FOUR">
+                <i class="fa-solid fa-user-nurse"></i>
+                <h3 data-i18n="tool.four.titulo">Escala de FOUR</h3>
+                <p data-i18n="tool.four.desc">Avaliação neurológica.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../fugulin.html" class="rd-tool-card" aria-label="Acessar Escala de Fugulin">
+                <i class="fas fa-hospital-alt"></i>
+                <h3 data-i18n="tool.fugulin.titulo">Escala de Fugulin (SCP)</h3>
+                <p data-i18n="tool.fugulin.desc">Avaliação do grau de Complexidade do paciente.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../gds.html" class="rd-tool-card" aria-label="Acessar Escala de GDS">
+                <i class="fas fa-child"></i>
+                <h3 data-i18n="tool.gds.titulo">Escala de GDS</h3>
+                <p data-i18n="tool.gds.desc">Depressão do paciente geriátrico.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../glasgow.html" class="rd-tool-card" aria-label="Acessar Escala de Glasgow">
+                <i class="fa-solid fa-eye"></i>
+                <h3 data-i18n="tool.glasgow.titulo">Escala de coma de Glasgow</h3>
+                <p data-i18n="tool.glasgow.desc">Nível de consciência.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../gosnell.html" class="rd-tool-card" aria-label="Acessar Escala de Gosnell">
+                <i class="fa-solid fa-weight-scale"></i>
+                <h3 data-i18n="tool.gosnell.titulo">Escala de Gosnell</h3>
+                <p data-i18n="tool.gosnell.desc">Risco de lesão por pressão.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../hamilton.html" class="rd-tool-card" aria-label="Acessar Escala de Hamilton">
+                <i class="fas fa-file-medical-alt"></i>
+                <h3 data-i18n="tool.hamilton.titulo">Escala de Hamilton</h3>
+                <p data-i18n="tool.hamilton.desc">Avalia gravidade dos sintomas de Ansiedade.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../hendrich.html" class="rd-tool-card" aria-label="Acessar Escala de Hendrich">
+                <i class="fa-solid fa-person-cane"></i>
+                <h3 data-i18n="tool.hendrich.titulo">Escala de Hendrich II</h3>
+                <p data-i18n="tool.hendrich.desc">Avalia Risco de quedas.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../humpty.html" class="rd-tool-card" aria-label="Acessar Escala de Humpty Dumpty">
+                <i class="fas fa-file-medical-alt"></i>
+                <h3 data-i18n="tool.humpty.titulo">Escala de Humpty - Dumpty</h3>
+                <p data-i18n="tool.humpty.desc">Risco de quedas em pacientes pediátricos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../johns.html" class="rd-tool-card" aria-label="Acessar Escala de Johns">
+                <i class="fa-solid fa-person-walking-with-cane"></i>
+                <h3 data-i18n="tool.johns.titulo">Escala de Johns</h3>
+                <p data-i18n="tool.johns.desc">Avalia risco de queda.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../jouvet.html" class="rd-tool-card" aria-label="Acessar Escala de Jouvet">
+                <i class="fas fa-bed"></i>
+                <h3 data-i18n="tool.jouvet.titulo">Escala de Jouvet</h3>
+                <p data-i18n="tool.jouvet.desc">Escala de coma/consciência.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../katz.html" class="rd-tool-card" aria-label="Acessar Escala de Katz">
+                <i class="fa-solid fa-bath"></i>
+                <h3 data-i18n="tool.katz.titulo">Escala de Katz</h3>
+                <p data-i18n="tool.katz.desc">Avaliação de autonomia nas ABVDs.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../lachs.html" class="rd-tool-card" aria-label="Acessar Escala de Lachs">
+                <i class="fa-solid fa-person-walking-with-cane"></i>
+                <h3 data-i18n="tool.lachs.titulo">Escala de Lachs</h3>
+                <p data-i18n="tool.lachs.desc">Avaliação da capacidade funcional do idoso.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../lanss.html" class="rd-tool-card" aria-label="Acessar Escala de LANSS">
+                <i class="fas fa-user-nurse"></i>
+                <h3 data-i18n="tool.lanss.titulo">Escala de LANSS</h3>
+                <p data-i18n="tool.lanss.desc">Avaliação de dor neuropática.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../lawton.html" class="rd-tool-card" aria-label="Acessar Escala de Lawton">
+                <i class="fa-solid fa-mug-saucer"></i>
+                <h3 data-i18n="tool.lawton.titulo">Escala de Lawton</h3>
+                <p data-i18n="tool.lawton.desc">Mede o grau de independência nas AIVD em idosos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../manchester.html" class="rd-tool-card" aria-label="Acessar Escala de Manchester">
+                <i class="fas fa-clinic-medical"></i>
+                <h3 data-i18n="tool.manchester.titulo">Escala de Manchester</h3>
+                <p data-i18n="tool.manchester.desc">Prioridade de atendimento do paciente em Unidades de pronto atendimento.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../meem.html" class="rd-tool-card" aria-label="Acessar Escala de MEEM">
+                <i class="fas fa-wheelchair"></i>
+                <h3 data-i18n="tool.meem.titulo">Escala de MEEM</h3>
+                <p data-i18n="tool.meem.desc">Rastreio cognitivo de déficits.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../meows.html" class="rd-tool-card" aria-label="Acessar Escala de MEOWS">
+                <i class="fas fa-notes-medical"></i>
+                <h3 data-i18n="tool.meows.titulo">Escala de MEOWS</h3>
+                <p data-i18n="tool.meows.desc">Escore de alerta obstétrico precoce/ Avalia Deterioração clínica.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../moca.html" class="rd-tool-card" aria-label="Acessar Escala de MoCA">
+                <i class="fa-solid fa-brain"></i>
+                <h3 data-i18n="tool.moca.titulo">Escala de MoCA</h3>
+                <p data-i18n="tool.moca.desc">Rastreio de comprometimento cognitivo leve (CCL).</p>
+              </a>
+            </li>
+            <li>
+              <a href="../morse.html" class="rd-tool-card" aria-label="Acessar Escala de Morse">
+                <i class="fas fa-walking"></i>
+                <h3 data-i18n="tool.morse.titulo">Escala de Morse</h3>
+                <p data-i18n="tool.morse.desc">Risco de queda.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../news2.html" class="rd-tool-card" aria-label="Acessar Escala de NEWS">
+                <i class="fas fa-chart-line"></i>
+                <h3 data-i18n="tool.news.titulo">Escala de NEWS</h3>
+                <p data-i18n="tool.news.desc">Escore de alerta precoce adulto/ Avalia Deterioração clínica.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../nihss.html" class="rd-tool-card" aria-label="Acessar Escala NIHSS">
+                <i class="fas fa-brain"></i>
+                <h3 data-i18n="tool.nihss.titulo">Escala NIHSS</h3>
+                <p data-i18n="tool.nihss.desc">Avaliação de AVE.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../nips.html" class="rd-tool-card" aria-label="Acessar Escala de NIPS">
+                <i class="fa-solid fa-eye-dropper"></i>
+                <h3 data-i18n="tool.nips.titulo">Escala de NIPS</h3>
+                <p data-i18n="tool.nips.desc">Ferramenta para avaliar a dor em recém-nascidos.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../norton.html" class="rd-tool-card" aria-label="Acessar Escala de Norton">
+                <i class="fas fa-file-medical-alt"></i>
+                <h3 data-i18n="tool.norton.titulo">Escala de Norton</h3>
+                <p data-i18n="tool.norton.desc">Risco de lesão por pressão.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../escalanumerica.html" class="rd-tool-card" aria-label="Acessar Escala Numérica de Dor">
+                <i class="fas fa-hospital-alt"></i>
+                <h3 data-i18n="tool.escalanumerica.titulo">Escala Numérica de Dor</h3>
+                <p data-i18n="tool.escalanumerica.desc">Escala de dor numérica.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../ofras.html" class="rd-tool-card" aria-label="Acessar Escala de OFRAS">
+                <i class="fa-solid fa-square-plus"></i>
+                <h3 data-i18n="tool.ofras.titulo">Escala de OFRAS</h3>
+                <p data-i18n="tool.ofras.desc">Risco de quedas em pacientes obstétricas.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../painad.html" class="rd-tool-card" aria-label="Acessar Escala de PAINAD">
+                <i class="fa-solid fa-hand-holding-medical"></i>
+                <h3 data-i18n="tool.painad.titulo">Escala de PAINAD</h3>
+                <p data-i18n="tool.painad.desc">Avaliação da Dor em Demência Avançada.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../pelod.html" class="rd-tool-card" aria-label="Acessar Escala de PELOD">
+                <i class="fa-solid fa-comment-medical"></i>
+                <h3 data-i18n="tool.pelod.titulo">Escala de PELOD</h3>
+                <p data-i18n="tool.pelod.desc">Gravidade e risco precoce em crianças na UTIP.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../pews.html" class="rd-tool-card" aria-label="Acessar Escala de PEWS">
+                <i class="fas fa-notes-medical"></i>
+                <h3 data-i18n="tool.pews.titulo">Escala de PEWS</h3>
+                <p data-i18n="tool.pews.desc">Alerta clínico precoce pediátrico/ Avalia Deterioração clínica.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../perroca.html" class="rd-tool-card" aria-label="Acessar Classificação Perroca">
+                <i class="fas fa-hospital-alt"></i>
+                <h3 data-i18n="tool.perroca.titulo">Classificação de paciente Perroca (SCP)</h3>
+                <p data-i18n="tool.perroca.desc">Classificação do paciente segundo suas complexidades.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../prism.html" class="rd-tool-card" aria-label="Acessar Escala PRISM">
+                <i class="fas fa-lungs"></i>
+                <h3 data-i18n="tool.prism.titulo">Escala PRISM</h3>
+                <p data-i18n="tool.prism.desc">Risco de mortalidade em UTIP.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../qsofa.html" class="rd-tool-card" aria-label="Acessar Escala qSOFA">
+                <i class="fas fa-lungs"></i>
+                <h3 data-i18n="tool.qsofa.titulo">Escala qSOFA</h3>
+                <p data-i18n="tool.qsofa.desc">Triagem rápida para sepse.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../ramsay.html" class="rd-tool-card" aria-label="Acessar Escala Ramsay">
+                <i class="fa-solid fa-bed-pulse"></i>
+                <h3 data-i18n="tool.ramsay.titulo">Escala Ramsay</h3>
+                <p data-i18n="tool.ramsay.desc">Avaliação da sedação em pacientes.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../rancholosamigos.html" class="rd-tool-card" aria-label="Acessar Escala de Rancho Los Amigos">
+                <i class="fas fa-user-md"></i>
+                <h3 data-i18n="tool.rancholosamigos.titulo">Escala de Rancho Los Amigos</h3>
+                <p data-i18n="tool.rancholosamigos.desc">Padrões cognitivos e comportamentais de pacientes com lesão cerebral.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../rass.html" class="rd-tool-card" aria-label="Acessar Escala de Richmond">
+                <i class="fas fa-user-md"></i>
+                <h3 data-i18n="tool.richmond.titulo">Escala de Richmond</h3>
+                <p data-i18n="tool.richmond.desc">Sedação e agitação.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../saps.html" class="rd-tool-card" aria-label="Acessar Escala de SAPS III">
+                <i class="fas fa-hospital-alt"></i>
+                <h3 data-i18n="tool.saps.titulo">Escala de SAPS III</h3>
+                <p data-i18n="tool.saps.desc">Porcentagem de Índice de mortalidade em UTI.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../silverman-andersen.html" class="rd-tool-card" aria-label="Acessar Boletim de Silverman e Anderson">
+                <i class="fas fa-notes-medical"></i>
+                <h3 data-i18n="tool.silverman.titulo">Boletim de Silverman e Anderson</h3>
+                <p data-i18n="tool.silverman.desc">Grau de desconforto respiratório em RN.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../sofa.html" class="rd-tool-card" aria-label="Acessar Escala SOFA">
+                <i class="fas fa-heartbeat"></i>
+                <h3 data-i18n="tool.sofa.titulo">Escala SOFA</h3>
+                <p data-i18n="tool.sofa.desc">Disfunção orgânica em sepse.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../tinetti.html" class="rd-tool-card" aria-label="Acessar Escala de Tinetti">
+                <i class="fa-solid fa-person-walking-with-cane"></i>
+                <h3 data-i18n="tool.tinetti.titulo">Escala de Tinetti (POMA)</h3>
+                <p data-i18n="tool.tinetti.desc">Avalia risco de queda em idosos observando marcha e equilíbrio.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../waterlow.html" class="rd-tool-card" aria-label="Acessar Escala de Waterlow">
+                <i class="fa-solid fa-weight-scale"></i>
+                <h3 data-i18n="tool.waterlow.titulo">Escala de Waterlow</h3>
+                <p data-i18n="tool.waterlow.desc">Risco de lesão por pressão.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../downes.html" class="rd-tool-card" aria-label="Acessar Escala Wood e Downes">
+                <i class="fa-solid fa-stethoscope"></i>
+                <h3 data-i18n="tool.downes.titulo">Escala Wood e Downes</h3>
+                <p data-i18n="tool.downes.desc">Desconforto respiratório em RN.</p>
+              </a>
+            </li>
+            <li>
+              <a href="../zarit.html" class="rd-tool-card" aria-label="Acessar Escala de Zarit">
+                <i class="fa-solid fa-hospital-user"></i>
+                <h3 data-i18n="tool.zarit.titulo">Escala de Zarit</h3>
+                <p data-i18n="tool.zarit.desc">Avaliação do grau de sobrecarga do cuidador familiar.</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ================= PLATAFORMA GLOBAL ================= -->
+      <section class="rd-section" style="padding-top:0" id="recursos" aria-label="Uma plataforma global">
+        <div class="rd-container">
+          <div class="rd-global">
+            <div>
+              <span class="rd-eyebrow"><i class="fa-solid fa-globe"></i> <span data-i18n="global.eyebrow">Comunidade</span></span>
+              <h2 data-i18n="global.titulo">Uma plataforma global</h2>
+              <p data-i18n="global.desc">Conectamos profissionais, instituições e conhecimento em mais de 195 países, promovendo uma enfermagem mais forte, colaborativa e sustentável.</p>
+              <a href="#institucional" class="rd-btn rd-btn-ghost"><span data-i18n="global.link">Nossa jornada</span> <i class="fa-solid fa-arrow-right"></i></a>
+              <div class="rd-global-stats">
+                <div><strong>195+</strong><span data-i18n="global.stat1">Países conectados</span></div>
+                <div><strong>Milhões</strong><span data-i18n="global.stat2">Profissionais impactados</span></div>
+                <div><strong>18+</strong><span data-i18n="global.stat3">Idiomas disponíveis</span></div>
+              </div>
+            </div>
+            <div class="rd-map-wrap">
+              <i class="fa-solid fa-earth-americas"></i>
+              <i class="rd-map-pin fa-solid fa-location-dot" style="top:30%; left:28%"></i>
+              <i class="rd-map-pin fa-solid fa-location-dot" style="top:55%; left:62%"></i>
+              <i class="rd-map-pin fa-solid fa-location-dot" style="top:40%; left:76%"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= NEWSLETTER ================= -->
+      <section class="rd-section" style="padding-top:0">
+        <div class="rd-container">
+          <div class="rd-newsletter">
+            <div class="rd-newsletter-left">
+              <span class="rd-newsletter-icon"><i class="fa-solid fa-envelope"></i></span>
+              <div>
+                <h3 data-i18n="newsletter2.titulo">Receba novidades e conteúdos exclusivos</h3>
+                <p data-i18n="newsletter2.desc">Fique por dentro das atualizações, novidades e lançamentos.</p>
+              </div>
+            </div>
+            <form class="rd-newsletter-form" id="rd-newsletter-form-main" style="flex-direction:column; align-items:flex-start">
+              <div style="display:flex; gap:10px; width:100%">
+                <input type="email" placeholder="Seu e-mail" aria-label="Seu e-mail" data-i18n-placeholder="footer.email-ph" data-i18n-aria="footer.email-ph" required />
+                <button type="submit" class="rd-btn rd-btn-blue"><span class="btn-label" data-i18n="footer.inscrever">Inscrever-se</span></button>
+              </div>
+              <label class="rd-newsletter-consent">
+                <input aria-label="Checkbox" type="checkbox" required />
+                <span data-i18n="newsletter2.consent">Concordo em receber comunicações por e-mail e aceito a <a href="#" style="text-decoration:underline">Política de Privacidade</a>.</span>
+              </label>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    
+    <!-- ═══ Ferramentas Integradas Base44 ═══ -->
+    <section class="rd-section rd-container" style="margin-top:48px">
+      <h2 class="section-title">Ferramentas Integradas</h2>
+      <p class="section-subtitle">Plataformas inteligentes conectadas ao ecossistema Nursing Intelligence System</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:24px">
+        <a href="../plano-enf.html" class="tool-integration-card">
+          <div class="tool-integration-icon" class="tool-integration-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+          <h3>PlanoEnf</h3>
+          <p>Planos de cuidado integrando NANDA-I, NIC e NOC com assistência inteligente.</p>
+          <span class="tool-integration-badge">Assistência</span>
+        </a>
+        <a href="../plantao-certo.html" class="tool-integration-card">
+          <div class="tool-integration-icon" class="tool-integration-icon"><i class="fa-solid fa-calendar-check"></i></div>
+          <h3>Plantão Certo</h3>
+          <p>Gestão de escalas, férias e afastamentos com conformidade trabalhista brasileira.</p>
+          <span class="tool-integration-badge">Gestão</span>
+        </a>
+        <a href="../enferma-cv.html" class="tool-integration-card">
+          <div class="tool-integration-icon" class="tool-integration-icon"><i class="fa-solid fa-file-lines"></i></div>
+          <h3>EnfermaCV</h3>
+          <p>Construtor de currículos especializado para profissionais de enfermagem.</p>
+          <span class="tool-integration-badge">Carreira</span>
+        </a>
+      </div>
+    </section>
+
 </main>
 <!-- Footer e módulo de cookies agora vêm de partials/footer.html e partials/cookie-system.html,
          injetados nos placeholders abaixo via js/partials-loader.js. -->
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 <script src="/js/partials-loader.js"></script>
-<script src="js/i18n-loader.js"></script>
-<script src="js/nurse-palm.js"></script>
-<script src="js/cognitive-ui.js"></script>
+<script src="/js/i18n-loader.js"></script>
+<script src="/js/nurse-palm.js"></script>
+<script src="/js/cognitive-ui.js"></script>
 
 <svg style="display:none" aria-hidden="true"><defs>
   <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></symbol>
