@@ -291,10 +291,26 @@ if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.locat
       }
 
       /* ---------- HEADER ---------- */
-      .rd-header {
+      :root {
+        --chrome-header-h: 118px;
+      }
+      @media (max-width: 1024px) {
+        :root { --chrome-header-h: 76px; }
+      }
+      #site-header {
         position: sticky;
         top: 0;
-        z-index: 40;
+        z-index: 60;
+      }
+      #site-a11y {
+        position: sticky;
+        top: var(--chrome-header-h);
+        z-index: 59;
+        background: #fff;
+      }
+      .rd-header {
+        position: static;
+        z-index: 1;
         background: rgba(255, 255, 255, 0.92);
         backdrop-filter: blur(10px);
         border-bottom: 1px solid var(--line);
@@ -1171,13 +1187,19 @@ if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.locat
          ============================================================ */
       :root { --a11y-focus: #ffd400; }
       #barraAcessibilidade {
-        position: fixed; left: 0; right: 0; top: 118px; z-index: 59;
-        background: #fff; border-bottom: 1px solid var(--line);
-        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
+        z-index: 1;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
         transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
       }
-      #barraAcessibilidade.show { opacity: 1; visibility: visible; transform: translateY(0); }
-      @media (max-width: 1024px) { #barraAcessibilidade { top: 76px; } }
+      #barraAcessibilidade.show { opacity: 1; visibility: visible; transform: none; }
 
       .a11y-bar-inner {
         display: flex; align-items: center; justify-content: space-between;
@@ -2321,10 +2343,6 @@ if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.locat
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 <script src="/js/partials-loader.js"></script>
-<script src="/js/i18n-loader.js"></script>
-<script src="/js/nurse-palm.js"></script>
-<script src="/js/cognitive-ui.js"></script>
-
 <svg style="display:none" aria-hidden="true"><defs>
   <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></symbol>

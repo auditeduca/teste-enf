@@ -71,6 +71,12 @@
     rootPath("js/site-widgets.js")
   ];
 
+  var CALC_SCRIPTS = [
+    rootPath("js/nurse-palm.js"),
+    rootPath("js/cognitive-ui.js"),
+    rootPath("js/knowledge-graph.js")
+  ];
+
   function fetchPartial(item) {
     var target = document.getElementById(item.target);
     if (!target) return Promise.resolve();
@@ -102,17 +108,28 @@
     });
   }
 
+  function finishPartialsReady() {
+    document.dispatchEvent(new Event("DOMContentLoaded"));
+    document.dispatchEvent(new Event("partials:ready"));
+  }
+
+  function loadCalcScriptsInOrder(index) {
+    if (index >= CALC_SCRIPTS.length) {
+      finishPartialsReady();
+      return;
+    }
+    loadScriptSequentially(CALC_SCRIPTS[index]).then(function () {
+      loadCalcScriptsInOrder(index + 1);
+    });
+  }
+
   function loadDependentScriptsInOrder(index) {
     if (index >= DEPENDENT_SCRIPTS.length) {
-      // Todos os scripts carregados: dispara um DOMContentLoaded sintético.
-      // Os scripts legados (mega-menu.js/lang-selector.js/site-widgets.js)
-      // registram seus init() via document.addEventListener("DOMContentLoaded", init).
-      // Esse evento nativo já ocorreu antes do fetch terminar, então os
-      // listeners recém-registrados nunca disparariam sozinhos — este
-      // evento sintético reaproveita o mesmo listener sem exigir
-      // nenhuma edição nesses arquivos.
-      document.dispatchEvent(new Event("DOMContentLoaded"));
-      document.dispatchEvent(new Event("partials:ready"));
+      if (document.getElementById("tool-config")) {
+        loadCalcScriptsInOrder(0);
+        return;
+      }
+      finishPartialsReady();
       return;
     }
     loadScriptSequentially(DEPENDENT_SCRIPTS[index]).then(function () {
