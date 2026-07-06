@@ -14,19 +14,25 @@
 (function () {
   "use strict";
 
+  // Root-absolute paths so partials/scripts resolve from any subdirectory
+  // (e.g. /biblioteca/, /en/, /es/) instead of relative to the current page.
+  function rootPath(path) {
+    return path.charAt(0) === "/" ? path : "/" + path;
+  }
+
   var PARTIALS = [
-    { url: "partials/header.html", target: "site-header" },
-    { url: "partials/accessibility-toolbar.html", target: "site-a11y" },
-    { url: "partials/footer.html", target: "site-footer" },
-    { url: "partials/cookie-system.html", target: "site-cookie" }
+    { url: rootPath("partials/header.html"), target: "site-header" },
+    { url: rootPath("partials/accessibility-toolbar.html"), target: "site-a11y" },
+    { url: rootPath("partials/footer.html"), target: "site-footer" },
+    { url: rootPath("partials/cookie-system.html"), target: "site-cookie" }
   ];
 
   var DEPENDENT_SCRIPTS = [
-    "js/global-scripts.js",
-    "js/mega-menu.js",
-    "js/i18n-loader.js",
-    "js/lang-selector.js",
-    "js/site-widgets.js"
+    rootPath("js/global-scripts.js"),
+    rootPath("js/mega-menu.js"),
+    rootPath("js/i18n-loader.js"),
+    rootPath("js/lang-selector.js"),
+    rootPath("js/site-widgets.js")
   ];
 
   function fetchPartial(item) {
