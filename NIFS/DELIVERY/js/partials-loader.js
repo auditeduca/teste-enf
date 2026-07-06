@@ -41,6 +41,21 @@
     }
   }
 
+  // Guarantee shared chrome CSS/fonts on pages that use partials but may omit
+  // the stylesheet link or Font Awesome definitions in their local <head>.
+  function ensureChromeStyles() {
+    var hasSiteStyles = document.querySelector(
+      'link[rel="stylesheet"][href="/css/site-styles.css"],' +
+      'link[rel="stylesheet"][href$="css/site-styles.css"]'
+    );
+    if (!hasSiteStyles) {
+      var siteCss = document.createElement("link");
+      siteCss.rel = "stylesheet";
+      siteCss.href = rootPath("css/site-styles.css");
+      document.head.appendChild(siteCss);
+    }
+  }
+
   var PARTIALS = [
     { url: rootPath("partials/header.html"), target: "site-header" },
     { url: rootPath("partials/accessibility-toolbar.html"), target: "site-a11y" },
