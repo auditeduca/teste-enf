@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="cs-CZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards | Calculadoras de Enfermagem</title>
+<meta name="description" content="Flashcards de enfermagem — revisão rápida com repetição espaçada. NANDA-I, NIC, NOC e mais.">
+<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/cs/flashcards.html" />
+<link rel="alternate" hreflang="pt-BR" href="https://www.calculadorasdeenfermagem.com.br/flashcards.html" />
+<link rel="alternate" hreflang="ar" href="https://www.calculadorasdeenfermagem.com.br/ar/flashcards.html" />
+<link rel="alternate" hreflang="bg-BG" href="https://www.calculadorasdeenfermagem.com.br/bg/flashcards.html" />
+<link rel="alternate" hreflang="cs-CZ" href="https://www.calculadorasdeenfermagem.com.br/cs/flashcards.html" />
+<link rel="alternate" hreflang="da-DK" href="https://www.calculadorasdeenfermagem.com.br/da/flashcards.html" />
+<link rel="alternate" hreflang="de" href="https://www.calculadorasdeenfermagem.com.br/de/flashcards.html" />
+<link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/en/flashcards.html" />
+<link rel="alternate" hreflang="es-419" href="https://www.calculadorasdeenfermagem.com.br/es/flashcards.html" />
+<link rel="alternate" hreflang="fi-FI" href="https://www.calculadorasdeenfermagem.com.br/fi/flashcards.html" />
+<link rel="alternate" hreflang="fr" href="https://www.calculadorasdeenfermagem.com.br/fr/flashcards.html" />
+<link rel="alternate" hreflang="hi-IN" href="https://www.calculadorasdeenfermagem.com.br/hi/flashcards.html" />
+<link rel="alternate" hreflang="hr-HR" href="https://www.calculadorasdeenfermagem.com.br/hr/flashcards.html" />
+<link rel="alternate" hreflang="hu-HU" href="https://www.calculadorasdeenfermagem.com.br/hu/flashcards.html" />
+<link rel="alternate" hreflang="id-ID" href="https://www.calculadorasdeenfermagem.com.br/id/flashcards.html" />
+<link rel="alternate" hreflang="it" href="https://www.calculadorasdeenfermagem.com.br/it/flashcards.html" />
+<link rel="alternate" hreflang="ja" href="https://www.calculadorasdeenfermagem.com.br/ja/flashcards.html" />
+<link rel="alternate" hreflang="ko-KR" href="https://www.calculadorasdeenfermagem.com.br/ko/flashcards.html" />
+<link rel="alternate" hreflang="nl-NL" href="https://www.calculadorasdeenfermagem.com.br/nl/flashcards.html" />
+<link rel="alternate" hreflang="no-NO" href="https://www.calculadorasdeenfermagem.com.br/no/flashcards.html" />
+<link rel="alternate" hreflang="pl-PL" href="https://www.calculadorasdeenfermagem.com.br/pl/flashcards.html" />
+<link rel="alternate" hreflang="ro-RO" href="https://www.calculadorasdeenfermagem.com.br/ro/flashcards.html" />
+<link rel="alternate" hreflang="ru-RU" href="https://www.calculadorasdeenfermagem.com.br/ru/flashcards.html" />
+<link rel="alternate" hreflang="sl-SI" href="https://www.calculadorasdeenfermagem.com.br/sl/flashcards.html" />
+<link rel="alternate" hreflang="sr-RS" href="https://www.calculadorasdeenfermagem.com.br/sr/flashcards.html" />
+<link rel="alternate" hreflang="sv-SE" href="https://www.calculadorasdeenfermagem.com.br/sv/flashcards.html" />
+<link rel="alternate" hreflang="th-TH" href="https://www.calculadorasdeenfermagem.com.br/th/flashcards.html" />
+<link rel="alternate" hreflang="tr-TR" href="https://www.calculadorasdeenfermagem.com.br/tr/flashcards.html" />
+<link rel="alternate" hreflang="uk-UA" href="https://www.calculadorasdeenfermagem.com.br/uk/flashcards.html" />
+<link rel="alternate" hreflang="vi-VN" href="https://www.calculadorasdeenfermagem.com.br/vi/flashcards.html" />
+<link rel="alternate" hreflang="zh-CN" href="https://www.calculadorasdeenfermagem.com.br/zh/flashcards.html" />
+<link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/flashcards.html" />
+
+<link rel="stylesheet" href="/css/site-styles.css">
+<style>
+  /* ===== Flashcards — estilos específicos da ferramenta ===== */
+  .fc-container{max-width:840px; margin:0 auto; padding:24px 16px 60px;}
+  .fc-header{text-align:center; margin-bottom:28px;}
+  .fc-header h1{font-size:28px; font-family: 'Nunito Sans',sans-serif; color:var(--navy-900); margin-bottom:6px;}
+  .fc-header p{font-size:14px; color:var(--muted);}
+
+  /* Toolbar */
+  .fc-toolbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:24px; flex-wrap:wrap;}
+  .fc-filters{display:flex; gap:8px; flex-wrap:wrap;}
+  .fc-filter{padding:8px 16px; border:1px solid var(--line); border-radius:99px; font-size:12px; font-weight:700; color:var(--muted); cursor:pointer; background:#fff; font-family: 'Inter',sans-serif; transition:all .15s;}
+  .fc-filter:hover{border-color:var(--blue-400); color:var(--blue-600);}
+  .fc-filter.active{background:var(--blue-600); color:#fff; border-color:var(--blue-600);}
+  .fc-progress{font-size:12px; font-weight:700; color:var(--muted); display:flex; align-items:center; gap:8px;}
+  .fc-progress strong{color:var(--navy-900); font-size:16px;}
+
+  /* Card area */
+  .fc-card-area{perspective:1200px; min-height:360px; display:flex; align-items:center; justify-content:center; margin-bottom:24px;}
+  .fc-card{width:100%; max-width:640px; min-height:320px; position:relative; transform-style:preserve-3d; transition:transform .5s cubic-bezier(0.4,0,0.2,1); cursor:pointer;}
+  .fc-card.is-flipped{transform:rotateY(180deg);}
+  .fc-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; box-shadow:var(--shadow-md); padding:32px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;}
+  .fc-front{background:#fff; border:1px solid var(--line);}
+  .fc-back{background:var(--bg-soft); border:1px solid var(--line); transform:rotateY(180deg);}
+  .fc-category{display:inline-flex; align-items:center; gap:6px; padding:4px 14px; border-radius:99px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-bottom:16px; background:var(--blue-100); color:var(--blue-600);}
+  .fc-question{font-size:22px; font-weight:700; color:var(--navy-900); font-family: 'Nunito Sans',sans-serif; line-height:1.4; margin-bottom:16px;}
+  .fc-hint{font-size:12px; color:var(--muted); margin-top:auto;}
+  .fc-answer{font-size:16px; font-weight:600; color:var(--navy-900); line-height:1.6; margin-bottom:14px;}
+  .fc-detail{font-size:13px; color:var(--muted); line-height:1.6; text-align:left; width:100%; background:#fff; border-radius:10px; padding:14px; border:1px solid var(--line);}
+  .fc-detail strong{color:var(--navy-900);}
+  .fc-flip-icon{position:absolute; top:16px; right:16px; opacity:.3;}
+
+  /* Controls */
+  .fc-controls{display:flex; gap:12px; justify-content:center; margin-bottom:24px;}
+  .fc-btn{padding:12px 24px; border-radius:10px; font-family: 'Inter',sans-serif; font-weight:700; font-size:14px; cursor:pointer; border:2px solid; transition:all .15s; display:flex; align-items:center; gap:8px;}
+  .fc-btn-review{background:#fff; border-color:#ea580c; color:#ea580c;}
+  .fc-btn-review:hover{background:#fff3e0;}
+  .fc-btn-known{background:#fff; border-color:#16a34a; color:#16a34a;}
+  .fc-btn-known:hover{background:#f0fdf4;}
+  .fc-btn-skip{background:#fff; border-color:var(--line); color:var(--muted);}
+  .fc-btn-skip:hover{background:var(--bg-soft);}
+
+  /* Session stats */
+  .fc-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px;}
+  .fc-stat{background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center;}
+  .fc-stat-val{font-size:24px; font-weight:800; color:var(--navy-900); font-family: 'Nunito Sans',sans-serif;}
+  .fc-stat-lbl{font-size:11px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.04em;}
+
+  /* Deck complete */
+  .fc-complete{background:#fff; border:1px solid var(--line); border-radius:16px; padding:40px; text-align:center; box-shadow:var(--shadow-md);}
+  .fc-complete h2{font-size:22px; color:var(--navy-900); font-family: 'Nunito Sans',sans-serif; margin-bottom:8px;}
+  .fc-complete p{font-size:14px; color:var(--muted); margin-bottom:20px;}
+  .fc-complete-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:400px; margin:0 auto 24px;}
+  .fc-restart{padding:12px 28px; border-radius:10px; background:var(--blue-600); color:#fff; border:none; font-family: 'Inter',sans-serif; font-weight:700; font-size:14px; cursor:pointer;}
+  .fc-restart:hover{background:var(--blue-500);}
+
+  /* Empty */
+  .fc-empty{text-align:center; padding:60px 20px; color:var(--muted);}
+  .fc-empty h2{font-size:18px; color:var(--navy-900); margin-bottom:8px;}
+
+  @media(max-width:640px){
+    .fc-stats{grid-template-columns:repeat(2,1fr);}
+    .fc-filters{justify-content:center;}
+    .fc-toolbar{flex-direction:column; align-items:stretch;}
+    .fc-question{font-size:18px;}
+    .fc-answer{font-size:14px;}
+  }
+
+  /* ===== Print Template ===== */
+  @media print {
+    body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+    .rd-header, .rd-footer, .rd-topbar, .gh-hamburger, .gh-mobile-menu,
+    .skip-link, .tool-tags, .related-tools, .profile-tabs-bar,
+    .learning-track-grid, #newsletter-section, .newsletter-section,
+    .rd-header-actions, .adsbygoogle,
+    #language-selector-placeholder, .accessibility-toolbar, .btn-primary,
+    .calc-actions, .ad-slot, .ad-banner { display: none !important; }
+    main { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+    .calc-card { page-break-inside: avoid; border: 1px solid #ccc !important; box-shadow: none !important; }
+    #resultado { display: block !important; }
+    .hidden { display: block !important; }
+    a { color: #000 !important; text-decoration: none !important; }
+    body::before { content: "Calculadoras de Enfermagem\A www.calculadorasdeenfermagem.com.br"; white-space: pre; display: block; text-align: center; font-size: 9pt; color: #1a3e74; border-bottom: 2px solid #1a3e74; padding-bottom: 6px; margin-bottom: 12px; font-weight: 700; }
+  }
+  .btn-print { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 13px; font-weight: 600; color: #2563eb; cursor: pointer; transition: all .15s; }
+  .btn-print:hover { background: #dbeafe; border-color: #60a5fa; }
+
+  /* ===== Responsive tags + related ===== */
+  @media(max-width:1024px){ .related-tools-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));} }
+  @media(max-width:768px){ .related-tools-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px;} .tool-tags{gap:6px;} .tool-tag{padding:4px 10px; font-size:11px;} }
+  @media(max-width:640px){ .related-tools-grid{grid-template-columns:repeat(2,1fr) !important; gap:8px;} .related-tool-card{padding:10px; gap:8px;} .tool-tags{gap:5px;} .tool-tag{padding:3px 8px; font-size:10px;} }
+  @media(max-width:480px){ .related-tools-grid{grid-template-columns:1fr !important;} }
+
+</style>
+<meta property="og:title" content="Flashcards | Calculadoras de Enfermagem"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Calculadoras de Enfermagem"/>
+<!-- Google Analytics + AdSense — Consent-based lazy load (from live site) -->
+<script>
+if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.location.search).get('admin')==='1'){console.log('<i class="fa fa"></i> Modo Admin: Bloqueado.');if(new URLSearchParams(window.location.search).get('admin')==='1'){localStorage.setItem('admin_mode','true');}}else{var savedConsent=localStorage.getItem("cookieConsent");var isRefused=(savedConsent==="refused");var isManaged=(savedConsent==="managed");var adsBlocked=isRefused||(isManaged&&localStorage.getItem("ad_storage")==="denied");window.__metricsLoaded=false;window.__adsenseLoaded=false;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;function loadAnalytics(){if(window.__metricsLoaded)return;window.__metricsLoaded=true;var aState=isRefused?"denied":(localStorage.getItem("analytics_storage")||"granted");var adState=adsBlocked?"denied":"granted";var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-PFM06B7TS5";document.head.appendChild(s);gtag("consent","default",{analytics_storage:aState,ad_storage:adState,ad_user_data:adState,ad_personalization:adState,wait_for_update:500});gtag("js",new Date());gtag("config","G-PFM06B7TS5");gtag("config","G-MJDKPDPJ26");gtag("config","G-M7DHHF38EJ");gtag("config","G-8FLJ59XXDK");gtag("config","G-VVDP5JGEX8");gtag("config","G-EX8");gtag("config","AW-952633102");gtag("config","AW-9277197961");console.log("<i class="fa fa"></i> Analytics carregado.");}function loadAdSenseOnce(){if(window.__adsenseLoaded||adsBlocked)return;window.__adsenseLoaded=true;var ad=document.createElement("script");ad.async=true;ad.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847";ad.crossOrigin="anonymous";document.head.appendChild(ad);console.log("<i class="fa fa"></i> AdSense carregado.");}function onUserInteraction(){loadAnalytics();loadAdSenseOnce();window.removeEventListener("scroll",onUserInteraction);window.removeEventListener("mousemove",onUserInteraction);window.removeEventListener("touchstart",onUserInteraction);window.removeEventListener("keydown",onUserInteraction);}if(!adsBlocked){window.addEventListener("scroll",onUserInteraction,{passive:true});window.addEventListener("mousemove",onUserInteraction,{passive:true});window.addEventListener("touchstart",onUserInteraction,{passive:true});window.addEventListener("keydown",onUserInteraction,{passive:true});setTimeout(onUserInteraction,4000);}function applyConsent(consent){gtag("consent","update",consent);if(consent.ad_storage==="granted"){adsBlocked=false;onUserInteraction();}else{adsBlocked=true;document.querySelectorAll("ins.adsbygoogle, .google-auto-placed").forEach(function(ad){ad.style.display="none";ad.innerHTML="";});}localStorage.setItem("analytics_storage",consent.analytics_storage);localStorage.setItem("ad_storage",consent.ad_storage);}window.acceptAllCookies=function(){localStorage.setItem("cookieConsent","accepted");applyConsent({analytics_storage:"granted",ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted"});};window.rejectAllCookies=function(){localStorage.setItem("cookieConsent","refused");applyConsent({analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"});};}
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MedicalWebPage","name":"Flashcards","url":"https://www.calculadorasdeenfermagem.com.br/flashcards.html","inLanguage":"pt-BR","isPartOf":{"@type":"WebSite","name":"Calculadoras de Enfermagem","url":"https://www.calculadorasdeenfermagem.com.br"},"about":{"@type":"MedicalCondition","name":"Enfermagem"}}
+</script>
+<link rel="stylesheet" href="/css/print-template.css"><link as="font" crossorigin="" href="/fonts/inter/inter-regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/inter/inter-600.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/inter/inter-700.woff2" rel="preload" type="font/woff2"/>
+
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-700.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-900.woff2" rel="preload" type="font/woff2"/>
+</head>
+<body>
+<a href="#main-content" class="skip-link sr-only">Pular para o conteúdo</a>
+
+<div id="site-header"></div>
+<div id="site-a11y"></div>
+    <nav class="tpl-breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Início</a>
+      <svg class="sep"><use href="#i-arrow"/></svg>
+      <a href="../index.html#calculadoras">Ferramentas</a>
+      <svg class="sep"><use href="#i-arrow"/></svg>
+      <span class="current" aria-current="page">Kartičky</span>
+    </nav>
+    <div class="tool-header">
+      <div class="tool-header-main">
+        <div class="tool-icon-badge" aria-hidden="true">
+          <svg class="icon"><use href="#i-cap"/></svg>
+        </div>
+        <div>
+          <span class="tool-category-badge">Educação</span>
+          <h1>Kartičky</h1>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn-icon" id="calcFavoriteBtn" aria-pressed="false">
+          <svg class="icon"><use href="#i-bookmark"/></svg> Favoritar
+        </button>
+        <button type="button" class="btn-icon" id="calcShareBtn">
+          <svg class="icon"><use href="#i-share"/></svg> Compartilhar
+        </button>
+        <button type="button" class="btn-icon" onclick="window.print()">
+          <svg class="icon"><use href="#i-printer"/></svg> Imprimir
+        </button>
+      </div>
+    </div>
+
+<!-- SVG Sprite -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18.5h5M10.3 21h3.4M12 3.2a6.2 6.2 0 0 0-3.2 11.5c1 .8 1.2 1.6 1.2 2.3h4c0-.7.2-1.5 1.2-2.3A6.2 6.2 0 0 0 12 3.2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><line x1="4" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><polyline points="13 6 19 12 13 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21.5 4v6h-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20v-6h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 10a8 8 0 0 1 13.4-3.6L21.5 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 14a8 8 0 0 1-13.4 3.6L2.5 14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><polyline points="8 12.5 10.8 15.3 16 9.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 3v5h-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 21v-5h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="9.2" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><line x1="12" y1="4" x2="12" y2="8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="3.4" r="1.2" fill="currentColor" stroke="none"/><line x1="2" y1="12.5" x2="5" y2="12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><line x1="19" y1="12.5" x2="22" y2="12.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-clipcheck" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="9" y="2.5" width="6" height="3.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/><polyline points="9 13 11 15 15 10.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><polyline points="2.5 13 7.5 13 9.5 6 13.5 19 16 13 21.5 13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.2c-2-1.6-5-2.1-8-1.6v13.6c3-.5 6 0 8 1.6 2-1.6 5-2.1 8-1.6V4.6c-3-.5-6 0-8 1.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><line x1="12" y1="6.2" x2="12" y2="19.8" stroke="currentColor" stroke-width="1.7"/></symbol>
+</svg>
+
+<main class="rd-container">
+  <div class="fc">
+    <h1><svg class="icon" style="width:28px;height:28px;color:var(--blue-600);vertical-align:middle"><use href="#i-bulb"/></svg> Flashcards
+    <p>Revisão rápida com repetição espaçada — NANDA-I, NIC, NOC e mais</p>
+  </div>
+
+  <div class="fc">
+    <div class="fc" id="fcFilters">
+      <button class="fc active" data-cat="all" type="button">Todos</button>
+      <button class="fc" data-cat="nanda" type="button">NANDA-I</button>
+      <button class="fc" data-cat="nic" type="button">NIC</button>
+      <button class="fc" data-cat="noc" type="button">NOC</button>
+      <button class="fc" data-cat="interpretation" type="button">Interpretação</button>
+      <button class="fc" data-cat="safety" type="button">Segurança</button>
+    </div>
+    <div class="fc" id="fcProgress">Cartão <strong>0</strong> / 0</div>
+  </div>
+
+  <div class="fc">
+    <div class="fc"><div class="fc" id="fcStatTotal">0</div><div class="fc">Total</div></div>
+    <div class="fc"><div class="fc" id="fcStatKnown" style="color:#16a34a">0</div><div class="fc">Dominados</div></div>
+    <div class="fc"><div class="fc" id="fcStatReview" style="color:#ea580c">0</div><div class="fc">Revisar</div></div>
+    <div class="fc"><div class="fc" id="fcStatNew" style="color:var(--blue-600)">0</div><div class="fc">Novos</div></div>
+  </div>
+
+  <div id="fcContent"><!-- dynamic --></div>
+
+  <div class="fc" id="fcControls" style="display:none;">
+    <button class="fc fc" id="fcReviewBtn" type="button">
+      <svg class="icon" style="width:18px;height:18px"><use href="#i-rotate"/></svg> Revisar depois
+    </button>
+    <button class="fc fc" id="fcSkipBtn" type="button">
+      <svg class="icon" style="width:18px;height:18px"><use href="#i-arrow"/></svg> Pular
+    </button>
+    <button class="fc fc" id="fcKnownBtn" type="button">
+      <svg class="icon" style="width:18px;height:18px"><use href="#i-check"/></svg> Dominado
+    </button>
+  </div>
+    <section class="tool-footer-zone">
+      <div class="tool-tags">
+        <a href="../index.html#calculadoras" class="tool-tag">#Flashcards</a>
+        <a href="../index.html#calculadoras" class="tool-tag">#Estudo</a>
+        <a href="../index.html#calculadoras" class="tool-tag">#Enfermagem</a>
+        <a href="../index.html#calculadoras" class="tool-tag">#Memorizacao</a>
+        <a href="../diagnosticosnanda.html" class="tool-tag">#NANDA-I</a>
+        <a href="../sae.html" class="tool-tag">#SAE</a>
+        <a href="../protocolos.html" class="tool-tag">#Protocolos</a>
+        <a href="../medicamentos.html" class="tool-tag">#Medicacao</a>
+        <a href="../simulados.html" class="tool-tag">#Simulados</a>
+        <a href="../flashcards.html" class="tool-tag">#Flashcards</a>
+      </div>
+
+      <div class="related-tools">
+        <h2 class="related-tools">Související nástroje</h2>
+        <div class="related-">
+          <a class="related-tools" href="../simulados.html">
+            <div class="related-tools"><svg class="icon"><use href="#i-clipboard"/></svg></div>
+            <div>
+              <h3>Simulace</h3>
+              <p>Simulacao</p>
+            </div>
+          </a>
+          <a class="related-tools" href="../biblioteca.html">
+            <div class="related-tools"><svg class="icon"><use href="#i-book"/></svg></div>
+            <div>
+              <h3>Knihovna</h3>
+              <p>Recursos</p>
+            </div>
+          </a>
+          <a class="related-tools" href="../artigo.html">
+            <div class="related-tools"><svg class="icon"><use href="#i-book"/></svg></div>
+            <div>
+              <h3>Články</h3>
+              <p>Články</p>
+            </div>
+          </a>
+          <a class="related-tools" href="../caso-clinico.html">
+            <div class="related-tools"><svg class="icon"><use href="#i-clipboard"/></svg></div>
+            <div>
+              <h3>Casos</h3>
+              <p>Casos clinicos</p>
+            </div>
+          </a>
+          <a class="related-tools" href="../sae.html">
+            <div class="related-tools"><svg class="icon"><use href="#i-clipboard"/></svg></div>
+            <div>
+              <h3>SAE</h3>
+              <p>Sistematizacao</p>
+            </div>
+          </a>
+          <a class="related-tools" href="../trilha-conhecimento.html">
+            <div class="related-tools"><svg class="icon"><use href="#i-layers"/></svg></div>
+            <div>
+              <h3>Vzdělávací cesta</h3>
+              <p>Conhecimento</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cip-section">
+      </h1>
+      
+      <div id="cipContainer" class="cip-"></div>
+    </section>
+
+    <div id="cognitivePanel" class="cognitive cip-hidden">
+      <div id="cognitivePanelContent"></div>
+    </div>
+
+</main>
+
+<div id="site-footer"></div>
+<div id="site-cookie"></div>
+
+<script src="js/partials-loader.js"></script>
+<script src="js/i18n-loader.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════════
+// FLASHCARDS — Motor data-driven que consome os mesmos dados da calculadora
+// Arquitetura: Banco → JSON da calculadora → Flashcards (ferramenta)
+// Dados: NANDA-I, NIC, NOC, interpretação, segurança — mesmo JSON da calc
+// ════════════════════════════════════════════════════════════════════
+
+const FC_DATA = {
+  apgar: [
+    // NANDA
+    { id: "fc-n1", cat: "nanda", catLabel: "NANDA-I",
+      q: "Qual o diagnóstico NANDA-I para um recém-nascido com ventilação inadequada (respiração ausente ou irregular)?",
+      a: "Padrão respiratório ineficaz (00032)",
+      detail: "Inspiração e/ou expiração que não proporciona ventilação adequada. Relacionado ao escore de Apgar baixo, especialmente nos parâmetros de esforço respiratório e frequência cardíaca." },
+    { id: "fc-n2", cat: "nanda", catLabel: "NANDA-I",
+      q: "Qual diagnóstico NANDA-I se aplica a um RN com risco de variação nos níveis de glicose sanguínea?",
+      a: "Risco de nível de glicemia instável (00179)",
+      detail: "Vulnerabilidade a variação nos níveis de glicose/açúcar no sangue, o que pode comprometer a saúde do recém-nascido. Comum em RNs de baixo peso ou prematuros." },
+
+    // NIC
+    { id: "fc-i1", cat: "nic", catLabel: "NIC",
+      q: "Qual a intervenção NIC para cuidados imediatos ao recém-nascido logo após o parto?",
+      a: "Cuidados ao recém-nascido: imediatos (NIC 3250)",
+      detail: "Inclui: secar e aquecer o RN, avaliar Apgar no 1º e 5º minuto, aspirar vias aéreas se necessário, realizar contato pele a pele, clampeamento do cordão." },
+    { id: "fc-i2", cat: "nic", catLabel: "NIC",
+      q: "Qual a intervenção NIC para reanimação neonatal quando o Apgar é muito baixo?",
+      a: "Reanimação neonatal (NIC 3254)",
+      detail: "Inclui: ventilação com pressão positiva, compressões torácicas se FC < 60 bpm, administração de adrenalina, intubação se necessário. Equipe de reanimação deve estar presente." },
+    { id: "fc-i3", cat: "nic", catLabel: "NIC",
+      q: "Qual a intervenção NIC para monitorização contínua do recém-nascido após reanimação?",
+      a: "Monitorização dos sinais vitais (NIC 3350)",
+      detail: "Monitorar FC, FR, saturação, temperatura e padrão respiratório. Reavaliar Apgar a cada 5 minutos se escore < 7. Documentar todas as intervenções." },
+
+    // NOC
+    { id: "fc-o1", cat: "noc", catLabel: "NOC",
+      q: "Qual o resultado esperado (NOC) relacionado à respiração do recém-nascido?",
+      a: "Status respiratório do recém-nascido (NOC 0413)",
+      detail: "Indicadores: frequência respiratória adequada, ausência de cianose, choro vigoroso, padrão respiratório regular. Avaliado em conjunto com o escore de Apgar." },
+    { id: "fc-o2", cat: "noc", catLabel: "NOC",
+      q: "Qual o resultado esperado (NOC) sobre a adaptação do RN à vida extrauterina?",
+      a: "Adaptação do recém-nascido à vida extrauterina (NOC 0415)",
+      detail: "Indicadores: estabilidade térmica, estabilidade cardiorrespiratória, reflexos presentes, tônus muscular adequado, coloração da pele normal." },
+
+    // Interpretação
+    { id: "fc-int1", cat: "interpretation", catLabel: "Interpretação",
+      q: "O que significa um Apgar de 0 a 3?",
+      a: "Gravemente Deprimido",
+      detail: "Recém-nascido gravemente deprimido. Requer manobras de reanimação neonatal imediatas. Conduta: reanimação neonatal imediata, ventilação com pressão positiva, considerar intubação, equipe de reanimação presente." },
+    { id: "fc-int2", cat: "interpretation", catLabel: "Interpretação",
+      q: "O que significa um Apgar de 4 a 6?",
+      a: "Moderadamente Deprimido",
+      detail: "Pode necessitar de estimulação, oxigênio suplementar ou ventilação assistida. Conduta: estimulação tátil, O₂ suplementar se indicado, monitorização contínua, reavaliar no 5º minuto." },
+    { id: "fc-int3", cat: "interpretation", catLabel: "Interpretação",
+      q: "O que significa um Apgar de 7 a 10?",
+      a: "Normal / Boa Vitalidade",
+      detail: "Recém-nascido com boa vitalidade ao nascer. Conduta: cuidados de rotina, contato pele a pele, clampeamento oportuno do cordão, monitorização de rotina." },
+    { id: "fc-int4", cat: "interpretation", catLabel: "Interpretação",
+      q: "Quando o Apgar deve ser reavaliado após o 5º minuto?",
+      a: "A cada 5 minutos até 20 minutos, se o escore permanecer < 7",
+      detail: "Repetir a avaliação a cada 5 minutos (10º, 15º, 20º minuto) se o escore permanecer abaixo de 7. Documentar cada escore separadamente. Não usar o Apgar isoladamente para prever prognóstico neurológico." },
+
+    // Segurança
+    { id: "fc-s1", cat: "safety", catLabel: "Segurança",
+      q: "Qual a regra de ouro sobre reanimação vs. cálculo do Apgar?",
+      a: "NUNCA atrase a reanimação para calcular o Apgar",
+      detail: "A reanimação tem prioridade absoluta. O Apgar é uma ferramenta de avaliação, não de triagem para decisão de reanimar. Se o RN não respira e está cianótico, inicie reanimação imediatamente." },
+    { id: "fc-s2", cat: "safety", catLabel: "Segurança",
+      q: "Qual o mnemônico para lembrar os 5 parâmetros do Apgar?",
+      a: "A-P-G-A-R: Aparência, Pulso, Gesticulação, Atividade, Respiração",
+      detail: "Aparência = cor da pele; Pulso = frequência cardíaca; Gesticulação = irritabilidade reflexa; Atividade = tônus muscular; Respiração = esforço respiratório. Cada parâmetro recebe score 0, 1 ou 2." },
+    { id: "fc-s3", cat: "safety", catLabel: "Segurança",
+      q: "O Apgar substitui a gasometria de cordão umbilical?",
+      a: "Não — são avaliações complementares",
+      detail: "A gasometria de cordão fornece informação objetiva sobre o equilíbrio ácido-base, enquanto o Apgar é uma avaliação clínica rápida da vitalidade. Ambas devem ser usadas em conjunto para avaliação completa." }
+  ],
+
+  // Placeholder for future calculadoras
+  glasgow: [],
+  braden: []
+};
+
+// ════════════════════════════════════════════════════════════════════
+// State — spaced repetition via localStorage
+// ════════════════════════════════════════════════════════════════════
+let fcState = {
+  topic: 'apgar',
+  filter: 'all',
+  queue: [],
+  currentIdx: 0,
+  flipped: false,
+  stats: { known: 0, review: 0, new: 0, total: 0 }
+};
+
+function loadCardStates(topic) {
+  const key = 'fc_states_' + topic;
+  try { return JSON.parse(localStorage.getItem(key)) || {}; } catch(e) { return {}; }
+}
+
+function saveCardState(topic, cardId, status) {
+  const key = 'fc_states_' + topic;
+  let states = {};
+  try { states = JSON.parse(localStorage.getItem(key)) || {}; } catch(e) {}
+  states[cardId] = { status: status, lastReviewed: new Date().toISOString() };
+  localStorage.setItem(key, JSON.stringify(states));
+}
+
+function buildQueue() {
+  const allCards = FC_DATA[fcState.topic] || [];
+  const states = loadCardStates(fcState.topic);
+
+  let filtered = allCards;
+  if (fcState.filter !== 'all') {
+    filtered = allCards.filter(c => c.cat === fcState.filter);
+  }
+
+  // Sort: new cards first, then review, then known
+  filtered.sort((a, b) => {
+    const sa = states[a.id]?.status || 'new';
+    const sb = states[b.id]?.status || 'new';
+    const order = { new: 0, review: 1, known: 2 };
+    return (order[sa] || 0) - (order[sb] || 0);
+  });
+
+  fcState.queue = filtered;
+  fcState.currentIdx = 0;
+  fcState.flipped = false;
+  updateStats(states);
+}
+
+function updateStats(states) {
+  const cards = FC_DATA[fcState.topic] || [];
+  let known = 0, review = 0, isNew = 0;
+  cards.forEach(c => {
+    const s = states[c.id]?.status || 'new';
+    if (s === 'known') known++;
+    else if (s === 'review') review++;
+    else isNew++;
+  });
+  fcState.stats = { known, review, new: isNew, total: cards.length };
+  document.getElementById('fcStatTotal').textContent = cards.length;
+  document.getElementById('fcStatKnown').textContent = known;
+  document.getElementById('fcStatReview').textContent = review;
+  document.getElementById('fcStatNew').textContent = isNew;
+}
+
+function renderCard() {
+  const card = fcState.queue[fcState.currentIdx];
+  if (!card) {
+    renderComplete();
+    return;
+  }
+
+  const total = fcState.queue.length;
+  document.getElementById('fcProgress').innerHTML = 'Cartão <strong>' + (fcState.currentIdx + 1) + '</strong> / ' + total;
+  document.getElementById('fcControls').style.display = 'flex';
+
+  let html = '<div class="fc">';
+  html += '<div class="fc' + (fcState.flipped ? ' is' : '') + '" id="fcCard">';
+
+  // Front
+  html += '<div class="fc fc">';
+  html += '<svg class="icon fc" style="width:20px;height:20px"><use href="#i-rotate"/></svg>';
+  html += '<span class="fc">' + card.catLabel + '</span>';
+  html += '<p class="fc">' + card.q + '</p>';
+  html += '<p class="fc">Clique para virar o cartão</p>';
+  html += '</div>';
+
+  // Back
+  html += '<div class="fc fc">';
+  html += '<span class="fc">' + card.catLabel + '</span>';
+  html += '<p class="fc">' + card.a + '</p>';
+  html += '<div class="fc">' + card.detail + '</div>';
+  html += '</div>';
+
+  html += '</div>';
+  html += '</div>';
+
+  document.getElementById('fcContent').innerHTML = html;
+
+  // Click to flip
+  document.getElementById('fcCard').addEventListener('click', function() {
+    fcState.flipped = !fcState.flipped;
+    this.classList.toggle('is-flipped');
+  });
+}
+
+function renderComplete() {
+  const states = loadCardStates(fcState.topic);
+  updateStats(states);
+  document.getElementById('fcControls').style.display = 'none';
+  document.getElementById('fcProgress').innerHTML = 'Cartão <strong>' + fcState.queue.length + '</strong> / ' + fcState.queue.length;
+
+  let html = '<div class="fc">';
+  html += '<h2><svg class="icon" style="width:24px;height:24px;color:var(--blue-600);vertical-align:middle"><use href="#i-check"/></svg> Deck completo!';</h2>
+  html += '<p>Você revisou todos os flashcards desta categoria.</p>';
+  html += '<div class="fc">';
+  html += '<div class="fc"><div class="fc" style="color:#16a34a">' + fcState.stats.known + '</div><div class="fc">Dominados</div></div>';
+  html += '<div class="fc"><div class="fc" style="color:#ea580c">' + fcState.stats.review + '</div><div class="fc">Revisar</div></div>';
+  html += '<div class="fc"><div class="fc" style="color:var(--blue-600)">' + fcState.stats.new + '</div><div class="fc">Novos</div></div>';
+  html += '</div>';
+  html += '<button class="fc" id="fcRestartBtn" type="button"><svg class="icon" style="width:16px;height:16px;display:inline;vertical-align:middle"><use href="#i-refresh"/></svg> Estudar novamente</button>';
+  html += '</div>';
+
+  document.getElementById('fcContent').innerHTML = html;
+  document.getElementById('fcRestartBtn').addEventListener('click', function() {
+    buildQueue();
+    renderCard();
+  });
+}
+
+function nextCard() {
+  fcState.currentIdx++;
+  fcState.flipped = false;
+  if (fcState.currentIdx >= fcState.queue.length) {
+    renderComplete();
+  } else {
+    renderCard();
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+// Event handlers
+// ════════════════════════════════════════════════════════════════════
+document.getElementById('fcKnownBtn').addEventListener('click', function() {
+  const card = fcState.queue[fcState.currentIdx];
+  if (card) saveCardState(fcState.topic, card.id, 'known');
+  nextCard();
+});
+
+document.getElementById('fcReviewBtn').addEventListener('click', function() {
+  const card = fcState.queue[fcState.currentIdx];
+  if (card) saveCardState(fcState.topic, card.id, 'review');
+  nextCard();
+});
+
+document.getElementById('fcSkipBtn').addEventListener('click', function() {
+  nextCard();
+});
+
+// Filter buttons
+document.querySelectorAll('.fc-filter').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.fc-filter').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    fcState.filter = this.dataset.cat;
+    buildQueue();
+    renderCard();
+  });
+});
+
+// Init
+buildQueue();
+renderCard();
+</script>
+  <script src="js/calc-engine-v2.js"></script>
+  <script src="js/nurse-palm.js"></script>
+  <script src="js/cognitive-ui.js"></script>
+  <script src="js/knowledge-graph.js"></script>
+
+<!-- ═══ Print Template (Relatório de Resultado) ═══ -->
+<div class="print" style="display:none;" id="printTemplate">
+  <div class="print">
+    <div class="print">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge">✓ Validada clinicamente</span>
+    </div>
+    <div class="print">
+      <div class="report" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+
+  <div class="print">
+    <div class="print"><span class="section-head">2</span> Dados do Paciente</div>
+    <div class="print-">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro / Prontuário</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Věk</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+
+  <div class="print">
+    <div class="print"><span class="section-head">3</span> Parâmetros Inseridos</div>
+    <ul class="print" id="printParamsList"></ul>
+  </div>
+
+  <div class="print">
+    <div class="print"><span class="section-head">4</span> Classificação e Interpretação</div>
+    <div class="print">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print" id="printInterpretation"></div>
+  </div>
+
+  <div class="print">
+    <div class="print"><span class="section-head">5</span> Metas Internacionais de Segurança</div>
+    <div class="print-">
+      <div class="print">
+        <h4>Metas de Segurança do Paciente</h4>
+        <ul>
+          <li>M1 Identificar o paciente corretamente</li>
+          <li>M2 Melhorar a comunicação efetiva</li>
+          <li>M3 Segurança na prescrição e administração</li>
+          <li>M5 Higiene das mãos</li>
+          <li>M6 Reduzir o risco de quedas</li>
+        </ul>
+      </div>
+      <div class="print">
+        <h4>9 Certos da Medicação</h4>
+        <ul>
+          <li>Paciente certo</li><li>Medicamento certo</li>
+          <li>Via certa</li><li>Hora certa</li>
+          <li>Dose certa</li><li>Registro certo</li>
+          <li>Ação certa</li><li>Forma certa</li>
+          <li>Resposta certa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="print">
+    <div class="print"><span class="section-head">6</span> Referência</div>
+    <div class="print" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+
+  <div class="print">
+    <div class="print">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Populate print template from page data
+function populatePrintTemplate() {
+  if (toolName) document.getElementById('printToolName').textContent = toolName.textContent.trim();
+  
+  var toolCat = document.querySelector('.tool-header .subtitle, .tool-category');
+  if (toolCat) document.getElementById('printToolCategory').textContent = toolCat.textContent.trim();
+  
+  // Date
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  var dateEl = document.getElementById('printDate');
+  if (dateEl) dateEl.textContent = dateStr;
+  
+  // Patient data from localStorage
+  try {
+    var ctx = JSON.parse(localStorage.getItem('patientContext') || '{}');
+    if (ctx.name) document.getElementById('printPatientName').textContent = ctx.name;
+    if (ctx.reg) document.getElementById('printPatientReg').textContent = ctx.reg;
+    if (ctx.age) document.getElementById('printPatientAge').textContent = ctx.age;
+    if (ctx.bed) document.getElementById('printPatientBed').textContent = ctx.bed;
+  } catch(e) {}
+  
+  // Parameters from calc inputs
+  var paramsList = document.getElementById('printParamsList');
+  if (paramsList) {
+    var inputs = document.querySelectorAll('.calc-card input, .calc-card select, .calc-grid input, .calc-grid select');
+    inputs.forEach(function(inp) {
+      if (inp.value && inp.value !== '') {
+        var label = inp.getAttribute('aria-label') || inp.getAttribute('placeholder') || inp.name || 'Parâmetro';
+        var li = document.createElement('li');
+        li.innerHTML = '<span class="param">' + label + '</span><span class="param">' + inp.value + '</span>';
+        paramsList.appendChild(li);
+      }
+    });
+  }
+  
+  // Score/classification from result
+  var scoreEl = document.querySelector('.result-box .score, .result-value, .calc-result .score');
+  if (scoreEl) document.getElementById('printScore').textContent = scoreEl.textContent.trim();
+  
+  var classEl = document.querySelector('.result-box .classification, .result-label, .calc-result .label');
+  if (classEl) document.getElementById('printClassification').textContent = classEl.textContent.trim();
+  
+  var interpEl = document.querySelector('.result-box .interpretation, .result-text, .calc-result .interpretation');
+  if (interpEl) document.getElementById('printInterpretation').textContent = interpEl.textContent.trim();
+  
+  // Reference
+  var refEl = document.querySelector('.evidence-section .reference, .reference-text, .citation');
+  if (refEl) document.getElementById('printReference').textContent = refEl.textContent.trim();
+}
+
+// Show print area when printing
+window.addEventListener('beforeprint', function() {
+  var pt = document.getElementById('printTemplate');
+  if (pt) {
+    pt.style.display = 'block';
+    populatePrintTemplate();
+  }
+});
+
+window.addEventListener('afterprint', function() {
+  var pt = document.getElementById('printTemplate');
+  if (pt) pt.style.display = 'none';
+});
+</script>
+
+</body>
+</html>

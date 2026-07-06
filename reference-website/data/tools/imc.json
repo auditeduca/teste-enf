@@ -1,0 +1,107 @@
+{
+  "id": "ad5e6f70-8192-4a3b-cd4e-5f6072839405",
+  "code": "CALC-IMC-001",
+  "slug": "imc",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Calculadora de IMC - Índice de Massa Corporal",
+    "description": "Calcule o Índice de Massa Corporal (IMC) a partir do peso e altura. Inclui classificação segundo a OMS, evidências e orientações de enfermagem.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/imc.html"
+  },
+  "breadcrumb": { "category": "Avaliação Nutricional", "categoryHref": "index.html#calculadoras" },
+  "overview": {
+    "name": "Calculadora de IMC",
+    "acronym": "IMC",
+    "categoryBadge": "Avaliação nutricional",
+    "icon": "i-gauge",
+    "objective": "Calcular o Índice de Massa Corporal (IMC) a partir do peso e da altura, classificando a faixa de peso segundo os critérios da Organização Mundial da Saúde (OMS).",
+    "indication": "Indicada como triagem inicial do estado nutricional em pacientes adultos, em consultas de enfermagem, admissão hospitalar e acompanhamento ambulatorial.",
+    "targetPopulation": "Adultos (não recomendado para gestantes, atletas de alta performance ou crianças, que possuem curvas específicas).",
+    "specialty": ["Nutrição", "Enfermagem", "Atenção Primária"],
+    "averageTime": "1 minuto",
+    "evidenceLevel": "II",
+    "organizations": ["Organização Mundial da Saúde (OMS)"],
+    "complexity": "basic",
+    "rating": 4.7,
+    "ratingCount": 3200
+  },
+  "calculator": {
+    "inputs": [
+      {"id": "peso", "type": "number", "label": "Peso", "unit": "kg", "defaultValue": 70, "min": 1, "step": 0.1,
+       "description": "Peso corporal atual em quilogramas."},
+      {"id": "altura", "type": "number", "label": "Altura", "unit": "m", "defaultValue": 1.70, "min": 0.3, "max": 2.5, "step": 0.01,
+       "description": "Altura em metros (ex: 1,70)."}
+    ],
+    "formula": {
+      "type": "expression",
+      "expression": "peso/(altura*altura)",
+      "resultLabel": "Índice de Massa Corporal",
+      "resultUnit": "kg/m²",
+      "decimals": 1
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {"min": 0, "max": 18.49, "label": "Abaixo do Peso", "riskLevel": "moderate", "color": "#ca8a04",
+       "clinicalImplications": "IMC abaixo da faixa considerada saudável. Avaliar padrão alimentar e possíveis causas de baixo peso.",
+       "recommendations": "• Avaliação nutricional detalhada\n• Investigar causas de baixo peso\n• Encaminhamento à nutrição se indicado"},
+      {"min": 18.5, "max": 24.99, "label": "Peso Normal", "riskLevel": "none", "color": "#2563eb",
+       "clinicalImplications": "IMC dentro da faixa considerada saudável pela OMS para a população adulta.",
+       "recommendations": "• Manter hábitos alimentares saudáveis\n• Reavaliação de rotina"},
+      {"min": 25, "max": 29.99, "label": "Sobrepeso", "riskLevel": "low", "color": "#ca8a04",
+       "clinicalImplications": "IMC acima da faixa considerada saudável. Risco aumentado de complicações metabólicas e cardiovasculares.",
+       "recommendations": "• Orientação nutricional\n• Estímulo à atividade física\n• Reavaliação periódica"},
+      {"min": 30, "max": 34.99, "label": "Obesidade Grau I", "riskLevel": "moderate", "color": "#ea580c",
+       "clinicalImplications": "Obesidade grau I. Risco moderado a alto de comorbidades associadas (diabetes, hipertensão, dislipidemia).",
+       "recommendations": "• Avaliação multiprofissional\n• Plano de mudança de estilo de vida\n• Rastreamento de comorbidades"},
+      {"min": 35, "max": 39.99, "label": "Obesidade Grau II", "riskLevel": "high", "color": "#dc2626",
+       "clinicalImplications": "Obesidade grau II (severa). Alto risco de comorbidades metabólicas e cardiovasculares.",
+       "recommendations": "• Avaliação multiprofissional especializada\n• Considerar encaminhamento a programa de obesidade\n• Rastreamento ativo de comorbidades"},
+      {"min": 40, "max": 999, "label": "Obesidade Grau III (Mórbida)", "riskLevel": "critical", "color": "#7f1d1d",
+       "clinicalImplications": "Obesidade grau III (mórbida). Risco muito alto de comorbidades graves; pode haver indicação de avaliação para cirurgia bariátrica.",
+       "recommendations": "• Avaliação multiprofissional especializada\n• Considerar avaliação para cirurgia bariátrica\n• Manejo intensivo de comorbidades"}
+    ]
+  },
+  "evidence": {
+    "foundation": "O Índice de Massa Corporal (IMC), originalmente descrito por Adolphe Quetelet no século XIX, é calculado dividindo-se o peso (kg) pelo quadrado da altura (m²). É a medida antropométrica mais utilizada mundialmente para triagem do estado nutricional em adultos.",
+    "history": "Adotado pela Organização Mundial da Saúde (OMS) como classificação padrão internacional de peso corporal desde a década de 1990, sendo usado em vigilância epidemiológica e na prática clínica.",
+    "validation": "É uma medida de triagem populacional útil, mas apresenta limitações individuais por não diferenciar massa magra de massa gorda.",
+    "limitations": "Não distingue massa muscular de massa gorda — atletas com grande massa muscular podem ter IMC elevado sem excesso de gordura corporal. Não deve ser usado isoladamente em gestantes, idosos muito frágeis ou crianças, que possuem critérios específicos.",
+    "references": [
+      {"text": "WORLD HEALTH ORGANIZATION. Obesity: preventing and managing the global epidemic. Geneva: WHO, 2000."},
+      {"text": "BRASIL. Ministério da Saúde. Vigitel Brasil: vigilância de fatores de risco e proteção para doenças crônicas por inquérito telefônico. Brasília: MS, 2023."},
+      {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."},
+      {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}
+    ]
+  },
+  "learning": {
+    "tips": [
+      "O IMC é uma ferramenta de triagem, não um diagnóstico isolado — combine com circunferência abdominal e avaliação clínica.",
+      "Em atletas e pessoas com grande massa muscular, o IMC pode superestimar o excesso de peso.",
+      "Não utilize esta fórmula para gestantes, crianças ou idosos muito frágeis sem ajuste clínico.",
+      "Reavalie periodicamente para acompanhar tendências, não apenas o valor isolado."
+    ],
+    "examples": [
+      {"label": "Peso normal", "sublabel": "70kg, 1,75m", "emoji": "✅", "values": {"peso": 70, "altura": 1.75}},
+      {"label": "Sobrepeso", "sublabel": "85kg, 1,70m", "emoji": "⚠️", "values": {"peso": 85, "altura": 1.70}},
+      {"label": "Obesidade grau I", "sublabel": "95kg, 1,65m", "emoji": "🚨", "values": {"peso": 95, "altura": 1.65}}
+    ],
+    "quiz": [
+      {"q": "Qual a fórmula do IMC?", "opts": ["Peso ÷ Altura", "Peso ÷ Altura²", "Altura² ÷ Peso", "Peso × Altura"], "correct": 1,
+       "expl": "IMC = Peso (kg) ÷ Altura² (m²)."},
+      {"q": "Segundo a OMS, qual faixa de IMC é considerada peso normal em adultos?", "opts": ["16-18", "18,5-24,9", "25-29,9", "30-35"], "correct": 1,
+       "expl": "A faixa de 18,5 a 24,9 kg/m² é classificada como peso normal pela OMS."},
+      {"q": "Por que o IMC pode ser impreciso em atletas?", "opts": ["Porque eles comem mais", "Porque não distingue massa muscular de gordura", "Porque são mais altos", "O IMC não é impreciso em atletas"], "correct": 1,
+       "expl": "O IMC não diferencia massa muscular de massa gorda, podendo superestimar o excesso de peso em pessoas com muita massa muscular."}
+    ]
+  },
+  "faq": [
+    {"q": "O IMC é confiável para todas as pessoas?", "a": "Não. É uma boa ferramenta de triagem populacional, mas tem limitações individuais — não diferencia massa magra de gordura e não deve ser usado isoladamente em atletas, gestantes, crianças ou idosos muito frágeis."},
+    {"q": "Qual a diferença entre sobrepeso e obesidade?", "a": "Sobrepeso corresponde a IMC entre 25 e 29,9 kg/m². Obesidade é IMC igual ou superior a 30 kg/m², subdividida em graus I (30-34,9), II (35-39,9) e III ou mórbida (≥40)."}
+  ],
+  "about": {
+    "title": "Como funciona o cálculo do IMC",
+    "html": "<p>O Índice de Massa Corporal (IMC) é calculado dividindo-se o peso corporal (em kg) pelo quadrado da altura (em metros). É amplamente utilizado como triagem inicial do estado nutricional, mas deve ser complementado por avaliação clínica individualizada.</p><p><strong>Fórmula:</strong> IMC = Peso (kg) ÷ Altura² (m²).</p>"
+  }
+}

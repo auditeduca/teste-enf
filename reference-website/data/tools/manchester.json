@@ -1,0 +1,118 @@
+{
+  "id": "42cbe3ad-77d6-4682-a44e-6c65c53bce47",
+  "code": "SCALE-MANCHESTER-001",
+  "slug": "manchester",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Escala de Manchester - Sistema de Triagem por Cores",
+    "description": "Consulte o Sistema de Triagem de Manchester (Manchester Triage System) para classificar a prioridade de atendimento em unidades de urgência e emergência. Inclui interpretação, SAE e evidências.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/manchester.html"
+  },
+  "breadcrumb": { "category": "Emergência", "categoryHref": "index.html#calculadoras" },
+  "overview": {
+    "name": "Sistema de Triagem de Manchester",
+    "acronym": "Manchester / MTS",
+    "categoryBadge": "Emergência",
+    "icon": "i-triage",
+    "objective": "Classificar a prioridade clínica de atendimento em serviços de urgência e emergência, por meio de 5 categorias de risco codificadas por cor, com base em fluxogramas de discriminadores clínicos.",
+    "indication": "Indicado para triagem de pacientes em pronto-socorro e unidades de pronto atendimento, determinando o tempo-alvo máximo até a primeira avaliação médica.",
+    "targetPopulation": "Pacientes de qualquer idade que buscam atendimento em serviços de urgência e emergência.",
+    "specialty": ["Emergência", "Enfermagem"],
+    "averageTime": "2-5 minutos",
+    "evidenceLevel": "II",
+    "organizations": ["Manchester Triage Group"],
+    "complexity": "advanced",
+    "rating": 4.6,
+    "ratingCount": 260
+  },
+  "calculator": {
+    "inputs": [
+      {"id": "prioridade", "type": "select", "label": "Categoria de Prioridade", "defaultValue": 1, "description": "Selecione a categoria de prioridade identificada com base nos discriminadores clínicos do fluxograma correspondente à queixa principal do paciente.",
+       "options": [
+         {"value": 1, "label": "Azul - Não Urgente", "score": 1, "description": "Ausência de discriminadores de risco. Atendimento em até 240 minutos (4 horas)."},
+         {"value": 2, "label": "Verde - Pouco Urgente", "score": 2, "description": "Discriminadores de baixo risco. Atendimento em até 120 minutos (2 horas)."},
+         {"value": 3, "label": "Amarelo - Urgente", "score": 3, "description": "Discriminadores de risco moderado. Atendimento em até 60 minutos."},
+         {"value": 4, "label": "Laranja - Muito Urgente", "score": 4, "description": "Discriminadores de alto risco (ex: dor intensa, hemorragia importante, alteração aguda da consciência). Atendimento em até 10 minutos."},
+         {"value": 5, "label": "Vermelho - Emergência", "score": 5, "description": "Discriminadores de risco iminente de morte (ex: via aérea comprometida, parada cardiorrespiratória). Atendimento imediato."}
+       ]}
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "Prioridade de Manchester",
+      "resultUnit": "",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {"min": 1, "max": 1, "label": "Azul - Não Urgente (até 240 min)", "riskLevel": "none", "color": "#2563eb",
+       "clinicalImplications": "Categoria azul, sem discriminadores de risco identificados.",
+       "recommendations": "• Atendimento em até 240 minutos (4 horas)\n• Reavaliar caso surjam novos sintomas ou piora clínica durante a espera"},
+      {"min": 2, "max": 2, "label": "Verde - Pouco Urgente (até 120 min)", "riskLevel": "low", "color": "#2563eb",
+       "clinicalImplications": "Categoria verde, com discriminadores de baixo risco.",
+       "recommendations": "• Atendimento em até 120 minutos (2 horas)\n• Reavaliar caso surjam novos sintomas ou piora clínica durante a espera"},
+      {"min": 3, "max": 3, "label": "Amarelo - Urgente (até 60 min)", "riskLevel": "moderate", "color": "#ca8a04",
+       "clinicalImplications": "Categoria amarela, com discriminadores de risco moderado.",
+       "recommendations": "• Atendimento em até 60 minutos\n• Monitorizar sinais vitais durante a espera\n• Reavaliar caso haja piora clínica"},
+      {"min": 4, "max": 4, "label": "Laranja - Muito Urgente (até 10 min)", "riskLevel": "high", "color": "#dc2626",
+       "clinicalImplications": "Categoria laranja, com discriminadores de alto risco.",
+       "recommendations": "• Atendimento em até 10 minutos\n• Monitorização contínua durante a espera\n• Comunicar imediatamente qualquer piora à equipe médica"},
+      {"min": 5, "max": 5, "label": "Vermelho - Emergência (Imediato)", "riskLevel": "critical", "color": "#7f1d1d",
+       "clinicalImplications": "Categoria vermelha, com risco iminente de morte.",
+       "recommendations": "• Atendimento médico imediato\n• Acionar sala de emergência/equipe de resposta rápida\n• Iniciar suporte de vida conforme protocolo institucional"}
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {"diagnosis": "Risco de morte súbita", "definition": "Risco de que a criança ou adulto morra inesperadamente, aplicável a pacientes classificados na categoria vermelha da triagem."},
+      {"diagnosis": "Ansiedade", "definition": "Sensação vaga e incômoda de desconforto ou temor, comum em pacientes e familiares durante o processo de triagem e espera por atendimento."}
+    ],
+    "noc": [
+      {"outcome": "Resposta à triagem", "indicators": ["Categoria de prioridade atribuída corretamente conforme discriminadores clínicos", "Tempo-alvo de atendimento respeitado conforme categoria", "Reavaliação realizada em caso de mudança do quadro clínico durante a espera"]}
+    ],
+    "nic": [
+      {"intervention": "Triagem/classificação de risco", "activities": ["Identificar a queixa principal do paciente e selecionar o fluxograma correspondente", "Avaliar sistematicamente os discriminadores de risco (gerais e específicos do fluxograma)", "Atribuir a categoria de prioridade com o tempo-alvo de atendimento correspondente", "Comunicar à equipe qualquer discriminador de risco iminente de morte imediatamente", "Reavaliar pacientes em espera prolongada, especialmente se houver mudança clínica"]}
+    ]
+  },
+  "evidence": {
+    "foundation": "O Sistema de Triagem de Manchester classifica os pacientes em 5 categorias de prioridade codificadas por cor — vermelho (emergência, atendimento imediato), laranja (muito urgente, 10 minutos), amarelo (urgente, 60 minutos), verde (pouco urgente, 120 minutos) e azul (não urgente, 240 minutos) — com base em 54 fluxogramas de apresentação clínica e seus respectivos discriminadores.",
+    "history": "Desenvolvido entre 1994 e 1996 por enfermeiros e médicos de emergência de 9 hospitais da cidade de Manchester (Reino Unido), tornou-se um dos sistemas de triagem mais utilizados no mundo, incluindo amplamente no Brasil.",
+    "validation": "Amplamente validado e adotado internacionalmente como sistema de triagem em serviços de urgência e emergência, com boa capacidade de identificar pacientes que necessitam de atendimento prioritário.",
+    "limitations": "A aplicação correta exige treinamento específico no uso dos 54 fluxogramas e seus discriminadores. Esta calculadora apresenta uma simplificação educacional das 5 categorias e não substitui a aplicação completa do protocolo com os fluxogramas específicos de cada queixa clínica.",
+    "references": [
+      {"text": "MACKWAY-JONES, K.; MARSDEN, J.; WINDLE, J. Emergency Triage: Manchester Triage Group. 3rd ed. Oxford: Wiley-Blackwell, 2014."},
+      {"text": "GRUPO BRASILEIRO DE CLASSIFICAÇÃO DE RISCO. Sistema Manchester de Classificação de Risco. São Paulo: GBCR, 2020."},
+      {"text": "MINISTÉRIO DA SAÚDE. Manual de acolhimento e classificação de risco em serviços de urgência. Brasília: MS, 2012."}
+    ]
+  },
+  "learning": {
+    "tips": [
+      "O Sistema de Manchester usa 54 fluxogramas diferentes de apresentação clínica, cada um com discriminadores específicos, além dos discriminadores gerais (risco de morte, dor, hemorragia, temperatura, nível de consciência, agudeza).",
+      "A cor vermelha indica atendimento imediato (risco iminente de morte); a azul indica o menor grau de urgência (até 240 minutos).",
+      "A classificação deve ser reavaliada se o paciente apresentar piora clínica durante o tempo de espera.",
+      "Esta calculadora apresenta uma simplificação educacional das 5 categorias — a aplicação completa do protocolo exige treinamento específico nos fluxogramas do Grupo de Manchester."
+    ],
+    "examples": [
+      {"label": "Queixa sem sinais de risco", "sublabel": "Manchester Azul", "emoji": "🔵", "values": {"prioridade": 1}},
+      {"label": "Dor moderada, discriminadores de risco moderado", "sublabel": "Manchester Amarelo", "emoji": "🟡", "values": {"prioridade": 3}},
+      {"label": "Via aérea comprometida", "sublabel": "Manchester Vermelho", "emoji": "🔴", "values": {"prioridade": 5}}
+    ],
+    "quiz": [
+      {"q": "Quantas categorias de prioridade compõem o Sistema de Manchester?", "opts": ["3", "4", "5", "7"], "correct": 2,
+       "expl": "O Sistema de Manchester classifica os pacientes em 5 categorias codificadas por cor: vermelho, laranja, amarelo, verde e azul."},
+      {"q": "Qual o tempo-alvo de atendimento para a categoria laranja (muito urgente)?", "opts": ["Imediato", "10 minutos", "60 minutos", "120 minutos"], "correct": 1,
+       "expl": "A categoria laranja (muito urgente) tem tempo-alvo de atendimento de até 10 minutos."},
+      {"q": "O que determina a categoria de prioridade no Sistema de Manchester?", "opts": ["Apenas a idade do paciente", "Discriminadores clínicos de fluxogramas específicos para cada queixa", "Apenas a ordem de chegada", "Apenas os sinais vitais"], "correct": 1,
+       "expl": "A categoria de prioridade é determinada pelos discriminadores clínicos (gerais e específicos) do fluxograma correspondente à queixa principal do paciente."}
+    ]
+  },
+  "faq": [
+    {"q": "O Sistema de Manchester determina o diagnóstico do paciente?", "a": "Não. O sistema determina apenas a prioridade e o tempo-alvo de atendimento, com base em discriminadores de risco, e não estabelece um diagnóstico clínico."},
+    {"q": "Um paciente pode mudar de categoria durante a espera?", "a": "Sim. Pacientes devem ser reavaliados periodicamente, especialmente em caso de piora clínica ou tempo de espera prolongado, podendo ser reclassificados para uma categoria de maior prioridade."}
+  ],
+  "about": {
+    "title": "Como funciona o Sistema de Triagem de Manchester",
+    "html": "<p>O Sistema de Manchester classifica os pacientes em 5 categorias de prioridade codificadas por cor, com base em discriminadores clínicos de 54 fluxogramas de apresentação.</p><p><strong>Guia rápido:</strong> Vermelho = Imediato | Laranja = 10 min | Amarelo = 60 min | Verde = 120 min | Azul = 240 min.</p>"
+  }
+}

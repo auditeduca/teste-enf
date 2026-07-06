@@ -1,0 +1,922 @@
+{
+  "generated_at": "2026-06-20T11:14:53.843608Z",
+  "schema_version": "2026.1.0",
+  "purpose": "Single source of truth map; FK references only, no duplicated entity payloads",
+  "removed_entities": [
+    {
+      "entity": "Persona",
+      "reason": "Merged into Audience (audiences.json)",
+      "removed_at": "2026-06-19T20:14:51Z"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "Country",
+      "file": "global/countries.json",
+      "primary_key": "country_code",
+      "records": 195
+    },
+    {
+      "entity": "Language",
+      "file": "global/languages.json",
+      "primary_key": "language_code",
+      "records": 30
+    },
+    {
+      "entity": "Locale",
+      "file": "global/locales.json",
+      "primary_key": "locale_code",
+      "records": 400
+    },
+    {
+      "entity": "RegulatoryZone",
+      "file": "global/regulatory_zones.json",
+      "primary_key": "regulatory_zone_code",
+      "records": 6
+    },
+    {
+      "entity": "Taxonomy",
+      "file": "clinical/taxonomy.json",
+      "primary_key": "taxonomy_code",
+      "records": 200
+    },
+    {
+      "entity": "ClinicalToolCatalog",
+      "file": "clinical/clinical_tools_catalog.json",
+      "primary_key": "tool_code",
+      "records": 100,
+      "edition": "2026"
+    },
+    {
+      "entity": "PatientSafetyGoal",
+      "file": "clinical/patient_safety_goals.json",
+      "primary_key": "goal_code",
+      "records": 6
+    },
+    {
+      "entity": "MedicationRight",
+      "file": "clinical/medication_rights.json",
+      "primary_key": "right_code",
+      "records": 9
+    },
+    {
+      "entity": "UnitConversion",
+      "file": "clinical/unit_conversions.json",
+      "primary_key": "conversion_code",
+      "records": 6
+    },
+    {
+      "entity": "DesignToken",
+      "file": "metadata/design_tokens.json",
+      "primary_key": "token_code",
+      "records": 207
+    },
+    {
+      "entity": "Component",
+      "file": "metadata/components.json",
+      "primary_key": "component_code",
+      "records": 101,
+      "edition": "2026"
+    },
+    {
+      "entity": "ComponentDefinition",
+      "file": "metadata/component_definitions.json",
+      "primary_key": "definition_code",
+      "fk": {
+        "component_code": "metadata/components.json"
+      },
+      "records": 100,
+      "edition": "2026"
+    },
+    {
+      "entity": "ComponentVariant",
+      "file": "metadata/component_variants.json",
+      "primary_key": "variant_code",
+      "fk": {
+        "component_code": "metadata/components.json",
+        "definition_code": "metadata/component_definitions.json"
+      },
+      "records": 300,
+      "edition": "2026"
+    },
+    {
+      "entity": "Layout",
+      "file": "metadata/layouts.json",
+      "primary_key": "layout_code",
+      "records": 13
+    },
+    {
+      "entity": "PageTemplate",
+      "file": "metadata/templates.json",
+      "primary_key": "template_code",
+      "records": 59,
+      "edition": "2026"
+    },
+    {
+      "entity": "CssClass",
+      "file": "metadata/css_classes.json",
+      "primary_key": "class_name",
+      "records": 35
+    },
+    {
+      "entity": "Theme",
+      "file": "metadata/themes.json",
+      "primary_key": "theme_code",
+      "records": 3
+    },
+    {
+      "entity": "Audience",
+      "file": "metadata/audiences.json",
+      "primary_key": "audience_code",
+      "records": 5,
+      "note": "Replaces deprecated Persona entity"
+    },
+    {
+      "entity": "Role",
+      "file": "metadata/roles.json",
+      "primary_key": "role_code",
+      "records": 7
+    },
+    {
+      "entity": "Permission",
+      "file": "metadata/permissions.json",
+      "primary_key": "permission_code",
+      "records": 12
+    },
+    {
+      "entity": "ViewMode",
+      "file": "metadata/view_modes.json",
+      "primary_key": "view_mode_code",
+      "records": 8
+    },
+    {
+      "entity": "CalculatorModeConfig",
+      "file": "metadata/calculator_mode_configs.json",
+      "primary_key": "mode_code",
+      "records": 6
+    },
+    {
+      "entity": "FieldConfiguration",
+      "file": "metadata/field_configurations.json",
+      "primary_key": "field_config_code",
+      "fk": {
+        "tool_code": "clinical/clinical_tools_catalog.json"
+      },
+      "records": 500,
+      "edition": "2026"
+    },
+    {
+      "entity": "Evidence",
+      "file": "clinical/evidence.json",
+      "primary_key": "evidence_code",
+      "records": 27
+    },
+    {
+      "entity": "MasterEntity",
+      "file": "master/master_entities.json",
+      "primary_key": "entity_code",
+      "records": 2000,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "StandardMapping",
+      "file": "master/standard_mappings.json",
+      "primary_key": "mapping_code",
+      "records": 196,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "ClinicalConcept",
+      "file": "clinical/clinical_concepts.json",
+      "primary_key": "concept_code",
+      "records": 2000,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "NursingDiagnosis",
+      "file": "clinical/nursing_diagnoses.json",
+      "primary_key": "diagnosis_code",
+      "records": 244,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "NursingIntervention",
+      "file": "clinical/nursing_interventions.json",
+      "primary_key": "intervention_code",
+      "records": 575,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "NursingOutcome",
+      "file": "clinical/nursing_outcomes.json",
+      "primary_key": "outcome_code",
+      "records": 550,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "DrugReference",
+      "file": "clinical/drug_references.json",
+      "primary_key": "drug_code",
+      "records": 500,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "LabReferenceValue",
+      "file": "clinical/lab_reference_values.json",
+      "primary_key": "lab_code",
+      "records": 300,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "ClinicalGuideline",
+      "file": "clinical/clinical_guidelines.json",
+      "primary_key": "guideline_code",
+      "records": 200,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "NursingDictionaryEntry",
+      "file": "master/nursing_dictionary.json",
+      "primary_key": "entry_code",
+      "records": 5000,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "SearchSynonym",
+      "file": "master/search_synonyms.json",
+      "primary_key": "synonym_code",
+      "records": 10000,
+      "nkos_phase": 2,
+      "edition": "2026",
+      "content_source": "NKOS_CUSTOM"
+    },
+    {
+      "entity": "NNNLinkage",
+      "file": "clinical/nnn_linkages.json",
+      "primary_key": "linkage_code",
+      "records": 1500,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "EntityRelation",
+      "file": "master/entity_relations.json",
+      "primary_key": "relation_code",
+      "records": 4999,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "EntityApplicability",
+      "file": "master/entity_applicability.json",
+      "primary_key": "applicability_code",
+      "records": 10000,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "ContentTaxonomy",
+      "file": "master/content_taxonomy.json",
+      "primary_key": "content_taxonomy_code",
+      "records": 113,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "DrugInteraction",
+      "file": "clinical/drug_interactions.json",
+      "primary_key": "interaction_code",
+      "records": 2000,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "SafetyRule",
+      "file": "clinical/safety_rules.json",
+      "primary_key": "rule_code",
+      "records": 200,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "RegulatoryDocument",
+      "file": "global/regulatory_documents.json",
+      "primary_key": "document_code",
+      "records": 500,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "ComplianceRule",
+      "file": "metadata/compliance_rules.json",
+      "primary_key": "compliance_code",
+      "records": 100,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "InstitutionalProtocol",
+      "file": "clinical/institutional_protocols.json",
+      "primary_key": "protocol_code",
+      "records": 20,
+      "nkos_phase": 3,
+      "edition": "2026"
+    },
+    {
+      "entity": "Section",
+      "file": "metadata/sections.json",
+      "primary_key": "section_code",
+      "records": 223,
+      "nkos_phase": 4,
+      "edition": "2026"
+    },
+    {
+      "entity": "Asset",
+      "file": "metadata/assets.json",
+      "primary_key": "asset_code",
+      "records": 1000,
+      "nkos_phase": 4,
+      "edition": "2026"
+    },
+    {
+      "entity": "AssetLocalization",
+      "file": "metadata/asset_localizations.json",
+      "primary_key": "localization_code",
+      "records": 3000,
+      "nkos_phase": 4,
+      "edition": "2026"
+    },
+    {
+      "entity": "SeoMetadata",
+      "file": "metadata/seo_metadata.json",
+      "primary_key": "seo_code",
+      "records": 266,
+      "nkos_phase": 4,
+      "edition": "2026"
+    },
+    {
+      "entity": "PromptTemplate",
+      "file": "metadata/prompt_templates.json",
+      "primary_key": "prompt_code",
+      "records": 100,
+      "nkos_phase": 4,
+      "edition": "2026"
+    },
+    {
+      "entity": "WorkflowTemplate",
+      "file": "metadata/workflow_templates.json",
+      "primary_key": "workflow_code",
+      "records": 20,
+      "nkos_phase": 4,
+      "edition": "2026"
+    },
+    {
+      "entity": "ToastTemplate",
+      "file": "metadata/toast_templates.json",
+      "primary_key": "toast_code",
+      "records": 50,
+      "nkos_phase": 4,
+      "edition": "2026"
+    },
+    {
+      "entity": "CalculatorDefinition",
+      "file": "clinical/calculator_definitions.json",
+      "primary_key": "definition_code",
+      "records": 100,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "ClinicalDecisionTree",
+      "file": "clinical/clinical_decision_trees.json",
+      "primary_key": "tree_code",
+      "records": 50,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "Quiz",
+      "file": "education/quizzes.json",
+      "primary_key": "quiz_code",
+      "records": 200,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "Flashcard",
+      "file": "education/flashcards.json",
+      "primary_key": "flashcard_code",
+      "records": 1000,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "SimulatedExam",
+      "file": "education/simulated_exams.json",
+      "primary_key": "exam_code",
+      "records": 20,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "LearningPath",
+      "file": "education/learning_paths.json",
+      "primary_key": "path_code",
+      "records": 30,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "Competency",
+      "file": "education/competencies.json",
+      "primary_key": "competency_code",
+      "records": 100,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "Assessment",
+      "file": "education/assessments.json",
+      "primary_key": "assessment_code",
+      "records": 50,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "LevelingRule",
+      "file": "education/leveling_rules.json",
+      "primary_key": "rule_code",
+      "records": 20,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "ContentRecommendationByLevel",
+      "file": "education/content_recommendations_by_level.json",
+      "primary_key": "recommendation_code",
+      "records": 500,
+      "nkos_phase": 5,
+      "edition": "2026"
+    },
+    {
+      "entity": "User",
+      "file": "users/users.json",
+      "primary_key": "user_id",
+      "records": 0,
+      "nkos_phase": 6,
+      "edition": "2026"
+    },
+    {
+      "entity": "UserPersonalizationProfile",
+      "file": "users/personalization_profiles.json",
+      "primary_key": "profile_code",
+      "records": 5,
+      "nkos_phase": 6,
+      "edition": "2026"
+    },
+    {
+      "entity": "UserPath",
+      "file": "users/user_paths.json",
+      "primary_key": "user_path_code",
+      "records": 20,
+      "nkos_phase": 6,
+      "edition": "2026"
+    },
+    {
+      "entity": "ProfileQuestionnaire",
+      "file": "users/profile_questionnaires.json",
+      "primary_key": "questionnaire_code",
+      "records": 3,
+      "nkos_phase": 6,
+      "edition": "2026"
+    },
+    {
+      "entity": "UserConsent",
+      "file": "users/user_consents.json",
+      "primary_key": "consent_code",
+      "records": 15,
+      "nkos_phase": 6,
+      "edition": "2026"
+    },
+    {
+      "entity": "ContentBookmark",
+      "file": "users/content_bookmarks.json",
+      "primary_key": "bookmark_id",
+      "records": 0,
+      "nkos_phase": 6,
+      "edition": "2026"
+    },
+    {
+      "entity": "ContentRating",
+      "file": "users/content_ratings.json",
+      "primary_key": "rating_id",
+      "records": 0,
+      "nkos_phase": 6,
+      "edition": "2026"
+    },
+    {
+      "entity": "Content",
+      "file": "content/nkos/contents.json",
+      "primary_key": "content_code",
+      "records": 5654,
+      "nkos_phase": 7,
+      "edition": "2026"
+    },
+    {
+      "entity": "ContentFragment",
+      "file": "content/nkos/content_fragments.json",
+      "primary_key": "fragment_code",
+      "records": 7549,
+      "nkos_phase": 7,
+      "edition": "2026"
+    },
+    {
+      "entity": "ContentVersion",
+      "file": "content/nkos/content_versions.json",
+      "primary_key": "version_code",
+      "records": 5654,
+      "nkos_phase": 7,
+      "edition": "2026"
+    },
+    {
+      "entity": "Translation",
+      "file": "content/i18n/translations.json",
+      "primary_key": "translation_code",
+      "records": 160776,
+      "nkos_phase": 7,
+      "edition": "2026"
+    },
+    {
+      "entity": "CommunityTranslation",
+      "file": "content/nkos/community_translations.json",
+      "primary_key": "community_translation_code",
+      "records": 0,
+      "nkos_phase": 7,
+      "edition": "2026"
+    },
+    {
+      "entity": "ContentRequest",
+      "file": "content/nkos/content_requests.json",
+      "primary_key": "request_code",
+      "records": 0,
+      "nkos_phase": 7,
+      "edition": "2026"
+    },
+    {
+      "entity": "ContentReviewCycle",
+      "file": "content/nkos/content_review_cycles.json",
+      "primary_key": "review_cycle_code",
+      "records": 5654,
+      "nkos_phase": 7,
+      "edition": "2026"
+    },
+    {
+      "entity": "Workflow",
+      "file": "ai/workflows.json",
+      "primary_key": "workflow_code",
+      "records": 0,
+      "nkos_phase": 8,
+      "edition": "2026"
+    },
+    {
+      "entity": "AIJob",
+      "file": "ai/ai_jobs.json",
+      "primary_key": "job_id",
+      "records": 0,
+      "nkos_phase": 8,
+      "edition": "2026"
+    },
+    {
+      "entity": "AIExecutionLog",
+      "file": "ai/ai_execution_logs.json",
+      "primary_key": "log_id",
+      "records": 0,
+      "nkos_phase": 8,
+      "edition": "2026"
+    },
+    {
+      "entity": "RAGChunk",
+      "file": "ai/rag_chunks.json",
+      "primary_key": "rag_chunk_code",
+      "records": 7435,
+      "nkos_phase": 8,
+      "edition": "2026"
+    },
+    {
+      "entity": "KnowledgeNode",
+      "file": "ai/knowledge_nodes.json",
+      "primary_key": "knowledge_node_code",
+      "records": 544,
+      "nkos_phase": 8,
+      "edition": "2026"
+    },
+    {
+      "entity": "Explanation",
+      "file": "ai/explanations.json",
+      "primary_key": "explanation_id",
+      "records": 0,
+      "nkos_phase": 8,
+      "edition": "2026"
+    },
+    {
+      "entity": "RecommendationFeedback",
+      "file": "ai/recommendation_feedback.json",
+      "primary_key": "feedback_id",
+      "records": 0,
+      "nkos_phase": 8,
+      "edition": "2026"
+    },
+    {
+      "entity": "Channel",
+      "file": "publishing/channels.json",
+      "primary_key": "channel_code",
+      "records": 10,
+      "nkos_phase": 9,
+      "edition": "2026"
+    },
+    {
+      "entity": "Publication",
+      "file": "publishing/publications.json",
+      "primary_key": "publication_id",
+      "records": 0,
+      "nkos_phase": 9,
+      "edition": "2026"
+    },
+    {
+      "entity": "ComponentInstance",
+      "file": "publishing/component_instances.json",
+      "primary_key": "instance_id",
+      "records": 0,
+      "nkos_phase": 9,
+      "edition": "2026"
+    },
+    {
+      "entity": "PatientProfile",
+      "file": "operations/patient_profiles.json",
+      "primary_key": "patient_profile_code",
+      "records": 500,
+      "nkos_phase": 10,
+      "edition": "2026"
+    },
+    {
+      "entity": "NursingCarePlan",
+      "file": "operations/nursing_care_plans.json",
+      "primary_key": "care_plan_code",
+      "records": 200,
+      "nkos_phase": 10,
+      "edition": "2026"
+    },
+    {
+      "entity": "CalculatorSession",
+      "file": "operations/calculator_sessions.json",
+      "primary_key": "session_id",
+      "records": 0,
+      "nkos_phase": 10,
+      "edition": "2026"
+    },
+    {
+      "entity": "DualCheckSession",
+      "file": "operations/dual_check_sessions.json",
+      "primary_key": "session_id",
+      "records": 0,
+      "nkos_phase": 10,
+      "edition": "2026"
+    },
+    {
+      "entity": "SBARMessage",
+      "file": "operations/sbar_messages.json",
+      "primary_key": "message_id",
+      "records": 0,
+      "nkos_phase": 10,
+      "edition": "2026"
+    },
+    {
+      "entity": "ReassessmentRule",
+      "file": "operations/reassessment_rules.json",
+      "primary_key": "reassessment_rule_code",
+      "records": 100,
+      "nkos_phase": 10,
+      "edition": "2026"
+    },
+    {
+      "entity": "NursingIndicator",
+      "file": "operations/nursing_indicators.json",
+      "primary_key": "nursing_indicator_code",
+      "records": 30,
+      "nkos_phase": 10,
+      "edition": "2026"
+    },
+    {
+      "entity": "AssessmentResult",
+      "file": "operations/assessment_results.json",
+      "primary_key": "result_id",
+      "records": 0,
+      "nkos_phase": 10,
+      "edition": "2026"
+    },
+    {
+      "entity": "AnalyticsEvent",
+      "file": "analytics/analytics_events.json",
+      "primary_key": "event_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "AnalyticsAggregate",
+      "file": "analytics/analytics_aggregates.json",
+      "primary_key": "aggregate_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "SearchDocument",
+      "file": "analytics/search_documents.json",
+      "primary_key": "search_document_code",
+      "records": 5644,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "SearchQueryLog",
+      "file": "analytics/search_query_logs.json",
+      "primary_key": "query_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "WorkflowMetric",
+      "file": "analytics/workflow_metrics.json",
+      "primary_key": "metric_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "SystemEvent",
+      "file": "analytics/system_events.json",
+      "primary_key": "event_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "CarbonMetric",
+      "file": "analytics/carbon_metrics.json",
+      "primary_key": "metric_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "AuditLog",
+      "file": "analytics/audit_logs.json",
+      "primary_key": "audit_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "SecurityAuditLog",
+      "file": "analytics/security_audit_logs.json",
+      "primary_key": "security_event_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "ComplianceEvidence",
+      "file": "analytics/compliance_evidence.json",
+      "primary_key": "evidence_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "AnonymizationJob",
+      "file": "analytics/anonymization_jobs.json",
+      "primary_key": "job_id",
+      "records": 0,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "DataAnonymizationRule",
+      "file": "analytics/data_anonymization_rules.json",
+      "primary_key": "anonymization_rule_code",
+      "records": 50,
+      "nkos_phase": 11,
+      "edition": "2026"
+    },
+    {
+      "entity": "ForumTopic",
+      "file": "community/forum_topics.json",
+      "primary_key": "forum_topic_code",
+      "records": 100,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "ForumPost",
+      "file": "community/forum_posts.json",
+      "primary_key": "forum_post_code",
+      "records": 500,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "JobListing",
+      "file": "community/job_listings.json",
+      "primary_key": "job_listing_code",
+      "records": 200,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "CourseListing",
+      "file": "community/course_listings.json",
+      "primary_key": "course_listing_code",
+      "records": 100,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "CareerPath",
+      "file": "community/career_paths.json",
+      "primary_key": "career_path_code",
+      "records": 10,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "FederatedModelManifest",
+      "file": "community/federated_model_manifests.json",
+      "primary_key": "federated_model_code",
+      "records": 5,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "FederatedUpdate",
+      "file": "community/federated_updates.json",
+      "primary_key": "update_id",
+      "records": 0,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "CachePolicy",
+      "file": "community/cache_policies.json",
+      "primary_key": "cache_policy_code",
+      "records": 22,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "FhirEndpointConfiguration",
+      "file": "community/fhir_endpoint_configurations.json",
+      "primary_key": "fhir_endpoint_code",
+      "records": 10,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "WebhookSubscription",
+      "file": "community/webhook_subscriptions.json",
+      "primary_key": "subscription_id",
+      "records": 0,
+      "nkos_phase": 12,
+      "edition": "2026"
+    },
+    {
+      "entity": "FeatureFlag",
+      "file": "community/feature_flags.json",
+      "primary_key": "feature_flag_code",
+      "records": 50,
+      "nkos_phase": 12,
+      "edition": "2026"
+    }
+  ]
+}

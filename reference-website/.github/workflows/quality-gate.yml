@@ -1,0 +1,80 @@
+# ═══════════════════════════════════════════════════════════════
+# NKOS — PR Quality Gate
+# Runs on every PR: lint, WCAG, clinical engine, i18n integrity
+# ═══════════════════════════════════════════════════════════════
+name: NKOS Quality Gate
+
+on:
+  pull_request:
+    branches: [main, production]
+
+jobs:
+  quality:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate JSON integrity
+        run: |
+          find . -name "*.json" -not -path "./node_modules/*" | while read f; do
+            python3 -c "import json; json.load(open('$f'))" || { echo "INVALID: $f"; exit 1; }
+          done
+          echo "✅ All JSON files valid"
+
+      - name: WCAG Accessibility Check
+        run: |
+          python3 scripts/audit_wcag.py --strict --fail-on-error
+
+      - name: i18n Completeness Check
+        run: |
+          python3 scripts/validate_i18n.py --languages 28 --fail-on-missing
+
+      - name: Clinical Engine Smoke Test
+        run: |
+          cd reference-clinical-engine
+          node -e "
+            const modules = [
+              './memory/episodicMemory.js',
+              './learning/feedbackLearning.js',
+              './council/councilEngine.js',
+              './temporal/temporalGraph.js',
+              './attention/clinicalAttention.js',
+              './cognitiveOrchestrator.js'
+            ];
+            for (const m of modules) {
+              require(m);
+              console.log('✅', m);
+            }
+            console.log('All 6 cognitive modules loaded successfully');
+          "
+
+      - name: Sitemap URL Count
+        run: |
+          URLS=$(grep -c '<loc>' sitemap.xml || true)
+          echo "Sitemap URLs: $URLS"
+          if [ "$URLS" -lt 100 ]; then
+            echo "❌ Sitemap too small"
+            exit 1
+          fi
+          echo "✅ Sitemap OK"
+
+      - name: hreflang Coverage
+        run: |
+          HREFLANG=$(grep -c 'hreflang=' index.html || true)
+          echo "hreflang tags in index.html: $HREFLANG"
+          if [ "$HREFLANG" -lt 28 ]; then
+            echo "❌ Insufficient hreflang coverage"
+            exit 1
+          fi
+          echo "✅ hreflang OK"

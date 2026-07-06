@@ -1,0 +1,981 @@
+{
+  "seo": {
+    "title": "Escala de Tinetti (POMA) - Avaliação de Equilíbrio e Marcha | Calculadoras de Enfermagem",
+    "description": "Calcule a Escala de Tinetti (Performance-Oriented Mobility Assessment) para avaliar equilíbrio, marcha e risco de quedas em idosos. Inclui interpretação, SAE e evidências.",
+    "h1": "Escala de Tinetti",
+    "subtitle": "Avaliar o equilíbrio e a marcha de idosos por meio de manobras funcionais padronizadas, estimando o risco de quedas."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "51627384-9506-1728-3940-516273849506",
+    "code": "SCALE-TINETTI-001",
+    "slug": "tinetti",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Escala de Tinetti (POMA) - Avaliação de Equilíbrio e Marcha",
+      "description": "Calcule a Escala de Tinetti (Performance-Oriented Mobility Assessment) para avaliar equilíbrio, marcha e risco de quedas em idosos. Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/tinetti.html"
+    },
+    "breadcrumb": {
+      "category": "Geriatria",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "Escala de Tinetti",
+      "acronym": "POMA",
+      "categoryBadge": "Geriatria",
+      "icon": "i-person",
+      "objective": "Avaliar o equilíbrio e a marcha de idosos por meio de manobras funcionais padronizadas, estimando o risco de quedas.",
+      "indication": "Indicada na avaliação geriátrica de idosos, especialmente aqueles com histórico de quedas, alterações de marcha ou equilíbrio, ou como parte de uma avaliação funcional ampla.",
+      "targetPopulation": "Pacientes idosos, especialmente aqueles em risco de quedas ou com queixas de instabilidade postural.",
+      "specialty": [
+        "Geriatria",
+        "Fisioterapia",
+        "Enfermagem"
+      ],
+      "averageTime": "10-15 minutos",
+      "evidenceLevel": "II",
+      "originalAuthors": [
+        "Mary Tinetti"
+      ],
+      "complexity": "advanced",
+      "rating": 4.5,
+      "ratingCount": 210
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "equilibrio_sentado",
+          "type": "select",
+          "label": "Equilíbrio Sentado",
+          "defaultValue": 1,
+          "description": "Observar o paciente sentado em cadeira rígida sem apoio de braços.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Inclina-se ou escorrega na cadeira",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Estável e seguro",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "levanta_se",
+          "type": "select",
+          "label": "Levanta-se da Cadeira",
+          "defaultValue": 2,
+          "description": "Capacidade de se levantar da cadeira.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Incapaz sem ajuda",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Capaz, usando os braços para ajudar",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Capaz sem usar os braços",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "tentativas_levantar",
+          "type": "select",
+          "label": "Tentativas para Levantar-se",
+          "defaultValue": 2,
+          "description": "Número de tentativas necessárias para se levantar.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Incapaz sem ajuda",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Capaz, necessita de mais de uma tentativa",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Capaz de levantar em uma única tentativa",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "equilibrio_imediato",
+          "type": "select",
+          "label": "Equilíbrio Imediato ao Ficar em Pé (primeiros 5 segundos)",
+          "defaultValue": 2,
+          "description": "Estabilidade nos primeiros 5 segundos em pé.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Instável (cambaleia, move os pés, balança o tronco)",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Estável, mas usa andador ou outro apoio",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Estável sem andador ou outro apoio",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "equilibrio_em_pe",
+          "type": "select",
+          "label": "Equilíbrio em Pé",
+          "defaultValue": 2,
+          "description": "Estabilidade mantida em pé.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Instável",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Estável, mas com base alargada e uso de apoio",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Base estreita sem apoio",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "prova_nudge",
+          "type": "select",
+          "label": "Prova do Nudge (Empurrão Leve no Esterno, 3x)",
+          "defaultValue": 2,
+          "description": "Examinador empurra levemente o esterno do paciente 3 vezes.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Começa a cair",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Cambaleia, agarra-se, mas se recupera",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Estável",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "olhos_fechados",
+          "type": "select",
+          "label": "Equilíbrio em Pé com Olhos Fechados",
+          "defaultValue": 1,
+          "description": "Estabilidade em pé com os olhos fechados.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Instável",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Estável",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "giro_passos",
+          "type": "select",
+          "label": "Girar 360° — Continuidade dos Passos",
+          "defaultValue": 1,
+          "description": "Observar a continuidade dos passos ao girar 360 graus.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Passos descontínuos",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Passos contínuos",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "giro_estabilidade",
+          "type": "select",
+          "label": "Girar 360° — Estabilidade",
+          "defaultValue": 1,
+          "description": "Observar a estabilidade ao girar 360 graus.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Instável (cambaleia, agarra-se)",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Estável",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "sentar_se",
+          "type": "select",
+          "label": "Sentar-se",
+          "defaultValue": 2,
+          "description": "Capacidade de se sentar de forma segura.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Inseguro (calcula mal a distância, cai na cadeira)",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Usa os braços ou movimento não suave",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Seguro, movimento suave",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "inicio_marcha",
+          "type": "select",
+          "label": "Início da Marcha",
+          "defaultValue": 1,
+          "description": "Observar hesitação ao iniciar a marcha.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Qualquer hesitação ou múltiplas tentativas",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sem hesitação",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "passo_direito",
+          "type": "select",
+          "label": "Comprimento e Altura do Passo — Pé Direito",
+          "defaultValue": 1,
+          "description": "O pé direito, ao balançar, ultrapassa o pé esquerdo parado.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Não ultrapassa o pé esquerdo parado",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Ultrapassa o pé esquerdo parado",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "passo_esquerdo",
+          "type": "select",
+          "label": "Comprimento e Altura do Passo — Pé Esquerdo",
+          "defaultValue": 1,
+          "description": "O pé esquerdo, ao balançar, ultrapassa o pé direito parado.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Não ultrapassa o pé direito parado",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Ultrapassa o pé direito parado",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "elevacao_pe_direito",
+          "type": "select",
+          "label": "Elevação do Passo — Pé Direito",
+          "defaultValue": 1,
+          "description": "O pé direito sai completamente do chão ao balançar.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Não sai completamente do chão (arrasta)",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sai completamente do chão",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "elevacao_pe_esquerdo",
+          "type": "select",
+          "label": "Elevação do Passo — Pé Esquerdo",
+          "defaultValue": 1,
+          "description": "O pé esquerdo sai completamente do chão ao balançar.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Não sai completamente do chão (arrasta)",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sai completamente do chão",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "simetria_passo",
+          "type": "select",
+          "label": "Simetria do Passo",
+          "defaultValue": 1,
+          "description": "Comprimento do passo direito comparado ao esquerdo.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Comprimento desigual entre os passos",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Comprimento aparentemente igual",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "continuidade_passo",
+          "type": "select",
+          "label": "Continuidade dos Passos",
+          "defaultValue": 1,
+          "description": "Continuidade entre um passo e outro.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Parada ou descontinuidade entre os passos",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Passos parecem contínuos",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "trajetoria",
+          "type": "select",
+          "label": "Trajetória (desvio observado)",
+          "defaultValue": 2,
+          "description": "Desvio da trajetória em linha reta ao caminhar cerca de 3 metros.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Desvio marcado",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Desvio leve/moderado ou uso de dispositivo de auxílio à marcha",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Trajetória reta sem dispositivo de auxílio",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "tronco",
+          "type": "select",
+          "label": "Tronco",
+          "defaultValue": 2,
+          "description": "Estabilidade do tronco durante a marcha.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Balanço marcado ou uso de dispositivo de auxílio",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sem balanço, mas flexiona joelhos/dorso ou abre os braços ao caminhar",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Sem balanço, flexão ou uso de braços/dispositivo de auxílio",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "postura_marcha",
+          "type": "select",
+          "label": "Postura ao Caminhar (Calcanhares)",
+          "defaultValue": 1,
+          "description": "Distância entre os calcanhares durante a marcha.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Calcanhares separados",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Calcanhares quase se tocando enquanto caminha",
+              "score": 1
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Escala de Tinetti (POMA)",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 18,
+          "label": "Alto Risco de Quedas",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Pontuação de 18 pontos ou menos indica alto risco de quedas, com comprometimento significativo de equilíbrio e/ou marcha.",
+          "recommendations": "• Encaminhar para avaliação fisioterapêutica especializada\n• Implementar medidas de prevenção de quedas (ambiente seguro, dispositivos de auxílio à marcha)\n• Reavaliar causas reversíveis (medicações, déficits visuais, força muscular)\n• Considerar programa de exercícios de equilíbrio e fortalecimento"
+        },
+        {
+          "min": 19,
+          "max": 23,
+          "label": "Risco Moderado de Quedas",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Pontuação entre 19 e 23 pontos indica risco moderado de quedas.",
+          "recommendations": "• Orientar sobre medidas de prevenção de quedas\n• Considerar avaliação fisioterapêutica\n• Reavaliar periodicamente\n• Revisar polifarmácia e fatores ambientais de risco"
+        },
+        {
+          "min": 24,
+          "max": 28,
+          "label": "Baixo Risco de Quedas",
+          "riskLevel": "low",
+          "color": "#2563eb",
+          "clinicalImplications": "Pontuação de 24 pontos ou mais indica baixo risco de quedas, com equilíbrio e marcha preservados.",
+          "recommendations": "• Manter acompanhamento geriátrico de rotina\n• Estimular atividade física regular\n• Reavaliar periodicamente, especialmente após eventos agudos de saúde"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Risco de quedas",
+          "definition": "Suscetibilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde, relacionada a comprometimento de equilíbrio e/ou marcha."
+        },
+        {
+          "diagnosis": "Mobilidade física prejudicada",
+          "definition": "Limitação no movimento físico independente e intencional do corpo ou de uma ou mais extremidades."
+        },
+        {
+          "diagnosis": "Deambulação prejudicada",
+          "definition": "Limitação da movimentação independente a pé pelo ambiente."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Equilíbrio",
+          "indicators": [
+            "Escore de Tinetti avaliado e monitorado ao longo do tempo",
+            "Ausência de quedas durante o período de internação/acompanhamento",
+            "Participação em programa de exercícios de equilíbrio quando indicado"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Prevenção de quedas",
+          "activities": [
+            "Aplicar a Escala de Tinetti na avaliação de equilíbrio e marcha",
+            "Encaminhar para fisioterapia conforme risco identificado",
+            "Orientar sobre uso adequado de dispositivos de auxílio à marcha",
+            "Adaptar o ambiente para reduzir riscos de queda (iluminação, tapetes, calçados)",
+            "Revisar medicações associadas a risco de queda (sedativos, hipotensores)"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "A Escala de Tinetti (Performance-Oriented Mobility Assessment - POMA) avalia 9 manobras de equilíbrio (máximo 16 pontos) e 8 manobras de marcha (máximo 12 pontos), totalizando um escore combinado de 0 a 28 pontos, para avaliar o risco de quedas em idosos.",
+      "history": "Desenvolvida por Mary Tinetti em 1986, é uma das ferramentas mais utilizadas mundialmente na avaliação funcional de equilíbrio e marcha em idosos, amplamente empregada em geriatria e fisioterapia.",
+      "validation": "Amplamente validada e utilizada na prática clínica e em pesquisa, com boa confiabilidade interexaminadores e correlação com outras medidas de mobilidade, como o Timed Up and Go e a velocidade de marcha.",
+      "limitations": "Requer treinamento e tempo para administração (10-15 minutos). O subteste de marcha pode apresentar efeito teto em populações com função relativamente preservada. Pontos de corte podem variar entre estudos e populações.",
+      "references": [
+        {
+          "text": "TINETTI, M. E. Performance-oriented assessment of mobility problems in elderly patients. Journal of the American Geriatrics Society, v. 34, n. 2, p. 119-126, 1986."
+        },
+        {
+          "text": "FABER, M. J. et al. Clinimetric properties of the performance-oriented mobility assessment. Physical Therapy, v. 86, n. 7, p. 944-954, 2006."
+        },
+        {
+          "text": "SHIRLEY RYAN ABILITYLAB. Tinetti Performance Oriented Mobility Assessment. Rehabilitation Measures Database, 2014."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "A escala é dividida em duas partes: equilíbrio (máximo 16 pontos) e marcha (máximo 12 pontos), somando um total de 28 pontos.",
+        "Utilize uma cadeira rígida sem braços e um percurso de aproximadamente 3 metros para a avaliação padronizada.",
+        "O ponto de corte de 18 pontos ou menos para alto risco é amplamente utilizado na prática clínica.",
+        "Combine os resultados da Tinetti com outras ferramentas (Timed Up and Go, histórico de quedas) para uma avaliação mais completa do risco."
+      ],
+      "examples": [
+        {
+          "label": "Idoso com boa mobilidade",
+          "sublabel": "POMA 28",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "equilibrio_sentado": 1,
+            "levanta_se": 2,
+            "tentativas_levantar": 2,
+            "equilibrio_imediato": 2,
+            "equilibrio_em_pe": 2,
+            "prova_nudge": 2,
+            "olhos_fechados": 1,
+            "giro_passos": 1,
+            "giro_estabilidade": 1,
+            "sentar_se": 2,
+            "inicio_marcha": 1,
+            "passo_direito": 1,
+            "passo_esquerdo": 1,
+            "elevacao_pe_direito": 1,
+            "elevacao_pe_esquerdo": 1,
+            "simetria_passo": 1,
+            "continuidade_passo": 1,
+            "trajetoria": 2,
+            "tronco": 2,
+            "postura_marcha": 1
+          }
+        },
+        {
+          "label": "Risco moderado de quedas",
+          "sublabel": "POMA 22",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "equilibrio_sentado": 1,
+            "levanta_se": 1,
+            "tentativas_levantar": 1,
+            "equilibrio_imediato": 1,
+            "equilibrio_em_pe": 1,
+            "prova_nudge": 1,
+            "olhos_fechados": 1,
+            "giro_passos": 1,
+            "giro_estabilidade": 1,
+            "sentar_se": 1,
+            "inicio_marcha": 1,
+            "passo_direito": 1,
+            "passo_esquerdo": 1,
+            "elevacao_pe_direito": 1,
+            "elevacao_pe_esquerdo": 1,
+            "simetria_passo": 1,
+            "continuidade_passo": 1,
+            "trajetoria": 2,
+            "tronco": 2,
+            "postura_marcha": 1
+          }
+        },
+        {
+          "label": "Alto risco de quedas",
+          "sublabel": "POMA 9",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "equilibrio_sentado": 0,
+            "levanta_se": 0,
+            "tentativas_levantar": 1,
+            "equilibrio_imediato": 1,
+            "equilibrio_em_pe": 1,
+            "prova_nudge": 1,
+            "olhos_fechados": 0,
+            "giro_passos": 0,
+            "giro_estabilidade": 0,
+            "sentar_se": 1,
+            "inicio_marcha": 0,
+            "passo_direito": 1,
+            "passo_esquerdo": 0,
+            "elevacao_pe_direito": 0,
+            "elevacao_pe_esquerdo": 0,
+            "simetria_passo": 0,
+            "continuidade_passo": 1,
+            "trajetoria": 1,
+            "tronco": 1,
+            "postura_marcha": 0
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Qual a pontuação máxima total da Escala de Tinetti (POMA)?",
+          "opts": [
+            "16 pontos",
+            "20 pontos",
+            "24 pontos",
+            "28 pontos"
+          ],
+          "correct": 3,
+          "expl": "A POMA soma o subteste de equilíbrio (máximo 16 pontos) e o de marcha (máximo 12 pontos), totalizando 28 pontos."
+        },
+        {
+          "q": "Qual pontuação total indica alto risco de quedas?",
+          "opts": [
+            "28 pontos ou mais",
+            "24 pontos ou mais",
+            "19 a 23 pontos",
+            "18 pontos ou menos"
+          ],
+          "correct": 3,
+          "expl": "Uma pontuação de 18 pontos ou menos indica alto risco de quedas na Escala de Tinetti."
+        },
+        {
+          "q": "Quantos pontos, no máximo, compõe o subteste de equilíbrio?",
+          "opts": [
+            "12 pontos",
+            "16 pontos",
+            "20 pontos",
+            "28 pontos"
+          ],
+          "correct": 1,
+          "expl": "O subteste de equilíbrio da POMA tem pontuação máxima de 16 pontos, distribuídos em 9 manobras."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Quanto tempo leva para aplicar a Escala de Tinetti?",
+        "a": "A aplicação completa costuma levar de 10 a 15 minutos, incluindo a observação das manobras de equilíbrio (sentado, levantar-se, em pé, girar) e de marcha (caminhar cerca de 3 metros)."
+      },
+      {
+        "q": "A Escala de Tinetti substitui outras avaliações de risco de queda?",
+        "a": "Não isoladamente. É recomendável combinar seus resultados com o histórico de quedas prévias, avaliação de medicações, força muscular e outras ferramentas como o Timed Up and Go para uma avaliação mais completa do risco de quedas."
+      }
+    ],
+    "about": {
+      "title": "Como funciona a Escala de Tinetti (POMA)",
+      "html": "<p>A Escala de Tinetti avalia o equilíbrio (9 manobras, máximo 16 pontos) e a marcha (8 itens, máximo 12 pontos) do paciente, somando um escore total de 0 a 28 pontos.</p><p><strong>Guia rápido:</strong> ≤18 = Alto risco de quedas | 19-23 = Risco moderado | ≥24 = Baixo risco.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Equilíbrio Sentado"
+    ],
+    [
+      "field_label",
+      "Levanta-se da Cadeira"
+    ],
+    [
+      "field_label",
+      "Tentativas para Levantar-se"
+    ],
+    [
+      "field_label",
+      "Equilíbrio Imediato ao Ficar em Pé (primeiros 5 segundos)"
+    ],
+    [
+      "field_label",
+      "Equilíbrio em Pé"
+    ],
+    [
+      "field_label",
+      "Prova do Nudge (Empurrão Leve no Esterno, 3x)"
+    ],
+    [
+      "field_label",
+      "Equilíbrio em Pé com Olhos Fechados"
+    ],
+    [
+      "field_label",
+      "Girar 360° — Continuidade dos Passos"
+    ],
+    [
+      "field_label",
+      "Girar 360° — Estabilidade"
+    ],
+    [
+      "field_label",
+      "Sentar-se"
+    ],
+    [
+      "field_label",
+      "Início da Marcha"
+    ],
+    [
+      "field_label",
+      "Comprimento e Altura do Passo — Pé Direito"
+    ],
+    [
+      "field_label",
+      "Comprimento e Altura do Passo — Pé Esquerdo"
+    ],
+    [
+      "field_label",
+      "Elevação do Passo — Pé Direito"
+    ],
+    [
+      "field_label",
+      "Elevação do Passo — Pé Esquerdo"
+    ],
+    [
+      "field_label",
+      "Simetria do Passo"
+    ],
+    [
+      "field_label",
+      "Continuidade dos Passos"
+    ],
+    [
+      "field_label",
+      "Trajetória (desvio observado)"
+    ],
+    [
+      "field_label",
+      "Tronco"
+    ],
+    [
+      "field_label",
+      "Postura ao Caminhar (Calcanhares)"
+    ],
+    [
+      "field_desc",
+      "Observar o paciente sentado em cadeira rígida sem apoio de braços."
+    ],
+    [
+      "field_desc",
+      "Capacidade de se levantar da cadeira."
+    ],
+    [
+      "field_desc",
+      "Número de tentativas necessárias para se levantar."
+    ],
+    [
+      "field_desc",
+      "Estabilidade nos primeiros 5 segundos em pé."
+    ],
+    [
+      "field_desc",
+      "Estabilidade mantida em pé."
+    ],
+    [
+      "field_desc",
+      "Examinador empurra levemente o esterno do paciente 3 vezes."
+    ],
+    [
+      "field_desc",
+      "Estabilidade em pé com os olhos fechados."
+    ],
+    [
+      "field_desc",
+      "Observar a continuidade dos passos ao girar 360 graus."
+    ],
+    [
+      "field_desc",
+      "Observar a estabilidade ao girar 360 graus."
+    ],
+    [
+      "field_desc",
+      "Capacidade de se sentar de forma segura."
+    ],
+    [
+      "field_desc",
+      "Observar hesitação ao iniciar a marcha."
+    ],
+    [
+      "field_desc",
+      "O pé direito, ao balançar, ultrapassa o pé esquerdo parado."
+    ],
+    [
+      "field_desc",
+      "O pé esquerdo, ao balançar, ultrapassa o pé direito parado."
+    ],
+    [
+      "field_desc",
+      "O pé direito sai completamente do chão ao balançar."
+    ],
+    [
+      "field_desc",
+      "O pé esquerdo sai completamente do chão ao balançar."
+    ],
+    [
+      "field_desc",
+      "Comprimento do passo direito comparado ao esquerdo."
+    ],
+    [
+      "field_desc",
+      "Continuidade entre um passo e outro."
+    ],
+    [
+      "field_desc",
+      "Desvio da trajetória em linha reta ao caminhar cerca de 3 metros."
+    ],
+    [
+      "field_desc",
+      "Estabilidade do tronco durante a marcha."
+    ],
+    [
+      "field_desc",
+      "Distância entre os calcanhares durante a marcha."
+    ],
+    [
+      "section_h2",
+      "Como funciona a Escala de Tinetti (POMA)"
+    ],
+    [
+      "card_h3",
+      "Equilíbrio Sentado"
+    ],
+    [
+      "card_h3",
+      "Levanta-se da Cadeira"
+    ],
+    [
+      "card_h3",
+      "Tentativas para Levantar-se"
+    ],
+    [
+      "card_h3",
+      "Equilíbrio Imediato ao Ficar em Pé (primeiros 5 segundos)"
+    ],
+    [
+      "card_h3",
+      "Equilíbrio em Pé"
+    ],
+    [
+      "card_h3",
+      "Prova do Nudge (Empurrão Leve no Esterno, 3x)"
+    ],
+    [
+      "card_h3",
+      "Equilíbrio em Pé com Olhos Fechados"
+    ],
+    [
+      "card_h3",
+      "Girar 360° — Continuidade dos Passos"
+    ],
+    [
+      "card_h3",
+      "Girar 360° — Estabilidade"
+    ],
+    [
+      "card_h3",
+      "Sentar-se"
+    ],
+    [
+      "card_h3",
+      "Início da Marcha"
+    ],
+    [
+      "card_h3",
+      "Comprimento e Altura do Passo — Pé Direito"
+    ],
+    [
+      "card_h3",
+      "Comprimento e Altura do Passo — Pé Esquerdo"
+    ],
+    [
+      "card_h3",
+      "Elevação do Passo — Pé Direito"
+    ],
+    [
+      "card_h3",
+      "Elevação do Passo — Pé Esquerdo"
+    ],
+    [
+      "card_h3",
+      "Simetria do Passo"
+    ],
+    [
+      "card_h3",
+      "Continuidade dos Passos"
+    ],
+    [
+      "card_h3",
+      "Trajetória (desvio observado)"
+    ],
+    [
+      "card_h3",
+      "Tronco"
+    ],
+    [
+      "card_h3",
+      "Postura ao Caminhar (Calcanhares)"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — Escala de Tinetti"
+    ],
+    [
+      "card_h3",
+      "Escala de Tinetti: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "A escala é dividida em duas partes: equilíbrio (máximo 16 pontos) e marcha (máximo 12 pontos), somando um total de 28 pontos."
+    ],
+    [
+      "tip_li",
+      "Utilize uma cadeira rígida sem braços e um percurso de aproximadamente 3 metros para a avaliação padronizada."
+    ],
+    [
+      "tip_li",
+      "O ponto de corte de 18 pontos ou menos para alto risco é amplamente utilizado na prática clínica."
+    ],
+    [
+      "tip_li",
+      "Combine os resultados da Tinetti com outras ferramentas (Timed Up and Go, histórico de quedas) para uma avaliação mais completa do risco."
+    ],
+    [
+      "faq_question",
+      "Quanto tempo leva para aplicar a Escala de Tinetti?"
+    ],
+    [
+      "faq_question",
+      "A Escala de Tinetti substitui outras avaliações de risco de queda?"
+    ]
+  ]
+}

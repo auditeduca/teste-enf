@@ -1,0 +1,128 @@
+{
+  "id": "2e3f4051-6273-4849-a0b1-c2d3e4f50617",
+  "code": "SCALE-EN-001",
+  "slug": "escalanumerica",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Escala Numérica de Dor (0-10)",
+    "description": "Avalie a intensidade da dor do paciente com a Escala Numérica de Dor (0 a 10). Inclui interpretação, SAE e evidências para a prática de enfermagem.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/escalanumerica.html"
+  },
+  "breadcrumb": { "category": "Avaliação da Dor", "categoryHref": "index.html#calculadoras" },
+  "overview": {
+    "name": "Escala Numérica de Dor",
+    "acronym": "END",
+    "categoryBadge": "Avaliação da dor",
+    "icon": "i-gauge",
+    "objective": "Quantificar a intensidade da dor referida pelo paciente por meio de uma escala numérica simples de 0 (sem dor) a 10 (pior dor imaginável).",
+    "indication": "Indicada para avaliação e reavaliação da dor em qualquer paciente adulto ou adolescente capaz de compreender e utilizar números para se autoavaliar.",
+    "targetPopulation": "Pacientes adultos e adolescentes orientados, capazes de se comunicar verbalmente ou por gestos (apontar o número).",
+    "specialty": ["Enfermagem", "Manejo da Dor", "Cuidados Paliativos"],
+    "averageTime": "menos de 1 minuto",
+    "evidenceLevel": "I",
+    "organizations": ["Sociedade Brasileira para o Estudo da Dor (SBED)"],
+    "complexity": "basic",
+    "rating": 4.9,
+    "ratingCount": 2100
+  },
+  "calculator": {
+    "inputs": [
+      {
+        "id": "intensidade",
+        "type": "select",
+        "label": "Intensidade da Dor",
+        "description": "Peça ao paciente para atribuir um número de 0 a 10 à intensidade da dor sentida no momento.",
+        "defaultValue": 0,
+        "options": [
+          {"value": 0, "label": "0 — Sem Dor", "score": 0, "description": "Ausência completa de dor."},
+          {"value": 1, "label": "1", "score": 1, "description": "Dor leve, quase imperceptível."},
+          {"value": 2, "label": "2", "score": 2, "description": "Dor leve."},
+          {"value": 3, "label": "3", "score": 3, "description": "Dor leve a moderada."},
+          {"value": 4, "label": "4", "score": 4, "description": "Dor moderada."},
+          {"value": 5, "label": "5", "score": 5, "description": "Dor moderada."},
+          {"value": 6, "label": "6", "score": 6, "description": "Dor moderada a intensa."},
+          {"value": 7, "label": "7", "score": 7, "description": "Dor intensa."},
+          {"value": 8, "label": "8", "score": 8, "description": "Dor intensa."},
+          {"value": 9, "label": "9", "score": 9, "description": "Dor muito intensa."},
+          {"value": 10, "label": "10 — Pior Dor Imaginável", "score": 10, "description": "Pior dor imaginável, insuportável."}
+        ]
+      }
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "Escore de Dor",
+      "resultUnit": "pontos",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {"min": 0, "max": 0, "label": "Sem Dor", "riskLevel": "none", "color": "#2563eb",
+       "clinicalImplications": "Ausência de dor relatada pelo paciente.",
+       "recommendations": "• Manter conduta atual\n• Reavaliar conforme protocolo institucional"},
+      {"min": 1, "max": 3, "label": "Dor Leve", "riskLevel": "low", "color": "#ca8a04",
+       "clinicalImplications": "Dor de intensidade leve, geralmente não interfere significativamente nas atividades diárias.",
+       "recommendations": "• Considerar medidas não farmacológicas\n• Reavaliar periodicamente\n• Analgesia simples se necessário, conforme prescrição"},
+      {"min": 4, "max": 6, "label": "Dor Moderada", "riskLevel": "moderate", "color": "#ca8a04",
+       "clinicalImplications": "Dor de intensidade moderada, pode interferir nas atividades e no repouso do paciente.",
+       "recommendations": "• Comunicar à equipe médica\n• Reavaliar após intervenção analgésica\n• Investigar causa da dor"},
+      {"min": 7, "max": 10, "label": "Dor Intensa", "riskLevel": "high", "color": "#dc2626",
+       "clinicalImplications": "Dor de forte intensidade, com significativo impacto no bem-estar e possível necessidade de intervenção imediata.",
+       "recommendations": "• Comunicar imediatamente à equipe médica\n• Priorizar intervenção analgésica\n• Reavaliar em intervalo curto após a intervenção\n• Investigar e tratar a causa de base"}
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial, de início súbito ou lento, com intensidade de leve a intensa, com término previsível e duração inferior a 3 meses."},
+      {"diagnosis": "Dor crônica", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial, com duração superior a 3 meses."}
+    ],
+    "noc": [
+      {"outcome": "Controle da dor", "indicators": ["Reconhece o início da dor", "Utiliza medidas de alívio", "Relata dor controlada", "Relata sinais e sintomas de dor à equipe de saúde"]}
+    ],
+    "nic": [
+      {"intervention": "Manejo da dor", "activities": ["Avaliar a dor de forma abrangente (localização, características, início, duração, frequência, intensidade)", "Utilizar escala numérica de forma consistente", "Administrar analgesia conforme prescrição", "Reavaliar a dor após intervenções", "Registrar a intensidade da dor no prontuário"]}
+    ]
+  },
+  "evidence": {
+    "foundation": "A Escala Numérica de Dor (END) é um dos instrumentos mais utilizados e validados mundialmente para avaliação unidimensional da intensidade da dor, solicitando que o paciente atribua um número de 0 (sem dor) a 10 (pior dor imaginável) à sua experiência dolorosa.",
+    "history": "Amplamente recomendada por sociedades de dor e órgãos de acreditação hospitalar como a 'quinta vitalidade' a ser monitorada, ao lado de temperatura, pulso, respiração e pressão arterial.",
+    "validation": "Apresenta boa confiabilidade teste-reteste e forte correlação com outras escalas de dor (Escala Visual Analógica, Escala de Faces), sendo de fácil compreensão e aplicação rápida na maioria dos pacientes adultos orientados.",
+    "limitations": "Requer que o paciente compreenda o conceito numérico, o que pode ser um limitante em crianças pequenas, pacientes com déficit cognitivo severo ou barreiras de comunicação — nesses casos, recomenda-se usar escalas comportamentais ou de faces.",
+    "references": [
+      {"text": "SOCIEDADE BRASILEIRA PARA O ESTUDO DA DOR (SBED). Consenso brasileiro sobre avaliação e tratamento da dor. São Paulo: SBED, 2022."},
+      {"text": "HAWKER, G. A. et al. Measures of adult pain. Arthritis Care & Research, v. 63, n. S11, p. S240-S252, 2011."},
+      {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."},
+      {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Sempre utilize a mesma escala ao longo do tratamento para permitir comparação consistente.",
+      "Reavalie a dor após qualquer intervenção analgésica, dentro do intervalo apropriado.",
+      "Em pacientes que não conseguem usar números, considere a Escala de Faces ou escalas comportamentais.",
+      "Registre não apenas o número, mas também localização, características e fatores de melhora/piora da dor."
+    ],
+    "examples": [
+      {"label": "Paciente confortável", "sublabel": "Escore 0", "emoji": "✅", "values": {"intensidade": 0}},
+      {"label": "Dor pós-operatória leve", "sublabel": "Escore 3", "emoji": "🙂", "values": {"intensidade": 3}},
+      {"label": "Dor intensa não controlada", "sublabel": "Escore 9", "emoji": "🚨", "values": {"intensidade": 9}}
+    ],
+    "quiz": [
+      {"q": "Qual a faixa de valores da Escala Numérica de Dor?", "opts": ["0 a 5", "0 a 10", "1 a 10", "0 a 100"], "correct": 1,
+       "expl": "A escala varia de 0 (sem dor) a 10 (pior dor imaginável)."},
+      {"q": "Um escore de 8 pontos é classificado como qual intensidade de dor?", "opts": ["Dor leve", "Dor moderada", "Dor intensa", "Sem dor"], "correct": 2,
+       "expl": "Escores de 7 a 10 são classificados como dor intensa, exigindo comunicação imediata à equipe médica e priorização da analgesia."},
+      {"q": "A Escala Numérica de Dor é adequada para todos os pacientes?", "opts": ["Sim, sempre", "Não, requer compreensão do conceito numérico", "Apenas para idosos", "Apenas para pós-operatório"], "correct": 1,
+       "expl": "Pacientes que não compreendem o conceito numérico (crianças pequenas, déficit cognitivo severo) devem ser avaliados com escalas alternativas, como a Escala de Faces."}
+    ]
+  },
+  "faq": [
+    {"q": "Com que frequência a dor deve ser reavaliada?", "a": "A dor deve ser avaliada como o 'quinto sinal vital', na admissão, periodicamente conforme protocolo institucional, e sempre após intervenções analgésicas, dentro do prazo de ação esperado do medicamento ou medida utilizada."},
+    {"q": "O que fazer se o paciente não conseguir usar a escala numérica?", "a": "Para pacientes que não compreendem números (crianças pequenas, déficit cognitivo, barreiras de comunicação), recomenda-se o uso de escalas alternativas como a Escala de Faces (Wong-Baker) ou escalas comportamentais de dor."}
+  ],
+  "about": {
+    "title": "Como funciona a Escala Numérica de Dor",
+    "html": "<p>A Escala Numérica de Dor solicita que o paciente atribua um número de 0 a 10 à intensidade da dor sentida, sendo 0 a ausência completa de dor e 10 a pior dor imaginável. É simples, rápida e amplamente validada para pacientes orientados capazes de compreender números.</p><p><strong>Guia rápido:</strong> 0 = Sem dor | 1-3 = Dor leve | 4-6 = Dor moderada | 7-10 = Dor intensa.</p>"
+  }
+}

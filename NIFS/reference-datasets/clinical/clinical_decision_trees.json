@@ -1,0 +1,4847 @@
+{
+  "generated_at": "2026-06-19T21:01:25.212427Z",
+  "schema_version": "2026.1.0",
+  "micro_phase": "5.2",
+  "template_id": "T5.2",
+  "entity": "ClinicalDecisionTree",
+  "nkos_phase": 5,
+  "edition": "2026",
+  "content_source": "NKOS_CUSTOM",
+  "reference_page": "/missao",
+  "count": 50,
+  "records": [
+    {
+      "uuid": "8f2907d2-2b83-5c9d-9d8c-7071be9937db",
+      "tree_code": "TREE.GCS",
+      "name": "Arvore de decisao — Glasgow Coma Scale (GCS)",
+      "name_pt": "Arvore de decisao — Glasgow Coma Scale (GCS)",
+      "tree_type": "diagnosis",
+      "domain": "neurology",
+      "root_node_id": "NODE.GCS.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.GCS.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Glasgow Coma Scale (GCS)",
+          "next_node_id": "NODE.GCS.ELIG"
+        },
+        {
+          "node_id": "NODE.GCS.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.GCS.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.GCS.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.GCS.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar GCS e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.GCS",
+          "linked_definition_code": "CALC.TOOL.GCS",
+          "next_node_id": "NODE.GCS.INTERP"
+        },
+        {
+          "node_id": "NODE.GCS.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.GCS.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.GCS.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.GCS.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.GCS.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.GCS.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.GCS"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.GCS"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00226",
+        "NANDA.00155"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "ccc37f82-6911-563b-bcb4-fdbad1578b8b",
+      "tree_code": "TREE.BRADEN",
+      "name": "Arvore de decisao — Braden Scale",
+      "name_pt": "Arvore de decisao — Braden Scale",
+      "tree_type": "diagnosis",
+      "domain": "wound_care",
+      "root_node_id": "NODE.BRADEN.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.BRADEN.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Braden Scale",
+          "next_node_id": "NODE.BRADEN.ELIG"
+        },
+        {
+          "node_id": "NODE.BRADEN.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.BRADEN.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.BRADEN.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BRADEN.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar BRADEN e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.BRADEN",
+          "linked_definition_code": "CALC.TOOL.BRADEN",
+          "next_node_id": "NODE.BRADEN.INTERP"
+        },
+        {
+          "node_id": "NODE.BRADEN.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.BRADEN.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.BRADEN.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BRADEN.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.BRADEN.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.BRADEN.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.BRADEN"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.BRADEN"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00235",
+        "NANDA.00202"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "18784504-a257-52ad-b42c-c8613ab7d366",
+      "tree_code": "TREE.MORSE",
+      "name": "Arvore de decisao — Morse Fall Scale",
+      "name_pt": "Arvore de decisao — Morse Fall Scale",
+      "tree_type": "diagnosis",
+      "domain": "patient_safety",
+      "root_node_id": "NODE.MORSE.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.MORSE.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Morse Fall Scale",
+          "next_node_id": "NODE.MORSE.ELIG"
+        },
+        {
+          "node_id": "NODE.MORSE.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.MORSE.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.MORSE.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.MORSE.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar MORSE e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.MORSE",
+          "linked_definition_code": "CALC.TOOL.MORSE",
+          "next_node_id": "NODE.MORSE.INTERP"
+        },
+        {
+          "node_id": "NODE.MORSE.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.MORSE.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.MORSE.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.MORSE.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.MORSE.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.MORSE.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.MORSE"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.MORSE"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00102"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "b42d65f4-7e19-5bf5-a421-4bc0f7c43816",
+      "tree_code": "TREE.RASS",
+      "name": "Arvore de decisao — Richmond Agitation-Sedation Scale",
+      "name_pt": "Arvore de decisao — Richmond Agitation-Sedation Scale",
+      "tree_type": "diagnosis",
+      "domain": "critical_care",
+      "root_node_id": "NODE.RASS.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.RASS.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Richmond Agitation-Sedation Scale",
+          "next_node_id": "NODE.RASS.ELIG"
+        },
+        {
+          "node_id": "NODE.RASS.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.RASS.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.RASS.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.RASS.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar RASS e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.RASS",
+          "linked_definition_code": "CALC.TOOL.RASS",
+          "next_node_id": "NODE.RASS.INTERP"
+        },
+        {
+          "node_id": "NODE.RASS.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.RASS.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.RASS.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.RASS.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.RASS.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.RASS.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.RASS"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.RASS"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00155"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "043e0c32-5c9c-507c-b80c-56420dd78f66",
+      "tree_code": "TREE.CAM-ICU",
+      "name": "Arvore de decisao — Confusion Assessment Method for ICU",
+      "name_pt": "Arvore de decisao — Confusion Assessment Method for ICU",
+      "tree_type": "diagnosis",
+      "domain": "critical_care",
+      "root_node_id": "NODE.CAM-ICU.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.CAM-ICU.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Confusion Assessment Method for ICU",
+          "next_node_id": "NODE.CAM-ICU.ELIG"
+        },
+        {
+          "node_id": "NODE.CAM-ICU.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.CAM-ICU.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.CAM-ICU.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CAM-ICU.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar CAM-ICU e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.CAM-ICU",
+          "linked_definition_code": "CALC.TOOL.CAM-ICU",
+          "next_node_id": "NODE.CAM-ICU.INTERP"
+        },
+        {
+          "node_id": "NODE.CAM-ICU.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.CAM-ICU.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.CAM-ICU.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CAM-ICU.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.CAM-ICU.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.CAM-ICU.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.CAM-ICU"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.CAM-ICU"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00155"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "8e1162c8-05d8-5c22-abc3-ba7d3ad1a3e6",
+      "tree_code": "TREE.BARTHEL",
+      "name": "Arvore de decisao — Barthel Index",
+      "name_pt": "Arvore de decisao — Barthel Index",
+      "tree_type": "diagnosis",
+      "domain": "rehabilitation",
+      "root_node_id": "NODE.BARTHEL.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.BARTHEL.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Barthel Index",
+          "next_node_id": "NODE.BARTHEL.ELIG"
+        },
+        {
+          "node_id": "NODE.BARTHEL.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.BARTHEL.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.BARTHEL.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BARTHEL.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar BARTHEL e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.BARTHEL",
+          "linked_definition_code": "CALC.TOOL.BARTHEL",
+          "next_node_id": "NODE.BARTHEL.INTERP"
+        },
+        {
+          "node_id": "NODE.BARTHEL.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.BARTHEL.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.BARTHEL.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BARTHEL.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.BARTHEL.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.BARTHEL.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.BARTHEL"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.BARTHEL"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "364639a4-be52-5dcc-9492-c9eabb1c085c",
+      "tree_code": "TREE.KATZ",
+      "name": "Arvore de decisao — Katz Index",
+      "name_pt": "Arvore de decisao — Katz Index",
+      "tree_type": "diagnosis",
+      "domain": "gerontology",
+      "root_node_id": "NODE.KATZ.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.KATZ.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Katz Index",
+          "next_node_id": "NODE.KATZ.ELIG"
+        },
+        {
+          "node_id": "NODE.KATZ.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.KATZ.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.KATZ.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.KATZ.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar KATZ e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.KATZ",
+          "linked_definition_code": "CALC.TOOL.KATZ",
+          "next_node_id": "NODE.KATZ.INTERP"
+        },
+        {
+          "node_id": "NODE.KATZ.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.KATZ.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.KATZ.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.KATZ.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.KATZ.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.KATZ.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.KATZ"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.KATZ"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "7b5bbac5-2de9-50a8-9c0d-d91268226924",
+      "tree_code": "TREE.NORTON",
+      "name": "Arvore de decisao — Norton Scale",
+      "name_pt": "Arvore de decisao — Norton Scale",
+      "tree_type": "diagnosis",
+      "domain": "wound_care",
+      "root_node_id": "NODE.NORTON.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.NORTON.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Norton Scale",
+          "next_node_id": "NODE.NORTON.ELIG"
+        },
+        {
+          "node_id": "NODE.NORTON.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.NORTON.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.NORTON.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.NORTON.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar NORTON e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.NORTON",
+          "linked_definition_code": "CALC.TOOL.NORTON",
+          "next_node_id": "NODE.NORTON.INTERP"
+        },
+        {
+          "node_id": "NODE.NORTON.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.NORTON.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.NORTON.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.NORTON.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.NORTON.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.NORTON.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.NORTON"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.NORTON"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00235"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "5f82fa44-08b7-5602-a6fa-5106949d0fba",
+      "tree_code": "TREE.WATERLOW",
+      "name": "Arvore de decisao — Waterlow Scale",
+      "name_pt": "Arvore de decisao — Waterlow Scale",
+      "tree_type": "diagnosis",
+      "domain": "wound_care",
+      "root_node_id": "NODE.WATERLOW.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.WATERLOW.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Waterlow Scale",
+          "next_node_id": "NODE.WATERLOW.ELIG"
+        },
+        {
+          "node_id": "NODE.WATERLOW.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.WATERLOW.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.WATERLOW.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.WATERLOW.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar WATERLOW e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.WATERLOW",
+          "linked_definition_code": "CALC.TOOL.WATERLOW",
+          "next_node_id": "NODE.WATERLOW.INTERP"
+        },
+        {
+          "node_id": "NODE.WATERLOW.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.WATERLOW.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.WATERLOW.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.WATERLOW.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.WATERLOW.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.WATERLOW.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.WATERLOW"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.WATERLOW"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00235"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "beeef8da-ffc9-5644-87cb-23eead3138af",
+      "tree_code": "TREE.NEWS2",
+      "name": "Arvore de decisao — National Early Warning Score 2",
+      "name_pt": "Arvore de decisao — National Early Warning Score 2",
+      "tree_type": "diagnosis",
+      "domain": "critical_care",
+      "root_node_id": "NODE.NEWS2.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.NEWS2.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: National Early Warning Score 2",
+          "next_node_id": "NODE.NEWS2.ELIG"
+        },
+        {
+          "node_id": "NODE.NEWS2.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.NEWS2.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.NEWS2.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.NEWS2.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar NEWS2 e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.NEWS2",
+          "linked_definition_code": "CALC.TOOL.NEWS2",
+          "next_node_id": "NODE.NEWS2.INTERP"
+        },
+        {
+          "node_id": "NODE.NEWS2.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.NEWS2.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.NEWS2.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.NEWS2.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.NEWS2.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.NEWS2.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.NEWS2"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.NEWS2"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00046",
+        "NANDA.00004"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "2ce103a2-52a9-5283-ae5e-131d3f1c907a",
+      "tree_code": "TREE.MEWS",
+      "name": "Arvore de decisao — Modified Early Warning Score",
+      "name_pt": "Arvore de decisao — Modified Early Warning Score",
+      "tree_type": "diagnosis",
+      "domain": "critical_care",
+      "root_node_id": "NODE.MEWS.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.MEWS.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Modified Early Warning Score",
+          "next_node_id": "NODE.MEWS.ELIG"
+        },
+        {
+          "node_id": "NODE.MEWS.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.MEWS.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.MEWS.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.MEWS.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar MEWS e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.MEWS",
+          "linked_definition_code": "CALC.TOOL.MEWS",
+          "next_node_id": "NODE.MEWS.INTERP"
+        },
+        {
+          "node_id": "NODE.MEWS.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.MEWS.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.MEWS.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.MEWS.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.MEWS.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.MEWS.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.MEWS"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.MEWS"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00046"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "f9a7d53d-271c-5563-8024-36c50f1b04d9",
+      "tree_code": "TREE.APACHE2",
+      "name": "Arvore de decisao — APACHE II",
+      "name_pt": "Arvore de decisao — APACHE II",
+      "tree_type": "diagnosis",
+      "domain": "critical_care",
+      "root_node_id": "NODE.APACHE2.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.APACHE2.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: APACHE II",
+          "next_node_id": "NODE.APACHE2.ELIG"
+        },
+        {
+          "node_id": "NODE.APACHE2.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.APACHE2.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.APACHE2.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.APACHE2.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar APACHE2 e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.APACHE2",
+          "linked_definition_code": "CALC.TOOL.APACHE2",
+          "next_node_id": "NODE.APACHE2.INTERP"
+        },
+        {
+          "node_id": "NODE.APACHE2.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.APACHE2.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.APACHE2.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.APACHE2.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.APACHE2.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.APACHE2.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.APACHE2"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.APACHE2"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00046"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "1e9303aa-68c7-55e9-be87-8402f7d03350",
+      "tree_code": "TREE.SOFA",
+      "name": "Arvore de decisao — Sequential Organ Failure Assessment",
+      "name_pt": "Arvore de decisao — Sequential Organ Failure Assessment",
+      "tree_type": "diagnosis",
+      "domain": "critical_care",
+      "root_node_id": "NODE.SOFA.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.SOFA.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Sequential Organ Failure Assessment",
+          "next_node_id": "NODE.SOFA.ELIG"
+        },
+        {
+          "node_id": "NODE.SOFA.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.SOFA.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.SOFA.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.SOFA.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar SOFA e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.SOFA",
+          "linked_definition_code": "CALC.TOOL.SOFA",
+          "next_node_id": "NODE.SOFA.INTERP"
+        },
+        {
+          "node_id": "NODE.SOFA.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.SOFA.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.SOFA.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.SOFA.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.SOFA.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.SOFA.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.SOFA"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.SOFA"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00046"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "9ac1660f-ffe4-5206-9feb-d4131079ffb7",
+      "tree_code": "TREE.qSOFA",
+      "name": "Arvore de decisao — Quick SOFA",
+      "name_pt": "Arvore de decisao — Quick SOFA",
+      "tree_type": "diagnosis",
+      "domain": "infectious_disease",
+      "root_node_id": "NODE.qSOFA.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.qSOFA.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Quick SOFA",
+          "next_node_id": "NODE.qSOFA.ELIG"
+        },
+        {
+          "node_id": "NODE.qSOFA.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.qSOFA.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.qSOFA.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.qSOFA.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar qSOFA e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.qSOFA",
+          "linked_definition_code": "CALC.TOOL.qSOFA",
+          "next_node_id": "NODE.qSOFA.INTERP"
+        },
+        {
+          "node_id": "NODE.qSOFA.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.qSOFA.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.qSOFA.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.qSOFA.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.qSOFA.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.qSOFA.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.qSOFA"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.qSOFA"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00004"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "33317ede-b782-5aae-aa75-c3ef7c098964",
+      "tree_code": "TREE.PSI",
+      "name": "Arvore de decisao — Pneumonia Severity Index",
+      "name_pt": "Arvore de decisao — Pneumonia Severity Index",
+      "tree_type": "diagnosis",
+      "domain": "pneumology",
+      "root_node_id": "NODE.PSI.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.PSI.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Pneumonia Severity Index",
+          "next_node_id": "NODE.PSI.ELIG"
+        },
+        {
+          "node_id": "NODE.PSI.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.PSI.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.PSI.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.PSI.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar PSI e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.PSI",
+          "linked_definition_code": "CALC.TOOL.PSI",
+          "next_node_id": "NODE.PSI.INTERP"
+        },
+        {
+          "node_id": "NODE.PSI.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.PSI.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.PSI.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.PSI.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.PSI.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.PSI.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.PSI"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.PSI"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "54112875-8f66-51d2-b2d2-3649067ba5fd",
+      "tree_code": "TREE.CURB65",
+      "name": "Arvore de decisao — CURB-65",
+      "name_pt": "Arvore de decisao — CURB-65",
+      "tree_type": "diagnosis",
+      "domain": "pneumology",
+      "root_node_id": "NODE.CURB65.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.CURB65.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: CURB-65",
+          "next_node_id": "NODE.CURB65.ELIG"
+        },
+        {
+          "node_id": "NODE.CURB65.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.CURB65.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.CURB65.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CURB65.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar CURB65 e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.CURB65",
+          "linked_definition_code": "CALC.TOOL.CURB65",
+          "next_node_id": "NODE.CURB65.INTERP"
+        },
+        {
+          "node_id": "NODE.CURB65.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.CURB65.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.CURB65.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CURB65.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.CURB65.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.CURB65.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.CURB65"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.CURB65"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "ac9dc645-7e39-5b69-b747-b003d231a21d",
+      "tree_code": "TREE.WELLS_DVT",
+      "name": "Arvore de decisao — Wells Criteria (DVT)",
+      "name_pt": "Arvore de decisao — Wells Criteria (DVT)",
+      "tree_type": "diagnosis",
+      "domain": "cardiology",
+      "root_node_id": "NODE.WELLS_DVT.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.WELLS_DVT.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Wells Criteria (DVT)",
+          "next_node_id": "NODE.WELLS_DVT.ELIG"
+        },
+        {
+          "node_id": "NODE.WELLS_DVT.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.WELLS_DVT.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.WELLS_DVT.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.WELLS_DVT.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar WELLS_DVT e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.WELLS_DVT",
+          "linked_definition_code": "CALC.TOOL.WELLS_DVT",
+          "next_node_id": "NODE.WELLS_DVT.INTERP"
+        },
+        {
+          "node_id": "NODE.WELLS_DVT.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.WELLS_DVT.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.WELLS_DVT.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.WELLS_DVT.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.WELLS_DVT.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.WELLS_DVT.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.WELLS_DVT"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.WELLS_DVT"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "fd5962c0-77e2-51e5-8fa1-48265749410b",
+      "tree_code": "TREE.WELLS_PE",
+      "name": "Arvore de decisao — Wells Criteria (PE)",
+      "name_pt": "Arvore de decisao — Wells Criteria (PE)",
+      "tree_type": "diagnosis",
+      "domain": "cardiology",
+      "root_node_id": "NODE.WELLS_PE.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.WELLS_PE.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Wells Criteria (PE)",
+          "next_node_id": "NODE.WELLS_PE.ELIG"
+        },
+        {
+          "node_id": "NODE.WELLS_PE.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.WELLS_PE.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.WELLS_PE.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.WELLS_PE.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar WELLS_PE e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.WELLS_PE",
+          "linked_definition_code": "CALC.TOOL.WELLS_PE",
+          "next_node_id": "NODE.WELLS_PE.INTERP"
+        },
+        {
+          "node_id": "NODE.WELLS_PE.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.WELLS_PE.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.WELLS_PE.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.WELLS_PE.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.WELLS_PE.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.WELLS_PE.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.WELLS_PE"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.WELLS_PE"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "4c1ac62a-4107-5d6d-b254-ad9a93c3e4c5",
+      "tree_code": "TREE.GENEVA_PE",
+      "name": "Arvore de decisao — Geneva Score (PE)",
+      "name_pt": "Arvore de decisao — Geneva Score (PE)",
+      "tree_type": "diagnosis",
+      "domain": "cardiology",
+      "root_node_id": "NODE.GENEVA_PE.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.GENEVA_PE.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Geneva Score (PE)",
+          "next_node_id": "NODE.GENEVA_PE.ELIG"
+        },
+        {
+          "node_id": "NODE.GENEVA_PE.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.GENEVA_PE.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.GENEVA_PE.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.GENEVA_PE.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar GENEVA_PE e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.GENEVA_PE",
+          "linked_definition_code": "CALC.TOOL.GENEVA_PE",
+          "next_node_id": "NODE.GENEVA_PE.INTERP"
+        },
+        {
+          "node_id": "NODE.GENEVA_PE.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.GENEVA_PE.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.GENEVA_PE.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.GENEVA_PE.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.GENEVA_PE.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.GENEVA_PE.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.GENEVA_PE"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.GENEVA_PE"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "7b9a477a-200e-5e16-8dd3-39de7a6f59b9",
+      "tree_code": "TREE.PERC",
+      "name": "Arvore de decisao — Pulmonary Embolism Rule-out Criteria",
+      "name_pt": "Arvore de decisao — Pulmonary Embolism Rule-out Criteria",
+      "tree_type": "diagnosis",
+      "domain": "emergency",
+      "root_node_id": "NODE.PERC.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.PERC.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Pulmonary Embolism Rule-out Criteria",
+          "next_node_id": "NODE.PERC.ELIG"
+        },
+        {
+          "node_id": "NODE.PERC.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.PERC.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.PERC.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.PERC.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar PERC e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.PERC",
+          "linked_definition_code": "CALC.TOOL.PERC",
+          "next_node_id": "NODE.PERC.INTERP"
+        },
+        {
+          "node_id": "NODE.PERC.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.PERC.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.PERC.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.PERC.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.PERC.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.PERC.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.PERC"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.PERC"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00172",
+        "NANDA.00173",
+        "NANDA.00174"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "2236cca1-3b4a-5928-a039-bff2386f218f",
+      "tree_code": "TREE.HEART",
+      "name": "Arvore de decisao — HEART Score",
+      "name_pt": "Arvore de decisao — HEART Score",
+      "tree_type": "diagnosis",
+      "domain": "cardiology",
+      "root_node_id": "NODE.HEART.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.HEART.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: HEART Score",
+          "next_node_id": "NODE.HEART.ELIG"
+        },
+        {
+          "node_id": "NODE.HEART.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.HEART.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.HEART.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HEART.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar HEART e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.HEART",
+          "linked_definition_code": "CALC.TOOL.HEART",
+          "next_node_id": "NODE.HEART.INTERP"
+        },
+        {
+          "node_id": "NODE.HEART.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.HEART.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.HEART.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HEART.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.HEART.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.HEART.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.HEART"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.HEART"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "cd58b01f-24a1-5be4-9b74-d49e9973cf66",
+      "tree_code": "TREE.GRACE",
+      "name": "Arvore de decisao — GRACE Score",
+      "name_pt": "Arvore de decisao — GRACE Score",
+      "tree_type": "diagnosis",
+      "domain": "cardiology",
+      "root_node_id": "NODE.GRACE.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.GRACE.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: GRACE Score",
+          "next_node_id": "NODE.GRACE.ELIG"
+        },
+        {
+          "node_id": "NODE.GRACE.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.GRACE.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.GRACE.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.GRACE.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar GRACE e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.GRACE",
+          "linked_definition_code": "CALC.TOOL.GRACE",
+          "next_node_id": "NODE.GRACE.INTERP"
+        },
+        {
+          "node_id": "NODE.GRACE.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.GRACE.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.GRACE.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.GRACE.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.GRACE.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.GRACE.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.GRACE"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.GRACE"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "f6f1267a-8285-50c0-80d8-35aeb0502981",
+      "tree_code": "TREE.TIMI",
+      "name": "Arvore de decisao — TIMI Score",
+      "name_pt": "Arvore de decisao — TIMI Score",
+      "tree_type": "diagnosis",
+      "domain": "cardiology",
+      "root_node_id": "NODE.TIMI.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.TIMI.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: TIMI Score",
+          "next_node_id": "NODE.TIMI.ELIG"
+        },
+        {
+          "node_id": "NODE.TIMI.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.TIMI.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.TIMI.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.TIMI.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar TIMI e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.TIMI",
+          "linked_definition_code": "CALC.TOOL.TIMI",
+          "next_node_id": "NODE.TIMI.INTERP"
+        },
+        {
+          "node_id": "NODE.TIMI.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.TIMI.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.TIMI.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.TIMI.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.TIMI.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.TIMI.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.TIMI"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.TIMI"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "664f3da7-ad5c-5f44-88a4-d679267ced71",
+      "tree_code": "TREE.HASBLED",
+      "name": "Arvore de decisao — HAS-BLED Score",
+      "name_pt": "Arvore de decisao — HAS-BLED Score",
+      "tree_type": "diagnosis",
+      "domain": "hematology",
+      "root_node_id": "NODE.HASBLED.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.HASBLED.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: HAS-BLED Score",
+          "next_node_id": "NODE.HASBLED.ELIG"
+        },
+        {
+          "node_id": "NODE.HASBLED.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.HASBLED.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.HASBLED.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HASBLED.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar HASBLED e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.HASBLED",
+          "linked_definition_code": "CALC.TOOL.HASBLED",
+          "next_node_id": "NODE.HASBLED.INTERP"
+        },
+        {
+          "node_id": "NODE.HASBLED.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.HASBLED.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.HASBLED.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HASBLED.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.HASBLED.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.HASBLED.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.HASBLED"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.HASBLED"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "747a2066-fe98-5535-acfe-454fcdb134ff",
+      "tree_code": "TREE.CHA2DS2VASc",
+      "name": "Arvore de decisao — CHA2DS2-VASc Score",
+      "name_pt": "Arvore de decisao — CHA2DS2-VASc Score",
+      "tree_type": "diagnosis",
+      "domain": "cardiology",
+      "root_node_id": "NODE.CHA2DS2VASc.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.CHA2DS2VASc.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: CHA2DS2-VASc Score",
+          "next_node_id": "NODE.CHA2DS2VASc.ELIG"
+        },
+        {
+          "node_id": "NODE.CHA2DS2VASc.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.CHA2DS2VASc.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.CHA2DS2VASc.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CHA2DS2VASc.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar CHA2DS2VASc e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.CHA2DS2VASc",
+          "linked_definition_code": "CALC.TOOL.CHA2DS2VASc",
+          "next_node_id": "NODE.CHA2DS2VASc.INTERP"
+        },
+        {
+          "node_id": "NODE.CHA2DS2VASc.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.CHA2DS2VASc.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.CHA2DS2VASc.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CHA2DS2VASc.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.CHA2DS2VASc.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.CHA2DS2VASc.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.CHA2DS2VASc"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.CHA2DS2VASc"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "5075e977-0386-5448-9936-ee739cfc570a",
+      "tree_code": "TREE.CLARK",
+      "name": "Arvore de decisao — Pediatric Dose (Clark)",
+      "name_pt": "Arvore de decisao — Pediatric Dose (Clark)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.CLARK.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.CLARK.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Pediatric Dose (Clark)",
+          "next_node_id": "NODE.CLARK.ELIG"
+        },
+        {
+          "node_id": "NODE.CLARK.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.CLARK.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.CLARK.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CLARK.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar CLARK e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.CLARK",
+          "linked_definition_code": "CALC.TOOL.CLARK",
+          "next_node_id": "NODE.CLARK.INTERP"
+        },
+        {
+          "node_id": "NODE.CLARK.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.CLARK.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.CLARK.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CLARK.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.CLARK.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.CLARK.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.CLARK"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.CLARK"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "d3037710-d128-5670-9793-d91faf4844ad",
+      "tree_code": "TREE.YOUNG",
+      "name": "Arvore de decisao — Pediatric Dose (Young)",
+      "name_pt": "Arvore de decisao — Pediatric Dose (Young)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.YOUNG.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.YOUNG.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Pediatric Dose (Young)",
+          "next_node_id": "NODE.YOUNG.ELIG"
+        },
+        {
+          "node_id": "NODE.YOUNG.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.YOUNG.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.YOUNG.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.YOUNG.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar YOUNG e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.YOUNG",
+          "linked_definition_code": "CALC.TOOL.YOUNG",
+          "next_node_id": "NODE.YOUNG.INTERP"
+        },
+        {
+          "node_id": "NODE.YOUNG.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.YOUNG.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.YOUNG.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.YOUNG.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.YOUNG.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.YOUNG.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.YOUNG"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.YOUNG"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "5176b205-4011-5215-b5ee-5cf10493c17d",
+      "tree_code": "TREE.BSA_MOSTELLER",
+      "name": "Arvore de decisao — Body Surface Area (Mosteller)",
+      "name_pt": "Arvore de decisao — Body Surface Area (Mosteller)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.BSA_MOSTELLER.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.BSA_MOSTELLER.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Body Surface Area (Mosteller)",
+          "next_node_id": "NODE.BSA_MOSTELLER.ELIG"
+        },
+        {
+          "node_id": "NODE.BSA_MOSTELLER.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.BSA_MOSTELLER.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.BSA_MOSTELLER.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BSA_MOSTELLER.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar BSA_MOSTELLER e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.BSA_MOSTELLER",
+          "linked_definition_code": "CALC.TOOL.BSA_MOSTELLER",
+          "next_node_id": "NODE.BSA_MOSTELLER.INTERP"
+        },
+        {
+          "node_id": "NODE.BSA_MOSTELLER.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.BSA_MOSTELLER.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.BSA_MOSTELLER.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BSA_MOSTELLER.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.BSA_MOSTELLER.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.BSA_MOSTELLER.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.BSA_MOSTELLER"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.BSA_MOSTELLER"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "adaaa01c-cf32-58d6-909a-df9cfb5a53fc",
+      "tree_code": "TREE.BSA_DUBOIS",
+      "name": "Arvore de decisao — Body Surface Area (DuBois)",
+      "name_pt": "Arvore de decisao — Body Surface Area (DuBois)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.BSA_DUBOIS.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.BSA_DUBOIS.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Body Surface Area (DuBois)",
+          "next_node_id": "NODE.BSA_DUBOIS.ELIG"
+        },
+        {
+          "node_id": "NODE.BSA_DUBOIS.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.BSA_DUBOIS.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.BSA_DUBOIS.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BSA_DUBOIS.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar BSA_DUBOIS e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.BSA_DUBOIS",
+          "linked_definition_code": "CALC.TOOL.BSA_DUBOIS",
+          "next_node_id": "NODE.BSA_DUBOIS.INTERP"
+        },
+        {
+          "node_id": "NODE.BSA_DUBOIS.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.BSA_DUBOIS.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.BSA_DUBOIS.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BSA_DUBOIS.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.BSA_DUBOIS.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.BSA_DUBOIS.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.BSA_DUBOIS"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.BSA_DUBOIS"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "d685d5b0-5573-512a-ac3f-4b4e4c38732b",
+      "tree_code": "TREE.INFUSION",
+      "name": "Arvore de decisao — Infusion Rate Calculator",
+      "name_pt": "Arvore de decisao — Infusion Rate Calculator",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.INFUSION.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.INFUSION.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Infusion Rate Calculator",
+          "next_node_id": "NODE.INFUSION.ELIG"
+        },
+        {
+          "node_id": "NODE.INFUSION.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.INFUSION.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.INFUSION.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.INFUSION.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar INFUSION e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.INFUSION",
+          "linked_definition_code": "CALC.TOOL.INFUSION",
+          "next_node_id": "NODE.INFUSION.INTERP"
+        },
+        {
+          "node_id": "NODE.INFUSION.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.INFUSION.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.INFUSION.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.INFUSION.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.INFUSION.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.INFUSION.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.INFUSION"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.INFUSION"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "654ceef7-43e9-5860-b73a-f78a5cfd23ad",
+      "tree_code": "TREE.MCG_KG_MIN",
+      "name": "Arvore de decisao — mcg/kg/min Calculator",
+      "name_pt": "Arvore de decisao — mcg/kg/min Calculator",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.MCG_KG_MIN.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.MCG_KG_MIN.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: mcg/kg/min Calculator",
+          "next_node_id": "NODE.MCG_KG_MIN.ELIG"
+        },
+        {
+          "node_id": "NODE.MCG_KG_MIN.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.MCG_KG_MIN.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.MCG_KG_MIN.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.MCG_KG_MIN.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar MCG_KG_MIN e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.MCG_KG_MIN",
+          "linked_definition_code": "CALC.TOOL.MCG_KG_MIN",
+          "next_node_id": "NODE.MCG_KG_MIN.INTERP"
+        },
+        {
+          "node_id": "NODE.MCG_KG_MIN.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.MCG_KG_MIN.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.MCG_KG_MIN.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.MCG_KG_MIN.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.MCG_KG_MIN.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.MCG_KG_MIN.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.MCG_KG_MIN"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.MCG_KG_MIN"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "ed4980e6-9dba-5338-8b23-750b84f28723",
+      "tree_code": "TREE.DILUTION",
+      "name": "Arvore de decisao — Drug Dilution Calculator",
+      "name_pt": "Arvore de decisao — Drug Dilution Calculator",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.DILUTION.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.DILUTION.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Drug Dilution Calculator",
+          "next_node_id": "NODE.DILUTION.ELIG"
+        },
+        {
+          "node_id": "NODE.DILUTION.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.DILUTION.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.DILUTION.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.DILUTION.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar DILUTION e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.DILUTION",
+          "linked_definition_code": "CALC.TOOL.DILUTION",
+          "next_node_id": "NODE.DILUTION.INTERP"
+        },
+        {
+          "node_id": "NODE.DILUTION.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.DILUTION.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.DILUTION.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.DILUTION.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.DILUTION.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.DILUTION.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.DILUTION"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.DILUTION"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "49917029-e5c4-56bf-9d52-2ea962230c23",
+      "tree_code": "TREE.RENAL_CG",
+      "name": "Arvore de decisao — Renal Dose (Cockcroft-Gault)",
+      "name_pt": "Arvore de decisao — Renal Dose (Cockcroft-Gault)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.RENAL_CG.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.RENAL_CG.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Renal Dose (Cockcroft-Gault)",
+          "next_node_id": "NODE.RENAL_CG.ELIG"
+        },
+        {
+          "node_id": "NODE.RENAL_CG.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.RENAL_CG.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.RENAL_CG.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.RENAL_CG.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar RENAL_CG e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.RENAL_CG",
+          "linked_definition_code": "CALC.TOOL.RENAL_CG",
+          "next_node_id": "NODE.RENAL_CG.INTERP"
+        },
+        {
+          "node_id": "NODE.RENAL_CG.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.RENAL_CG.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.RENAL_CG.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.RENAL_CG.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.RENAL_CG.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.RENAL_CG.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.RENAL_CG"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.RENAL_CG"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c56fd13d-32dc-5f60-b526-7ffef6569f93",
+      "tree_code": "TREE.RENAL_MDRD",
+      "name": "Arvore de decisao — Renal Dose (MDRD)",
+      "name_pt": "Arvore de decisao — Renal Dose (MDRD)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.RENAL_MDRD.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.RENAL_MDRD.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Renal Dose (MDRD)",
+          "next_node_id": "NODE.RENAL_MDRD.ELIG"
+        },
+        {
+          "node_id": "NODE.RENAL_MDRD.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.RENAL_MDRD.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.RENAL_MDRD.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.RENAL_MDRD.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar RENAL_MDRD e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.RENAL_MDRD",
+          "linked_definition_code": "CALC.TOOL.RENAL_MDRD",
+          "next_node_id": "NODE.RENAL_MDRD.INTERP"
+        },
+        {
+          "node_id": "NODE.RENAL_MDRD.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.RENAL_MDRD.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.RENAL_MDRD.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.RENAL_MDRD.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.RENAL_MDRD.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.RENAL_MDRD.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.RENAL_MDRD"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.RENAL_MDRD"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "efb58069-1404-58ca-a446-40f7d1f6c739",
+      "tree_code": "TREE.RENAL_CKD",
+      "name": "Arvore de decisao — Renal Dose (CKD-EPI)",
+      "name_pt": "Arvore de decisao — Renal Dose (CKD-EPI)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.RENAL_CKD.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.RENAL_CKD.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Renal Dose (CKD-EPI)",
+          "next_node_id": "NODE.RENAL_CKD.ELIG"
+        },
+        {
+          "node_id": "NODE.RENAL_CKD.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.RENAL_CKD.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.RENAL_CKD.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.RENAL_CKD.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar RENAL_CKD e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.RENAL_CKD",
+          "linked_definition_code": "CALC.TOOL.RENAL_CKD",
+          "next_node_id": "NODE.RENAL_CKD.INTERP"
+        },
+        {
+          "node_id": "NODE.RENAL_CKD.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.RENAL_CKD.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.RENAL_CKD.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.RENAL_CKD.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.RENAL_CKD.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.RENAL_CKD.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.RENAL_CKD"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.RENAL_CKD"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "d80b7d83-9c5f-533f-b698-f4af0e5df584",
+      "tree_code": "TREE.HEPATIC_CP",
+      "name": "Arvore de decisao — Hepatic Dose (Child-Pugh)",
+      "name_pt": "Arvore de decisao — Hepatic Dose (Child-Pugh)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.HEPATIC_CP.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.HEPATIC_CP.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Hepatic Dose (Child-Pugh)",
+          "next_node_id": "NODE.HEPATIC_CP.ELIG"
+        },
+        {
+          "node_id": "NODE.HEPATIC_CP.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.HEPATIC_CP.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.HEPATIC_CP.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HEPATIC_CP.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar HEPATIC_CP e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.HEPATIC_CP",
+          "linked_definition_code": "CALC.TOOL.HEPATIC_CP",
+          "next_node_id": "NODE.HEPATIC_CP.INTERP"
+        },
+        {
+          "node_id": "NODE.HEPATIC_CP.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.HEPATIC_CP.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.HEPATIC_CP.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HEPATIC_CP.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.HEPATIC_CP.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.HEPATIC_CP.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.HEPATIC_CP"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.HEPATIC_CP"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "763737ab-97ef-55d1-a051-993c636adb66",
+      "tree_code": "TREE.BMI",
+      "name": "Arvore de decisao — BMI Calculator",
+      "name_pt": "Arvore de decisao — BMI Calculator",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.BMI.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.BMI.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: BMI Calculator",
+          "next_node_id": "NODE.BMI.ELIG"
+        },
+        {
+          "node_id": "NODE.BMI.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.BMI.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.BMI.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BMI.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar BMI e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.BMI",
+          "linked_definition_code": "CALC.TOOL.BMI",
+          "next_node_id": "NODE.BMI.INTERP"
+        },
+        {
+          "node_id": "NODE.BMI.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.BMI.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.BMI.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BMI.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.BMI.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.BMI.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.BMI"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.BMI"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "39924da2-92f5-5050-9cf7-c3ee6439ab7d",
+      "tree_code": "TREE.IBW_DEVINE",
+      "name": "Arvore de decisao — Ideal Body Weight (Devine)",
+      "name_pt": "Arvore de decisao — Ideal Body Weight (Devine)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.IBW_DEVINE.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.IBW_DEVINE.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Ideal Body Weight (Devine)",
+          "next_node_id": "NODE.IBW_DEVINE.ELIG"
+        },
+        {
+          "node_id": "NODE.IBW_DEVINE.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.IBW_DEVINE.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.IBW_DEVINE.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.IBW_DEVINE.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar IBW_DEVINE e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.IBW_DEVINE",
+          "linked_definition_code": "CALC.TOOL.IBW_DEVINE",
+          "next_node_id": "NODE.IBW_DEVINE.INTERP"
+        },
+        {
+          "node_id": "NODE.IBW_DEVINE.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.IBW_DEVINE.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.IBW_DEVINE.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.IBW_DEVINE.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.IBW_DEVINE.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.IBW_DEVINE.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.IBW_DEVINE"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.IBW_DEVINE"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "49a57939-0b4a-51d1-a1e7-0342a241a458",
+      "tree_code": "TREE.IBW_ROBINSON",
+      "name": "Arvore de decisao — Ideal Body Weight (Robinson)",
+      "name_pt": "Arvore de decisao — Ideal Body Weight (Robinson)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.IBW_ROBINSON.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.IBW_ROBINSON.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Ideal Body Weight (Robinson)",
+          "next_node_id": "NODE.IBW_ROBINSON.ELIG"
+        },
+        {
+          "node_id": "NODE.IBW_ROBINSON.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.IBW_ROBINSON.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.IBW_ROBINSON.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.IBW_ROBINSON.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar IBW_ROBINSON e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.IBW_ROBINSON",
+          "linked_definition_code": "CALC.TOOL.IBW_ROBINSON",
+          "next_node_id": "NODE.IBW_ROBINSON.INTERP"
+        },
+        {
+          "node_id": "NODE.IBW_ROBINSON.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.IBW_ROBINSON.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.IBW_ROBINSON.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.IBW_ROBINSON.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.IBW_ROBINSON.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.IBW_ROBINSON.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.IBW_ROBINSON"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.IBW_ROBINSON"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "ec7fd343-ee4f-5d32-8d5b-7dc1d4dd91e8",
+      "tree_code": "TREE.BSA",
+      "name": "Arvore de decisao — BSA Calculator",
+      "name_pt": "Arvore de decisao — BSA Calculator",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.BSA.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.BSA.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: BSA Calculator",
+          "next_node_id": "NODE.BSA.ELIG"
+        },
+        {
+          "node_id": "NODE.BSA.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.BSA.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.BSA.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BSA.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar BSA e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.BSA",
+          "linked_definition_code": "CALC.TOOL.BSA",
+          "next_node_id": "NODE.BSA.INTERP"
+        },
+        {
+          "node_id": "NODE.BSA.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.BSA.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.BSA.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BSA.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.BSA.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.BSA.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.BSA"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.BSA"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "5b132349-c0f0-5ccb-b842-63ef405d9d5b",
+      "tree_code": "TREE.HEPARIN",
+      "name": "Arvore de decisao — Heparin Protocol",
+      "name_pt": "Arvore de decisao — Heparin Protocol",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.HEPARIN.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.HEPARIN.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Heparin Protocol",
+          "next_node_id": "NODE.HEPARIN.ELIG"
+        },
+        {
+          "node_id": "NODE.HEPARIN.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.HEPARIN.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.HEPARIN.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HEPARIN.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar HEPARIN e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.HEPARIN",
+          "linked_definition_code": "CALC.TOOL.HEPARIN",
+          "next_node_id": "NODE.HEPARIN.INTERP"
+        },
+        {
+          "node_id": "NODE.HEPARIN.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.HEPARIN.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.HEPARIN.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HEPARIN.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.HEPARIN.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.HEPARIN.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.HEPARIN"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.HEPARIN"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "a986f4a6-c498-5bb7-8c3f-8309bd6991dc",
+      "tree_code": "TREE.INSULIN",
+      "name": "Arvore de decisao — Insulin Sliding Scale",
+      "name_pt": "Arvore de decisao — Insulin Sliding Scale",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.INSULIN.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.INSULIN.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Insulin Sliding Scale",
+          "next_node_id": "NODE.INSULIN.ELIG"
+        },
+        {
+          "node_id": "NODE.INSULIN.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.INSULIN.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.INSULIN.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.INSULIN.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar INSULIN e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.INSULIN",
+          "linked_definition_code": "CALC.TOOL.INSULIN",
+          "next_node_id": "NODE.INSULIN.INTERP"
+        },
+        {
+          "node_id": "NODE.INSULIN.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.INSULIN.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.INSULIN.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.INSULIN.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.INSULIN.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.INSULIN.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.INSULIN"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.INSULIN"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "6ca65ca6-d01d-5160-9112-f41dd9ca884a",
+      "tree_code": "TREE.HYPERNAT",
+      "name": "Arvore de decisao — Hypernatremia Correction",
+      "name_pt": "Arvore de decisao — Hypernatremia Correction",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.HYPERNAT.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.HYPERNAT.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Hypernatremia Correction",
+          "next_node_id": "NODE.HYPERNAT.ELIG"
+        },
+        {
+          "node_id": "NODE.HYPERNAT.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.HYPERNAT.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.HYPERNAT.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HYPERNAT.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar HYPERNAT e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.HYPERNAT",
+          "linked_definition_code": "CALC.TOOL.HYPERNAT",
+          "next_node_id": "NODE.HYPERNAT.INTERP"
+        },
+        {
+          "node_id": "NODE.HYPERNAT.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.HYPERNAT.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.HYPERNAT.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HYPERNAT.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.HYPERNAT.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.HYPERNAT.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.HYPERNAT"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.HYPERNAT"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "161b7b99-6db6-5a3a-aded-dbe2f15c2d6a",
+      "tree_code": "TREE.HYPONAT",
+      "name": "Arvore de decisao — Hyponatremia Correction",
+      "name_pt": "Arvore de decisao — Hyponatremia Correction",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.HYPONAT.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.HYPONAT.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Hyponatremia Correction",
+          "next_node_id": "NODE.HYPONAT.ELIG"
+        },
+        {
+          "node_id": "NODE.HYPONAT.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.HYPONAT.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.HYPONAT.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HYPONAT.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar HYPONAT e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.HYPONAT",
+          "linked_definition_code": "CALC.TOOL.HYPONAT",
+          "next_node_id": "NODE.HYPONAT.INTERP"
+        },
+        {
+          "node_id": "NODE.HYPONAT.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.HYPONAT.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.HYPONAT.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.HYPONAT.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.HYPONAT.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.HYPONAT.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.HYPONAT"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.HYPONAT"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "1552a848-e69f-5211-b358-9f9b072fa4fb",
+      "tree_code": "TREE.BICARB",
+      "name": "Arvore de decisao — Bicarbonate Deficit",
+      "name_pt": "Arvore de decisao — Bicarbonate Deficit",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.BICARB.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.BICARB.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Bicarbonate Deficit",
+          "next_node_id": "NODE.BICARB.ELIG"
+        },
+        {
+          "node_id": "NODE.BICARB.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.BICARB.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.BICARB.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BICARB.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar BICARB e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.BICARB",
+          "linked_definition_code": "CALC.TOOL.BICARB",
+          "next_node_id": "NODE.BICARB.INTERP"
+        },
+        {
+          "node_id": "NODE.BICARB.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.BICARB.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.BICARB.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.BICARB.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.BICARB.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.BICARB.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.BICARB"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.BICARB"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "57072645-3994-5fd9-8c77-7302a9bfb20d",
+      "tree_code": "TREE.CPP",
+      "name": "Arvore de decisao — Cerebral Perfusion Pressure",
+      "name_pt": "Arvore de decisao — Cerebral Perfusion Pressure",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.CPP.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.CPP.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Cerebral Perfusion Pressure",
+          "next_node_id": "NODE.CPP.ELIG"
+        },
+        {
+          "node_id": "NODE.CPP.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.CPP.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.CPP.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CPP.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar CPP e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.CPP",
+          "linked_definition_code": "CALC.TOOL.CPP",
+          "next_node_id": "NODE.CPP.INTERP"
+        },
+        {
+          "node_id": "NODE.CPP.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.CPP.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.CPP.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CPP.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.CPP.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.CPP.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.CPP"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.CPP"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "902a81ae-d201-5649-84f3-e02179ada8a5",
+      "tree_code": "TREE.CI_FICK",
+      "name": "Arvore de decisao — Cardiac Index (Fick)",
+      "name_pt": "Arvore de decisao — Cardiac Index (Fick)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.CI_FICK.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.CI_FICK.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Cardiac Index (Fick)",
+          "next_node_id": "NODE.CI_FICK.ELIG"
+        },
+        {
+          "node_id": "NODE.CI_FICK.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.CI_FICK.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.CI_FICK.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CI_FICK.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar CI_FICK e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.CI_FICK",
+          "linked_definition_code": "CALC.TOOL.CI_FICK",
+          "next_node_id": "NODE.CI_FICK.INTERP"
+        },
+        {
+          "node_id": "NODE.CI_FICK.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.CI_FICK.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.CI_FICK.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.CI_FICK.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.CI_FICK.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.CI_FICK.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.CI_FICK"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.CI_FICK"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "4046971f-c5e8-5171-9bd3-1d165b4ac0bf",
+      "tree_code": "TREE.SVR",
+      "name": "Arvore de decisao — Systemic Vascular Resistance",
+      "name_pt": "Arvore de decisao — Systemic Vascular Resistance",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.SVR.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.SVR.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Systemic Vascular Resistance",
+          "next_node_id": "NODE.SVR.ELIG"
+        },
+        {
+          "node_id": "NODE.SVR.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.SVR.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.SVR.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.SVR.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar SVR e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.SVR",
+          "linked_definition_code": "CALC.TOOL.SVR",
+          "next_node_id": "NODE.SVR.INTERP"
+        },
+        {
+          "node_id": "NODE.SVR.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.SVR.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.SVR.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.SVR.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.SVR.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.SVR.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.SVR"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.SVR"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "36988f2a-348e-55ba-86c5-1ef1440e2d0f",
+      "tree_code": "TREE.PVR",
+      "name": "Arvore de decisao — Pulmonary Vascular Resistance",
+      "name_pt": "Arvore de decisao — Pulmonary Vascular Resistance",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.PVR.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.PVR.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Pulmonary Vascular Resistance",
+          "next_node_id": "NODE.PVR.ELIG"
+        },
+        {
+          "node_id": "NODE.PVR.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.PVR.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.PVR.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.PVR.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar PVR e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.PVR",
+          "linked_definition_code": "CALC.TOOL.PVR",
+          "next_node_id": "NODE.PVR.INTERP"
+        },
+        {
+          "node_id": "NODE.PVR.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.PVR.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.PVR.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.PVR.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.PVR.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.PVR.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.PVR"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.PVR"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "d8d06a96-8b2f-5543-a5b0-dc1b6586a202",
+      "tree_code": "TREE.SHUNT",
+      "name": "Arvore de decisao — Intrapulmonary Shunt (Qs/Qt)",
+      "name_pt": "Arvore de decisao — Intrapulmonary Shunt (Qs/Qt)",
+      "tree_type": "diagnosis",
+      "domain": "general",
+      "root_node_id": "NODE.SHUNT.START",
+      "node_count": 7,
+      "nodes": [
+        {
+          "node_id": "NODE.SHUNT.START",
+          "node_type": "start",
+          "text_pt": "Iniciar fluxo: Intrapulmonary Shunt (Qs/Qt)",
+          "next_node_id": "NODE.SHUNT.ELIG"
+        },
+        {
+          "node_id": "NODE.SHUNT.ELIG",
+          "node_type": "question",
+          "text_pt": "Paciente elegivel para aplicacao desta ferramenta?",
+          "options": [
+            {
+              "option_id": "YES",
+              "label_pt": "Sim",
+              "next_node_id": "NODE.SHUNT.APPLY"
+            },
+            {
+              "option_id": "NO",
+              "label_pt": "Nao",
+              "next_node_id": "NODE.SHUNT.DEFER"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.SHUNT.APPLY",
+          "node_type": "action",
+          "text_pt": "Aplicar SHUNT e registrar escore/resultado",
+          "action_type": "apply_calculator",
+          "linked_tool_code": "TOOL.SHUNT",
+          "linked_definition_code": "CALC.TOOL.SHUNT",
+          "next_node_id": "NODE.SHUNT.INTERP"
+        },
+        {
+          "node_id": "NODE.SHUNT.INTERP",
+          "node_type": "decision",
+          "text_pt": "Resultado requer escalonamento?",
+          "options": [
+            {
+              "option_id": "HIGH",
+              "label_pt": "Risco alto",
+              "next_node_id": "NODE.SHUNT.ESCALATE"
+            },
+            {
+              "option_id": "LOW",
+              "label_pt": "Risco baixo/moderado",
+              "next_node_id": "NODE.SHUNT.MONITOR"
+            }
+          ]
+        },
+        {
+          "node_id": "NODE.SHUNT.ESCALATE",
+          "node_type": "terminal",
+          "text_pt": "Notificar equipe medica; revisar plano de cuidados e monitorizacao intensiva",
+          "severity": "high"
+        },
+        {
+          "node_id": "NODE.SHUNT.MONITOR",
+          "node_type": "terminal",
+          "text_pt": "Manter monitorizacao de rotina e reavaliar conforme protocolo",
+          "severity": "low"
+        },
+        {
+          "node_id": "NODE.SHUNT.DEFER",
+          "node_type": "terminal",
+          "text_pt": "Documentar contraindicacao ou adiamento; revisar conduta alternativa",
+          "severity": "moderate"
+        }
+      ],
+      "linked_tool_codes": [
+        "TOOL.SHUNT"
+      ],
+      "linked_definition_codes": [
+        "CALC.TOOL.SHUNT"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "template_code": "TPL.SCALE_FORM",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:44:57Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    }
+  ],
+  "validation_summary": {
+    "total_records": 50,
+    "passed": true,
+    "errors": []
+  },
+  "target": 50,
+  "import_status": "complete",
+  "reference_framework": "NANDA-I 2026"
+}

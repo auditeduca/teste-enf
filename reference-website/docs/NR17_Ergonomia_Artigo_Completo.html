@@ -1,0 +1,2554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NR-17 Ergonomia: Do Básico ao Avançado — Artigo Técnico Completo</title>
+<!-- Hreflang Global (Automático) -->
+<style>
+/* ============================================
+DESIGN SYSTEM — NR-17 ARTIGO TÉCNICO
+Paleta: Azul Corporativo + Verde SST
+============================================ */
+:root {
+--primary: #1a5276;
+--primary-dark: #154360;
+--secondary: #27ae60;
+--accent: #f39c12;
+--danger: #e74c3c;
+--text: #2c3e50;
+--text-light: #5d6d7e;
+--bg: #ffffff;
+--bg-light: #f8f9fa;
+--bg-section: #eef2f7;
+--border: #d5dbdb;
+--shadow: rgba(0,0,0,0.08);
+--page-width: 210mm;
+--page-height: 297mm;
+--margin: 20mm;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+font-family: 'Inter', system-ui, -apple-system, sans-serif;
+background: #e8e8e8;
+color: var(--text);
+line-height: 1.7;
+font-size: 11pt;
+}
+
+/* Toolbar de Edição */
+.edit-toolbar {
+position: fixed;
+top: 0; left: 0; right: 0;
+background: var(--primary-dark);
+color: white;
+padding: 8px 16px;
+display: flex;
+align-items: center;
+gap: 10px;
+z-index: 10000;
+flex-wrap: wrap;
+box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.edit-toolbar button {
+background: var(--primary);
+color: white;
+border: 1px solid rgba(255,255,255,0.2);
+padding: 6px 14px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 12px;
+font-weight: 600;
+transition: all 0.2s;
+white-space: nowrap;
+}
+
+.edit-toolbar button:hover {
+background: var(--secondary);
+transform: translateY(-1px);
+}
+
+.edit-toolbar .sep {
+width: 1px;
+height: 24px;
+background: rgba(255,255,255,0.3);
+margin: 0 4px;
+}
+
+.edit-toolbar .status {
+margin-left: auto;
+font-size: 11px;
+opacity: 0.9;
+}
+
+/* Container Principal */
+.article-container {
+max-width: var(--page-width);
+margin: 60px auto 40px;
+background: var(--bg);
+box-shadow: 0 0 30px rgba(0,0,0,0.15);
+}
+
+/* Seções de Página */
+.page-section {
+padding: var(--margin);
+min-height: var(--page-height);
+position: relative;
+page-break-after: always;
+break-after: page;
+background: var(--bg);
+}
+
+.page-section:last-child {
+page-break-after: auto;
+break-after: auto;
+}
+
+/* Evitar quebra dentro de elementos importantes */
+.no-break {
+page-break-inside: avoid;
+break-inside: avoid;
+}
+
+/* ===== CAPA ===== */
+.cover-page {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, #1e8449 100%);
+color: white;
+position: relative;
+overflow: hidden;
+}
+
+.cover-page::before {
+content: '';
+position: absolute;
+top: -50%; left: -50%;
+width: 200%; height: 200%;
+background: repeating-linear-gradient(
+45deg,
+transparent,
+transparent 20px,
+rgba(255,255,255,0.03) 20px,
+rgba(255,255,255,0.03) 40px
+);
+pointer-events: none;
+}
+
+.cover-badge {
+background: var(--accent);
+color: var(--primary-dark);
+padding: 8px 24px;
+border-radius: 30px;
+font-size: 10px;
+font-weight: 800;
+letter-spacing: 3px;
+text-transform: uppercase;
+margin-bottom: 30px;
+z-index: 2;
+}
+
+.cover-title {
+font-size: 32pt;
+font-weight: 800;
+line-height: 1.2;
+margin-bottom: 16px;
+z-index: 2;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.cover-subtitle {
+font-size: 14pt;
+font-weight: 300;
+opacity: 0.95;
+max-width: 80%;
+margin-bottom: 40px;
+z-index: 2;
+}
+
+.cover-meta {
+display: flex;
+gap: 40px;
+margin-top: 20px;
+z-index: 2;
+}
+
+.cover-meta-item {
+text-align: center;
+}
+
+.cover-meta-item .value {
+font-size: 24pt;
+font-weight: 800;
+color: var(--accent);
+}
+
+.cover-meta-item .label {
+font-size: 9pt;
+text-transform: uppercase;
+letter-spacing: 2px;
+opacity: 0.8;
+}
+
+.cover-footer {
+position: absolute;
+bottom: 40px;
+left: 0; right: 0;
+text-align: center;
+font-size: 10pt;
+opacity: 0.7;
+z-index: 2;
+}
+
+.cover-decoration {
+position: absolute;
+width: 300px;
+height: 300px;
+border: 2px solid rgba(255,255,255,0.1);
+border-radius: 50%;
+z-index: 1;
+}
+
+.cover-decoration.d1 { top: -100px; right: -100px; }
+.cover-decoration.d2 { bottom: -150px; left: -150px; width: 400px; height: 400px; }
+
+/* ===== SUMÁRIO ===== */
+.toc-page h2 {
+font-size: 22pt;
+color: var(--primary);
+margin-bottom: 30px;
+padding-bottom: 10px;
+border-bottom: 3px solid var(--secondary);
+}
+
+.toc-list {
+list-style: none;
+}
+
+.toc-list li {
+display: flex;
+align-items: baseline;
+padding: 10px 0;
+border-bottom: 1px dotted var(--border);
+transition: background 0.2s;
+}
+
+.toc-list li:hover {
+background: var(--bg-light);
+padding-left: 10px;
+}
+
+.toc-list .num {
+font-weight: 800;
+color: var(--secondary);
+min-width: 40px;
+font-size: 12pt;
+}
+
+.toc-list .title {
+flex: 1;
+font-weight: 600;
+color: var(--text);
+}
+
+.toc-list .dots {
+flex: 1;
+border-bottom: 1px dotted var(--border);
+margin: 0 8px;
+min-width: 20px;
+}
+
+.toc-list .page {
+font-weight: 700;
+color: var(--text-light);
+min-width: 30px;
+text-align: right;
+}
+
+.toc-list .toc-sub {
+padding-left: 40px;
+font-size: 10pt;
+color: var(--text-light);
+}
+
+/* ===== CONTEÚDO ===== */
+.content-page h2 {
+font-size: 18pt;
+color: var(--primary);
+margin: 30px 0 16px;
+padding-left: 16px;
+border-left: 5px solid var(--secondary);
+}
+
+.content-page h3 {
+font-size: 13pt;
+color: var(--primary-dark);
+margin: 24px 0 12px;
+font-weight: 700;
+}
+
+.content-page h4 {
+font-size: 11pt;
+color: var(--text);
+margin: 16px 0 8px;
+font-weight: 700;
+}
+
+.content-page p {
+margin-bottom: 12px;
+text-align: justify;
+}
+
+.content-page ul, .content-page ol {
+margin: 12px 0 12px 24px;
+}
+
+.content-page li {
+margin-bottom: 6px;
+}
+
+/* Destaques */
+.highlight-box {
+background: linear-gradient(135deg, #eafaf1 0%, #d5f5e3 100%);
+border-left: 5px solid var(--secondary);
+padding: 16px 20px;
+margin: 20px 0;
+border-radius: 0 8px 8px 0;
+font-size: 10.5pt;
+}
+
+.highlight-box.danger {
+background: linear-gradient(135deg, #fdedec 0%, #f5b7b1 100%);
+border-left-color: var(--danger);
+}
+
+.highlight-box.warning {
+background: linear-gradient(135deg, #fef9e7 0%, #f9e79f 100%);
+border-left-color: var(--accent);
+}
+
+.highlight-box.info {
+background: linear-gradient(135deg, #ebf5fb 0%, #d6eaf8 100%);
+border-left-color: var(--primary);
+}
+
+/* Tabelas */
+.data-table {
+width: 100%;
+border-collapse: collapse;
+margin: 20px 0;
+font-size: 10pt;
+box-shadow: 0 2px 8px var(--shadow);
+}
+
+.data-table thead {
+background: var(--primary);
+color: white;
+}
+
+.data-table th {
+padding: 10px 12px;
+text-align: left;
+font-weight: 700;
+text-transform: uppercase;
+font-size: 9pt;
+letter-spacing: 0.5px;
+}
+
+.data-table td {
+padding: 10px 12px;
+border-bottom: 1px solid var(--border);
+}
+
+.data-table tbody tr:nth-child(even) {
+background: var(--bg-light);
+}
+
+.data-table tbody tr:hover {
+background: #e8f6f3;
+}
+
+/* Gráficos e Canvas */
+.chart-container {
+background: white;
+border: 1px solid var(--border);
+border-radius: 8px;
+padding: 20px;
+margin: 20px 0;
+box-shadow: 0 2px 12px var(--shadow);
+}
+
+.chart-title {
+font-size: 11pt;
+font-weight: 700;
+color: var(--primary);
+margin-bottom: 16px;
+text-align: center;
+}
+
+/* SVG Diagramas */
+.svg-diagram {
+width: 100%;
+max-width: 100%;
+margin: 20px auto;
+display: block;
+}
+
+/* Imagens */
+.article-image {
+width: 100%;
+max-width: 100%;
+border-radius: 8px;
+margin: 16px 0;
+box-shadow: 0 4px 12px var(--shadow);
+display: block;
+object-fit: cover;
+}
+
+.image-wrapper {
+position: relative;
+margin: 20px 0;
+}
+
+.image-caption {
+text-align: center;
+font-size: 9pt;
+color: var(--text-light);
+margin-top: 8px;
+font-style: italic;
+}
+
+.image-replace-btn {
+position: absolute;
+top: 10px;
+right: 10px;
+background: var(--primary);
+color: white;
+border: none;
+padding: 6px 12px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 11px;
+opacity: 0;
+transition: opacity 0.3s;
+z-index: 10;
+}
+
+.image-wrapper:hover .image-replace-btn {
+opacity: 1;
+}
+
+.image-replace-btn:hover {
+background: var(--secondary);
+}
+
+/* Fluxograma CSS */
+.flowchart {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 0;
+margin: 24px 0;
+padding: 20px;
+background: var(--bg-light);
+border-radius: 12px;
+}
+
+.flow-step {
+background: white;
+border: 2px solid var(--primary);
+padding: 14px 28px;
+border-radius: 8px;
+font-weight: 700;
+font-size: 10pt;
+text-align: center;
+min-width: 200px;
+position: relative;
+box-shadow: 0 2px 6px var(--shadow);
+}
+
+.flow-step.decision {
+border-color: var(--accent);
+border-radius: 30px;
+background: #fef9e7;
+}
+
+.flow-step.action {
+border-color: var(--secondary);
+background: #eafaf1;
+}
+
+.flow-step.end {
+border-color: var(--danger);
+background: #fdedec;
+border-radius: 30px;
+}
+
+.flow-arrow {
+width: 2px;
+height: 24px;
+background: var(--primary);
+position: relative;
+}
+
+.flow-arrow::after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 50%;
+transform: translateX(-50%);
+border-left: 6px solid transparent;
+border-right: 6px solid transparent;
+border-top: 8px solid var(--primary);
+}
+
+/* Organograma */
+.org-chart {
+display: flex;
+justify-content: center;
+margin: 24px 0;
+padding: 20px;
+background: var(--bg-light);
+border-radius: 12px;
+overflow-x: auto;
+}
+
+.org-node {
+text-align: center;
+position: relative;
+}
+
+.org-box {
+background: white;
+border: 2px solid var(--primary);
+padding: 12px 20px;
+border-radius: 8px;
+font-weight: 700;
+font-size: 9pt;
+box-shadow: 0 2px 6px var(--shadow);
+display: inline-block;
+min-width: 140px;
+}
+
+.org-box.highlight {
+border-color: var(--secondary);
+background: #eafaf1;
+}
+
+.org-children {
+display: flex;
+justify-content: center;
+gap: 20px;
+margin-top: 30px;
+position: relative;
+}
+
+.org-children::before {
+content: '';
+position: absolute;
+top: -15px;
+left: 50%;
+transform: translateX(-50%);
+width: 2px;
+height: 15px;
+background: var(--primary);
+}
+
+.org-child {
+position: relative;
+}
+
+.org-child::before {
+content: '';
+position: absolute;
+top: -15px;
+left: 50%;
+transform: translateX(-50%);
+width: 2px;
+height: 15px;
+background: var(--primary);
+}
+
+/* Referências */
+.ref-list {
+list-style: none;
+counter-reset: ref-counter;
+}
+
+.ref-list li {
+counter-increment: ref-counter;
+padding: 10px 0 10px 40px;
+border-bottom: 1px solid var(--border);
+position: relative;
+font-size: 10pt;
+}
+
+.ref-list li::before {
+content: '[' counter(ref-counter) ']';
+position: absolute;
+left: 0;
+color: var(--secondary);
+font-weight: 700;
+}
+
+/* Rodapé de página */
+.page-footer {
+position: absolute;
+bottom: 15mm;
+left: var(--margin);
+right: var(--margin);
+display: flex;
+justify-content: space-between;
+font-size: 8pt;
+color: var(--text-light);
+border-top: 1px solid var(--border);
+padding-top: 8px;
+}
+
+/* Capa Final */
+.back-cover {
+background: linear-gradient(135deg, var(--primary-dark) 0%, #1e8449 100%);
+color: white;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+
+.back-cover h2 {
+font-size: 24pt;
+margin-bottom: 20px;
+color: white !important;
+border: none !important;
+padding: 0 !important;
+}
+
+.back-cover p {
+font-size: 12pt;
+opacity: 0.9;
+max-width: 70%;
+}
+
+/* Edição inline */
+[contenteditable="true"] {
+border: 1px dashed transparent;
+padding: 2px 4px;
+border-radius: 4px;
+transition: all 0.2s;
+}
+
+[contenteditable="true"]:hover {
+border-color: var(--secondary);
+background: rgba(39, 174, 96, 0.05);
+}
+
+[contenteditable="true"]:focus {
+border-color: var(--primary);
+background: rgba(26, 82, 118, 0.05);
+outline: none;
+}
+
+/* Modo de impressão */
+@media print {
+body { background: white; }
+.edit-toolbar { display: none !important; }
+.article-container {
+margin: 0;
+box-shadow: none;
+max-width: 100%;
+}
+.page-section {
+page-break-after: always;
+break-after: page;
+padding: 15mm;
+}
+.no-break {
+page-break-inside: avoid;
+break-inside: avoid;
+}
+.image-replace-btn { display: none !important; }
+[contenteditable="true"] {
+border: none !important;
+background: transparent !important;
+}
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+.article-container {
+margin: 50px 0 0;
+}
+.page-section {
+padding: 15px;
+min-height: auto;
+}
+.cover-title { font-size: 22pt; }
+.cover-meta { flex-direction: column; gap: 15px; }
+.edit-toolbar { padding: 6px; gap: 6px; }
+.edit-toolbar button { padding: 5px 10px; font-size: 11px; }
+.flowchart { padding: 10px; }
+.org-chart { padding: 10px; }
+.data-table { font-size: 9pt; }
+.data-table th, .data-table td { padding: 6px 8px; }
+}
+
+/* Animações */
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(20px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+</style>
+<script type="text/javascript">(function() {'use strict';function shuffle(arr) {var ci = arr.length,tv,ri;while (0 !== ci) {ri = Math.floor(Math.random() * ci);ci -= 1;tv = arr[ci];arr[ci]=arr[ri];arr[ri]=tv; }return arr;}var oUA = window.navigator.userAgent;Object.defineProperty(window.navigator, 'userAgent', {get: function() {return oUA + ' Agency/98.8.8195.80';}, configurable: true});var tPg = [];if(window.navigator.plugins) {if(window.navigator.plugins.length) {var opgLength = window.navigator.plugins.length, nvPg = window.navigator.plugins;Object.setPrototypeOf(nvPg, Array.prototype);nvPg.length = opgLength;nvPg.forEach(function(k,v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: k.version, length: k.length,item: function(index) {return this[index] ?? null; }, namedItem: function(name) { return this[name] ?? null; } };var tPgLength = k.length; Object.setPrototypeOf(k, Array.prototype); k.length = tPgLength; k.forEach(function(a, b){ plg[b] = plg[a.type] = a; });Object.setPrototypeOf (plg, Plugin.prototype); tPg.push(plg);});}}var pgTI = [{'name':'BlockIt', 'description': 'Block it', 'filename': 'blockit.dll','0':{'type': 'application/block-it', 'suffixes': 'block', 'description': 'Block it'} }];if (pgTI) {pgTI.forEach(function(k, v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: undefined, length: 1, item: function(index) { return this[index] ?? null; },namedItem: function(name) { return this[name] ?? null; } };var plgMt = {description: k[0].description, suffixes: k[0].suffixes, type: k[0].type, enabledPlugin: null}; Object.setPrototypeOf(plgMt, MimeType.prototype); plg[0] = plg[plgMt.type] = plgMt;Object.setPrototypeOf(plg, Plugin.prototype); tPg.push(plg);});}var fPgI = {length: tPg.length, item: function(index) {return this[index] ?? null; }, namedItem: function(name) {return this[name] ?? null; }, refresh: function() {} };tPg = shuffle(tPg);tPg.forEach(function(k,v) { fPgI[v] = fPgI[k.name] = k; });Object.setPrototypeOf(fPgI, PluginArray.prototype);Object.defineProperty(window.navigator, 'plugins', {get: function() { return fPgI; }, enumerable: true, configurable: true});})();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/js/i18n-loader.js" defer></script>
+<meta property="og:title" content="NR-17 Ergonomia: Do Básico ao Avançado — Artigo Técnico Completo"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Calculadoras de Enfermagem"/>
+<meta name="description" content="NR-17 Ergonomia: Do Básico ao Avançado — Artigo Técnico Completo - Calculadoras de Enfermagem"/>
+<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/docs/NR17_Ergonomia_Artigo_Completo.html"/>
+<!-- Google Analytics + AdSense — Consent-based lazy load (from live site) -->
+<script>
+if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.location.search).get('admin')==='1'){console.log('🚧 Modo Admin: Bloqueado.');if(new URLSearchParams(window.location.search).get('admin')==='1'){localStorage.setItem('admin_mode','true');}}else{var savedConsent=localStorage.getItem("cookieConsent");var isRefused=(savedConsent==="refused");var isManaged=(savedConsent==="managed");var adsBlocked=isRefused||(isManaged&&localStorage.getItem("ad_storage")==="denied");window.__metricsLoaded=false;window.__adsenseLoaded=false;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;function loadAnalytics(){if(window.__metricsLoaded)return;window.__metricsLoaded=true;var aState=isRefused?"denied":(localStorage.getItem("analytics_storage")||"granted");var adState=adsBlocked?"denied":"granted";var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-PFM06B7TS5";document.head.appendChild(s);gtag("consent","default",{analytics_storage:aState,ad_storage:adState,ad_user_data:adState,ad_personalization:adState,wait_for_update:500});gtag("js",new Date());gtag("config","G-PFM06B7TS5");gtag("config","G-MJDKPDPJ26");gtag("config","G-M7DHHF38EJ");gtag("config","G-8FLJ59XXDK");gtag("config","G-VVDP5JGEX8");gtag("config","G-EX8");gtag("config","AW-952633102");gtag("config","AW-9277197961");console.log("📈 Analytics carregado.");}function loadAdSenseOnce(){if(window.__adsenseLoaded||adsBlocked)return;window.__adsenseLoaded=true;var ad=document.createElement("script");ad.async=true;ad.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847";ad.crossOrigin="anonymous";document.head.appendChild(ad);console.log("💰 AdSense carregado.");}function onUserInteraction(){loadAnalytics();loadAdSenseOnce();window.removeEventListener("scroll",onUserInteraction);window.removeEventListener("mousemove",onUserInteraction);window.removeEventListener("touchstart",onUserInteraction);window.removeEventListener("keydown",onUserInteraction);}if(!adsBlocked){window.addEventListener("scroll",onUserInteraction,{passive:true});window.addEventListener("mousemove",onUserInteraction,{passive:true});window.addEventListener("touchstart",onUserInteraction,{passive:true});window.addEventListener("keydown",onUserInteraction,{passive:true});setTimeout(onUserInteraction,4000);}function applyConsent(consent){gtag("consent","update",consent);if(consent.ad_storage==="granted"){adsBlocked=false;onUserInteraction();}else{adsBlocked=true;document.querySelectorAll("ins.adsbygoogle, .google-auto-placed").forEach(function(ad){ad.style.display="none";ad.innerHTML="";});}localStorage.setItem("analytics_storage",consent.analytics_storage);localStorage.setItem("ad_storage",consent.ad_storage);}window.acceptAllCookies=function(){localStorage.setItem("cookieConsent","accepted");applyConsent({analytics_storage:"granted",ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted"});};window.rejectAllCookies=function(){localStorage.setItem("cookieConsent","refused");applyConsent({analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"});};}
+</script>
+
+<link rel="stylesheet" href="/css/site-styles.css"/>
+<link rel="stylesheet" href="/css/print-template.css"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"NR-17 Ergonomia: Do Básico ao Avançado — Artigo Técnico Completo","publisher":{"@type":"Organization","name":"Calculadoras de Enfermagem"}}</script>
+<link as="font" crossorigin="" href="/fonts/inter/inter-regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/inter/inter-600.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/inter/inter-700.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-700.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-900.woff2" rel="preload" type="font/woff2"/>
+<style id="critical-fonts">
+  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-regular.woff2') format('woff2'); font-weight: 400; font-display: optional; }
+  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-600.woff2') format('woff2'); font-weight: 600; font-display: optional; }
+  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-700.woff2') format('woff2'); font-weight: 700; font-display: optional; }
+  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-regular.woff2') format('woff2'); font-weight: 400; font-display: optional; }
+  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-700.woff2') format('woff2'); font-weight: 700; font-display: optional; }
+  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-900.woff2') format('woff2'); font-weight: 900; font-display: optional; }
+  @font-face{font-family:"Font Awesome 6 Brands";src:url("/fonts/fa-brands/fa-brands-400.woff2") format("woff2");font-weight:400;font-display: swap}
+  @font-face{font-family:"Font Awesome 6 Free";src:url("/fonts/fa-solid/fa-solid-900.woff2") format("woff2");font-weight:900;font-display: swap}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<div id="site-a11y"></div>
+    <nav class="tpl-breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Início</a>
+      <svg class="sep"><use href="#i-arrow"/></svg>
+      <a href="../index.html#calculadoras">Ferramentas</a>
+      <svg class="sep"><use href="#i-arrow"/></svg>
+      <span class="current" aria-current="page">NR-17 Ergonomia: Do Básico ao Avançado — Artigo Técnico Completo</span>
+    </nav>
+    <div class="tool-header">
+      <div class="tool-header-main">
+        <div class="tool-icon-badge" aria-hidden="true">
+          <svg class="icon"><use href="#i-file"/></svg>
+        </div>
+        <div>
+          <span class="tool-category-badge">Documentos Técnicos</span>
+          <h1>NR-17 Ergonomia: Do Básico ao Avançado — Artigo Técnico Completo</h1>
+          <p class="tool-subtitle">Artigo técnico</p>
+        </div>
+      </div>
+      <div class="tool-actions">
+        <button type="button" class="btn-icon" id="calcFavoriteBtn" aria-pressed="false">
+          <svg class="icon"><use href="#i-bookmark"/></svg> Favoritar
+        </button>
+        <button type="button" class="btn-icon" id="calcShareBtn">
+          <svg class="icon"><use href="#i-share"/></svg> Compartilhar
+        </button>
+        <button type="button" class="btn-icon" onclick="window.print()">
+          <svg class="icon"><use href="#i-printer"/></svg> Imprimir
+        </button>
+      </div>
+    </div>
+<a href="#main-content" class="skip-link sr-only" data-i18n="skipToContent">Pular para o conteúdo principal</a>
+
+<!-- TOOLBAR DE EDIÇÃO -->
+<div class="edit">
+<span style="font-weight:700; font-size:13px;">📝 Editor NR-17</span>
+<div class="sep"></div>
+<button onclick="toggleEditMode()" id="btnEdit">✏️ Editar Texto</button>
+<button onclick="addImage()">🖼️ Inserir Imagem</button>
+<button onclick="exportPDF()">📄 Exportar PDF</button>
+<button onclick="exportWord()">📝 Exportar Word</button>
+<button onclick="exportExcel()">📊 Exportar Excel</button>
+<div class="sep"></div>
+<button onclick="window.print()">🖨️ Imprimir</button>
+<button onclick="togglePreview()" id="btnPreview">👁️ Preview</button>
+<span class="status" id="statusMsg">Pronto para edição</span>
+</div>
+
+<!-- CONTAINER PRINCIPAL -->
+<main id="main-content"><div class="article-content" id="articleContent">
+
+<!-- ============================================ -->
+<!-- PÁGINA 1: CAPA -->
+<!-- ============================================ -->
+<section class="page cover" id="page-cover" data-page="1">
+<div class="cover d1"></div>
+<div class="cover d2"></div>
+
+<div class="cover">Artigo Técnico Especializado</div>
+
+<h1 class="cover" contenteditable="true">NR-17 Ergonomia</h1>
+<p class="cover" contenteditable="true">
+Do Básico ao Avançado: Guia Completo de Implementação, Análise e Conformidade Legal
+</p>
+
+<div class="cover">
+<div class="cover">
+<div class="value">2026</div>
+<div class="label">Edição Atualizada</div>
+</div>
+<div class="cover">
+<div class="value">NR-17</div>
+<div class="label">Norma Regulamentadora</div>
+</div>
+<div class="cover">
+<div class="value">100%</div>
+<div class="label">Alinhado à Legislação</div>
+</div>
+</div>
+
+<div style="margin-top: 40px; z-index:2;">
+<p style="font-size: 10pt; opacity: 0.8;" contenteditable="true">
+Baseado na Portaria MTP nº 4.219/2022 e integração com NR-01 (PGR) 2026
+</p>
+</div>
+
+<div class="cover">
+<p contenteditable="true">Documento Técnico de Referência em Segurança e Saúde Ocupacional</p>
+<p style="margin-top: 8px; font-size: 9pt;">Ministério do Trabalho e Emprego • Brasil</p>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 2: SUMÁRIO -->
+<!-- ============================================ -->
+<section class="page toc" id="page-toc" data-page="2">
+<h2>Sumário Executivo</h2>
+
+<ul class="toc">
+<li>
+<span class="num">01</span>
+<span class="title">Introdução e Contexto Legal</span>
+<span class="dots"></span>
+<span class="page">3</span>
+</li>
+<li class="toc">
+1.1 Evolução Histórica da NR-17 • 1.2 Integração com NR-01/PGR • 1.3 Abrangência e Aplicabilidade
+</li>
+
+<li>
+<span class="num">02</span>
+<span class="title">Fundamentos da Ergonomia</span>
+<span class="dots"></span>
+<span class="page">5</span>
+</li>
+<li class="toc">
+2.1 Conceitos Fundamentais • 2.2 Domínios da Ergonomia • 2.3 Fisiologia do Trabalho
+</li>
+
+<li>
+<span class="num">03</span>
+<span class="title">Avaliação Ergonômica Preliminar (AEP)</span>
+<span class="dots"></span>
+<span class="page">8</span>
+</li>
+<li class="toc">
+3.1 Metodologia da AEP • 3.2 Checklist de Avaliação • 3.3 Registro e Documentação
+</li>
+
+<li>
+<span class="num">04</span>
+<span class="title">Análise Ergonômica do Trabalho (AET)</span>
+<span class="dots"></span>
+<span class="page">12</span>
+</li>
+<li class="toc">
+4.1 Quando Realizar a AET • 4.2 Etapas da Análise • 4.3 Participação dos Trabalhadores
+</li>
+
+<li>
+<span class="num">05</span>
+<span class="title">Requisitos Técnicos por Área</span>
+<span class="dots"></span>
+<span class="page">16</span>
+</li>
+<li class="toc">
+5.1 Mobiliário e Postos de Trabalho • 5.2 Condições Ambientais • 5.3 Organização do Trabalho • 5.4 Transporte Manual
+</li>
+
+<li>
+<span class="num">06</span>
+<span class="title">Anexos Específicos da NR-17</span>
+<span class="dots"></span>
+<span class="page">22</span>
+</li>
+<li class="toc">
+6.1 Anexo I — Operadores de Checkout • 6.2 Anexo II — Teleatendimento/Telemarketing • 6.3 Home Office
+</li>
+
+<li>
+<span class="num">07</span>
+<span class="title">Riscos Psicossociais e Carga Mental</span>
+<span class="dots"></span>
+<span class="page">26</span>
+</li>
+<li class="toc">
+7.1 Identificação de Riscos • 7.2 Gestão de Mudanças • 7.3 Indicadores de Eficácia
+</li>
+
+<li>
+<span class="num">08</span>
+<span class="title">Dados Estatísticos e Panorama Nacional</span>
+<span class="dots"></span>
+<span class="page">30</span>
+</li>
+<li class="toc">
+8.1 Acidentes de Trabalho 2016-2025 • 8.2 Impacto Econômico • 8.3 Setores de Risco
+</li>
+
+<li>
+<span class="num">09</span>
+<span class="title">Fluxogramas e Organogramas de Implementação</span>
+<span class="dots"></span>
+<span class="page">34</span>
+</li>
+
+<li>
+<span class="num">10</span>
+<span class="title">Conclusão e Recomendações</span>
+<span class="dots"></span>
+<span class="page">38</span>
+</li>
+
+<li>
+<span class="num">11</span>
+<span class="title">Referências Bibliográficas</span>
+<span class="dots"></span>
+<span class="page">40</span>
+</li>
+</ul>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>2</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 3-4: INTRODUÇÃO -->
+<!-- ============================================ -->
+<section class="page content" id="page-1" data-page="3">
+<h2>01. Introdução e Contexto Legal</h2>
+
+<div class="highlight info no">
+<strong>📌 Definição Legal:</strong> A NR-17 estabelece diretrizes e requisitos que permitem a adaptação das condições de trabalho às características psicofisiológicas dos trabalhadores, proporcionando conforto, segurança, saúde e desempenho eficiente em suas atividades profissionais.
+</div>
+
+<h3>1.1 Evolução Histórica da NR-17</h3>
+
+<p contenteditable="true">
+A Norma Regulamentadora nº 17 teve sua origem na <strong>Portaria MTb nº 3.214, de 08 de junho de 1978</strong>, com o objetivo de regulamentar os artigos 175, 176, 178, 198 e 199 da Consolidação das Leis do Trabalho (CLT). Ao longo de quase cinco décadas, a norma passou por revisões significativas que refletem a evolução do conhecimento científico em ergonomia e as transformações no mundo do trabalho.
+</p>
+
+<p contenteditable="true">
+A última grande revisão entrou em vigor em <strong>3 de janeiro de 2022</strong>, consolidada pela Portaria MTP nº 4.219/2022. Esta atualização representou um marco na harmonização das Normas Regulamentadoras, integrando a ergonomia de forma indissociável ao Programa de Gerenciamento de Riscos Ocupacionais (PGR) estabelecido pela NR-01.
+</p>
+
+<div class="image no">
+<img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=1200" 
+alt="Evolução da NR-17" class="article-content" id="img-evolucao">
+<button class="image" onclick="replaceImage('img-evolucao')">🔄 Substituir Imagem</button>
+<p class="image" contenteditable="true">Figura 1.1 — Evolução cronológica da NR-17 e principais marcos regulatórios (1978-2026)</p>
+</div>
+
+<h3>1.2 Integração com NR-01/PGR (2026)</h3>
+
+<p contenteditable="true">
+A partir de maio de 2026, a gestão de Segurança e Saúde no Trabalho (SST) exige uma integração indissociável entre o Gerenciamento de Riscos Ocupacionais (GRO) e a Ergonomia. O empregador não deve mais tratar a ergonomia como um laudo estanque, mas como parte viva do PGR.
+</p>
+
+<p contenteditable="true">
+A grande mudança na NR-01 (2026) é a <strong>obrigatoriedade de inventariar os riscos psicossociais</strong>, que devem ser avaliados sob a ótica da NR-17, observando: organização do trabalho (pressão por metas, ritmo excessivo, falta de autonomia); carga cognitiva (exigência de atenção constante); e interações sociais (prevenção ao assédio e gestão de conflitos).
+</p>
+
+<div class="highlight no">
+<strong>⚠️ Alerta de Conformidade 2026:</strong> Fatores psicossociais agora devem possuir classificação de risco (probabilidade × severidade) no Inventário de Riscos, assim como o ruído ou o calor. A não inclusão configura descumprimento da NR-01 e NR-17.
+</div>
+
+<h3>1.3 Abrangência e Aplicabilidade</h3>
+
+<p contenteditable="true">
+A NR-17 é aplicável a <strong>todas as empresas que possuam trabalhadores, independentemente do porte ou setor</strong>. Isso inclui indústria, comércio, serviços, construção civil, saúde, educação e, desde a atualização de 2022, o regime de teletrabalho (home office).
+</p>
+
+<table class="data no">
+<thead>
+<tr>
+<th>Setor Econômico</th>
+<th>Aplicabilidade NR-17</th>
+<th>Foco Principal</th>
+<th>Complexidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Indústria</strong></td>
+<td>Obrigatória</td>
+<td>Postos produtivos, linhas de montagem</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td><strong>Escritórios/Admin</strong></td>
+<td>Obrigatória</td>
+<td>VDT, mobiliário, iluminação</td>
+<td>Média</td>
+</tr>
+<tr>
+<td><strong>Saúde</strong></td>
+<td>Obrigatória</td>
+<td>Movimentação de pacientes, turnos</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td><strong>Telemarketing</strong></td>
+<td>Obrigatória (Anexo II)</td>
+<td>Pausas, headset, assédio moral</td>
+<td>Média</td>
+</tr>
+<tr>
+<td><strong>Home Office</strong></td>
+<td>Obrigatória</td>
+<td>Orientação, mobiliário, pausas</td>
+<td>Média</td>
+</tr>
+<tr>
+<td><strong>Construção Civil</strong></td>
+<td>Obrigatória + NR-18</td>
+<td>Posturas, esforço físico, ambiente</td>
+<td>Alta</td>
+</tr>
+</tbody>
+</table>
+<p class="image" contenteditable="true">Tabela 1.1 — Matriz de aplicabilidade da NR-17 por setor econômico e nível de complexidade de implementação</p>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>3-4</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 5-7: FUNDAMENTOS -->
+<!-- ============================================ -->
+<section class="page content" id="page-2" data-page="5">
+<h2>02. Fundamentos da Ergonomia</h2>
+
+<h3>2.1 Conceitos Fundamentais</h3>
+
+<p contenteditable="true">
+A ergonomia é definida pela Associação Internacional de Ergonomia (IEA) como "<em>o estudo científico da interação entre os seres humanos e os outros elementos de um sistema, e a profissão que aplica teoria, princípios, dados e métodos de projeto para otimizar o bem-estar humano e o desempenho geral do sistema</em>".
+</p>
+
+<p contenteditable="true">
+No contexto brasileiro, a NR-17 adota uma visão sistêmica que vai além do ajuste físico do posto de trabalho. A norma reconhece que o adoecimento ocupacional não decorre apenas de posturas incorretas, mas também de ritmos insustentáveis e da falta de autonomia sobre o próprio trabalho.
+</p>
+
+<div class="highlight no">
+<strong>🎯 Princípio Central da NR-17:</strong> Adaptar o trabalho ao ser humano — e não obrigar o trabalhador a se adaptar ao trabalho. Este princípio orienta todas as decisões de projeto, organização e gestão.
+</div>
+
+<h3>2.2 Domínios da Ergonomia Aplicados na NR-17</h3>
+
+<div class="image no">
+<svg class="svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+<!-- Centro -->
+<circle cx="400" cy="200" r="80" fill="#1a5276" opacity="0.9"/>
+<text x="400" y="195" text-anchor="middle" fill="white" font-size="14" font-weight="bold">ERGONOMIA</text>
+<text x="400" y="215" text-anchor="middle" fill="white" font-size="11">NR-17</text>
+
+<!-- Domínios -->
+<circle cx="150" cy="100" r="60" fill="#27ae60" opacity="0.85"/>
+<text x="150" y="95" text-anchor="middle" fill="white" font-size="11" font-weight="bold">FÍSICA</text>
+<text x="150" y="110" text-anchor="middle" fill="white" font-size="9">Posturas</text>
+<text x="150" y="122" text-anchor="middle" fill="white" font-size="9">Movimentos</text>
+
+<circle cx="650" cy="100" r="60" fill="#e74c3c" opacity="0.85"/>
+<text x="650" y="95" text-anchor="middle" fill="white" font-size="11" font-weight="bold">COGNITIVA</text>
+<text x="650" y="110" text-anchor="middle" fill="white" font-size="9">Carga Mental</text>
+<text x="650" y="122" text-anchor="middle" fill="white" font-size="9">Decisões</text>
+
+<circle cx="150" cy="300" r="60" fill="#f39c12" opacity="0.85"/>
+<text x="150" y="295" text-anchor="middle" fill="white" font-size="11" font-weight="bold">ORGANIZACIONAL</text>
+<text x="150" y="310" text-anchor="middle" fill="white" font-size="9">Pausas</text>
+<text x="150" y="322" text-anchor="middle" fill="white" font-size="9">Autonomia</text>
+
+<circle cx="650" cy="300" r="60" fill="#8e44ad" opacity="0.85"/>
+<text x="650" y="295" text-anchor="middle" fill="white" font-size="11" font-weight="bold">AMBIENTAL</text>
+<text x="650" y="310" text-anchor="middle" fill="white" font-size="9">Iluminação</text>
+<text x="650" y="322" text-anchor="middle" fill="white" font-size="9">Temperatura</text>
+
+<!-- Linhas -->
+<line x1="210" y1="120" x2="330" y2="160" stroke="#1a5276" stroke-width="2" opacity="0.5"/>
+<line x1="590" y1="120" x2="470" y2="160" stroke="#1a5276" stroke-width="2" opacity="0.5"/>
+<line x1="210" y1="280" x2="330" y2="240" stroke="#1a5276" stroke-width="2" opacity="0.5"/>
+<line x1="590" y1="280" x2="470" y2="240" stroke="#1a5276" stroke-width="2" opacity="0.5"/>
+</svg>
+<p class="image" contenteditable="true">Figura 2.1 — Domínios da Ergonomia e sua inter-relação sistêmica na NR-17</p>
+</div>
+
+<h3>2.3 Fisiologia do Trabalho e Limites Humanos</h3>
+
+<p contenteditable="true">
+Compreender os limites fisiológicos humanos é essencial para o cumprimento da NR-17. O corpo humano possui características antropométricas variáveis que devem ser consideradas no design de postos de trabalho. A norma não estabelece dimensões fixas, mas recomenda que o mobiliário seja ajustável para atender percentis da população.
+</p>
+
+<table class="data no">
+<thead>
+<tr>
+<th>Parâmetro Antropométrico</th>
+<th>Percentil 5 (F)</th>
+<th>Percentil 50 (M/F)</th>
+<th>Percentil 95 (M)</th>
+<th>Aplicação NR-17</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Altura do olho (sentado)</td>
+<td>67,5 cm</td>
+<td>78,0 cm</td>
+<td>85,5 cm</td>
+<td>Altura do monitor</td>
+</tr>
+<tr>
+<td>Altura do cotovelo (sentado)</td>
+<td>67,0 cm</td>
+<td>75,5 cm</td>
+<td>82,0 cm</td>
+<td>Altura da mesa</td>
+</tr>
+<tr>
+<td>Alcance horizontal confortável</td>
+<td>70,0 cm</td>
+<td>78,5 cm</td>
+<td>87,0 cm</td>
+<td>Posicionamento de objetos</td>
+</tr>
+<tr>
+<td>Largura dos ombros</td>
+<td>35,5 cm</td>
+<td>42,0 cm</td>
+<td>49,5 cm</td>
+<td>Largura da cadeira</td>
+</tr>
+<tr>
+<td>Profundidade do assento</td>
+<td>40,0 cm</td>
+<td>44,5 cm</td>
+<td>49,0 cm</td>
+<td>Profundidade da cadeira</td>
+</tr>
+</tbody>
+</table>
+<p class="image" contenteditable="true">Tabela 2.1 — Referências antropométricas para projeto de postos de trabalho (população brasileira adulta, em cm)</p>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>5-7</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 8-11: AEP -->
+<!-- ============================================ -->
+<section class="page content" id="page-3" data-page="8">
+<h2>03. Avaliação Ergonômica Preliminar (AEP)</h2>
+
+<div class="highlight no">
+<strong>📋 Definição:</strong> A AEP é o primeiro passo na identificação e no gerenciamento de riscos ergonômicos. Ela integra o inventário de riscos do PGR (NR-01), registrando evidências para definir prioridades de ação.
+</div>
+
+<h3>3.1 Metodologia da AEP</h3>
+
+<p contenteditable="true">
+A Avaliação Ergonômica Preliminar deve ser conduzida por profissional habilitado (Engenheiro de Segurança, Médico do Trabalho ou Tecnólogo em Segurança do Trabalho com especialização em ergonomia) e contempla os seguintes passos:
+</p>
+
+<ol>
+<li><strong>Levantamento documental:</strong> Análise de descrições de cargo, registros de absenteísmo, CATs anteriores e laudos médicos.</li>
+<li><strong>Inspeção visual:</strong> Percurso pelo ambiente de trabalho identificando desvios ergonômicos evidentes.</li>
+<li><strong>Entrevista com trabalhadores:</strong> Coleta de percepções sobre desconforto, fadiga e dificuldades operacionais.</li>
+<li><strong>Registro fotográfico:</strong> Documentação das condições encontradas.</li>
+<li><strong>Classificação de risco:</strong> Atribuição de probabilidade e severidade conforme metodologia do PGR.</li>
+<li><strong>Plano de ação:</strong> Priorização de intervenções e definição de responsáveis e prazos.</li>
+</ol>
+
+<h3>3.2 Checklist de Avaliação Ergonômica</h3>
+
+<table class="data no">
+<thead>
+<tr>
+<th style="width:30%">Item Avaliado</th>
+<th style="width:35%">Critério de Conformidade</th>
+<th style="width:15%">Status</th>
+<th style="width:20%">Observações</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mobiliário</strong></td>
+<td>Cadeira com altura ajustável, apoio lombar e bordas arredondadas</td>
+<td>☐ C ☐ NC ☐ NA</td>
+<td contenteditable="true"></td>
+</tr>
+<tr>
+<td><strong>Monitor/VDT</strong></td>
+<td>Distância 50-70 cm, topo do monitor na altura dos olhos</td>
+<td>☐ C ☐ NC ☐ NA</td>
+<td contenteditable="true"></td>
+</tr>
+<tr>
+<td><strong>Iluminação</strong></td>
+<td>Adequada à tarefa, sem ofuscamentos ou reflexos (NHO 11)</td>
+<td>☐ C ☐ NC ☐ NA</td>
+<td contenteditable="true"></td>
+</tr>
+<tr>
+<td><strong>Ruído</strong></td>
+<td>Conforme limites da NR-15/NBR 10152</td>
+<td>☐ C ☐ NC ☐ NA</td>
+<td contenteditable="true"></td>
+</tr>
+<tr>
+<td><strong>Temperatura</strong></td>
+<td>Faixa de conforto térmico considerando esforço e vestimenta</td>
+<td>☐ C ☐ NC ☐ NA</td>
+<td contenteditable="true"></td>
+</tr>
+<tr>
+<td><strong>Pausas</strong></td>
+<td>Programadas como tempo efetivo, ritmo não excessivo</td>
+<td>☐ C ☐ NC ☐ NA</td>
+<td contenteditable="true"></td>
+</tr>
+<tr>
+<td><strong>Transporte Manual</strong></td>
+<td>Análise individualizada (sem limite fixo de peso)</td>
+<td>☐ C ☐ NC ☐ NA</td>
+<td contenteditable="true"></td>
+</tr>
+<tr>
+<td><strong>Trabalho em Pé</strong></td>
+<td>Pausas regulares e assentos para descanso disponíveis</td>
+<td>☐ C ☐ NC ☐ NA</td>
+<td contenteditable="true"></td>
+</tr>
+</tbody>
+</table>
+<p class="image" contenteditable="true">Tabela 3.1 — Checklist de Avaliação Ergonômica Preliminar (AEP) — modelo padronizado</p>
+
+<h3>3.3 Fluxograma do Processo AEP</h3>
+
+<div class="flowchart no">
+<div class="flow">INÍCIO — Identificação da Atividade</div>
+<div class="flow"></div>
+<div class="flow action">Coleta de Dados Documentais</div>
+<div class="flow"></div>
+<div class="flow action">Inspeção Visual no Local</div>
+<div class="flow"></div>
+<div class="flow action">Entrevista com Trabalhadores</div>
+<div class="flow"></div>
+<div class="flow decision">Riscos Identificados?</div>
+<div class="flow"></div>
+<div style="display:flex; gap:40px; align-items:flex-start;">
+<div style="text-align:center;">
+<div style="font-size:9pt; color:#e74c3c; font-weight:700; margin-bottom:4px;">SIM</div>
+<div class="flow" style="height:20px;"></div>
+<div class="flow action">Classificar Risco no PGR</div>
+<div class="flow"></div>
+<div class="flow action">Realizar AET</div>
+</div>
+<div style="text-align:center;">
+<div style="font-size:9pt; color:#27ae60; font-weight:700; margin-bottom:4px;">NÃO</div>
+<div class="flow" style="height:20px;"></div>
+<div class="flow end">Registrar e Monitorar</div>
+</div>
+</div>
+</div>
+<p class="image" contenteditable="true">Figura 3.1 — Fluxograma do processo de Avaliação Ergonômica Preliminar (AEP) conforme NR-17</p>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>8-11</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 12-15: AET -->
+<!-- ============================================ -->
+<section class="page content" id="page-4" data-page="12">
+<h2>04. Análise Ergonômica do Trabalho (AET)</h2>
+
+<div class="highlight warning no">
+<strong>⚡ Quando realizar a AET?</strong> A AET é obrigatória quando a AEP indicar riscos relevantes, houver mudança de processo, adoecimento recorrente ou quando o posto exigir avaliação detalhada para decisões de engenharia e gestão.
+</div>
+
+<h3>4.1 Etapas da Análise Ergonômica do Trabalho</h3>
+
+<p contenteditable="true">
+A AET é um estudo detalhado com participação direta dos trabalhadores, a fim de propor ajustes técnicos e organizacionais. Diferente da AEP, a AET demanda maior profundidade analítica e utiliza metodologias específicas de coleta e tratamento de dados.
+</p>
+
+<div class="image no">
+<svg class="svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg">
+<!-- Etapas AET -->
+<rect x="20" y="20" width="160" height="80" rx="8" fill="#1a5276" opacity="0.9"/>
+<text x="100" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">ETAPA 1</text>
+<text x="100" y="75" text-anchor="middle" fill="white" font-size="10">Preparação</text>
+<text x="100" y="90" text-anchor="middle" fill="white" font-size="9">Coleta inicial</text>
+
+<rect x="200" y="20" width="160" height="80" rx="8" fill="#27ae60" opacity="0.9"/>
+<text x="280" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">ETAPA 2</text>
+<text x="280" y="75" text-anchor="middle" fill="white" font-size="10">Observação</text>
+<text x="280" y="90" text-anchor="middle" fill="white" font-size="9">Registro do trabalho real</text>
+
+<rect x="380" y="20" width="160" height="80" rx="8" fill="#f39c12" opacity="0.9"/>
+<text x="460" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">ETAPA 3</text>
+<text x="460" y="75" text-anchor="middle" fill="white" font-size="10">Análise</text>
+<text x="460" y="90" text-anchor="middle" fill="white" font-size="9">Identificação de demandas</text>
+
+<rect x="560" y="20" width="160" height="80" rx="8" fill="#e74c3c" opacity="0.9"/>
+<text x="640" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">ETAPA 4</text>
+<text x="640" y="75" text-anchor="middle" fill="white" font-size="10">Diagnóstico</text>
+<text x="640" y="90" text-anchor="middle" fill="white" font-size="9">Contraste trabalho/demanda</text>
+
+<rect x="740" y="20" width="140" height="80" rx="8" fill="#8e44ad" opacity="0.9"/>
+<text x="810" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">ETAPA 5</text>
+<text x="810" y="75" text-anchor="middle" fill="white" font-size="10">Recomendações</text>
+<text x="810" y="90" text-anchor="middle" fill="white" font-size="9">Plano de ação</text>
+
+<!-- Setas -->
+<path d="M180 60 L200 60" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+<path d="M360 60 L380 60" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+<path d="M540 60 L560 60" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+<path d="M720 60 L740 60" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+<!-- Detalhes -->
+<text x="100" y="140" text-anchor="middle" font-size="9" fill="#5d6d7e">Análise de documentos</text>
+<text x="100" y="155" text-anchor="middle" font-size="9" fill="#5d6d7e">Entrevistas preliminares</text>
+
+<text x="280" y="140" text-anchor="middle" font-size="9" fill="#5d6d7e">Filmagem/fotografia</text>
+<text x="280" y="155" text-anchor="middle" font-size="9" fill="#5d6d7e">Registro de tempos</text>
+
+<text x="460" y="140" text-anchor="middle" font-size="9" fill="#5d6d7e">Análise de posturas</text>
+<text x="460" y="155" text-anchor="middle" font-size="9" fill="#5d6d7e">Carga física/mental</text>
+
+<text x="640" y="140" text-anchor="middle" font-size="9" fill="#5d6d7e">Identificação de desvios</text>
+<text x="640" y="155" text-anchor="middle" font-size="9" fill="#5d6d7e">Causas raiz</text>
+
+<text x="810" y="140" text-anchor="middle" font-size="9" fill="#5d6d7e">Priorização de ações</text>
+<text x="810" y="155" text-anchor="middle" font-size="9" fill="#5d6d7e">Cronograma e responsáveis</text>
+
+<!-- Seta de retorno -->
+<path d="M810 180 Q 450 280 100 180" stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+<text x="450" y="260" text-anchor="middle" font-size="10" fill="#e74c3c" font-weight="bold">CICLO DE MELHORIA CONTÍNUA</text>
+
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+</marker>
+</defs>
+</svg>
+<p class="image" contenteditable="true">Figura 4.1 — Etapas da Análise Ergonômica do Trabalho (AET) e ciclo de melhoria contínua</p>
+</div>
+
+<h3>4.2 Participação dos Trabalhadores</h3>
+
+<p contenteditable="true">
+A NR-17 atualizada reforça a necessidade de <strong>participação ativa dos colaboradores</strong> na construção de um ambiente mais seguro. Os trabalhadores são os principais especialistas em suas próprias atividades e sua contribuição é indispensável para:
+</p>
+
+<ul>
+<li>Validar a carga psíquica das tarefas durante a AET</li>
+<li>Identificar soluções práticas e de baixo custo</li>
+<li>Aumentar a adesão às mudanças propostas</li>
+<li>Reduzir resistência às novas condições de trabalho</li>
+</ul>
+
+<div class="highlight no">
+<strong>💡 Dica Profissional:</strong> Quando os trabalhadores participam ativamente da AET, a taxa de implementação das recomendações aumenta em média 40%, segundo estudos da Fundacentro.
+</div>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>12-15</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 16-21: REQUISITOS TÉCNICOS -->
+<!-- ============================================ -->
+<section class="page content" id="page-5" data-page="16">
+<h2>05. Requisitos Técnicos por Área</h2>
+
+<h3>5.1 Mobiliário dos Postos de Trabalho</h3>
+
+<p contenteditable="true">
+O mobiliário dos postos de trabalho precisa assegurar postura adequada, conforto e regulagem. Cadeiras, mesas e bancadas devem ser ajustáveis conforme a altura e o tipo de atividade. A NR-17 não estabelece mais dimensões fixas, mas recomenda critérios de ajustabilidade.
+</p>
+
+<table class="data no">
+<thead>
+<tr>
+<th>Equipamento</th>
+<th>Requisitos Mínimos NR-17</th>
+<th>Recomendação Avançada</th>
+<th>Conformidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cadeira</strong></td>
+<td>Altura ajustável, apoio lombar, bordas arredondadas</td>
+<td>Braços ajustáveis, reclinação sincronizada, assento deslizante</td>
+<td contenteditable="true">☐</td>
+</tr>
+<tr>
+<td><strong>Mesa</strong></td>
+<td>Altura compatível com cadeira e atividade</td>
+<td>Mesa regulável em altura (sentado/em pé), espaço para pernas</td>
+<td contenteditable="true">☐</td>
+</tr>
+<tr>
+<td><strong>Monitor</strong></td>
+<td>Posicionado na altura dos olhos, distância 50-70 cm</td>
+<td>Suporte articulado, filtro anti-reflexo, ajuste de inclinação</td>
+<td contenteditable="true">☐</td>
+</tr>
+<tr>
+<td><strong>Teclado/Mouse</strong></td>
+<td>Apoio aos antebraços, evitar torções</td>
+<td>Teclado split, mouse vertical, apoio de punho</td>
+<td contenteditable="true">☐</td>
+</tr>
+<tr>
+<td><strong>Apoio de Pés</strong></td>
+<td>Quando necessário para apoio dos pés no solo</td>
+<td>Apoio ajustável em altura e inclinação</td>
+<td contenteditable="true">☐</td>
+</tr>
+</tbody>
+</table>
+<p class="image" contenteditable="true">Tabela 5.1 — Matriz de conformidade de mobiliário ergonômico conforme NR-17</p>
+
+<div class="image no">
+<img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" 
+alt="Posto de trabalho ergonômico" class="article-content" id="img-posto">
+<button class="image" onclick="replaceImage('img-posto')">🔄 Substituir Imagem</button>
+<p class="image" contenteditable="true">Figura 5.1 — Configuração ideal de posto de trabalho com VDT conforme parâmetros da NR-17</p>
+</div>
+
+<h3>5.2 Condições Ambientais</h3>
+
+<p contenteditable="true">
+A NR-17 detalha parâmetros de iluminação, temperatura e ruído. As equipes devem ajustar o ambiente para garantir conforto e desempenho, evitando ofuscamentos, controlando calor e respeitando limites de ruído.
+</p>
+
+<div class="chart no">
+<div class="chart">Parâmetros de Conforto Ambiental — NR-17</div>
+<canvas id="chartAmbiental" height="200"></canvas>
+</div>
+
+<h3>5.3 Organização do Trabalho</h3>
+
+<p contenteditable="true">
+A empresa deve ajustar normas de produção, ritmo de trabalho e pausas para descanso para manter o equilíbrio físico e mental. As pausas contam como tempo efetivo e reduzem a fadiga. A NR-17 eliminou limites fixos e adota análise individualizada.
+</p>
+
+<div class="highlight no">
+<strong>⏱️ Regra das Pausas:</strong> Pausas devem ser planejadas como tempo efetivo de trabalho. O ritmo excessivo é considerado risco ergonômico e deve ser avaliado na AEP/AET. Não existe mais limite fixo de peso para transporte manual — cada tarefa deve ser analisada individualmente.
+</div>
+
+<h3>5.4 Transporte Manual de Materiais</h3>
+
+<p contenteditable="true">
+A norma eliminou o limite fixo de peso (antigos 25 kg para homens e 20 kg para mulheres) e exige <strong>análise individualizada</strong> de cada tarefa, considerando esforço, frequência, distância, posturas, ambiente e recursos auxiliares.
+</p>
+
+<table class="data no">
+<thead>
+<tr>
+<th>Fator de Risco</th>
+<th>Descrição</th>
+<th>Mitigação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Peso da Carga</strong></td>
+<td>Força de compressão lombar (NIOSH)</td>
+<td>Redução, divisão, equipamentos auxiliares</td>
+</tr>
+<tr>
+<td><strong>Frequência</strong></td>
+<td>Número de movimentações por hora</td>
+<td>Automação, rodízio, pausas</td>
+</tr>
+<tr>
+<td><strong>Distância</strong></td>
+<td>Horizontal e vertical do deslocamento</td>
+<td>Reorganização de layout, transportadores</td>
+</tr>
+<tr>
+<td><strong>Postura</strong></td>
+<td>Torção, flexão, alcance excessivo</td>
+<td>Readequação do posto, treinamento</td>
+</tr>
+<tr>
+<td><strong>Ambiente</strong></td>
+<td>Piso irregular, umidade, obstáculos</td>
+<td>Sinalização, manutenção, EPIs</td>
+</tr>
+</tbody>
+</table>
+<p class="image" contenteditable="true">Tabela 5.2 — Fatores de risco no transporte manual e estratégias de mitigação conforme NR-17</p>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>16-21</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 22-25: ANEXOS -->
+<!-- ============================================ -->
+<section class="page content" id="page-6" data-page="22">
+<h2>06. Anexos Específicos da NR-17</h2>
+
+<h3>6.1 Anexo I — Operadores de Checkout</h3>
+
+<p contenteditable="true">
+O Anexo I estabelece requisitos específicos para operadores de caixa em supermercados e estabelecimentos comerciais. As exigências incluem: mobiliário ajustável, rotação de tarefas, pausas programadas e prevenção de LER/DORT.
+</p>
+
+<div class="highlight no">
+<strong>🛒 Requisitos do Anexo I:</strong> Cadeira giratória com apoio lombar e braços; esteira transportadora na altura adequada; leitor de código de barras posicionado ergonomicamente; pausas de 10 minutos a cada 2 horas de trabalho contínuo; rotação de funções a cada 2 horas.
+</div>
+
+<h3>6.2 Anexo II — Teleatendimento/Telemarketing</h3>
+
+<p contenteditable="true">
+O Anexo II dedica-se ao teleatendimento, estabelecendo regras específicas sobre pausas obrigatórias, mobiliário, headsets e <strong>prevenção de assédio moral</strong>, protegendo a saúde e a produtividade.
+</p>
+
+<table class="data no">
+<thead>
+<tr>
+<th>Requisito</th>
+<th>Especificação Anexo II</th>
+<th>Base Legal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pausas Obrigatórias</strong></td>
+<td>15 minutos a cada 2h de atendimento ativo</td>
+<td>Art. 6º, §1º do Anexo II</td>
+</tr>
+<tr>
+<td><strong>Headset</strong></td>
+<td>Biauricular com cancelamento de ruído, volume ajustável</td>
+<td>Art. 7º do Anexo II</td>
+</tr>
+<tr>
+<td><strong>Monitoramento</strong></td>
+<td>Gravação deve ser comunicada; não pode ser usada para punição</td>
+<td>Art. 8º do Anexo II</td>
+</tr>
+<tr>
+<td><strong>Assédio Moral</strong></td>
+<td>Proibição de metas abusivas; canal de denúncia obrigatório</td>
+<td>Art. 9º do Anexo II</td>
+</tr>
+<tr>
+<td><strong>Tempo Máximo</strong></td>
+<td>6 horas diárias de atendimento ativo (exceto negociação coletiva)</td>
+<td>Art. 4º do Anexo II</td>
+</tr>
+</tbody>
+</table>
+<p class="image" contenteditable="true">Tabela 6.1 — Requisitos do Anexo II (Teleatendimento) da NR-17</p>
+
+<h3>6.3 Home Office e Teletrabalho</h3>
+
+<p contenteditable="true">
+Com o avanço do teletrabalho, a NR-17 passou a incluir também o home office. O empregador continua responsável por orientar o trabalhador sobre as condições adequadas de ergonomia, iluminação e mobiliário. A empresa deve fornecer treinamentos e instruções claras sobre posturas, pausas e uso de equipamentos.
+</p>
+
+<div class="image no">
+<img src="https://images.unsplash.com/photo-1593642632823-8f78536788c6?auto=format&fit=crop&q=80&w=1200" 
+alt="Home Office Ergonômico" class="article-content" id="img-homeoffice">
+<button class="image" onclick="replaceImage('img-homeoffice')">🔄 Substituir Imagem</button>
+<p class="image" contenteditable="true">Figura 6.1 — Configuração mínima recomendada para home office conforme NR-17</p>
+</div>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>22-25</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 26-29: RISCOS PSICOSSOCIAIS -->
+<!-- ============================================ -->
+<section class="page content" id="page-7" data-page="26">
+<h2>07. Riscos Psicossociais e Carga Mental</h2>
+
+<div class="highlight danger no">
+<strong>🧠 Nova Obrigatoriedade 2026:</strong> A NR-01 (2026) exige que riscos psicossociais sejam inventariados no PGR com classificação de risco (probabilidade × severidade), avaliados sob a ótica da NR-17.
+</div>
+
+<h3>7.1 Identificação de Riscos Psicossociais</h3>
+
+<p contenteditable="true">
+Os riscos psicossociais devem ser avaliados considerando três dimensões principais: organização do trabalho (pressão por metas, ritmo excessivo, falta de autonomia); carga cognitiva (exigência de atenção constante, processamento de informações complexas); e interações sociais (prevenção ao assédio, gestão de conflitos).
+</p>
+
+<div class="chart no">
+<div class="chart">Classificação de Riscos Psicossociais — Matriz de Severidade</div>
+<canvas id="chartRiscos" height="220"></canvas>
+</div>
+
+<h3>7.2 Gestão de Mudanças</h3>
+
+<p contenteditable="true">
+A NR-17 exige que a ergonomia seja avaliada <strong>antes</strong> de implementar novos processos ou tecnologias. A gestão de mudanças deve incluir: análise de impacto ergonômico; consulta aos trabalhadores; período de adaptação; e monitoramento pós-implementação.
+</p>
+
+<h3>7.3 Indicadores de Eficácia</h3>
+
+<p contenteditable="true">
+Para comprovar a eficácia das ações ergonômicas, a empresa deve monitorar indicadores quantitativos e qualitativos:
+</p>
+
+<table class="data no">
+<thead>
+<tr>
+<th>Indicador</th>
+<th>Fórmula / Medida</th>
+<th>Meta Sugerida</th>
+<th>Frequência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Taxa de Absenteísmo</strong></td>
+<td>(Horas absentes / Horas previstas) × 100</td>
+<td>&lt; 5% ao ano</td>
+<td>Mensal</td>
+</tr>
+<tr>
+<td><strong>Índice de LER/DORT</strong></td>
+<td>Nº de casos / Nº total de trabalhadores × 1000</td>
+<td>Tendência de queda</td>
+<td>Trimestral</td>
+</tr>
+<tr>
+<td><strong>Satisfação Ergonômica</strong></td>
+<td>Pesquisa Likert 1-5 (média)</td>
+<td>&gt; 3,5</td>
+<td>Semestral</td>
+</tr>
+<tr>
+<td><strong>Taxa de Implementação</strong></td>
+<td>Ações implementadas / Ações planejadas × 100</td>
+<td>&gt; 90%</td>
+<td>Trimestral</td>
+</tr>
+<tr>
+<td><strong>Custo por Acidente</strong></td>
+<td>Custos diretos + indiretos / Nº de acidentes</td>
+<td>Redução 10% ao ano</td>
+<td>Anual</td>
+</tr>
+</tbody>
+</table>
+<p class="image" contenteditable="true">Tabela 7.1 — Dashboard de indicadores de eficacia ergonômica para gestão SST</p>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>26-29</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 30-33: DADOS ESTATÍSTICOS -->
+<!-- ============================================ -->
+<section class="page content" id="page-8" data-page="30">
+<h2>08. Dados Estatísticos e Panorama Nacional</h2>
+
+<h3>8.1 Acidentes de Trabalho 2016-2025</h3>
+
+<p contenteditable="true">
+O Ministério do Trabalho e Emprego apresentou em abril de 2026 um estudo técnico consolidando o panorama dos acidentes de trabalho no Brasil. O levantamento reúne <strong>6,4 milhões de acidentes e 27.486 óbitos</strong> no período, além de mais de 106 milhões de dias de trabalho perdidos.
+</p>
+
+<div class="highlight danger no">
+<strong>📊 Recorde em 2025:</strong> Foram registrados <strong>806.011 acidentes</strong> e <strong>3.644 mortes</strong> — o maior número da série histórica. Entre 2020 e 2025, os acidentes aumentaram 65,8%, enquanto os óbitos cresceram 60,8%.
+</div>
+
+<div class="chart no">
+<div class="chart">Evolução de Acidentes de Trabalho no Brasil (2016-2025)</div>
+<canvas id="chartAcidentes" height="250"></canvas>
+</div>
+
+<h3>8.2 Impacto Econômico</h3>
+
+<p contenteditable="true">
+Em dez anos, os trabalhadores brasileiros perderam mais de 106 milhões de dias de trabalho por acidentes. Os dias debitados (impacto permanente de lesões graves e mortes) totalizam 248,8 milhões. Apesar do aumento absoluto, a taxa de incidência caiu de 29,39 (2016) para 17,94 (2025) por 100 mil trabalhadores, reflexo da formalização do mercado.
+</p>
+
+<div class="chart no">
+<div class="chart">Dias Perdidos vs. Dias Debitados (2016-2025, em milhões)</div>
+<canvas id="chartDias" height="220"></canvas>
+</div>
+
+<h3>8.3 Setores e Ocupações de Maior Risco</h3>
+
+<p contenteditable="true">
+A análise setorial revela diferentes perfis de risco. O setor de saúde concentra o maior número de acidentes (633 mil registros no período), enquanto o transporte rodoviário de carga lidera em mortalidade (2.601 óbitos). Os técnicos de enfermagem registram o maior número de acidentes; os motoristas de caminhão concentram o maior número de mortes (4.249 óbitos em dez anos).
+</p>
+
+<div class="chart no">
+<div class="chart">Acidentes por Setor Econômico (2016-2025, acumulado)</div>
+<canvas id="chartSetores" height="220"></canvas>
+</div>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>30-33</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 34-37: FLUXOGRAMAS -->
+<!-- ============================================ -->
+<section class="page content" id="page-9" data-page="34">
+<h2>09. Fluxogramas e Organogramas de Implementação</h2>
+
+<h3>9.1 Organograma da Gestão Ergonômica</h3>
+
+<div class="org no">
+<div class="org">
+<div class="org highlight">DIRETORIA / PRESIDÊNCIA<br><small>Política de SST</small></div>
+<div class="org">
+<div class="org">
+<div class="org">GERÊNCIA DE SST<br><small>Coordenação do PGR</small></div>
+<div class="org">
+<div class="org">
+<div class="org highlight">ERGONOMISTA / ENGENHEIRO<br><small>AEP, AET, Laudos</small></div>
+</div>
+<div class="org">
+<div class="org">MÉDICO DO TRABALHO<br><small>Exames, absenteísmo</small></div>
+</div>
+<div class="org">
+<div class="org">CIPA / SESMT<br><small>Participação, inspeções</small></div>
+</div>
+</div>
+</div>
+<div class="org">
+<div class="org">GERÊNCIA DE RH<br><small>Gestão de mudanças, treinamentos</small></div>
+</div>
+<div class="org">
+<div class="org">GERÊNCIA OPERACIONAL<br><small>Implementação no chão de fábrica</small></div>
+</div>
+</div>
+</div>
+</div>
+<p class="image" contenteditable="true">Figura 9.1 — Organograma da estrutura de gestão ergonômica integrada ao PGR</p>
+
+<h3>9.2 Fluxograma de Implementação Completa NR-17</h3>
+
+<div class="flowchart no">
+<div class="flow">1. POLÍTICA DE SST<br><small>Compromisso da direção</small></div>
+<div class="flow"></div>
+<div class="flow action">2. AVALIAÇÃO ERGONÔMICA PRELIMINAR (AEP)<br><small>Identificação de riscos</small></div>
+<div class="flow"></div>
+<div class="flow decision">Riscos Relevantes?</div>
+<div class="flow"></div>
+<div style="display:flex; gap:30px; justify-content:center;">
+<div style="text-align:center;">
+<div style="font-size:9pt; color:#e74c3c; font-weight:700;">SIM → AET</div>
+<div class="flow" style="height:15px;"></div>
+<div class="flow action">3. ANÁLISE ERGONÔMICA<br><small>Estudo detalhado</small></div>
+</div>
+<div style="text-align:center;">
+<div style="font-size:9pt; color:#27ae60; font-weight:700;">NÃO → Monitorar</div>
+<div class="flow" style="height:15px;"></div>
+<div class="flow end">4. REGISTRO NO PGR<br><small>Reavaliação periódica</small></div>
+</div>
+</div>
+<div class="flow"></div>
+<div class="flow action">5. PLANO DE AÇÃO<br><small>Priorização e cronograma</small></div>
+<div class="flow"></div>
+<div class="flow action">6. IMPLEMENTAÇÃO<br><small>Ajustes físicos e organizacionais</small></div>
+<div class="flow"></div>
+<div class="flow action">7. TREINAMENTO<br><small>Capacitação dos trabalhadores</small></div>
+<div class="flow"></div>
+<div class="flow action">8. MONITORAMENTO<br><small>Indicadores de eficácia</small></div>
+<div class="flow"></div>
+<div class="flow decision">Meta Atingida?</div>
+<div style="display:flex; gap:30px; justify-content:center; margin-top:10px;">
+<div style="text-align:center;">
+<div style="font-size:9pt; color:#27ae60; font-weight:700;">SIM</div>
+<div class="flow end">REGISTRAR E ATUALIZAR</div>
+</div>
+<div style="text-align:center;">
+<div style="font-size:9pt; color:#e74c3c; font-weight:700;">NÃO → Retornar</div>
+<div style="font-size:9pt; color:#e74c3c;">ao Plano de Ação</div>
+</div>
+</div>
+</div>
+<p class="image" contenteditable="true">Figura 9.2 — Fluxograma completo de implementação da NR-17 integrada ao ciclo PDCA do PGR</p>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>34-37</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 38-39: CONCLUSÃO -->
+<!-- ============================================ -->
+<section class="page content" id="page-10" data-page="38">
+<h2>10. Conclusão e Recomendações</h2>
+
+<p contenteditable="true">
+A <strong>NR-17</strong> vai muito além de uma obrigação legal. Ela representa uma nova forma de enxergar o trabalho — como um sistema onde o ser humano é o elemento central a ser protegido e otimizado. Empresas que aplicam seus princípios criam ambientes mais humanos, reduzem o absenteísmo e aumentam a produtividade sustentável.
+</p>
+
+<p contenteditable="true">
+Os dados de 2025 são inequívocos: com <strong>806.011 acidentes</strong> e <strong>3.644 óbitos</strong> registrados, o Brasil bateu recorde negativo na série histórica. A formalização do mercado de trabalho (queda da taxa de incidência para 17,94/100 mil) não foi acompanhada por melhora proporcional nas condições de segurança. Isso evidencia que a prevenção não pode ser apenas burocrática — precisa ser estratégica e contínua.
+</p>
+
+<h3>Recomendações Estratégicas para 2026:</h3>
+
+<div class="highlight no">
+<ol style="margin-left: 20px;">
+<li><strong>Integre ergonomia ao PGR:</strong> Não trate AEP/AET como documentos isolados. Faça da ergonomia um pilar vivo do gerenciamento de riscos.</li>
+<li><strong>Inventarie riscos psicossociais:</strong> A NR-01 (2026) exige classificação formal desses riscos. Use a NR-17 como base técnica.</li>
+<li><strong>Involva os trabalhadores:</strong> A participação ativa aumenta em 40% a taxa de implementação das melhorias.</li>
+<li><strong>Monitore indicadores:</strong> Absenteísmo, LER/DORT, satisfação e custos devem fazer parte do dashboard de gestão.</li>
+<li><strong>Capacite continuamente:</strong> Treinamentos não são eventos pontuais. A ergonomia exige atualização constante de conhecimentos.</li>
+<li><strong>Atenda os anexos:</strong> Checkout e telemarketing possuem regras específicas que, se descumpridas, geram multas severas.</li>
+<li><strong>Cuide do home office:</strong> O teletrabalho é realidade permanente. Oriente, forneça equipamentos e acompanhe.</li>
+</ol>
+</div>
+
+<p contenteditable="true" style="margin-top: 24px; font-style: italic; font-size: 12pt; text-align: center; color: var(--primary);">
+"Ignorar a ergonomia é negligenciar o principal ativo de qualquer negócio: as pessoas."
+</p>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>38-39</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 40: REFERÊNCIAS -->
+<!-- ============================================ -->
+<section class="page content" id="page-11" data-page="40">
+<h2>11. Referências Bibliográficas</h2>
+
+<ol class="ref">
+<li>
+BRASIL. Ministério do Trabalho e Emprego. <strong>Norma Regulamentadora nº 17: Ergonomia.</strong> Portaria MTP nº 4.219, de 20 de dezembro de 2022. Brasília, DF, 2022. Disponível em: https://www.gov.br/trabalho-e-emprego
+</li>
+<li>
+BRASIL. Ministério do Trabalho e Emprego. <strong>Norma Regulamentadora nº 01: Disposições Gerais e Gerenciamento de Riscos Ocupacionais.</strong> Texto vigente a partir de maio de 2026. Brasília, DF, 2026.
+</li>
+<li>
+BRASIL. Ministério do Trabalho e Emprego. <strong>Acidentes de trabalho no Brasil — 2016 a 2025.</strong> Estudo Técnico do MTE, abril de 2026. Brasília, DF.
+</li>
+<li>
+FUNDACENTRO. <strong>NHO 11: Avaliação dos Níveis de Iluminamento em Ambientes de Trabalho Internos.</strong> Norma de Higiene Ocupacional. São Paulo, 2013.
+</li>
+<li>
+IIDA, I. <strong>Ergonomia: Projeto e Produção.</strong> 2. ed. São Paulo: Edgard Blücher, 2005.
+</li>
+<li>
+GUÉRIN, F. et al. <strong>Compreender o Trabalho para Transformá-lo: A Prática da Ergonomia.</strong> São Paulo: Edgard Blücher, 2001.
+</li>
+<li>
+ABNT. <strong>NBR 10152: Iluminância de Interiores.</strong> Rio de Janeiro, 2003.
+</li>
+<li>
+NIOSH. <strong>Revised NIOSH Equation for the Design and Evaluation of Manual Lifting Tasks.</strong> Cincinnati, OH, 1991.
+</li>
+<li>
+SENIOR BRASIL. <strong>Integração NR-01 e NR-17 (Vigência 2026).</strong> Blog Normas & Normas, março de 2026.
+</li>
+<li>
+ENGEHALL. <strong>NR-17 Atualizada 2026: Resumo, Guia Completo e PDF.</strong> Dezembro de 2025.
+</li>
+<li>
+ABQv. <strong>Ergonomia no trabalho e NR-17: por que essas preocupações devem ir além da questão burocrática.</strong> Revista Ação Ergonômica, v. 18, 2024.
+</li>
+<li>
+SIENGE. <strong>O que é NR-17 — Ergonomia no local de trabalho.</strong> Blog Construpoint, novembro de 2023.
+</li>
+</ol>
+
+<div class="page">
+<span>NR-17 Ergonomia — Artigo Técnico Completo</span>
+<span>40</span>
+</div>
+</section>
+
+<!-- ============================================ -->
+<!-- PÁGINA 41: CAPA FINAL -->
+<!-- ============================================ -->
+<section class="page back" id="page-back" data-page="41">
+<div class="cover d1"></div>
+<div class="cover d2"></div>
+
+<h2>NR-17 Ergonomia</h2>
+<p contenteditable="true">
+Este artigo técnico foi elaborado com base na legislação vigente e nas melhores práticas internacionais de ergonomia ocupacional.
+</p>
+<p style="margin-top: 30px; font-size: 11pt; opacity: 0.8;" contenteditable="true">
+A ergonomia é investimento, não custo.<br>
+Ao aplicar a NR-17, a empresa melhora o desempenho coletivo<br>
+e constrói uma cultura voltada à saúde e à eficiência.
+</p>
+
+<div style="margin-top: 50px; z-index:2;">
+<div style="width: 60px; height: 3px; background: var(--accent); margin: 0 auto 20px;"></div>
+<p style="font-size: 10pt; opacity: 0.7;">Documento gerado em 2026</p>
+<p style="font-size: 9pt; opacity: 0.5; margin-top: 8px;">Todos os direitos reservados • Uso técnico-educacional</p>
+</div>
+</section>
+
+</div><!-- /article-container -->
+
+<!-- ============================================ -->
+<!-- SCRIPTS -->
+<!-- ============================================ -->
+<script>
+// ============================================================
+// CONFIGURAÇÃO DE GRÁFICOS (Chart.js)
+// ============================================================
+
+// Gráfico 1: Condições Ambientais
+const ctxAmbiental = document.getElementById('chartAmbiental');
+if (ctxAmbiental) {
+new Chart(ctxAmbiental, {
+type: 'bar',
+data: {
+labels: ['Iluminação (lux)', 'Temperatura (°C)', 'Ruído (dB)', 'Umidade (%)'],
+datasets: [{
+label: 'Mínimo Adequado',
+data: [300, 20, 65, 40],
+backgroundColor: '#27ae60',
+borderRadius: 6
+}, {
+label: 'Máximo Adequado',
+data: [750, 26, 85, 70],
+backgroundColor: '#1a5276',
+borderRadius: 6
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: { legend: { position: 'top' } },
+scales: { y: { beginAtZero: true } }
+}
+});
+}
+
+// Gráfico 2: Riscos Psicossociais
+const ctxRiscos = document.getElementById('chartRiscos');
+if (ctxRiscos) {
+new Chart(ctxRiscos, {
+type: 'radar',
+data: {
+labels: ['Pressão por Metas', 'Ritmo Excessivo', 'Falta de Autonomia', 'Carga Cognitiva', 'Assédio Moral', 'Conflitos'],
+datasets: [{
+label: 'Risco Atual',
+data: [4, 5, 3, 4, 2, 3],
+backgroundColor: 'rgba(231, 76, 60, 0.2)',
+borderColor: '#e74c3c',
+pointBackgroundColor: '#e74c3c',
+borderWidth: 2
+}, {
+label: 'Meta Após Intervenção',
+data: [2, 2, 2, 2, 1, 2],
+backgroundColor: 'rgba(39, 174, 96, 0.2)',
+borderColor: '#27ae60',
+pointBackgroundColor: '#27ae60',
+borderWidth: 2
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+scales: {
+r: {
+beginAtZero: true,
+max: 5,
+ticks: { stepSize: 1 }
+}
+}
+}
+});
+}
+
+// Gráfico 3: Acidentes 2016-2025
+const ctxAcidentes = document.getElementById('chartAcidentes');
+if (ctxAcidentes) {
+new Chart(ctxAcidentes, {
+type: 'line',
+data: {
+labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+datasets: [{
+label: 'Acidentes (mil)',
+data: [720, 735, 710, 695, 486, 580, 650, 720, 780, 806],
+borderColor: '#1a5276',
+backgroundColor: 'rgba(26, 82, 118, 0.1)',
+fill: true,
+tension: 0.4,
+pointRadius: 5,
+pointBackgroundColor: '#1a5276'
+}, {
+label: 'Óbitos',
+data: [3200, 3150, 3100, 3050, 2267, 2500, 2800, 3100, 3400, 3644],
+borderColor: '#e74c3c',
+backgroundColor: 'rgba(231, 76, 60, 0.1)',
+fill: true,
+tension: 0.4,
+pointRadius: 5,
+pointBackgroundColor: '#e74c3c',
+yAxisID: 'y1'
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+interaction: { mode: 'index', intersect: false },
+scales: {
+y: { beginAtZero: true, title: { display: true, text: 'Acidentes (×1000)' } },
+y1: { position: 'right', beginAtZero: true, title: { display: true, text: 'Óbitos' }, grid: { drawOnChartArea: false } }
+}
+}
+});
+}
+
+// Gráfico 4: Dias Perdidos vs Debitados
+const ctxDias = document.getElementById('chartDias');
+if (ctxDias) {
+new Chart(ctxDias, {
+type: 'bar',
+data: {
+labels: ['2016-2017', '2018-2019', '2020-2021', '2022-2023', '2024-2025'],
+datasets: [{
+label: 'Dias Perdidos (mi)',
+data: [18, 19, 12, 17, 18.5],
+backgroundColor: '#f39c12',
+borderRadius: 6
+}, {
+label: 'Dias Debitados (mi)',
+data: [42, 44, 38, 45, 48],
+backgroundColor: '#e74c3c',
+borderRadius: 6
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: { legend: { position: 'top' } },
+scales: { y: { beginAtZero: true } }
+}
+});
+}
+
+// Gráfico 5: Setores
+const ctxSetores = document.getElementById('chartSetores');
+if (ctxSetores) {
+new Chart(ctxSetores, {
+type: 'doughnut',
+data: {
+labels: ['Saúde', 'Transporte', 'Construção', 'Indústria', 'Comércio', 'Serviços', 'Agronegócio'],
+datasets: [{
+data: [633, 480, 420, 380, 290, 250, 180],
+backgroundColor: ['#e74c3c', '#1a5276', '#f39c12', '#27ae60', '#8e44ad', '#16a085', '#d35400'],
+borderWidth: 2,
+borderColor: '#fff'
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: { position: 'right' },
+tooltip: {
+callbacks: {
+label: function(context) {
+return context.label + ': ' + context.parsed + ' mil acidentes';
+}
+}
+}
+}
+}
+});
+}
+
+// ============================================================
+// FUNÇÕES DE EDIÇÃO
+// ============================================================
+
+let editMode = false;
+
+function toggleEditMode() {
+editMode = !editMode;
+const elements = document.querySelectorAll('[contenteditable]');
+elements.forEach(el => {
+el.contentEditable = editMode;
+});
+const btn = document.getElementById('btnEdit');
+btn.textContent = editMode ? '✅ Edição Ativa' : '✏️ Editar Texto';
+btn.style.background = editMode ? '#27ae60' : '#1a5276';
+document.getElementById('statusMsg').textContent = editMode ? 'Clique em qualquer texto para editar' : 'Pronto para edição';
+}
+
+function togglePreview() {
+const toolbar = document.querySelector('.edit-toolbar');
+toolbar.style.display = toolbar.style.display === 'none' ? 'flex' : 'none';
+document.getElementById('btnPreview').textContent = toolbar.style.display === 'none' ? '👁️ Mostrar Toolbar' : '👁️ Preview';
+}
+
+// ============================================================
+// SUBSTITUIR IMAGENS
+// ============================================================
+
+function replaceImage(imgId) {
+const input = document.createElement('input');
+input.type = 'file';
+input.accept = 'image/*';
+input.onchange = function(e) {
+const file = e.target.files[0];
+if (file) {
+const reader = new FileReader();
+reader.onload = function(event) {
+document.getElementById(imgId).src = event.target.result;
+document.getElementById('statusMsg').textContent = 'Imagem substituída com sucesso!';
+setTimeout(() => document.getElementById('statusMsg').textContent = 'Pronto para edição', 3000);
+};
+reader.readAsDataURL(file);
+}
+};
+input.click();
+}
+
+function addImage() {
+const input = document.createElement('input');
+input.type = 'file';
+input.accept = 'image/*';
+input.onchange = function(e) {
+const file = e.target.files[0];
+if (file) {
+const reader = new FileReader();
+reader.onload = function(event) {
+const wrapper = document.createElement('div');
+wrapper.className = 'image-wrapper no-break';
+const imgId = 'img-custom-' + Date.now();
+wrapper.innerHTML = `
+<img src="${event.target.result}" alt="Imagem inserida" class="article-content" id="${imgId}">
+<button class="image" onclick="replaceImage('${imgId}')">🔄 Substituir Imagem</button>
+<p class="image" contenteditable="true">Figura — Descrição da imagem inserida (clique para editar)</p>
+`;
+const selection = window.getSelection();
+if (selection.rangeCount > 0) {
+const range = selection.getRangeAt(0);
+range.insertNode(wrapper);
+} else {
+document.querySelector('.content-page:last-of-type').appendChild(wrapper);
+}
+document.getElementById('statusMsg').textContent = 'Imagem inserida com sucesso!';
+setTimeout(() => document.getElementById('statusMsg').textContent = 'Pronto para edição', 3000);
+};
+reader.readAsDataURL(file);
+}
+};
+input.click();
+}
+
+// ============================================================
+// EXPORTAÇÃO PDF
+// ============================================================
+
+async function exportPDF() {
+document.getElementById('statusMsg').textContent = 'Gerando PDF...';
+const { jsPDF } = window.jspdf;
+const element = document.getElementById('articleContent');
+
+try {
+const canvas = await html2canvas(element, {
+scale: 2,
+useCORS: true,
+allowTaint: true,
+logging: false,
+windowWidth: element.scrollWidth,
+windowHeight: element.scrollHeight
+});
+
+const imgData = canvas.toDataURL('image/png');
+const pdf = new jsPDF('p', 'mm', 'a4');
+const imgWidth = 210;
+const pageHeight = 297;
+const imgHeight = (canvas.height * imgWidth) / canvas.width;
+let heightLeft = imgHeight;
+let position = 0;
+
+pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+heightLeft -= pageHeight;
+
+while (heightLeft > 0) {
+position = heightLeft - imgHeight;
+pdf.addPage();
+pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+heightLeft -= pageHeight;
+}
+
+pdf.save('NR17-Ergonomia-Artigo-Completo.pdf');
+document.getElementById('statusMsg').textContent = 'PDF exportado com sucesso!';
+} catch (err) {
+document.getElementById('statusMsg').textContent = 'Erro ao gerar PDF. Tente imprimir como PDF.';
+console.error(err);
+}
+setTimeout(() => document.getElementById('statusMsg').textContent = 'Pronto para edição', 4000);
+}
+
+// ============================================================
+// EXPORTAÇÃO WORD
+// ============================================================
+
+function exportWord() {
+document.getElementById('statusMsg').textContent = 'Gerando Word...';
+
+const header = `
+<html xmlns:o='urn:schemas-microsoft-com:office:office' 
+xmlns:w='urn:schemas-microsoft-com:office:word' 
+xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'><title>NR-17 Artigo</title>
+<style>
+body { font-family: 'Inter'; font-size: 11pt; line-height: 1.5; color: #2c3e50; }
+h1 { font-size: 24pt; color: #1a5276; }
+h2 { font-size: 16pt; color: #1a5276; border-left: 4px solid #27ae60; padding-left: 10px; }
+h3 { font-size: 13pt; color: #154360; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { border: 1px solid #d5dbdb; padding: 8px; text-align: left; }
+th { background: #1a5276; color: white; }
+.highlight-box { background: #eafaf1; border-left: 4px solid #27ae60; padding: 10px; margin: 10px 0; }
+img { max-width: 100%; height: auto; }
+.page-break { page-break-after: always; }
+</style>
+<!-- Hreflang Global (Automático) -->
+<script src="/js/i18n-loader.js" defer></script>
+<meta property="og:title" content="NR-17 Ergonomia: Do Básico ao Avançado — Artigo Técnico Completo"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Calculadoras de Enfermagem"/>
+<meta name="description" content="NR-17 Ergonomia: Do Básico ao Avançado — Artigo Técnico Completo - Calculadoras de Enfermagem"/>
+<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/docs/NR17_Ergonomia_Artigo_Completo.html"/>
+<!-- Google Analytics + AdSense — Consent-based lazy load (from live site) -->
+<script>
+if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.location.search).get('admin')==='1'){console.log('🚧 Modo Admin: Bloqueado.');if(new URLSearchParams(window.location.search).get('admin')==='1'){localStorage.setItem('admin_mode','true');}}else{var savedConsent=localStorage.getItem("cookieConsent");var isRefused=(savedConsent==="refused");var isManaged=(savedConsent==="managed");var adsBlocked=isRefused||(isManaged&&localStorage.getItem("ad_storage")==="denied");window.__metricsLoaded=false;window.__adsenseLoaded=false;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;function loadAnalytics(){if(window.__metricsLoaded)return;window.__metricsLoaded=true;var aState=isRefused?"denied":(localStorage.getItem("analytics_storage")||"granted");var adState=adsBlocked?"denied":"granted";var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-PFM06B7TS5";document.head.appendChild(s);gtag("consent","default",{analytics_storage:aState,ad_storage:adState,ad_user_data:adState,ad_personalization:adState,wait_for_update:500});gtag("js",new Date());gtag("config","G-PFM06B7TS5");gtag("config","G-MJDKPDPJ26");gtag("config","G-M7DHHF38EJ");gtag("config","G-8FLJ59XXDK");gtag("config","G-VVDP5JGEX8");gtag("config","G-EX8");gtag("config","AW-952633102");gtag("config","AW-9277197961");console.log("📈 Analytics carregado.");}function loadAdSenseOnce(){if(window.__adsenseLoaded||adsBlocked)return;window.__adsenseLoaded=true;var ad=document.createElement("script");ad.async=true;ad.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847";ad.crossOrigin="anonymous";document.head.appendChild(ad);console.log("💰 AdSense carregado.");}function onUserInteraction(){loadAnalytics();loadAdSenseOnce();window.removeEventListener("scroll",onUserInteraction);window.removeEventListener("mousemove",onUserInteraction);window.removeEventListener("touchstart",onUserInteraction);window.removeEventListener("keydown",onUserInteraction);}if(!adsBlocked){window.addEventListener("scroll",onUserInteraction,{passive:true});window.addEventListener("mousemove",onUserInteraction,{passive:true});window.addEventListener("touchstart",onUserInteraction,{passive:true});window.addEventListener("keydown",onUserInteraction,{passive:true});setTimeout(onUserInteraction,4000);}function applyConsent(consent){gtag("consent","update",consent);if(consent.ad_storage==="granted"){adsBlocked=false;onUserInteraction();}else{adsBlocked=true;document.querySelectorAll("ins.adsbygoogle, .google-auto-placed").forEach(function(ad){ad.style.display="none";ad.innerHTML="";});}localStorage.setItem("analytics_storage",consent.analytics_storage);localStorage.setItem("ad_storage",consent.ad_storage);}window.acceptAllCookies=function(){localStorage.setItem("cookieConsent","accepted");applyConsent({analytics_storage:"granted",ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted"});};window.rejectAllCookies=function(){localStorage.setItem("cookieConsent","refused");applyConsent({analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"});};}
+</script>
+
+<link as="font" crossorigin="" href="/fonts/inter/inter-regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/inter/inter-600.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/inter/inter-700.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-700.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/nunito/nunito-900.woff2" rel="preload" type="font/woff2"/>
+<style id="critical-fonts">
+  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-regular.woff2') format('woff2'); font-weight: 400; font-display: optional; }
+  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-600.woff2') format('woff2'); font-weight: 600; font-display: optional; }
+  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-700.woff2') format('woff2'); font-weight: 700; font-display: optional; }
+  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-regular.woff2') format('woff2'); font-weight: 400; font-display: optional; }
+  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-700.woff2') format('woff2'); font-weight: 700; font-display: optional; }
+  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-900.woff2') format('woff2'); font-weight: 900; font-display: optional; }
+  @font-face{font-family:"Font Awesome 6 Brands";src:url("/fonts/fa-brands/fa-brands-400.woff2") format("woff2");font-weight:400;font-display: swap}
+  @font-face{font-family:"Font Awesome 6 Free";src:url("/fonts/fa-solid/fa-solid-900.woff2") format("woff2");font-weight:900;font-display: swap}
+</style>
+</head><body>
+`;
+
+let content = '';
+document.querySelectorAll('.page-section').forEach(section => {
+content += '<div class="page">' + section.innerHTML + '</div>';
+});
+
+const footer = '<script src="/js/partials-loader.js" defer></script>
+<button class="btn-icon" onclick="window.print()" type="button">🖨️ Imprimir / PDF</button>
+<script src="/js/nurse-palm.js"></script>
+<script src="/js/cognitive-ui.js"></script>
+<div class="tool-footer-zone">
+  <div class="tool-tags"><a class="tool-tag">#Enfermagem</a><a href="#" class="tool-tag">#Documentos</a><a href="#" class="tool-tag">#Técnico</a></div>
+  
+</div>
+<div id="site-footer"></div>
+<div id="site-cookie"></div>
+<svg style="display:none" aria-hidden="true"><defs>
+  <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13.9A8.5 8.5 0 1 1 10.1 3.5a7 7 0 0 0 10.4 10.4z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M15 3v4h4"/><line x1="8.5" y1="12" x2="15.5" y2="12"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/><line x1="8.5" y1="8.5" x2="11" y2="8.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.8 5.5-5.8s5.5 2.5 5.5 5.8"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.7 14.5c2.4.3 4.3 2.4 4.3 5"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="3 17 9.5 10.5 13.5 14.5 21 6.5"/><polyline points="15 6.5 21 6.5 21 12.5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.2c-2-1.6-5-2.1-8-1.6v13.6c3-.5 6 0 8 1.6 2-1.6 5-2.1 8-1.6V4.6c-3-.5-6 0-8 1.6z"/><line x1="12" y1="6.2" x2="12" y2="19.8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 10.8 15.3 16 9.3"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18.5h5M10.3 21h3.4M12 3.2a6.2 6.2 0 0 0-3.2 11.5c1 .8 1.2 1.6 1.2 2.3h4c0-.7.2-1.5 1.2-2.3A6.2 6.2 0 0 0 12 3.2z"/></symbol>
+  <symbol id="i-clipcheck" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><polyline points="9 13 11 15 15 10.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.2 4.8 13.5h5.8l-1 8.3 8.4-11.3h-5.8l1-8.3z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><line x1="8" y1="11" x2="16" y2="7"/><line x1="8" y1="13" x2="16" y2="17"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4z"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><rect x="6" y="9" width="12" height="7" rx="1.5"/><path d="M7 9V4.5h10V9"/><path d="M7 16v3.5h10V16"/><circle cx="16" cy="12" r="0.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6-4.4-4.2 6-.8z"/></symbol>
+  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3.5l10 17.5H2z"/><line x1="12" y1="10" x2="12" y2="15"/><circle cx="12" cy="17.7" r="0.7" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M10 8.3l6 3.7-6 3.7z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 4.5 2 9l10 4.5L22 9z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><line x1="22" y1="9" x2="22" y2="15"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></symbol>
+  <symbol id="i-calculator" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="2"/><line x1="8" y1="8.5" x2="16" y2="8.5"/><line x1="8" y1="12" x2="8.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="16" y1="12" x2="16.01" y2="12"/><line x1="8" y1="15.5" x2="8.01" y2="15.5"/><line x1="12" y1="15.5" x2="12.01" y2="15.5"/><line x1="16" y1="15.5" x2="16.01" y2="15.5"/></symbol>
+  <symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/><polyline points="9 12 11 14 15.5 9"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><line x1="8" y1="15" x2="16" y2="15"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 21c0-9.5 6.5-16 16-16 0 9.5-6.5 16-16 16z"/><path d="M5 21c3.2-3.2 6.3-6.5 9-11"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 2.5c3 2 5 6 5 10.3 0 2-.9 3.9-2 5.2l-3 3-3-3c-1.1-1.3-2-3.2-2-5.2 0-4.3 2-8.3 5-10.3z"/><circle cx="12" cy="11" r="1.8"/><path d="M8 17l-2.5 4.5M16 17l2.5 4.5"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="2.5"/><circle cx="9.2" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><line x1="12" y1="4" x2="12" y2="8"/><circle cx="12" cy="3.4" r="1.2" fill="currentColor" stroke="none"/><line x1="2" y1="12.5" x2="5" y2="12.5"/><line x1="19" y1="12.5" x2="22" y2="12.5"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M6.5 18.5h11a4 4 0 0 0 0-8 6.2 6.2 0 0 0-11.8 1.6A3.6 3.6 0 0 0 6.5 18.5z"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16.5" x2="12" y2="20"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><circle cx="12" cy="12.5" r="8.5"/><line x1="12" y1="12.5" x2="15.5" y2="9"/><circle cx="12" cy="12.5" r="1" fill="currentColor" stroke="none"/><line x1="12" y1="4.3" x2="12" y2="5.8"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><line x1="6" y1="4" x2="6" y2="20"/><circle cx="6" cy="9.5" r="2" fill="#fff"/><line x1="12" y1="4" x2="12" y2="20"/><circle cx="12" cy="15.5" r="2" fill="#fff"/><line x1="18" y1="4" x2="18" y2="20"/><circle cx="18" cy="7.5" r="2" fill="#fff"/></symbol>
+  <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4.3" r="1.8" fill="currentColor" stroke="none"/><path d="M4.5 9h15M12 9v5.5l-4.2 7.2M12 13.8l4.2 6.9"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/></symbol>
+  <symbol id="i-cookie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="9.5" cy="15" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><line x1="8.5" y1="11.5" x2="15.5" y2="11.5"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12.5M7 11.5l5 5 5-5"/><line x1="5" y1="20.5" x2="19" y2="20.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21.5 4v6h-6"/><path d="M2.5 20v-6h6"/><path d="M4 10a8 8 0 0 1 13.4-3.6L21.5 10"/><path d="M20 14a8 8 0 0 1-13.4 3.6L2.5 14"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><polyline points="2.5 13 7.5 13 9.5 6 13.5 19 16 13 21.5 13"/></symbol>
+  <symbol id="i-headphone" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0v4"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M20 18a3 3 0 0 1-3 3h-2"/></symbol>
+  <symbol id="i-handshake" viewBox="0 0 24 24"><path d="M2 12l4-3 3 2 3-2 3 2 3-2 4 3"/><path d="M7 11l3 6M14 11l-3 6"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="10" height="18" rx="1"/><rect x="14" y="9" width="6" height="12" rx="1"/><line x1="7" y1="7" x2="7.01" y2="7"/><line x1="11" y1="7" x2="11.01" y2="7"/><line x1="7" y1="11" x2="7.01" y2="11"/><line x1="11" y1="11" x2="11.01" y2="11"/><line x1="7" y1="15" x2="7.01" y2="15"/><line x1="11" y1="15" x2="11.01" y2="15"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/></symbol>
+  <symbol id="i-stetho" viewBox="0 0 24 24"><path d="M5 3v5a3 3 0 0 0 6 0V3"/><path d="M8 11v2.5a6 6 0 0 0 12 0v-1.5"/><circle cx="20" cy="10.5" r="2.2"/></symbol>
+  <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2v5M10.5 13.5 6.5 16M13.5 13.5l4 2.5"/></symbol>
+  <symbol id="i-sitemap" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="5" rx="1"/><rect x="2" y="12.5" width="6" height="5" rx="1"/><rect x="16" y="12.5" width="6" height="5" rx="1"/><line x1="12" y1="7.5" x2="12" y2="10"/><line x1="5" y1="12.5" x2="5" y2="10"/><line x1="19" y1="12.5" x2="19" y2="10"/><path d="M5 10h14"/></symbol>
+  <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
+
+<symbol id="i-clipboard-list" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></symbol>
+  <symbol id="i-comments" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
+  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-2-2-4-2-4s2 4 2 6a6 6 0 0 1-12 0c0-4 4-6 4-10z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/></symbol>
+  <symbol id="i-pills" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(45 12 12)"/><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/></symbol>
+  <symbol id="i-syringe" viewBox="0 0 24 24"><path d="M18 2l4 4-2 2-4-4z"/><path d="M14 6l4 4-8 8H6v-4z"/><path d="M6 18l-2 2"/><path d="M10 10l4 4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></symbol>
+  <symbol id="i-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></symbol>
+</defs></svg>
+
+</body></html>';
+const sourceHTML = header + content + footer;
+
+const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+const fileDownload = document.createElement('a');
+document.body.appendChild(fileDownload);
+fileDownload.href = source;
+fileDownload.download = 'NR17-Ergonomia-Artigo-Completo.doc';
+fileDownload.click();
+document.body.removeChild(fileDownload);
+
+document.getElementById('statusMsg').textContent = 'Word exportado com sucesso!';
+setTimeout(() => document.getElementById('statusMsg').textContent = 'Pronto para edição', 3000);
+}
+
+// ============================================================
+// EXPORTAÇÃO EXCEL (dados estruturados)
+// ============================================================
+
+function exportExcel() {
+document.getElementById('statusMsg').textContent = 'Gerando Excel...';
+
+// Coletar dados das tabelas do artigo
+const tables = document.querySelectorAll('.data-table');
+let csvContent = 'data:text/csv;charset=utf-8,﻿';
+
+csvContent += 'NR-17 ERGONOMIA — DADOS ESTRUTURADOS DO ARTIGO\n';
+csvContent += 'Gerado em: ' + new Date().toLocaleDateString('pt-BR') + '\n\n';
+
+tables.forEach((table, idx) => {
+const caption = table.nextElementSibling?.textContent || 'Tabela ' + (idx + 1);
+csvContent += '"' + caption.replace(/"/g, '""') + '"\n';
+
+const rows = table.querySelectorAll('tr');
+rows.forEach(row => {
+const cells = row.querySelectorAll('th, td');
+const rowData = [];
+cells.forEach(cell => {
+let text = cell.textContent.replace(/\s+/g, ' ').trim();
+text = text.replace(/"/g, '""');
+rowData.push('"' + text + '"');
+});
+csvContent += rowData.join(';') + '\n';
+});
+csvContent += '\n';
+});
+
+// Adicionar dados estatísticos
+csvContent += '"DADOS ESTATÍSTICOS — ACIDENTES DE TRABALHO BRASIL 2016-2025"\n';
+csvContent += '"Ano";"Acidentes (mil)";"Óbitos";"Taxa CAT/100mil"\n';
+csvContent += '"2016";"720";"3200";"29,39"\n';
+csvContent += '"2017";"735";"3150";"28,50"\n';
+csvContent += '"2018";"710";"3100";"26,80"\n';
+csvContent += '"2019";"695";"3050";"25,10"\n';
+csvContent += '"2020";"486";"2267";"22,30"\n';
+csvContent += '"2021";"580";"2500";"20,50"\n';
+csvContent += '"2022";"650";"2800";"19,20"\n';
+csvContent += '"2023";"720";"3100";"18,50"\n';
+csvContent += '"2024";"780";"3400";"18,10"\n';
+csvContent += '"2025";"806";"3644";"17,94"\n';
+
+const encodedUri = encodeURI(csvContent);
+const link = document.createElement('a');
+link.setAttribute('href', encodedUri);
+link.setAttribute('download', 'NR17-Ergonomia-Dados-Estruturados.csv');
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+document.getElementById('statusMsg').textContent = 'Excel (CSV) exportado com sucesso!';
+setTimeout(() => document.getElementById('statusMsg').textContent = 'Pronto para edição', 3000);
+}
+
+// ============================================================
+// AJUSTE DE QUEBRA DE PÁGINA
+// ============================================================
+
+function ajustarQuebras() {
+// Garantir que elementos críticos não quebrem
+document.querySelectorAll('.no-break, table, .chart-container, .flowchart, .org-chart, .image-wrapper').forEach(el => {
+el.style.pageBreakInside = 'avoid';
+el.style.breakInside = 'avoid';
+});
+}
+
+// Inicialização
+window.addEventListener('DOMContentLoaded', () => {
+ajustarQuebras();
+document.getElementById('statusMsg').textContent = 'Artigo NR-17 carregado. Clique em Editar para modificar.';
+});
+
+// Reajustar em resize
+window.addEventListener('resize', ajustarQuebras);
+</script>
+
+<script src="/js/partials-loader.js" defer></script>
+<svg style="display:none" aria-hidden="true"><defs>
+  <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13.9A8.5 8.5 0 1 1 10.1 3.5a7 7 0 0 0 10.4 10.4z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M15 3v4h4"/><line x1="8.5" y1="12" x2="15.5" y2="12"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/><line x1="8.5" y1="8.5" x2="11" y2="8.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.8 5.5-5.8s5.5 2.5 5.5 5.8"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.7 14.5c2.4.3 4.3 2.4 4.3 5"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="3 17 9.5 10.5 13.5 14.5 21 6.5"/><polyline points="15 6.5 21 6.5 21 12.5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.2c-2-1.6-5-2.1-8-1.6v13.6c3-.5 6 0 8 1.6 2-1.6 5-2.1 8-1.6V4.6c-3-.5-6 0-8 1.6z"/><line x1="12" y1="6.2" x2="12" y2="19.8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 10.8 15.3 16 9.3"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18.5h5M10.3 21h3.4M12 3.2a6.2 6.2 0 0 0-3.2 11.5c1 .8 1.2 1.6 1.2 2.3h4c0-.7.2-1.5 1.2-2.3A6.2 6.2 0 0 0 12 3.2z"/></symbol>
+  <symbol id="i-clipcheck" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><polyline points="9 13 11 15 15 10.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.2 4.8 13.5h5.8l-1 8.3 8.4-11.3h-5.8l1-8.3z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><line x1="8" y1="11" x2="16" y2="7"/><line x1="8" y1="13" x2="16" y2="17"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4z"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><rect x="6" y="9" width="12" height="7" rx="1.5"/><path d="M7 9V4.5h10V9"/><path d="M7 16v3.5h10V16"/><circle cx="16" cy="12" r="0.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6-4.4-4.2 6-.8z"/></symbol>
+  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3.5l10 17.5H2z"/><line x1="12" y1="10" x2="12" y2="15"/><circle cx="12" cy="17.7" r="0.7" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M10 8.3l6 3.7-6 3.7z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 4.5 2 9l10 4.5L22 9z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><line x1="22" y1="9" x2="22" y2="15"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></symbol>
+  <symbol id="i-calculator" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="2"/><line x1="8" y1="8.5" x2="16" y2="8.5"/><line x1="8" y1="12" x2="8.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="16" y1="12" x2="16.01" y2="12"/><line x1="8" y1="15.5" x2="8.01" y2="15.5"/><line x1="12" y1="15.5" x2="12.01" y2="15.5"/><line x1="16" y1="15.5" x2="16.01" y2="15.5"/></symbol>
+  <symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/><polyline points="9 12 11 14 15.5 9"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><line x1="8" y1="15" x2="16" y2="15"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 21c0-9.5 6.5-16 16-16 0 9.5-6.5 16-16 16z"/><path d="M5 21c3.2-3.2 6.3-6.5 9-11"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 2.5c3 2 5 6 5 10.3 0 2-.9 3.9-2 5.2l-3 3-3-3c-1.1-1.3-2-3.2-2-5.2 0-4.3 2-8.3 5-10.3z"/><circle cx="12" cy="11" r="1.8"/><path d="M8 17l-2.5 4.5M16 17l2.5 4.5"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="2.5"/><circle cx="9.2" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><line x1="12" y1="4" x2="12" y2="8"/><circle cx="12" cy="3.4" r="1.2" fill="currentColor" stroke="none"/><line x1="2" y1="12.5" x2="5" y2="12.5"/><line x1="19" y1="12.5" x2="22" y2="12.5"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M6.5 18.5h11a4 4 0 0 0 0-8 6.2 6.2 0 0 0-11.8 1.6A3.6 3.6 0 0 0 6.5 18.5z"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16.5" x2="12" y2="20"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><circle cx="12" cy="12.5" r="8.5"/><line x1="12" y1="12.5" x2="15.5" y2="9"/><circle cx="12" cy="12.5" r="1" fill="currentColor" stroke="none"/><line x1="12" y1="4.3" x2="12" y2="5.8"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><line x1="6" y1="4" x2="6" y2="20"/><circle cx="6" cy="9.5" r="2" fill="#fff"/><line x1="12" y1="4" x2="12" y2="20"/><circle cx="12" cy="15.5" r="2" fill="#fff"/><line x1="18" y1="4" x2="18" y2="20"/><circle cx="18" cy="7.5" r="2" fill="#fff"/></symbol>
+  <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4.3" r="1.8" fill="currentColor" stroke="none"/><path d="M4.5 9h15M12 9v5.5l-4.2 7.2M12 13.8l4.2 6.9"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/></symbol>
+  <symbol id="i-cookie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="9.5" cy="15" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><line x1="8.5" y1="11.5" x2="15.5" y2="11.5"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12.5M7 11.5l5 5 5-5"/><line x1="5" y1="20.5" x2="19" y2="20.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21.5 4v6h-6"/><path d="M2.5 20v-6h6"/><path d="M4 10a8 8 0 0 1 13.4-3.6L21.5 10"/><path d="M20 14a8 8 0 0 1-13.4 3.6L2.5 14"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><polyline points="2.5 13 7.5 13 9.5 6 13.5 19 16 13 21.5 13"/></symbol>
+  <symbol id="i-headphone" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0v4"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M20 18a3 3 0 0 1-3 3h-2"/></symbol>
+  <symbol id="i-handshake" viewBox="0 0 24 24"><path d="M2 12l4-3 3 2 3-2 3 2 3-2 4 3"/><path d="M7 11l3 6M14 11l-3 6"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="10" height="18" rx="1"/><rect x="14" y="9" width="6" height="12" rx="1"/><line x1="7" y1="7" x2="7.01" y2="7"/><line x1="11" y1="7" x2="11.01" y2="7"/><line x1="7" y1="11" x2="7.01" y2="11"/><line x1="11" y1="11" x2="11.01" y2="11"/><line x1="7" y1="15" x2="7.01" y2="15"/><line x1="11" y1="15" x2="11.01" y2="15"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/></symbol>
+  <symbol id="i-stetho" viewBox="0 0 24 24"><path d="M5 3v5a3 3 0 0 0 6 0V3"/><path d="M8 11v2.5a6 6 0 0 0 12 0v-1.5"/><circle cx="20" cy="10.5" r="2.2"/></symbol>
+  <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2v5M10.5 13.5 6.5 16M13.5 13.5l4 2.5"/></symbol>
+  <symbol id="i-sitemap" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="5" rx="1"/><rect x="2" y="12.5" width="6" height="5" rx="1"/><rect x="16" y="12.5" width="6" height="5" rx="1"/><line x1="12" y1="7.5" x2="12" y2="10"/><line x1="5" y1="12.5" x2="5" y2="10"/><line x1="19" y1="12.5" x2="19" y2="10"/><path d="M5 10h14"/></symbol>
+  <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
+
+<symbol id="i-clipboard-list" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></symbol>
+  <symbol id="i-comments" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
+  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-2-2-4-2-4s2 4 2 6a6 6 0 0 1-12 0c0-4 4-6 4-10z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/></symbol>
+  <symbol id="i-pills" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(45 12 12)"/><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/></symbol>
+  <symbol id="i-syringe" viewBox="0 0 24 24"><path d="M18 2l4 4-2 2-4-4z"/><path d="M14 6l4 4-8 8H6v-4z"/><path d="M6 18l-2 2"/><path d="M10 10l4 4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></symbol>
+  <symbol id="i-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></symbol>
+</defs></svg>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+{
+  "id": "73849506-1728-4950-6273-849506172839",
+  "code": "SCALE-GCSPED-001",
+  "slug": "glasgow-pediatrico",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Escala de Coma de Glasgow Pediátrica",
+    "description": "Calcule a Escala de Coma de Glasgow adaptada para lactentes e crianças pequenas, com critérios verbais e motores ajustados. Inclui interpretação, SAE e evidências.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/glasgow-pediatrico.html"
+  },
+  "breadcrumb": { "category": "Pediatria", "categoryHref": "index.html#calculadoras" },
+  "overview": {
+    "name": "Escala de Coma de Glasgow Pediátrica",
+    "acronym": "GCS Pediátrica",
+    "categoryBadge": "Pediatria",
+    "icon": "i-brain",
+    "objective": "Avaliar objetivamente o nível de consciência de lactentes e crianças pequenas (geralmente menores de 2 anos), a partir de critérios verbais e motores adaptados ao estágio de desenvolvimento neurológico infantil.",
+    "indication": "Indicada para lactentes e crianças pequenas com trauma cranioencefálico, alteração do nível de consciência ou outras condições neurológicas agudas.",
+    "targetPopulation": "Lactentes e crianças pequenas, tipicamente menores de 2 anos ou pré-verbais.",
+    "specialty": ["Pediatria", "Neurologia", "Enfermagem"],
+    "averageTime": "2-3 minutos",
+    "evidenceLevel": "II",
+    "originalAuthors": ["Graham Teasdale", "Bryan Jennett (adaptação pediátrica por diversos autores)"],
+    "complexity": "intermediate",
+    "rating": 4.6,
+    "ratingCount": 200
+  },
+  "calculator": {
+    "inputs": [
+      {"id": "ocular", "type": "select", "label": "Abertura Ocular", "description": "Avalie a abertura ocular espontânea ou em resposta a estímulos.", "defaultValue": 4,
+       "options": [
+         {"value": 4, "label": "4 — Espontânea", "score": 4, "description": "Abre os olhos espontaneamente."},
+         {"value": 3, "label": "3 — Ao Som/Chamado", "score": 3, "description": "Abre os olhos em resposta à voz ou som."},
+         {"value": 2, "label": "2 — À Dor", "score": 2, "description": "Abre os olhos apenas em resposta a estímulo doloroso."},
+         {"value": 1, "label": "1 — Nenhuma Resposta", "score": 1, "description": "Não abre os olhos a nenhum estímulo."}
+       ]
+      },
+      {"id": "verbal", "type": "select", "label": "Melhor Resposta Verbal (Adaptada)", "description": "Avalie sons, choro e interação social apropriados à idade.", "defaultValue": 5,
+       "options": [
+         {"value": 5, "label": "5 — Sorri, Orientado aos Sons, Interage e Segue Objetos", "score": 5, "description": "Balbucia apropriadamente, sorri, interage de forma adequada à idade."},
+         {"value": 4, "label": "4 — Choro Consolável, Interação Inadequada", "score": 4, "description": "Choro consolável, mas interação social prejudicada."},
+         {"value": 3, "label": "3 — Choro Inconsistentemente Consolável, Gemidos", "score": 3, "description": "Consegue ser consolado apenas às vezes, apresenta gemidos."},
+         {"value": 2, "label": "2 — Inconsolável, Agitado", "score": 2, "description": "Não consegue ser consolado, apresenta-se agitado."},
+         {"value": 1, "label": "1 — Nenhuma Resposta", "score": 1, "description": "Sem resposta verbal ou sonora."}
+       ]
+      },
+      {"id": "motora", "type": "select", "label": "Melhor Resposta Motora (Adaptada)", "description": "Avalie a resposta motora espontânea ou a estímulos.", "defaultValue": 6,
+       "options": [
+         {"value": 6, "label": "6 — Movimentos Espontâneos Normais", "score": 6, "description": "Movimenta-se espontaneamente e de forma apropriada."},
+         {"value": 5, "label": "5 — Retirada ao Toque", "score": 5, "description": "Retira o membro ao toque (localiza estímulo tátil)."},
+         {"value": 4, "label": "4 — Retirada à Dor", "score": 4, "description": "Retira o membro em resposta a estímulo doloroso."},
+         {"value": 3, "label": "3 — Flexão Anormal à Dor (Decorticação)", "score": 3, "description": "Postura de flexão anormal dos membros superiores em resposta à dor."},
+         {"value": 2, "label": "2 — Extensão Anormal à Dor (Descerebração)", "score": 2, "description": "Postura de extensão anormal dos membros em resposta à dor."},
+         {"value": 1, "label": "1 — Nenhuma Resposta", "score": 1, "description": "Ausência de resposta motora a qualquer estímulo."}
+       ]
+      }
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "Escala de Coma de Glasgow Pediátrica",
+      "resultUnit": "pontos",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {"min": 13, "max": 15, "label": "Leve / Sem Comprometimento", "riskLevel": "none", "color": "#2563eb",
+       "clinicalImplications": "Nível de consciência preservado ou com comprometimento leve.",
+       "recommendations": "• Manter observação neurológica de rotina\n• Reavaliar conforme protocolo institucional de trauma pediátrico"},
+      {"min": 9, "max": 12, "label": "Moderado", "riskLevel": "moderate", "color": "#ca8a04",
+       "clinicalImplications": "Comprometimento moderado do nível de consciência.",
+       "recommendations": "• Comunicar à equipe médica/neuropediatria\n• Monitorização neurológica seriada mais frequente\n• Investigar causas do rebaixamento do nível de consciência"},
+      {"min": 3, "max": 8, "label": "Grave / Coma", "riskLevel": "critical", "color": "#7f1d1d",
+       "clinicalImplications": "Comprometimento grave do nível de consciência, compatível com coma.",
+       "recommendations": "• Comunicar imediatamente à equipe médica\n• Avaliar necessidade de proteção de via aérea e suporte ventilatório\n• Monitorização neurológica contínua\n• Investigação de imagem urgente conforme avaliação médica"}
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {"diagnosis": "Perfusão tissular cerebral ineficaz", "definition": "Diminuição da circulação sanguínea cerebral, podendo comprometer a saúde."},
+      {"diagnosis": "Risco de aspiração", "definition": "Risco de entrada de secreções gastrintestinais, orofaríngeas ou líquidos/sólidos nas vias traqueobrônquicas, associado a reflexos protetores diminuídos."},
+      {"diagnosis": "Ansiedade dos pais/cuidadores", "definition": "Sensação vaga e incômoda de desconforto ou temor dos pais/cuidadores relacionada à condição neurológica da criança."}
+    ],
+    "noc": [
+      {"outcome": "Status neurológico", "indicators": ["Nível de consciência adequado à idade e ao quadro clínico", "Resposta motora e verbal apropriadas", "Ausência de sinais de deterioração neurológica"]}
+    ],
+    "nic": [
+      {"intervention": "Monitorização neurológica", "activities": ["Avaliar abertura ocular, resposta verbal e motora adaptadas à idade", "Documentar o escore a cada avaliação", "Comunicar imediatamente qualquer queda no escore à equipe médica", "Envolver os pais/cuidadores na observação de mudanças comportamentais da criança"]}
+    ]
+  },
+  "evidence": {
+    "foundation": "A Escala de Coma de Glasgow Pediátrica é uma adaptação da Escala de Glasgow original (Teasdale e Jennett, 1974) para lactentes e crianças pequenas, ajustando os critérios de resposta verbal e motora para considerar o estágio de desenvolvimento neurológico esperado nessa faixa etária, já que crianças pré-verbais não conseguem responder aos critérios verbais originais da escala adulta.",
+    "history": "Amplamente utilizada em pediatria e neonatologia para avaliação de trauma cranioencefálico e outras condições neurológicas agudas em crianças que ainda não desenvolveram linguagem verbal plena.",
+    "validation": "Adaptações pediátricas da Escala de Glasgow são amplamente utilizadas na prática clínica, mantendo a mesma faixa de pontuação (3 a 15) e lógica geral da escala original adulta, com critérios adaptados à idade.",
+    "limitations": "A avaliação em lactentes pode ser mais desafiadora e sujeita a maior variabilidade interobservador, dado o caráter subjetivo da interpretação do comportamento infantil. Deve ser complementada por avaliação neurológica pediátrica completa.",
+    "references": [
+      {"text": "TEASDALE, G.; JENNETT, B. Assessment of coma and impaired consciousness: a practical scale. The Lancet, v. 304, n. 7872, p. 81-84, 1974."},
+      {"text": "HOLMES, J. F. et al. Performance of the pediatric Glasgow Coma Scale in children with blunt head trauma. Academic Emergency Medicine, v. 12, n. 9, p. 814-819, 2005."},
+      {"text": "BRASIL. Sociedade Brasileira de Pediatria. Manual de emergências pediátricas. Rio de Janeiro: SBP, 2021."}
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Use esta versão adaptada para lactentes e crianças pequenas, geralmente menores de 2 anos ou pré-verbais.",
+      "Para crianças maiores, capazes de verbalizar adequadamente, utilize a Escala de Glasgow padrão (adulto/criança maior).",
+      "Envolva os pais/cuidadores na avaliação, pois eles frequentemente reconhecem melhor mudanças sutis no comportamento da criança.",
+      "Reavalie frequentemente e compare com o estado basal da criança relatado pelos pais."
+    ],
+    "examples": [
+      {"label": "Lactente neurologicamente normal", "sublabel": "GCS Pediátrica 15", "emoji": "✅",
+       "values": {"ocular": 4, "verbal": 5, "motora": 6}},
+      {"label": "Comprometimento moderado", "sublabel": "GCS Pediátrica 10", "emoji": "⚠️",
+       "values": {"ocular": 3, "verbal": 3, "motora": 4}},
+      {"label": "Comprometimento grave", "sublabel": "GCS Pediátrica 5", "emoji": "🚨",
+       "values": {"ocular": 1, "verbal": 2, "motora": 2}}
+    ],
+    "quiz": [
+      {"q": "Para qual faixa etária a Escala de Coma de Glasgow Pediátrica foi adaptada?", "opts": ["Adolescentes", "Lactentes e crianças pequenas, geralmente menores de 2 anos", "Apenas recém-nascidos a termo", "Crianças acima de 10 anos"], "correct": 1,
+       "expl": "A versão pediátrica é destinada a lactentes e crianças pequenas, tipicamente menores de 2 anos ou ainda pré-verbais, cujos critérios de resposta verbal e motora são adaptados ao desenvolvimento esperado nessa idade."},
+      {"q": "Qual a faixa de pontuação total da Escala de Coma de Glasgow Pediátrica?", "opts": ["0 a 10", "3 a 15", "1 a 5", "0 a 20"], "correct": 1,
+       "expl": "Assim como a escala adulta original, a versão pediátrica mantém a faixa de pontuação de 3 a 15 pontos."},
+      {"q": "Por que é necessária uma versão pediátrica da Escala de Glasgow?", "opts": ["Porque crianças não sentem dor", "Porque crianças pequenas/lactentes não conseguem responder aos critérios verbais da escala original", "Porque a escala original é muito simples", "Não há necessidade real, é apenas uma formalidade"], "correct": 1,
+       "expl": "Lactentes e crianças pequenas ainda não desenvolveram linguagem verbal plena, exigindo critérios adaptados de resposta verbal e motora, baseados no comportamento esperado para a idade."}
+    ]
+  },
+  "faq": [
+    {"q": "Quando devo usar a versão pediátrica ao invés da Escala de Glasgow padrão?", "a": "A versão pediátrica deve ser usada em lactentes e crianças pequenas, geralmente menores de 2 anos ou que ainda não desenvolveram linguagem verbal adequada. Para crianças maiores, capazes de verbalizar, utiliza-se a escala padrão (adulto)."},
+    {"q": "A interpretação dos escores é a mesma da Escala de Glasgow adulta?", "a": "Sim. As mesmas faixas de interpretação são utilizadas: 13-15 leve, 9-12 moderado e 3-8 grave/coma, mantendo a mesma lógica geral da escala original."}
+  ],
+  "about": {
+    "title": "Como funciona a Escala de Coma de Glasgow Pediátrica",
+    "html": "<p>A Escala de Coma de Glasgow Pediátrica soma pontos de 3 domínios — abertura ocular, resposta verbal e resposta motora, todos adaptados ao desenvolvimento neurológico esperado em lactentes e crianças pequenas —, totalizando de 3 a 15 pontos.</p><p><strong>Guia rápido:</strong> 13-15 = Leve/sem comprometimento | 9-12 = Moderado | 3-8 = Grave/coma.</p>"
+  }
+}

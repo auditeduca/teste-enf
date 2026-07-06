@@ -1,0 +1,889 @@
+{
+  "seo": {
+    "title": "Índice de Comorbidade de Charlson | Calculadoras de Enfermagem",
+    "description": "Calcule o Índice de Comorbidade de Charlson para estimar o risco de mortalidade em 10 anos com base nas comorbidades e idade do paciente. Inclui interpretação e evidências.",
+    "h1": "Índice de Comorbidade de Charlson",
+    "subtitle": "Estimar o risco de mortalidade em 10 anos a partir da soma ponderada de comorbidades presentes e da idade do paciente."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "06172a3b-4051-4263-0718-293a41526374",
+    "code": "SCALE-CHARLSON-001",
+    "slug": "charlson",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Índice de Comorbidade de Charlson",
+      "description": "Calcule o Índice de Comorbidade de Charlson para estimar o risco de mortalidade em 10 anos com base nas comorbidades e idade do paciente. Inclui interpretação e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/charlson.html"
+    },
+    "breadcrumb": {
+      "category": "Avaliação e Escore",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "Índice de Comorbidade de Charlson",
+      "acronym": "ICC",
+      "categoryBadge": "Avaliação e escore",
+      "icon": "i-clipboard",
+      "objective": "Estimar o risco de mortalidade em 10 anos a partir da soma ponderada de comorbidades presentes e da idade do paciente.",
+      "indication": "Indicada para estratificação de risco em pacientes com múltiplas comorbidades, pesquisa clínica, ajuste de risco em estudos epidemiológicos e planejamento de cuidados.",
+      "targetPopulation": "Pacientes adultos com uma ou mais comorbidades crônicas registradas.",
+      "specialty": [
+        "Enfermagem",
+        "Clínica Médica",
+        "Epidemiologia"
+      ],
+      "averageTime": "3-5 minutos",
+      "evidenceLevel": "II",
+      "originalAuthors": [
+        "Mary E. Charlson",
+        "colaboradores"
+      ],
+      "complexity": "advanced",
+      "rating": 4.5,
+      "ratingCount": 260
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "infarto_miocardio",
+          "type": "select",
+          "label": "Infarto do Miocárdio Prévio",
+          "description": "História de infarto agudo do miocárdio.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "insuficiencia_cardiaca",
+          "type": "select",
+          "label": "Insuficiência Cardíaca Congestiva",
+          "description": "Diagnóstico de insuficiência cardíaca congestiva.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "doenca_vascular_periferica",
+          "type": "select",
+          "label": "Doença Vascular Periférica",
+          "description": "Claudicação intermitente, aneurisma de aorta, doença arterial periférica.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "doenca_cerebrovascular",
+          "type": "select",
+          "label": "Doença Cerebrovascular",
+          "description": "AVC prévio ou ataque isquêmico transitório (AIT), sem hemiplegia residual.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "demencia",
+          "type": "select",
+          "label": "Demência",
+          "description": "Diagnóstico de demência de qualquer etiologia.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "doenca_pulmonar_cronica",
+          "type": "select",
+          "label": "Doença Pulmonar Crônica",
+          "description": "DPOC ou outra pneumopatia crônica significativa.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "doenca_tecido_conjuntivo",
+          "type": "select",
+          "label": "Doença do Tecido Conjuntivo",
+          "description": "Lúpus, artrite reumatoide ou outra colagenose.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "ulcera_peptica",
+          "type": "select",
+          "label": "Úlcera Péptica",
+          "description": "História de úlcera péptica tratada.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "doenca_hepatica_leve",
+          "type": "select",
+          "label": "Doença Hepática Leve",
+          "description": "Hepatopatia crônica leve, sem hipertensão portal.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "diabetes_sem_complicacao",
+          "type": "select",
+          "label": "Diabetes Sem Complicações Crônicas",
+          "description": "Diabetes mellitus sem lesão de órgão-alvo.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1,
+              "description": "1 ponto."
+            }
+          ]
+        },
+        {
+          "id": "hemiplegia",
+          "type": "select",
+          "label": "Hemiplegia",
+          "description": "Hemiplegia ou paraplegia de qualquer causa.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Sim",
+              "score": 2,
+              "description": "2 pontos."
+            }
+          ]
+        },
+        {
+          "id": "doenca_renal_moderada_grave",
+          "type": "select",
+          "label": "Doença Renal Moderada a Grave",
+          "description": "Doença renal crônica moderada/grave, incluindo diálise.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Sim",
+              "score": 2,
+              "description": "2 pontos."
+            }
+          ]
+        },
+        {
+          "id": "diabetes_com_complicacao",
+          "type": "select",
+          "label": "Diabetes Com Complicações Crônicas",
+          "description": "Diabetes com retinopatia, nefropatia, neuropatia ou outra lesão de órgão-alvo.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Sim",
+              "score": 2,
+              "description": "2 pontos."
+            }
+          ]
+        },
+        {
+          "id": "tumor_solido_sem_metastase",
+          "type": "select",
+          "label": "Tumor Sólido Sem Metástase",
+          "description": "Neoplasia sólida ativa, sem metástase confirmada.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Sim",
+              "score": 2,
+              "description": "2 pontos."
+            }
+          ]
+        },
+        {
+          "id": "leucemia",
+          "type": "select",
+          "label": "Leucemia",
+          "description": "Leucemia aguda ou crônica.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Sim",
+              "score": 2,
+              "description": "2 pontos."
+            }
+          ]
+        },
+        {
+          "id": "linfoma",
+          "type": "select",
+          "label": "Linfoma",
+          "description": "Linfoma de qualquer tipo.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Sim",
+              "score": 2,
+              "description": "2 pontos."
+            }
+          ]
+        },
+        {
+          "id": "doenca_hepatica_moderada_grave",
+          "type": "select",
+          "label": "Doença Hepática Moderada a Grave",
+          "description": "Cirrose com hipertensão portal ou varizes esofágicas.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 3,
+              "label": "Sim",
+              "score": 3,
+              "description": "3 pontos."
+            }
+          ]
+        },
+        {
+          "id": "tumor_solido_metastatico",
+          "type": "select",
+          "label": "Tumor Sólido Metastático",
+          "description": "Neoplasia sólida com metástase confirmada.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 6,
+              "label": "Sim",
+              "score": 6,
+              "description": "6 pontos."
+            }
+          ]
+        },
+        {
+          "id": "aids",
+          "type": "select",
+          "label": "AIDS (HIV com Doença Definidora)",
+          "description": "Síndrome da Imunodeficiência Adquirida com doença definidora, não apenas soropositividade.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 6,
+              "label": "Sim",
+              "score": 6,
+              "description": "6 pontos."
+            }
+          ]
+        },
+        {
+          "id": "idade",
+          "type": "select",
+          "label": "Faixa Etária",
+          "description": "Ajuste de pontos por década de vida a partir dos 50 anos.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Menor que 50 Anos",
+              "score": 0,
+              "description": "Sem pontos adicionais por idade."
+            },
+            {
+              "value": 1,
+              "label": "50 a 59 Anos",
+              "score": 1,
+              "description": "1 ponto adicional."
+            },
+            {
+              "value": 2,
+              "label": "60 a 69 Anos",
+              "score": 2,
+              "description": "2 pontos adicionais."
+            },
+            {
+              "value": 3,
+              "label": "70 a 79 Anos",
+              "score": 3,
+              "description": "3 pontos adicionais."
+            },
+            {
+              "value": 4,
+              "label": "80 Anos ou Mais",
+              "score": 4,
+              "description": "4 pontos adicionais."
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Índice de Charlson (ajustado por idade)",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 0,
+          "label": "Ausência de Comorbidade Relevante",
+          "riskLevel": "none",
+          "color": "#2563eb",
+          "clinicalImplications": "Ausência de comorbidades relevantes computadas pelo índice, exceto o ajuste por idade.",
+          "recommendations": "• Manter acompanhamento clínico de rotina"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "label": "Comorbidade Leve",
+          "riskLevel": "low",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Carga de comorbidade leve, associada a menor risco de mortalidade em 10 anos em relação a escores mais altos.",
+          "recommendations": "• Acompanhamento clínico das comorbidades identificadas\n• Reavaliação periódica"
+        },
+        {
+          "min": 3,
+          "max": 4,
+          "label": "Comorbidade Moderada",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Carga de comorbidade moderada, associada a risco intermediário de mortalidade em 10 anos.",
+          "recommendations": "• Avaliação multiprofissional\n• Otimizar controle das comorbidades presentes\n• Considerar impacto em decisões terapêuticas"
+        },
+        {
+          "min": 5,
+          "max": 37,
+          "label": "Comorbidade Grave",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Carga de comorbidade elevada, associada a maior risco de mortalidade em 10 anos.",
+          "recommendations": "• Avaliação multiprofissional especializada\n• Discutir objetivos de cuidado e prognóstico com o paciente/família\n• Otimizar manejo de todas as comorbidades ativas"
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "O Índice de Comorbidade de Charlson foi desenvolvido por Mary Charlson e colaboradores em 1987, atribuindo pesos de 1 a 6 pontos a 19 categorias de comorbidades, com ajuste adicional por década de idade a partir dos 50 anos, para estimar o risco de mortalidade em 10 anos.",
+      "history": "Um dos índices de comorbidade mais utilizados mundialmente em pesquisa clínica e epidemiológica, empregado para ajuste de risco em estudos observacionais e para estratificação prognóstica na prática clínica.",
+      "validation": "Amplamente validado em diversas populações e contextos clínicos, com boa correlação entre o escore e a mortalidade observada, embora o desempenho possa variar conforme a população e o desfecho estudado.",
+      "limitations": "Não contempla todas as comorbidades possíveis nem sua gravidade individual detalhada. Foi originalmente desenvolvido para prever mortalidade em 10 anos, podendo ter menor acurácia para desfechos de curto prazo ou populações muito diferentes da coorte original.",
+      "references": [
+        {
+          "text": "CHARLSON, M. E. et al. A new method of classifying prognostic comorbidity in longitudinal studies: development and validation. Journal of Chronic Diseases, v. 40, n. 5, p. 373-383, 1987."
+        },
+        {
+          "text": "QUAN, H. et al. Updating and validating the Charlson comorbidity index and score for risk adjustment in hospital discharge abstracts using data from 6 countries. American Journal of Epidemiology, v. 173, n. 6, p. 676-682, 2011."
+        },
+        {
+          "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "Considere apenas comorbidades documentadas e confirmadas, não suspeitas.",
+        "O ajuste por idade é cumulativo com as comorbidades — some ambos para o escore final.",
+        "Utilize o índice como apoio à discussão de prognóstico, nunca isoladamente para decisões terapêuticas.",
+        "Reavalie o índice se novas comorbidades forem diagnosticadas ao longo do acompanhamento."
+      ],
+      "examples": [
+        {
+          "label": "Sem comorbidades, jovem",
+          "sublabel": "Charlson 0",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "idade": 0
+          }
+        },
+        {
+          "label": "DM2 com complicação, 65 anos",
+          "sublabel": "Charlson 4",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "diabetes_com_complicacao": 2,
+            "idade": 2
+          }
+        },
+        {
+          "label": "Neoplasia metastática, 75 anos",
+          "sublabel": "Charlson 9",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "tumor_solido_metastatico": 6,
+            "idade": 3
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Quantas categorias de comorbidade compõem o Índice de Charlson original?",
+          "opts": [
+            "10",
+            "15",
+            "19",
+            "25"
+          ],
+          "correct": 2,
+          "expl": "O índice original avalia 19 categorias de comorbidade, com pesos de 1 a 6 pontos, mais o ajuste por idade."
+        },
+        {
+          "q": "Quantos pontos adicionais são somados por década de vida a partir dos 50 anos?",
+          "opts": [
+            "0,5 ponto",
+            "1 ponto",
+            "2 pontos",
+            "5 pontos"
+          ],
+          "correct": 1,
+          "expl": "Soma-se 1 ponto adicional para cada década de vida a partir dos 50 anos (50-59: +1, 60-69: +2, e assim por diante)."
+        },
+        {
+          "q": "Qual comorbidade tem o maior peso individual no Índice de Charlson?",
+          "opts": [
+            "Diabetes sem complicação (1 ponto)",
+            "Hemiplegia (2 pontos)",
+            "Tumor sólido metastático ou AIDS (6 pontos)",
+            "Úlcera péptica (1 ponto)"
+          ],
+          "correct": 2,
+          "expl": "Tumor sólido metastático e AIDS com doença definidora têm o maior peso individual, 6 pontos cada."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "O Índice de Charlson prevê mortalidade em qualquer prazo?",
+        "a": "O índice foi originalmente desenvolvido e validado para estimar mortalidade em 10 anos. Seu uso para desfechos de curto prazo deve ser interpretado com cautela."
+      },
+      {
+        "q": "O ajuste por idade é obrigatório?",
+        "a": "A versão mais utilizada na prática e em pesquisa é a versão ajustada por idade, que soma pontos adicionais por década de vida a partir dos 50 anos, além da pontuação das comorbidades."
+      }
+    ],
+    "about": {
+      "title": "Como funciona o Índice de Charlson",
+      "html": "<p>O Índice de Charlson soma pontos (1, 2, 3 ou 6, conforme a gravidade) atribuídos a comorbidades específicas presentes no paciente, somados a pontos adicionais por década de idade a partir dos 50 anos, gerando um escore total associado ao risco de mortalidade em 10 anos.</p><p><strong>Guia rápido:</strong> 0 = Nenhuma comorbidade relevante | 1-2 = Leve | 3-4 = Moderada | ≥5 = Grave.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Infarto do Miocárdio Prévio"
+    ],
+    [
+      "field_label",
+      "Insuficiência Cardíaca Congestiva"
+    ],
+    [
+      "field_label",
+      "Doença Vascular Periférica"
+    ],
+    [
+      "field_label",
+      "Doença Cerebrovascular"
+    ],
+    [
+      "field_label",
+      "Demência"
+    ],
+    [
+      "field_label",
+      "Doença Pulmonar Crônica"
+    ],
+    [
+      "field_label",
+      "Doença do Tecido Conjuntivo"
+    ],
+    [
+      "field_label",
+      "Úlcera Péptica"
+    ],
+    [
+      "field_label",
+      "Doença Hepática Leve"
+    ],
+    [
+      "field_label",
+      "Diabetes Sem Complicações Crônicas"
+    ],
+    [
+      "field_label",
+      "Hemiplegia"
+    ],
+    [
+      "field_label",
+      "Doença Renal Moderada a Grave"
+    ],
+    [
+      "field_label",
+      "Diabetes Com Complicações Crônicas"
+    ],
+    [
+      "field_label",
+      "Tumor Sólido Sem Metástase"
+    ],
+    [
+      "field_label",
+      "Leucemia"
+    ],
+    [
+      "field_label",
+      "Linfoma"
+    ],
+    [
+      "field_label",
+      "Doença Hepática Moderada a Grave"
+    ],
+    [
+      "field_label",
+      "Tumor Sólido Metastático"
+    ],
+    [
+      "field_label",
+      "AIDS (HIV com Doença Definidora)"
+    ],
+    [
+      "field_desc",
+      "História de infarto agudo do miocárdio."
+    ],
+    [
+      "field_desc",
+      "Diagnóstico de insuficiência cardíaca congestiva."
+    ],
+    [
+      "field_desc",
+      "Claudicação intermitente, aneurisma de aorta, doença arterial periférica."
+    ],
+    [
+      "field_desc",
+      "AVC prévio ou ataque isquêmico transitório (AIT), sem hemiplegia residual."
+    ],
+    [
+      "field_desc",
+      "Diagnóstico de demência de qualquer etiologia."
+    ],
+    [
+      "field_desc",
+      "DPOC ou outra pneumopatia crônica significativa."
+    ],
+    [
+      "field_desc",
+      "Lúpus, artrite reumatoide ou outra colagenose."
+    ],
+    [
+      "field_desc",
+      "História de úlcera péptica tratada."
+    ],
+    [
+      "field_desc",
+      "Hepatopatia crônica leve, sem hipertensão portal."
+    ],
+    [
+      "field_desc",
+      "Diabetes mellitus sem lesão de órgão-alvo."
+    ],
+    [
+      "field_desc",
+      "Hemiplegia ou paraplegia de qualquer causa."
+    ],
+    [
+      "field_desc",
+      "Doença renal crônica moderada/grave, incluindo diálise."
+    ],
+    [
+      "field_desc",
+      "Diabetes com retinopatia, nefropatia, neuropatia ou outra lesão de órgão-alvo."
+    ],
+    [
+      "field_desc",
+      "Neoplasia sólida ativa, sem metástase confirmada."
+    ],
+    [
+      "field_desc",
+      "Leucemia aguda ou crônica."
+    ],
+    [
+      "field_desc",
+      "Linfoma de qualquer tipo."
+    ],
+    [
+      "field_desc",
+      "Cirrose com hipertensão portal ou varizes esofágicas."
+    ],
+    [
+      "field_desc",
+      "Neoplasia sólida com metástase confirmada."
+    ],
+    [
+      "field_desc",
+      "Síndrome da Imunodeficiência Adquirida com doença definidora, não apenas soropositividade."
+    ],
+    [
+      "field_desc",
+      "Ajuste de pontos por década de vida a partir dos 50 anos."
+    ],
+    [
+      "section_h2",
+      "Como funciona o Índice de Charlson"
+    ],
+    [
+      "card_h3",
+      "Infarto do Miocárdio Prévio"
+    ],
+    [
+      "card_h3",
+      "Insuficiência Cardíaca Congestiva"
+    ],
+    [
+      "card_h3",
+      "Doença Vascular Periférica"
+    ],
+    [
+      "card_h3",
+      "Doença Cerebrovascular"
+    ],
+    [
+      "card_h3",
+      "Demência"
+    ],
+    [
+      "card_h3",
+      "Doença Pulmonar Crônica"
+    ],
+    [
+      "card_h3",
+      "Doença do Tecido Conjuntivo"
+    ],
+    [
+      "card_h3",
+      "Úlcera Péptica"
+    ],
+    [
+      "card_h3",
+      "Doença Hepática Leve"
+    ],
+    [
+      "card_h3",
+      "Diabetes Sem Complicações Crônicas"
+    ],
+    [
+      "card_h3",
+      "Hemiplegia"
+    ],
+    [
+      "card_h3",
+      "Doença Renal Moderada a Grave"
+    ],
+    [
+      "card_h3",
+      "Diabetes Com Complicações Crônicas"
+    ],
+    [
+      "card_h3",
+      "Tumor Sólido Sem Metástase"
+    ],
+    [
+      "card_h3",
+      "Leucemia"
+    ],
+    [
+      "card_h3",
+      "Linfoma"
+    ],
+    [
+      "card_h3",
+      "Doença Hepática Moderada a Grave"
+    ],
+    [
+      "card_h3",
+      "Tumor Sólido Metastático"
+    ],
+    [
+      "card_h3",
+      "AIDS (HIV com Doença Definidora)"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — Índice de Comorbidade de Charlson"
+    ],
+    [
+      "card_h3",
+      "Índice de Comorbidade de Charlson: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "Considere apenas comorbidades documentadas e confirmadas, não suspeitas."
+    ],
+    [
+      "tip_li",
+      "O ajuste por idade é cumulativo com as comorbidades — some ambos para o escore final."
+    ],
+    [
+      "tip_li",
+      "Utilize o índice como apoio à discussão de prognóstico, nunca isoladamente para decisões terapêuticas."
+    ],
+    [
+      "tip_li",
+      "Reavalie o índice se novas comorbidades forem diagnosticadas ao longo do acompanhamento."
+    ],
+    [
+      "faq_question",
+      "O Índice de Charlson prevê mortalidade em qualquer prazo?"
+    ],
+    [
+      "faq_question",
+      "O ajuste por idade é obrigatório?"
+    ]
+  ]
+}

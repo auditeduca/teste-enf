@@ -1,0 +1,146 @@
+{
+  "id": "01829405-1627-4384-9506-172940516273",
+  "code": "SCALE-SILVERMAN-001",
+  "slug": "silverman-andersen",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Boletim de Silverman-Andersen - Desconforto Respiratório Neonatal",
+    "description": "Calcule o Boletim de Silverman-Andersen para avaliar a gravidade do desconforto respiratório em recém-nascidos. Inclui interpretação, SAE e evidências.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/silverman-andersen.html"
+  },
+  "breadcrumb": { "category": "Neonatologia", "categoryHref": "index.html#calculadoras" },
+  "overview": {
+    "name": "Boletim de Silverman-Andersen",
+    "acronym": "Silverman-Andersen",
+    "categoryBadge": "Neonatologia",
+    "icon": "i-stetho",
+    "objective": "Avaliar objetivamente a gravidade do desconforto respiratório em recém-nascidos, a partir de 5 sinais clínicos observáveis.",
+    "indication": "Indicada para recém-nascidos com sinais de dificuldade respiratória, na sala de parto, alojamento conjunto ou unidade neonatal.",
+    "targetPopulation": "Recém-nascidos, especialmente prematuros ou com fatores de risco para desconforto respiratório.",
+    "specialty": ["Neonatologia", "Enfermagem", "Pediatria"],
+    "averageTime": "1-2 minutos",
+    "evidenceLevel": "II",
+    "originalAuthors": ["William A. Silverman", "Dorothy H. Andersen"],
+    "complexity": "basic",
+    "rating": 4.7,
+    "ratingCount": 260
+  },
+  "calculator": {
+    "inputs": [
+      {"id": "movimento_toracoabdominal", "type": "select", "label": "Movimento Tóraco-Abdominal", "description": "Observe a sincronia entre os movimentos do tórax e do abdome.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "0 — Rítmico e Regular (Sincrônico)", "score": 0, "description": "Tórax e abdome se movem de forma sincrônica."},
+         {"value": 1, "label": "1 — Tórax Imóvel, Abdome em Movimento", "score": 1, "description": "Discreta assincronia entre tórax e abdome."},
+         {"value": 2, "label": "2 — Movimento em Gangorra", "score": 2, "description": "Franco assincronismo tóraco-abdominal (movimento em gangorra/balancim)."}
+       ]
+      },
+      {"id": "tiragem_intercostal", "type": "select", "label": "Tiragem Intercostal", "description": "Observe a retração dos espaços intercostais durante a inspiração.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "0 — Ausente", "score": 0},
+         {"value": 1, "label": "1 — Leve", "score": 1},
+         {"value": 2, "label": "2 — Acentuada e Constante", "score": 2}
+       ]
+      },
+      {"id": "retracao_xifoide", "type": "select", "label": "Retração Xifoide", "description": "Observe a retração da região do apêndice xifoide durante a inspiração.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "0 — Ausente", "score": 0},
+         {"value": 1, "label": "1 — Leve", "score": 1},
+         {"value": 2, "label": "2 — Acentuada", "score": 2}
+       ]
+      },
+      {"id": "batimento_asa_nasal", "type": "select", "label": "Batimento de Asas do Nariz", "description": "Observe o movimento das narinas durante a respiração.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "0 — Ausente", "score": 0},
+         {"value": 1, "label": "1 — Mínimo", "score": 1},
+         {"value": 2, "label": "2 — Acentuado", "score": 2}
+       ]
+      },
+      {"id": "gemido_expiratorio", "type": "select", "label": "Gemido Expiratório", "description": "Ausculte a presença de gemido durante a expiração.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "0 — Ausente", "score": 0},
+         {"value": 1, "label": "1 — Audível Apenas com Estetoscópio", "score": 1},
+         {"value": 2, "label": "2 — Audível sem Estetoscópio (à Distância)", "score": 2}
+       ]
+      }
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "Boletim de Silverman-Andersen",
+      "resultUnit": "pontos",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {"min": 0, "max": 0, "label": "Sem Desconforto Respiratório", "riskLevel": "none", "color": "#2563eb",
+       "clinicalImplications": "Ausência de sinais de desconforto respiratório.",
+       "recommendations": "• Manter observação de rotina do recém-nascido"},
+      {"min": 1, "max": 3, "label": "Desconforto Respiratório Leve", "riskLevel": "low", "color": "#ca8a04",
+       "clinicalImplications": "Sinais leves de desconforto respiratório.",
+       "recommendations": "• Monitorização respiratória frequente\n• Reavaliar periodicamente conforme protocolo neonatal"},
+      {"min": 4, "max": 6, "label": "Desconforto Respiratório Moderado", "riskLevel": "moderate", "color": "#ca8a04",
+       "clinicalImplications": "Sinais moderados de desconforto respiratório, exigindo atenção e monitorização mais próxima.",
+       "recommendations": "• Comunicar à equipe médica/neonatologista\n• Considerar suporte de oxigênio conforme avaliação\n• Reavaliação frequente"},
+      {"min": 7, "max": 10, "label": "Desconforto Respiratório Grave", "riskLevel": "high", "color": "#dc2626",
+       "clinicalImplications": "Desconforto respiratório grave, com risco de insuficiência respiratória iminente.",
+       "recommendations": "• Comunicar imediatamente à equipe médica/neonatologista\n• Preparar para suporte ventilatório\n• Monitorização contínua"}
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."},
+      {"diagnosis": "Troca de gases prejudicada", "definition": "Excesso ou déficit na oxigenação e/ou eliminação de dióxido de carbono na membrana alvéolo-capilar."},
+      {"diagnosis": "Risco de aspiração", "definition": "Risco de entrada de secreções gastrintestinais, orofaríngeas ou líquidos/sólidos nas vias traqueobrônquicas."}
+    ],
+    "noc": [
+      {"outcome": "Status respiratório do recém-nascido", "indicators": ["Frequência respiratória dentro dos limites esperados", "Ausência de tiragem e batimento de asa nasal", "Coloração de pele adequada"]}
+    ],
+    "nic": [
+      {"intervention": "Monitorização respiratória", "activities": ["Aplicar o Boletim de Silverman-Andersen de forma sistemática", "Avaliar padrão respiratório e sinais de desconforto", "Comunicar escores elevados à equipe médica/neonatologista", "Manter vias aéreas pérvias e posicionamento adequado"]}
+    ]
+  },
+  "evidence": {
+    "foundation": "O Boletim de Silverman-Andersen foi desenvolvido por William Silverman e Dorothy Andersen para avaliar objetivamente a gravidade do desconforto respiratório em recém-nascidos, a partir de 5 sinais clínicos: movimento tóraco-abdominal, tiragem intercostal, retração xifoide, batimento de asas do nariz e gemido expiratório.",
+    "history": "Amplamente utilizado em unidades neonatais para triagem e acompanhamento evolutivo do desconforto respiratório neonatal, especialmente em prematuros com risco de síndrome do desconforto respiratório.",
+    "validation": "Instrumento clássico e amplamente adotado na prática neonatal, com boa aplicabilidade clínica para triagem rápida à beira do leito.",
+    "limitations": "É uma ferramenta de avaliação clínica rápida, não substituindo exames complementares (gasometria, radiografia de tórax) na investigação da causa do desconforto respiratório.",
+    "references": [
+      {"text": "SILVERMAN, W. A.; ANDERSEN, D. H. A controlled clinical trial of effects of water mist on obstructive respiratory signs, death rate and necropsy findings among premature infants. Pediatrics, v. 17, n. 1, p. 1-10, 1956."},
+      {"text": "BRASIL. Ministério da Saúde. Atenção à saúde do recém-nascido: guia para os profissionais de saúde. Brasília: MS, 2014."},
+      {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Avalie todos os 5 sinais de forma sistemática, observando o recém-nascido em repouso, sem choro.",
+      "Reavalie seriadamente para acompanhar a evolução do desconforto respiratório.",
+      "Escores elevados exigem comunicação imediata à equipe médica/neonatologista.",
+      "Combine com outros parâmetros clínicos (saturação de O2, frequência respiratória) para avaliação completa."
+    ],
+    "examples": [
+      {"label": "Recém-nascido sem desconforto", "sublabel": "Silverman-Andersen 0", "emoji": "✅",
+       "values": {"movimento_toracoabdominal": 0, "tiragem_intercostal": 0, "retracao_xifoide": 0, "batimento_asa_nasal": 0, "gemido_expiratorio": 0}},
+      {"label": "Desconforto moderado", "sublabel": "Silverman-Andersen 5", "emoji": "⚠️",
+       "values": {"movimento_toracoabdominal": 1, "tiragem_intercostal": 1, "retracao_xifoide": 1, "batimento_asa_nasal": 1, "gemido_expiratorio": 1}},
+      {"label": "Desconforto grave", "sublabel": "Silverman-Andersen 9", "emoji": "🚨",
+       "values": {"movimento_toracoabdominal": 2, "tiragem_intercostal": 2, "retracao_xifoide": 2, "batimento_asa_nasal": 2, "gemido_expiratorio": 1}}
+    ],
+    "quiz": [
+      {"q": "Quantos sinais clínicos compõem o Boletim de Silverman-Andersen?", "opts": ["3", "4", "5", "6"], "correct": 2,
+       "expl": "O boletim avalia 5 sinais: movimento tóraco-abdominal, tiragem intercostal, retração xifoide, batimento de asas do nariz e gemido expiratório."},
+      {"q": "Qual a pontuação máxima possível no Boletim de Silverman-Andersen?", "opts": ["5", "8", "10", "15"], "correct": 2,
+       "expl": "Cada um dos 5 sinais varia de 0 a 2 pontos, totalizando uma pontuação máxima de 10 pontos."},
+      {"q": "Diferente da Escala de Apgar, o que o Silverman-Andersen avalia especificamente?", "opts": ["Vitalidade geral ao nascer", "Gravidade do desconforto respiratório", "Idade gestacional", "Icterícia neonatal"], "correct": 1,
+       "expl": "Enquanto o Apgar avalia a vitalidade geral do recém-nascido, o Silverman-Andersen é específico para avaliar a gravidade do desconforto respiratório."}
+    ]
+  },
+  "faq": [
+    {"q": "O Silverman-Andersen substitui a gasometria arterial?", "a": "Não. É uma ferramenta de avaliação clínica rápida à beira do leito. Casos de desconforto moderado a grave geralmente requerem investigação complementar, incluindo gasometria e radiografia de tórax."},
+    {"q": "Com que frequência o Silverman-Andersen deve ser reavaliado?", "a": "Deve ser reavaliado seriadamente conforme a gravidade do quadro e o protocolo da unidade neonatal, especialmente em recém-nascidos com desconforto respiratório em evolução."}
+  ],
+  "about": {
+    "title": "Como funciona o Boletim de Silverman-Andersen",
+    "html": "<p>O Boletim de Silverman-Andersen soma pontos de 5 sinais clínicos — movimento tóraco-abdominal, tiragem intercostal, retração xifoide, batimento de asas do nariz e gemido expiratório —, cada um pontuado de 0 a 2, totalizando de 0 a 10 pontos.</p><p><strong>Guia rápido:</strong> 0 = Sem desconforto | 1-3 = Leve | 4-6 = Moderado | 7-10 = Grave.</p>"
+  }
+}

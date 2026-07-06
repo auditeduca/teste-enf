@@ -1,0 +1,72 @@
+{
+  "schema_version": "2026.2.2-draft",
+  "status": "PENDING_REVIEW",
+  "description": "Catálogo fixo de tipos de relação (edge layer). Relações NÃO são entidades com código REL_* — são arestas entre entity_codes existentes.",
+  "rules": {
+    "no_rel_entity": "Nunca criar entity_code com sufixo REL ou prefixo REL_",
+    "edge_identity": "Identidade da aresta = (from, relation_type, to) — sem código artificial",
+    "synonym_ban": "Proibido sinônimos ad hoc (related_to, linked_with, uses). Usar apenas chaves deste dicionário."
+  },
+  "relation_types": {
+    "assesses": {
+      "label_pt": "Avalia",
+      "label_en": "Assesses",
+      "direction": "scale_or_tool → condition_or_concept",
+      "example": "BRADEN_SCL_001 assesses skin_integrity_risk"
+    },
+    "supports_diagnosis": {
+      "label_pt": "Suporta diagnóstico",
+      "label_en": "Supports diagnosis",
+      "direction": "scale_or_assessment → nanda",
+      "example": "BRADEN_SCL_001 supports_diagnosis NANDA_00046"
+    },
+    "triggers": {
+      "label_pt": "Dispara",
+      "label_en": "Triggers",
+      "direction": "finding_or_threshold → nanda",
+      "example": "braden_score_le_12 triggers NANDA_00046"
+    },
+    "maps_to": {
+      "label_pt": "Mapeia para",
+      "label_en": "Maps to",
+      "direction": "nanda → nic",
+      "example": "NANDA_00046 maps_to NIC_3540"
+    },
+    "treated_by": {
+      "label_pt": "Tratado por",
+      "label_en": "Treated by",
+      "direction": "nanda → nic",
+      "example": "NANDA_00046 treated_by NIC_3540"
+    },
+    "impacts": {
+      "label_pt": "Impacta desfecho",
+      "label_en": "Impacts outcome",
+      "direction": "nic → noc",
+      "example": "NIC_3540 impacts NOC_1101"
+    },
+    "implements": {
+      "label_pt": "Implementa",
+      "label_en": "Implements",
+      "direction": "cal → scl",
+      "example": "BRADEN_CAL_001 implements BRADEN_SCL_001"
+    },
+    "derived_from": {
+      "label_pt": "Derivado de",
+      "label_en": "Derived from",
+      "direction": "content_artifact → primary_artifact",
+      "example": "APGAR_FLA_001 derived_from APGAR_SCL_001"
+    },
+    "evidenced_by": {
+      "label_pt": "Evidenciado por",
+      "label_en": "Evidenced by",
+      "direction": "entity → evidence_source",
+      "example": "APGAR_SCL_001 evidenced_by EVID_APgar_1952"
+    },
+    "depends_on": {
+      "label_pt": "Depende de",
+      "label_en": "Depends on",
+      "direction": "entity → entity",
+      "example": "DRIP_RATE_CAL_001 depends_on unit_conversion_ml_gtt"
+    }
+  }
+}

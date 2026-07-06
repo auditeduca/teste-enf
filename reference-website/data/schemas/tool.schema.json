@@ -1,0 +1,210 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tool (Calculadora/Escala) — calculadorasdeenfermagem.com.br",
+  "description": "Schema v1 do engine estático (js/calc-engine.js). Adaptado de nursing-calculators-json-v2.0/schemas/scale.schema.json (Draft-07), simplificado para strings diretas em pt-BR (sem objeto {pt,en,...} por campo) para casar com o padrão de i18n por arquivo já usado no restante do site. Cobre 2 famílias de fórmula: 'sum' (escalas de escore, ex: Braden, Glasgow, Morse) e 'expression' (cálculo numérico, ex: gotejamento, IMC).",
+  "type": "object",
+  "required": ["id", "slug", "code", "overview", "calculator", "interpretation"],
+  "properties": {
+    "id": { "type": "string", "description": "UUID v4" },
+    "code": { "type": "string", "description": "Ex: SCALE-BRADEN-001" },
+    "slug": { "type": "string", "description": "Ex: escala-de-braden" },
+    "version": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "review", "published", "archived"] },
+
+    "seo": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "canonical": { "type": "string" }
+      }
+    },
+
+    "overview": {
+      "type": "object",
+      "required": ["name", "objective"],
+      "properties": {
+        "name": { "type": "string" },
+        "acronym": { "type": "string" },
+        "categoryBadge": { "type": "string", "description": "Ex: Segurança do paciente / Avaliação neurológica" },
+        "icon": { "type": "string", "description": "id do símbolo do sprite, ex: i-shieldcheck" },
+        "objective": { "type": "string" },
+        "indication": { "type": "string" },
+        "targetPopulation": { "type": "string" },
+        "specialty": { "type": "array", "items": { "type": "string" } },
+        "averageTime": { "type": "string" },
+        "evidenceLevel": { "type": "string", "enum": ["I", "II", "III", "IV", "V"] },
+        "originalAuthors": { "type": "array", "items": { "type": "string" } },
+        "organizations": { "type": "array", "items": { "type": "string" } },
+        "complexity": { "type": "string", "enum": ["basic", "intermediate", "advanced", "expert"] },
+        "rating": { "type": "number" },
+        "ratingCount": { "type": "integer" }
+      }
+    },
+
+    "calculator": {
+      "type": "object",
+      "required": ["inputs", "formula"],
+      "properties": {
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "type", "label"],
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string", "enum": ["number", "select"] },
+              "label": { "type": "string" },
+              "description": { "type": "string" },
+              "unit": { "type": "string" },
+              "defaultValue": {},
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "step": { "type": "number" },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": {},
+                    "label": { "type": "string" },
+                    "score": { "type": "number" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "formula": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "type": "string", "enum": ["sum", "expression"] },
+            "expression": { "type": "string", "description": "Para type=expression. Usa os ids dos inputs como variáveis, ex: '(volume*factor)/(hours*60)'" },
+            "resultLabel": { "type": "string" },
+            "resultUnit": { "type": "string" },
+            "decimals": { "type": "integer", "default": 0 }
+          }
+        }
+      }
+    },
+
+    "interpretation": {
+      "type": "object",
+      "properties": {
+        "ranges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "label": { "type": "string" },
+              "riskLevel": { "type": "string", "enum": ["none", "low", "moderate", "high", "critical"] },
+              "color": { "type": "string" },
+              "clinicalImplications": { "type": "string" },
+              "recommendations": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "sae": {
+      "type": "object",
+      "properties": {
+        "nanda": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "diagnosis": { "type": "string" },
+              "definition": { "type": "string" }
+            }
+          }
+        },
+        "noc": { "type": "array", "items": { "type": "object", "properties": { "outcome": { "type": "string" }, "indicators": { "type": "array", "items": { "type": "string" } } } } },
+        "nic": { "type": "array", "items": { "type": "object", "properties": { "intervention": { "type": "string" }, "activities": { "type": "array", "items": { "type": "string" } } } } }
+      }
+    },
+
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "foundation": { "type": "string" },
+        "history": { "type": "string" },
+        "validation": { "type": "string" },
+        "sensitivity": { "type": "number" },
+        "specificity": { "type": "number" },
+        "limitations": { "type": "string" },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "text": { "type": "string" } }
+          },
+          "description": "Referências ABNT já formatadas como texto (evita indireção via references.json separado, mais simples para o engine estático)."
+        }
+      }
+    },
+
+    "learning": {
+      "type": "object",
+      "properties": {
+        "glossary": {
+          "type": "array",
+          "items": { "type": "object", "properties": { "term": { "type": "string" }, "def": { "type": "string" } } },
+          "description": "Se omitido, o engine gera automaticamente a partir de calculator.inputs[].options[].label/description."
+        },
+        "tips": { "type": "array", "items": { "type": "string" } },
+        "examples": {
+          "type": "array",
+          "description": "Presets de exemplo (usados no painel Estudante e Modo Urgência)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "sublabel": { "type": "string" },
+              "emoji": { "type": "string" },
+              "values": { "type": "object", "description": "map inputId -> valor" }
+            }
+          }
+        },
+        "quiz": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "q": { "type": "string" },
+              "opts": { "type": "array", "items": { "type": "string" } },
+              "correct": { "type": "integer" },
+              "expl": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "faq": {
+      "type": "array",
+      "items": { "type": "object", "properties": { "q": { "type": "string" }, "a": { "type": "string" } } }
+    },
+
+    "about": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "html": { "type": "string", "description": "1-3 parágrafos, pode conter <strong>" }
+      }
+    },
+
+    "breadcrumb": {
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "categoryHref": { "type": "string" }
+      }
+    }
+  }
+}

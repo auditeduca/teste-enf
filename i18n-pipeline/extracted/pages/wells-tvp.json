@@ -1,0 +1,568 @@
+{
+  "seo": {
+    "title": "Escore de Wells - Probabilidade de Trombose Venosa Profunda (TVP) | Calculadoras de Enfermagem",
+    "description": "Calcule o Escore de Wells para estimar a probabilidade clínica de trombose venosa profunda (TVP). Inclui interpretação, SAE e evidências.",
+    "h1": "Escore de Wells para TVP",
+    "subtitle": "Estimar a probabilidade clínica pré-teste de trombose venosa profunda (TVP), orientando a necessidade de exames complementares (D-dímero, ultrassonografia com Doppler)."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "62839405-1728-4950-5162-738495061728",
+    "code": "SCALE-WELLSTVP-001",
+    "slug": "wells-tvp",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Escore de Wells - Probabilidade de Trombose Venosa Profunda (TVP)",
+      "description": "Calcule o Escore de Wells para estimar a probabilidade clínica de trombose venosa profunda (TVP). Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/wells-tvp.html"
+    },
+    "breadcrumb": {
+      "category": "Emergência e Terapia Intensiva",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "Escore de Wells para TVP",
+      "acronym": "Wells (TVP)",
+      "categoryBadge": "Emergência",
+      "icon": "i-stetho",
+      "objective": "Estimar a probabilidade clínica pré-teste de trombose venosa profunda (TVP), orientando a necessidade de exames complementares (D-dímero, ultrassonografia com Doppler).",
+      "indication": "Indicada para pacientes com suspeita clínica de trombose venosa profunda de membros inferiores.",
+      "targetPopulation": "Pacientes adultos com sinais e sintomas sugestivos de TVP de membro inferior.",
+      "specialty": [
+        "Emergência",
+        "Enfermagem",
+        "Angiologia"
+      ],
+      "averageTime": "2-3 minutos",
+      "evidenceLevel": "I",
+      "originalAuthors": [
+        "Philip S. Wells",
+        "colaboradores"
+      ],
+      "complexity": "intermediate",
+      "rating": 4.6,
+      "ratingCount": 210
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "cancer_ativo",
+          "type": "select",
+          "label": "Câncer Ativo",
+          "description": "Tratamento oncológico nos últimos 6 meses, ou tratamento paliativo em curso.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "paralisia_imobilizacao",
+          "type": "select",
+          "label": "Paralisia, Paresia ou Imobilização Gessada Recente",
+          "description": "Paralisia, paresia ou imobilização gessada recente de membro inferior.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "repouso_cirurgia",
+          "type": "select",
+          "label": "Repouso no Leito ou Cirurgia Recente",
+          "description": "Repouso no leito maior que 3 dias ou cirurgia de grande porte nas últimas 12 semanas.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "dor_trajeto_venoso",
+          "type": "select",
+          "label": "Dor Localizada no Trajeto Venoso Profundo",
+          "description": "Dor à palpação ao longo do trajeto do sistema venoso profundo.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "edema_membro_todo",
+          "type": "select",
+          "label": "Edema de Todo o Membro Inferior",
+          "description": "Edema envolvendo todo o membro inferior acometido.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "edema_panturrilha",
+          "type": "select",
+          "label": "Edema de Panturrilha (>3cm)",
+          "description": "Diferença de circunferência da panturrilha maior que 3cm em relação ao membro assintomático (medida 10cm abaixo da tuberosidade tibial).",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "edema_cacifo",
+          "type": "select",
+          "label": "Edema Depressível (Cacifo) Maior no Membro Sintomático",
+          "description": "Edema com cacifo mais evidente no membro sintomático.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "veias_colaterais",
+          "type": "select",
+          "label": "Veias Colaterais Superficiais Não Varicosas",
+          "description": "Presença de veias colaterais superficiais visíveis, não varicosas.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "diagnostico_alternativo",
+          "type": "select",
+          "label": "Diagnóstico Alternativo Pelo Menos Tão Provável quanto TVP",
+          "description": "Existe outro diagnóstico que explique o quadro tão bem ou melhor que a TVP.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": -2,
+              "label": "Sim",
+              "score": -2
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Escore de Wells (TVP)",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": -2,
+          "max": 0,
+          "label": "Baixa Probabilidade",
+          "riskLevel": "low",
+          "color": "#2563eb",
+          "clinicalImplications": "Baixa probabilidade clínica pré-teste de trombose venosa profunda.",
+          "recommendations": "• Considerar dosagem de D-dímero como próximo passo\n• D-dímero negativo com baixa probabilidade geralmente exclui TVP\n• Investigar diagnósticos diferenciais"
+        },
+        {
+          "min": 1,
+          "max": 2,
+          "label": "Probabilidade Moderada",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Probabilidade clínica intermediária de trombose venosa profunda.",
+          "recommendations": "• Considerar D-dímero e ultrassonografia com Doppler venoso\n• Reavaliação clínica seriada se investigação inicial negativa"
+        },
+        {
+          "min": 3,
+          "max": 9,
+          "label": "Alta Probabilidade",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Alta probabilidade clínica de trombose venosa profunda.",
+          "recommendations": "• Priorizar ultrassonografia com Doppler venoso\n• Comunicar à equipe médica para avaliação de anticoagulação empírica conforme protocolo\n• Monitorizar sinais de embolia pulmonar (dispneia, dor torácica, taquicardia)"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Perfusão tissular periférica ineficaz",
+          "definition": "Redução na circulação sanguínea para a periferia, que pode comprometer a saúde."
+        },
+        {
+          "diagnosis": "Risco de perfusão tissular ineficaz",
+          "definition": "Risco de diminuição na circulação sanguínea para o tecido, associado a possível trombose venosa."
+        },
+        {
+          "diagnosis": "Dor aguda",
+          "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Perfusão tissular: periférica",
+          "indicators": [
+            "Ausência de edema periférico localizado",
+            "Coloração da pele adequada",
+            "Ausência de dor no trajeto venoso"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Cuidados circulatórios: insuficiência venosa",
+          "activities": [
+            "Aplicar o Escore de Wells de forma sistemática",
+            "Avaliar sinais de TVP (edema, dor, calor, coloração)",
+            "Auxiliar na coleta de D-dímero conforme solicitação médica",
+            "Monitorar sinais de possível embolia pulmonar",
+            "Orientar sobre mobilização e prevenção conforme indicação médica"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "O Escore de Wells para TVP foi desenvolvido por Philip Wells e colaboradores para estratificar a probabilidade clínica pré-teste de trombose venosa profunda, combinando fatores de risco, sinais clínicos e um item de diagnóstico alternativo (pontuação negativa).",
+      "history": "Amplamente utilizado em serviços de emergência para orientar a estratégia diagnóstica (D-dímero versus ultrassonografia direta), otimizando o uso de recursos e reduzindo exames desnecessários em pacientes de baixa probabilidade.",
+      "validation": "Validado extensivamente na literatura, com boa capacidade de estratificação de risco quando combinado ao D-dímero, sendo um dos escores mais utilizados mundialmente para essa finalidade.",
+      "limitations": "Não deve ser usado isoladamente para excluir ou confirmar TVP — a combinação com D-dímero e/ou ultrassonografia é essencial para a decisão diagnóstica final.",
+      "references": [
+        {
+          "text": "WELLS, P. S. et al. Value of assessment of pretest probability of deep-vein thrombosis in clinical management. The Lancet, v. 350, n. 9094, p. 1795-1798, 1997."
+        },
+        {
+          "text": "WELLS, P. S. et al. Evaluation of D-dimer in the diagnosis of suspected deep-vein thrombosis. New England Journal of Medicine, v. 349, n. 13, p. 1227-1235, 2003."
+        },
+        {
+          "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "O item 'diagnóstico alternativo' subtrai 2 pontos e pode reduzir significativamente o escore total.",
+        "Combine sempre com o D-dímero: baixa probabilidade + D-dímero negativo geralmente exclui TVP com segurança.",
+        "Alta probabilidade clínica justifica investigação direta por ultrassonografia com Doppler, independentemente do D-dímero.",
+        "Reavalie o paciente clinicamente se os sintomas persistirem apesar de investigação inicial negativa."
+      ],
+      "examples": [
+        {
+          "label": "Baixa probabilidade",
+          "sublabel": "Wells -1",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "cancer_ativo": 0,
+            "paralisia_imobilizacao": 0,
+            "repouso_cirurgia": 0,
+            "dor_trajeto_venoso": 0,
+            "edema_membro_todo": 0,
+            "edema_panturrilha": 0,
+            "edema_cacifo": 0,
+            "veias_colaterais": 0,
+            "diagnostico_alternativo": -2
+          }
+        },
+        {
+          "label": "Probabilidade moderada",
+          "sublabel": "Wells 2",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "cancer_ativo": 0,
+            "paralisia_imobilizacao": 0,
+            "repouso_cirurgia": 1,
+            "dor_trajeto_venoso": 1,
+            "edema_membro_todo": 0,
+            "edema_panturrilha": 0,
+            "edema_cacifo": 0,
+            "veias_colaterais": 0,
+            "diagnostico_alternativo": 0
+          }
+        },
+        {
+          "label": "Alta probabilidade",
+          "sublabel": "Wells 5",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "cancer_ativo": 1,
+            "paralisia_imobilizacao": 0,
+            "repouso_cirurgia": 1,
+            "dor_trajeto_venoso": 1,
+            "edema_membro_todo": 1,
+            "edema_panturrilha": 1,
+            "edema_cacifo": 0,
+            "veias_colaterais": 0,
+            "diagnostico_alternativo": 0
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Qual item do Escore de Wells para TVP subtrai pontos ao invés de somar?",
+          "opts": [
+            "Câncer ativo",
+            "Diagnóstico alternativo pelo menos tão provável quanto TVP",
+            "Edema de panturrilha",
+            "Repouso no leito"
+          ],
+          "correct": 1,
+          "expl": "O item 'diagnóstico alternativo pelo menos tão provável quanto TVP' subtrai 2 pontos do escore total."
+        },
+        {
+          "q": "Qual exame é frequentemente combinado ao Escore de Wells para decisão diagnóstica de TVP?",
+          "opts": [
+            "Radiografia de tórax",
+            "D-dímero",
+            "Eletrocardiograma",
+            "Hemograma completo"
+          ],
+          "correct": 1,
+          "expl": "O D-dímero é frequentemente combinado ao Escore de Wells: baixa probabilidade clínica associada a D-dímero negativo geralmente exclui TVP com segurança."
+        },
+        {
+          "q": "Um escore de Wells de 4 pontos indica qual probabilidade de TVP?",
+          "opts": [
+            "Baixa",
+            "Moderada",
+            "Alta",
+            "Nula"
+          ],
+          "correct": 2,
+          "expl": "Escores de 3 pontos ou mais indicam alta probabilidade clínica de trombose venosa profunda."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "O Escore de Wells confirma o diagnóstico de TVP isoladamente?",
+        "a": "Não. É uma ferramenta de estratificação de probabilidade pré-teste, que deve ser combinada com D-dímero e/ou ultrassonografia com Doppler venoso para confirmação ou exclusão diagnóstica."
+      },
+      {
+        "q": "Existe uma versão do Escore de Wells para embolia pulmonar?",
+        "a": "Sim. Existe uma versão específica do Escore de Wells para probabilidade clínica de embolia pulmonar, com critérios diferentes dos utilizados na avaliação de TVP."
+      }
+    ],
+    "about": {
+      "title": "Como funciona o Escore de Wells para TVP",
+      "html": "<p>O Escore de Wells soma pontos de 8 critérios clínicos e de risco (cada um valendo 1 ponto) e subtrai 2 pontos caso exista diagnóstico alternativo pelo menos tão provável quanto TVP, totalizando de -2 a 9 pontos.</p><p><strong>Guia rápido:</strong> ≤0 = Baixa probabilidade | 1-2 = Probabilidade moderada | ≥3 = Alta probabilidade.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Câncer Ativo"
+    ],
+    [
+      "field_label",
+      "Paralisia, Paresia ou Imobilização Gessada Recente"
+    ],
+    [
+      "field_label",
+      "Repouso no Leito ou Cirurgia Recente"
+    ],
+    [
+      "field_label",
+      "Dor Localizada no Trajeto Venoso Profundo"
+    ],
+    [
+      "field_label",
+      "Edema de Todo o Membro Inferior"
+    ],
+    [
+      "field_label",
+      "Edema de Panturrilha (&gt;3cm)"
+    ],
+    [
+      "field_label",
+      "Edema Depressível (Cacifo) Maior no Membro Sintomático"
+    ],
+    [
+      "field_label",
+      "Veias Colaterais Superficiais Não Varicosas"
+    ],
+    [
+      "field_label",
+      "Diagnóstico Alternativo Pelo Menos Tão Provável quanto TVP"
+    ],
+    [
+      "field_desc",
+      "Tratamento oncológico nos últimos 6 meses, ou tratamento paliativo em curso."
+    ],
+    [
+      "field_desc",
+      "Paralisia, paresia ou imobilização gessada recente de membro inferior."
+    ],
+    [
+      "field_desc",
+      "Repouso no leito maior que 3 dias ou cirurgia de grande porte nas últimas 12 semanas."
+    ],
+    [
+      "field_desc",
+      "Dor à palpação ao longo do trajeto do sistema venoso profundo."
+    ],
+    [
+      "field_desc",
+      "Edema envolvendo todo o membro inferior acometido."
+    ],
+    [
+      "field_desc",
+      "Diferença de circunferência da panturrilha maior que 3cm em relação ao membro assintomático (medida 10cm abaixo da tuberosidade tibial)."
+    ],
+    [
+      "field_desc",
+      "Edema com cacifo mais evidente no membro sintomático."
+    ],
+    [
+      "field_desc",
+      "Presença de veias colaterais superficiais visíveis, não varicosas."
+    ],
+    [
+      "field_desc",
+      "Existe outro diagnóstico que explique o quadro tão bem ou melhor que a TVP."
+    ],
+    [
+      "section_h2",
+      "Como funciona o Escore de Wells para TVP"
+    ],
+    [
+      "card_h3",
+      "Câncer Ativo"
+    ],
+    [
+      "card_h3",
+      "Paralisia, Paresia ou Imobilização Gessada Recente"
+    ],
+    [
+      "card_h3",
+      "Repouso no Leito ou Cirurgia Recente"
+    ],
+    [
+      "card_h3",
+      "Dor Localizada no Trajeto Venoso Profundo"
+    ],
+    [
+      "card_h3",
+      "Edema de Todo o Membro Inferior"
+    ],
+    [
+      "card_h3",
+      "Edema de Panturrilha (&gt;3cm)"
+    ],
+    [
+      "card_h3",
+      "Edema Depressível (Cacifo) Maior no Membro Sintomático"
+    ],
+    [
+      "card_h3",
+      "Veias Colaterais Superficiais Não Varicosas"
+    ],
+    [
+      "card_h3",
+      "Diagnóstico Alternativo Pelo Menos Tão Provável quanto TVP"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — Escore de Wells para TVP"
+    ],
+    [
+      "card_h3",
+      "Escore de Wells para TVP: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "O item &#x27;diagnóstico alternativo&#x27; subtrai 2 pontos e pode reduzir significativamente o escore total."
+    ],
+    [
+      "tip_li",
+      "Combine sempre com o D-dímero: baixa probabilidade + D-dímero negativo geralmente exclui TVP com segurança."
+    ],
+    [
+      "tip_li",
+      "Alta probabilidade clínica justifica investigação direta por ultrassonografia com Doppler, independentemente do D-dímero."
+    ],
+    [
+      "tip_li",
+      "Reavalie o paciente clinicamente se os sintomas persistirem apesar de investigação inicial negativa."
+    ],
+    [
+      "faq_question",
+      "O Escore de Wells confirma o diagnóstico de TVP isoladamente?"
+    ],
+    [
+      "faq_question",
+      "Existe uma versão do Escore de Wells para embolia pulmonar?"
+    ]
+  ]
+}

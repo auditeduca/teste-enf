@@ -1,0 +1,46 @@
+# ═══════════════════════════════════════════════════════════════
+# NKOS — Monthly ANVISA Sync
+# Syncs drug references, compulsory notifications, and legislation
+# ═══════════════════════════════════════════════════════════════
+name: NKOS Monthly ANVISA Sync
+
+on:
+  schedule:
+    - cron: '0 3 1 * *'  # 03:00 UTC on 1st of each month
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    name: Sync ANVISA Data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Sync drug references
+        run: |
+          python3 scripts/sync_anvisa_drugs.py
+
+      - name: Sync compulsory notifications
+        run: |
+          python3 scripts/sync_anvisa_notifications.py
+
+      - name: Sync legislation corpus
+        run: |
+          python3 scripts/sync_legislation.py
+
+      - name: Validate synced data
+        run: |
+          python3 scripts/validate_datasets.py --anvisa-only
+
+      - name: Create PR if changes
+        run: |
+          git config user.name "NKOS Bot"
+          git config user.email "bot@calculadorasdeenfermagem.com.br"
+          git add .
+          git diff --staged --quiet || git commit -m "chore: monthly ANVISA sync $(date +%Y-%m)"
+          git push || echo "No changes to push"

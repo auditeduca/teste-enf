@@ -1,0 +1,176 @@
+{
+  "id": "d7e8f950-7182-4940-6273-8f9507182940",
+  "code": "SCALE-WATERLOW-001",
+  "slug": "waterlow",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Escala de Waterlow - Risco de Lesão por Pressão",
+    "description": "Calcule a Escala de Waterlow para avaliação do risco de lesão por pressão, considerando constituição corporal, continência, pele, mobilidade e fatores especiais.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/waterlow.html"
+  },
+  "breadcrumb": { "category": "Cuidados com a Pele", "categoryHref": "index.html#calculadoras" },
+  "overview": {
+    "name": "Escala de Waterlow",
+    "acronym": "Waterlow",
+    "categoryBadge": "Cuidados com a pele",
+    "icon": "i-leaf",
+    "objective": "Avaliar o risco de desenvolvimento de lesão por pressão, considerando constituição corporal, continência, tipo de pele, mobilidade, sexo, idade, apetite e fatores de risco especiais.",
+    "indication": "Indicada na admissão hospitalar e periodicamente conforme protocolo institucional, como alternativa ou complemento à Escala de Braden.",
+    "targetPopulation": "Pacientes adultos hospitalizados, especialmente em unidades cirúrgicas, ortopédicas e de terapia intensiva.",
+    "specialty": ["Enfermagem", "Estomaterapia", "Cuidados com a Pele"],
+    "averageTime": "3-5 minutos",
+    "evidenceLevel": "II",
+    "originalAuthors": ["Judy Waterlow"],
+    "complexity": "advanced",
+    "rating": 4.4,
+    "ratingCount": 220
+  },
+  "calculator": {
+    "inputs": [
+      {"id": "constituicao", "type": "select", "label": "Constituição Corporal / IMC", "description": "Relação peso/altura (IMC) do paciente.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "Média (IMC 20-24,9)", "score": 0},
+         {"value": 1, "label": "Acima da Média (IMC 25-29,9)", "score": 1},
+         {"value": 2, "label": "Obeso (IMC ≥ 30)", "score": 2},
+         {"value": 3, "label": "Abaixo da Média (IMC < 20)", "score": 3}
+       ]
+      },
+      {"id": "continencia", "type": "select", "label": "Continência", "description": "Controle esfincteriano urinário e fecal.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "Completa / Cateterizado", "score": 0},
+         {"value": 1, "label": "Incontinência Urinária Ocasional", "score": 1},
+         {"value": 2, "label": "Cateter / Incontinência Fecal", "score": 2},
+         {"value": 3, "label": "Incontinência Urinária e Fecal (Dupla)", "score": 3}
+       ]
+      },
+      {"id": "tipo_pele", "type": "select", "label": "Tipo de Pele / Áreas de Risco Visual", "description": "Aspecto da pele e presença de sinais visíveis de dano tecidual.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "Saudável", "score": 0},
+         {"value": 1, "label": "Fina / Ressecada / Edemaciada / Úmida (Febril)", "score": 1},
+         {"value": 2, "label": "Descolorida (Estágio 1)", "score": 2},
+         {"value": 3, "label": "Lesão Aberta / Fissura (Estágio 2 a 4)", "score": 3}
+       ]
+      },
+      {"id": "mobilidade", "type": "select", "label": "Mobilidade", "description": "Capacidade de se movimentar de forma independente.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "Completa", "score": 0},
+         {"value": 1, "label": "Inquieto / Agitado", "score": 1},
+         {"value": 2, "label": "Apático", "score": 2},
+         {"value": 3, "label": "Restrito", "score": 3},
+         {"value": 4, "label": "Em Tração / Leito-Cadeira / Imóvel", "score": 4}
+       ]
+      },
+      {"id": "sexo", "type": "select", "label": "Sexo", "description": "Sexo biológico do paciente.", "defaultValue": 1,
+       "options": [
+         {"value": 1, "label": "Masculino", "score": 1},
+         {"value": 2, "label": "Feminino", "score": 2}
+       ]
+      },
+      {"id": "faixa_etaria", "type": "select", "label": "Faixa Etária", "description": "Idade do paciente em anos completos.", "defaultValue": 1,
+       "options": [
+         {"value": 1, "label": "14 a 49 Anos", "score": 1},
+         {"value": 2, "label": "50 a 64 Anos", "score": 2},
+         {"value": 3, "label": "65 a 74 Anos", "score": 3},
+         {"value": 4, "label": "75 a 80 Anos", "score": 4},
+         {"value": 5, "label": "81 Anos ou Mais", "score": 5}
+       ]
+      },
+      {"id": "apetite", "type": "select", "label": "Apetite", "description": "Padrão alimentar e ingesta atual do paciente.", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "Médio (Bom)", "score": 0},
+         {"value": 1, "label": "Pobre", "score": 1},
+         {"value": 2, "label": "Alimentação por Sonda / Apenas Líquidos", "score": 2},
+         {"value": 3, "label": "Anorexia / Jejum", "score": 3}
+       ]
+      },
+      {"id": "fatores_especiais", "type": "select", "label": "Fatores de Risco Especiais", "description": "Selecione o fator de risco especial mais relevante presente (desnutrição tecidual, déficit neurológico, cirurgia/trauma de grande porte ou medicação de risco).", "defaultValue": 0,
+       "options": [
+         {"value": 0, "label": "Nenhum Fator Especial", "score": 0},
+         {"value": 2, "label": "Tabagismo / Anemia", "score": 2},
+         {"value": 5, "label": "Doença Vascular Periférica / Cirurgia ou Trauma de Grande Porte", "score": 5},
+         {"value": 6, "label": "Déficit Neurológico (AVC, Diabetes, Paraplegia)", "score": 6},
+         {"value": 8, "label": "Falência de Múltiplos Órgãos / Caquexia Terminal", "score": 8}
+       ]
+      }
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "Escore de Waterlow",
+      "resultUnit": "pontos",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {"min": 0, "max": 9, "label": "Sem Risco", "riskLevel": "none", "color": "#2563eb",
+       "clinicalImplications": "Baixo risco de desenvolvimento de lesão por pressão segundo os critérios avaliados.",
+       "recommendations": "• Manter cuidados de rotina com a pele\n• Reavaliar conforme protocolo institucional"},
+      {"min": 10, "max": 14, "label": "Risco", "riskLevel": "low", "color": "#ca8a04",
+       "clinicalImplications": "Presença de risco para desenvolvimento de lesão por pressão.",
+       "recommendations": "• Iniciar medidas preventivas básicas\n• Reposicionamento regular\n• Reavaliação frequente da pele"},
+      {"min": 15, "max": 19, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626",
+       "clinicalImplications": "Alto risco de desenvolvimento de lesão por pressão.",
+       "recommendations": "• Implementar protocolo intensivo de prevenção\n• Considerar superfície de suporte especial\n• Reposicionamento frequente e sistemático\n• Reavaliação diária da pele"},
+      {"min": 20, "max": 99, "label": "Risco Muito Alto", "riskLevel": "critical", "color": "#7f1d1d",
+       "clinicalImplications": "Risco muito alto de desenvolvimento de lesão por pressão, exigindo medidas preventivas máximas.",
+       "recommendations": "• Superfície de suporte especializada (colchão de alta especificação)\n• Reposicionamento rigoroso e frequente\n• Avaliação multiprofissional (nutrição, estomaterapia)\n• Reavaliação a cada turno"}
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {"diagnosis": "Risco de integridade da pele prejudicada", "definition": "Suscetibilidade a alteração na epiderme e/ou derme, que pode comprometer a saúde."},
+      {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."},
+      {"diagnosis": "Nutrição desequilibrada: menos do que as necessidades corporais", "definition": "Ingestão de nutrientes insuficiente para atender às necessidades metabólicas."}
+    ],
+    "noc": [
+      {"outcome": "Integridade tissular: pele e mucosas", "indicators": ["Ausência de lesão por pressão", "Perfusão tissular adequada", "Hidratação da pele adequada"]}
+    ],
+    "nic": [
+      {"intervention": "Prevenção de lesão por pressão", "activities": ["Aplicar escala validada de risco (Waterlow)", "Reposicionar o paciente conforme risco identificado", "Utilizar superfícies de suporte especializadas quando indicado", "Manter a pele limpa e hidratada", "Avaliar e otimizar o estado nutricional"]}
+    ]
+  },
+  "evidence": {
+    "foundation": "A Escala de Waterlow foi desenvolvida por Judy Waterlow no Reino Unido, avaliando múltiplos domínios de risco para lesão por pressão: constituição corporal, continência, tipo de pele, mobilidade, sexo, idade, apetite e fatores de risco especiais (desnutrição tecidual, déficit neurológico, cirurgia/trauma de grande porte e medicações de risco).",
+    "history": "Amplamente utilizada em serviços de saúde no Reino Unido e em outros países como alternativa ou complemento à Escala de Braden, sendo considerada mais abrangente por incluir fatores de risco especiais frequentemente não contemplados em outras escalas.",
+    "validation": "Estudos de validação mostram boa sensibilidade, embora com especificidade variável conforme a população estudada, sendo uma ferramenta amplamente utilizada na prática clínica europeia.",
+    "limitations": "Por ser mais complexa que a Escala de Braden, com múltiplos subdomínios (incluindo fatores especiais combinados nesta calculadora em uma única seleção simplificada), pode apresentar maior variabilidade na aplicação entre diferentes avaliadores sem treinamento adequado.",
+    "references": [
+      {"text": "WATERLOW, J. Pressure sores: a risk assessment card. Nursing Times, v. 81, n. 48, p. 49-55, 1985."},
+      {"text": "WATERLOW, J. Waterlow Pressure Ulcer Prevention/Treatment Policy. Revised 2005."},
+      {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}
+    ]
+  },
+  "learning": {
+    "tips": [
+      "A Escala de Waterlow inclui fatores de risco especiais (desnutrição tecidual, déficit neurológico, cirurgia de grande porte) não contemplados diretamente pela Escala de Braden.",
+      "Reavalie a pele do paciente a cada mudança de decúbito, independentemente do escore calculado.",
+      "Combine a avaliação de risco com o exame físico completo da pele, especialmente em proeminências ósseas.",
+      "A escolha entre Waterlow e Braden costuma depender do protocolo institucional vigente."
+    ],
+    "examples": [
+      {"label": "Paciente sem fatores de risco", "sublabel": "Waterlow 3", "emoji": "✅",
+       "values": {"constituicao": 0, "continencia": 0, "tipo_pele": 0, "mobilidade": 0, "sexo": 1, "faixa_etaria": 1, "apetite": 0, "fatores_especiais": 0}},
+      {"label": "Idoso com múltiplos fatores", "sublabel": "Waterlow 16", "emoji": "⚠️",
+       "values": {"constituicao": 3, "continencia": 2, "tipo_pele": 1, "mobilidade": 3, "sexo": 2, "faixa_etaria": 4, "apetite": 1, "fatores_especiais": 0}},
+      {"label": "Risco muito alto, pós-cirúrgico", "sublabel": "Waterlow 24", "emoji": "🚨",
+       "values": {"constituicao": 3, "continencia": 3, "tipo_pele": 2, "mobilidade": 4, "sexo": 2, "faixa_etaria": 3, "apetite": 2, "fatores_especiais": 5}}
+    ],
+    "quiz": [
+      {"q": "Quais fatores de risco especiais são exclusivos da Escala de Waterlow em relação à Braden?", "opts": ["Mobilidade e nutrição", "Desnutrição tecidual, déficit neurológico, cirurgia/trauma de grande porte e medicações de risco", "Idade e sexo apenas", "Não há diferença entre as escalas"], "correct": 1,
+       "expl": "A Waterlow inclui uma seção específica de fatores de risco especiais (desnutrição tecidual, déficit neurológico, cirurgia/trauma de grande porte, medicações de risco) que não são contemplados diretamente pela Escala de Braden."},
+      {"q": "A partir de qual pontuação o Waterlow indica risco muito alto?", "opts": ["10 pontos", "15 pontos", "20 pontos ou mais", "5 pontos"], "correct": 2,
+       "expl": "Escores de 20 pontos ou mais classificam o paciente como risco muito alto na Escala de Waterlow."},
+      {"q": "A Escala de Waterlow foi desenvolvida em qual país?", "opts": ["Estados Unidos", "Brasil", "Reino Unido", "Alemanha"], "correct": 2,
+       "expl": "A Escala de Waterlow foi desenvolvida por Judy Waterlow no Reino Unido, sendo amplamente utilizada em serviços de saúde europeus."}
+    ]
+  },
+  "faq": [
+    {"q": "Devo usar Waterlow ou Braden?", "a": "Ambas são escalas validadas para avaliação de risco de lesão por pressão. A escolha geralmente segue o protocolo institucional vigente. A Waterlow tende a ser mais sensível (identifica mais pacientes em risco), enquanto a Braden é mais amplamente estudada e utilizada internacionalmente."},
+    {"q": "Com que frequência a Escala de Waterlow deve ser reaplicada?", "a": "Recomenda-se reavaliação na admissão, a cada mudança significativa do estado clínico e conforme a frequência definida pelo protocolo institucional (geralmente diária em pacientes de risco)."}
+  ],
+  "about": {
+    "title": "Como funciona a Escala de Waterlow",
+    "html": "<p>A Escala de Waterlow soma pontos de múltiplos domínios — constituição corporal, continência, tipo de pele, mobilidade, sexo, idade, apetite e fatores de risco especiais — para estimar o risco de desenvolvimento de lesão por pressão.</p><p><strong>Guia rápido:</strong> 0-9 = Sem risco | 10-14 = Risco | 15-19 = Alto risco | ≥20 = Risco muito alto.</p>"
+  }
+}

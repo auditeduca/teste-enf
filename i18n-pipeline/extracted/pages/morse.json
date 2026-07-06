@@ -1,0 +1,484 @@
+{
+  "seo": {
+    "title": "Escala de Morse - Risco de Queda | Calculadoras de Enfermagem",
+    "description": "Calcule o risco de queda de pacientes hospitalizados com a Escala de Morse (Morse Fall Scale). Inclui interpretação, SAE, segurança do paciente e evidências.",
+    "h1": "Escala de Morse",
+    "subtitle": "Avaliar o risco de queda de pacientes adultos hospitalizados, orientando medidas preventivas proporcionais ao nível de risco."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "7a2b3c4d-5e6f-4708-9a1b-2c3d4e5f6072",
+    "code": "SCALE-MORSE-001",
+    "slug": "escala-de-morse",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Escala de Morse - Risco de Queda",
+      "description": "Calcule o risco de queda de pacientes hospitalizados com a Escala de Morse (Morse Fall Scale). Inclui interpretação, SAE, segurança do paciente e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/morse.html"
+    },
+    "breadcrumb": {
+      "category": "Segurança do Paciente",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "Escala de Morse",
+      "acronym": "MFS",
+      "categoryBadge": "Segurança do paciente",
+      "icon": "i-access",
+      "objective": "Avaliar o risco de queda de pacientes adultos hospitalizados, orientando medidas preventivas proporcionais ao nível de risco.",
+      "indication": "Indicada na admissão, após qualquer queda, na transferência de setor e periodicamente conforme protocolo institucional (geralmente a cada 24h ou a cada turno em pacientes de risco).",
+      "targetPopulation": "Pacientes adultos em ambiente hospitalar.",
+      "specialty": [
+        "Enfermagem Médico-Cirúrgica",
+        "Geriatria",
+        "Segurança do Paciente"
+      ],
+      "averageTime": "2-3 minutos",
+      "evidenceLevel": "II",
+      "originalAuthors": [
+        "Janice Morse"
+      ],
+      "organizations": [
+        "The Joint Commission",
+        "ANVISA"
+      ],
+      "complexity": "basic",
+      "rating": 4.8,
+      "ratingCount": 640
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "historico",
+          "type": "select",
+          "label": "Histórico de Quedas",
+          "description": "Queda imediata anterior ou nos últimos 3 meses.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0,
+              "description": "Sem histórico de queda recente."
+            },
+            {
+              "value": 25,
+              "label": "Sim",
+              "score": 25,
+              "description": "Queda imediata ou nos últimos 3 meses."
+            }
+          ]
+        },
+        {
+          "id": "diagnostico",
+          "type": "select",
+          "label": "Diagnóstico Secundário",
+          "description": "Presença de mais de um diagnóstico médico registrado no prontuário.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0,
+              "description": "Apenas um diagnóstico médico ativo."
+            },
+            {
+              "value": 15,
+              "label": "Sim",
+              "score": 15,
+              "description": "Dois ou mais diagnósticos médicos ativos."
+            }
+          ]
+        },
+        {
+          "id": "deambulacao",
+          "type": "select",
+          "label": "Auxílio para Deambulação",
+          "description": "Tipo de apoio usado para caminhar.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum / Repouso / Auxílio da Enfermagem",
+              "score": 0,
+              "description": "Caminha sem apoio, está em repouso no leito ou é auxiliado pela equipe."
+            },
+            {
+              "value": 15,
+              "label": "Muletas / Bengala / Andador",
+              "score": 15,
+              "description": "Usa dispositivo de apoio para deambular."
+            },
+            {
+              "value": 30,
+              "label": "Apoia-se em Móveis",
+              "score": 30,
+              "description": "Usa mobiliário do quarto como apoio para caminhar."
+            }
+          ]
+        },
+        {
+          "id": "terapia_ev",
+          "type": "select",
+          "label": "Terapia Endovenosa / Heparina",
+          "description": "Uso de acesso venoso contínuo ou dispositivo salinizado.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0,
+              "description": "Sem acesso venoso ou dispositivo de infusão."
+            },
+            {
+              "value": 20,
+              "label": "Sim",
+              "score": 20,
+              "description": "Em uso de terapia endovenosa contínua ou dispositivo salinizado."
+            }
+          ]
+        },
+        {
+          "id": "marcha",
+          "type": "select",
+          "label": "Marcha",
+          "description": "Padrão de marcha observado.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Normal / Repouso / Cadeira de Rodas",
+              "score": 0,
+              "description": "Marcha normal, com passos firmes; ou paciente restrito ao leito/cadeira de rodas."
+            },
+            {
+              "value": 10,
+              "label": "Fraca",
+              "score": 10,
+              "description": "Passos curtos, incertos, mas consegue levantar-se sozinho."
+            },
+            {
+              "value": 20,
+              "label": "Comprometida",
+              "score": 20,
+              "description": "Dificuldade significativa para levantar-se da cadeira, marcha arrastada, desequilibrada."
+            }
+          ]
+        },
+        {
+          "id": "estado_mental",
+          "type": "select",
+          "label": "Estado Mental",
+          "description": "Percepção do paciente sobre suas próprias limitações.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Orientado quanto à Própria Capacidade",
+              "score": 0,
+              "description": "Reconhece corretamente suas limitações físicas."
+            },
+            {
+              "value": 15,
+              "label": "Superestima Capacidade / Esquece Limitações",
+              "score": 15,
+              "description": "Superestima sua capacidade física ou esquece as restrições impostas."
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Escore de Morse",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 24,
+          "label": "Baixo Risco",
+          "riskLevel": "low",
+          "color": "#2563eb",
+          "clinicalImplications": "Risco baixo de queda. Manter cuidados padrão de segurança e reavaliação conforme protocolo.",
+          "recommendations": "• Orientação sobre segurança\n• Reavaliação periódica\n• Ambiente livre de obstáculos"
+        },
+        {
+          "min": 25,
+          "max": 50,
+          "label": "Médio Risco",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Risco moderado. Implementar precauções padrão de prevenção de quedas e sinalização visual.",
+          "recommendations": "• Sinalização de risco de queda\n• Grades elevadas\n• Campainha ao alcance\n• Auxílio na deambulação"
+        },
+        {
+          "min": 51,
+          "max": 200,
+          "label": "Alto Risco",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Alto risco de queda. Implementar protocolo intensivo de prevenção, com supervisão frequente e medidas ambientais reforçadas.",
+          "recommendations": "• Protocolo intensivo de prevenção\n• Supervisão frequente\n• Leito em posição baixa\n• Reavaliação a cada turno"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Risco de quedas",
+          "definition": "Vulnerabilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Comportamento de prevenção de quedas",
+          "indicators": [
+            "Uso correto de dispositivos de apoio",
+            "Solicita auxílio quando necessário",
+            "Ambiente livre de riscos"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Prevenção de quedas",
+          "activities": [
+            "Identificar déficits cognitivos/físicos",
+            "Sinalizar risco de queda",
+            "Orientar paciente e família",
+            "Manter grades elevadas e leito baixo"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "A Escala de Morse foi desenvolvida por Janice Morse em 1989 para prever o risco de queda em pacientes hospitalizados, avaliando 6 fatores: histórico de quedas, diagnóstico secundário, auxílio para deambulação, terapia endovenosa, marcha e estado mental.",
+      "history": "Amplamente adotada em protocolos de segurança do paciente no mundo todo, incluindo recomendações da ANVISA e do Ministério da Saúde no Brasil, sendo uma das escalas de risco de queda mais utilizadas globalmente.",
+      "validation": "Estudos de validação relatam sensibilidade entre 78% e 83% e especificidade entre 40% e 55%, variando conforme a população estudada.",
+      "sensitivity": 0.8,
+      "specificity": 0.48,
+      "limitations": "A especificidade relativamente baixa pode gerar classificação de muitos pacientes em risco moderado/alto, exigindo julgamento clínico complementar. Não substitui a avaliação individualizada do ambiente e da condição clínica.",
+      "references": [
+        {
+          "text": "MORSE, J. M.; MORSE, R. M.; TYLKO, S. J. Development of a scale to identify the fall-prone patient. Canadian Journal on Aging, v. 8, n. 4, p. 366-377, 1989."
+        },
+        {
+          "text": "BRASIL. Agência Nacional de Vigilância Sanitária (ANVISA). Protocolo de Prevenção de Quedas. Brasília: ANVISA, 2013."
+        },
+        {
+          "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+        },
+        {
+          "text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."
+        },
+        {
+          "text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "Reavalie o escore a cada turno em pacientes de risco moderado/alto.",
+        "Considere o ambiente físico do quarto, não apenas o escore numérico.",
+        "Envolva o paciente e a família nas orientações de prevenção.",
+        "Documente as intervenções realizadas, não apenas o escore."
+      ],
+      "examples": [
+        {
+          "label": "Paciente estável",
+          "sublabel": "Sem fatores de risco",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "historico": 0,
+            "diagnostico": 0,
+            "deambulacao": 0,
+            "terapia_ev": 0,
+            "marcha": 0,
+            "estado_mental": 0
+          }
+        },
+        {
+          "label": "Idoso com múltiplas comorbidades",
+          "sublabel": "Risco médio",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "historico": 0,
+            "diagnostico": 15,
+            "deambulacao": 15,
+            "terapia_ev": 20,
+            "marcha": 10,
+            "estado_mental": 0
+          }
+        },
+        {
+          "label": "Pós-queda recente",
+          "sublabel": "Alto risco",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "historico": 25,
+            "diagnostico": 15,
+            "deambulacao": 30,
+            "terapia_ev": 20,
+            "marcha": 20,
+            "estado_mental": 15
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Qual a pontuação máxima possível na Escala de Morse?",
+          "opts": [
+            "100 pontos",
+            "125 pontos",
+            "150 pontos",
+            "80 pontos"
+          ],
+          "correct": 1,
+          "expl": "A soma máxima é 125 pontos (25+15+30+20+20+15)."
+        },
+        {
+          "q": "Um escore de 45 pontos corresponde a qual classificação de risco?",
+          "opts": [
+            "Baixo risco",
+            "Médio risco",
+            "Alto risco",
+            "Sem risco"
+          ],
+          "correct": 1,
+          "expl": "Escores entre 25 e 50 são classificados como Médio Risco."
+        },
+        {
+          "q": "O item 'Terapia Endovenosa' soma quantos pontos quando presente?",
+          "opts": [
+            "10",
+            "15",
+            "20",
+            "25"
+          ],
+          "correct": 2,
+          "expl": "A presença de terapia endovenosa/dispositivo salinizado soma 20 pontos."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Com que frequência devo reavaliar a Escala de Morse?",
+        "a": "Recomenda-se reavaliação a cada turno para pacientes de risco moderado/alto, na admissão, após qualquer queda e em qualquer mudança significativa do estado clínico."
+      },
+      {
+        "q": "A Escala de Morse substitui a avaliação clínica do ambiente?",
+        "a": "Não. O escore numérico deve ser combinado com a avaliação do ambiente físico (iluminação, piso, mobiliário) e o julgamento clínico da equipe de enfermagem."
+      }
+    ],
+    "about": {
+      "title": "Como funciona a Escala de Morse",
+      "html": "<p>A Escala de Morse (Morse Fall Scale) avalia 6 fatores de risco de queda: histórico de quedas, diagnóstico secundário, auxílio para deambulação, terapia endovenosa, marcha e estado mental. A soma dos pontos de cada item classifica o paciente em baixo, médio ou alto risco de queda.</p><p><strong>Guia rápido:</strong> 0-24 = Baixo risco | 25-50 = Médio risco | ≥51 = Alto risco.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Histórico de Quedas"
+    ],
+    [
+      "field_label",
+      "Diagnóstico Secundário"
+    ],
+    [
+      "field_label",
+      "Auxílio para Deambulação"
+    ],
+    [
+      "field_label",
+      "Terapia Endovenosa / Heparina"
+    ],
+    [
+      "field_label",
+      "Marcha"
+    ],
+    [
+      "field_desc",
+      "Queda imediata anterior ou nos últimos 3 meses."
+    ],
+    [
+      "field_desc",
+      "Presença de mais de um diagnóstico médico registrado no prontuário."
+    ],
+    [
+      "field_desc",
+      "Tipo de apoio usado para caminhar."
+    ],
+    [
+      "field_desc",
+      "Uso de acesso venoso contínuo ou dispositivo salinizado."
+    ],
+    [
+      "field_desc",
+      "Padrão de marcha observado."
+    ],
+    [
+      "field_desc",
+      "Percepção do paciente sobre suas próprias limitações."
+    ],
+    [
+      "section_h2",
+      "Como funciona a Escala de Morse"
+    ],
+    [
+      "card_h3",
+      "Histórico de Quedas"
+    ],
+    [
+      "card_h3",
+      "Diagnóstico Secundário"
+    ],
+    [
+      "card_h3",
+      "Auxílio para Deambulação"
+    ],
+    [
+      "card_h3",
+      "Terapia Endovenosa / Heparina"
+    ],
+    [
+      "card_h3",
+      "Marcha"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — Escala de Morse"
+    ],
+    [
+      "card_h3",
+      "Escala de Morse: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "Reavalie o escore a cada turno em pacientes de risco moderado/alto."
+    ],
+    [
+      "tip_li",
+      "Considere o ambiente físico do quarto, não apenas o escore numérico."
+    ],
+    [
+      "tip_li",
+      "Envolva o paciente e a família nas orientações de prevenção."
+    ],
+    [
+      "tip_li",
+      "Documente as intervenções realizadas, não apenas o escore."
+    ],
+    [
+      "faq_question",
+      "Com que frequência devo reavaliar a Escala de Morse?"
+    ],
+    [
+      "faq_question",
+      "A Escala de Morse substitui a avaliação clínica do ambiente?"
+    ]
+  ]
+}

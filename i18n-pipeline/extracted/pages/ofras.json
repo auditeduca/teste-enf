@@ -1,0 +1,542 @@
+{
+  "seo": {
+    "title": "Escala OFRAS - Risco de Queda em Paciente Obstétrica | Calculadoras de Enfermagem",
+    "description": "Calcule a Escala OFRAS (Obstetric Fall Risk Assessment System) para estratificar o risco de queda em gestantes e puérperas. Inclui interpretação, SAE e evidências.",
+    "h1": "Escala de Avaliação de Risco de Queda Obstétrica",
+    "subtitle": "Estratificar o risco de queda em pacientes obstétricas (gestantes e puérperas) hospitalizadas, considerando 6 categorias de fatores de risco: história pregressa, sistema cardíaco, hemorragia, anestesia, atividade motora e uso de medicamentos."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "ef70343b-0a49-406c-8eef-285ce4b2d90b",
+    "code": "SCALE-OFRAS-001",
+    "slug": "ofras",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Escala OFRAS - Risco de Queda em Paciente Obstétrica",
+      "description": "Calcule a Escala OFRAS (Obstetric Fall Risk Assessment System) para estratificar o risco de queda em gestantes e puérperas. Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/ofras.html"
+    },
+    "breadcrumb": {
+      "category": "Obstetrícia",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "Escala de Avaliação de Risco de Queda Obstétrica",
+      "acronym": "OFRAS",
+      "categoryBadge": "Obstetrícia",
+      "icon": "i-pregnant",
+      "objective": "Estratificar o risco de queda em pacientes obstétricas (gestantes e puérperas) hospitalizadas, considerando 6 categorias de fatores de risco: história pregressa, sistema cardíaco, hemorragia, anestesia, atividade motora e uso de medicamentos.",
+      "indication": "Indicada para avaliação do risco de queda na admissão de pacientes obstétricas e reavaliação diária até a alta hospitalar.",
+      "targetPopulation": "Gestantes e puérperas internadas em unidades de obstetrícia e maternidade.",
+      "specialty": [
+        "Obstetrícia",
+        "Enfermagem"
+      ],
+      "averageTime": "2-4 minutos",
+      "evidenceLevel": "II",
+      "organizations": [
+        "Maternidade-Escola da UFRJ - Núcleo de Segurança do Paciente"
+      ],
+      "complexity": "advanced",
+      "rating": 4.5,
+      "ratingCount": 74
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "historia_pregressa",
+          "type": "select",
+          "label": "História Pregressa",
+          "defaultValue": 0,
+          "description": "Selecione o fator de maior risco presente relacionado à história pregressa da paciente.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum dos fatores abaixo",
+              "score": 0,
+              "description": "Ausência de fatores de risco de história pregressa."
+            },
+            {
+              "value": 1,
+              "label": "Uso irregular de óculos ou para leitura",
+              "score": 1,
+              "description": "Fator de risco leve."
+            },
+            {
+              "value": 2,
+              "label": "História de queda anterior (em qualquer internação ou na gestação)",
+              "score": 2,
+              "description": "Fator de risco moderado."
+            },
+            {
+              "value": 3,
+              "label": "Esteve acamada nos últimos 2 meses de gravidez",
+              "score": 2,
+              "description": "Fator de risco moderado."
+            },
+            {
+              "value": 4,
+              "label": "Uso constante de óculos",
+              "score": 3,
+              "description": "Fator de risco relevante."
+            }
+          ]
+        },
+        {
+          "id": "sistema_cardiaco",
+          "type": "select",
+          "label": "Sistema Cardíaco",
+          "defaultValue": 0,
+          "description": "Selecione o fator de maior risco presente relacionado ao sistema cardíaco.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum dos fatores abaixo",
+              "score": 0,
+              "description": "Ausência de fatores de risco cardíaco."
+            },
+            {
+              "value": 1,
+              "label": "Hemoglobina < 10,5 g/dl",
+              "score": 2,
+              "description": "Fator de risco moderado."
+            },
+            {
+              "value": 2,
+              "label": "Pré-eclâmpsia",
+              "score": 2,
+              "description": "Fator de risco moderado."
+            },
+            {
+              "value": 3,
+              "label": "Mal-estar ao ortostatismo (deitado para sentado ou sentado para de pé)",
+              "score": 3,
+              "description": "Fator de risco relevante."
+            },
+            {
+              "value": 4,
+              "label": "Sensação de fraqueza, visão borrada ou vertigem",
+              "score": 3,
+              "description": "Fator de risco relevante."
+            }
+          ]
+        },
+        {
+          "id": "hemorragia",
+          "type": "select",
+          "label": "Hemorragia",
+          "defaultValue": 0,
+          "description": "Selecione o fator de maior risco presente relacionado à hemorragia.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum dos fatores abaixo",
+              "score": 0,
+              "description": "Ausência de fatores de risco de hemorragia."
+            },
+            {
+              "value": 1,
+              "label": "Placenta prévia ou descolamento prematuro de placenta",
+              "score": 2,
+              "description": "Fator de risco moderado."
+            },
+            {
+              "value": 2,
+              "label": "Hemorragia pós-parto (> 1,5 L) ou hemotransfusão durante o procedimento",
+              "score": 3,
+              "description": "Fator de risco relevante."
+            }
+          ]
+        },
+        {
+          "id": "anestesia",
+          "type": "select",
+          "label": "Anestesia",
+          "defaultValue": 0,
+          "description": "Selecione o fator de maior risco presente relacionado à anestesia.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum dos fatores abaixo",
+              "score": 0,
+              "description": "Ausência de fatores de risco relacionados à anestesia."
+            },
+            {
+              "value": 1,
+              "label": "Dormência nas coxas",
+              "score": 1,
+              "description": "Fator de risco leve."
+            },
+            {
+              "value": 2,
+              "label": "Peridural há menos de 3 horas",
+              "score": 3,
+              "description": "Fator de risco relevante."
+            }
+          ]
+        },
+        {
+          "id": "atividade_motora",
+          "type": "select",
+          "label": "Atividade Motora",
+          "defaultValue": 0,
+          "description": "Selecione a condição de atividade motora da paciente.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum dos fatores abaixo",
+              "score": 0,
+              "description": "Ausência de comprometimento motor relevante."
+            },
+            {
+              "value": 1,
+              "label": "Levanta as pernas, mas não consegue desencostar o quadril da cama com o apoio das pernas e costas (ponte)",
+              "score": 1,
+              "description": "Fator de risco leve."
+            },
+            {
+              "value": 2,
+              "label": "Incapaz de levantar as pernas estando deitada",
+              "score": 2,
+              "description": "Fator de risco moderado."
+            }
+          ]
+        },
+        {
+          "id": "uso_medicamentos",
+          "type": "select",
+          "label": "Uso de Medicamentos",
+          "defaultValue": 0,
+          "description": "Selecione a condição de uso de medicamentos com potencial de risco de queda.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum dos fatores abaixo",
+              "score": 0,
+              "description": "Sem uso de medicamentos com risco de queda."
+            },
+            {
+              "value": 1,
+              "label": "Uma classe terapêutica (antipsicótico, anticonvulsionante, ansiolítico, opioide, sedativo, diurético ou antiarrítmico)",
+              "score": 1,
+              "description": "Fator de risco leve."
+            },
+            {
+              "value": 2,
+              "label": "Um medicamento anti-hipertensivo",
+              "score": 2,
+              "description": "Fator de risco moderado."
+            },
+            {
+              "value": 3,
+              "label": "Mais de uma classe terapêutica",
+              "score": 3,
+              "description": "Fator de risco relevante."
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Escore OFRAS",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 2,
+          "label": "Risco Baixo (0-2 pontos)",
+          "riskLevel": "low",
+          "color": "#2563eb",
+          "clinicalImplications": "Baixo risco de queda para a paciente obstétrica.",
+          "recommendations": "• Manter orientações gerais de segurança e prevenção de quedas\n• Reavaliar diariamente até a alta"
+        },
+        {
+          "min": 3,
+          "max": 4,
+          "label": "Risco Médio (3-4 pontos)",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Risco médio de queda, exigindo maior vigilância da equipe.",
+          "recommendations": "• Identificar a paciente com pulseira de risco de queda (tarja amarela)\n• Orientar paciente e acompanhante quanto aos riscos de queda\n• Reforçar supervisão em deambulação e transferências\n• Reavaliar diariamente até a alta"
+        },
+        {
+          "min": 5,
+          "max": 20,
+          "label": "Risco Alto (≥ 5 pontos)",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Alto risco de queda, exigindo intervenções de segurança reforçadas.",
+          "recommendations": "• Identificar a paciente com pulseira de risco de queda (tarja amarela)\n• Assistência direta em toda deambulação e transferência\n• Avaliar necessidade de auxílio para higiene e cuidados pessoais\n• Revisar medicamentos com potencial de risco de queda junto à equipe médica\n• Reavaliar diariamente até a alta"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Risco de quedas",
+          "definition": "Suscetibilidade aumentada a quedas que podem causar dano físico à gestante ou puérpera e comprometer a saúde."
+        },
+        {
+          "diagnosis": "Mobilidade física prejudicada",
+          "definition": "Limitação no movimento físico independente e voluntário do corpo, relacionada a fatores como anestesia recente, hemorragia ou uso de medicamentos sedativos."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Comportamento de prevenção de quedas",
+          "indicators": [
+            "Paciente identificada com pulseira de risco quando indicado",
+            "Ausência de episódios de queda durante a internação",
+            "Paciente e acompanhante orientados sobre os riscos de queda"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Prevenção de quedas",
+          "activities": [
+            "Aplicar a escala OFRAS na admissão e reavaliar diariamente",
+            "Identificar a paciente com pulseira de risco de queda quando pontuação ≥ 3",
+            "Orientar paciente e acompanhante quanto aos riscos de queda em ambiente hospitalar",
+            "Auxiliar na deambulação e transferências em pacientes de risco médio/alto",
+            "Monitorar efeitos de medicamentos com potencial de causar ou potencializar risco de queda"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "A OFRAS avalia 6 categorias de risco (história pregressa, sistema cardíaco, hemorragia, anestesia, atividade motora e uso de medicamentos), cada uma com fatores de risco com pontuações específicas não uniformes. A pontuação total classifica o risco em baixo (0-2), médio (3-4) ou alto (≥5).",
+      "history": "Desenvolvida por Peggy Wallace e colaboradores nos EUA (JOGNN, 2015 - \"Catch a Falling Star\": The Development of the Obstetric Falls Risk Assessment System to Improve Patient Safety), foi traduzida e adaptada para uso em maternidades brasileiras, incluindo protocolo institucional da Maternidade-Escola da UFRJ.",
+      "validation": "Estudos comparativos mostraram que a OFRAS é mais sensível e específica para identificar risco de queda em pacientes obstétricas do que a Escala de Morse (originalmente desenvolvida para população geral/idosa), reduzindo a taxa de quedas obstétricas após sua implementação.",
+      "limitations": "Cada categoria considera apenas o fator de maior pontuação presente, não somando múltiplos fatores dentro da mesma categoria. A aplicação correta exige treinamento da equipe quanto aos critérios específicos de cada categoria.",
+      "references": [
+        {
+          "text": "WALLACE, P. et al. \"Catch a Falling Star\": The Development of the Obstetric Falls Risk Assessment System to Improve Patient Safety. Journal of Obstetric, Gynecologic & Neonatal Nursing, v. 44, s1, 2015."
+        },
+        {
+          "text": "MATERNIDADE-ESCOLA DA UFRJ. Protocolo de Prevenção de Quedas. Gerência de Risco/Núcleo de Segurança do Paciente, Rio de Janeiro, 2023."
+        },
+        {
+          "text": "RISSO, S.; SOARES, T.; MARQUES-VIEIRA, C. Scoping review of fall risk assessment tools for women who receive maternity care. Journal of Obstetric, Gynecologic & Neonatal Nursing, v. 53, n. 3, p. 234-244, 2024."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "A OFRAS avalia 6 categorias: história pregressa, sistema cardíaco, hemorragia, anestesia, atividade motora e uso de medicamentos.",
+        "Em cada categoria, considera-se apenas o fator de maior pontuação presente, e não a soma de todos os fatores daquela categoria.",
+        "Pontuação ≥ 3 indica necessidade de identificação com pulseira de risco de queda (tarja amarela).",
+        "A OFRAS demonstrou maior sensibilidade que a Escala de Morse para identificar risco de queda em pacientes obstétricas."
+      ],
+      "examples": [
+        {
+          "label": "Gestante sem fatores de risco identificados",
+          "sublabel": "OFRAS 0",
+          "emoji": "<i class=\"fa fa\" style=\"color:var(--blue-500)\"></i>",
+          "values": {
+            "historia_pregressa": 0,
+            "sistema_cardiaco": 0,
+            "hemorragia": 0,
+            "anestesia": 0,
+            "atividade_motora": 0,
+            "uso_medicamentos": 0
+          }
+        },
+        {
+          "label": "Puérpera com peridural há menos de 3h e uso de anti-hipertensivo",
+          "sublabel": "OFRAS 5",
+          "emoji": "<i class=\"fa fa\" style=\"color:var(--blue-700)\"></i>",
+          "values": {
+            "historia_pregressa": 0,
+            "sistema_cardiaco": 0,
+            "hemorragia": 0,
+            "anestesia": 2,
+            "atividade_motora": 0,
+            "uso_medicamentos": 2
+          }
+        },
+        {
+          "label": "Gestante com pré-eclâmpsia e história de queda anterior",
+          "sublabel": "OFRAS 4",
+          "emoji": "",
+          "values": {
+            "historia_pregressa": 2,
+            "sistema_cardiaco": 2,
+            "hemorragia": 0,
+            "anestesia": 0,
+            "atividade_motora": 0,
+            "uso_medicamentos": 0
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Quantas categorias compõem a escala OFRAS?",
+          "opts": [
+            "4",
+            "5",
+            "6",
+            "8"
+          ],
+          "correct": 2,
+          "expl": "A OFRAS avalia 6 categorias: história pregressa, sistema cardíaco, hemorragia, anestesia, atividade motora e uso de medicamentos."
+        },
+        {
+          "q": "A partir de qual pontuação a paciente deve ser identificada com pulseira de risco de queda?",
+          "opts": [
+            "≥ 1",
+            "≥ 3",
+            "≥ 5",
+            "≥ 10"
+          ],
+          "correct": 1,
+          "expl": "Pontuação de 3 a 4 já classifica risco médio, exigindo identificação com pulseira de risco de queda (tarja amarela); risco alto é ≥ 5."
+        },
+        {
+          "q": "A OFRAS foi desenvolvida especificamente para qual população?",
+          "opts": [
+            "Idosos hospitalizados",
+            "Pacientes obstétricas (gestantes e puérperas)",
+            "Pacientes pediátricos",
+            "Pacientes de UTI"
+          ],
+          "correct": 1,
+          "expl": "A OFRAS (Obstetric Fall Risk Assessment System) foi desenvolvida especificamente para estratificar o risco de queda em pacientes obstétricas, mostrando-se mais sensível que escalas gerais como a de Morse nessa população."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "A OFRAS substitui a Escala de Morse em unidades obstétricas?",
+        "a": "Sim, recomenda-se o uso da OFRAS em vez da Escala de Morse em unidades obstétricas, pois estudos mostram maior sensibilidade e especificidade da OFRAS para essa população específica."
+      },
+      {
+        "q": "Com que frequência a OFRAS deve ser reaplicada?",
+        "a": "Deve ser aplicada na admissão da paciente e reavaliada diariamente até a alta hospitalar, ou a qualquer momento em que houver mudança relevante no quadro clínico."
+      }
+    ],
+    "about": {
+      "title": "Como funciona a Escala OFRAS",
+      "html": "<p>A OFRAS avalia 6 categorias de risco de queda em pacientes obstétricas, considerando em cada categoria o fator de maior pontuação presente.</p><p><strong>Interpretação:</strong> 0-2 = risco baixo | 3-4 = risco médio | ≥ 5 = risco alto.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "História Pregressa"
+    ],
+    [
+      "field_label",
+      "Sistema Cardíaco"
+    ],
+    [
+      "field_label",
+      "Hemorragia"
+    ],
+    [
+      "field_label",
+      "Anestesia"
+    ],
+    [
+      "field_label",
+      "Atividade Motora"
+    ],
+    [
+      "field_label",
+      "Uso de Medicamentos"
+    ],
+    [
+      "field_desc",
+      "Selecione o fator de maior risco presente relacionado à história pregressa da paciente."
+    ],
+    [
+      "field_desc",
+      "Selecione o fator de maior risco presente relacionado ao sistema cardíaco."
+    ],
+    [
+      "field_desc",
+      "Selecione o fator de maior risco presente relacionado à hemorragia."
+    ],
+    [
+      "field_desc",
+      "Selecione o fator de maior risco presente relacionado à anestesia."
+    ],
+    [
+      "field_desc",
+      "Selecione a condição de atividade motora da paciente."
+    ],
+    [
+      "field_desc",
+      "Selecione a condição de uso de medicamentos com potencial de risco de queda."
+    ],
+    [
+      "section_h2",
+      "Como funciona a Escala OFRAS"
+    ],
+    [
+      "card_h3",
+      "História Pregressa"
+    ],
+    [
+      "card_h3",
+      "Sistema Cardíaco"
+    ],
+    [
+      "card_h3",
+      "Hemorragia"
+    ],
+    [
+      "card_h3",
+      "Anestesia"
+    ],
+    [
+      "card_h3",
+      "Atividade Motora"
+    ],
+    [
+      "card_h3",
+      "Uso de Medicamentos"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — Escala de Avaliação de Risco de Queda Obstétrica"
+    ],
+    [
+      "card_h3",
+      "Escala de Avaliação de Risco de Queda Obstétrica: cálculo, fundamentação e evidências"
+    ],
+    [
+      "card_h3",
+      "Bishop"
+    ],
+    [
+      "tip_li",
+      "A OFRAS avalia 6 categorias: história pregressa, sistema cardíaco, hemorragia, anestesia, atividade motora e uso de medicamentos."
+    ],
+    [
+      "tip_li",
+      "Em cada categoria, considera-se apenas o fator de maior pontuação presente, e não a soma de todos os fatores daquela categoria."
+    ],
+    [
+      "tip_li",
+      "Pontuação ≥ 3 indica necessidade de identificação com pulseira de risco de queda (tarja amarela)."
+    ],
+    [
+      "tip_li",
+      "A OFRAS demonstrou maior sensibilidade que a Escala de Morse para identificar risco de queda em pacientes obstétricas."
+    ],
+    [
+      "faq_question",
+      "A OFRAS substitui a Escala de Morse em unidades obstétricas?"
+    ],
+    [
+      "faq_question",
+      "Com que frequência a OFRAS deve ser reaplicada?"
+    ]
+  ]
+}

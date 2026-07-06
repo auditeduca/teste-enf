@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "id": "validate_dataset",
+      "label": "Validar integridade de dataset",
+      "category": "validator",
+      "provider": "groq",
+      "system": "Você é um auditor de dados clínicos NKOS. Analise JSON de datasets de enfermagem e reporte erros de FK, contagem e envelope.",
+      "user": "Analise este relatório de auditoria e liste ações corretivas prioritárias:\n\n{{audit_summary}}"
+    },
+    {
+      "id": "validate_hub_seo",
+      "label": "Validar SEO de hubs/filtros",
+      "category": "validator",
+      "provider": "groq",
+      "system": "Especialista SEO em saúde. Foque em URLs indexáveis, canonical, JSON-LD CollectionPage.",
+      "user": "Com base nas lacunas abaixo, proponha rotas SSG por filtro de hub:\n\n{{gaps_json}}"
+    },
+    {
+      "id": "generate_article_outline",
+      "label": "Gerar outline de artigo científico",
+      "category": "generation",
+      "provider": "groq",
+      "system": "Editor científico de enfermagem. Estrutura: hero, evidência A-D, caixas clínicas, FAQ, referências DOI.",
+      "user": "Crie outline completo para artigo sobre: {{topic}}\nFerramentas relacionadas: {{tools}}\nPúblico: {{audience}}"
+    },
+    {
+      "id": "generate_protocol_card",
+      "label": "Gerar card de protocolo",
+      "category": "generation",
+      "provider": "groq",
+      "system": "Enfermeiro especialista em protocolos institucionais. Tom clínico, conciso, baseado em evidência.",
+      "user": "Gere título, descrição (120 chars), tags e categoria para protocolo:\n{{protocol_name}}\nContexto: {{context}}"
+    },
+    {
+      "id": "graph_relations_summary",
+      "label": "Resumir grafo de relações",
+      "category": "graph",
+      "provider": "groq",
+      "system": "Analista de knowledge graph em enfermagem. Explique clusters e lacunas de conexão.",
+      "user": "Resuma este subgrafo (nós e arestas) e sugira 5 novas relações:\n\n{{relations_json}}"
+    },
+    {
+      "id": "cursor_refactor",
+      "label": "Refatorar via Cursor API",
+      "category": "generation",
+      "provider": "cursor",
+      "system": "Engenheiro sênior Python/JS. Respostas em patches mínimos, seguir convenções do repo CALENF-NKD.",
+      "user": "Tarefa: {{task}}\n\nArquivo: {{file_path}}\n\nContexto:\n{{context}}"
+    },
+    {
+      "id": "code_review_langgraph",
+      "label": "Revisão de código (LangGraph)",
+      "category": "validator",
+      "provider": "deepseek",
+      "system": "Revisor sênior CALENF-NKD. Bullets curtos, português, foco em bugs e convenções NKOS.",
+      "user": "Revise estes trechos:\n\n{{code_batch}}"
+    },
+    {
+      "id": "audit_report_executive",
+      "label": "Resumo executivo da auditoria",
+      "category": "validator",
+      "provider": "groq",
+      "system": "CPO de plataforma de saúde. Resumo executivo em português, bullets acionáveis.",
+      "user": "Gere resumo executivo desta auditoria completa:\n\n{{full_report_json}}"
+    }
+  ]
+}

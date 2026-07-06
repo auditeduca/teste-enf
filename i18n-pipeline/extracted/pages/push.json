@@ -1,0 +1,444 @@
+{
+  "seo": {
+    "title": "PUSH Tool - Escala de Cicatrização de Lesão por Pressão | Calculadoras de Enfermagem",
+    "description": "Calcule o PUSH Tool (Pressure Ulcer Scale for Healing) para monitorar a evolução da cicatrização de lesões por pressão. Inclui interpretação, SAE e evidências.",
+    "h1": "PUSH Tool",
+    "subtitle": "Monitorar objetivamente a evolução da cicatrização de lesões por pressão ao longo do tempo, a partir de 3 parâmetros: área da lesão, quantidade de exsudato e tipo de tecido predominante no leito da ferida."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "4b5c6d7e-8496-4a0b-4152-6d7e85960718",
+    "code": "SCALE-PUSH-001",
+    "slug": "push",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "PUSH Tool - Escala de Cicatrização de Lesão por Pressão",
+      "description": "Calcule o PUSH Tool (Pressure Ulcer Scale for Healing) para monitorar a evolução da cicatrização de lesões por pressão. Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/push.html"
+    },
+    "breadcrumb": {
+      "category": "Cuidados com a Pele",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "PUSH Tool",
+      "acronym": "PUSH",
+      "categoryBadge": "Cuidados com a pele",
+      "icon": "i-leaf",
+      "objective": "Monitorar objetivamente a evolução da cicatrização de lesões por pressão ao longo do tempo, a partir de 3 parâmetros: área da lesão, quantidade de exsudato e tipo de tecido predominante no leito da ferida.",
+      "indication": "Indicada para reavaliação seriada de lesões por pressão já existentes, permitindo acompanhar objetivamente se a lesão está em processo de cicatrização, estável ou em piora.",
+      "targetPopulation": "Pacientes com lesão por pressão diagnosticada, em qualquer estágio, em ambiente hospitalar, ambulatorial ou domiciliar.",
+      "specialty": [
+        "Estomaterapia",
+        "Enfermagem",
+        "Cuidados com a Pele"
+      ],
+      "averageTime": "3-5 minutos",
+      "evidenceLevel": "II",
+      "organizations": [
+        "National Pressure Ulcer Advisory Panel (NPUAP)"
+      ],
+      "complexity": "intermediate",
+      "rating": 4.6,
+      "ratingCount": 245
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "area",
+          "type": "select",
+          "label": "Área da Lesão (comprimento × largura)",
+          "description": "Meça o maior comprimento e a maior largura da lesão (em cm) e multiplique para obter a área em cm².",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "0 cm² (Lesão Fechada)",
+              "score": 0,
+              "description": "Lesão completamente epitelizada/fechada."
+            },
+            {
+              "value": 1,
+              "label": "Menos de 0,3 cm²",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "0,3 a 0,6 cm²",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "0,7 a 1,0 cm²",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "1,1 a 2,0 cm²",
+              "score": 4
+            },
+            {
+              "value": 5,
+              "label": "2,1 a 3,0 cm²",
+              "score": 5
+            },
+            {
+              "value": 6,
+              "label": "3,1 a 4,0 cm²",
+              "score": 6
+            },
+            {
+              "value": 7,
+              "label": "4,1 a 8,0 cm²",
+              "score": 7
+            },
+            {
+              "value": 8,
+              "label": "8,1 a 12,0 cm²",
+              "score": 8
+            },
+            {
+              "value": 9,
+              "label": "12,1 a 24,0 cm²",
+              "score": 9
+            },
+            {
+              "value": 10,
+              "label": "Mais de 24,0 cm²",
+              "score": 10
+            }
+          ]
+        },
+        {
+          "id": "exsudato",
+          "type": "select",
+          "label": "Quantidade de Exsudato",
+          "description": "Quantidade de exsudato observada após a remoção do curativo, antes da aplicação de qualquer produto tópico.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum",
+              "score": 0,
+              "description": "Leito da ferida seco."
+            },
+            {
+              "value": 1,
+              "label": "Leve",
+              "score": 1,
+              "description": "Pequena quantidade de exsudato."
+            },
+            {
+              "value": 2,
+              "label": "Moderado",
+              "score": 2,
+              "description": "Quantidade moderada de exsudato."
+            },
+            {
+              "value": 3,
+              "label": "Intenso",
+              "score": 3,
+              "description": "Grande quantidade de exsudato."
+            }
+          ]
+        },
+        {
+          "id": "tipo_tecido",
+          "type": "select",
+          "label": "Tipo de Tecido",
+          "description": "Tipo de tecido predominante presente no leito da ferida.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "Fechado / Cicatrizado",
+              "score": 0,
+              "description": "Pele totalmente reepitelizada ou fechada."
+            },
+            {
+              "value": 1,
+              "label": "Tecido Epitelial",
+              "score": 1,
+              "description": "Tecido epitelial novo, róseo ou brilhante, cobrindo parte ou toda a lesão."
+            },
+            {
+              "value": 2,
+              "label": "Tecido de Granulação",
+              "score": 2,
+              "description": "Tecido róseo/vermelho brilhante, com aspecto granular e úmido."
+            },
+            {
+              "value": 3,
+              "label": "Esfacelo",
+              "score": 3,
+              "description": "Tecido amarelado ou esbranquiçado, aderido ou solto, tipo fibrinoso."
+            },
+            {
+              "value": 4,
+              "label": "Tecido Necrótico (Escara)",
+              "score": 4,
+              "description": "Tecido enegrecido, endurecido ou amolecido, aderido ao leito ou às bordas da ferida."
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Escore PUSH",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 0,
+          "label": "Lesão Cicatrizada",
+          "riskLevel": "none",
+          "color": "#2563eb",
+          "clinicalImplications": "Lesão completamente fechada/epitelizada, sem área mensurável nem exsudato.",
+          "recommendations": "• Manter proteção da pele recém-cicatrizada\n• Continuar medidas de prevenção de nova lesão"
+        },
+        {
+          "min": 1,
+          "max": 9,
+          "label": "Evolução Favorável",
+          "riskLevel": "low",
+          "color": "#ca8a04",
+          "clinicalImplications": "Pontuação mais baixa dentro da faixa possível, geralmente associada a lesão em processo de cicatrização. O PUSH deve ser interpretado pela tendência ao longo do tempo (queda progressiva do escore), não apenas pelo valor isolado.",
+          "recommendations": "• Manter o plano de cuidados da ferida vigente\n• Reavaliar semanalmente (ou conforme protocolo) para acompanhar tendência\n• Documentar e comparar com avaliações anteriores"
+        },
+        {
+          "min": 10,
+          "max": 17,
+          "label": "Lesão Extensa — Monitorar Evolução",
+          "riskLevel": "moderate",
+          "color": "#ca8a04",
+          "clinicalImplications": "Pontuação mais alta, indicando lesão mais extensa e/ou com tecido menos favorável. Fundamental acompanhar a tendência do escore nas reavaliações seriadas.",
+          "recommendations": "• Reavaliar o plano terapêutico da ferida com a equipe\n• Investigar fatores que possam estar dificultando a cicatrização (nutrição, perfusão, infecção, pressão persistente)\n• Reavaliação mais frequente conforme gravidade"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Integridade da pele prejudicada",
+          "definition": "Alteração na epiderme e/ou derme."
+        },
+        {
+          "diagnosis": "Integridade tissular prejudicada",
+          "definition": "Dano ao tecido mucoso, córneo, subcutâneo, muscular, cartilaginoso, ósseo ou vascular."
+        },
+        {
+          "diagnosis": "Risco de infecção",
+          "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos, relacionado à solução de continuidade da pele."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Cicatrização de feridas: segunda intenção",
+          "indicators": [
+            "Diminuição do tamanho da lesão",
+            "Formação de tecido de granulação",
+            "Redução do exsudato",
+            "Ausência de sinais de infecção"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Cuidados com a lesão",
+          "activities": [
+            "Mensurar e documentar área, exsudato e tipo de tecido a cada avaliação",
+            "Realizar curativo conforme protocolo e características da lesão",
+            "Monitorar sinais de infecção",
+            "Registrar a evolução do escore PUSH ao longo do tempo",
+            "Orientar sobre reposicionamento e alívio de pressão"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "O PUSH Tool foi desenvolvido pelo National Pressure Ulcer Advisory Panel (NPUAP) como um instrumento simples e padronizado para monitorar a evolução da cicatrização de lesões por pressão ao longo do tempo, avaliando área, exsudato e tipo de tecido.",
+      "history": "Amplamente utilizado em serviços de estomaterapia e cuidados com feridas para documentar objetivamente a evolução clínica de lesões por pressão, permitindo comparação padronizada entre avaliações seriadas.",
+      "validation": "Estudos de validação demonstram boa sensibilidade para detectar mudanças ao longo do tempo, sendo uma ferramenta confiável para monitorar tendência de cicatrização, embora não substitua a avaliação clínica completa da ferida.",
+      "limitations": "O PUSH Tool foi desenhado para monitorar tendência ao longo do tempo (redução progressiva do escore indica cicatrização), não para classificar gravidade em um único momento isolado. Não avalia profundidade da lesão nem descolamento/túneis.",
+      "references": [
+        {
+          "text": "NATIONAL PRESSURE ULCER ADVISORY PANEL (NPUAP). Pressure Ulcer Scale for Healing (PUSH) Tool. Reston: NPUAP, 1998."
+        },
+        {
+          "text": "THOMAS, D. R. et al. Pressure ulcer scale for healing: derivation and validation of the PUSH tool. Advances in Wound Care, v. 10, n. 5, p. 96-101, 1997."
+        },
+        {
+          "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "Reavalie sempre com a mesma técnica de mensuração para garantir comparabilidade entre avaliações.",
+        "O mais importante é a tendência do escore ao longo do tempo, não o valor isolado de uma única avaliação.",
+        "Registre fotografias padronizadas junto com o escore para documentação mais completa.",
+        "Investigue causas de estagnação ou piora do escore (nutrição, perfusão, pressão persistente, infecção)."
+      ],
+      "examples": [
+        {
+          "label": "Lesão em cicatrização",
+          "sublabel": "PUSH 3",
+          "emoji": "✅",
+          "values": {
+            "area": 2,
+            "exsudato": 0,
+            "tipo_tecido": 1
+          }
+        },
+        {
+          "label": "Lesão moderada, granulando",
+          "sublabel": "PUSH 8",
+          "emoji": "⚠️",
+          "values": {
+            "area": 4,
+            "exsudato": 2,
+            "tipo_tecido": 2
+          }
+        },
+        {
+          "label": "Lesão extensa com necrose",
+          "sublabel": "PUSH 15",
+          "emoji": "🚨",
+          "values": {
+            "area": 9,
+            "exsudato": 2,
+            "tipo_tecido": 4
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Quantos parâmetros compõem o PUSH Tool?",
+          "opts": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": 1,
+          "expl": "O PUSH avalia 3 parâmetros: área da lesão, quantidade de exsudato e tipo de tecido predominante."
+        },
+        {
+          "q": "O que uma redução progressiva do escore PUSH ao longo das reavaliações indica?",
+          "opts": [
+            "Piora da lesão",
+            "Cicatrização em progresso",
+            "Infecção ativa",
+            "Nenhuma mudança relevante"
+          ],
+          "correct": 1,
+          "expl": "O PUSH Tool foi desenhado para monitorar tendência: uma redução progressiva do escore ao longo do tempo indica que a lesão está evoluindo para cicatrização."
+        },
+        {
+          "q": "O PUSH Tool avalia profundidade da lesão?",
+          "opts": [
+            "Sim, é o principal parâmetro",
+            "Não, avalia área, exsudato e tipo de tecido",
+            "Apenas em lesões estágio IV",
+            "Sim, mas apenas em lesões fechadas"
+          ],
+          "correct": 1,
+          "expl": "O PUSH Tool não avalia profundidade diretamente; seus 3 parâmetros são área, exsudato e tipo de tecido do leito da ferida."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Com que frequência o PUSH deve ser reaplicado?",
+        "a": "Recomenda-se reavaliação semanal, ou conforme protocolo institucional, para acompanhar a tendência de cicatrização ao longo do tempo."
+      },
+      {
+        "q": "Um escore PUSH baixo sempre significa lesão pequena e simples?",
+        "a": "Não necessariamente isoladamente — o valor deve ser interpretado em conjunto com a tendência das avaliações anteriores e o contexto clínico geral do paciente."
+      }
+    ],
+    "about": {
+      "title": "Como funciona o PUSH Tool",
+      "html": "<p>O PUSH Tool soma pontos de 3 parâmetros — área da lesão (0-10 pontos), quantidade de exsudato (0-3 pontos) e tipo de tecido predominante (0-4 pontos) — totalizando de 0 a 17 pontos. O valor deve ser acompanhado ao longo de avaliações seriadas: a redução progressiva do escore indica evolução favorável da cicatrização.</p><p><strong>Guia rápido:</strong> 0 = Lesão cicatrizada | Escores mais baixos = tendência favorável | Escores mais altos = lesão mais extensa, requer monitorização mais próxima.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Área da Lesão (comprimento × largura)"
+    ],
+    [
+      "field_label",
+      "Quantidade de Exsudato"
+    ],
+    [
+      "field_label",
+      "Tipo de Tecido"
+    ],
+    [
+      "field_desc",
+      "Meça o maior comprimento e a maior largura da lesão (em cm) e multiplique para obter a área em cm²."
+    ],
+    [
+      "field_desc",
+      "Quantidade de exsudato observada após a remoção do curativo, antes da aplicação de qualquer produto tópico."
+    ],
+    [
+      "field_desc",
+      "Tipo de tecido predominante presente no leito da ferida."
+    ],
+    [
+      "section_h2",
+      "Como funciona o PUSH Tool"
+    ],
+    [
+      "card_h3",
+      "Área da Lesão (comprimento × largura)"
+    ],
+    [
+      "card_h3",
+      "Quantidade de Exsudato"
+    ],
+    [
+      "card_h3",
+      "Tipo de Tecido"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — PUSH Tool"
+    ],
+    [
+      "card_h3",
+      "PUSH Tool: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "Reavalie sempre com a mesma técnica de mensuração para garantir comparabilidade entre avaliações."
+    ],
+    [
+      "tip_li",
+      "O mais importante é a tendência do escore ao longo do tempo, não o valor isolado de uma única avaliação."
+    ],
+    [
+      "tip_li",
+      "Registre fotografias padronizadas junto com o escore para documentação mais completa."
+    ],
+    [
+      "tip_li",
+      "Investigue causas de estagnação ou piora do escore (nutrição, perfusão, pressão persistente, infecção)."
+    ],
+    [
+      "faq_question",
+      "Com que frequência o PUSH deve ser reaplicado?"
+    ],
+    [
+      "faq_question",
+      "Um escore PUSH baixo sempre significa lesão pequena e simples?"
+    ]
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "462cbc09-1148-4483-85ad-7eba1d575a21",
+  "code": "CALC-DIMENSIONAMENTO-001",
+  "slug": "dimensionamento",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Calculadora de Dimensionamento de Equipe de Enfermagem (COFEN 543/2017)",
+    "description": "Calcule o quadro de pessoal de enfermagem (QP) conforme a Resolução COFEN nº 543/2017, a partir do Sistema de Classificação de Pacientes (SCP) e da Constante de Marinho (KM).",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/dimensionamento.html"
+  },
+  "breadcrumb": { "category": "Gestão em Enfermagem", "categoryHref": "index.html#calculadoras" },
+  "overview": {
+    "name": "Calculadora de Dimensionamento de Equipe de Enfermagem",
+    "acronym": "QP-COFEN 543",
+    "categoryBadge": "Gestão em Enfermagem",
+    "icon": "i-users-cog",
+    "objective": "Calcular o quantitativo de profissionais de enfermagem (QP) necessário para uma unidade, a partir do total de horas de enfermagem (THE) demandado pelo perfil de pacientes (SCP) e da Constante de Marinho (KM), conforme a metodologia da Resolução COFEN nº 543/2017.",
+    "indication": "Indicado para gestores de enfermagem no planejamento e dimensionamento de equipes em unidades de internação, considerando a classificação dos pacientes por complexidade assistencial.",
+    "targetPopulation": "Unidades de internação hospitalar (clínica médica, cirúrgica, pediátrica, obstétrica, entre outras).",
+    "specialty": ["Gestão em Enfermagem", "Administração Hospitalar"],
+    "averageTime": "3-5 minutos",
+    "evidenceLevel": "II",
+    "organizations": ["Conselho Federal de Enfermagem (COFEN)"],
+    "complexity": "advanced",
+    "rating": 4.5,
+    "ratingCount": 96
+  },
+  "calculator": {
+    "inputs": [
+      {"id": "pcm", "type": "number", "label": "Pacientes de Cuidados Mínimos (PCM)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes estáveis, sob cuidados de rotina — 4 horas de enfermagem/paciente/dia."},
+      {"id": "pci", "type": "number", "label": "Pacientes de Cuidados Intermediários (PCI)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes estáveis com dependência parcial da equipe — 6 horas de enfermagem/paciente/dia."},
+      {"id": "pcad", "type": "number", "label": "Pacientes de Alta Dependência (PCAD)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes crônicos estáveis, totalmente dependentes das ações da equipe — 10 horas de enfermagem/paciente/dia."},
+      {"id": "pcsi", "type": "number", "label": "Pacientes Semi-Intensivos (PCSI)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes graves, porém estáveis, com risco de instabilização — 10 horas de enfermagem/paciente/dia."},
+      {"id": "pcit", "type": "number", "label": "Pacientes Intensivos (PCIt)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes graves e instáveis, com risco iminente de morte — 18 horas de enfermagem/paciente/dia."},
+      {"id": "dias_semana", "type": "number", "label": "Dias de Funcionamento por Semana (DS)", "unit": "dias", "defaultValue": 7, "min": 1, "max": 7, "step": 1, "description": "Número de dias por semana em que a unidade funciona (7 para unidades de internação com funcionamento contínuo)."},
+      {"id": "ist", "type": "number", "label": "Índice de Segurança Técnica (IST)", "unit": "%", "defaultValue": 15, "min": 15, "max": 100, "step": 1, "description": "Percentual para cobrir ausências previstas (férias, faltas, licenças). A Resolução COFEN 543/2017 exige no mínimo 15%."},
+      {"id": "chs", "type": "number", "label": "Carga Horária Semanal do Profissional (CHS)", "unit": "horas/semana", "defaultValue": 36, "min": 20, "max": 44, "step": 1, "description": "Carga horária semanal de trabalho do profissional de enfermagem (comumente 30, 36 ou 40 horas, conforme legislação/instituição)."}
+    ],
+    "formula": {
+      "type": "expression",
+      "expression": "(pcm*4 + pci*6 + pcad*10 + pcsi*10 + pcit*18) * (dias_semana*(1+ist/100)/chs)",
+      "resultLabel": "Quadro de Pessoal (QP)",
+      "resultUnit": "profissionais",
+      "decimals": 1
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {"min": 0, "max": 5.99, "label": "Equipe Pequena (até 6 profissionais)", "riskLevel": "none", "color": "#2563eb",
+       "clinicalImplications": "Quadro de pessoal compatível com unidades de pequeno porte ou baixa complexidade assistencial.",
+       "recommendations": "• Distribuir 33% da equipe como Enfermeiros e o restante como Técnicos/Auxiliares de Enfermagem (cuidado mínimo/intermediário), respeitando o mínimo de 6 enfermeiros por unidade\n• Reavaliar o dimensionamento a cada mudança relevante no perfil de pacientes"},
+      {"min": 6, "max": 20.99, "label": "Equipe Média (6 a 21 profissionais)", "riskLevel": "none", "color": "#2563eb",
+       "clinicalImplications": "Quadro de pessoal compatível com unidades de porte médio.",
+       "recommendations": "• Distribuir a equipe conforme o percentual de enfermeiros exigido para o perfil de complexidade predominante\n• Considerar sazonalidade de ausências ao planejar escalas\n• Reavaliar periodicamente com nova classificação SCP dos pacientes"},
+      {"min": 21, "max": 50.99, "label": "Equipe Grande (21 a 51 profissionais)", "riskLevel": "none", "color": "#ca8a04",
+       "clinicalImplications": "Quadro de pessoal compatível com unidades de grande porte ou maior complexidade assistencial.",
+       "recommendations": "• Considerar necessidade de coordenação/supervisão adicional para equipes grandes\n• Reavaliar o dimensionamento a cada mudança relevante no perfil de pacientes (SCP)\n• Verificar adequação da proporção enfermeiro/técnico conforme legislação vigente"},
+      {"min": 51, "max": 100000, "label": "Equipe Muito Grande (acima de 51 profissionais)", "riskLevel": "none", "color": "#dc2626",
+       "clinicalImplications": "Quadro de pessoal compatível com unidades de alta complexidade e grande volume de pacientes (ex: UTI de grande porte).",
+       "recommendations": "• Avaliar a divisão da unidade em subunidades/postos para facilitar a gestão\n• Assegurar liderança e supervisão de enfermagem em todos os turnos\n• Reavaliar o dimensionamento periodicamente conforme variação do perfil assistencial"}
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {"diagnosis": "Risco de infecção (relacionado à sobrecarga da equipe)", "definition": "Risco aumentado de eventos adversos e infecções relacionado a dimensionamento inadequado de pessoal frente à demanda assistencial."}
+    ],
+    "noc": [
+      {"outcome": "Adequação do quadro de pessoal", "indicators": ["Quadro de pessoal calculado conforme metodologia COFEN 543/2017", "Proporção enfermeiro/técnico respeitada conforme a complexidade assistencial", "Reavaliação periódica do dimensionamento conforme mudança do perfil de pacientes (SCP)"]}
+    ],
+    "nic": [
+      {"intervention": "Gestão de recursos humanos em enfermagem", "activities": ["Classificar os pacientes da unidade conforme Sistema de Classificação de Pacientes (SCP)", "Calcular o Total de Horas de Enfermagem (THE) demandado pelo perfil de pacientes", "Aplicar a Constante de Marinho (KM) considerando dias de funcionamento, IST e carga horária da equipe", "Distribuir o quadro de pessoal (QP) entre enfermeiros e técnicos/auxiliares conforme a complexidade predominante", "Reavaliar o dimensionamento periodicamente e a cada mudança relevante no perfil assistencial"]}
+    ]
+  },
+  "evidence": {
+    "foundation": "O dimensionamento segue três etapas: (1) cálculo do Total de Horas de Enfermagem (THE), somando o produto do número de pacientes em cada categoria do SCP pelo respectivo tempo de cuidado (Mínimo=4h, Intermediário=6h, Alta Dependência=10h, Semi-Intensivo=10h, Intensivo=18h); (2) cálculo da Constante de Marinho (KM = DS × (1+IST)/CHS); (3) cálculo do Quadro de Pessoal (QP = THE × KM).",
+    "history": "A metodologia foi originalmente proposta por Maria José Trevizan Marinho e incorporada às normativas do Conselho Federal de Enfermagem, sendo consolidada na Resolução COFEN nº 543/2017 (posteriormente revisada pela Resolução COFEN nº 743/2024).",
+    "validation": "Metodologia oficial adotada nacionalmente para dimensionamento de pessoal de enfermagem em serviços de saúde, referenciada por auditorias dos Conselhos Regionais de Enfermagem (COREN).",
+    "limitations": "O resultado representa o quantitativo total teórico de profissionais (enfermeiros + técnicos/auxiliares); a distribuição percentual entre essas categorias depende da complexidade predominante e deve seguir os parâmetros normativos vigentes. A carga horária semanal (CHS) e o IST podem variar conforme legislação trabalhista, convenção coletiva e política institucional.",
+    "references": [
+      {"text": "CONSELHO FEDERAL DE ENFERMAGEM (COFEN). Resolução COFEN nº 543, de 18 de abril de 2017. Atualiza a norma para dimensionamento do quantitativo de profissionais de enfermagem nos serviços/locais em que são realizadas atividades de enfermagem."},
+      {"text": "CONSELHO FEDERAL DE ENFERMAGEM (COFEN). Manual Prático de Dimensionamento de Pessoal - Resolução COFEN nº 543/2017. Brasília: COFEN, 2017."},
+      {"text": "CONSELHO FEDERAL DE ENFERMAGEM (COFEN). Resolução COFEN nº 743, de 2024 (revoga e atualiza a Resolução 543/2017)."}
+    ]
+  },
+  "learning": {
+    "tips": [
+      "A fórmula tem 3 etapas: THE (horas totais de cuidado demandadas), KM (constante de Marinho, que ajusta pela cobertura de 7 dias, ausências e carga horária) e QP = THE × KM.",
+      "O IST (Índice de Segurança Técnica) nunca pode ser inferior a 15%, conforme a Resolução COFEN nº 543/2017.",
+      "Para cuidados mínimos e intermediários, recomenda-se que ao menos 33% da equipe (mínimo de 6) sejam enfermeiros, sendo o restante técnicos/auxiliares de enfermagem.",
+      "Em unidades de maior complexidade (alta dependência, semi-intensivo, intensivo), a proporção de enfermeiros deve ser maior, conforme parâmetros normativos vigentes."
+    ],
+    "examples": [
+      {"label": "Clínica médica: 12 cuidados mínimos, 15 intermediários, 5 alta dependência", "sublabel": "QP 42,0 profissionais", "emoji": "🔵", "values": {"pcm": 12, "pci": 15, "pcad": 5, "pcsi": 0, "pcit": 0, "dias_semana": 7, "ist": 15, "chs": 36}},
+      {"label": "UTI: 10 pacientes intensivos, 5 semi-intensivos", "sublabel": "QP 53,7 profissionais", "emoji": "🔴", "values": {"pcm": 0, "pci": 0, "pcad": 0, "pcsi": 5, "pcit": 10, "dias_semana": 7, "ist": 20, "chs": 36}},
+      {"label": "Ambulatório/unidade de 6 dias: 5 mínimos, 3 intermediários", "sublabel": "QP 8,7 profissionais", "emoji": "🟢", "values": {"pcm": 5, "pci": 3, "pcad": 0, "pcsi": 0, "pcit": 0, "dias_semana": 6, "ist": 15, "chs": 30}}
+    ],
+    "quiz": [
+      {"q": "Quais são as 5 categorias do Sistema de Classificação de Pacientes (SCP) usadas no THE?", "opts": ["Leve, moderado, grave, crítico, terminal", "Mínimos, intermediários, alta dependência, semi-intensivos, intensivos", "Ambulatorial, internação, UTI, emergência, cirúrgico", "Pediátrico, adulto, idoso, obstétrico, neonatal"], "correct": 1,
+       "expl": "O SCP classifica os pacientes em 5 categorias: cuidados mínimos (4h), intermediários (6h), alta dependência (10h), semi-intensivos (10h) e intensivos (18h) de enfermagem por paciente/dia."},
+      {"q": "Qual o valor mínimo exigido para o Índice de Segurança Técnica (IST) pela Resolução COFEN 543/2017?", "opts": ["5%", "10%", "15%", "25%"], "correct": 2,
+       "expl": "A Resolução COFEN nº 543/2017 exige um Índice de Segurança Técnica (IST) não inferior a 15%, para cobrir ausências previstas como férias, faltas e licenças."},
+      {"q": "Como é calculado o Quadro de Pessoal (QP)?", "opts": ["QP = THE + KM", "QP = THE × KM", "QP = THE ÷ KM", "QP = KM - THE"], "correct": 1,
+       "expl": "O Quadro de Pessoal é calculado multiplicando o Total de Horas de Enfermagem (THE) pela Constante de Marinho (KM)."}
+    ]
+  },
+  "faq": [
+    {"q": "O resultado do QP já vem dividido entre enfermeiros e técnicos?", "a": "Não. O QP representa o quantitativo total de profissionais de enfermagem. A distribuição percentual entre enfermeiros e técnicos/auxiliares deve seguir os parâmetros normativos conforme a complexidade assistencial predominante da unidade."},
+    {"q": "Com que frequência o dimensionamento deve ser refeito?", "a": "Recomenda-se reavaliação periódica (geralmente semestral ou anual) e sempre que houver mudança relevante no perfil de complexidade dos pacientes atendidos pela unidade."}
+  ],
+  "about": {
+    "title": "Como funciona a Calculadora de Dimensionamento (COFEN 543/2017)",
+    "html": "<p>Calcula o Total de Horas de Enfermagem (THE) a partir do número de pacientes em cada categoria do SCP, aplica a Constante de Marinho (KM) e obtém o Quadro de Pessoal (QP = THE × KM).</p><p><strong>Fórmula:</strong> THE = (PCM×4 + PCI×6 + PCAD×10 + PCSI×10 + PCIt×18) | KM = DS×(1+IST)/CHS | QP = THE × KM.</p>"
+  }
+}

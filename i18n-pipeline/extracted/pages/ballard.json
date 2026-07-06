@@ -1,0 +1,928 @@
+{
+  "seo": {
+    "title": "New Ballard Score - Avaliação da Idade Gestacional | Calculadoras de Enfermagem",
+    "description": "Calcule o New Ballard Score para estimar a idade gestacional do recém-nascido por meio da maturidade neuromuscular e física. Inclui interpretação, SAE e evidências.",
+    "h1": "New Ballard Score",
+    "subtitle": "Estimar a idade gestacional do recém-nascido por meio da avaliação de 6 sinais de maturidade neuromuscular e 6 sinais de maturidade física."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "13c16ea3-e22c-4fc6-b445-4c0a8f2888fa",
+    "code": "SCALE-BALLARD-001",
+    "slug": "ballard",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "New Ballard Score - Avaliação da Idade Gestacional",
+      "description": "Calcule o New Ballard Score para estimar a idade gestacional do recém-nascido por meio da maturidade neuromuscular e física. Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/ballard.html"
+    },
+    "breadcrumb": {
+      "category": "Neonatologia",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "New Ballard Score",
+      "acronym": "Ballard",
+      "categoryBadge": "Neonatologia",
+      "icon": "i-baby",
+      "objective": "Estimar a idade gestacional do recém-nascido por meio da avaliação de 6 sinais de maturidade neuromuscular e 6 sinais de maturidade física.",
+      "indication": "Indicada para estimar a idade gestacional quando a data da última menstruação é incerta ou não há ultrassonografia precoce disponível, idealmente nas primeiras 12-24 horas de vida (válido até 96 horas).",
+      "targetPopulation": "Recém-nascidos de qualquer idade gestacional, desde extremamente pré-termo até pós-termo.",
+      "specialty": [
+        "Neonatologia",
+        "Enfermagem",
+        "Pediatria"
+      ],
+      "averageTime": "5-10 minutos",
+      "evidenceLevel": "II",
+      "originalAuthors": [
+        "Jeanne L. Ballard"
+      ],
+      "complexity": "expert",
+      "rating": 4.5,
+      "ratingCount": 95
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "postura",
+          "type": "select",
+          "label": "Postura",
+          "defaultValue": 0,
+          "description": "Observar o recém-nascido em repouso, em decúbito dorsal.",
+          "options": [
+            {
+              "value": 0,
+              "label": "0 - Braços e pernas estendidos",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Início de flexão de quadris e joelhos, braços estendidos",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Flexão mais acentuada de pernas, braços estendidos",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Braços levemente fletidos, pernas fletidas e abduzidas",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Flexão completa de braços e pernas",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "janela_quadrada",
+          "type": "select",
+          "label": "Janela Quadrada (Punho)",
+          "defaultValue": 0,
+          "description": "Fletir o punho do recém-nascido e medir o ângulo entre a eminência hipotenar e a face ventral do antebraço.",
+          "options": [
+            {
+              "value": -1,
+              "label": "-1 - Ângulo maior que 90°",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "0 - Ângulo de 90°",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Ângulo de 60°",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Ângulo de 45°",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Ângulo de 30°",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Ângulo de 0° (punho encosta no antebraço)",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "recuo_braco",
+          "type": "select",
+          "label": "Recuo do Braço (Arm Recoil)",
+          "defaultValue": 0,
+          "description": "Fletir os antebraços por 5 segundos, estendê-los completamente e soltar, observando o retorno à flexão.",
+          "options": [
+            {
+              "value": 0,
+              "label": "0 - Permanece estendido ou com movimentos aleatórios (180°)",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Flexão parcial lenta (140-180°)",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Flexão parcial (110-140°)",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Retorno rápido a flexão parcial (90-110°)",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Retorno rápido e completo à flexão (menor que 90°)",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "angulo_popliteo",
+          "type": "select",
+          "label": "Ângulo Poplíteo",
+          "defaultValue": 0,
+          "description": "Com o quadril fletido, estender o joelho e medir o ângulo poplíteo formado.",
+          "options": [
+            {
+              "value": -1,
+              "label": "-1 - Ângulo de 180°",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "0 - Ângulo de 160°",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Ângulo de 140°",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Ângulo de 120°",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Ângulo de 100°",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Ângulo de 90°",
+              "score": 4
+            },
+            {
+              "value": 5,
+              "label": "5 - Ângulo menor que 90°",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "id": "sinal_cachecol",
+          "type": "select",
+          "label": "Sinal do Cachecol (Scarf Sign)",
+          "defaultValue": 0,
+          "description": "Tracionar o braço do recém-nascido em direção ao ombro contralateral, observando até onde o cotovelo alcança.",
+          "options": [
+            {
+              "value": -1,
+              "label": "-1 - Cotovelo alcança o lado oposto sem resistência",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "0 - Cotovelo ultrapassa a linha axilar contralateral",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Cotovelo alcança a linha axilar contralateral",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Cotovelo próximo à linha média",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Cotovelo não alcança a linha média",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Cotovelo não ultrapassa a linha do mamilo",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "calcanhar_orelha",
+          "type": "select",
+          "label": "Calcanhar-Orelha (Heel to Ear)",
+          "defaultValue": 0,
+          "description": "Com a pelve na maca, aproximar o pé do recém-nascido o mais próximo possível da cabeça, sem forçar, observando a resistência e a distância.",
+          "options": [
+            {
+              "value": -1,
+              "label": "-1 - Sem resistência, pé encosta na cabeça",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "0 - Resistência mínima",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Resistência leve",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Resistência moderada",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Resistência acentuada",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Resistência importante, pé não se aproxima da cabeça",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "pele",
+          "type": "select",
+          "label": "Pele",
+          "defaultValue": 0,
+          "description": "Inspecionar textura, cor e transparência da pele.",
+          "options": [
+            {
+              "value": -1,
+              "label": "-1 - Pegajosa, friável, transparente",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "0 - Gelatinosa, vermelha, translúcida",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Lisa e rosada, veias visíveis",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Descamação superficial e/ou rash, poucas veias",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Rachaduras, áreas pálidas, veias raras",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Tipo pergaminho, rachaduras profundas, sem vasos",
+              "score": 4
+            },
+            {
+              "value": 5,
+              "label": "5 - Coriácea, rachada e enrugada",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "id": "lanugem",
+          "type": "select",
+          "label": "Lanugem",
+          "defaultValue": 0,
+          "description": "Observar a quantidade de lanugem (pelos finos) no dorso do recém-nascido.",
+          "options": [
+            {
+              "value": 0,
+              "label": "0 - Ausente",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Esparsa",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Abundante",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Rarefazendo (afinando)",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Áreas sem lanugem (calvas)",
+              "score": 4
+            },
+            {
+              "value": 5,
+              "label": "5 - Predominantemente sem lanugem",
+              "score": 5
+            }
+          ]
+        },
+        {
+          "id": "superficie_plantar",
+          "type": "select",
+          "label": "Superfície Plantar",
+          "defaultValue": 0,
+          "description": "Medir o comprimento do pé (calcanhar-hálux) ou observar as pregas plantares.",
+          "options": [
+            {
+              "value": -2,
+              "label": "-2 - Comprimento do calcanhar ao hálux menor que 40mm",
+              "score": -2
+            },
+            {
+              "value": -1,
+              "label": "-1 - Comprimento do calcanhar ao hálux entre 40-50mm",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "0 - Maior que 50mm, sem pregas",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Marcas vermelhas tênues",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Apenas prega transversa anterior",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Pregas nos 2/3 anteriores da planta",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Pregas em toda a planta do pé",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "mama",
+          "type": "select",
+          "label": "Mama",
+          "defaultValue": 0,
+          "description": "Palpar o tecido mamário e observar a aréola.",
+          "options": [
+            {
+              "value": -1,
+              "label": "-1 - Imperceptível",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "0 - Apenas perceptível",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Aréola plana, sem broto mamário",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Aréola pontilhada, broto de 1-2mm",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Aréola elevada, broto de 3-4mm",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Aréola completa, broto de 5-10mm",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "olho_orelha",
+          "type": "select",
+          "label": "Olho/Orelha",
+          "defaultValue": 0,
+          "description": "Inspecionar as pálpebras e testar a recuperação do pavilhão auricular ao ser dobrado.",
+          "options": [
+            {
+              "value": -2,
+              "label": "-2 - Pálpebras fundidas firmemente",
+              "score": -2
+            },
+            {
+              "value": -1,
+              "label": "-1 - Pálpebras fundidas frouxamente",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "0 - Pálpebras abertas, pavilhão plano, permanece dobrado",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1 - Pavilhão levemente curvo, mole, recuo lento",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "2 - Pavilhão bem curvo, mole mas com recuo pronto",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "3 - Formado e firme, recuo instantâneo",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "4 - Cartilagem espessa, orelha rígida",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "genitalia",
+          "type": "select",
+          "label": "Genitália (Masculina ou Feminina)",
+          "defaultValue": 0,
+          "description": "Selecione a opção correspondente ao sexo e estágio de maturação observado.",
+          "options": [
+            {
+              "value": -1,
+              "label": "M: Bolsa escrotal plana e lisa",
+              "score": -1
+            },
+            {
+              "value": 0,
+              "label": "M: Bolsa escrotal vazia, rugas discretas / F: Clitóris proeminente e lábios achatados",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "M: Testículos no canal superior, raras rugas / F: Clitóris proeminente e lábios menores aumentando",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "M: Testículos descendo, poucas rugas / F: Lábios maiores e menores igualmente proeminentes",
+              "score": 2
+            },
+            {
+              "value": 3,
+              "label": "M: Testículos descidos, boas rugas / F: Lábios maiores grandes, menores pequenos",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "M: Testículos pendulares, rugas profundas / F: Lábios maiores cobrem o clitóris e os menores",
+              "score": 4
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "New Ballard Score",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": -11,
+          "max": 9,
+          "label": "Extremamente Pré-termo (< 28 semanas)",
+          "riskLevel": "critical",
+          "color": "#7f1d1d",
+          "clinicalImplications": "Pontuação abaixo de 10, correspondendo a uma idade gestacional estimada inferior a 28 semanas.",
+          "recommendations": "• Cuidados intensivos neonatais especializados\n• Monitorização rigorosa de temperatura, glicemia e função respiratória\n• Suporte multiprofissional para prematuridade extrema"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label": "Muito Pré-termo (28 a 31 semanas)",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Pontuação entre 10 e 19, correspondendo a uma idade gestacional estimada entre aproximadamente 28 e 31 semanas.",
+          "recommendations": "• Cuidados em unidade de terapia intensiva neonatal\n• Monitorização de complicações da prematuridade (síndrome do desconforto respiratório, hemorragia intraventricular)\n• Suporte térmico e nutricional especializado"
+        },
+        {
+          "min": 20,
+          "max": 32,
+          "label": "Pré-termo Moderado a Tardio (32 a 36 semanas)",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Pontuação entre 20 e 32, correspondendo a uma idade gestacional estimada entre aproximadamente 32 e 36 semanas.",
+          "recommendations": "• Monitorização de temperatura, glicemia e icterícia\n• Avaliar necessidade de suporte respiratório e alimentar\n• Observação da adaptação à vida extrauterina"
+        },
+        {
+          "min": 33,
+          "max": 50,
+          "label": "Termo (37 semanas ou mais)",
+          "riskLevel": "none",
+          "color": "#2563eb",
+          "clinicalImplications": "Pontuação de 33 ou mais, correspondendo a uma idade gestacional estimada de 37 semanas ou mais (termo a pós-termo).",
+          "recommendations": "• Cuidados de rotina do recém-nascido a termo\n• Avaliar sinais de pós-maturidade se pontuação muito elevada (pele apergaminhada, ausência de lanugem)\n• Seguir protocolo padrão de triagem neonatal"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Termorregulação ineficaz",
+          "definition": "Flutuação da temperatura entre hipotermia e hipertermia, com risco aumentado em recém-nascidos com menor maturidade física identificada pelo Ballard."
+        },
+        {
+          "diagnosis": "Padrão respiratório ineficaz",
+          "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada, com risco aumentado proporcional ao grau de prematuridade."
+        },
+        {
+          "diagnosis": "Nutrição desequilibrada: menor que as necessidades corporais",
+          "definition": "Ingestão de nutrientes insuficiente para atender às necessidades metabólicas, relevante em recém-nascidos pré-termo com reflexo de sucção imaturo."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Adaptação do prematuro",
+          "indicators": [
+            "Idade gestacional estimada corretamente pelo New Ballard Score",
+            "Plano de cuidados ajustado conforme o grau de prematuridade identificado",
+            "Ausência de complicações da prematuridade não detectadas precocemente"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Cuidado ao recém-nascido pré-termo",
+          "activities": [
+            "Aplicar o New Ballard Score idealmente nas primeiras 12-24 horas de vida (válido até 96 horas)",
+            "Correlacionar o resultado com a idade gestacional estimada por data da última menstruação/ultrassonografia, quando disponível",
+            "Ajustar o plano de cuidados conforme o grau de prematuridade identificado",
+            "Monitorar sinais de complicações específicas da prematuridade",
+            "Registrar o escore e a idade gestacional estimada no prontuário"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "O New Ballard Score soma a pontuação de 6 sinais de maturidade neuromuscular (postura, janela quadrada, recuo do braço, ângulo poplíteo, sinal do cachecol, calcanhar-orelha) e 6 sinais de maturidade física (pele, lanugem, superfície plantar, mama, olho/orelha, genitália), com escore total que é convertido em idade gestacional estimada por meio de tabela de referência (cada incremento de 5 pontos corresponde a aproximadamente 2 semanas adicionais de idade gestacional).",
+      "history": "Desenvolvido por Jeanne Ballard e colaboradores, o New Ballard Score (1991) é uma revisão e expansão do escore original de Dubowitz, estendendo a aplicabilidade para recém-nascidos extremamente pré-termo (a partir de 20 semanas).",
+      "validation": "Amplamente validado e utilizado internacionalmente para estimativa da idade gestacional ao nascimento, com boa correlação com a idade gestacional calculada pela data da última menstruação e ultrassonografia precoce, especialmente quando aplicado nas primeiras 12-24 horas de vida.",
+      "limitations": "A precisão é maior quando aplicado nas primeiras 12-24 horas de vida (válido até 96 horas). Recém-nascidos gravemente enfermos ou com certas condições neurológicas podem ter avaliação neuromuscular comprometida, exigindo maior peso da maturidade física na estimativa.",
+      "references": [
+        {
+          "text": "BALLARD, J. L. et al. New Ballard Score, expanded to include extremely premature infants. Journal of Pediatrics, v. 119, n. 3, p. 417-423, 1991."
+        },
+        {
+          "text": "DUBOWITZ, L. M.; DUBOWITZ, V.; GOLDBERG, C. Clinical assessment of gestational age in the newborn infant. Journal of Pediatrics, v. 77, n. 1, p. 1-10, 1970."
+        },
+        {
+          "text": "SOCIEDADE BRASILEIRA DE PEDIATRIA. Avaliação da idade gestacional do recém-nascido. Rio de Janeiro: SBP, 2021."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "O New Ballard Score é mais preciso quando aplicado nas primeiras 12-24 horas de vida, sendo válido até 96 horas após o nascimento.",
+        "Cada incremento de 5 pontos no escore total corresponde a aproximadamente 2 semanas adicionais de idade gestacional estimada.",
+        "A avaliação de genitália depende do sexo do recém-nascido — selecione a opção correspondente (masculina ou feminina) na lista combinada.",
+        "Em recém-nascidos gravemente enfermos, a avaliação neuromuscular pode estar comprometida por sedação ou doença — dê maior peso aos sinais de maturidade física nesses casos."
+      ],
+      "examples": [
+        {
+          "label": "Prematuro extremo",
+          "sublabel": "Ballard -8 (≈21 semanas)",
+          "emoji": "",
+          "values": {
+            "postura": 0,
+            "janela_quadrada": -1,
+            "recuo_braco": 0,
+            "angulo_popliteo": -1,
+            "sinal_cachecol": -1,
+            "calcanhar_orelha": -1,
+            "pele": -1,
+            "lanugem": 1,
+            "superficie_plantar": -1,
+            "mama": -1,
+            "olho_orelha": -1,
+            "genitalia": -1
+          }
+        },
+        {
+          "label": "Pré-termo moderado",
+          "sublabel": "Ballard 24 (≈34 semanas)",
+          "emoji": "",
+          "values": {
+            "postura": 2,
+            "janela_quadrada": 2,
+            "recuo_braco": 2,
+            "angulo_popliteo": 2,
+            "sinal_cachecol": 2,
+            "calcanhar_orelha": 2,
+            "pele": 2,
+            "lanugem": 2,
+            "superficie_plantar": 2,
+            "mama": 2,
+            "olho_orelha": 2,
+            "genitalia": 2
+          }
+        },
+        {
+          "label": "Recém-nascido a termo",
+          "sublabel": "Ballard 47 (≈43 semanas)",
+          "emoji": "",
+          "values": {
+            "postura": 4,
+            "janela_quadrada": 4,
+            "recuo_braco": 4,
+            "angulo_popliteo": 4,
+            "sinal_cachecol": 4,
+            "calcanhar_orelha": 4,
+            "pele": 4,
+            "lanugem": 4,
+            "superficie_plantar": 4,
+            "mama": 3,
+            "olho_orelha": 4,
+            "genitalia": 4
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Quantos sinais compõem o New Ballard Score?",
+          "opts": [
+            "4 sinais",
+            "8 sinais",
+            "12 sinais (6 neuromusculares e 6 físicos)",
+            "20 sinais"
+          ],
+          "correct": 2,
+          "expl": "O New Ballard Score combina 6 sinais de maturidade neuromuscular e 6 sinais de maturidade física, totalizando 12 sinais avaliados."
+        },
+        {
+          "q": "Em que janela de tempo o New Ballard Score é mais preciso?",
+          "opts": [
+            "Apenas na primeira hora de vida",
+            "Nas primeiras 12-24 horas de vida (válido até 96 horas)",
+            "Apenas após 7 dias de vida",
+            "Não há relação com o momento da aplicação"
+          ],
+          "correct": 1,
+          "expl": "O New Ballard Score é mais preciso quando aplicado nas primeiras 12-24 horas de vida, mantendo-se válido até 96 horas após o nascimento."
+        },
+        {
+          "q": "Aproximadamente quantas semanas de idade gestacional correspondem a cada incremento de 5 pontos no escore total?",
+          "opts": [
+            "1 semana",
+            "2 semanas",
+            "4 semanas",
+            "6 semanas"
+          ],
+          "correct": 1,
+          "expl": "Segundo a tabela de referência do New Ballard Score, cada incremento de 5 pontos no escore total corresponde a aproximadamente 2 semanas adicionais de idade gestacional estimada."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "O New Ballard Score substitui a ultrassonografia obstétrica para estimar a idade gestacional?",
+        "a": "Não. Quando disponível, a ultrassonografia precoce (idealmente no primeiro trimestre) é considerada mais precisa. O New Ballard Score é especialmente útil quando a data da última menstruação é incerta ou não há ultrassonografia precoce disponível."
+      },
+      {
+        "q": "O escore pode ser aplicado em qualquer momento após o nascimento?",
+        "a": "O New Ballard Score é mais preciso quando aplicado nas primeiras 12-24 horas de vida, e sua validade é considerada até 96 horas após o nascimento. Após esse período, a maturidade física e neuromuscular pode não refletir com precisão a idade gestacional real."
+      }
+    ],
+    "about": {
+      "title": "Como funciona o New Ballard Score",
+      "html": "<p>O New Ballard Score soma a pontuação de 6 sinais de maturidade neuromuscular e 6 sinais de maturidade física. O escore total é convertido em idade gestacional estimada (cada 5 pontos ≈ 2 semanas adicionais).</p><p><strong>Guia rápido:</strong> Pontuação <10 = Extremamente pré-termo (<28 sem) | 10-19 = Muito pré-termo (28-31 sem) | 20-32 = Pré-termo moderado a tardio (32-36 sem) | ≥33 = Termo (≥37 sem).</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Postura"
+    ],
+    [
+      "field_label",
+      "Janela Quadrada (Punho)"
+    ],
+    [
+      "field_label",
+      "Recuo do Braço (Arm Recoil)"
+    ],
+    [
+      "field_label",
+      "Ângulo Poplíteo"
+    ],
+    [
+      "field_label",
+      "Sinal do Cachecol (Scarf Sign)"
+    ],
+    [
+      "field_label",
+      "Calcanhar-Orelha (Heel to Ear)"
+    ],
+    [
+      "field_label",
+      "Pele"
+    ],
+    [
+      "field_label",
+      "Lanugem"
+    ],
+    [
+      "field_label",
+      "Superfície Plantar"
+    ],
+    [
+      "field_label",
+      "Mama"
+    ],
+    [
+      "field_label",
+      "Olho/Orelha"
+    ],
+    [
+      "field_label",
+      "Genitália (Masculina ou Feminina)"
+    ],
+    [
+      "field_desc",
+      "Observar o recém-nascido em repouso, em decúbito dorsal."
+    ],
+    [
+      "field_desc",
+      "Fletir o punho do recém-nascido e medir o ângulo entre a eminência hipotenar e a face ventral do antebraço."
+    ],
+    [
+      "field_desc",
+      "Fletir os antebraços por 5 segundos, estendê-los completamente e soltar, observando o retorno à flexão."
+    ],
+    [
+      "field_desc",
+      "Com o quadril fletido, estender o joelho e medir o ângulo poplíteo formado."
+    ],
+    [
+      "field_desc",
+      "Tracionar o braço do recém-nascido em direção ao ombro contralateral, observando até onde o cotovelo alcança."
+    ],
+    [
+      "field_desc",
+      "Com a pelve na maca, aproximar o pé do recém-nascido o mais próximo possível da cabeça, sem forçar, observando a resistência e a distância."
+    ],
+    [
+      "field_desc",
+      "Inspecionar textura, cor e transparência da pele."
+    ],
+    [
+      "field_desc",
+      "Observar a quantidade de lanugem (pelos finos) no dorso do recém-nascido."
+    ],
+    [
+      "field_desc",
+      "Medir o comprimento do pé (calcanhar-hálux) ou observar as pregas plantares."
+    ],
+    [
+      "field_desc",
+      "Palpar o tecido mamário e observar a aréola."
+    ],
+    [
+      "field_desc",
+      "Inspecionar as pálpebras e testar a recuperação do pavilhão auricular ao ser dobrado."
+    ],
+    [
+      "field_desc",
+      "Selecione a opção correspondente ao sexo e estágio de maturação observado."
+    ],
+    [
+      "section_h2",
+      "Como funciona o New Ballard Score"
+    ],
+    [
+      "card_h3",
+      "Postura"
+    ],
+    [
+      "card_h3",
+      "Janela Quadrada (Punho)"
+    ],
+    [
+      "card_h3",
+      "Recuo do Braço (Arm Recoil)"
+    ],
+    [
+      "card_h3",
+      "Ângulo Poplíteo"
+    ],
+    [
+      "card_h3",
+      "Sinal do Cachecol (Scarf Sign)"
+    ],
+    [
+      "card_h3",
+      "Calcanhar-Orelha (Heel to Ear)"
+    ],
+    [
+      "card_h3",
+      "Pele"
+    ],
+    [
+      "card_h3",
+      "Lanugem"
+    ],
+    [
+      "card_h3",
+      "Superfície Plantar"
+    ],
+    [
+      "card_h3",
+      "Mama"
+    ],
+    [
+      "card_h3",
+      "Olho/Orelha"
+    ],
+    [
+      "card_h3",
+      "Genitália (Masculina ou Feminina)"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — New Ballard Score"
+    ],
+    [
+      "card_h3",
+      "New Ballard Score: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "O New Ballard Score é mais preciso quando aplicado nas primeiras 12-24 horas de vida, sendo válido até 96 horas após o nascimento."
+    ],
+    [
+      "tip_li",
+      "Cada incremento de 5 pontos no escore total corresponde a aproximadamente 2 semanas adicionais de idade gestacional estimada."
+    ],
+    [
+      "tip_li",
+      "A avaliação de genitália depende do sexo do recém-nascido — selecione a opção correspondente (masculina ou feminina) na lista combinada."
+    ],
+    [
+      "tip_li",
+      "Em recém-nascidos gravemente enfermos, a avaliação neuromuscular pode estar comprometida por sedação ou doença — dê maior peso aos sinais de maturidade física nesses casos."
+    ],
+    [
+      "faq_question",
+      "O New Ballard Score substitui a ultrassonografia obstétrica para estimar a idade gestacional?"
+    ],
+    [
+      "faq_question",
+      "O escore pode ser aplicado em qualquer momento após o nascimento?"
+    ]
+  ]
+}

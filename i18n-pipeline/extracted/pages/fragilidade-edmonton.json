@@ -1,0 +1,599 @@
+{
+  "seo": {
+    "title": "Escala de Fragilidade de Edmonton - Avaliação Geriátrica | Calculadoras de Enfermagem",
+    "description": "Calcule a Escala de Fragilidade de Edmonton (EFS) para avaliar o grau de fragilidade em idosos, considerando 9 domínios clínicos e funcionais. Inclui interpretação, SAE e evidências.",
+    "h1": "Escala de Fragilidade de Edmonton",
+    "subtitle": "Avaliar o grau de fragilidade em idosos por meio de 9 domínios clínicos e funcionais, auxiliando no planejamento de cuidados e na identificação de pacientes com maior risco de desfechos adversos."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "83940516-2739-4051-6273-839405162739",
+    "code": "SCALE-EFS-001",
+    "slug": "fragilidade-edmonton",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Escala de Fragilidade de Edmonton - Avaliação Geriátrica",
+      "description": "Calcule a Escala de Fragilidade de Edmonton (EFS) para avaliar o grau de fragilidade em idosos, considerando 9 domínios clínicos e funcionais. Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/fragilidade-edmonton.html"
+    },
+    "breadcrumb": {
+      "category": "Geriatria",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "Escala de Fragilidade de Edmonton",
+      "acronym": "EFS",
+      "categoryBadge": "Geriatria",
+      "icon": "i-user-heart",
+      "objective": "Avaliar o grau de fragilidade em idosos por meio de 9 domínios clínicos e funcionais, auxiliando no planejamento de cuidados e na identificação de pacientes com maior risco de desfechos adversos.",
+      "indication": "Indicada na avaliação geriátrica ampla, especialmente em idosos em consultas ambulatoriais, pré-operatório ou antes de decisões terapêuticas relevantes.",
+      "targetPopulation": "Pacientes idosos (geralmente 65 anos ou mais) em avaliação clínica ou geriátrica.",
+      "specialty": [
+        "Geriatria",
+        "Enfermagem",
+        "Atenção Primária"
+      ],
+      "averageTime": "5 minutos",
+      "evidenceLevel": "II",
+      "originalAuthors": [
+        "Darryl Rolfson"
+      ],
+      "complexity": "intermediate",
+      "rating": 4.5,
+      "ratingCount": 165
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "cognicao",
+          "type": "select",
+          "label": "Cognição",
+          "defaultValue": 0,
+          "description": "Avaliação da memória/cognição do paciente (ex: teste do relógio ou impressão clínica).",
+          "options": [
+            {
+              "value": 0,
+              "label": "Normal",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Comprometimento Leve",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Comprometimento Moderado a Grave",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "estado_geral_saude",
+          "type": "select",
+          "label": "Estado Geral de Saúde",
+          "defaultValue": 0,
+          "description": "Número de internações hospitalares no último ano e autopercepção de saúde.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhuma Internação / Boa Autopercepção",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "1-2 Internações ou Percepção Regular",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "≥2 Internações e Percepção Ruim de Saúde",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "independencia_funcional",
+          "type": "select",
+          "label": "Independência Funcional",
+          "defaultValue": 0,
+          "description": "Necessidade de ajuda para atividades instrumentais de vida diária (compras, transporte, finanças, medicação).",
+          "options": [
+            {
+              "value": 0,
+              "label": "Independente em Todas as Atividades",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Dependente em 1-2 Atividades",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Dependente em 3 ou Mais Atividades",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "suporte_social",
+          "type": "select",
+          "label": "Suporte Social",
+          "defaultValue": 0,
+          "description": "Disponibilidade de apoio quando necessário.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Sempre Disponível Quando Necessário",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Às Vezes Disponível",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Nunca Disponível",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "uso_medicacoes",
+          "type": "select",
+          "label": "Uso de Medicações",
+          "defaultValue": 0,
+          "description": "Uso de 5 ou mais medicações regulares e/ou esquecimento de doses.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Nenhum dos Fatores Presentes",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Um dos Fatores Presente",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Ambos os Fatores Presentes",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "nutricao",
+          "type": "select",
+          "label": "Nutrição",
+          "defaultValue": 0,
+          "description": "Perda de peso não intencional recente.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Sem Perda de Peso",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Perda de Peso Não Intencional Recente",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "humor",
+          "type": "select",
+          "label": "Humor",
+          "defaultValue": 0,
+          "description": "Presença de sintomas sugestivos de tristeza persistente ou desânimo.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Sem Sintomas de Tristeza/Desânimo",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Sintomas Presentes",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "continencia",
+          "type": "select",
+          "label": "Continência",
+          "defaultValue": 0,
+          "description": "Presença de problemas com controle de urina/fezes.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Sem Problemas de Continência",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Problemas de Continência Presentes",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "desempenho_funcional",
+          "type": "select",
+          "label": "Desempenho Funcional (Timed Up and Go)",
+          "defaultValue": 0,
+          "description": "Desempenho no teste Timed Up and Go (levantar da cadeira, caminhar 3 metros, voltar e sentar).",
+          "options": [
+            {
+              "value": 0,
+              "label": "Normal",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Levemente Lentificado ou com Adaptações",
+              "score": 1
+            },
+            {
+              "value": 2,
+              "label": "Muito Lentificado / Necessita Ajuda",
+              "score": 2
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Escala de Fragilidade de Edmonton (EFS)",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 5,
+          "label": "Sem Fragilidade / Vigoroso",
+          "riskLevel": "none",
+          "color": "#2563eb",
+          "clinicalImplications": "Ausência de fragilidade, compatível com idoso vigoroso e independente.",
+          "recommendations": "• Manter acompanhamento geriátrico de rotina\n• Estimular atividade física e hábitos saudáveis\n• Reavaliar periodicamente"
+        },
+        {
+          "min": 6,
+          "max": 7,
+          "label": "Aparentemente Vulnerável",
+          "riskLevel": "low",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Idoso aparentemente vulnerável, sem fragilidade estabelecida, mas com fatores de atenção.",
+          "recommendations": "• Investigar e intervir sobre fatores de vulnerabilidade identificados\n• Reavaliar em intervalo mais curto\n• Considerar avaliação geriátrica ampla"
+        },
+        {
+          "min": 8,
+          "max": 9,
+          "label": "Fragilidade Leve",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Fragilidade leve, com maior risco de desfechos adversos (quedas, hospitalização, declínio funcional).",
+          "recommendations": "• Encaminhar para avaliação geriátrica ampla\n• Plano de cuidados individualizado, incluindo reabilitação e suporte social conforme necessidade\n• Revisão da polifarmácia"
+        },
+        {
+          "min": 10,
+          "max": 11,
+          "label": "Fragilidade Moderada",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Fragilidade moderada, com risco significativo de desfechos adversos e maior necessidade de suporte.",
+          "recommendations": "• Avaliação geriátrica ampla prioritária\n• Plano de cuidados multiprofissional intensivo\n• Envolver família/cuidadores no planejamento de cuidados"
+        },
+        {
+          "min": 12,
+          "max": 17,
+          "label": "Fragilidade Grave",
+          "riskLevel": "critical",
+          "color": "#7f1d1d",
+          "clinicalImplications": "Fragilidade grave, com alto risco de desfechos adversos, dependência funcional e mortalidade.",
+          "recommendations": "• Avaliação geriátrica ampla urgente e plano de cuidados intensivo\n• Discutir objetivos de cuidado com paciente e família\n• Suporte multiprofissional (enfermagem, fisioterapia, nutrição, serviço social) estruturado"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Síndrome do idoso frágil",
+          "definition": "Estado clínico dinâmico e não linear de instabilidade que aumenta o risco de declínio funcional e/ou de saúde física e/ou cognitiva, aumento da vulnerabilidade e diminuição da capacidade de recuperação após um evento estressante."
+        },
+        {
+          "diagnosis": "Risco de quedas",
+          "definition": "Suscetibilidade aumentada a quedas, que pode causar dano físico, relacionado ao comprometimento funcional e cognitivo identificado na avaliação de fragilidade."
+        },
+        {
+          "diagnosis": "Risco de nutrição desequilibrada: menos do que as necessidades corporais",
+          "definition": "Risco de ingestão de nutrientes insuficiente para suprir as necessidades metabólicas, relacionado à perda de peso não intencional identificada."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Status de fragilidade",
+          "indicators": [
+            "Escore de fragilidade avaliado e monitorado ao longo do tempo",
+            "Plano de cuidados individualizado implementado conforme grau de fragilidade",
+            "Suporte social e familiar adequado identificado ou providenciado"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Cuidados geriátricos",
+          "activities": [
+            "Aplicar a Escala de Fragilidade de Edmonton na avaliação geriátrica ampla",
+            "Encaminhar para avaliação multiprofissional conforme grau de fragilidade identificado",
+            "Revisar a polifarmácia e simplificar esquemas medicamentosos quando possível",
+            "Avaliar e fortalecer a rede de suporte social do idoso",
+            "Monitorar peso, humor e desempenho funcional periodicamente"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "A Escala de Fragilidade de Edmonton avalia 9 domínios — cognição, estado geral de saúde, independência funcional, suporte social, uso de medicações, nutrição, humor, continência e desempenho funcional — somando pontuações de 0 a 2 em cada domínio, para um escore total de 0 a 17 pontos.",
+      "history": "Desenvolvida por Rolfson e colaboradores na Universidade de Edmonton (Canadá), é uma das ferramentas de rastreamento de fragilidade mais utilizadas por sua abordagem multidimensional e aplicabilidade rápida em diferentes contextos clínicos.",
+      "validation": "Validada em diversos contextos clínicos e populações, incluindo avaliação pré-operatória, apresentando boa correlação com desfechos adversos como hospitalização, institucionalização e mortalidade.",
+      "limitations": "Alguns itens dependem de avaliação subjetiva (ex: percepção de saúde, humor) e da colaboração do paciente. A escala rastreia fragilidade, mas não substitui uma avaliação geriátrica ampla completa para o planejamento terapêutico definitivo.",
+      "references": [
+        {
+          "text": "ROLFSON, D. B. et al. Validity and reliability of the Edmonton Frail Scale. Age and Ageing, v. 35, n. 5, p. 526-529, 2006."
+        },
+        {
+          "text": "PERNA, S. et al. Performance of Edmonton Frail Scale on frailty assessment: its association with multi-dimensional geriatric conditions assessed with specific screening tools. BMC Geriatrics, v. 17, n. 1, p. 2, 2017."
+        },
+        {
+          "text": "SOCIEDADE BRASILEIRA DE GERIATRIA E GERONTOLOGIA. Diretrizes de avaliação da fragilidade em idosos. São Paulo: SBGG, 2019."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "A EFS avalia 9 domínios diferentes, oferecendo uma visão multidimensional da fragilidade, além dos aspectos puramente físicos.",
+        "O componente de desempenho funcional utiliza o teste Timed Up and Go, que pode ser cronometrado durante a própria avaliação.",
+        "Fragilidade não é sinônimo de dependência — idosos frágeis ainda podem ser independentes, mas com maior vulnerabilidade a eventos estressores.",
+        "Utilize o resultado para direcionar encaminhamentos: fragilidade leve a moderada geralmente se beneficia de avaliação geriátrica ampla e intervenções multiprofissionais."
+      ],
+      "examples": [
+        {
+          "label": "Idoso vigoroso",
+          "sublabel": "EFS 1",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "cognicao": 0,
+            "estado_geral_saude": 0,
+            "independencia_funcional": 0,
+            "suporte_social": 0,
+            "uso_medicacoes": 1,
+            "nutricao": 0,
+            "humor": 0,
+            "continencia": 0,
+            "desempenho_funcional": 0
+          }
+        },
+        {
+          "label": "Fragilidade leve",
+          "sublabel": "EFS 8",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "cognicao": 1,
+            "estado_geral_saude": 1,
+            "independencia_funcional": 1,
+            "suporte_social": 1,
+            "uso_medicacoes": 1,
+            "nutricao": 0,
+            "humor": 0,
+            "continencia": 2,
+            "desempenho_funcional": 1
+          }
+        },
+        {
+          "label": "Fragilidade grave",
+          "sublabel": "EFS 14",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "cognicao": 2,
+            "estado_geral_saude": 2,
+            "independencia_funcional": 2,
+            "suporte_social": 2,
+            "uso_medicacoes": 2,
+            "nutricao": 2,
+            "humor": 0,
+            "continencia": 0,
+            "desempenho_funcional": 2
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Quantos domínios compõem a Escala de Fragilidade de Edmonton?",
+          "opts": [
+            "5",
+            "7",
+            "9",
+            "12"
+          ],
+          "correct": 2,
+          "expl": "A EFS avalia 9 domínios: cognição, estado geral de saúde, independência funcional, suporte social, uso de medicações, nutrição, humor, continência e desempenho funcional."
+        },
+        {
+          "q": "Qual teste é utilizado para avaliar o domínio 'desempenho funcional' na EFS?",
+          "opts": [
+            "Índice de Barthel",
+            "Timed Up and Go",
+            "Mini Exame do Estado Mental",
+            "Escala de Katz"
+          ],
+          "correct": 1,
+          "expl": "O domínio de desempenho funcional utiliza o teste Timed Up and Go, cronometrando o tempo do paciente para levantar, caminhar e retornar sentado."
+        },
+        {
+          "q": "Fragilidade é sinônimo de dependência funcional total?",
+          "opts": [
+            "Sim, sempre",
+            "Não, um idoso frágil ainda pode ser independente, mas com maior vulnerabilidade",
+            "Só se aplica a idosos institucionalizados",
+            "É o mesmo que demência"
+          ],
+          "correct": 1,
+          "expl": "Fragilidade representa maior vulnerabilidade a eventos estressores e risco de declínio, mas não é sinônimo de dependência funcional total — muitos idosos frágeis ainda realizam atividades de forma independente."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "A Escala de Fragilidade de Edmonton substitui a avaliação geriátrica ampla?",
+        "a": "Não. É uma ferramenta de rastreamento rápido que ajuda a identificar idosos com maior risco, direcionando quais pacientes se beneficiariam de uma avaliação geriátrica ampla e mais detalhada."
+      },
+      {
+        "q": "Fragilidade é o mesmo que velhice avançada?",
+        "a": "Não. Fragilidade é uma síndrome clínica caracterizada por maior vulnerabilidade a eventos estressores, que pode ocorrer em diferentes idades avançadas e não está presente em todos os idosos, mesmo os muito idosos."
+      }
+    ],
+    "about": {
+      "title": "Como funciona a Escala de Fragilidade de Edmonton",
+      "html": "<p>A EFS soma pontuações (0 a 2) em 9 domínios: cognição, estado geral de saúde, independência funcional, suporte social, uso de medicações, nutrição, humor, continência e desempenho funcional (Timed Up and Go), totalizando de 0 a 17 pontos.</p><p><strong>Guia rápido:</strong> 0-5 = Sem fragilidade | 6-7 = Vulnerável | 8-9 = Fragilidade leve | 10-11 = Moderada | 12-17 = Grave.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Cognição"
+    ],
+    [
+      "field_label",
+      "Estado Geral de Saúde"
+    ],
+    [
+      "field_label",
+      "Independência Funcional"
+    ],
+    [
+      "field_label",
+      "Suporte Social"
+    ],
+    [
+      "field_label",
+      "Uso de Medicações"
+    ],
+    [
+      "field_label",
+      "Humor"
+    ],
+    [
+      "field_label",
+      "Desempenho Funcional (Timed Up and Go)"
+    ],
+    [
+      "field_desc",
+      "Avaliação da memória/cognição do paciente (ex: teste do relógio ou impressão clínica)."
+    ],
+    [
+      "field_desc",
+      "Número de internações hospitalares no último ano e autopercepção de saúde."
+    ],
+    [
+      "field_desc",
+      "Necessidade de ajuda para atividades instrumentais de vida diária (compras, transporte, finanças, medicação)."
+    ],
+    [
+      "field_desc",
+      "Disponibilidade de apoio quando necessário."
+    ],
+    [
+      "field_desc",
+      "Uso de 5 ou mais medicações regulares e/ou esquecimento de doses."
+    ],
+    [
+      "field_desc",
+      "Perda de peso não intencional recente."
+    ],
+    [
+      "field_desc",
+      "Presença de sintomas sugestivos de tristeza persistente ou desânimo."
+    ],
+    [
+      "field_desc",
+      "Presença de problemas com controle de urina/fezes."
+    ],
+    [
+      "field_desc",
+      "Desempenho no teste Timed Up and Go (levantar da cadeira, caminhar 3 metros, voltar e sentar)."
+    ],
+    [
+      "section_h2",
+      "Como funciona a Escala de Fragilidade de Edmonton"
+    ],
+    [
+      "card_h3",
+      "Cognição"
+    ],
+    [
+      "card_h3",
+      "Estado Geral de Saúde"
+    ],
+    [
+      "card_h3",
+      "Independência Funcional"
+    ],
+    [
+      "card_h3",
+      "Suporte Social"
+    ],
+    [
+      "card_h3",
+      "Uso de Medicações"
+    ],
+    [
+      "card_h3",
+      "Humor"
+    ],
+    [
+      "card_h3",
+      "Desempenho Funcional (Timed Up and Go)"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — Escala de Fragilidade de Edmonton"
+    ],
+    [
+      "card_h3",
+      "Escala de Fragilidade de Edmonton: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "A EFS avalia 9 domínios diferentes, oferecendo uma visão multidimensional da fragilidade, além dos aspectos puramente físicos."
+    ],
+    [
+      "tip_li",
+      "O componente de desempenho funcional utiliza o teste Timed Up and Go, que pode ser cronometrado durante a própria avaliação."
+    ],
+    [
+      "tip_li",
+      "Fragilidade não é sinônimo de dependência — idosos frágeis ainda podem ser independentes, mas com maior vulnerabilidade a eventos estressores."
+    ],
+    [
+      "tip_li",
+      "Utilize o resultado para direcionar encaminhamentos: fragilidade leve a moderada geralmente se beneficia de avaliação geriátrica ampla e intervenções multiprofissionais."
+    ],
+    [
+      "faq_question",
+      "A Escala de Fragilidade de Edmonton substitui a avaliação geriátrica ampla?"
+    ],
+    [
+      "faq_question",
+      "Fragilidade é o mesmo que velhice avançada?"
+    ]
+  ]
+}

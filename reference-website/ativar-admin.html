@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<!-- 1. Charset e Viewport -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<!-- 2. DNS e Preconnects -->
+<link href="//googleads.g.doubleclick.net" rel="dns-prefetch"/>
+<link href="//pagead2.googlesyndication.com" rel="dns-prefetch"/>
+<link href="https://www.googletagmanager.com" rel="preconnect"/>
+
+<!-- 3. Title e Metatags (SEO e Redes Sociais) -->
+<title>Painel Admin - Calculadoras de Enfermagem</title>
+
+<!-- 5. Preloads de Módulos HTML -->
+
+
+<!-- 6. CSS Adicional (Ícones e Fontes Extras) -->
+
+
+<!-- 8. SEO Internacional (Canonical e Hreflang) -->
+
+<!-- 11. Outros Scripts/Tags -->
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+font-family: Arial, sans-serif;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 100vh;
+background-color: #f0f2f5;
+margin: 0;
+text-align: center;
+}
+.card {
+background: white;
+padding: 2rem;
+border-radius: 12px;
+box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+max-width: 90%;
+width: 400px;
+}
+h1 { color: #333; margin-bottom: 20px; font-size: 1.5rem; }
+.status {
+padding: 10px;
+margin-bottom: 20px;
+border-radius: 6px;
+font-weight: bold;
+transition: all 0.3s ease;
+}
+/* Classes controladas pelo JS */
+.status.on { background-color: #d1fae5; color: #065f46; border: 1px solid #34d399; }
+.status.off { background-color: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+
+button {
+width: 100%;
+padding: 15px;
+margin: 5px 0;
+border: none;
+border-radius: 8px;
+font-size: 1rem;
+cursor: pointer;
+font-weight: bold;
+transition: opacity 0.2s;
+}
+button:active { opacity: 0.8; }
+.btn-ativar { background-color: #10b981; color: white; }
+.btn-desativar { background-color: #ef4444; color: white; }
+.footer { margin-top: 20px; font-size: 0.8rem; color: #666; }
+</style>
+<script src="/js/i18n-loader.js" defer></script>
+<meta property="og:title" content="Painel Admin - Calculadoras de Enfermagem"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Calculadoras de Enfermagem"/>
+<meta name="description" content="Painel Admin - Calculadoras de Enfermagem"/>
+<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/ativar-admin.html"/>
+<style>body{max-width:100%;overflow-x:hidden}img{max-width:100%;height:auto}table{display:block;overflow-x:auto}</style>
+<style>
+@media print {
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .rd-header, .rd-footer, .rd-topbar, .gh-hamburger, .gh-mobile-menu,
+  .skip-link, .tool-tags, .related-tools, .profile-tabs-bar,
+  .learning-track-grid, #newsletter-section, .newsletter-section,
+  .rd-header-actions, .adsbygoogle,  
+  #language-selector-placeholder, .accessibility-toolbar, .btn-primary,
+  .calc-actions, .ad-slot, .ad-banner, .newsletter-form-container { display: none !important; }
+  main { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  #resultado, #result { display: block !important; }
+  .hidden { display: block !important; }
+  a { color: #000 !important; text-decoration: none !important; }
+  body::before { content: "Calculadoras de Enfermagem\A www.calculadorasdeenfermagem.com.br"; white-space: pre; display: block; text-align: center; font-size: 9pt; color: #1a3e74; border-bottom: 2px solid #1a3e74; padding-bottom: 6px; margin-bottom: 12px; font-weight: 700; }
+}
+.btn-print { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 13px; font-weight: 600; color: #2563eb; cursor: pointer; transition: all .15s; }
+.btn-print:hover { background: #dbeafe; border-color: #60a5fa; }
+@media(max-width:768px){ .related-tools-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px;} .tool-tags{gap:6px;} }
+@media(max-width:640px){ .related-tools-grid{grid-template-columns:1fr !important;} .tool-tag{padding:3px 8px; font-size:10px;} }
+@media(max-width:480px){ .related-tools-grid{grid-template-columns:1fr !important;} }
+</style>
+<!-- Google Analytics + AdSense — Consent-based lazy load (from live site) -->
+<script>
+if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.location.search).get('admin')==='1'){console.log('<i class="fa-solid fa-triangle-exclamation"></i> Modo Admin: Bloqueado.');if(new URLSearchParams(window.location.search).get('admin')==='1'){localStorage.setItem('admin_mode','true');}}else{var savedConsent=localStorage.getItem("cookieConsent");var isRefused=(savedConsent==="refused");var isManaged=(savedConsent==="managed");var adsBlocked=isRefused||(isManaged&&localStorage.getItem("ad_storage")==="denied");window.__metricsLoaded=false;window.__adsenseLoaded=false;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;function loadAnalytics(){if(window.__metricsLoaded)return;window.__metricsLoaded=true;var aState=isRefused?"denied":(localStorage.getItem("analytics_storage")||"granted");var adState=adsBlocked?"denied":"granted";var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-PFM06B7TS5";document.head.appendChild(s);gtag("consent","default",{analytics_storage:aState,ad_storage:adState,ad_user_data:adState,ad_personalization:adState,wait_for_update:500});gtag("js",new Date());gtag("config","G-PFM06B7TS5");gtag("config","G-MJDKPDPJ26");gtag("config","G-M7DHHF38EJ");gtag("config","G-8FLJ59XXDK");gtag("config","G-VVDP5JGEX8");gtag("config","G-EX8");gtag("config","AW-952633102");gtag("config","AW-9277197961");console.log("<i class="fa-solid fa-chart-line"></i> Analytics carregado.");}function loadAdSenseOnce(){if(window.__adsenseLoaded||adsBlocked)return;window.__adsenseLoaded=true;var ad=document.createElement("script");ad.async=true;ad.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847";ad.crossOrigin="anonymous";document.head.appendChild(ad);console.log("<i class="fa-solid fa-money-bill-wave"></i> AdSense carregado.");}function onUserInteraction(){loadAnalytics();loadAdSenseOnce();window.removeEventListener("scroll",onUserInteraction);window.removeEventListener("mousemove",onUserInteraction);window.removeEventListener("touchstart",onUserInteraction);window.removeEventListener("keydown",onUserInteraction);}if(!adsBlocked){window.addEventListener("scroll",onUserInteraction,{passive:true});window.addEventListener("mousemove",onUserInteraction,{passive:true});window.addEventListener("touchstart",onUserInteraction,{passive:true});window.addEventListener("keydown",onUserInteraction,{passive:true});setTimeout(onUserInteraction,4000);}function applyConsent(consent){gtag("consent","update",consent);if(consent.ad_storage==="granted"){adsBlocked=false;onUserInteraction();}else{adsBlocked=true;document.querySelectorAll("ins.adsbygoogle, .google-auto-placed").forEach(function(ad){ad.style.display="none";ad.innerHTML="";});}localStorage.setItem("analytics_storage",consent.analytics_storage);localStorage.setItem("ad_storage",consent.ad_storage);}window.acceptAllCookies=function(){localStorage.setItem("cookieConsent","accepted");applyConsent({analytics_storage:"granted",ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted"});};window.rejectAllCookies=function(){localStorage.setItem("cookieConsent","refused");applyConsent({analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"});};}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MedicalWebPage","name":"Ativar Admin","url":"https://www.calculadorasdeenfermagem.com.br/ativar-admin.html","inLanguage":"pt-BR","isPartOf":{"@type":"WebSite","name":"Calculadoras de Enfermagem","url":"https://www.calculadorasdeenfermagem.com.br"},"about":{"@type":"MedicalCondition","name":"Enfermagem"}}
+</script>
+<link rel="stylesheet" href="css/print-template.css">
+<link rel="stylesheet" href="/css/site-styles.css"/>
+</head>
+<body role="main">
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="icon-brain" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3 3 3 0 0 0-3 3 3 3 0 0 0-1 5.87V18a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3v-4.13A3 3 0 0 0 14 10a3 3 0 0 0-2-5.87z"/></symbol>
+<symbol id="icon-stethoscope" viewBox="0 0 24 24"><path d="M6 2v6a4 4 0 0 0 8 0V2"/><path d="M6 8v4a6 6 0 0 0 12 0V8"/><circle cx="20" cy="14" r="2"/></symbol>
+<symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></symbol>
+<symbol id="icon-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5H6.5A2.5 2.5 0 0 0 4 19.5z"/></symbol>
+<symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></symbol>
+<symbol id="icon-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="icon-print" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+</svg>
+
+
+<a href="#main-content" class="skip-link sr-only" data-i18n="skipToContent">Pular para o conteúdo principal</a>
+<div class="card">
+<h1>Painel de Controle </h1>
+<p>Status atual do Modo Admin:</p>
+
+<div id="status-display" class="status off">Verificando...</div>
+
+<button onclick="ativarAdmin()" class="btn-ativar">ATIVAR MODO ADMIN (Bloquear Ads)</button>
+<button onclick="desativarAdmin()" class="btn-desativar">DESATIVAR (Voltar ao normal)</button>
+
+<div class="footer">
+<p>Ative isso em todos os seus dispositivos (PC e Celular) para não gerar tráfego inválido no AdSense.</p>
+<a href="/" style="color:#2563eb; text-decoration: none;">Ir para a Home</a>
+</div>
+</div>
+
+<script>
+// 1. Função que roda ao carregar a página para mostrar o status real
+function verificarStatus() {
+const statusDiv = document.getElementById('status-display');
+// Verifica se existe o item no LocalStorage
+const isAdmin = localStorage.getItem('admin_mode') === 'true';
+
+if (isAdmin) {
+statusDiv.innerText = "ATIVADO (Você está invisível)";
+statusDiv.className = "status on";
+} else {
+statusDiv.innerText = "DESATIVADO (Rastreamento Normal)";
+statusDiv.className = "status off";
+}
+}
+
+// 2. Função para o botão ATIVAR
+function ativarAdmin() {
+localStorage.setItem('admin_mode', 'true');
+verificarStatus(); // Atualiza a cor na hora
+alert("Modo Admin ATIVADO!\n\nAgora o Analytics e Adsense não carregarão para você neste navegador.");
+}
+
+// 3. Função para o botão DESATIVAR
+function desativarAdmin() {
+localStorage.removeItem('admin_mode');
+verificarStatus(); // Atualiza a cor na hora
+alert("Modo Admin DESATIVADO!\n\nVocê voltou a ser um usuário comum.");
+}
+
+// Roda a verificação assim que a página abre
+window.onload = verificarStatus;
+</script>
+
+<div id="site-footer"></div>
+<div id="site-cookie"></div>
+    <section class="cip-section">
+      
+      
+      <div id="cipContainer" class="cip-hidden"></div>
+    </section>
+    <section class="cog-section-wrapper">
+      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
+        <div class="cognitive-panel-header">
+          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
+          <span class="cognitive-badge">Motor Clínico</span>
+        </div>
+        <div id="cognitivePanelContent"></div>
+      </div>
+    </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+setTimeout(() => {
+fetch("/footer.html")
+.then(response => response.text())
+.then((data) => {
+document.getElementById("footer-placeholder").innerHTML = data;
+carregarTraducoes('pt', 'footer.json');
+carregarTraducoes('pt', 'cookies.json');
+});
+}, 150);
+});
+</script>
+<script src="/js/partials-loader.js" defer></script>
+  <script src="js/calc-engine-v2.js"></script>
+  <script src="js/nurse-palm.js"></script>
+  <script src="js/cognitive-ui.js"></script>
+  <script src="js/knowledge-graph.js"></script>
+
+
+
+<div class="tool-footer-zone">
+  <div class="tool-tags"></div>
+  <div class="related-tools"></div>
+</div>
+
+<!-- ═══ Print Template (Relatório de Resultado) ═══ -->
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro / Prontuário</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col">
+        <h4>Metas de Segurança do Paciente</h4>
+        <ul>
+          <li>M1 Identificar o paciente corretamente</li>
+          <li>M2 Melhorar a comunicação efetiva</li>
+          <li>M3 Segurança na prescrição e administração</li>
+          <li>M5 Higiene das mãos</li>
+          <li>M6 Reduzir o risco de quedas</li>
+        </ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>9 Certos da Medicação</h4>
+        <ul>
+          <li>Paciente certo</li><li>Medicamento certo</li>
+          <li>Via certa</li><li>Hora certa</li>
+          <li>Dose certa</li><li>Registro certo</li>
+          <li>Ação certa</li><li>Forma certa</li>
+          <li>Resposta certa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Populate print template from page data
+function populatePrintTemplate() {
+  var toolName = document.querySelector('.tool-header h1, .tool-header h2, .tool-title');
+  if (toolName) document.getElementById('printToolName').textContent = toolName.textContent.trim();
+  
+  var toolCat = document.querySelector('.tool-header .subtitle, .tool-category');
+  if (toolCat) document.getElementById('printToolCategory').textContent = toolCat.textContent.trim();
+  
+  // Date
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  var dateEl = document.getElementById('printDate');
+  if (dateEl) dateEl.textContent = dateStr;
+  
+  // Patient data from localStorage
+  try {
+    var ctx = JSON.parse(localStorage.getItem('patientContext') || '{}');
+    if (ctx.name) document.getElementById('printPatientName').textContent = ctx.name;
+    if (ctx.reg) document.getElementById('printPatientReg').textContent = ctx.reg;
+    if (ctx.age) document.getElementById('printPatientAge').textContent = ctx.age;
+    if (ctx.bed) document.getElementById('printPatientBed').textContent = ctx.bed;
+  } catch(e) {}
+  
+  // Parameters from calc inputs
+  var paramsList = document.getElementById('printParamsList');
+  if (paramsList) {
+    var inputs = document.querySelectorAll('.calc-card input, .calc-card select, .calc-grid input, .calc-grid select');
+    inputs.forEach(function(inp) {
+      if (inp.value && inp.value !== '') {
+        var label = inp.getAttribute('aria-label') || inp.getAttribute('placeholder') || inp.name || 'Parâmetro';
+        var li = document.createElement('li');
+        li.innerHTML = '<span class="param-label">' + label + '</span><span class="param-value">' + inp.value + '</span>';
+        paramsList.appendChild(li);
+      }
+    });
+  }
+  
+  // Score/classification from result
+  var scoreEl = document.querySelector('.result-box .score, .result-value, .calc-result .score');
+  if (scoreEl) document.getElementById('printScore').textContent = scoreEl.textContent.trim();
+  
+  var classEl = document.querySelector('.result-box .classification, .result-label, .calc-result .label');
+  if (classEl) document.getElementById('printClassification').textContent = classEl.textContent.trim();
+  
+  var interpEl = document.querySelector('.result-box .interpretation, .result-text, .calc-result .interpretation');
+  if (interpEl) document.getElementById('printInterpretation').textContent = interpEl.textContent.trim();
+  
+  // Reference
+  var refEl = document.querySelector('.evidence-section .reference, .reference-text, .citation');
+  if (refEl) document.getElementById('printReference').textContent = refEl.textContent.trim();
+}
+
+// Show print area when printing
+window.addEventListener('beforeprint', function() {
+  var pt = document.getElementById('printTemplate');
+  if (pt) {
+    pt.style.display = 'block';
+    populatePrintTemplate();
+  }
+});
+
+window.addEventListener('afterprint', function() {
+  var pt = document.getElementById('printTemplate');
+  if (pt) pt.style.display = 'none';
+});
+</script>
+
+</body>
+</html>

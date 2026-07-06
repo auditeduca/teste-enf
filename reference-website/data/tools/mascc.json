@@ -1,0 +1,122 @@
+{
+  "id": "62738495-0617-4850-5162-738495061728",
+  "code": "SCALE-MASCC-001",
+  "slug": "mascc",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "MASCC Score - Risco de Complicações em Neutropenia Febril",
+    "description": "Calcule o MASCC Score para estimar o risco de complicações em pacientes oncológicos com neutropenia febril. Inclui interpretação, SAE e evidências.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/mascc.html"
+  },
+  "breadcrumb": { "category": "Oncologia e Cuidados Paliativos", "categoryHref": "index.html#calculadoras" },
+  "overview": {
+    "name": "MASCC Score",
+    "acronym": "MASCC",
+    "categoryBadge": "Oncologia e cuidados paliativos",
+    "icon": "i-clipboard",
+    "objective": "Estimar o risco de complicações graves em pacientes oncológicos com neutropenia febril, orientando a decisão entre tratamento ambulatorial (via oral) ou internação com antibioticoterapia endovenosa.",
+    "indication": "Indicada para pacientes oncológicos com febre e neutropenia (contagem de neutrófilos abaixo de 500-1000/mm³), no momento do diagnóstico do episódio febril.",
+    "targetPopulation": "Pacientes adultos em tratamento oncológico que desenvolvem neutropenia febril.",
+    "specialty": ["Oncologia", "Emergência", "Enfermagem"],
+    "averageTime": "2-3 minutos",
+    "evidenceLevel": "I",
+    "organizations": ["Multinational Association for Supportive Care in Cancer (MASCC)"],
+    "complexity": "advanced",
+    "rating": 4.5,
+    "ratingCount": 150
+  },
+  "calculator": {
+    "inputs": [
+      {"id": "carga_doenca", "type": "select", "label": "Carga da Doença (Gravidade dos Sintomas)", "description": "Intensidade geral dos sintomas relacionados à neutropenia febril, excluindo pacientes moribundos.", "defaultValue": 5,
+       "options": [
+         {"value": 5, "label": "Sintomas Ausentes ou Leves", "score": 5},
+         {"value": 3, "label": "Sintomas Moderados", "score": 3},
+         {"value": 0, "label": "Sintomas Graves", "score": 0}
+       ]
+      },
+      {"id": "hipotensao", "type": "select", "label": "Ausência de Hipotensão", "description": "Pressão arterial sistólica maior que 90 mmHg, sem necessidade de vasopressores.", "defaultValue": 5,
+       "options": [{"value": 0, "label": "Não (Hipotenso)", "score": 0}, {"value": 5, "label": "Sim (Sem Hipotensão)", "score": 5}]},
+      {"id": "dpoc", "type": "select", "label": "Ausência de DPOC", "description": "Ausência de Doença Pulmonar Obstrutiva Crônica ativa.", "defaultValue": 4,
+       "options": [{"value": 0, "label": "Não (Presença de DPOC Ativa)", "score": 0}, {"value": 4, "label": "Sim (Sem DPOC)", "score": 4}]},
+      {"id": "tipo_tumor", "type": "select", "label": "Tipo de Tumor / Infecção Fúngica Prévia", "description": "Tumor sólido, ou neoplasia hematológica sem infecção fúngica invasiva prévia.", "defaultValue": 4,
+       "options": [{"value": 0, "label": "Não (Infecção Fúngica Prévia)", "score": 0}, {"value": 4, "label": "Sim (Tumor Sólido ou sem Infecção Fúngica Prévia)", "score": 4}]},
+      {"id": "desidratacao", "type": "select", "label": "Ausência de Desidratação", "description": "Ausência de desidratação que necessite de reposição de fluidos por via parenteral.", "defaultValue": 3,
+       "options": [{"value": 0, "label": "Não (Desidratado)", "score": 0}, {"value": 3, "label": "Sim (Sem Desidratação)", "score": 3}]},
+      {"id": "status_inicio_febre", "type": "select", "label": "Status no Início da Febre", "description": "Condição do paciente no momento em que a febre se iniciou.", "defaultValue": 3,
+       "options": [{"value": 0, "label": "Paciente Hospitalizado no Início da Febre", "score": 0}, {"value": 3, "label": "Paciente Ambulatorial no Início da Febre", "score": 3}]},
+      {"id": "idade", "type": "select", "label": "Idade Menor que 60 Anos", "description": "Idade do paciente inferior a 60 anos (não aplicável a pacientes pediátricos).", "defaultValue": 2,
+       "options": [{"value": 0, "label": "Não (60 Anos ou Mais)", "score": 0}, {"value": 2, "label": "Sim (Menos de 60 Anos)", "score": 2}]}
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "MASCC Score",
+      "resultUnit": "pontos",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {"min": 21, "max": 26, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb",
+       "clinicalImplications": "Baixo risco de complicações graves. Pacientes com escore igual ou superior a 21 podem ser candidatos a tratamento ambulatorial com antibioticoterapia oral, conforme avaliação médica individualizada.",
+       "recommendations": "• Considerar tratamento ambulatorial com antibiótico oral, conforme protocolo institucional e avaliação médica\n• Garantir acesso rápido a reavaliação em caso de piora\n• Orientar sinais de alarme para retorno imediato"},
+      {"min": 0, "max": 20, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626",
+       "clinicalImplications": "Alto risco de complicações graves em neutropenia febril. Escore abaixo de 21 geralmente indica necessidade de internação hospitalar e antibioticoterapia endovenosa.",
+       "recommendations": "• Internação hospitalar\n• Iniciar antibioticoterapia endovenosa de amplo espectro em caráter de urgência, conforme protocolo institucional\n• Monitorização rigorosa de sinais vitais e de sepse"}
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos, significativamente elevada pela neutropenia."},
+      {"diagnosis": "Risco de choque", "definition": "Risco de fluxo sanguíneo inadequado aos tecidos corporais, que pode levar à disfunção celular potencialmente fatal (sepse neutropênica)."},
+      {"diagnosis": "Hipertermia", "definition": "Temperatura corporal central acima da faixa normal diurna, devido a falha da termorregulação."}
+    ],
+    "noc": [
+      {"outcome": "Controle de risco: neutropenia febril", "indicators": ["Início precoce da antibioticoterapia", "Sinais vitais monitorizados de forma contínua", "Ausência de sinais de sepse/choque séptico"]}
+    ],
+    "nic": [
+      {"intervention": "Controle de infecção: neutropenia febril", "activities": ["Calcular o MASCC Score imediatamente na avaliação do episódio febril", "Coletar hemoculturas antes do início da antibioticoterapia", "Administrar antibiótico de amplo espectro dentro de 1 hora, conforme protocolo institucional (porta-antibiótico)", "Monitorar sinais vitais continuamente", "Orientar medidas de proteção contra infecção (higiene das mãos, restrição de visitas com sintomas infecciosos)"]}
+    ]
+  },
+  "evidence": {
+    "foundation": "O MASCC Score foi desenvolvido pela Multinational Association for Supportive Care in Cancer, combinando 7 fatores clínicos para estimar o risco de complicações graves em pacientes com neutropenia febril, permitindo identificar pacientes de baixo risco potencialmente elegíveis para tratamento ambulatorial.",
+    "history": "Amplamente incorporado em diretrizes internacionais de manejo da neutropenia febril, contribuindo para reduzir internações desnecessárias em pacientes de baixo risco, mantendo a segurança do tratamento.",
+    "validation": "Validado extensivamente na literatura oncológica, com boa capacidade preditiva de complicações graves, sendo referência nas principais diretrizes de sociedades de oncologia e doenças infecciosas.",
+    "limitations": "A decisão final sobre tratamento ambulatorial deve sempre considerar também fatores logísticos e sociais (acesso a reavaliação rápida, suporte familiar, distância do serviço de saúde), além do escore numérico.",
+    "references": [
+      {"text": "KLASTERSKY, J. et al. The Multinational Association for Supportive Care in Cancer risk index: a multinational scoring system for identifying low-risk febrile neutropenic cancer patients. Journal of Clinical Oncology, v. 18, n. 16, p. 3038-3051, 2000."},
+      {"text": "FREIFELD, A. G. et al. Clinical Practice Guideline for the Use of Antimicrobial Agents in Neutropenic Patients with Cancer. Clinical Infectious Diseases, v. 52, n. 4, p. e56-e93, 2011."},
+      {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}
+    ]
+  },
+  "learning": {
+    "tips": [
+      "A antibioticoterapia deve ser iniciada rapidamente (idealmente dentro de 1 hora) em todo paciente com neutropenia febril, independentemente do escore, enquanto se aguarda a decisão sobre local de tratamento.",
+      "O MASCC Score usa lógica inversa: quanto maior a pontuação, menor o risco (diferente da maioria dos outros escores clínicos).",
+      "A decisão por tratamento ambulatorial deve considerar também critérios logísticos e sociais, não apenas o escore numérico.",
+      "Reavalie o paciente clinicamente de forma frequente, mesmo se classificado como baixo risco inicialmente."
+    ],
+    "examples": [
+      {"label": "Baixo risco", "sublabel": "MASCC 24", "emoji": "✅",
+       "values": {"carga_doenca": 5, "hipotensao": 5, "dpoc": 4, "tipo_tumor": 4, "desidratacao": 3, "status_inicio_febre": 3, "idade": 0}},
+      {"label": "Alto risco", "sublabel": "MASCC 12", "emoji": "🚨",
+       "values": {"carga_doenca": 3, "hipotensao": 0, "dpoc": 4, "tipo_tumor": 4, "desidratacao": 0, "status_inicio_febre": 0, "idade": 0}}
+    ],
+    "quiz": [
+      {"q": "No MASCC Score, uma pontuação mais alta indica o quê?", "opts": ["Maior risco de complicações", "Menor risco de complicações", "Não tem relação com risco", "Necessidade obrigatória de internação"], "correct": 1,
+       "expl": "Diferente da maioria dos escores clínicos, no MASCC uma pontuação mais alta indica MENOR risco de complicações graves."},
+      {"q": "A partir de qual pontuação o MASCC Score indica baixo risco?", "opts": ["10 pontos ou mais", "15 pontos ou mais", "21 pontos ou mais", "26 pontos apenas"], "correct": 2,
+       "expl": "Escores de 21 pontos ou mais (de um máximo de 26) indicam baixo risco, podendo o paciente ser considerado para tratamento ambulatorial conforme avaliação médica."},
+      {"q": "O MASCC Score substitui o início rápido da antibioticoterapia?", "opts": ["Sim, deve-se aguardar o cálculo antes de tratar", "Não, a antibioticoterapia deve ser iniciada rapidamente independentemente do escore", "Apenas em pacientes de alto risco", "O MASCC Score não tem relação com antibióticos"], "correct": 1,
+       "expl": "A antibioticoterapia de amplo espectro deve ser iniciada rapidamente em todo paciente com neutropenia febril, e o MASCC Score orienta a decisão sobre via de administração e local de tratamento, não o início do tratamento em si."}
+    ]
+  },
+  "faq": [
+    {"q": "Todo paciente de baixo risco pelo MASCC pode ser tratado em casa?", "a": "Não necessariamente de forma automática. A decisão deve considerar também critérios logísticos e sociais, como acesso a reavaliação rápida, suporte familiar e distância do serviço de saúde, além do escore numérico."},
+    {"q": "O MASCC Score é usado antes ou depois do início do antibiótico?", "a": "O MASCC Score é calculado no momento do diagnóstico da neutropenia febril, mas isso não deve atrasar o início da antibioticoterapia de amplo espectro, que deve ser iniciada o mais rapidamente possível."}
+  ],
+  "about": {
+    "title": "Como funciona o MASCC Score",
+    "html": "<p>O MASCC Score soma pontos ponderados de 7 fatores clínicos — carga da doença, ausência de hipotensão, ausência de DPOC, tipo de tumor, ausência de desidratação, status no início da febre e idade —, totalizando de 0 a 26 pontos. Diferente da maioria dos escores, uma pontuação mais alta indica MENOR risco.</p><p><strong>Guia rápido:</strong> ≥21 = Baixo risco (considerar tratamento ambulatorial) | menos de 21 = Alto risco (internação com antibioticoterapia endovenosa).</p>"
+  }
+}

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ======================================================================
+     TEMPLATE V2 — FLUXO VERTICAL INTEGRADO
+     Calculadoras de Enfermagem — Processo Clínico + Educação
+     ======================================================================
+     Inspirado no IVFlow Care: fluxo vertical contínuo, não tabs.
+     Cada calculadora = 11 etapas (6 clínicas + 5 educacionais).
+     
+     ETAPAS:
+     1. Dados do Paciente (teal)
+     2. Parâmetros Clínicos + Cálculo (blue)
+     3. Raciocínio NANDA/NIC/NOC (purple) — automático após cálculo
+     4. Plano de Ação — Checklist (green)
+     5. Avaliação NOC (indigo)
+     6. Segurança do Paciente — 9 Direitos + IPSG (orange)
+     --- DIVISOR: EDUCAÇÃO CONTINUADA ---
+     7. Quiz Interativo (purple)
+     8. Simulado / Cenário Prático (orange)
+     9. Caso Clínico Real (green)
+     10. Artigos & Evidência GRADE (blue)
+     11. Slides / Material de Estudo (indigo)
+     ====================================================================== -->
+
+<title>Calculadora de Gotejamento de Soro (IV) | Calculadoras de Enfermagem</title>
+<meta name="description" content="Calcule o gotejamento de solucoes intravenosas com raciocinio clinico NANDA/NIC/NOC integrado, checklist de seguranca, quiz, simulados e casos clinicos.">
+<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/calculadora-gotejamento.html" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="css/site-styles.css">
+
+
+<style>
+@media print {
+  body * { visibility: hidden; }
+  .tool-header, .tool-header *, .calc-card, .calc-card *, .result-box, .result-box *,
+  .cip-section, .cip-section *, .cog-section-wrapper, .cog-section-wrapper * { visibility: visible; }
+  .tool-header { position: absolute; left: 0; top: 0; width: 100%; }
+  .no-print, .no-print * { display: none !important; }
+  .profile-tabs-bar, .tool-footer-zone, #site-header, #site-footer, #site-cookie { display: none !important; }
+}
+.btn-print { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #60a5fa; border-radius: 6px; background: #eff6ff; font-size: 13px; font-weight: 600; color: #2563eb; cursor: pointer; transition: all .15s; }
+.btn-print:hover { background: #dbeafe; border-color: #60a5fa; }
+</style>
+
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVDP5JGEX8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-VVDP5JGEX8");
+</script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847" crossorigin="anonymous"></script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MedicalWebPage","name":"Calculadora Template V2","url":"https://www.calculadorasdeenfermagem.com.br/calculadora-template-v2.html","inLanguage":"pt-BR","isPartOf":{"@type":"WebSite","name":"Calculadoras de Enfermagem","url":"https://www.calculadorasdeenfermagem.com.br"},"about":{"@type":"MedicalCondition","name":"Enfermagem"}}
+</script>
+<link rel="stylesheet" href="css/print-template.css">
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="icon-brain" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3 3 3 0 0 0-3 3 3 3 0 0 0-1 5.87V18a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3v-4.13A3 3 0 0 0 14 10a3 3 0 0 0-2-5.87z"/></symbol>
+<symbol id="icon-stethoscope" viewBox="0 0 24 24"><path d="M6 2v6a4 4 0 0 0 8 0V2"/><path d="M6 8v4a6 6 0 0 0 12 0V8"/><circle cx="20" cy="14" r="2"/></symbol>
+<symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/></symbol>
+<symbol id="icon-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5H6.5A2.5 2.5 0 0 0 4 19.5z"/></symbol>
+<symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></symbol>
+<symbol id="icon-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="icon-print" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+</svg>
+
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+
+
+<div id="site-header"></div>
+<div id="site-a11y"></div>
+
+
+<div class="profile-tabs-bar" role="tablist" aria-label="Perfil de visualização">
+  <button class="profile-tab active" data-profile="standard" role="tab">Padrão</button>
+  <button class="profile-tab" data-profile="urgency" role="tab">Urgência</button>
+  <button class="profile-tab" data-profile="manager" role="tab">Gestor</button>
+  <button class="profile-tab" data-profile="student" role="tab">Estudante</button>
+  <button class="profile-tab" data-profile="academic" role="tab">Acadêmico</button>
+</div>
+
+<main class="vf-flow" id="vf-flow">
+
+  <div class="vf-flow-header">
+    <h1>Processo de Enfermagem Clinica</h1>
+    <p class="vf-subtitle">Calculadora de Gotejamento IV - Decisao Clinica NANDA/NIC/NOC - Raciocinio Cognitivo Integrado</p>
+    <div class="vf-tag-row">
+      <span class="vf-tag"><i class="fas fa-clock"></i> Calculo em tempo real</span>
+      <span class="vf-tag"><i class="fas fa-brain"></i> Nurse-PaLM V9</span>
+      <span class="vf-tag"><i class="fas fa-graduation-cap"></i> 11 etapas integradas</span>
+      <span class="vf-tag"><i class="fas fa-shield-alt"></i> Seguranca IPSG</span>
+    </div>
+  </div>
+
+  <!-- ETAPA 1: DADOS DO PACIENTE -->
+  <div class="vf-step" data-step="1">
+    <div class="vf-step-header">
+      <div class="vf-step-badge teal">1</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Identificacao e Dados do Paciente</div>
+        <div class="vf-step-subtitle">Anamnese - coleta de dados subjetivos e objetivos</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-user-injured"></i></div>
+    </div>
+    <div class="vf-step-body">
+      <div class="vf-field-row">
+        <div class="vf-field">
+          <label class="vf-field-label">Nome Completo</label>
+          <input class="vf-field-input" type="text" placeholder="Nome do paciente" data-patient="name">
+        </div>
+        <div class="vf-field" style="max-width:120px;">
+          <label class="vf-field-label">Leito</label>
+          <input class="vf-field-input" type="text" placeholder="Ex: 204B" data-patient="bed">
+        </div>
+      </div>
+      <div class="vf-field-row">
+        <div class="vf-field">
+          <label class="vf-field-label">Diagnostico Medico</label>
+          <input class="vf-field-input" type="text" placeholder="CID ou descricao" data-patient="diagnosis">
+        </div>
+        <div class="vf-field" style="max-width:100px;">
+          <label class="vf-field-label">Idade</label>
+          <input class="vf-field-input" type="number" placeholder="Anos" data-patient="age">
+        </div>
+        <div class="vf-field" style="max-width:120px;">
+          <label class="vf-field-label">Sexo</label>
+          <select class="vf-field-select" data-patient="sex">
+            <option value="F">Feminino</option>
+            <option value="M">Masculino</option>
+          </select>
+        </div>
+      </div>
+      <div class="vf-field">
+        <label class="vf-field-label">Queixa Principal</label>
+        <textarea class="vf-field-textarea" placeholder="Descreva a queixa principal..." data-patient="complaint"></textarea>
+      </div>
+      <div class="vf-field">
+        <label class="vf-field-label">Comorbidades / Historico</label>
+        <textarea class="vf-field-textarea" placeholder="HAS, DM, cardiopatia..." data-patient="comorbidities"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="vf-divider"><i class="fas fa-arrow-down"></i> AVALIACAO CLINICA</div>
+
+  <!-- ETAPA 2: PARAMETROS + CALCULO -->
+  <div class="vf-step" data-step="2">
+    <div class="vf-step-header">
+      <div class="vf-step-badge blue">2</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Parametros Clinicos e Calculo de Gotejamento</div>
+        <div class="vf-step-subtitle">Prescricao de terapia intravenosa - calculo em tempo real</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-droplet"></i></div>
+    </div>
+    <div class="vf-step-body">
+      <div class="vf-field-row">
+        <div class="vf-field">
+          <label class="vf-field-label">Volume (mL)</label>
+          <input class="vf-field-input" type="number" id="vf-volume" placeholder="Ex: 1000" value="1000">
+        </div>
+        <div class="vf-field">
+          <label class="vf-field-label">Tempo (horas)</label>
+          <input class="vf-field-input" type="number" id="vf-time" placeholder="Ex: 6" value="6" step="0.5">
+        </div>
+        <div class="vf-field">
+          <label class="vf-field-label">Fator do Equipo</label>
+          <select class="vf-field-select" id="vf-factor">
+            <option value="20">20 gotas/mL (Macro)</option>
+            <option value="15">15 gotas/mL (Macro)</option>
+            <option value="10">10 gotas/mL (Pediatrico)</option>
+            <option value="60">60 gotas/mL (Micro)</option>
+          </select>
+        </div>
+      </div>
+      <div class="vf-btn-row vf-end">
+        <button class="vf-btn vf-btn-primary" id="vf-calc-btn">
+          <i class="fas fa-calculator"></i> Gotejamento Calculado
+        </button>
+      </div>
+      <div class="vf-result-box" id="vf-result" style="display:none;">
+        <div class="vf-result-label">Gotejamento</div>
+        <div class="vf-result-value" id="vf-result-value">--</div>
+        <div class="vf-result-unit" id="vf-result-unit">gotas/min</div>
+        <div class="vf-result-detail" id="vf-result-detail"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vf-divider"><i class="fas fa-brain"></i> RACIOCINIO CLINICO AUTOMATICO</div>
+
+  <!-- ETAPA 3: NANDA/NIC/NOC -->
+  <div class="vf-step" data-step="3" id="vf-step-nanda" style="display:none;">
+    <div class="vf-step-header">
+      <div class="vf-step-badge purple">3</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Raciocinio Clinico - NANDA/NIC/NOC</div>
+        <div class="vf-step-subtitle">Diagnosticos, intervencoes e resultados gerados pelo Nurse-PaLM</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-brain"></i></div>
+    </div>
+    <div class="vf-step-body" id="vf-nanda-body"></div>
+  </div>
+
+  <div class="vf-divider"><i class="fas fa-clipboard-check"></i> PLANO DE ACAO</div>
+
+  <!-- ETAPA 4: PLANO DE ACAO -->
+  <div class="vf-step" data-step="4" id="vf-step-plan" style="display:none;">
+    <div class="vf-step-header">
+      <div class="vf-step-badge green">4</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Plano de Acao - Checklist de Implementacao</div>
+        <div class="vf-step-subtitle">Intervencoes de enfermagem priorizadas e acionaveis</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-list-check"></i></div>
+    </div>
+    <div class="vf-step-body">
+      <ul class="vf-checklist" id="vf-checklist"></ul>
+    </div>
+  </div>
+
+  <div class="vf-divider"><i class="fas fa-chart-line"></i> AVALIACAO DE RESULTADOS</div>
+
+  <!-- ETAPA 5: AVALIACAO NOC -->
+  <div class="vf-step" data-step="5" id="vf-step-noc" style="display:none;">
+    <div class="vf-step-header">
+      <div class="vf-step-badge indigo">5</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Avaliacao NOC - Monitoramento e Resultados</div>
+        <div class="vf-step-subtitle">Indicadores de resultado esperados e escala de avaliacao</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-chart-line"></i></div>
+    </div>
+    <div class="vf-step-body" id="vf-noc-body"></div>
+  </div>
+
+  <div class="vf-divider"><i class="fas fa-shield-alt"></i> SEGURANCA DO PACIENTE</div>
+
+  <!-- ETAPA 6: SEGURANCA -->
+  <div class="vf-step" data-step="6" id="vf-step-safety" style="display:none;">
+    <div class="vf-step-header">
+      <div class="vf-step-badge orange">6</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Seguranca do Paciente - 9 Direitos & Metas IPSG</div>
+        <div class="vf-step-subtitle">Verificacoes obrigatorias antes, durante e apos a administracao</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-shield-halved"></i></div>
+    </div>
+    <div class="vf-step-body">
+      <div class="vf-safety-grid" id="vf-safety-grid"></div>
+    </div>
+  </div>
+
+  <!-- DIVISOR EDUCACAO -->
+  <div class="vf-divider" style="margin-top: 32px;">
+    <i class="fas fa-graduation-cap"></i> EDUCACAO CONTINUADA
+  </div>
+
+  <!-- ETAPA 7: QUIZ -->
+  <div class="vf-step" data-step="7">
+    <div class="vf-step-header">
+      <div class="vf-step-badge purple">7</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Quiz Interativo</div>
+        <div class="vf-step-subtitle">Teste seu conhecimento sobre gotejamento IV</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-question-circle"></i></div>
+    </div>
+    <div class="vf-step-body" id="vf-quiz-container"></div>
+  </div>
+
+  <!-- ETAPA 8: SIMULADO -->
+  <div class="vf-step" data-step="8">
+    <div class="vf-step-header">
+      <div class="vf-step-badge orange">8</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Simulado - Cenarios Praticos</div>
+        <div class="vf-step-subtitle">Casos com parametros reais para treinar o raciocinio</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-flask"></i></div>
+    </div>
+    <div class="vf-step-body" id="vf-sim-container"></div>
+  </div>
+
+  <!-- ETAPA 9: CASO CLINICO -->
+  <div class="vf-step" data-step="9">
+    <div class="vf-step-header">
+      <div class="vf-step-badge green">9</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Caso Clinico Real</div>
+        <div class="vf-step-subtitle">Aplicacao pratica em cenario hospitalar</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-file-medical"></i></div>
+    </div>
+    <div class="vf-step-body" id="vf-case-container"></div>
+  </div>
+
+  <!-- ETAPA 10: ARTIGOS -->
+  <div class="vf-step" data-step="10">
+    <div class="vf-step-header">
+      <div class="vf-step-badge blue">10</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Artigos & Evidencia Cientifica</div>
+        <div class="vf-step-subtitle">Fontes primarias classificadas pelo sistema GRADE</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-book-medical"></i></div>
+    </div>
+    <div class="vf-step-body" id="vf-articles-container"></div>
+  </div>
+
+  <!-- ETAPA 11: SLIDES -->
+  <div class="vf-step" data-step="11">
+    <div class="vf-step-header">
+      <div class="vf-step-badge indigo">11</div>
+      <div class="vf-step-title-wrap">
+        <div class="vf-step-title">Slides - Material de Estudo</div>
+        <div class="vf-step-subtitle">Apresentacoes para aulas, treinamentos e revisoes</div>
+      </div>
+      <div class="vf-step-icon"><i class="fas fa-chalkboard-user"></i></div>
+    </div>
+    <div class="vf-step-body" id="vf-slides-container"></div>
+  </div>
+
+
+    <!-- ═══ Clinical Intelligence Package ═══ -->
+    <section class="cip-section">
+      
+      
+      <div id="cipContainer" class="cip-hidden"></div>
+    </section>
+
+    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
+    <section class="cog-section-wrapper">
+      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
+        <div class="cognitive-panel-header">
+          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
+          <span class="cognitive-badge">Motor Clínico</span>
+        </div>
+        <div id="cognitivePanelContent"></div>
+      </div>
+    </section>
+
+
+<div class="tool-footer-zone">
+  <div class="tool-tags"></div>
+  <div class="related-tools"></div>
+</div>
+
+</main>
+
+<div id="site-footer"></div>
+<div id="site-cookie"></div>
+
+<script src="js/partials-loader.js"></script>
+<script src="js/i18n-loader.js"></script>
+<script>
+/* ======================================================================
+   VERTICAL FLOW ENGINE v2.0
+   Calculo + Raciocinio NANDA/NIC/NOC + Educacao integrada
+   ====================================================================== */
+
+const VF_STATE = {
+  volume: 1000, time: 6, factor: 20, result: null,
+  patient: {}, quizScore: 0, quizAnswered: 0
+};
+
+// ===== CALCULO =====
+function calculateDrip() {
+  const vol = parseFloat(document.getElementById('vf-volume').value) || 0;
+  const time = parseFloat(document.getElementById('vf-time').value) || 0;
+  const factor = parseFloat(document.getElementById('vf-factor').value) || 20;
+  if (vol <= 0 || time <= 0) { alert('Preencha volume e tempo com valores validos.'); return; }
+  const dropsPerMin = Math.round((vol * factor) / (time * 60));
+  const mLPerHour = Math.round(vol / time);
+  VF_STATE.result = dropsPerMin;
+  
+  const box = document.getElementById('vf-result');
+  box.style.display = 'block';
+  document.getElementById('vf-result-value').textContent = dropsPerMin;
+  document.getElementById('vf-result-unit').textContent = factor === 60 ? 'microgotas/min' : 'gotas/min';
+  document.getElementById('vf-result-detail').innerHTML = '<strong>' + vol + ' mL</strong> em <strong>' + time + 'h</strong> - Equipo ' + factor + ' gts/mL - Fluxo: <strong>' + mLPerHour + ' mL/h</strong>';
+  
+  triggerClinicalReasoning(dropsPerMin, mLPerHour, vol, time);
+}
+
+// ===== RACIOCINIO CLINICO =====
+function triggerClinicalReasoning(dropsPerMin, mLPerHour, vol, time) {
+  document.getElementById('vf-step-nanda').style.display = 'block';
+  document.getElementById('vf-step-plan').style.display = 'block';
+  document.getElementById('vf-step-noc').style.display = 'block';
+  document.getElementById('vf-step-safety').style.display = 'block';
+  
+  const isRapid = dropsPerMin > 120;
+  const isLargeVolume = vol > 2000;
+  let alerts = '';
+  if (isRapid) alerts += '<p style="color:#b42318;margin-top:6px;"><i class="fas fa-triangle-exclamation"></i> <strong>Alerta:</strong> Gotejamento elevado (>120 gts/min) - risco de sobrecarga volemica.</p>';
+  if (isLargeVolume) alerts += '<p style="color:#d97706;margin-top:6px;"><i class="fas fa-triangle-exclamation"></i> <strong>Atencao:</strong> Volume elevado (>2000 mL) - monitorar balanco hidrico.</p>';
+  
+  document.getElementById('vf-nanda-body').innerHTML = 
+    '<div class="vf-clinical-card nanda"><div class="vf-clinical-card-header"><span class="vf-clinical-tag nanda">NANDA-I</span><span class="vf-clinical-card-title">Risco de Volume de Liquidos Instavel (00225)</span></div><div class="vf-clinical-card-body"><p><strong>Fatores de risco:</strong> Infusao intravenosa em andamento, hipovolemia potencial, desequilibrio entre entrada e saida.</p>' + alerts + '</div></div>' +
+    '<div class="vf-clinical-card nic"><div class="vf-clinical-card-header"><span class="vf-clinical-tag nic">NIC</span><span class="vf-clinical-card-title">Gerenciamento da Terapia Intravenosa (2440)</span></div><div class="vf-clinical-card-body"><p>Intervencoes prioritarias:</p><ul><li>Verificar o local de insercao a cada 2 horas</li><li>Controlar a velocidade de infusao (' + dropsPerMin + ' gts/min)</li><li>Monitorar sinais vitais e balanco hidrico a cada turno</li><li>Observar sinais de sobrecarga: dispneia, edema, crepitacoes</li><li>Higiene das maos e tecnica asséptica</li></ul></div></div>' +
+    '<div class="vf-clinical-card nic"><div class="vf-clinical-card-header"><span class="vf-clinical-tag nic">NIC</span><span class="vf-clinical-card-title">Monitorizacao dos Sinais Vitais (6680)</span></div><div class="vf-clinical-card-body"><p>Monitorar PA, FC, FR, SpO2 e temperatura. Registrar diurese e balanco hidrico.</p></div></div>';
+  
+  // Checklist
+  const checklist = [
+    'Confirmar identificacao do paciente (nome + leito + pulseira)',
+    'Conferir prescricao medica: volume, solucao, tempo de infusao',
+    'Verificar viabilidade do acesso venoso (puntura intacta, sem sinais flogisticos)',
+    'Lavar as maos e preparar material (equipo, gaze, alcool 70%, etiqueta)',
+    'Preencher etiqueta de identificacao do soro (solucao, volume, horario, gotejamento)',
+    'Puncionar acesso ou conectar equipo com tecnica aseptica',
+    'Ajustar gotejamento conforme calculo (' + dropsPerMin + ' gts/min)',
+    'Orientar paciente sobre a terapia e sinais de alarme',
+    'Registrar no prontuario: solucao, volume, gotejamento e horario de inicio',
+    'Reavaliar gotejamento a cada turno e anotar intercorrencias'
+  ];
+  document.getElementById('vf-checklist').innerHTML = checklist.map((item, i) => 
+    '<li data-idx="' + i + '"><span class="vf-check"></span><span class="vf-check-text">' + item + '</span></li>'
+  ).join('');
+  document.querySelectorAll('#vf-checklist li').forEach(li => {
+    li.addEventListener('click', () => li.classList.toggle('done'));
+  });
+  
+  // NOC
+  document.getElementById('vf-noc-body').innerHTML = 
+    '<div class="vf-clinical-card noc"><div class="vf-clinical-card-header"><span class="vf-clinical-tag noc">NOC</span><span class="vf-clinical-card-title">Equilibrio Hidrico (0601)</span></div><div class="vf-clinical-card-body"><p>Indicadores:</p><ul><li>Pressao arterial dentro dos limites normais</li><li>Pulso regular e dentro dos limites normais</li><li>Entrada e saida equilibradas (I&O)</li><li>Densidade urinaria dentro dos limites normais</li><li>Sem edema periferico / pulmonar</li></ul><p style="margin-top:8px;"><strong>Escala:</strong> 1=Comprometido severamente - 5=Nao comprometido</p></div></div>' +
+    '<div class="vf-clinical-card noc"><div class="vf-clinical-card-header"><span class="vf-clinical-tag noc">NOC</span><span class="vf-clinical-card-title">Estado do Local de Insercao IV (0421)</span></div><div class="vf-clinical-card-body"><p>Indicadores: pele intacta, sem dor, sem edema, sem eritema, sem infiltracao.</p></div></div>';
+  
+  // Safety
+  const rights = ['Medicamento Certo','Paciente Certo','Dose Certa','Via Certa','Horario Certo','Registro Certo','Orientacao Certa','Validade Certa','Resposta Certa'];
+  document.getElementById('vf-safety-grid').innerHTML = rights.map((r, i) => 
+    '<div class="vf-safety-item"><span class="vf-safety-num">' + (i+1) + '</span><span>' + r + '</span></div>'
+  ).join('');
+}
+
+// ===== QUIZ =====
+const QUIZ_DATA = [
+  { q: "Qual a formula correta para calculo de gotejamento em gotas/min?", options: ["Volume x Fator / (Tempo x 60)","Volume / (Tempo x Fator)","Volume x Tempo / Fator","Fator x Tempo / Volume"], correct: 0, explanation: "Gotejamento = (Volume x Fator do equipo) / (Tempo em horas x 60). O x 60 converte horas para minutos." },
+  { q: "Um equipo macrogotas tem qual fator?", options: ["10 gotas/mL","15 ou 20 gotas/mL","60 gotas/mL","30 gotas/mL"], correct: 1, explanation: "Equipos macrogotas geralmente tem fator 15 ou 20 gotas/mL. Microgotas tem 60 gotas/mL." },
+  { q: "Para infundir 500 mL em 4h com equipo 20 gts/mL, qual o gotejamento?", options: ["~21 gotas/min","~42 gotas/min","~62 gotas/min","~100 gotas/min"], correct: 1, explanation: "(500 x 20) / (4 x 60) = 10000 / 240 = 42 gotas/min." },
+  { q: "Qual sinal indica sobrecarga volemica durante infusao IV?", options: ["Hipotensao e bradicardia","Dispneia, edema periferico e crepitacoes pulmonares","Febre e calafrios","Dor no local da puncao apenas"], correct: 1, explanation: "Sobrecarga volemica: dispneia, edema periferico, crepitacoes pulmonares, hipertensao e taquicardia." },
+  { q: "Qual NANDA-I esta mais associado ao risco de terapia IV?", options: ["Dor aguda (00132)","Risco de volume de liquidos instavel (00225)","Ansiedade (00146)","Risco de infeccao (00004)"], correct: 1, explanation: "Risco de volume de liquidos instavel (00225) e o diagnostico mais relacionado a terapia IV." }
+];
+
+function renderQuiz() {
+  const c = document.getElementById('vf-quiz-container');
+  c.innerHTML = QUIZ_DATA.map((item, i) => 
+    '<div class="vf-quiz-question" data-quiz="' + i + '"><div class="vf-quiz-q-header"><span class="vf-quiz-q-num">' + (i+1) + '</span><span class="vf-quiz-q-text">' + item.q + '</span></div><div class="vf-quiz-options">' + item.options.map((opt, j) => 
+    '<div class="vf-quiz-option" data-q="' + i + '" data-opt="' + j + '"><span class="vf-quiz-letter">' + String.fromCharCode(65+j) + '</span><span>' + opt + '</span></div>'
+    ).join('') + '</div><div class="vf-quiz-feedback" data-feedback="' + i + '"></div></div>'
+  ).join('') + '<div class="vf-quiz-score" id="vf-quiz-score" style="display:none;"><span class="vf-quiz-score-label">Sua pontuacao</span><span class="vf-quiz-score-value" id="vf-quiz-score-value">0/0</span></div>';
+  
+  c.querySelectorAll('.vf-quiz-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      const qIdx = parseInt(this.dataset.q), optIdx = parseInt(this.dataset.opt);
+      const question = this.closest('.vf-quiz-question');
+      const feedback = question.querySelector('.vf-quiz-feedback');
+      question.querySelectorAll('.vf-quiz-option').forEach(o => o.style.pointerEvents = 'none');
+      this.classList.add('selected');
+      if (optIdx === QUIZ_DATA[qIdx].correct) {
+        this.classList.add('correct');
+        feedback.className = 'vf-quiz-feedback show correct';
+        feedback.innerHTML = '<i class="fas fa-check-circle"></i> <strong>Correto!</strong> ' + QUIZ_DATA[qIdx].explanation;
+        VF_STATE.quizScore++;
+      } else {
+        this.classList.add('wrong');
+        question.querySelectorAll('.vf-quiz-option')[QUIZ_DATA[qIdx].correct].classList.add('correct');
+        feedback.className = 'vf-quiz-feedback show wrong';
+        feedback.innerHTML = '<i class="fas fa-times-circle"></i> <strong>Incorreto.</strong> ' + QUIZ_DATA[qIdx].explanation;
+      }
+      VF_STATE.quizAnswered++;
+      const sEl = document.getElementById('vf-quiz-score');
+      const sVal = document.getElementById('vf-quiz-score-value');
+      if (VF_STATE.quizAnswered > 0) { sEl.style.display = 'flex'; sVal.textContent = VF_STATE.quizScore + '/' + QUIZ_DATA.length; }
+    });
+  });
+}
+
+// ===== SIMULADO =====
+const SIM_DATA = [
+  { title: "Paciente idoso com desidratacao", params: { volume: 1500, time: 8, factor: 20 }, body: "Paciente de 78 anos, internado com desidratacao moderada. Prescricao: SF 0,9% 1500 mL em 8 horas, equipo macrogotas.", answer: "Gotejamento = (1500 x 20) / (8 x 60) = 30000 / 480 = <strong>63 gotas/min</strong>. Fluxo: 187,5 mL/h. Atencao: paciente idoso - monitorar sobrecarga." },
+  { title: "Reanimacao volemica em pronto-socorro", params: { volume: 500, time: 0.5, factor: 20 }, body: "Paciente trauma, hipotenso. Medico solicita bolus de RL 500 mL em 30 minutos.", answer: "Gotejamento = (500 x 20) / (0,5 x 60) = 10000 / 30 = <strong>333 gotas/min</strong>. Atencao: gotejamento elevado - usar bomba de infusao." },
+  { title: "Paciente pediatrico - microgotas", params: { volume: 250, time: 4, factor: 60 }, body: "Crianca de 4 anos, pos-operatorio. Prescricao: SG 5% 250 mL em 4 horas, equipo microgotas.", answer: "Gotejamento = (250 x 60) / (4 x 60) = 15000 / 240 = <strong>63 microgotas/min</strong>. Equipo microgotas: 63 microgotas = 3,1 mL/min." }
+];
+
+function renderSimulado() {
+  document.getElementById('vf-sim-container').innerHTML = SIM_DATA.map((sim, i) => 
+    '<div class="vf-sim-scenario"><div class="vf-sim-scenario-header"><span class="vf-sim-badge"><i class="fas fa-flask"></i> Cenario ' + (i+1) + '</span><span class="vf-sim-title">' + sim.title + '</span></div><div class="vf-sim-body">' + sim.body + '</div><div class="vf-sim-params"><div class="vf-sim-param"><div class="vf-sim-param-label">Volume</div><div class="vf-sim-param-value">' + sim.params.volume + ' mL</div></div><div class="vf-sim-param"><div class="vf-sim-param-label">Tempo</div><div class="vf-sim-param-value">' + sim.params.time + 'h</div></div><div class="vf-sim-param"><div class="vf-sim-param-label">Fator</div><div class="vf-sim-param-value">' + sim.params.factor + ' gts</div></div></div><div class="vf-btn-row"><button class="vf-btn vf-btn-secondary" onclick="toggleSimAnswer(' + i + ')"><i class="fas fa-lightbulb"></i> Ver resolucao</button></div><div class="vf-sim-answer" id="vf-sim-answer-' + i + '">' + sim.answer + '</div></div>'
+  ).join('');
+}
+
+function toggleSimAnswer(idx) { document.getElementById('vf-sim-answer-' + idx).classList.toggle('show'); }
+
+// ===== CASO CLINICO =====
+function renderCase() {
+  const sections = [
+    { label: "Historia Clinica", text: "Paciente feminina, 65 anos, hipertensa e diabetica tipo 2. Submetida a colectomia parcial. D1: SF 0,9% 1000 mL + KCl 10mEq em 6h, equipo 20 gts/mL." },
+    { label: "Evolucao", text: "Apos 3h, apenas 400 mL infundidos. Gotejamento em 33 gts/min (abaixo do esperado: 55 gts/min). Paciente refere dor no local da puncao." },
+    { label: "Conduta de Enfermagem", text: "1. Reajustar gotejamento para 55 gts/min. 2. Avaliar local de puncao - investigar infiltracao. 3. Se infiltrado, recomunicar acesso. 4. Notificar medico sobre atraso. 5. Monitorar kaliemia. 6. Registrar intercorrencia." },
+    { label: "Licoes Aprendidas", text: "O gotejamento deve ser conferido a cada turno. Diferencas podem ocorrer por obstrucao parcial, posicao do membro, dobra do equipo ou infiltracao." }
+  ];
+  document.getElementById('vf-case-container').innerHTML = '<div class="vf-case"><div class="vf-case-header"><span class="vf-case-tag"><i class="fas fa-file-medical"></i> Caso Real</span><span class="vf-case-title">Sra. M.A.S., 65 anos - Pos-operatorio de cirurgia abdominal</span></div><div class="vf-case-body">' + sections.map(s => '<div class="vf-case-section"><div class="vf-case-section-label">' + s.label + '</div><div class="vf-case-section-text">' + s.text + '</div></div>').join('') + '</div></div>';
+}
+
+// ===== ARTIGOS =====
+function renderArticles() {
+  const articles = [
+    { title: "Infusion therapy standards of practice", source: "INS", year: "2024", grade: "high", gradeLabel: "GRADE: High" },
+    { title: "Manual de Infusao Intravenosa", source: "ANVISA", year: "2023", grade: "moderate", gradeLabel: "GRADE: Moderate" },
+    { title: "Prevention of peripheral IV catheter complications", source: "Cochrane", year: "2023", grade: "high", gradeLabel: "GRADE: High" },
+    { title: "Calculo de gotejamento: revisao sistematica", source: "Rev Bras Enferm", year: "2022", grade: "moderate", gradeLabel: "GRADE: Moderate" },
+    { title: "Medication errors in IV therapy", source: "BMJ Qual Saf", year: "2023", grade: "high", gradeLabel: "GRADE: High" }
+  ];
+  document.getElementById('vf-articles-container').innerHTML = articles.map(a => 
+    '<a href="#" class="vf-article" onclick="return false;"><div class="vf-article-icon"><i class="fas fa-file-lines"></i></div><div class="vf-article-content"><div class="vf-article-title">' + a.title + '</div><div class="vf-article-meta"><span>' + a.source + ' - ' + a.year + '</span><span class="vf-article-grade ' + a.grade + '">' + a.gradeLabel + '</span></div></div></a>'
+  ).join('');
+}
+
+// ===== SLIDES =====
+function renderSlides() {
+  const slides = [
+    { num: 1, title: "Introducao a Terapia IV", desc: "Conceitos e indicacoes", icon: "fa-play", grad: "linear-gradient(135deg,#4f46e5,#7c3aed)" },
+    { num: 2, title: "Calculo de Gotejamento", desc: "Formula e pratico", icon: "fa-calculator", grad: "linear-gradient(135deg,#008080,#059669)" },
+    { num: 3, title: "Tipos de Equipo", desc: "Macro vs Microgotas", icon: "fa-droplet", grad: "linear-gradient(135deg,#3344cc,#4f46e5)" },
+    { num: 4, title: "Complicacoes e Prevencao", desc: "Infiltracao, flebite", icon: "fa-triangle-exclamation", grad: "linear-gradient(135deg,#d97706,#dc2626)" },
+    { num: 5, title: "Seguranca na Administracao", desc: "9 Direitos e IPSG", icon: "fa-shield-halved", grad: "linear-gradient(135deg,#059669,#008080)" },
+    { num: 6, title: "Casos Clinicos", desc: "Aplicacao pratica", icon: "fa-file-medical", grad: "linear-gradient(135deg,#7c3aed,#4f46e5)" },
+    { num: 7, title: "NANDA/NIC/NOC em IV", desc: "Raciocinio integrado", icon: "fa-brain", grad: "linear-gradient(135deg,#4f46e5,#3344cc)" },
+    { num: 8, title: "Avaliacao e Monitoramento", desc: "Indicadores NOC", icon: "fa-chart-line", grad: "linear-gradient(135deg,#059669,#7c3aed)" }
+  ];
+  document.getElementById('vf-slides-container').innerHTML = '<div class="vf-slides-grid">' + slides.map(s => 
+    '<div class="vf-slide-card"><div class="vf-slide-thumb" style="background:' + s.grad + ';"><span class="vf-slide-num">' + s.num + '</span><i class="fas ' + s.icon + '"></i></div><div class="vf-slide-info"><div class="vf-slide-title">' + s.title + '</div><div class="vf-slide-desc">' + s.desc + '</div></div></div>'
+  ).join('') + '</div>';
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('vf-calc-btn').addEventListener('click', calculateDrip);
+  ['vf-volume','vf-time','vf-factor'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function() {
+      if (document.getElementById('vf-result').style.display === 'block') calculateDrip();
+    });
+  });
+  renderQuiz(); renderSimulado(); renderCase(); renderArticles(); renderSlides();
+  document.querySelectorAll('[data-patient]').forEach(el => {
+    el.addEventListener('change', function() { VF_STATE.patient[this.dataset.patient] = this.value; });
+  });
+});
+</script>
+  <script src="js/calc-engine-v2.js"></script>
+  <script src="js/nurse-palm.js"></script>
+  <script src="js/cognitive-ui.js"></script>
+  <script src="js/knowledge-graph.js"></script>
+
+
+
+
+<!-- ═══ Print Template (Relatório de Resultado) ═══ -->
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro / Prontuário</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col">
+        <h4>Metas de Segurança do Paciente</h4>
+        <ul>
+          <li>M1 Identificar o paciente corretamente</li>
+          <li>M2 Melhorar a comunicação efetiva</li>
+          <li>M3 Segurança na prescrição e administração</li>
+          <li>M5 Higiene das mãos</li>
+          <li>M6 Reduzir o risco de quedas</li>
+        </ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>9 Certos da Medicação</h4>
+        <ul>
+          <li>Paciente certo</li><li>Medicamento certo</li>
+          <li>Via certa</li><li>Hora certa</li>
+          <li>Dose certa</li><li>Registro certo</li>
+          <li>Ação certa</li><li>Forma certa</li>
+          <li>Resposta certa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Populate print template from page data
+function populatePrintTemplate() {
+  var toolName = document.querySelector('.tool-header h1, .tool-header h2, .tool-title');
+  if (toolName) document.getElementById('printToolName').textContent = toolName.textContent.trim();
+  
+  var toolCat = document.querySelector('.tool-header .subtitle, .tool-category');
+  if (toolCat) document.getElementById('printToolCategory').textContent = toolCat.textContent.trim();
+  
+  // Date
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  var dateEl = document.getElementById('printDate');
+  if (dateEl) dateEl.textContent = dateStr;
+  
+  // Patient data from localStorage
+  try {
+    var ctx = JSON.parse(localStorage.getItem('patientContext') || '{}');
+    if (ctx.name) document.getElementById('printPatientName').textContent = ctx.name;
+    if (ctx.reg) document.getElementById('printPatientReg').textContent = ctx.reg;
+    if (ctx.age) document.getElementById('printPatientAge').textContent = ctx.age;
+    if (ctx.bed) document.getElementById('printPatientBed').textContent = ctx.bed;
+  } catch(e) {}
+  
+  // Parameters from calc inputs
+  var paramsList = document.getElementById('printParamsList');
+  if (paramsList) {
+    var inputs = document.querySelectorAll('.calc-card input, .calc-card select, .calc-grid input, .calc-grid select');
+    inputs.forEach(function(inp) {
+      if (inp.value && inp.value !== '') {
+        var label = inp.getAttribute('aria-label') || inp.getAttribute('placeholder') || inp.name || 'Parâmetro';
+        var li = document.createElement('li');
+        li.innerHTML = '<span class="param-label">' + label + '</span><span class="param-value">' + inp.value + '</span>';
+        paramsList.appendChild(li);
+      }
+    });
+  }
+  
+  // Score/classification from result
+  var scoreEl = document.querySelector('.result-box .score, .result-value, .calc-result .score');
+  if (scoreEl) document.getElementById('printScore').textContent = scoreEl.textContent.trim();
+  
+  var classEl = document.querySelector('.result-box .classification, .result-label, .calc-result .label');
+  if (classEl) document.getElementById('printClassification').textContent = classEl.textContent.trim();
+  
+  var interpEl = document.querySelector('.result-box .interpretation, .result-text, .calc-result .interpretation');
+  if (interpEl) document.getElementById('printInterpretation').textContent = interpEl.textContent.trim();
+  
+  // Reference
+  var refEl = document.querySelector('.evidence-section .reference, .reference-text, .citation');
+  if (refEl) document.getElementById('printReference').textContent = refEl.textContent.trim();
+}
+
+// Show print area when printing
+window.addEventListener('beforeprint', function() {
+  var pt = document.getElementById('printTemplate');
+  if (pt) {
+    pt.style.display = 'block';
+    populatePrintTemplate();
+  }
+});
+
+window.addEventListener('afterprint', function() {
+  var pt = document.getElementById('printTemplate');
+  if (pt) pt.style.display = 'none';
+});
+</script>
+
+</body>
+</html>

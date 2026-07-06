@@ -1,0 +1,320 @@
+{
+  "seo": {
+    "title": "IMC Gestacional - Avaliação Nutricional na Gravidez | Calculadoras de Enfermagem",
+    "description": "Calcule o Índice de Massa Corporal (IMC) na gestação e obtenha orientações sobre classificação nutricional e ganho de peso recomendado. Inclui interpretação e evidências.",
+    "h1": "IMC Gestacional",
+    "subtitle": "Calcular o Índice de Massa Corporal (IMC) da gestante e orientar sobre a classificação do estado nutricional, auxiliando no acompanhamento pré-natal e na definição de metas de ganho de peso gestacional."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "94051627-3840-5162-7394-940516273840",
+    "code": "CALC-IMCGESTACIONAL-001",
+    "slug": "imc-gestacional",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "IMC Gestacional - Avaliação Nutricional na Gravidez",
+      "description": "Calcule o Índice de Massa Corporal (IMC) na gestação e obtenha orientações sobre classificação nutricional e ganho de peso recomendado. Inclui interpretação e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/imc-gestacional.html"
+    },
+    "breadcrumb": {
+      "category": "Obstetrícia",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "IMC Gestacional",
+      "acronym": "IMC Gestacional",
+      "categoryBadge": "Obstetrícia",
+      "icon": "i-heart-pulse",
+      "objective": "Calcular o Índice de Massa Corporal (IMC) da gestante e orientar sobre a classificação do estado nutricional, auxiliando no acompanhamento pré-natal e na definição de metas de ganho de peso gestacional.",
+      "indication": "Indicada no acompanhamento pré-natal, para avaliação e monitoramento do estado nutricional da gestante ao longo da gravidez.",
+      "targetPopulation": "Gestantes em acompanhamento pré-natal.",
+      "specialty": [
+        "Obstetrícia",
+        "Enfermagem",
+        "Nutrição"
+      ],
+      "averageTime": "menos de 1 minuto",
+      "evidenceLevel": "III",
+      "organizations": [
+        "Ministério da Saúde",
+        "Institute of Medicine (IOM)"
+      ],
+      "complexity": "basic",
+      "rating": 4.6,
+      "ratingCount": 340
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "peso",
+          "type": "number",
+          "label": "Peso Atual",
+          "unit": "kg",
+          "defaultValue": 65,
+          "min": 30,
+          "max": 200,
+          "step": 0.1,
+          "description": "Peso atual da gestante, em quilogramas."
+        },
+        {
+          "id": "altura",
+          "type": "number",
+          "label": "Altura",
+          "unit": "m",
+          "defaultValue": 1.65,
+          "min": 1.2,
+          "max": 2.2,
+          "step": 0.01,
+          "description": "Altura da gestante, em metros."
+        }
+      ],
+      "formula": {
+        "type": "expression",
+        "expression": "peso/(altura*altura)",
+        "resultLabel": "Índice de Massa Corporal (IMC)",
+        "resultUnit": "kg/m²",
+        "decimals": 1
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 18.4,
+          "label": "Baixo Peso",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Baixo peso, associado a maior risco de recém-nascido pequeno para a idade gestacional e ganho de peso gestacional recomendado mais elevado.",
+          "recommendations": "• Encaminhar para avaliação e acompanhamento nutricional\n• Meta de ganho de peso gestacional total recomendada geralmente entre 12,5 e 18 kg (conforme diretrizes vigentes)\n• Monitorar crescimento fetal e ganho de peso ao longo do pré-natal"
+        },
+        {
+          "min": 18.5,
+          "max": 24.9,
+          "label": "Peso Adequado",
+          "riskLevel": "none",
+          "color": "#2563eb",
+          "clinicalImplications": "Estado nutricional adequado no início da gestação, associado a menor risco de complicações relacionadas ao peso.",
+          "recommendations": "• Manter alimentação equilibrada e acompanhamento pré-natal de rotina\n• Meta de ganho de peso gestacional total recomendada geralmente entre 11,5 e 16 kg\n• Monitorar ganho de peso a cada consulta"
+        },
+        {
+          "min": 25,
+          "max": 29.9,
+          "label": "Sobrepeso",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Sobrepeso, associado a maior risco de diabetes gestacional, hipertensão gestacional e macrossomia fetal.",
+          "recommendations": "• Encaminhar para avaliação e acompanhamento nutricional\n• Meta de ganho de peso gestacional total recomendada geralmente entre 7 e 11,5 kg\n• Monitorar glicemia e pressão arterial conforme protocolo de pré-natal"
+        },
+        {
+          "min": 30,
+          "max": 70,
+          "label": "Obesidade",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Obesidade, associada a maior risco de diabetes gestacional, hipertensão gestacional, pré-eclâmpsia, macrossomia fetal e complicações no parto.",
+          "recommendations": "• Encaminhar para acompanhamento nutricional e pré-natal de alto risco conforme avaliação\n• Meta de ganho de peso gestacional total recomendada geralmente entre 5 e 9 kg\n• Monitorização rigorosa de glicemia, pressão arterial e crescimento fetal"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Nutrição desequilibrada: menos do que as necessidades corporais",
+          "definition": "Ingestão de nutrientes insuficiente para suprir as necessidades metabólicas, relacionada ao baixo peso gestacional."
+        },
+        {
+          "diagnosis": "Risco de nutrição desequilibrada: mais do que as necessidades corporais",
+          "definition": "Risco de ingestão de nutrientes que excede as necessidades metabólicas, relacionado ao sobrepeso/obesidade gestacional."
+        },
+        {
+          "diagnosis": "Disposição para nutrição melhorada",
+          "definition": "Padrão de ingestão de nutrientes suficiente para suprir as necessidades metabólicas, que pode ser fortalecido, aplicável a gestantes com peso adequado buscando manutenção saudável."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Estado nutricional",
+          "indicators": [
+            "IMC gestacional monitorado ao longo do pré-natal",
+            "Ganho de peso gestacional dentro da meta recomendada para a classificação nutricional",
+            "Ausência de complicações relacionadas ao estado nutricional"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Aconselhamento nutricional",
+          "activities": [
+            "Calcular e monitorar o IMC gestacional a cada consulta de pré-natal",
+            "Orientar sobre a meta de ganho de peso gestacional conforme classificação nutricional",
+            "Encaminhar para acompanhamento nutricional especializado quando indicado",
+            "Monitorar sinais de complicações associadas ao estado nutricional (diabetes gestacional, hipertensão)",
+            "Orientar sobre alimentação equilibrada e atividade física compatível com a gestação"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "O IMC gestacional é calculado da mesma forma que o IMC convencional (peso em kg dividido pela altura em metros ao quadrado), sendo utilizado no início da gestação para classificar o estado nutricional pré-gestacional e orientar as metas de ganho de peso ao longo da gravidez.",
+      "history": "As recomendações de ganho de peso gestacional por categoria de IMC pré-gestacional foram estabelecidas por instituições como o Institute of Medicine (IOM), sendo adotadas e adaptadas por diretrizes de pré-natal, incluindo as do Ministério da Saúde do Brasil.",
+      "validation": "A classificação por IMC e as metas de ganho de peso associadas são amplamente adotadas em protocolos de pré-natal, embora o acompanhamento mais preciso ao longo da gestação utilize curvas específicas (como a curva de Atalah), que consideram o IMC em função da idade gestacional, não apenas o valor isolado.",
+      "limitations": "Esta calculadora aplica a fórmula padrão de IMC (peso/altura²), útil principalmente como avaliação inicial. Para o acompanhamento da adequação do ganho de peso ao longo da gestação, recomenda-se o uso de curvas específicas de IMC por idade gestacional (curva de Atalah), adotadas pelo Ministério da Saúde, que não estão incorporadas nesta calculadora simplificada.",
+      "references": [
+        {
+          "text": "INSTITUTE OF MEDICINE. Weight Gain During Pregnancy: Reexamining the Guidelines. Washington, DC: National Academies Press, 2009."
+        },
+        {
+          "text": "BRASIL. Ministério da Saúde. Atenção ao pré-natal de baixo risco. Brasília: Ministério da Saúde, 2012."
+        },
+        {
+          "text": "ATALAH, E. et al. Propuesta de un nuevo estándar de evaluación nutricional en embarazadas. Revista Médica de Chile, v. 125, n. 12, p. 1429-1436, 1997."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "O IMC gestacional utiliza a mesma fórmula do IMC convencional: peso (kg) dividido pela altura (m) ao quadrado.",
+        "Idealmente, o IMC deve ser calculado com o peso pré-gestacional ou obtido na primeira consulta de pré-natal, para definir corretamente a meta de ganho de peso.",
+        "Para acompanhamento mais preciso ao longo da gestação, utilize curvas específicas de IMC por idade gestacional (curva de Atalah), adotadas pelo Ministério da Saúde.",
+        "Gestantes com baixo peso ou obesidade devem ser encaminhadas para acompanhamento nutricional especializado."
+      ],
+      "examples": [
+        {
+          "label": "Peso adequado",
+          "sublabel": "IMC 22,7",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "peso": 65,
+            "altura": 1.69
+          }
+        },
+        {
+          "label": "Sobrepeso",
+          "sublabel": "IMC 27,5",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "peso": 75,
+            "altura": 1.65
+          }
+        },
+        {
+          "label": "Obesidade",
+          "sublabel": "IMC 33,9",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "peso": 90,
+            "altura": 1.63
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Qual a fórmula utilizada para calcular o IMC gestacional?",
+          "opts": [
+            "Peso × Altura",
+            "Peso ÷ Altura",
+            "Peso ÷ (Altura × Altura)",
+            "Altura ÷ Peso"
+          ],
+          "correct": 2,
+          "expl": "O IMC é calculado dividindo o peso (kg) pela altura ao quadrado (m²), a mesma fórmula utilizada fora da gestação."
+        },
+        {
+          "q": "Qual instituição estabeleceu as metas de ganho de peso gestacional por categoria de IMC amplamente utilizadas?",
+          "opts": [
+            "Organização Mundial da Saúde exclusivamente",
+            "Institute of Medicine (IOM)",
+            "CDC exclusivamente",
+            "Não existem metas estabelecidas"
+          ],
+          "correct": 1,
+          "expl": "O Institute of Medicine (IOM) estabeleceu as recomendações de ganho de peso gestacional por categoria de IMC pré-gestacional amplamente adotadas em diretrizes de pré-natal."
+        },
+        {
+          "q": "O IMC isolado é suficiente para acompanhar a adequação do ganho de peso ao longo de toda a gestação?",
+          "opts": [
+            "Sim, totalmente suficiente",
+            "Não, recomenda-se o uso de curvas específicas de IMC por idade gestacional, como a curva de Atalah",
+            "Não tem nenhuma utilidade na gestação",
+            "Só é válido no terceiro trimestre"
+          ],
+          "correct": 1,
+          "expl": "Para o acompanhamento da adequação do ganho de peso ao longo da gestação, recomenda-se o uso de curvas específicas que consideram o IMC em função da idade gestacional, como a curva de Atalah adotada pelo Ministério da Saúde."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Devo usar o peso atual ou o peso pré-gestacional para calcular o IMC gestacional?",
+        "a": "Idealmente, utiliza-se o peso pré-gestacional (ou o peso obtido na primeira consulta de pré-natal) para classificar o estado nutricional inicial e definir a meta de ganho de peso adequada para o restante da gestação."
+      },
+      {
+        "q": "Esta calculadora considera a idade gestacional na classificação do IMC?",
+        "a": "Não. Esta calculadora aplica a fórmula padrão de IMC, útil principalmente como avaliação inicial. Para o acompanhamento da adequação do peso ao longo da gestação, o ideal é utilizar curvas específicas de IMC por idade gestacional, como a curva de Atalah adotada pelo Ministério da Saúde."
+      }
+    ],
+    "about": {
+      "title": "Como funciona o cálculo do IMC Gestacional",
+      "html": "<p>O IMC Gestacional é calculado dividindo o peso (kg) pela altura ao quadrado (m²), da mesma forma que o IMC convencional, sendo utilizado para classificar o estado nutricional da gestante e orientar a meta de ganho de peso na gravidez.</p><p><strong>Guia rápido:</strong> &lt;18,5 = Baixo peso | 18,5-24,9 = Adequado | 25-29,9 = Sobrepeso | ≥30 = Obesidade.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Peso Atual"
+    ],
+    [
+      "field_label",
+      "Altura"
+    ],
+    [
+      "section_h2",
+      "Como funciona o cálculo do IMC Gestacional"
+    ],
+    [
+      "card_h3",
+      "Peso Atual"
+    ],
+    [
+      "card_h3",
+      "Altura"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — IMC Gestacional"
+    ],
+    [
+      "card_h3",
+      "IMC Gestacional: cálculo, fundamentação e evidências"
+    ],
+    [
+      "card_h3",
+      "Bishop"
+    ],
+    [
+      "tip_li",
+      "O IMC gestacional utiliza a mesma fórmula do IMC convencional: peso (kg) dividido pela altura (m) ao quadrado."
+    ],
+    [
+      "tip_li",
+      "Idealmente, o IMC deve ser calculado com o peso pré-gestacional ou obtido na primeira consulta de pré-natal, para definir corretamente a meta de ganho de peso."
+    ],
+    [
+      "tip_li",
+      "Para acompanhamento mais preciso ao longo da gestação, utilize curvas específicas de IMC por idade gestacional (curva de Atalah), adotadas pelo Ministério da Saúde."
+    ],
+    [
+      "tip_li",
+      "Gestantes com baixo peso ou obesidade devem ser encaminhadas para acompanhamento nutricional especializado."
+    ],
+    [
+      "faq_question",
+      "Devo usar o peso atual ou o peso pré-gestacional para calcular o IMC gestacional?"
+    ],
+    [
+      "faq_question",
+      "Esta calculadora considera a idade gestacional na classificação do IMC?"
+    ]
+  ]
+}

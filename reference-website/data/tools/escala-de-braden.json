@@ -1,0 +1,486 @@
+{
+  "id": "550e8400-e29b-41d4-a716-446655440001",
+  "code": "SCALE-BRADEN-001",
+  "slug": "escala-de-braden",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Escala de Braden - Risco de Úlcera por Pressão",
+    "description": "Calcule o risco de úlcera por pressão com a Escala de Braden. Inclui interpretação, SAE NANDA/NIC/NOC, segurança do paciente e evidências científicas.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/braden.html"
+  },
+  "breadcrumb": {
+    "category": "Segurança do Paciente",
+    "categoryHref": "index.html#calculadoras"
+  },
+  "overview": {
+    "name": "Escala de Braden",
+    "acronym": "Braden",
+    "categoryBadge": "Segurança do paciente",
+    "icon": "i-shieldcheck",
+    "objective": "Avaliar o risco de desenvolvimento de úlcera por pressão em pacientes adultos hospitalizados.",
+    "indication": "Indicada para todos os pacientes hospitalizados, especialmente idosos, imobilizados, com incontinência, desnutridos ou com alterações de sensibilidade.",
+    "targetPopulation": "Pacientes adultos em ambiente hospitalar, clínica e domiciliar.",
+    "specialty": [
+      "Enfermagem Médico-Cirúrgica",
+      "UTI",
+      "Geriatria",
+      "Cuidados Paliativos"
+    ],
+    "averageTime": "5-10 minutos",
+    "evidenceLevel": "I",
+    "originalAuthors": [
+      "Barbara Braden",
+      "Nancy Bergstrom"
+    ],
+    "organizations": [
+      "National Pressure Ulcer Advisory Panel (NPUAP)",
+      "European Pressure Ulcer Advisory Panel (EPUAP)"
+    ],
+    "complexity": "basic",
+    "rating": 4.9,
+    "ratingCount": 860
+  },
+  "calculator": {
+    "inputs": [
+      {
+        "id": "perception",
+        "type": "select",
+        "label": "Percepção Sensorial",
+        "description": "Capacidade de responder significativamente a pressão relacionada ao desconforto.",
+        "options": [
+          {
+            "value": 1,
+            "label": "Completamente Limitada",
+            "score": 1,
+            "description": "Não responde a estímulos dolorosos. Devido à diminuição do nível de consciência ou sedação."
+          },
+          {
+            "value": 2,
+            "label": "Muito Limitada",
+            "score": 2,
+            "description": "Responde apenas a estímulos dolorosos. Não pode comunicar desconforto exceto por gemidos ou inquietação."
+          },
+          {
+            "value": 3,
+            "label": "Levemente Limitada",
+            "score": 3,
+            "description": "Responde a comandos verbais, mas não pode sempre comunicar desconforto ou necessidade de mudança de posição."
+          },
+          {
+            "value": 4,
+            "label": "Nenhuma Limitação",
+            "score": 4,
+            "description": "Responde a comandos verbais. Tem sensibilidade tática e dolorosa intacta."
+          }
+        ],
+        "defaultValue": 3
+      },
+      {
+        "id": "moisture",
+        "type": "select",
+        "label": "Umidade",
+        "description": "Nível de exposição da pele à umidade.",
+        "options": [
+          {
+            "value": 1,
+            "label": "Constantemente Úmida",
+            "score": 1,
+            "description": "A pele é mantida úmida quase constantemente por suor, urina, etc. A umidade é detectada cada vez que o paciente é movido."
+          },
+          {
+            "value": 2,
+            "label": "Muito Úmida",
+            "score": 2,
+            "description": "A pele está úmida, mas não constantemente. Pelo menos uma troca de lençol é necessária por turno."
+          },
+          {
+            "value": 3,
+            "label": "Ocasionalmente Úmida",
+            "score": 3,
+            "description": "A pele está ocasionalmente úmida, exigindo troca de lençol extra aproximadamente uma vez por dia."
+          },
+          {
+            "value": 4,
+            "label": "Raramente Úmida",
+            "score": 4,
+            "description": "A pele geralmente está seca. Lençóis são trocados apenas de acordo com a rotina."
+          }
+        ],
+        "defaultValue": 3
+      },
+      {
+        "id": "activity",
+        "type": "select",
+        "label": "Atividade",
+        "description": "Grau de mobilidade física.",
+        "options": [
+          {
+            "value": 1,
+            "label": "Acamado",
+            "score": 1,
+            "description": "Confinado à cama."
+          },
+          {
+            "value": 2,
+            "label": "Confinado à Cadeira",
+            "score": 2,
+            "description": "Capacidade de ambular severamente limitada ou inexistente. Não pode suportar o próprio peso e/ou deve ser assistido para transferência para cadeira."
+          },
+          {
+            "value": 3,
+            "label": "Anda Ocasionalmente",
+            "score": 3,
+            "description": "Anda ocasionalmente durante o dia, mas por distâncias muito curtas, com ou sem assistência."
+          },
+          {
+            "value": 4,
+            "label": "Anda Frequentemente",
+            "score": 4,
+            "description": "Anda fora do quarto pelo menos duas vezes por dia e dentro do quarto pelo menos a cada 2 horas durante o período de vigília."
+          }
+        ],
+        "defaultValue": 3
+      },
+      {
+        "id": "mobility",
+        "type": "select",
+        "label": "Mobilidade",
+        "description": "Capacidade de mudar e controlar a posição do corpo.",
+        "options": [
+          {
+            "value": 1,
+            "label": "Completamente Imóvel",
+            "score": 1,
+            "description": "Não realiza mudanças de posição mesmo com assistência."
+          },
+          {
+            "value": 2,
+            "label": "Muito Limitada",
+            "score": 2,
+            "description": "Realiza mudanças ocasionais de posição, mas incapaz de fazer mudanças frequentes ou significativas."
+          },
+          {
+            "value": 3,
+            "label": "Levemente Limitada",
+            "score": 3,
+            "description": "Realiza mudanças frequentes, embora pequenas, de posição."
+          },
+          {
+            "value": 4,
+            "label": "Nenhuma Limitação",
+            "score": 4,
+            "description": "Realiza mudanças grandes e frequentes de posição."
+          }
+        ],
+        "defaultValue": 3
+      },
+      {
+        "id": "nutrition",
+        "type": "select",
+        "label": "Nutrição",
+        "description": "Padrão alimentar habitual.",
+        "options": [
+          {
+            "value": 1,
+            "label": "Muito Pobre",
+            "score": 1,
+            "description": "Nunca come uma refeição completa. Raramente come mais de 1/3 de qualquer alimento oferecido."
+          },
+          {
+            "value": 2,
+            "label": "Provavelmente Inadequada",
+            "score": 2,
+            "description": "Raramente come uma refeição completa e geralmente come cerca de 1/2 das refeições oferecidas."
+          },
+          {
+            "value": 3,
+            "label": "Adequada",
+            "score": 3,
+            "description": "Come mais da metade da maioria das refeições. Come um total de 4 porções de proteína por dia."
+          },
+          {
+            "value": 4,
+            "label": "Excelente",
+            "score": 4,
+            "description": "Come a maioria das refeições. Nunca recusa uma refeição."
+          }
+        ],
+        "defaultValue": 3
+      },
+      {
+        "id": "friction",
+        "type": "select",
+        "label": "Fricção e Cisalhamento",
+        "description": "Problemas de movimentação.",
+        "options": [
+          {
+            "value": 1,
+            "label": "Problema",
+            "score": 1,
+            "description": "Requer assistência moderada a máxima para movimentação. Levantar sem deslizar é impossível."
+          },
+          {
+            "value": 2,
+            "label": "Problema Potencial",
+            "score": 2,
+            "description": "Movimenta-se com dificuldade ou necessita de mínima assistência. Durante os movimentos, a pele provavelmente desliza contra os lençóis."
+          },
+          {
+            "value": 3,
+            "label": "Nenhum Problema Aparente",
+            "score": 3,
+            "description": "Movimenta-se no leito e na cadeira de forma independente, com boa força muscular."
+          }
+        ],
+        "defaultValue": 3
+      }
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "Score de Braden",
+      "resultUnit": "pontos",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {
+        "min": 6,
+        "max": 9,
+        "label": "Risco Muito Alto",
+        "riskLevel": "critical",
+        "color": "#dc2626",
+        "clinicalImplications": "Paciente com alto risco de desenvolver úlcera por pressão. Necessita de protocolo de prevenção intensiva, incluindo realinhamento a cada 2 horas, uso de superfícies de apoio de pressão reduzida, avaliação nutricional e hidratação.",
+        "recommendations": "• Protocolo de prevenção de UP intensivo\n• Realignment a cada 2h\n• Superfície de apoio de pressão alternada\n• Avaliação nutricional diária\n• Hidratação rigorosa\n• Inspeção de pele a cada turno"
+      },
+      {
+        "min": 10,
+        "max": 12,
+        "label": "Risco Alto",
+        "riskLevel": "high",
+        "color": "#ea580c",
+        "clinicalImplications": "Paciente com alto risco. Implementar protocolo de prevenção com realinhamento a cada 2-3 horas, educação da família e cuidados com a pele.",
+        "recommendations": "• Realignment a cada 2-3h\n• Superfície de apoio de pressão\n• Cuidados com a pele\n• Educação da família"
+      },
+      {
+        "min": 13,
+        "max": 14,
+        "label": "Risco Moderado",
+        "riskLevel": "moderate",
+        "color": "#ca8a04",
+        "clinicalImplications": "Risco moderado. Reavaliação diária e cuidados preventivos padrão.",
+        "recommendations": "• Reavaliação diária\n• Cuidados de pele padrão\n• Mobilização precoce"
+      },
+      {
+        "min": 15,
+        "max": 18,
+        "label": "Risco Leve",
+        "riskLevel": "low",
+        "color": "#ca8a04",
+        "clinicalImplications": "Risco leve. Manter cuidados de pele e reavaliação periódica.",
+        "recommendations": "• Cuidados de pele padrão\n• Reavaliação a cada 48-72h"
+      },
+      {
+        "min": 19,
+        "max": 23,
+        "label": "Sem Risco",
+        "riskLevel": "none",
+        "color": "#2563eb",
+        "clinicalImplications": "Paciente sem risco aparente de úlcera por pressão. Manter cuidados de pele de rotina.",
+        "recommendations": "• Cuidados de pele de rotina\n• Reavaliação semanal"
+      }
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {
+        "diagnosis": "Risco de lesão cutânea",
+        "definition": "Vulnerável à alteração da integridade epidérmica e/ou dérmica, que pode comprometer a saúde."
+      },
+      {
+        "diagnosis": "Mobilidade física prejudicada",
+        "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."
+      }
+    ],
+    "noc": [
+      {
+        "outcome": "Integridade tecidual: pele e mucosas",
+        "indicators": [
+          "Pele intacta",
+          "Turgor adequado",
+          "Coloração normal",
+          "Sem lesões",
+          "Hidratação adequada"
+        ]
+      },
+      {
+        "outcome": "Mobilidade",
+        "indicators": [
+          "Muda de posição",
+          "Deambula",
+          "Realiza ADMs",
+          "Força muscular preservada"
+        ]
+      }
+    ],
+    "nic": [
+      {
+        "intervention": "Cuidados com a pele",
+        "activities": [
+          "Inspecionar pele a cada turno",
+          "Manter pele limpa e seca",
+          "Aplicar hidratante",
+          "Utilizar superfície de apoio"
+        ]
+      },
+      {
+        "intervention": "Prevenção de lesão por pressão",
+        "activities": [
+          "Realignment a cada 2h",
+          "Elevar calcanhares",
+          "Evitar fricção",
+          "Avaliar nutrição"
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "A Escala de Braden foi desenvolvida em 1987 por Barbara Braden e Nancy Bergstrom. É a escala mais utilizada mundialmente para predição de risco de úlcera por pressão.",
+    "history": "Validada em múltiplas populações e contextos clínicos. Revisada pela NPUAP/EPUAP em diretrizes internacionais.",
+    "validation": "Sensibilidade de 83-100% e especificidade de 64-77% em diversos estudos. Validada para adultos hospitalizados.",
+    "sensitivity": 0.91,
+    "specificity": 0.7,
+    "limitations": "Não validada para pediatria. Pode subestimar risco em pacientes com pele escura. Não considera fatores como idade avançada isoladamente.",
+    "references": [
+      {
+        "text": "BRADEN, B.; BERGSTROM, N. A conceptual schema for the study of the etiology of pressure sores. Rehabilitation Nursing, v. 12, n. 1, p. 8-12, 1987."
+      },
+      {
+        "text": "EUROPEAN PRESSURE ULCER ADVISORY PANEL; NATIONAL PRESSURE INJURY ADVISORY PANEL; PAN PACIFIC PRESSURE INJURY ALLIANCE. Prevention and Treatment of Pressure Ulcers/Injuries: Clinical Practice Guideline. 3ª ed. EPUAP/NPIAP/PPPIA, 2019."
+      },
+      {
+        "text": "TEASDALE, G.; JENNETT, B. Assessment of coma and impaired consciousness: a practical scale. The Lancet, v. 304, n. 7872, p. 81-84, 1974."
+      },
+      {
+        "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+      },
+      {
+        "text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."
+      },
+      {
+        "text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."
+      }
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Sempre documentar o componente individual de cada domínio, não apenas o score total.",
+      "Em pacientes com incontinência, a umidade geralmente é 1 ou 2.",
+      "Pacientes acamados com boa nutrição podem ter score de 14-16, mas ainda precisam de cuidados."
+    ],
+    "examples": [
+      {
+        "label": "Paciente crítico UTI",
+        "sublabel": "Sedado, imóvel",
+        "emoji": "🚨",
+        "values": {
+          "perception": 1,
+          "moisture": 1,
+          "activity": 1,
+          "mobility": 1,
+          "nutrition": 2,
+          "friction": 1
+        }
+      },
+      {
+        "label": "Pós-operatório",
+        "sublabel": "Mobilidade reduzida",
+        "emoji": "🩹",
+        "values": {
+          "perception": 3,
+          "moisture": 3,
+          "activity": 2,
+          "mobility": 2,
+          "nutrition": 3,
+          "friction": 2
+        }
+      },
+      {
+        "label": "Idoso acamado",
+        "sublabel": "Nutrição comprometida",
+        "emoji": "🛏️",
+        "values": {
+          "perception": 2,
+          "moisture": 2,
+          "activity": 1,
+          "mobility": 2,
+          "nutrition": 2,
+          "friction": 2
+        }
+      },
+      {
+        "label": "Paciente estável",
+        "sublabel": "Deambulando",
+        "emoji": "✅",
+        "values": {
+          "perception": 4,
+          "moisture": 4,
+          "activity": 4,
+          "mobility": 4,
+          "nutrition": 4,
+          "friction": 3
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Qual a pontuação mínima possível na Escala de Braden?",
+        "opts": [
+          "4 pontos",
+          "6 pontos",
+          "10 pontos",
+          "0 pontos"
+        ],
+        "correct": 1,
+        "expl": "O score mínimo é 6 (1 ponto em cada um dos 6 domínios), indicando risco muito alto."
+      },
+      {
+        "q": "Um paciente com score 11 na Escala de Braden está em qual faixa de risco?",
+        "opts": [
+          "Sem risco",
+          "Risco leve",
+          "Risco alto",
+          "Risco moderado"
+        ],
+        "correct": 2,
+        "expl": "Score entre 10 e 12 corresponde a Risco Alto, exigindo reposicionamento a cada 2-3h."
+      },
+      {
+        "q": "Para pacientes pediátricos, qual escala deve ser usada em vez da Braden?",
+        "opts": [
+          "Escala de Braden Q",
+          "Escala de Glasgow",
+          "Escala de Morse",
+          "Escala de Norton"
+        ],
+        "correct": 0,
+        "expl": "A Escala de Braden não é validada para crianças; usa-se a versão adaptada Braden Q."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Posso usar a Escala de Braden em pediatria?",
+      "a": "Não. Para pediatria, utilize a Escala de Braden Q, adaptada para crianças."
+    },
+    {
+      "q": "Com que frequência devo reavaliar?",
+      "a": "Risco muito alto: a cada 24h. Alto: a cada 24-48h. Moderado: a cada 48h. Leve: a cada 72h."
+    }
+  ],
+  "about": {
+    "title": "Como funciona a Escala de Braden",
+    "html": "<p>A Escala de Braden avalia 6 domínios: percepção sensorial, umidade, atividade, mobilidade, nutrição, e fricção/cisalhamento. Score ≤12 = alto risco. Score ≤9 = muito alto risco. Quanto menor o score, maior o risco.</p><p><strong>Guia rápido:</strong> Score ≤9: Muito Alto Risco | 10-12: Alto Risco | 13-14: Moderado | 15-18: Leve | 19-23: Sem Risco. Realignment a cada 2h para risco alto.</p>"
+  }
+}

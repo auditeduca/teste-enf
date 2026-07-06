@@ -1,0 +1,480 @@
+{
+  "seo": {
+    "title": "Escala de Coma FOUR - Avaliação Neurológica | Calculadoras de Enfermagem",
+    "description": "Calcule a Escala de Coma FOUR (Full Outline of UnResponsiveness) para avaliação neurológica detalhada, incluindo pacientes intubados. Inclui interpretação, SAE e evidências.",
+    "h1": "Escala de Coma FOUR",
+    "subtitle": "Avaliar de forma detalhada o nível de consciência do paciente crítico, incluindo componentes de reflexos de tronco encefálico e padrão respiratório, superando limitações da Escala de Glasgow em pacientes intubados."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "9506172a-3940-4152-f607-182940516273",
+    "code": "SCALE-FOUR-001",
+    "slug": "four",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Escala de Coma FOUR - Avaliação Neurológica",
+      "description": "Calcule a Escala de Coma FOUR (Full Outline of UnResponsiveness) para avaliação neurológica detalhada, incluindo pacientes intubados. Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/four.html"
+    },
+    "breadcrumb": {
+      "category": "Terapia Intensiva",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "Escala de Coma FOUR",
+      "acronym": "FOUR",
+      "categoryBadge": "Terapia intensiva",
+      "icon": "i-brain",
+      "objective": "Avaliar de forma detalhada o nível de consciência do paciente crítico, incluindo componentes de reflexos de tronco encefálico e padrão respiratório, superando limitações da Escala de Glasgow em pacientes intubados.",
+      "indication": "Indicada para pacientes neurocríticos, incluindo aqueles sob ventilação mecânica ou intubados, situação em que a Escala de Glasgow tem sua avaliação verbal comprometida.",
+      "targetPopulation": "Pacientes adultos em estado crítico com rebaixamento do nível de consciência, especialmente em UTI e neurocríticos.",
+      "specialty": [
+        "Terapia Intensiva",
+        "Neurologia",
+        "Enfermagem"
+      ],
+      "averageTime": "3-5 minutos",
+      "evidenceLevel": "II",
+      "originalAuthors": [
+        "Eelco F. M. Wijdicks",
+        "colaboradores"
+      ],
+      "organizations": [
+        "Mayo Clinic"
+      ],
+      "complexity": "advanced",
+      "rating": 4.6,
+      "ratingCount": 210
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "ocular",
+          "type": "select",
+          "label": "Resposta Ocular (E)",
+          "description": "Avalie a abertura ocular e capacidade de rastreamento visual.",
+          "defaultValue": 4,
+          "options": [
+            {
+              "value": 4,
+              "label": "E4 — Pálpebras Abertas, Rastreia ou Pisca ao Comando",
+              "score": 4,
+              "description": "Olhos abertos ou capazes de abrir, rastreando ou piscando ao comando."
+            },
+            {
+              "value": 3,
+              "label": "E3 — Pálpebras Abertas, Sem Rastreamento",
+              "score": 3,
+              "description": "Olhos abertos, mas sem rastreamento visual."
+            },
+            {
+              "value": 2,
+              "label": "E2 — Abre ao Estímulo Sonoro Alto",
+              "score": 2,
+              "description": "Pálpebras fechadas, abrem à voz alta."
+            },
+            {
+              "value": 1,
+              "label": "E1 — Abre à Dor",
+              "score": 1,
+              "description": "Pálpebras fechadas, abrem apenas ao estímulo doloroso."
+            },
+            {
+              "value": 0,
+              "label": "E0 — Permanece Fechada à Dor",
+              "score": 0,
+              "description": "Pálpebras permanecem fechadas mesmo com estímulo doloroso."
+            }
+          ]
+        },
+        {
+          "id": "motora",
+          "type": "select",
+          "label": "Resposta Motora (M)",
+          "description": "Avalie a melhor resposta motora observada, incluindo comandos gestuais específicos da escala.",
+          "defaultValue": 4,
+          "options": [
+            {
+              "value": 4,
+              "label": "M4 — Sinal de Positivo, Punho Fechado ou Sinal de Paz",
+              "score": 4,
+              "description": "Realiza gestos específicos ao comando (polegar para cima, punho fechado, sinal de paz)."
+            },
+            {
+              "value": 3,
+              "label": "M3 — Localiza a Dor",
+              "score": 3,
+              "description": "Localiza e tenta afastar o estímulo doloroso."
+            },
+            {
+              "value": 2,
+              "label": "M2 — Flexão à Dor",
+              "score": 2,
+              "description": "Resposta de flexão (decorticação) ao estímulo doloroso."
+            },
+            {
+              "value": 1,
+              "label": "M1 — Extensão à Dor",
+              "score": 1,
+              "description": "Resposta de extensão (descerebração) ao estímulo doloroso."
+            },
+            {
+              "value": 0,
+              "label": "M0 — Sem Resposta ou Mioclonia Generalizada",
+              "score": 0,
+              "description": "Ausência de resposta motora à dor, ou estado de mioclonia generalizada (mau prognóstico)."
+            }
+          ]
+        },
+        {
+          "id": "tronco",
+          "type": "select",
+          "label": "Reflexos de Tronco Encefálico (B)",
+          "description": "Avalie os reflexos pupilar, corneano e de tosse.",
+          "defaultValue": 4,
+          "options": [
+            {
+              "value": 4,
+              "label": "B4 — Reflexos Pupilar e Corneano Presentes",
+              "score": 4,
+              "description": "Reflexos pupilar e corneano preservados bilateralmente."
+            },
+            {
+              "value": 3,
+              "label": "B3 — Uma Pupila Fixa e Dilatada",
+              "score": 3,
+              "description": "Uma pupila fixa e dilatada (midríase paralítica unilateral)."
+            },
+            {
+              "value": 2,
+              "label": "B2 — Reflexo Pupilar ou Corneano Ausente",
+              "score": 2,
+              "description": "Ausência de um dos reflexos (pupilar ou corneano)."
+            },
+            {
+              "value": 1,
+              "label": "B1 — Reflexos Pupilar e Corneano Ausentes",
+              "score": 1,
+              "description": "Ausência de ambos os reflexos, pupilar e corneano."
+            },
+            {
+              "value": 0,
+              "label": "B0 — Ausência de Reflexo Pupilar, Corneano e de Tosse",
+              "score": 0,
+              "description": "Ausência de todos os reflexos de tronco encefálico avaliados, incluindo o reflexo de tosse."
+            }
+          ]
+        },
+        {
+          "id": "respiracao",
+          "type": "select",
+          "label": "Respiração (R)",
+          "description": "Avalie o padrão respiratório do paciente, considerando se está ou não sob ventilação mecânica.",
+          "defaultValue": 4,
+          "options": [
+            {
+              "value": 4,
+              "label": "R4 — Não Intubado, Padrão Regular",
+              "score": 4,
+              "description": "Paciente não intubado, com padrão respiratório regular."
+            },
+            {
+              "value": 3,
+              "label": "R3 — Não Intubado, Padrão Cheyne-Stokes",
+              "score": 3,
+              "description": "Paciente não intubado, com padrão respiratório de Cheyne-Stokes."
+            },
+            {
+              "value": 2,
+              "label": "R2 — Não Intubado, Padrão Irregular",
+              "score": 2,
+              "description": "Paciente não intubado, com padrão respiratório irregular."
+            },
+            {
+              "value": 1,
+              "label": "R1 — Respira Acima da Frequência do Ventilador",
+              "score": 1,
+              "description": "Paciente intubado, respirando acima da frequência programada no ventilador."
+            },
+            {
+              "value": 0,
+              "label": "R0 — Respira na Frequência do Ventilador ou Apneia",
+              "score": 0,
+              "description": "Paciente intubado, respirando exatamente na frequência do ventilador, ou em apneia."
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Escore FOUR",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 8,
+          "label": "Comprometimento Grave",
+          "riskLevel": "critical",
+          "color": "#7f1d1d",
+          "clinicalImplications": "Comprometimento neurológico grave, associado a maior risco de mortalidade e pior prognóstico funcional.",
+          "recommendations": "• Avaliação neurológica intensiva e seriada\n• Investigar causas reversíveis\n• Discussão com equipe multiprofissional sobre prognóstico\n• Monitorização neurológica contínua"
+        },
+        {
+          "min": 9,
+          "max": 12,
+          "label": "Comprometimento Moderado",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Comprometimento neurológico moderado. Requer monitorização rigorosa e investigação de causas de base.",
+          "recommendations": "• Reavaliação neurológica frequente\n• Investigar e tratar causas reversíveis\n• Monitorização de sinais de piora"
+        },
+        {
+          "min": 13,
+          "max": 16,
+          "label": "Comprometimento Leve / Preservado",
+          "riskLevel": "low",
+          "color": "#2563eb",
+          "clinicalImplications": "Função neurológica preservada ou com comprometimento leve.",
+          "recommendations": "• Manter monitorização de rotina\n• Reavaliação conforme protocolo da unidade"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Perfusão tissular cerebral ineficaz",
+          "definition": "Diminuição da circulação sanguínea cerebral, podendo comprometer a saúde."
+        },
+        {
+          "diagnosis": "Padrão respiratório ineficaz",
+          "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."
+        },
+        {
+          "diagnosis": "Risco de aspiração",
+          "definition": "Risco de entrada de secreções gastrintestinais, orofaríngeas ou líquidos/sólidos nas vias traqueobrônquicas, associado a reflexos protetores diminuídos."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Status neurológico",
+          "indicators": [
+            "Nível de consciência adequado ao quadro clínico",
+            "Reflexos de tronco encefálico preservados",
+            "Padrão respiratório adequado"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Monitorização neurológica",
+          "activities": [
+            "Avaliar resposta ocular, motora, reflexos de tronco e padrão respiratório",
+            "Documentar o escore FOUR a cada avaliação",
+            "Comunicar imediatamente qualquer deterioração à equipe médica",
+            "Avaliar reflexos de proteção de via aérea (tosse, corneano)"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "A Escala de Coma FOUR (Full Outline of UnResponsiveness) foi desenvolvida por Wijdicks e colaboradores na Mayo Clinic em 2005, avaliando 4 componentes (resposta ocular, motora, reflexos de tronco encefálico e padrão respiratório), cada um pontuado de 0 a 4, totalizando de 0 a 16 pontos.",
+      "history": "Desenvolvida para superar limitações da Escala de Glasgow em pacientes intubados (impossibilidade de avaliar resposta verbal) e para detectar estados de consciência mínima e síndrome do encarceramento (locked-in syndrome) através da avaliação de reflexos de tronco encefálico.",
+      "validation": "Estudos comparativos demonstram boa confiabilidade interobservador e capacidade preditiva de mortalidade comparável ou superior à Escala de Glasgow, com a vantagem de ser aplicável em pacientes intubados.",
+      "limitations": "É uma escala mais complexa que a de Glasgow, exigindo maior treinamento da equipe para aplicação correta dos componentes de reflexos de tronco encefálico.",
+      "references": [
+        {
+          "text": "WIJDICKS, E. F. M. et al. Validation of a new coma scale: The FOUR score. Annals of Neurology, v. 58, n. 4, p. 585-593, 2005."
+        },
+        {
+          "text": "WOLF, C. A. et al. Further validation of the FOUR score coma scale by intensive care nurses. Mayo Clinic Proceedings, v. 82, n. 4, p. 435-438, 2007."
+        },
+        {
+          "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "A Escala FOUR é especialmente útil em pacientes intubados, onde a Escala de Glasgow perde a avaliação verbal.",
+        "Avalie os reflexos de tronco encefálico com cuidado e treinamento adequado, pois são o componente mais específico da escala.",
+        "Escores baixos no componente motor (mioclonia generalizada) têm forte associação com mau prognóstico.",
+        "Reavalie seriadamente para acompanhar a evolução do quadro neurológico."
+      ],
+      "examples": [
+        {
+          "label": "Neurologicamente íntegro",
+          "sublabel": "FOUR 16",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "ocular": 4,
+            "motora": 4,
+            "tronco": 4,
+            "respiracao": 4
+          }
+        },
+        {
+          "label": "Comprometimento moderado",
+          "sublabel": "FOUR 10",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "ocular": 2,
+            "motora": 3,
+            "tronco": 3,
+            "respiracao": 2
+          }
+        },
+        {
+          "label": "Comprometimento grave",
+          "sublabel": "FOUR 2",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "ocular": 0,
+            "motora": 1,
+            "tronco": 1,
+            "respiracao": 0
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Quantos componentes compõem a Escala de Coma FOUR?",
+          "opts": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "correct": 1,
+          "expl": "A FOUR avalia 4 componentes: resposta ocular (E), motora (M), reflexos de tronco encefálico (B) e respiração (R)."
+        },
+        {
+          "q": "Qual a principal vantagem da FOUR sobre a Escala de Glasgow?",
+          "opts": [
+            "É mais rápida de aplicar",
+            "Pode ser aplicada em pacientes intubados",
+            "Não precisa de treinamento",
+            "Tem apenas 2 componentes"
+          ],
+          "correct": 1,
+          "expl": "A FOUR não depende de resposta verbal, podendo ser aplicada em pacientes intubados ou traqueostomizados, diferente da Escala de Glasgow."
+        },
+        {
+          "q": "Qual a pontuação máxima possível na Escala FOUR?",
+          "opts": [
+            "15",
+            "16",
+            "20",
+            "8"
+          ],
+          "correct": 1,
+          "expl": "Cada um dos 4 componentes varia de 0 a 4, totalizando uma pontuação máxima de 16 pontos."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "A Escala FOUR substitui a Escala de Glasgow?",
+        "a": "Não necessariamente. Ambas são utilizadas na prática clínica, mas a FOUR é particularmente útil em pacientes intubados, onde a avaliação verbal da Glasgow não pode ser realizada."
+      },
+      {
+        "q": "É necessário treinamento especial para aplicar a Escala FOUR?",
+        "a": "Sim. A avaliação dos reflexos de tronco encefálico requer treinamento específico da equipe, sendo mais complexa que a aplicação da Escala de Glasgow."
+      }
+    ],
+    "about": {
+      "title": "Como funciona a Escala de Coma FOUR",
+      "html": "<p>A Escala FOUR avalia 4 componentes — resposta ocular, resposta motora, reflexos de tronco encefálico e padrão respiratório — cada um pontuado de 0 a 4, totalizando de 0 a 16 pontos. Foi desenvolvida para superar a limitação da Escala de Glasgow em pacientes intubados.</p><p><strong>Guia rápido:</strong> 13-16 = Preservado/leve | 9-12 = Moderado | 0-8 = Grave.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Resposta Ocular (E)"
+    ],
+    [
+      "field_label",
+      "Resposta Motora (M)"
+    ],
+    [
+      "field_label",
+      "Reflexos de Tronco Encefálico (B)"
+    ],
+    [
+      "field_label",
+      "Respiração (R)"
+    ],
+    [
+      "field_desc",
+      "Avalie a abertura ocular e capacidade de rastreamento visual."
+    ],
+    [
+      "field_desc",
+      "Avalie a melhor resposta motora observada, incluindo comandos gestuais específicos da escala."
+    ],
+    [
+      "field_desc",
+      "Avalie os reflexos pupilar, corneano e de tosse."
+    ],
+    [
+      "field_desc",
+      "Avalie o padrão respiratório do paciente, considerando se está ou não sob ventilação mecânica."
+    ],
+    [
+      "section_h2",
+      "Como funciona a Escala de Coma FOUR"
+    ],
+    [
+      "card_h3",
+      "Resposta Ocular (E)"
+    ],
+    [
+      "card_h3",
+      "Resposta Motora (M)"
+    ],
+    [
+      "card_h3",
+      "Reflexos de Tronco Encefálico (B)"
+    ],
+    [
+      "card_h3",
+      "Respiração (R)"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — Escala de Coma FOUR"
+    ],
+    [
+      "card_h3",
+      "Escala de Coma FOUR: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "A Escala FOUR é especialmente útil em pacientes intubados, onde a Escala de Glasgow perde a avaliação verbal."
+    ],
+    [
+      "tip_li",
+      "Avalie os reflexos de tronco encefálico com cuidado e treinamento adequado, pois são o componente mais específico da escala."
+    ],
+    [
+      "tip_li",
+      "Escores baixos no componente motor (mioclonia generalizada) têm forte associação com mau prognóstico."
+    ],
+    [
+      "tip_li",
+      "Reavalie seriadamente para acompanhar a evolução do quadro neurológico."
+    ],
+    [
+      "faq_question",
+      "A Escala FOUR substitui a Escala de Glasgow?"
+    ],
+    [
+      "faq_question",
+      "É necessário treinamento especial para aplicar a Escala FOUR?"
+    ]
+  ]
+}

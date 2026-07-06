@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "data_auditoria": "2026-07-03",
+    "script": "scripts/audit_pendencias.py",
+    "escopo": "Diretório raiz do projeto Calculadoras de Enfermagem"
+  },
+  "resumo": {
+    "total_html_calculadoras": 66,
+    "total_json_tools": 66,
+    "pares_completos_slug": 63,
+    "html_sem_json": 3,
+    "json_sem_html": 3,
+    "links_quebrados_no_index": 61,
+    "links_quebrados_com_alias_existente": 4,
+    "links_quebrados_sem_arquivo": 57,
+    "html_sem_tool_config": 0,
+    "html_nao_modularizados": 0,
+    "chaves_i18n_index": 257,
+    "chaves_en_json": 345,
+    "chaves_es_json": 345,
+    "idiomas_completos": ["pt (nativo)", "en", "es"],
+    "idiomas_parciais_planejados": 18,
+    "idiomas_no_seletor_sem_traducao": 27
+  },
+  "json_pendentes": {
+    "nota_slug_divergente": "Os 3 casos abaixo NÃO são JSON/HTML ausentes — existem ambos, mas o slug no JSON difere do nome do arquivo HTML. Recomenda-se alinhar slug ou canonical.",
+    "criar_json_para_html": [
+      { "html": "braden.html", "slug_html": "braden", "json_existente": "data/tools/escala-de-braden.json", "slug_json": "escala-de-braden" },
+      { "html": "glasgow.html", "slug_html": "glasgow", "json_existente": "data/tools/escala-de-glasgow.json", "slug_json": "escala-de-glasgow" },
+      { "html": "morse.html", "slug_html": "morse", "json_existente": "data/tools/escala-de-morse.json", "slug_json": "escala-de-morse" }
+    ],
+    "json_sem_html_gerado": [
+      { "json": "escala-de-braden.json", "slug": "escala-de-braden", "html_existente": "braden.html", "acao": "Renomear slug para 'braden' OU gerar escala-de-braden.html" },
+      { "json": "escala-de-glasgow.json", "slug": "escala-de-glasgow", "html_existente": "glasgow.html", "acao": "Renomear slug para 'glasgow' OU gerar escala-de-glasgow.html" },
+      { "json": "escala-de-morse.json", "slug": "escala-de-morse", "html_existente": "morse.html", "acao": "Renomear slug para 'morse' OU gerar escala-de-morse.html" }
+    ],
+    "json_com_erro_parse": [],
+    "json_incompletos_schema": [],
+    "html_com_tool_config_json_invalido": [
+      { "html": "asa.html", "erro": "JSON embutido em tool-config com erro de parse (caractere inválido ~col 3862). Regenerar via generate_tool_page.py a partir de data/tools/asa.json." }
+    ]
+  },
+  "html_pendentes": {
+    "gerar_html_novos": "57 páginas referenciadas no index.html ainda não existem no diretório (lista abaixo, excluindo aliases).",
+    "links_com_alias_existente_corrigir_no_index": [
+      { "link_index": "curb-65.html", "arquivo_existente": "curb65.html" },
+      { "link_index": "silverman.html", "arquivo_existente": "silverman-andersen.html" },
+      { "link_index": "news.html", "arquivo_existente": "news2.html" },
+      { "link_index": "gestacional.html", "arquivo_existente": "imc-gestacional.html" }
+    ],
+    "links_quebrados_referenciados_no_index": [
+      "balancohidrico.html",
+      "ballard.html",
+      "berg.html",
+      "biblioteca-provas.html",
+      "calculadoravacina.html",
+      "cincinnati.html",
+      "copsoq.html",
+      "copsoq3.html",
+      "cornell.html",
+      "cries.html",
+      "curb-65.html",
+      "diagnosticosnanda.html",
+      "dimensionamento.html",
+      "downes.html",
+      "elpo.html",
+      "exames_laboratoriais.html",
+      "fast.html",
+      "flacc.html",
+      "flashcards_quiz.html",
+      "gasometria.html",
+      "gds.html",
+      "gestacional.html",
+      "gosnell.html",
+      "hamilton.html",
+      "hendrich.html",
+      "humpty.html",
+      "johns.html",
+      "jouvet.html",
+      "lachs.html",
+      "lanss.html",
+      "manchester.html",
+      "medicamentos.html",
+      "meem.html",
+      "meows.html",
+      "moca.html",
+      "news.html",
+      "nihss.html",
+      "nips.html",
+      "norton.html",
+      "notificacao-compulsoria.html",
+      "ofras.html",
+      "painad.html",
+      "pelod.html",
+      "perroca.html",
+      "pews.html",
+      "prism.html",
+      "rancholosamigos.html",
+      "richmond.html",
+      "saps.html",
+      "sbar.html",
+      "silverman.html",
+      "simulado-de-enfermagem-doencas-de-notificacao-compulsoria.html",
+      "simulado-de-enfermagem-nucleo-de-seguranca-do-paciente.html",
+      "simulado-de-enfermagem.html",
+      "simulado-de-enfermagem2.html",
+      "simulado-de-enfermagem3.html",
+      "simulado-de-enfermagem4.html",
+      "simulado_bloco-operatorio.html",
+      "simulado_pcr.html",
+      "simulado_vacinacao.html",
+      "tinetti.html"
+    ],
+    "links_quebrados_por_categoria": {
+      "calculadoras_clinicas": ["balancohidrico.html", "medicamentos.html", "gasometria.html", "exames_laboratoriais.html", "calculadoravacina.html", "notificacao-compulsoria.html", "dimensionamento.html"],
+      "escalas_nao_migradas": ["ballard.html", "berg.html", "cincinnati.html", "copsoq.html", "copsoq3.html", "cornell.html", "cries.html", "downes.html", "elpo.html", "fast.html", "flacc.html", "gds.html", "gosnell.html", "hamilton.html", "hendrich.html", "humpty.html", "johns.html", "jouvet.html", "lachs.html", "lanss.html", "manchester.html", "meem.html", "meows.html", "moca.html", "nihss.html", "nips.html", "norton.html", "ofras.html", "painad.html", "pelod.html", "pews.html", "prism.html", "rancholosamigos.html", "richmond.html", "saps.html", "tinetti.html"],
+      "gestao_formularios": ["perroca.html", "sbar.html"],
+      "educacao_simulados": ["biblioteca-provas.html", "flashcards_quiz.html", "diagnosticosnanda.html", "simulado-de-enfermagem.html", "simulado-de-enfermagem2.html", "simulado-de-enfermagem3.html", "simulado-de-enfermagem4.html", "simulado-de-enfermagem-nucleo-de-seguranca-do-paciente.html", "simulado-de-enfermagem-doencas-de-notificacao-compulsoria.html", "simulado_vacinacao.html", "simulado_pcr.html", "simulado_bloco-operatorio.html"],
+      "aliases_nome_errado": ["curb-65.html", "silverman.html", "news.html", "gestacional.html"]
+    },
+    "sem_bloco_tool_config": [],
+    "sem_partials_loader_modular": [],
+    "sem_calc_engine_js": [],
+    "paginas_institucionais_modularizacao": {
+      "index.html": true,
+      "institucional.html": true,
+      "privacidade.html": true,
+      "acessibilidade-digital.html": true,
+      "sustentabilidade-digital.html": true,
+      "mapa-do-site.html": true
+    }
+  },
+  "traducoes_pendentes": {
+    "status_atual": {
+      "completos": ["pt-BR (nativo no HTML)", "en (345 chaves em i18n/en.json + embutido em lang-selector.js)", "es (345 chaves em i18n/es.json + embutido em lang-selector.js)"],
+      "index_vs_en_es": "Todas as 257 chaves data-i18n do index.html existem em en e es. Todas as 182 chaves tool.* estão traduzidas.",
+      "migracao_pendente": "i18n-loader.js existe mas NÃO substitui lang-selector.js — dicionários ainda embutidos no JS"
+    },
+    "idiomas_planejados_sem_arquivo_json": [
+      "ar", "cs", "da", "de", "el", "fr", "hi", "it", "ja", "ko", "nl", "pl", "ro", "ru", "sv", "tr", "uk", "zh"
+    ],
+    "idiomas_no_seletor_marcados_em_breve": [
+      "am", "ar", "bn", "cs", "de", "el", "fr", "he", "hi", "hu", "id", "it", "ja", "ko", "ms", "nl", "pl", "ro", "ru", "sv", "sw", "th", "tl", "tr", "vi", "zh-CN", "zh-TW"
+    ],
+    "chaves_index_ausentes_em_en": [],
+    "chaves_index_ausentes_em_es": [],
+    "divergencia_en_vs_es": { "somente_em_en": [], "somente_em_es": [] },
+    "proximos_passos_i18n": [
+      "Criar i18n/{code}.json para os 18 idiomas em plannedNotYetIntegrated (manifest.json)",
+      "Completar ~345 chaves por idioma (incluindo 182 tool.* das calculadoras)",
+      "Migrar TRANSLATIONS de lang-selector.js para arquivos JSON",
+      "Ativar idiomas no seletor somente após 100% das chaves"
+    ]
+  },
+  "outras_pendencias": {
+    "sitemap_xml": false,
+    "fonts_woff2_ausentes": ["/fonts/inter/*.woff2", "/fonts/nunito/*.woff2"],
+    "preload_css_404": ["/public/output.css", "/global-styles.css", "/css/fontawesome.min.css"],
+    "site_webmanifest": true,
+    "manifest_link_head": "Corrigido parcialmente — verificar preload de fontes no index.html"
+  }
+}

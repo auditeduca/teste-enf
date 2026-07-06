@@ -1,0 +1,526 @@
+{
+  "seo": {
+    "title": "Hendrich II Fall Risk Model - Risco de Queda em Adultos | Calculadoras de Enfermagem",
+    "description": "Calcule o Hendrich II Fall Risk Model para avaliar o risco de quedas em pacientes adultos hospitalizados. Inclui interpretação, SAE e evidências.",
+    "h1": "Hendrich II Fall Risk Model",
+    "subtitle": "Identificar pacientes adultos hospitalizados com risco aumentado de quedas, a partir de fatores clínicos e do desempenho no teste Get-Up-and-Go."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "62738495-0617-2839-4051-627384950617",
+    "code": "SCALE-HENDRICH-001",
+    "slug": "hendrich",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Hendrich II Fall Risk Model - Risco de Queda em Adultos",
+      "description": "Calcule o Hendrich II Fall Risk Model para avaliar o risco de quedas em pacientes adultos hospitalizados. Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/hendrich.html"
+    },
+    "breadcrumb": {
+      "category": "Segurança do Paciente",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "Hendrich II Fall Risk Model",
+      "acronym": "Hendrich II",
+      "categoryBadge": "Segurança do paciente",
+      "icon": "i-shieldcheck",
+      "objective": "Identificar pacientes adultos hospitalizados com risco aumentado de quedas, a partir de fatores clínicos e do desempenho no teste Get-Up-and-Go.",
+      "indication": "Indicada na triagem de risco de quedas em pacientes adultos hospitalizados, geralmente na admissão e reavaliada periodicamente.",
+      "targetPopulation": "Pacientes adultos hospitalizados.",
+      "specialty": [
+        "Enfermagem",
+        "Segurança do Paciente",
+        "Geriatria"
+      ],
+      "averageTime": "3-5 minutos",
+      "evidenceLevel": "II",
+      "originalAuthors": [
+        "Ann Hendrich"
+      ],
+      "complexity": "intermediate",
+      "rating": 4.5,
+      "ratingCount": 240
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "confusao",
+          "type": "select",
+          "label": "Confusão / Desorientação / Impulsividade",
+          "defaultValue": 0,
+          "description": "Presença de confusão mental, desorientação ou impulsividade.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Ausente",
+              "score": 0
+            },
+            {
+              "value": 4,
+              "label": "Presente",
+              "score": 4
+            }
+          ]
+        },
+        {
+          "id": "depressao",
+          "type": "select",
+          "label": "Depressão Sintomática",
+          "defaultValue": 0,
+          "description": "Presença de sintomas depressivos.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Ausente",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Presente",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "eliminacao_alterada",
+          "type": "select",
+          "label": "Alteração na Eliminação",
+          "defaultValue": 0,
+          "description": "Incontinência, urgência urinária/intestinal ou necessidade de eliminação frequente.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Ausente",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Presente",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "tontura",
+          "type": "select",
+          "label": "Tontura / Vertigem",
+          "defaultValue": 0,
+          "description": "Presença de tontura ou vertigem relatada.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Ausente",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Presente",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "sexo",
+          "type": "select",
+          "label": "Sexo",
+          "defaultValue": 0,
+          "description": "Sexo do paciente.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Feminino",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Masculino",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "antiepilepticos",
+          "type": "select",
+          "label": "Uso de Antiepilépticos / Anticonvulsivantes",
+          "defaultValue": 0,
+          "description": "Uso de qualquer medicação antiepiléptica/anticonvulsivante.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 2,
+              "label": "Sim",
+              "score": 2
+            }
+          ]
+        },
+        {
+          "id": "benzodiazepinicos",
+          "type": "select",
+          "label": "Uso de Benzodiazepínicos / Tranquilizantes",
+          "defaultValue": 0,
+          "description": "Uso de qualquer benzodiazepínico ou tranquilizante.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Não",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Sim",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": "get_up_go",
+          "type": "select",
+          "label": "Teste Get-Up-and-Go (Levantar-se da Cadeira)",
+          "defaultValue": 0,
+          "description": "Observe o paciente se levantando de uma cadeira sem apoio dos braços, se possível.",
+          "options": [
+            {
+              "value": 0,
+              "label": "Capaz de levantar em um único movimento, sem perda de equilíbrio",
+              "score": 0
+            },
+            {
+              "value": 1,
+              "label": "Impulsiona-se com as mãos, bem-sucedido na primeira tentativa",
+              "score": 1
+            },
+            {
+              "value": 3,
+              "label": "Múltiplas tentativas, mas bem-sucedido",
+              "score": 3
+            },
+            {
+              "value": 4,
+              "label": "Incapaz de levantar-se sem assistência",
+              "score": 4
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "Hendrich II Fall Risk Model",
+        "resultUnit": "pontos",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 4,
+          "label": "Baixo Risco de Queda",
+          "riskLevel": "low",
+          "color": "#2563eb",
+          "clinicalImplications": "Pontuação abaixo de 5, associada a baixo risco de quedas.",
+          "recommendations": "• Manter precauções padrão de segurança (cama em posição baixa, campainha ao alcance)\n• Reavaliar periodicamente e após mudanças no estado clínico ou medicações"
+        },
+        {
+          "min": 5,
+          "max": 16,
+          "label": "Alto Risco de Queda",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Pontuação igual ou superior a 5 indica alto risco de quedas.",
+          "recommendations": "• Implementar protocolo institucional de prevenção de quedas (identificação visual, supervisão aumentada)\n• Revisar medicações associadas a risco (antiepilépticos, benzodiazepínicos)\n• Orientar paciente e família sobre medidas de segurança\n• Reavaliar frequentemente durante a internação"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Risco de quedas",
+          "definition": "Suscetibilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde."
+        },
+        {
+          "diagnosis": "Confusão aguda",
+          "definition": "Início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção, quando presente como fator de risco identificado."
+        },
+        {
+          "diagnosis": "Mobilidade física prejudicada",
+          "definition": "Limitação no movimento físico independente e intencional do corpo ou de uma ou mais extremidades, relacionada ao desempenho no teste Get-Up-and-Go."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Ocorrência de quedas",
+          "indicators": [
+            "Escore de Hendrich II avaliado na admissão e reavaliado periodicamente",
+            "Protocolo de prevenção de quedas implementado conforme risco identificado",
+            "Ausência de quedas durante a internação"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Prevenção de quedas",
+          "activities": [
+            "Aplicar o Hendrich II Fall Risk Model na admissão e reavaliar periodicamente",
+            "Implementar identificação visual de risco de queda (pulseira, sinalização) conforme protocolo institucional",
+            "Revisar medicações associadas a risco de queda com a equipe médica/farmácia",
+            "Orientar paciente e acompanhantes sobre medidas de segurança",
+            "Manter cama em posição baixa e campainha de chamada ao alcance"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "O Hendrich II Fall Risk Model avalia 7 fatores de risco clínicos (confusão/desorientação/impulsividade, depressão sintomática, alteração na eliminação, tontura, sexo masculino, uso de antiepilépticos e uso de benzodiazepínicos) somados ao desempenho no teste Get-Up-and-Go, totalizando uma pontuação de 0 a 16 pontos.",
+      "history": "Desenvolvido por Ann Hendrich e colaboradores, é uma ferramenta amplamente utilizada em hospitais para triagem de risco de quedas em pacientes adultos, com boa capacidade preditiva validada em diversos contextos hospitalares.",
+      "validation": "Validado em múltiplos estudos com boa sensibilidade e especificidade para predição de quedas em pacientes hospitalizados, sendo uma das ferramentas recomendadas para triagem sistemática de risco de queda.",
+      "limitations": "Como toda ferramenta de triagem, não substitui o julgamento clínico individualizado. A pontuação deve ser reavaliada sempre que houver mudança no estado clínico, cognitivo ou na medicação do paciente.",
+      "references": [
+        {
+          "text": "HENDRICH, A. L.; BENDER, P. S.; NYHUIS, A. Validation of the Hendrich II Fall Risk Model: a large concurrent case/control study of hospitalized patients. Applied Nursing Research, v. 16, n. 1, p. 9-21, 2003."
+        },
+        {
+          "text": "HU, M. H. et al. Validating the accuracy of the Hendrich II Fall Risk Model for hospitalized patients using the ROC curve analysis. The Kaohsiung Journal of Medical Sciences, 2024."
+        },
+        {
+          "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "O teste Get-Up-and-Go pode contribuir com até 4 dos 16 pontos totais — observe atentamente o desempenho do paciente ao se levantar da cadeira.",
+        "O ponto de corte de 5 pontos ou mais para alto risco é o mais amplamente utilizado na prática clínica.",
+        "Reavalie o escore sempre que houver alteração no estado clínico, cognitivo ou na medicação do paciente.",
+        "Combine o resultado com a observação de fatores ambientais (iluminação, calçados, dispositivos de auxílio) para um plano de prevenção mais completo."
+      ],
+      "examples": [
+        {
+          "label": "Baixo risco",
+          "sublabel": "Escore 1",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "confusao": 0,
+            "depressao": 0,
+            "eliminacao_alterada": 1,
+            "tontura": 0,
+            "sexo": 0,
+            "antiepilepticos": 0,
+            "benzodiazepinicos": 0,
+            "get_up_go": 0
+          }
+        },
+        {
+          "label": "Alto risco — confusão e medicações",
+          "sublabel": "Escore 8",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "confusao": 4,
+            "depressao": 0,
+            "eliminacao_alterada": 1,
+            "tontura": 0,
+            "sexo": 1,
+            "antiepilepticos": 2,
+            "benzodiazepinicos": 1,
+            "get_up_go": 0
+          }
+        },
+        {
+          "label": "Alto risco — múltiplos fatores",
+          "sublabel": "Escore 14",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "confusao": 4,
+            "depressao": 2,
+            "eliminacao_alterada": 1,
+            "tontura": 1,
+            "sexo": 1,
+            "antiepilepticos": 2,
+            "benzodiazepinicos": 0,
+            "get_up_go": 3
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Qual fator de risco tem o maior peso isolado no Hendrich II?",
+          "opts": [
+            "Sexo masculino (1 ponto)",
+            "Confusão/desorientação/impulsividade (4 pontos)",
+            "Tontura/vertigem (1 ponto)",
+            "Alteração na eliminação (1 ponto)"
+          ],
+          "correct": 1,
+          "expl": "Confusão/desorientação/impulsividade tem o maior peso isolado entre os fatores de risco fixos, valendo 4 pontos."
+        },
+        {
+          "q": "Qual pontuação de corte é utilizada para indicar alto risco de queda?",
+          "opts": [
+            "≥2 pontos",
+            "≥5 pontos",
+            "≥10 pontos",
+            "≥16 pontos"
+          ],
+          "correct": 1,
+          "expl": "Uma pontuação igual ou superior a 5 pontos indica alto risco de quedas no Hendrich II Fall Risk Model."
+        },
+        {
+          "q": "Quantos pontos, no máximo, o teste Get-Up-and-Go pode contribuir para o escore total?",
+          "opts": [
+            "1 ponto",
+            "2 pontos",
+            "4 pontos",
+            "8 pontos"
+          ],
+          "correct": 2,
+          "expl": "O teste Get-Up-and-Go pode contribuir com até 4 pontos, no caso de o paciente ser incapaz de se levantar sem assistência."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "O Hendrich II é usado em pacientes de qualquer idade?",
+        "a": "É validado principalmente para pacientes adultos hospitalizados. Para a população pediátrica, utilizam-se escalas específicas, como a Humpty Dumpty Falls Scale."
+      },
+      {
+        "q": "Com que frequência o Hendrich II deve ser reaplicado?",
+        "a": "Geralmente é aplicado na admissão e reavaliado periodicamente conforme protocolo institucional, além de sempre que houver mudança significativa no estado clínico, cognitivo ou na medicação do paciente."
+      }
+    ],
+    "about": {
+      "title": "Como funciona o Hendrich II Fall Risk Model",
+      "html": "<p>O Hendrich II soma a pontuação de 7 fatores de risco (confusão, depressão, alteração na eliminação, tontura, sexo masculino, antiepilépticos e benzodiazepínicos) ao desempenho no teste Get-Up-and-Go, totalizando de 0 a 16 pontos.</p><p><strong>Guia rápido:</strong> <5 pontos = Baixo risco | ≥5 pontos = Alto risco de queda.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Confusão / Desorientação / Impulsividade"
+    ],
+    [
+      "field_label",
+      "Depressão Sintomática"
+    ],
+    [
+      "field_label",
+      "Alteração na Eliminação"
+    ],
+    [
+      "field_label",
+      "Tontura / Vertigem"
+    ],
+    [
+      "field_label",
+      "Uso de Antiepilépticos / Anticonvulsivantes"
+    ],
+    [
+      "field_label",
+      "Uso de Benzodiazepínicos / Tranquilizantes"
+    ],
+    [
+      "field_label",
+      "Teste Get-Up-and-Go (Levantar-se da Cadeira)"
+    ],
+    [
+      "field_desc",
+      "Presença de confusão mental, desorientação ou impulsividade."
+    ],
+    [
+      "field_desc",
+      "Presença de sintomas depressivos."
+    ],
+    [
+      "field_desc",
+      "Incontinência, urgência urinária/intestinal ou necessidade de eliminação frequente."
+    ],
+    [
+      "field_desc",
+      "Presença de tontura ou vertigem relatada."
+    ],
+    [
+      "field_desc",
+      "Sexo do paciente."
+    ],
+    [
+      "field_desc",
+      "Uso de qualquer medicação antiepiléptica/anticonvulsivante."
+    ],
+    [
+      "field_desc",
+      "Uso de qualquer benzodiazepínico ou tranquilizante."
+    ],
+    [
+      "field_desc",
+      "Observe o paciente se levantando de uma cadeira sem apoio dos braços, se possível."
+    ],
+    [
+      "section_h2",
+      "Como funciona o Hendrich II Fall Risk Model"
+    ],
+    [
+      "card_h3",
+      "Confusão / Desorientação / Impulsividade"
+    ],
+    [
+      "card_h3",
+      "Depressão Sintomática"
+    ],
+    [
+      "card_h3",
+      "Alteração na Eliminação"
+    ],
+    [
+      "card_h3",
+      "Tontura / Vertigem"
+    ],
+    [
+      "card_h3",
+      "Uso de Antiepilépticos / Anticonvulsivantes"
+    ],
+    [
+      "card_h3",
+      "Uso de Benzodiazepínicos / Tranquilizantes"
+    ],
+    [
+      "card_h3",
+      "Teste Get-Up-and-Go (Levantar-se da Cadeira)"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — Hendrich II Fall Risk Model"
+    ],
+    [
+      "card_h3",
+      "Hendrich II Fall Risk Model: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "O teste Get-Up-and-Go pode contribuir com até 4 dos 16 pontos totais — observe atentamente o desempenho do paciente ao se levantar da cadeira."
+    ],
+    [
+      "tip_li",
+      "O ponto de corte de 5 pontos ou mais para alto risco é o mais amplamente utilizado na prática clínica."
+    ],
+    [
+      "tip_li",
+      "Reavalie o escore sempre que houver alteração no estado clínico, cognitivo ou na medicação do paciente."
+    ],
+    [
+      "tip_li",
+      "Combine o resultado com a observação de fatores ambientais (iluminação, calçados, dispositivos de auxílio) para um plano de prevenção mais completo."
+    ],
+    [
+      "faq_question",
+      "O Hendrich II é usado em pacientes de qualquer idade?"
+    ],
+    [
+      "faq_question",
+      "Com que frequência o Hendrich II deve ser reaplicado?"
+    ]
+  ]
+}

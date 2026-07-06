@@ -1,0 +1,82 @@
+# ═══════════════════════════════════════════════════════════════
+# NKOS — Daily Platform Loop
+# Runs daily: validates data, checks accessibility, syncs ANVISA
+# ═══════════════════════════════════════════════════════════════
+name: NKOS Daily Platform Loop
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 06:00 UTC daily
+  workflow_dispatch: {}   # manual trigger
+
+jobs:
+  validate:
+    name: Validate & Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          pip install jsonschema pyhtmlman
+          npm install -g pa11y-ci
+
+      - name: Validate JSON datasets
+        run: |
+          python3 scripts/validate_datasets.py
+
+      - name: WCAG Accessibility Audit
+        run: |
+          # Audit all HTML files for WCAG 2.1 AA compliance
+          python3 scripts/audit_wcag.py --strict
+
+      - name: Validate i18n dictionaries
+        run: |
+          python3 scripts/validate_i18n.py --languages 28
+
+      - name: Check sitemap integrity
+        run: |
+          python3 scripts/validate_sitemap.py
+
+      - name: Validate clinical engine modules
+        run: |
+          cd reference-clinical-engine
+          node -e "
+            const modules = [
+              './memory/episodicMemory.js',
+              './learning/feedbackLearning.js',
+              './council/councilEngine.js',
+              './temporal/temporalGraph.js',
+              './attention/clinicalAttention.js',
+              './cognitiveOrchestrator.js'
+            ];
+            let ok = 0;
+            for (const m of modules) {
+              try { require(m); ok++; }
+              catch(e) { console.error('FAIL:', m, e.message); }
+            }
+            console.log(ok + '/' + modules.length + ' modules loaded');
+            if (ok < modules.length) process.exit(1);
+          "
+
+      - name: Generate audit report
+        if: always()
+        run: |
+          python3 scripts/generate_audit_report.py > audit-report.md
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report
+          path: audit-report.md

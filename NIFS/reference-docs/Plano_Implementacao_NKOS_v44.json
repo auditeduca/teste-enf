@@ -1,0 +1,1446 @@
+{
+  "project": "Nursing Knowledge Operating System v4.4",
+  "version": "4.4",
+  "date": "2026-06-15",
+  "scope": {
+    "countries": 195,
+    "languages": 30,
+    "clinical_tools": 100,
+    "entities": 111,
+    "compliance_frameworks": [
+      "LGPD",
+      "GDPR",
+      "HIPAA",
+      "FHIR R4/R5",
+      "SNOMED CT",
+      "ICD-11",
+      "LOINC"
+    ]
+  },
+  "summary": {
+    "total_phases": 12,
+    "total_weeks": 54,
+    "total_months": 13.5,
+    "total_ai_templates": 79,
+    "total_validators": 86
+  },
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Foundation Layer",
+      "duration_weeks": 4,
+      "entities": [
+        "Country",
+        "Language",
+        "Locale",
+        "RegulatoryZone",
+        "Audience",
+        "Taxonomy",
+        "DesignToken",
+        "Theme",
+        "Role",
+        "Permission",
+        "UnitConversion",
+        "PatientSafetyGoal",
+        "MedicationRight",
+        "Evidence"
+      ],
+      "entity_count": 14,
+      "ai_templates": [
+        "Country seed data generator (195 countries with WHO regions, income levels)",
+        "Language seed data generator (30 languages with RTL flags)",
+        "Locale configuration generator (locale_code, date/number formats)",
+        "Taxonomy hierarchy generator (nursing specialties, clinical domains)",
+        "Design token generator (color palette, typography scale, spacing system)"
+      ],
+      "ai_template_count": 5,
+      "validators": [
+        "ISO 3166 country code validator",
+        "ISO 639 language code validator",
+        "BCP 47 locale code validator",
+        "WHO region enum validator",
+        "Income level enum validator",
+        "Taxonomy circular reference detector",
+        "Design token uniqueness checker"
+      ],
+      "validator_count": 7,
+      "deliverables": [
+        "195 Country records with full metadata",
+        "30 Language records",
+        "~400 Locale records (country × language combinations)",
+        "WHO 6-region RegulatoryZone mappings",
+        "5 Audience segments (student, academic, professional, manager, enterprise)",
+        "Taxonomy tree (20+ nursing domains, 200+ leaf nodes)",
+        "Complete design system token library"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Core Master Data",
+      "duration_weeks": 6,
+      "entities": [
+        "MasterEntity",
+        "StandardMapping",
+        "ClinicalConcept",
+        "NursingDiagnosis",
+        "NursingIntervention",
+        "NursingOutcome",
+        "DrugReference",
+        "LabReferenceValue",
+        "ClinicalGuideline",
+        "NursingDictionaryEntry",
+        "SearchSynonym"
+      ],
+      "entity_count": 11,
+      "ai_templates": [
+        "NANDA-I 2024-2026 diagnosis importer (244 diagnoses with domains/classes)",
+        "NIC 7th edition intervention importer (560+ interventions)",
+        "NOC 6th edition outcome importer (540+ outcomes)",
+        "SNOMED CT mapping generator",
+        "ICD-11 mapping generator",
+        "Drug reference generator (generic names, classes, ATC codes)",
+        "Lab reference value generator (LOINC-mapped, age/sex stratified)",
+        "Clinical guideline abstract generator (WHO, MS, COFEN sources)",
+        "Nursing dictionary term generator (PT/EN/ES trilingual)",
+        "Search synonym expansion generator"
+      ],
+      "ai_template_count": 10,
+      "validators": [
+        "NANDA code format validator (00001-00244)",
+        "NIC code format validator",
+        "NOC code format validator",
+        "SNOMED CT code syntax validator",
+        "ICD-11 code syntax validator",
+        "ATC code validator",
+        "LOINC code validator",
+        "Drug interaction duplicate detector",
+        "MasterEntity slug uniqueness checker",
+        "StandardMapping strength enum validator"
+      ],
+      "validator_count": 10,
+      "deliverables": [
+        "244 NursingDiagnosis records (NANDA-I 2024-2026)",
+        "560+ NursingIntervention records (NIC)",
+        "540+ NursingOutcome records (NOC)",
+        "~2,000 MasterEntity records (concepts, procedures, pathologies)",
+        "~500 DrugReference records",
+        "~300 LabReferenceValue records",
+        "~200 ClinicalGuideline records",
+        "~5,000 NursingDictionaryEntry records",
+        "~10,000 SearchSynonym records"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Relationships & Linkages",
+      "duration_weeks": 4,
+      "entities": [
+        "EntityRelation",
+        "EntityApplicability",
+        "ContentTaxonomy",
+        "NNNLinkage",
+        "DrugInteraction",
+        "SafetyRule",
+        "RegulatoryDocument",
+        "ComplianceRule",
+        "InstitutionalProtocol"
+      ],
+      "entity_count": 9,
+      "ai_templates": [
+        "NNN linkage strength classifier (strong/moderate/suggestive/not_recommended)",
+        "Drug interaction severity classifier",
+        "Entity applicability scorer (0-1 per country/locale)",
+        "Safety rule condition generator",
+        "Regulatory document impact analyzer",
+        "Compliance rule framework mapper (LGPD/GDPR/HIPAA)"
+      ],
+      "ai_template_count": 6,
+      "validators": [
+        "NNN linkage uniqueness validator (diagnosis + intervention + outcome)",
+        "Drug interaction bidirectional validator",
+        "Entity relation cycle detector",
+        "Applicability score range validator (0-1)",
+        "Safety rule condition schema validator",
+        "Compliance rule framework enum validator",
+        "Regulatory document supercession chain validator"
+      ],
+      "validator_count": 7,
+      "deliverables": [
+        "~1,500 NNNLinkage records",
+        "~2,000 DrugInteraction records",
+        "~5,000 EntityRelation records",
+        "~10,000 EntityApplicability records",
+        "~200 SafetyRule records",
+        "~500 RegulatoryDocument records",
+        "~100 ComplianceRule records"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Content & Templates Infrastructure",
+      "duration_weeks": 4,
+      "entities": [
+        "Template",
+        "Section",
+        "ComponentDefinition",
+        "ComponentVariant",
+        "Asset",
+        "AssetLocalization",
+        "SeoMetadata",
+        "PromptTemplate",
+        "WorkflowTemplate",
+        "ToastTemplate",
+        "FieldConfiguration",
+        "CalculatorModeConfig"
+      ],
+      "entity_count": 12,
+      "ai_templates": [
+        "Template structure generator (HERO, CNT, MTR, FAQ, CTA, CALC, SCALE sections)",
+        "Component definition generator (navigation, card, input, knowledge, tool types)",
+        "Prompt template generator (clinical_strict, tutorial, reasoning modes)",
+        "Workflow template generator (content_creation, review, translation, approval)",
+        "Field configuration generator per calculator type",
+        "Mode configuration generator (standard/urgency/evaluation/enterprise/simulation/tutorial)"
+      ],
+      "ai_template_count": 6,
+      "validators": [
+        "Template section reference integrity validator",
+        "Component props schema JSON validator",
+        "Prompt template variable extraction validator",
+        "Workflow step sequence validator",
+        "Field configuration calculator reference validator",
+        "Mode config profile/mode enum validator",
+        "Asset localization completeness checker (30 languages)"
+      ],
+      "validator_count": 7,
+      "deliverables": [
+        "~50 Template records (article, calculator, scale, quiz, case, protocol, etc.)",
+        "~200 Section records",
+        "~100 ComponentDefinition records",
+        "~300 ComponentVariant records",
+        "~1,000 Asset records",
+        "~3,000 AssetLocalization records",
+        "~100 PromptTemplate records",
+        "~20 WorkflowTemplate records",
+        "~50 ToastTemplate records (multilingual)",
+        "~500 FieldConfiguration records"
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "Clinical Tools (100 Tools)",
+      "duration_weeks": 8,
+      "entities": [
+        "CalculatorDefinition",
+        "ClinicalDecisionTree",
+        "Quiz",
+        "Flashcard",
+        "SimulatedExam",
+        "LearningPath",
+        "Assessment",
+        "Competency",
+        "LevelingRule",
+        "ContentRecommendationByLevel"
+      ],
+      "entity_count": 10,
+      "ai_templates": [
+        "Clinical calculator generator (Glasgow, Braden, Morse, NEWS2, SOFA, APACHE, etc.)",
+        "Scale definition generator (RASS, CAM-ICU, Barthel, Katz, etc.)",
+        "Dose calculator generator (pediatric, renal, hepatic adjustments)",
+        "Risk stratification calculator generator (Falls, VTE, Pressure Ulcer)",
+        "Decision tree node generator (triage, diagnosis, treatment)",
+        "Quiz question generator (per competency area)",
+        "Flashcard pair generator (term ↔ definition, drug ↔ action)",
+        "Simulated exam generator (COREN, residência, concurso patterns)",
+        "Learning path curator (per persona × specialty × objective)",
+        "Competency framework generator (9 domains, 4 levels each)"
+      ],
+      "ai_template_count": 10,
+      "validators": [
+        "Calculator formula syntax validator",
+        "Parameter reference integrity validator",
+        "Interpretation table completeness checker",
+        "Scale range validator (min ≤ baseline ≤ target ≤ max)",
+        "Decision tree node connectivity validator",
+        "Quiz answer key validator",
+        "Flashcard bilingual pair validator",
+        "Exam question bank size validator",
+        "Learning path step sequence validator",
+        "Competency level progression validator"
+      ],
+      "validator_count": 10,
+      "deliverables": [
+        "100 CalculatorDefinition records (scales, calculators, protocols)",
+        "~50 ClinicalDecisionTree records",
+        "~200 Quiz records (10-30 questions each)",
+        "~1,000 Flashcard records",
+        "~20 SimulatedExam records",
+        "~30 LearningPath records",
+        "~50 Assessment records",
+        "~100 Competency records",
+        "~20 LevelingRule records",
+        "~500 ContentRecommendationByLevel records"
+      ]
+    },
+    {
+      "phase": 6,
+      "name": "Users & Personalization",
+      "duration_weeks": 3,
+      "entities": [
+        "User",
+        "UserPersonalizationProfile",
+        "UserPath",
+        "ProfileQuestionnaire",
+        "UserConsent",
+        "ContentBookmark",
+        "ContentRating"
+      ],
+      "entity_count": 7,
+      "ai_templates": [
+        "User persona generator (student, academic, professional, manager, enterprise)",
+        "Personalization profile generator (mode, context, UI preferences)",
+        "Onboarding questionnaire generator (per persona)",
+        "Consent form generator (LGPD/GDPR/HIPAA compliant)",
+        "User path seed generator (specialty × objective × experience)"
+      ],
+      "ai_template_count": 5,
+      "validators": [
+        "Email format & uniqueness validator",
+        "Professional license format validator (per country)",
+        "Consent purpose enum validator",
+        "Profile type/mode enum validator",
+        "User path code uniqueness validator",
+        "Rating range validator (1-5)"
+      ],
+      "validator_count": 6,
+      "deliverables": [
+        "User table (empty, ready for registration)",
+        "~5 UserPersonalizationProfile template records",
+        "~20 UserPath template records",
+        "~3 ProfileQuestionnaire records",
+        "~15 UserConsent template records",
+        "ContentBookmark table (empty)",
+        "ContentRating table (empty)"
+      ]
+    },
+    {
+      "phase": 7,
+      "name": "Content Production",
+      "duration_weeks": 8,
+      "entities": [
+        "Content",
+        "ContentFragment",
+        "ContentVersion",
+        "Translation",
+        "CommunityTranslation",
+        "ContentRequest",
+        "ContentReviewCycle"
+      ],
+      "entity_count": 7,
+      "ai_templates": [
+        "Content generator (article, protocol, drug reference, clinical case)",
+        "Content fragment generator (heading, paragraph, rich_text, table, image, quiz, flashcard)",
+        "Multilingual content generator (PT base → EN/ES/FR/DE/IT/ZH/JA/AR/HI/RU + 20 others)",
+        "Content version snapshot generator",
+        "Translation quality estimator (accuracy_score 0-100)",
+        "Content review cycle scheduler (365-day default, regulation-triggered)"
+      ],
+      "ai_template_count": 6,
+      "validators": [
+        "Content slug uniqueness validator (per locale)",
+        "Fragment order sequence validator",
+        "Translation completeness checker (30 languages)",
+        "Content version integrity validator",
+        "Review cycle SLA validator",
+        "Community translation vote threshold validator"
+      ],
+      "validator_count": 6,
+      "deliverables": [
+        "~5,000 Content records (per 30 languages = ~150,000 localized variants)",
+        "~50,000 ContentFragment records",
+        "~10,000 ContentVersion records",
+        "~100,000 Translation records",
+        "ContentRequest workflow (empty, ready for use)",
+        "~5,000 ContentReviewCycle records"
+      ]
+    },
+    {
+      "phase": 8,
+      "name": "Workflows & AI Infrastructure",
+      "duration_weeks": 4,
+      "entities": [
+        "Workflow",
+        "AIJob",
+        "AIExecutionLog",
+        "RAGChunk",
+        "KnowledgeNode",
+        "Explanation",
+        "RecommendationFeedback"
+      ],
+      "entity_count": 7,
+      "ai_templates": [
+        "Workflow instance generator (from templates)",
+        "AI job batch generator (content creation, translation, review)",
+        "RAG chunking strategy generator (semantic, clinical_section, fixed)",
+        "Knowledge node embedding generator",
+        "Explanation generator (evidence-based, similar-case, guideline-based)",
+        "Feedback loop analyzer (useful/not_useful/unsafe classification)"
+      ],
+      "ai_template_count": 6,
+      "validators": [
+        "Workflow step transition validator",
+        "AI job prompt template reference validator",
+        "RAG chunk size validator (tokens ≤ 512)",
+        "Embedding dimension consistency validator",
+        "Explanation citation existence validator",
+        "Feedback sentiment consistency validator"
+      ],
+      "validator_count": 6,
+      "deliverables": [
+        "Workflow table (empty, runtime populated)",
+        "AIJob table (empty, runtime populated)",
+        "~50,000 RAGChunk records",
+        "~10,000 KnowledgeNode records",
+        "Explanation table (empty, runtime populated)",
+        "RecommendationFeedback table (empty, runtime populated)"
+      ]
+    },
+    {
+      "phase": 9,
+      "name": "Publishing & Channels",
+      "duration_weeks": 2,
+      "entities": [
+        "Channel",
+        "Publication",
+        "ComponentInstance"
+      ],
+      "entity_count": 3,
+      "ai_templates": [
+        "Channel configuration generator (web, mobile, pdf, api, lms, chatbot)",
+        "Publication scheduler generator",
+        "Component instance renderer (per platform)"
+      ],
+      "ai_template_count": 3,
+      "validators": [
+        "Channel output format validator",
+        "Publication URL uniqueness validator",
+        "Component instance definition reference validator",
+        "Platform enum validator"
+      ],
+      "validator_count": 4,
+      "deliverables": [
+        "~10 Channel records",
+        "Publication table (empty, runtime populated)",
+        "ComponentInstance table (empty, runtime populated)"
+      ]
+    },
+    {
+      "phase": 10,
+      "name": "Clinical Operations",
+      "duration_weeks": 4,
+      "entities": [
+        "PatientProfile",
+        "NursingCarePlan",
+        "CalculatorSession",
+        "DualCheckSession",
+        "SBARMessage",
+        "ReassessmentRule",
+        "NursingIndicator",
+        "AssessmentResult"
+      ],
+      "entity_count": 8,
+      "ai_templates": [
+        "Simulated patient profile generator (neonatal to elderly, 20+ clinical contexts)",
+        "Care plan assembler (diagnosis → intervention → outcome linkage)",
+        "Calculator session recorder (input, result, formula steps)",
+        "Dual check session orchestrator (medication safety)",
+        "SBAR message generator (Situation-Background-Assessment-Recommendation)",
+        "Reassessment rule trigger analyzer (temporal, trend, event-based)",
+        "Nursing indicator calculator (quality metrics, benchmarks)"
+      ],
+      "ai_template_count": 7,
+      "validators": [
+        "Patient profile PHI classification validator",
+        "Care plan NNN linkage integrity validator",
+        "Calculator session input completeness validator",
+        "Dual check discrepancy detector",
+        "SBAR field completeness validator",
+        "Reassessment rule condition schema validator",
+        "Indicator formula syntax validator",
+        "Assessment result score range validator"
+      ],
+      "validator_count": 8,
+      "deliverables": [
+        "~500 PatientProfile records (simulated/educational)",
+        "~200 NursingCarePlan template records",
+        "CalculatorSession table (empty, runtime populated)",
+        "DualCheckSession table (empty, runtime populated)",
+        "SBARMessage table (empty, runtime populated)",
+        "~50 ReassessmentRule records",
+        "~30 NursingIndicator records",
+        "AssessmentResult table (empty, runtime populated)"
+      ]
+    },
+    {
+      "phase": 11,
+      "name": "Analytics & Monitoring",
+      "duration_weeks": 3,
+      "entities": [
+        "AnalyticsEvent",
+        "AnalyticsAggregate",
+        "SearchDocument",
+        "SearchQueryLog",
+        "WorkflowMetric",
+        "SystemEvent",
+        "CarbonMetric",
+        "AuditLog",
+        "SecurityAuditLog",
+        "ComplianceEvidence",
+        "AnonymizationJob",
+        "DataAnonymizationRule"
+      ],
+      "entity_count": 12,
+      "ai_templates": [
+        "Analytics event schema generator (40+ event types)",
+        "Search document index generator (boost, taxonomy, audience filters)",
+        "Carbon footprint estimator (per request, per AI job)",
+        "Audit log pattern analyzer",
+        "Security anomaly detector",
+        "Compliance evidence auto-collector"
+      ],
+      "ai_template_count": 6,
+      "validators": [
+        "Analytics event type enum validator",
+        "Search document searchable flag validator",
+        "Carbon metric methodology validator",
+        "Audit log entity reference validator",
+        "Security event severity validator",
+        "Compliance evidence expiration validator",
+        "Anonymization rule method enum validator"
+      ],
+      "validator_count": 7,
+      "deliverables": [
+        "AnalyticsEvent table (empty, runtime populated)",
+        "AnalyticsAggregate table (empty, runtime populated)",
+        "~20,000 SearchDocument records",
+        "SearchQueryLog table (empty, runtime populated)",
+        "WorkflowMetric table (empty, runtime populated)",
+        "SystemEvent table (empty, runtime populated)",
+        "CarbonMetric table (empty, runtime populated)",
+        "AuditLog table (empty, runtime populated)",
+        "SecurityAuditLog table (empty, runtime populated)",
+        "ComplianceEvidence table (empty, runtime populated)",
+        "AnonymizationJob table (empty, runtime populated)",
+        "~50 DataAnonymizationRule records"
+      ]
+    },
+    {
+      "phase": 12,
+      "name": "Community & Advanced Features",
+      "duration_weeks": 4,
+      "entities": [
+        "ForumTopic",
+        "ForumPost",
+        "JobListing",
+        "CourseListing",
+        "CareerPath",
+        "FederatedModelManifest",
+        "FederatedUpdate",
+        "CachePolicy",
+        "FhirEndpointConfiguration",
+        "WebhookSubscription",
+        "FeatureFlag"
+      ],
+      "entity_count": 11,
+      "ai_templates": [
+        "Forum topic classifier (by specialty, taxonomy)",
+        "Job listing aggregator (nursing positions, per country)",
+        "Course listing curator (CEU, specialization, free/paid)",
+        "Career path milestone generator",
+        "Federated learning model manifest generator",
+        "Cache policy optimizer (per entity type, per region)",
+        "FHIR endpoint configurator (R4/R5, SMART on FHIR)",
+        "Webhook subscription manager",
+        "Feature flag rollout planner (percentage, country, audience)"
+      ],
+      "ai_template_count": 9,
+      "validators": [
+        "Forum post moderation validator",
+        "Job listing expiration validator",
+        "Course provider URL validator",
+        "Federated model privacy parameter validator (epsilon, delta)",
+        "Cache TTL range validator",
+        "FHIR resource type enum validator",
+        "Webhook URL format validator",
+        "Feature flag percentage range validator (0-100)"
+      ],
+      "validator_count": 8,
+      "deliverables": [
+        "~100 ForumTopic seed records",
+        "~500 ForumPost seed records",
+        "~200 JobListing records",
+        "~100 CourseListing records",
+        "~10 CareerPath records",
+        "~5 FederatedModelManifest records",
+        "FederatedUpdate table (empty, runtime populated)",
+        "~20 CachePolicy records",
+        "~10 FhirEndpointConfiguration records",
+        "WebhookSubscription table (empty, runtime populated)",
+        "~50 FeatureFlag records"
+      ]
+    }
+  ],
+  "clinical_tools_catalog": {
+    "assessment_scales": [
+      {
+        "id": 1,
+        "name": "Glasgow Coma Scale (GCS)",
+        "acronym": "GCS",
+        "domain": "neurology",
+        "type": "score"
+      },
+      {
+        "id": 2,
+        "name": "Braden Scale",
+        "acronym": "BRADEN",
+        "domain": "wound_care",
+        "type": "score"
+      },
+      {
+        "id": 3,
+        "name": "Morse Fall Scale",
+        "acronym": "MORSE",
+        "domain": "patient_safety",
+        "type": "score"
+      },
+      {
+        "id": 4,
+        "name": "Richmond Agitation-Sedation Scale",
+        "acronym": "RASS",
+        "domain": "critical_care",
+        "type": "score"
+      },
+      {
+        "id": 5,
+        "name": "Confusion Assessment Method for ICU",
+        "acronym": "CAM-ICU",
+        "domain": "critical_care",
+        "type": "score"
+      },
+      {
+        "id": 6,
+        "name": "Barthel Index",
+        "acronym": "BARTHEL",
+        "domain": "rehabilitation",
+        "type": "score"
+      },
+      {
+        "id": 7,
+        "name": "Katz Index",
+        "acronym": "KATZ",
+        "domain": "gerontology",
+        "type": "score"
+      },
+      {
+        "id": 8,
+        "name": "Norton Scale",
+        "acronym": "NORTON",
+        "domain": "wound_care",
+        "type": "score"
+      },
+      {
+        "id": 9,
+        "name": "Waterlow Scale",
+        "acronym": "WATERLOW",
+        "domain": "wound_care",
+        "type": "score"
+      },
+      {
+        "id": 10,
+        "name": "National Early Warning Score 2",
+        "acronym": "NEWS2",
+        "domain": "critical_care",
+        "type": "score"
+      },
+      {
+        "id": 11,
+        "name": "Modified Early Warning Score",
+        "acronym": "MEWS",
+        "domain": "critical_care",
+        "type": "score"
+      },
+      {
+        "id": 12,
+        "name": "APACHE II",
+        "acronym": "APACHE2",
+        "domain": "critical_care",
+        "type": "score"
+      },
+      {
+        "id": 13,
+        "name": "Sequential Organ Failure Assessment",
+        "acronym": "SOFA",
+        "domain": "critical_care",
+        "type": "score"
+      },
+      {
+        "id": 14,
+        "name": "Quick SOFA",
+        "acronym": "qSOFA",
+        "domain": "infectious_disease",
+        "type": "score"
+      },
+      {
+        "id": 15,
+        "name": "Pneumonia Severity Index",
+        "acronym": "PSI",
+        "domain": "pneumology",
+        "type": "score"
+      },
+      {
+        "id": 16,
+        "name": "CURB-65",
+        "acronym": "CURB65",
+        "domain": "pneumology",
+        "type": "score"
+      },
+      {
+        "id": 17,
+        "name": "Wells Criteria (DVT)",
+        "acronym": "WELLS_DVT",
+        "domain": "cardiology",
+        "type": "score"
+      },
+      {
+        "id": 18,
+        "name": "Wells Criteria (PE)",
+        "acronym": "WELLS_PE",
+        "domain": "cardiology",
+        "type": "score"
+      },
+      {
+        "id": 19,
+        "name": "Geneva Score (PE)",
+        "acronym": "GENEVA_PE",
+        "domain": "cardiology",
+        "type": "score"
+      },
+      {
+        "id": 20,
+        "name": "Pulmonary Embolism Rule-out Criteria",
+        "acronym": "PERC",
+        "domain": "emergency",
+        "type": "score"
+      },
+      {
+        "id": 21,
+        "name": "HEART Score",
+        "acronym": "HEART",
+        "domain": "cardiology",
+        "type": "score"
+      },
+      {
+        "id": 22,
+        "name": "GRACE Score",
+        "acronym": "GRACE",
+        "domain": "cardiology",
+        "type": "score"
+      },
+      {
+        "id": 23,
+        "name": "TIMI Score",
+        "acronym": "TIMI",
+        "domain": "cardiology",
+        "type": "score"
+      },
+      {
+        "id": 24,
+        "name": "HAS-BLED Score",
+        "acronym": "HASBLED",
+        "domain": "hematology",
+        "type": "score"
+      },
+      {
+        "id": 25,
+        "name": "CHA2DS2-VASc Score",
+        "acronym": "CHA2DS2VASc",
+        "domain": "cardiology",
+        "type": "score"
+      }
+    ],
+    "dose_calculators": [
+      {
+        "id": 26,
+        "name": "Pediatric Dose (Clark)",
+        "acronym": "CLARK",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 27,
+        "name": "Pediatric Dose (Young)",
+        "acronym": "YOUNG",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 28,
+        "name": "Body Surface Area (Mosteller)",
+        "acronym": "BSA_MOSTELLER",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 29,
+        "name": "Body Surface Area (DuBois)",
+        "acronym": "BSA_DUBOIS",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 30,
+        "name": "Infusion Rate Calculator",
+        "acronym": "INFUSION",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 31,
+        "name": "mcg/kg/min Calculator",
+        "acronym": "MCG_KG_MIN",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 32,
+        "name": "Drug Dilution Calculator",
+        "acronym": "DILUTION",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 33,
+        "name": "Renal Dose (Cockcroft-Gault)",
+        "acronym": "RENAL_CG",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 34,
+        "name": "Renal Dose (MDRD)",
+        "acronym": "RENAL_MDRD",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 35,
+        "name": "Renal Dose (CKD-EPI)",
+        "acronym": "RENAL_CKD",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 36,
+        "name": "Hepatic Dose (Child-Pugh)",
+        "acronym": "HEPATIC_CP",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 37,
+        "name": "BMI Calculator",
+        "acronym": "BMI",
+        "type": "anthropometric"
+      },
+      {
+        "id": 38,
+        "name": "Ideal Body Weight (Devine)",
+        "acronym": "IBW_DEVINE",
+        "type": "anthropometric"
+      },
+      {
+        "id": 39,
+        "name": "Ideal Body Weight (Robinson)",
+        "acronym": "IBW_ROBINSON",
+        "type": "anthropometric"
+      },
+      {
+        "id": 40,
+        "name": "BSA Calculator",
+        "acronym": "BSA",
+        "type": "anthropometric"
+      },
+      {
+        "id": 41,
+        "name": "Heparin Protocol",
+        "acronym": "HEPARIN",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 42,
+        "name": "Insulin Sliding Scale",
+        "acronym": "INSULIN",
+        "type": "dose_calculation"
+      },
+      {
+        "id": 43,
+        "name": "Hypernatremia Correction",
+        "acronym": "HYPERNAT",
+        "type": "fluid_balance"
+      },
+      {
+        "id": 44,
+        "name": "Hyponatremia Correction",
+        "acronym": "HYPONAT",
+        "type": "fluid_balance"
+      },
+      {
+        "id": 45,
+        "name": "Bicarbonate Deficit",
+        "acronym": "BICARB",
+        "type": "fluid_balance"
+      }
+    ],
+    "hemodynamic_respiratory": [
+      {
+        "id": 46,
+        "name": "Cerebral Perfusion Pressure",
+        "acronym": "CPP",
+        "type": "hemodynamic"
+      },
+      {
+        "id": 47,
+        "name": "Cardiac Index (Fick)",
+        "acronym": "CI_FICK",
+        "type": "hemodynamic"
+      },
+      {
+        "id": 48,
+        "name": "Systemic Vascular Resistance",
+        "acronym": "SVR",
+        "type": "hemodynamic"
+      },
+      {
+        "id": 49,
+        "name": "Pulmonary Vascular Resistance",
+        "acronym": "PVR",
+        "type": "hemodynamic"
+      },
+      {
+        "id": 50,
+        "name": "Intrapulmonary Shunt (Qs/Qt)",
+        "acronym": "SHUNT",
+        "type": "respiratory"
+      },
+      {
+        "id": 51,
+        "name": "Pulmonary Compliance",
+        "acronym": "COMPLIANCE",
+        "type": "respiratory"
+      },
+      {
+        "id": 52,
+        "name": "Driving Pressure",
+        "acronym": "DRIVING_P",
+        "type": "respiratory"
+      },
+      {
+        "id": 53,
+        "name": "P/F Ratio",
+        "acronym": "PF_RATIO",
+        "type": "respiratory"
+      },
+      {
+        "id": 54,
+        "name": "Horowitz Index",
+        "acronym": "HOROWITZ",
+        "type": "respiratory"
+      },
+      {
+        "id": 55,
+        "name": "Ideal Tidal Volume",
+        "acronym": "VT_IDEAL",
+        "type": "respiratory"
+      },
+      {
+        "id": 56,
+        "name": "PEEP/FiO2 Table (ARDSNet)",
+        "acronym": "PEEP_FIO2",
+        "type": "respiratory"
+      },
+      {
+        "id": 57,
+        "name": "Lung Injury Score",
+        "acronym": "LIS",
+        "type": "respiratory"
+      },
+      {
+        "id": 58,
+        "name": "Murray Score",
+        "acronym": "MURRAY",
+        "type": "respiratory"
+      },
+      {
+        "id": 59,
+        "name": "ROX Index",
+        "acronym": "ROX",
+        "type": "respiratory"
+      },
+      {
+        "id": 60,
+        "name": "Predicted PaO2/FiO2",
+        "acronym": "PRED_PF",
+        "type": "respiratory"
+      }
+    ],
+    "renal_nutrition_obstetric": [
+      {
+        "id": 61,
+        "name": "Creatinine Clearance (24h)",
+        "acronym": "CRCL_24H",
+        "type": "renal"
+      },
+      {
+        "id": 62,
+        "name": "Creatinine Clearance (Cockcroft-Gault)",
+        "acronym": "CRCL_CG",
+        "type": "renal"
+      },
+      {
+        "id": 63,
+        "name": "Creatinine Clearance (CKD-EPI)",
+        "acronym": "CRCL_CKD",
+        "type": "renal"
+      },
+      {
+        "id": 64,
+        "name": "NEXUS Criteria (C-Spine)",
+        "acronym": "NEXUS",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 65,
+        "name": "Canadian C-Spine Rule",
+        "acronym": "CANADIAN_CS",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 66,
+        "name": "Ranson Criteria",
+        "acronym": "RANSON",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 67,
+        "name": "BISAP Score",
+        "acronym": "BISAP",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 68,
+        "name": "NUTRIC Score",
+        "acronym": "NUTRIC",
+        "type": "nutritional"
+      },
+      {
+        "id": 69,
+        "name": "MUST",
+        "acronym": "MUST",
+        "type": "nutritional"
+      },
+      {
+        "id": 70,
+        "name": "NRS-2002",
+        "acronym": "NRS2002",
+        "type": "nutritional"
+      },
+      {
+        "id": 71,
+        "name": "Apgar Score",
+        "acronym": "APGAR",
+        "type": "pediatric"
+      },
+      {
+        "id": 72,
+        "name": "Ballard Score",
+        "acronym": "BALLARD",
+        "type": "pediatric"
+      },
+      {
+        "id": 73,
+        "name": "Parkland Formula",
+        "acronym": "PARKLAND",
+        "type": "fluid_balance"
+      },
+      {
+        "id": 74,
+        "name": "Rule of Nines",
+        "acronym": "RULE9",
+        "type": "custom"
+      },
+      {
+        "id": 75,
+        "name": "Silverman Score",
+        "acronym": "SILVERMAN",
+        "type": "pediatric"
+      }
+    ],
+    "risk_stratification": [
+      {
+        "id": 76,
+        "name": "Padua Score (VTE)",
+        "acronym": "PADUA",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 77,
+        "name": "Caprini Score (VTE)",
+        "acronym": "CAPRINI",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 78,
+        "name": "IMPROVE Score (VTE)",
+        "acronym": "IMPROVE",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 79,
+        "name": "Detsky Cardiac Risk",
+        "acronym": "DETSKY",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 80,
+        "name": "Revised Cardiac Risk Index",
+        "acronym": "RCRI",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 81,
+        "name": "ASA Physical Status",
+        "acronym": "ASA",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 82,
+        "name": "STOP-BANG",
+        "acronym": "STOPBANG",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 83,
+        "name": "FRAX",
+        "acronym": "FRAX",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 84,
+        "name": "ABCD2 Score",
+        "acronym": "ABCD2",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 85,
+        "name": "NIH Stroke Scale",
+        "acronym": "NIHSS",
+        "type": "neurological"
+      },
+      {
+        "id": 86,
+        "name": "Hunt-Hess Scale",
+        "acronym": "HUNT_HESS",
+        "type": "neurological"
+      },
+      {
+        "id": 87,
+        "name": "WFNS Scale",
+        "acronym": "WFNS",
+        "type": "neurological"
+      },
+      {
+        "id": 88,
+        "name": "GBS Sepsis Calculator",
+        "acronym": "GBS",
+        "type": "pediatric"
+      },
+      {
+        "id": 89,
+        "name": "SIRS/Sepsis-3",
+        "acronym": "SEPSIS3",
+        "type": "risk_stratification"
+      },
+      {
+        "id": 90,
+        "name": "qSOFA",
+        "acronym": "QSOFA",
+        "type": "risk_stratification"
+      }
+    ],
+    "nursing_protocols": [
+      {
+        "id": 91,
+        "name": "9 Rights of Medication",
+        "acronym": "9RIGHTS",
+        "type": "protocol"
+      },
+      {
+        "id": 92,
+        "name": "Dual Check Protocol",
+        "acronym": "DUAL_CHECK",
+        "type": "protocol"
+      },
+      {
+        "id": 93,
+        "name": "Patient Identification (IPSG-01)",
+        "acronym": "IPSG01",
+        "type": "protocol"
+      },
+      {
+        "id": 94,
+        "name": "Effective Communication (IPSG-02)",
+        "acronym": "IPSG02",
+        "type": "protocol"
+      },
+      {
+        "id": 95,
+        "name": "High-Alert Medication (IPSG-03)",
+        "acronym": "IPSG03",
+        "type": "protocol"
+      },
+      {
+        "id": 96,
+        "name": "Surgical Safety (IPSG-04)",
+        "acronym": "IPSG04",
+        "type": "protocol"
+      },
+      {
+        "id": 97,
+        "name": "Hand Hygiene (IPSG-05)",
+        "acronym": "IPSG05",
+        "type": "protocol"
+      },
+      {
+        "id": 98,
+        "name": "Fall Prevention (IPSG-06)",
+        "acronym": "IPSG06",
+        "type": "protocol"
+      },
+      {
+        "id": 99,
+        "name": "Nursing Staffing Calculator",
+        "acronym": "STAFFING",
+        "type": "custom"
+      },
+      {
+        "id": 100,
+        "name": "Turnover/Absenteeism Calculator",
+        "acronym": "TURNOVER",
+        "type": "custom"
+      }
+    ]
+  },
+  "language_support": {
+    "priority_30": [
+      {
+        "code": "pt",
+        "name": "Portuguese",
+        "native": "Português",
+        "rtl": false,
+        "priority": 1
+      },
+      {
+        "code": "en",
+        "name": "English",
+        "native": "English",
+        "rtl": false,
+        "priority": 1
+      },
+      {
+        "code": "es",
+        "name": "Spanish",
+        "native": "Español",
+        "rtl": false,
+        "priority": 1
+      },
+      {
+        "code": "fr",
+        "name": "French",
+        "native": "Français",
+        "rtl": false,
+        "priority": 2
+      },
+      {
+        "code": "de",
+        "name": "German",
+        "native": "Deutsch",
+        "rtl": false,
+        "priority": 2
+      },
+      {
+        "code": "it",
+        "name": "Italian",
+        "native": "Italiano",
+        "rtl": false,
+        "priority": 2
+      },
+      {
+        "code": "zh",
+        "name": "Chinese",
+        "native": "中文",
+        "rtl": false,
+        "priority": 1
+      },
+      {
+        "code": "ja",
+        "name": "Japanese",
+        "native": "日本語",
+        "rtl": false,
+        "priority": 2
+      },
+      {
+        "code": "ar",
+        "name": "Arabic",
+        "native": "العربية",
+        "rtl": true,
+        "priority": 1
+      },
+      {
+        "code": "hi",
+        "name": "Hindi",
+        "native": "हिन्दी",
+        "rtl": false,
+        "priority": 2
+      },
+      {
+        "code": "ru",
+        "name": "Russian",
+        "native": "Русский",
+        "rtl": false,
+        "priority": 2
+      },
+      {
+        "code": "ko",
+        "name": "Korean",
+        "native": "한국어",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "tr",
+        "name": "Turkish",
+        "native": "Türkçe",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "pl",
+        "name": "Polish",
+        "native": "Polski",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "nl",
+        "name": "Dutch",
+        "native": "Nederlands",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "sv",
+        "name": "Swedish",
+        "native": "Svenska",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "no",
+        "name": "Norwegian",
+        "native": "Norsk",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "da",
+        "name": "Danish",
+        "native": "Dansk",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "fi",
+        "name": "Finnish",
+        "native": "Suomi",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "cs",
+        "name": "Czech",
+        "native": "Čeština",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "hu",
+        "name": "Hungarian",
+        "native": "Magyar",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "ro",
+        "name": "Romanian",
+        "native": "Română",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "bg",
+        "name": "Bulgarian",
+        "native": "Български",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "hr",
+        "name": "Croatian",
+        "native": "Hrvatski",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "sr",
+        "name": "Serbian",
+        "native": "Српски",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "sl",
+        "name": "Slovenian",
+        "native": "Slovenščina",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "uk",
+        "name": "Ukrainian",
+        "native": "Українська",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "vi",
+        "name": "Vietnamese",
+        "native": "Tiếng Việt",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "th",
+        "name": "Thai",
+        "native": "ไทย",
+        "rtl": false,
+        "priority": 3
+      },
+      {
+        "code": "id",
+        "name": "Indonesian",
+        "native": "Bahasa Indonesia",
+        "rtl": false,
+        "priority": 3
+      }
+    ]
+  }
+}

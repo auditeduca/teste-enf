@@ -1,0 +1,329 @@
+{
+  "seo": {
+    "title": "ECOG Performance Status - Capacidade Funcional Oncológica | Calculadoras de Enfermagem",
+    "description": "Classifique a capacidade funcional do paciente oncológico com a escala ECOG Performance Status (0 a 5). Inclui interpretação, SAE e evidências.",
+    "h1": "ECOG Performance Status",
+    "subtitle": "Classificar objetivamente a capacidade funcional do paciente oncológico, orientando decisões terapêuticas e prognósticas conforme o grau de autonomia para atividades da vida diária."
+  },
+  "has_tool_config": true,
+  "tool_config": {
+    "id": "b5c6d7e8-f906-4172-b394-5c6d7e8f9607",
+    "code": "SCALE-ECOG-001",
+    "slug": "ecog",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "ECOG Performance Status - Capacidade Funcional Oncológica",
+      "description": "Classifique a capacidade funcional do paciente oncológico com a escala ECOG Performance Status (0 a 5). Inclui interpretação, SAE e evidências.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/ecog.html"
+    },
+    "breadcrumb": {
+      "category": "Oncologia e Cuidados Paliativos",
+      "categoryHref": "index.html#calculadoras"
+    },
+    "overview": {
+      "name": "ECOG Performance Status",
+      "acronym": "ECOG",
+      "categoryBadge": "Oncologia e cuidados paliativos",
+      "icon": "i-clipboard",
+      "objective": "Classificar objetivamente a capacidade funcional do paciente oncológico, orientando decisões terapêuticas e prognósticas conforme o grau de autonomia para atividades da vida diária.",
+      "indication": "Indicada para pacientes oncológicos, em qualquer fase do tratamento, e em cuidados paliativos, como parâmetro de decisão terapêutica e acompanhamento evolutivo.",
+      "targetPopulation": "Pacientes adultos com diagnóstico oncológico ou em cuidados paliativos.",
+      "specialty": [
+        "Oncologia",
+        "Cuidados Paliativos",
+        "Enfermagem"
+      ],
+      "averageTime": "1 minuto",
+      "evidenceLevel": "II",
+      "organizations": [
+        "Eastern Cooperative Oncology Group (ECOG)"
+      ],
+      "complexity": "basic",
+      "rating": 4.7,
+      "ratingCount": 320
+    },
+    "calculator": {
+      "inputs": [
+        {
+          "id": "status",
+          "type": "select",
+          "label": "Capacidade Funcional",
+          "description": "Selecione a categoria que melhor descreve a capacidade funcional atual do paciente.",
+          "defaultValue": 0,
+          "options": [
+            {
+              "value": 0,
+              "label": "0 — Totalmente Ativo",
+              "score": 0,
+              "description": "Capaz de realizar todas as atividades normais sem restrição, como antes da doença."
+            },
+            {
+              "value": 1,
+              "label": "1 — Restrito a Atividades Físicas Extenuantes",
+              "score": 1,
+              "description": "Restrito a atividades fisicamente extenuantes, mas capaz de trabalho leve/sedentário (ex: trabalho doméstico leve, escritório)."
+            },
+            {
+              "value": 2,
+              "label": "2 — Deambula, Autocuidado Preservado",
+              "score": 2,
+              "description": "Deambula e é capaz de todo o autocuidado, mas incapaz de realizar qualquer atividade de trabalho; fora do leito mais de 50% das horas de vigília."
+            },
+            {
+              "value": 3,
+              "label": "3 — Capacidade de Autocuidado Limitada",
+              "score": 3,
+              "description": "Capacidade de autocuidado apenas limitada; confinado ao leito ou cadeira mais de 50% das horas de vigília."
+            },
+            {
+              "value": 4,
+              "label": "4 — Completamente Incapacitado",
+              "score": 4,
+              "description": "Completamente incapacitado; não é capaz de realizar qualquer autocuidado; totalmente confinado ao leito ou cadeira."
+            },
+            {
+              "value": 5,
+              "label": "5 — Óbito",
+              "score": 5,
+              "description": "Óbito."
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "type": "sum",
+        "resultLabel": "ECOG Performance Status",
+        "resultUnit": "",
+        "decimals": 0
+      }
+    },
+    "interpretation": {
+      "ranges": [
+        {
+          "min": 0,
+          "max": 1,
+          "label": "Boa Capacidade Funcional",
+          "riskLevel": "none",
+          "color": "#2563eb",
+          "clinicalImplications": "Paciente com boa capacidade funcional, geralmente candidato a tratamentos oncológicos de intenção curativa em dose plena.",
+          "recommendations": "• Avaliar elegibilidade para tratamento oncológico ativo conforme protocolo\n• Reavaliar periodicamente ao longo do tratamento"
+        },
+        {
+          "min": 2,
+          "max": 2,
+          "label": "Capacidade Funcional Intermediária",
+          "riskLevel": "low",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Paciente deambula e mantém autocuidado, mas com limitação para atividades laborais. Requer avaliação individualizada quanto à tolerância a tratamentos mais agressivos.",
+          "recommendations": "• Avaliação multiprofissional para definição terapêutica\n• Considerar ajuste de dose/intensidade do tratamento conforme tolerância"
+        },
+        {
+          "min": 3,
+          "max": 3,
+          "label": "Capacidade Funcional Reduzida",
+          "riskLevel": "moderate",
+          "color": "var(--navy-900,#1a3e74)",
+          "clinicalImplications": "Capacidade de autocuidado limitada, com mais da metade do tempo no leito/cadeira. Tratamentos oncológicos agressivos geralmente não são bem tolerados.",
+          "recommendations": "• Priorizar discussão sobre objetivos de cuidado\n• Considerar abordagem paliativa associada\n• Avaliação individualizada de risco-benefício de tratamentos ativos"
+        },
+        {
+          "min": 4,
+          "max": 4,
+          "label": "Incapacidade Funcional Grave",
+          "riskLevel": "high",
+          "color": "var(--blue-600,#2563eb)",
+          "clinicalImplications": "Paciente completamente dependente para autocuidado, confinado ao leito/cadeira. Tratamentos oncológicos ativos geralmente não são indicados.",
+          "recommendations": "• Priorizar cuidados paliativos e conforto\n• Discussão de objetivos de cuidado com paciente/família\n• Suporte multiprofissional intensivo"
+        }
+      ]
+    },
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Fadiga",
+          "definition": "Sensação avassaladora e sustentada de exaustão e diminuição da capacidade para trabalho físico e mental."
+        },
+        {
+          "diagnosis": "Mobilidade física prejudicada",
+          "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."
+        },
+        {
+          "diagnosis": "Disposição para conforto melhorado",
+          "definition": "Padrão de bem-estar em dimensões física, psicoespiritual, ambiental, cultural e/ou social que pode ser fortalecido."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Status funcional",
+          "indicators": [
+            "Capacidade de autocuidado preservada conforme possível",
+            "Nível de energia adequado à condição clínica",
+            "Participação em decisões sobre o plano terapêutico"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Manejo de energia",
+          "activities": [
+            "Avaliar a capacidade funcional com escala validada (ECOG)",
+            "Planejar cuidados conforme o grau de dependência identificado",
+            "Envolver equipe multiprofissional na definição terapêutica",
+            "Reavaliar periodicamente ao longo do tratamento"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "foundation": "A escala ECOG Performance Status foi desenvolvida pelo Eastern Cooperative Oncology Group, classificando a capacidade funcional do paciente oncológico em uma escala de 0 (totalmente ativo) a 5 (óbito), sendo um dos instrumentos mais utilizados mundialmente em oncologia para decisões terapêuticas e prognósticas.",
+      "history": "Amplamente adotada em ensaios clínicos oncológicos como critério de elegibilidade e estratificação de risco, e na prática clínica diária para orientar decisões sobre intensidade de tratamento.",
+      "validation": "Apresenta boa correlação com prognóstico e tolerância a tratamentos oncológicos, sendo validada e utilizada extensivamente na literatura oncológica internacional.",
+      "limitations": "É uma escala relativamente simples e pode não capturar nuances específicas de determinadas condições; a Escala de Karnofsky, mais granular (0-100), é frequentemente usada como complemento ou alternativa em determinados contextos.",
+      "references": [
+        {
+          "text": "OKEN, M. M. et al. Toxicity and response criteria of the Eastern Cooperative Oncology Group. American Journal of Clinical Oncology, v. 5, n. 6, p. 649-655, 1982."
+        },
+        {
+          "text": "INSTITUTO NACIONAL DE CÂNCER (INCA). Cuidados paliativos oncológicos: controle de sintomas. Rio de Janeiro: INCA, 2021."
+        },
+        {
+          "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+        }
+      ]
+    },
+    "learning": {
+      "tips": [
+        "Avalie a capacidade funcional real do paciente, não sua capacidade percebida ou desejada.",
+        "Reavalie o ECOG a cada consulta ou ciclo de tratamento oncológico para acompanhar a evolução.",
+        "Use em conjunto com a Escala de Karnofsky quando maior granularidade for necessária para decisões terapêuticas.",
+        "O ECOG é frequentemente utilizado como critério de elegibilidade para ensaios clínicos e protocolos de tratamento."
+      ],
+      "examples": [
+        {
+          "label": "Paciente ativo",
+          "sublabel": "ECOG 0",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "status": 0
+          }
+        },
+        {
+          "label": "Limitação para trabalho",
+          "sublabel": "ECOG 2",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "status": 2
+          }
+        },
+        {
+          "label": "Totalmente dependente",
+          "sublabel": "ECOG 4",
+          "emoji": "<i class=\"fa fa\"></i>",
+          "values": {
+            "status": 4
+          }
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Qual a faixa de valores do ECOG Performance Status?",
+          "opts": [
+            "0 a 3",
+            "0 a 5",
+            "1 a 10",
+            "0 a 100"
+          ],
+          "correct": 1,
+          "expl": "O ECOG varia de 0 (totalmente ativo) a 5 (óbito)."
+        },
+        {
+          "q": "Um paciente ECOG 4 é geralmente candidato a tratamento oncológico agressivo?",
+          "opts": [
+            "Sim, sempre",
+            "Geralmente não, prioriza-se abordagem paliativa",
+            "Apenas com quimioterapia oral",
+            "Depende apenas da idade"
+          ],
+          "correct": 1,
+          "expl": "Pacientes ECOG 4 (completamente incapacitados) geralmente não toleram tratamentos oncológicos agressivos, sendo priorizada a abordagem de cuidados paliativos e conforto."
+        },
+        {
+          "q": "Para que é frequentemente utilizado o ECOG em pesquisa clínica?",
+          "opts": [
+            "Cálculo de dose de medicação",
+            "Critério de elegibilidade em ensaios clínicos oncológicos",
+            "Diagnóstico de câncer",
+            "Estadiamento tumoral"
+          ],
+          "correct": 1,
+          "expl": "O ECOG é amplamente utilizado como critério de elegibilidade e estratificação de risco em ensaios clínicos oncológicos."
+        }
+      ]
+    },
+    "faq": [
+      {
+        "q": "Qual a diferença entre ECOG e Escala de Karnofsky?",
+        "a": "Ambas avaliam capacidade funcional em oncologia, mas o ECOG usa uma escala mais simples de 0 a 5, enquanto a Karnofsky usa uma escala mais granular de 0 a 100 (incrementos de 10), permitindo maior precisão em determinados contextos."
+      },
+      {
+        "q": "O ECOG substitui a avaliação clínica completa do paciente oncológico?",
+        "a": "Não. É uma ferramenta padronizada de comunicação sobre capacidade funcional, mas deve ser complementada por avaliação clínica individualizada, incluindo comorbidades e objetivos de cuidado do paciente."
+      }
+    ],
+    "about": {
+      "title": "Como funciona o ECOG Performance Status",
+      "html": "<p>O ECOG classifica a capacidade funcional do paciente oncológico em 6 níveis, de 0 (totalmente ativo, sem restrições) a 5 (óbito), orientando decisões sobre elegibilidade e intensidade de tratamento oncológico.</p><p><strong>Guia rápido:</strong> 0-1 = Boa capacidade funcional | 2 = Intermediária | 3 = Reduzida | 4 = Incapacidade grave | 5 = Óbito.</p>"
+    }
+  },
+  "unique_texts": [
+    [
+      "field_label",
+      "Capacidade Funcional"
+    ],
+    [
+      "field_desc",
+      "Selecione a categoria que melhor descreve a capacidade funcional atual do paciente."
+    ],
+    [
+      "section_h2",
+      "Como funciona o ECOG Performance Status"
+    ],
+    [
+      "card_h3",
+      "Capacidade Funcional"
+    ],
+    [
+      "card_h3",
+      "Cálculo rápido — ECOG Performance Status"
+    ],
+    [
+      "card_h3",
+      "ECOG Performance Status: cálculo, fundamentação e evidências"
+    ],
+    [
+      "tip_li",
+      "Avalie a capacidade funcional real do paciente, não sua capacidade percebida ou desejada."
+    ],
+    [
+      "tip_li",
+      "Reavalie o ECOG a cada consulta ou ciclo de tratamento oncológico para acompanhar a evolução."
+    ],
+    [
+      "tip_li",
+      "Use em conjunto com a Escala de Karnofsky quando maior granularidade for necessária para decisões terapêuticas."
+    ],
+    [
+      "tip_li",
+      "O ECOG é frequentemente utilizado como critério de elegibilidade para ensaios clínicos e protocolos de tratamento."
+    ],
+    [
+      "faq_question",
+      "Qual a diferença entre ECOG e Escala de Karnofsky?"
+    ],
+    [
+      "faq_question",
+      "O ECOG substitui a avaliação clínica completa do paciente oncológico?"
+    ]
+  ]
+}
