@@ -555,7 +555,6 @@ window.scrollTo({ top: 0, behavior: "smooth" }),
 }
 });
 </script>
-<div id="global-body-elements-container"></div>
 <script>
 // Função auxiliar para carregar HTML modular
 function fetchHTML(url, containerId) {
@@ -577,11 +576,6 @@ console.warn(`Container com ID '${containerId}' não encontrado.`);
 .catch((error) => console.error(`Erro ao buscar ${url}:`, error));
 }    document.addEventListener("DOMContentLoaded", () => {
 fetchHTML("/_language_selector.html", "language-dropdown-wrapper");
-
-fetchHTML(
-"/global-body-elements.html",
-"global-body-elements-container"
-);
 });
 </script>
 <div id="site-footer"></div>
@@ -593,10 +587,7 @@ setTimeout(() => {
 });
 </script>
 <script defer="True" src="/js/partials-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-  <script src="js/calc-engine-v2.js"></script>
+  <script src="/js/calc-engine-v2.js"></script>
 
 <!-- ═══ Print Template (Relatório de Resultado) ═══ -->
 <div class="print" style="display:none;" id="printTemplate">

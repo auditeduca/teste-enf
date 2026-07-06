@@ -14,19 +14,67 @@
 (function () {
   "use strict";
 
+  // Root-absolute paths so partials/scripts resolve from any subdirectory
+  // (e.g. /biblioteca/, /en/, /es/) instead of relative to the current page.
+  function rootPath(path) {
+    return path.charAt(0) === "/" ? path : "/" + path;
+  }
+
+  // Partial HTML is authored with root-relative paths (missao.html, images/...).
+  // Rewrite to site-root absolute so links/assets work from any subdirectory.
+  function rewritePartialPaths(html) {
+    return html.replace(
+      /(\s(?:href|src|action)=["'])((?!\/|https?:|mailto:|#|javascript:|data:)[^"']*)/gi,
+      function (_match, prefix, url) {
+        return prefix + "/" + url.replace(/^\.\//, "");
+      }
+    );
+  }
+
+  function mountPartialHtml(target, html) {
+    target.innerHTML = rewritePartialPaths(html);
+    // Keep modal overlays at body level — avoids stacking/position issues when
+    // the partial is injected inside #site-a11y or #site-cookie wrappers.
+    var modals = target.querySelectorAll(".ck-modal-overlay");
+    for (var i = 0; i < modals.length; i++) {
+      document.body.appendChild(modals[i]);
+    }
+  }
+
+  // Guarantee shared chrome CSS/fonts on pages that use partials but may omit
+  // the stylesheet link or Font Awesome definitions in their local <head>.
+  function ensureChromeStyles() {
+    var hasSiteStyles = document.querySelector(
+      'link[rel="stylesheet"][href="/css/site-styles.css"],' +
+      'link[rel="stylesheet"][href$="css/site-styles.css"]'
+    );
+    if (!hasSiteStyles) {
+      var siteCss = document.createElement("link");
+      siteCss.rel = "stylesheet";
+      siteCss.href = rootPath("css/site-styles.css");
+      document.head.appendChild(siteCss);
+    }
+  }
+
   var PARTIALS = [
-    { url: "partials/header.html", target: "site-header" },
-    { url: "partials/accessibility-toolbar.html", target: "site-a11y" },
-    { url: "partials/footer.html", target: "site-footer" },
-    { url: "partials/cookie-system.html", target: "site-cookie" }
+    { url: rootPath("partials/header.html"), target: "site-header" },
+    { url: rootPath("partials/accessibility-toolbar.html"), target: "site-a11y" },
+    { url: rootPath("partials/footer.html"), target: "site-footer" },
+    { url: rootPath("partials/cookie-system.html"), target: "site-cookie" }
   ];
 
   var DEPENDENT_SCRIPTS = [
-    "js/global-scripts.js",
-    "js/mega-menu.js",
-    "js/i18n-loader.js",
-    "js/lang-selector.js",
-    "js/site-widgets.js"
+    rootPath("js/global-scripts.js"),
+    rootPath("js/mega-menu.js"),
+    rootPath("js/i18n-loader.js"),
+    rootPath("js/lang-selector.js"),
+    rootPath("js/site-widgets.js")
+  ];
+
+  var CALC_SCRIPTS = [
+    rootPath("js/nurse-palm.js"),
+    rootPath("js/cognitive-ui.js"),
+    rootPath("js/knowledge-graph.js")
   ];
 
   function fetchPartial(item) {
@@ -38,7 +86,7 @@
         return res.text();
       })
       .then(function (html) {
-        target.innerHTML = html;
+        mountPartialHtml(target, html);
       })
       .catch(function (err) {
         console.error("[partials-loader] Falha ao carregar", item.url, err);
@@ -60,17 +108,28 @@
     });
   }
 
+  function finishPartialsReady() {
+    document.dispatchEvent(new Event("DOMContentLoaded"));
+    document.dispatchEvent(new Event("partials:ready"));
+  }
+
+  function loadCalcScriptsInOrder(index) {
+    if (index >= CALC_SCRIPTS.length) {
+      finishPartialsReady();
+      return;
+    }
+    loadScriptSequentially(CALC_SCRIPTS[index]).then(function () {
+      loadCalcScriptsInOrder(index + 1);
+    });
+  }
+
   function loadDependentScriptsInOrder(index) {
     if (index >= DEPENDENT_SCRIPTS.length) {
-      // Todos os scripts carregados: dispara um DOMContentLoaded sintético.
-      // Os scripts legados (mega-menu.js/lang-selector.js/site-widgets.js)
-      // registram seus init() via document.addEventListener("DOMContentLoaded", init).
-      // Esse evento nativo já ocorreu antes do fetch terminar, então os
-      // listeners recém-registrados nunca disparariam sozinhos — este
-      // evento sintético reaproveita o mesmo listener sem exigir
-      // nenhuma edição nesses arquivos.
-      document.dispatchEvent(new Event("DOMContentLoaded"));
-      document.dispatchEvent(new Event("partials:ready"));
+      if (document.getElementById("tool-config")) {
+        loadCalcScriptsInOrder(0);
+        return;
+      }
+      finishPartialsReady();
       return;
     }
     loadScriptSequentially(DEPENDENT_SCRIPTS[index]).then(function () {
@@ -79,6 +138,7 @@
   }
 
   function init() {
+    ensureChromeStyles();
     Promise.all(PARTIALS.map(fetchPartial)).then(function () {
       loadDependentScriptsInOrder(0);
     });

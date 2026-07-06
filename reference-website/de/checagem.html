@@ -510,7 +510,6 @@ Medicamentos.
 <button accesskey="T" aria-label="Voltar ao topo da página"  id="backToTopBtn">
 <i class="fas fa"></i>
 </button>
-<div id="global-body-elements-container"></div>
 <!-- Scripts Globais e de Bibliotecas -->
 <!-- Script de Carregamento Modular e Funcionalidades -->
 <script>
@@ -528,9 +527,6 @@ if (container) container.innerHTML = data;
 document.addEventListener("DOMContentLoaded", function () {
 // Carrega módulos
 fetchHTML("/_language_selector.html", "language-dropdown-wrapper");
-
-fetchHTML("/global-body-elements.html", "global-body-elements-container");
-
 // Lógica para o botão "Voltar ao Topo"
 const backToTopBtn = document.getElementById("backToTopBtn");
 if (backToTopBtn) {
@@ -553,10 +549,7 @@ setTimeout(() => {
 });
 </script>
 <script defer="True" src="/js/partials-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-  <script src="js/calc-engine-v2.js"></script>
+  <script src="/js/calc-engine-v2.js"></script>
 
 <!-- ═══ Print Template (Relatório de Resultado) ═══ -->
 <div class="print" style="display:none;" id="printTemplate">
