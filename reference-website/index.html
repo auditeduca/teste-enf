@@ -808,6 +808,16 @@ if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.locat
       }
       .rd-tool-card p { font-size: 12px; color: var(--ink-600); margin: 0; line-height: 1.5; }
 
+      /* ---------- FERRAMENTAS INTEGRADAS ---------- */
+      .rd-integrations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .tool-integration-icon--assistencia { background: #eff6ff; color: #2563eb; }
+      .tool-integration-icon--gestao { background: #f0fdf4; color: #16a34a; }
+      .tool-integration-icon--carreira { background: #fdf4ff; color: #9333ea; }
+
       /* ---------- FOOTER ---------- */
       .rd-footer { background: var(--navy-900); color: rgba(226,232,245,.8); padding: 56px 0 26px; margin-top: 20px; }
       .rd-footer-top {
@@ -2249,6 +2259,37 @@ if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.locat
         </div>
       </section>
 
+      <!-- ================= FERRAMENTAS INTEGRADAS ================= -->
+      <section class="rd-section" style="padding-top:0" id="ferramentas-integradas" aria-label="Ferramentas integradas">
+        <div class="rd-container">
+          <div class="rd-section-head">
+            <span class="rd-eyebrow"><i class="fa-solid fa-puzzle-piece"></i> <span data-i18n="integrations.eyebrow">Ecossistema NIS</span></span>
+            <h2 data-i18n="integrations.titulo">Ferramentas Integradas</h2>
+            <p data-i18n="integrations.desc">Plataformas inteligentes conectadas ao ecossistema Nursing Intelligence System</p>
+          </div>
+          <div class="rd-integrations-grid">
+            <a href="plano-enf.html" class="tool-integration-card">
+              <div class="tool-integration-icon tool-integration-icon--assistencia"><i class="fa-solid fa-clipboard-list"></i></div>
+              <h3>PlanoEnf</h3>
+              <p>Planos de cuidado integrando NANDA-I, NIC e NOC com assistência inteligente.</p>
+              <span class="tool-integration-badge">Assistência</span>
+            </a>
+            <a href="plantao-certo.html" class="tool-integration-card">
+              <div class="tool-integration-icon tool-integration-icon--gestao"><i class="fa-solid fa-calendar-check"></i></div>
+              <h3>Plantão Certo</h3>
+              <p>Gestão de escalas, férias e afastamentos com conformidade trabalhista brasileira.</p>
+              <span class="tool-integration-badge">Gestão</span>
+            </a>
+            <a href="enferma-cv.html" class="tool-integration-card">
+              <div class="tool-integration-icon tool-integration-icon--carreira"><i class="fa-solid fa-file-lines"></i></div>
+              <h3>EnfermaCV</h3>
+              <p>Construtor de currículos especializado para profissionais de enfermagem.</p>
+              <span class="tool-integration-badge">Carreira</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <!-- ================= NEWSLETTER ================= -->
       <section class="rd-section" style="padding-top:0">
         <div class="rd-container">
@@ -2273,33 +2314,6 @@ if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.locat
           </div>
         </div>
       </section>
-
-    
-    <!-- ═══ Ferramentas Integradas Base44 ═══ -->
-    <section class="rd-section rd-container" style="margin-top:48px">
-      <h2 class="section-title">Ferramentas Integradas</h2>
-      <p class="section-subtitle">Plataformas inteligentes conectadas ao ecossistema Nursing Intelligence System</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:24px">
-        <a href="plano-enf.html" class="tool-integration-card">
-          <div class="tool-integration-icon" class="tool-integration-icon"><i class="fa-solid fa-clipboard-list"></i></div>
-          <h3>PlanoEnf</h3>
-          <p>Planos de cuidado integrando NANDA-I, NIC e NOC com assistência inteligente.</p>
-          <span class="tool-integration-badge">Assistência</span>
-        </a>
-        <a href="plantao-certo.html" class="tool-integration-card">
-          <div class="tool-integration-icon" class="tool-integration-icon"><i class="fa-solid fa-calendar-check"></i></div>
-          <h3>Plantão Certo</h3>
-          <p>Gestão de escalas, férias e afastamentos com conformidade trabalhista brasileira.</p>
-          <span class="tool-integration-badge">Gestão</span>
-        </a>
-        <a href="enferma-cv.html" class="tool-integration-card">
-          <div class="tool-integration-icon" class="tool-integration-icon"><i class="fa-solid fa-file-lines"></i></div>
-          <h3>EnfermaCV</h3>
-          <p>Construtor de currículos especializado para profissionais de enfermagem.</p>
-          <span class="tool-integration-badge">Carreira</span>
-        </a>
-      </div>
-    </section>
 
 </main>
 <!-- Footer e módulo de cookies agora vêm de partials/footer.html e partials/cookie-system.html,
