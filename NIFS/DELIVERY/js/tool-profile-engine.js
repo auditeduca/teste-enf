@@ -64,8 +64,10 @@
     if (!tools.length) return "";
     var inner = '<div class="related-tools-grid profile-related-compact">';
     tools.forEach(function (t) {
+      var icon = t.icon || "i-clipboard";
       inner +=
         '<a class="related-tool-card" href="' + esc(t.href) + '">' +
+        '<div class="icon-wrap"><svg class="icon"><use href="#' + esc(icon) + '"/></svg></div>' +
         '<div><h3>' + esc(t.title) + "</h3><p>" + esc(t.desc) + "</p></div></a>";
     });
     inner += "</div>";
@@ -77,10 +79,13 @@
     if (!tracks.length) return "";
     var inner = '<div class="learning-track-grid profile-learning-compact">';
     tracks.forEach(function (item) {
+      var icon = item.icon || "i-book";
       inner +=
         '<a class="learn-card" href="' + esc(item.href || "#") + '">' +
+        '<div class="icon-wrap"><svg class="icon"><use href="#' + esc(icon) + '"/></svg></div>' +
         '<h3>' + esc(item.title) + "</h3>" +
         "<p>" + esc(item.desc || "") + "</p>" +
+        '<span class="learn-cta">Abrir <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>' +
         "</a>";
     });
     inner += "</div>";
