@@ -426,6 +426,24 @@
     });
   }
 
+  function initDecorativeStarRatings() {
+    document.querySelectorAll(".tool-rating .stars").forEach(function (el) {
+      var label = el.getAttribute("aria-label") || "";
+      var match = label.match(/([\d.]+)\s*de\s*5/i);
+      if (!match) return;
+      var rating = parseFloat(match[1]);
+      if (isNaN(rating)) return;
+      el.classList.add("decorative");
+      var buttons = Array.prototype.slice.call(el.querySelectorAll("button"));
+      buttons.forEach(function (btn, index) {
+        var starValue = buttons.length - index;
+        btn.classList.remove("on", "half");
+        if (rating >= starValue) btn.classList.add("on");
+        else if (rating >= starValue - 0.5) btn.classList.add("half");
+      });
+    });
+  }
+
   function init() {
     initCookies();
     initBackToTop();
@@ -434,6 +452,7 @@
     initUtilityBarReveal();
     initNewsletterForms();
     initRating();
+    initDecorativeStarRatings();
   }
 
   if (document.readyState === "loading") {
