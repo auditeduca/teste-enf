@@ -225,6 +225,134 @@
     return range.riskLevel || "unknown";
   }
 
+  function renderCIP(total, range) {
+    var container = document.getElementById("cipContainer");
+    if (!container) return;
+
+    var severity = getRangeSeverity(range);
+    var severityColor = { critical: "#dc2626", moderate: "#f59e0b", low: "#3b82f6", normal: "#2563eb", unknown: "#64748b" }[severity] || "#64748b";
+    var severityLabel = { critical: "Crítico", moderate: "Moderado", low: "Baixo Risco", normal: "Normal", unknown: "—" }[severity] || "—";
+    var html = "";
+
+    var nandaList = sae.nanda || [];
+    if (nandaList.length > 0) {
+      html += '<div class="cip-dim cip-dim-nanda" style="border-left: 4px solid #8b5cf6;">';
+      html += '<div class="cip-dim-header"><span class="cip-dim-icon">🔬</span><h4>Diagnósticos NANDA-I</h4>';
+      html += '<span class="cip-dim-severity" style="background:' + severityColor + '20; color:' + severityColor + ';">' + severityLabel + "</span></div>";
+      html += '<div class="cip-dim-content">';
+      nandaList.forEach(function (n, i) {
+        var dx = n.diagnosis || n.name || "";
+        var def = n.definition || "";
+        html += '<div class="cip-card" style="' + (i === 0 && severity !== "normal" ? "border-color:" + severityColor + ";" : "") + '">';
+        html += '<div class="cip-card-title">' + dx + "</div>";
+        if (def) html += '<div class="cip-card-desc">' + def.substring(0, 120) + (def.length > 120 ? "..." : "") + "</div>";
+        html += "</div>";
+      });
+      html += "</div></div>";
+    }
+
+    var nicList = sae.nic || [];
+    if (nicList.length > 0) {
+      html += '<div class="cip-dim cip-dim-nic" style="border-left: 4px solid #3b82f6;">';
+      html += '<div class="cip-dim-header"><span class="cip-dim-icon">💊</span><h4>Intervenções NIC</h4></div><div class="cip-dim-content">';
+      nicList.forEach(function (n) {
+        var name = n.intervention || n.name || "";
+        var activities = n.activities || [];
+        html += '<div class="cip-card"><div class="cip-card-title">' + name + "</div>";
+        if (activities.length > 0) {
+          html += '<ul class="cip-activities">';
+          activities.slice(0, 4).forEach(function (a) { html += "<li>" + a + "</li>"; });
+          if (activities.length > 4) html += '<li class="cip-more">+' + (activities.length - 4) + " atividades</li>";
+          html += "</ul>";
+        }
+        html += "</div>";
+      });
+      html += "</div></div>";
+    }
+
+    var nocList = sae.noc || [];
+    if (nocList.length > 0) {
+      html += '<div class="cip-dim cip-dim-noc" style="border-left: 4px solid #3b82f6;">';
+      html += '<div class="cip-dim-header"><span class="cip-dim-icon">🎯</span><h4>Outcomes NOC</h4></div><div class="cip-dim-content">';
+      nocList.forEach(function (n) {
+        var name = n.outcome || n.name || "";
+        var indicators = n.indicators || [];
+        html += '<div class="cip-card"><div class="cip-card-title">' + name + "</div>";
+        if (indicators.length > 0) {
+          html += '<div class="cip-indicators">';
+          indicators.slice(0, 3).forEach(function (ind) { html += '<span class="cip-indicator-tag">' + ind + "</span>"; });
+          html += "</div>";
+        }
+        html += "</div>";
+      });
+      html += "</div></div>";
+    }
+
+    if (evidence.foundation || (evidence.references && evidence.references.length > 0)) {
+      html += '<div class="cip-dim cip-dim-evidence" style="border-left: 4px solid #f59e0b;">';
+      html += '<div class="cip-dim-header"><span class="cip-dim-icon">📚</span><h4>Evidência Científica</h4>';
+      if (overview.evidenceLevel) html += '<span class="cip-dim-severity" style="background:#f59e0b20; color:#f59e0b;">Nível: ' + overview.evidenceLevel + "</span>";
+      html += '</div><div class="cip-dim-content">';
+      if (evidence.foundation) {
+        html += '<div class="cip-card"><div class="cip-card-desc">' + evidence.foundation.substring(0, 200) + "...</div></div>";
+      }
+      if (evidence.references && evidence.references.length > 0) {
+        html += '<div class="cip-references">';
+        evidence.references.slice(0, 3).forEach(function (ref) {
+          var refText = typeof ref === "string" ? ref : (ref.author || "") + " (" + (ref.year || "") + "). " + (ref.title || ref.text || "");
+          html += '<div class="cip-reference">' + refText.substring(0, 100) + "</div>";
+        });
+        html += "</div>";
+      }
+      html += "</div></div>";
+    }
+
+    var safetyAlerts = [];
+    if (severity === "critical") {
+      safetyAlerts = ["IPSG-3: Segurança em procedimentos de alta vigilância", "Escalada de cuidado imediata — notificar equipe médica", "Documentação completa do evento em prontuário"];
+    } else if (severity === "moderate") {
+      safetyAlerts = ["Monitoramento contínuo recomendado", "Reavaliar em 15-30 minutos", "Verificar protocolo institucional correspondente"];
+    } else if (severity === "normal") {
+      safetyAlerts = ["Manter rotina de monitoramento padrão"];
+    }
+    if (safetyAlerts.length > 0) {
+      html += '<div class="cip-dim cip-dim-safety" style="border-left: 4px solid ' + severityColor + ';">';
+      html += '<div class="cip-dim-header"><span class="cip-dim-icon">⚠️</span><h4>Metas de Segurança (IPSG)</h4></div><div class="cip-dim-content">';
+      safetyAlerts.forEach(function (alert) {
+        html += '<div class="cip-safety-alert" style="border-color:' + severityColor + ';">' + alert + "</div>";
+      });
+      html += "</div></div>";
+    }
+
+    var tips = learning.tips || [];
+    if (tips.length > 0) {
+      html += '<div class="cip-dim cip-dim-learning" style="border-left: 4px solid #3b82f6;">';
+      html += '<div class="cip-dim-header"><span class="cip-dim-icon">🎓</span><h4>Dicas de Aprendizado</h4></div><div class="cip-dim-content">';
+      tips.slice(0, 4).forEach(function (tip) { html += '<div class="cip-tip">💡 ' + tip + "</div>"; });
+      html += "</div></div>";
+    }
+
+    container.innerHTML = html;
+    container.classList.remove("cip-hidden");
+    container.style.display = "block";
+  }
+
+  function hideCipSections() {
+    var cip = document.getElementById("cipContainer");
+    if (cip) {
+      cip.innerHTML = "";
+      cip.classList.add("cip-hidden");
+      cip.style.display = "none";
+    }
+    var cogPanel = document.getElementById("cognitivePanel");
+    if (cogPanel) cogPanel.classList.add("cip-hidden");
+    var cipSection = document.querySelector(".cip-section");
+    if (cipSection) cipSection.classList.add("cip-hidden");
+    document.querySelectorAll(".cip-kg-links, .cog-section-wrapper").forEach(function (el) {
+      el.classList.add("cip-hidden");
+    });
+  }
+
   var lastCognitiveResult = null;
   var cogTimer = null;
   var hasCalculated = false;
@@ -408,22 +536,49 @@
     });
     var strip = document.getElementById("cognitiveProfileStrip");
     if (strip) strip.classList.remove("is-visible");
+    hideCipSections();
   }
 
   function runCognitiveAnalysis(total, range) {
-    if (!window.NursePaLM || !window.NursePaLM.runCognitivePipeline) return;
+    renderCIP(total, range);
     if (cogTimer) clearTimeout(cogTimer);
     cogTimer = setTimeout(function () {
       var ctx = buildCognitiveContext(total, range);
-      Promise.resolve(window.NursePaLM.runCognitivePipeline(ctx)).then(function (result) {
+      var cogPanel = document.getElementById("cognitivePanel");
+      var pipeline = function (result) {
         lastCognitiveResult = result;
         if (document.getElementById("calcClinicalFlow") && document.getElementById("calcClinicalFlow").classList.contains("is-visible")) {
           applyClinicalFlowTexts(range);
         }
-      }).catch(function (e) {
-        console.error("[calc-engine-v2] Cognitive error:", e);
-      });
-      if (window.NursePaLM.TemporalGraph) {
+        if (cogPanel && result) {
+          var header = cogPanel.querySelector(".cognitive-panel-header h3");
+          if (header) {
+            var confPct = Math.round((result.confidence || 0) * 100);
+            header.innerHTML = '<i class="fa-solid fa-brain"></i> Nurse-PaLM — ' + (range ? range.label : "Resultado") + " · Confiança: " + confPct + "%";
+          }
+        }
+      };
+
+      if (cogPanel && window.CognitiveUI && window.CognitiveUI.renderCognitivePanel) {
+        cogPanel.classList.remove("cip-hidden");
+        var cipSection = document.querySelector(".cip-section");
+        if (cipSection) cipSection.classList.remove("cip-hidden");
+        document.querySelectorAll(".cip-kg-links, .cog-section-wrapper").forEach(function (el) {
+          el.classList.remove("cip-hidden");
+        });
+        Promise.resolve(window.CognitiveUI.renderCognitivePanel("cognitivePanelContent", ctx)).then(pipeline).catch(function (e) {
+          console.error("[calc-engine-v2] Cognitive UI error:", e);
+        });
+      } else if (window.NursePaLM && window.NursePaLM.runCognitivePipeline) {
+        document.querySelectorAll(".cip-section, .cip-kg-links, .cog-section-wrapper").forEach(function (el) {
+          el.classList.remove("cip-hidden");
+        });
+        Promise.resolve(window.NursePaLM.runCognitivePipeline(ctx)).then(pipeline).catch(function (e) {
+          console.error("[calc-engine-v2] Cognitive error:", e);
+        });
+      }
+
+      if (window.NursePaLM && window.NursePaLM.TemporalGraph) {
         window.NursePaLM.TemporalGraph.record({ tool: TOOL_SLUG, result: total, range: range ? range.label : "", state: { result: total / 100 } });
       }
     }, 280);
@@ -436,6 +591,11 @@
     if (!clinicalFlow) return;
     runCognitiveAnalysis(total, range);
     applyClinicalFlowTexts(range);
+    var cipSection = document.querySelector(".cip-section");
+    if (cipSection) cipSection.classList.remove("cip-hidden");
+    document.querySelectorAll(".cip-kg-links").forEach(function (el) {
+      el.classList.remove("cip-hidden");
+    });
     if (flowDivider) flowDivider.style.display = "block";
     clinicalFlow.classList.add("is-visible");
     if (window.showToast) window.showToast("Raciocínio clínico integrado disponível em todos os perfis", "success");

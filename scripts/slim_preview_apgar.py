@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -145,26 +146,14 @@ def add_modular_shell(content: str) -> str:
         )
         content = content.replace(
             "</body>",
-            f'{CLINICAL_FLOW_SCRIPT}\n<script src="js/tool-medication-links.js"></script>\n<script src="js/partials-loader.js"></script>\n</body>',
+            '<script src="js/tool-medication-links.js"></script>\n<script src="js/partials-loader.js"></script>\n</body>',
         )
     return content
 
 
 def remove_cip_blocks(content: str) -> str:
     content = re.sub(
-        r"\s*<!-- ═══ Clinical Intelligence Package.*?<!-- ═══ Knowledge Graph Links ═══ -->.*?</section>\s*",
-        "\n",
-        content,
-        flags=re.DOTALL,
-    )
-    content = re.sub(
         r'\s*<div id="cognitiveProfileStrip"[^>]*>.*?</div>\s*',
-        "\n",
-        content,
-        flags=re.DOTALL,
-    )
-    content = re.sub(
-        r'\s*<section class="tool-footer-zone">.*?</section>\s*',
         "\n",
         content,
         flags=re.DOTALL,
@@ -412,6 +401,9 @@ def main() -> None:
     original = SRC.read_text(encoding="utf-8")
     slimmed = slim(original)
     write_outputs(slimmed)
+    import subprocess
+
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "complete_preview_apgar.py")], check=True)
 
     orig_lines = original.count("\n") + 1
     new_lines = slimmed.count("\n") + 1

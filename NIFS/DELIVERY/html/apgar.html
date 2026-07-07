@@ -109,6 +109,14 @@
       </div>
     </div>
 
+
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
+    </div>
+
     <div data-tab-panels="perfil">
 
 <div class="tab-panel active" data-tab-panel="padrao">
@@ -300,23 +308,13 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do recém-nascido</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança na reanimação neonatal</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Redução do risco de infecção</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
@@ -368,9 +366,26 @@
             </a>
           </div>
         </div>
+        <div class="flow-divider"><span>Recursos Adicionais</span></div>
+
+        <div class="learning-track-wrap">
+          <div class="learning-track-grid">
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-book"/></svg></div><h3>Artigos</h3><p>Evidência científica e literatura de referência sobre o tema.</p><span class="learn-cta">Ler artigos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="protocolos.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div><h3>Protocolos</h3><p>Protocolos institucionais e fluxos operacionais de enfermagem.</p><span class="learn-cta">Ver protocolos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-file"/></svg></div><h3>Casos Clínicos</h3><p>Situações reais com tomada de decisão e raciocínio clínico.</p><span class="learn-cta">Ver casos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-clipcheck"/></svg></div><h3>Check-lists</h3><p>Listas de verificação para prática segura e auditoria.</p><span class="learn-cta">Baixar check-lists <svg class="icon icon-sm"><use href="#i-download"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><h3>Simulados</h3><p>Cenários práticos com decisões clínicas em tempo real.</p><span class="learn-cta">Simular agora <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-bulb"/></svg></div><h3>Flashcards</h3><p>Fichas de revisão rápida para fixação de conceitos-chave.</p><span class="learn-cta">Estudar flashcards <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-network"/></svg></div><h3>Infográficos</h3><p>Visualizações gráficas para ensino e treinamento em serviço.</p><span class="learn-cta">Ver infográficos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-flask"/></svg></div><h3>Guia de Bolso</h3><p>Resumo rápido para consulta à beira do leito.</p><span class="learn-cta">Consultar guia <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-monitor"/></svg></div><h3>Slides</h3><p>Material de apresentação para aulas e treinamentos.</p><span class="learn-cta">Baixar slides <svg class="icon icon-sm"><use href="#i-download"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-play"/></svg></div><h3>Vídeos</h3><p>Tutoriais e demonstrações práticas em vídeo.</p><span class="learn-cta">Assistir vídeos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+          </div>
+        </div>
 </div>
 
 <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -524,6 +539,7 @@
               <select class="field-select" data-calc-input="tono" style="background:rgba(255,255,255,.07);border-"><option value="0">Flácido</option><option value="1">Alguma Flexão</option><option value="2" selected>Movimento Ativo</option></select></div><div class="urg-field"><label>Irritabilidade Reflexa</label>
               <select class="field-select" data-calc-input="irritabilidade" style="background:rgba(255,255,255,.07);border-"><option value="0">Sem Resposta</option><option value="1">Careta</option><option value="2" selected>Choro / Tosse / Espirro</option></select></div><div class="urg-field"><label>Cor da Pele</label>
               <select class="field-select" data-calc-input="cor" style="background:rgba(255,255,255,.07);border-"><option value="0">Cianótico / Pálido</option><option value="1">Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>Completamente Rosado</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">10</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Normal / Boa Vitalidade</span>
@@ -557,7 +573,7 @@
               <button type="button" class="btn btn-outline-navy aca-print-btn" onclick="window.print()"><svg class="icon icon-sm"><use href="#i-printer"/></svg> Exportar / Imprimir</button>
             </div>
             <div class="tab-panel" data-tab-panel="fundamentacao"><h4>Fundamentação</h4><p>O Índice de Apgar foi desenvolvido pela anestesiologista Virginia Apgar em 1952 como um método rápido e padronizado para avaliar a condição clínica do recém-nascido logo após o parto, permitindo identificar precocemente a necessidade de reanimação.</p><h4>Histórico</h4><p>Adotado mundialmente como padrão de avaliação neonatal imediata, sendo recomendado pela Academia Americana de Pediatria (AAP) e pelo Colégio Americano de Obstetras e Ginecologistas (ACOG) como parte da rotina de nascimento.</p></div>
-            <div class="tab-panel" data-tab-panel="sae"><h4>NANDA — Padrão respiratório ineficaz</h4><p>Inspiração e/ou expiração que não proporciona ventilação adequada.</p><h4>NANDA — Risco de nível de glicemia instável</h4><p>Vulnerabilidade a variação nos níveis de glicose/açúcar no sangue, o que pode comprometer a saúde do recém-nascido.</p><h4>NOC — Status respiratório do recém-nascido</h4><ul class="tips-list"><li>Frequência respiratória adequada</li><li>Ausência de cianose</li><li>Choro vigoroso</li></ul><h4>NOC — Adaptação do recém-nascido à vida extrauterina</h4><ul class="tips-list"><li>Estabilidade térmica</li><li>Estabilidade cardiorrespiratória</li><li>Reflexos presentes</li></ul><h4>NIC — Cuidados ao recém-nascido: imediatos</h4><ul class="tips-list"><li>Secar e aquecer o recém-nascido</li><li>Avaliar Apgar no 1º e 5º minuto</li><li>Aspirar vias aéreas se necessário</li><li>Realizar contato pele a pele</li></ul></div>
+            <div class="tab-panel cognitive-locked" data-tab-panel="sae"><h4>NANDA — Padrão respiratório ineficaz</h4><p>Inspiração e/ou expiração que não proporciona ventilação adequada.</p><h4>NANDA — Risco de nível de glicemia instável</h4><p>Vulnerabilidade a variação nos níveis de glicose/açúcar no sangue, o que pode comprometer a saúde do recém-nascido.</p><h4>NOC — Status respiratório do recém-nascido</h4><ul class="tips-list"><li>Frequência respiratória adequada</li><li>Ausência de cianose</li><li>Choro vigoroso</li></ul><h4>NOC — Adaptação do recém-nascido à vida extrauterina</h4><ul class="tips-list"><li>Estabilidade térmica</li><li>Estabilidade cardiorrespiratória</li><li>Reflexos presentes</li></ul><h4>NIC — Cuidados ao recém-nascido: imediatos</h4><ul class="tips-list"><li>Secar e aquecer o recém-nascido</li><li>Avaliar Apgar no 1º e 5º minuto</li><li>Aspirar vias aéreas se necessário</li><li>Realizar contato pele a pele</li></ul></div>
             <div class="tab-panel" data-tab-panel="evidencias"><h4>Validação científica</h4><p>Amplamente validado na literatura como indicador de vitalidade neonatal, embora não deva ser usado isoladamente para prever prognóstico neurológico a longo prazo.</p><h4>Limitações</h4><p>O escore de Apgar isolado não deve ser utilizado para diagnosticar asfixia perinatal nem para prever desfechos neurológicos a longo prazo — deve ser interpretado em conjunto com gasometria de cordão e exame clínico completo.</p></div>
             <div class="tab-panel" data-tab-panel="referencias"><ol class="ref-list"><li><span class="ref-num">1</span>APGAR, V. A proposal for a new method of evaluation of the newborn infant. Current Researches in Anesthesia and Analgesia, v. 32, n. 4, p. 260-267, 1953.</li><li><span class="ref-num">2</span>AMERICAN ACADEMY OF PEDIATRICS; AMERICAN COLLEGE OF OBSTETRICIANS AND GYNECOLOGISTS. The Apgar Score. Committee Opinion, 2015 (reafirmado).</li><li><span class="ref-num">3</span>BRASIL. Ministério da Saúde. Atenção à Saúde do Recém-Nascido: Guia para os Profissionais de Saúde. Brasília: MS, 2014.</li><li><span class="ref-num">4</span>BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020.</li><li><span class="ref-num">5</span>COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017.</li></ol></div>
           </div>
@@ -634,6 +650,48 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+      <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+      <div class="related-tools-grid">
+        <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Estimativa da idade gestacional</p></div></a>
+        <a class="related-tool-card" href="capurro.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Capurro</h3><p>Maturidade somática do recém-nascido</p></div></a>
+        <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Perfil Biofísico</h3><p>Avaliação do bem-estar fetal</p></div></a>
+        <a class="related-tool-card" href="silverman-andersen.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Silverman-Andersen</h3><p>Desconforto respiratório neonatal</p></div></a>
+        <a class="related-tool-card" href="downes.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Downes</h3><p>Escore de desconforto respiratório infantil</p></div></a>
+        <a class="related-tool-card" href="bishop.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Bishop</h3><p>Avaliação do colo uterino</p></div></a>
+        <a class="related-tool-card" href="medicamentos.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pills"/></svg></div><div><h3>Calculadora de Medicamentos</h3><p>Regra de três e dose por volume</p></div></a>
+      </div>
+    </section>
+
+    <section class="cip-section cip-hidden">
+      <h2 class="cip-section-title">Clinical Intelligence Package</h2>
+      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
+      <div id="cipContainer" class="cip-hidden"></div>
+    </section>
+
+    <section class="cog-section-wrapper cip-hidden">
+      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
+        <div class="cognitive-panel-header">
+          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
+          <span class="cognitive-badge">Motor Clínico</span>
+        </div>
+        <div id="cognitivePanelContent"></div>
+      </div>
+    </section>
+
+    <section class="cip-kg-links cip-hidden">
+      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
+      <div class="cip-kg-links-list">
+        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
+        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
+        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
+        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
+        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
+        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
+        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
+      </div>
+    </section>
 </main>
 
 <div id="site-footer"></div>
@@ -664,6 +722,7 @@
   <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 4.5 2 9l10 4.5L22 9z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><line x1="22" y1="9" x2="22" y2="15"/></symbol>
   <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></symbol>
   <symbol id="i-calculator" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="2"/><line x1="8" y1="8.5" x2="16" y2="8.5"/><line x1="8" y1="12" x2="8.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="16" y1="12" x2="16.01" y2="12"/><line x1="8" y1="15.5" x2="8.01" y2="15.5"/><line x1="12" y1="15.5" x2="12.01" y2="15.5"/><line x1="16" y1="15.5" x2="16.01" y2="15.5"/></symbol>
+  <symbol id="i-baby" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M6 20c0-3.5 2.5-5.5 6-5.5s6 2 6 5.5"/><circle cx="9" cy="6.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="15" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-pills" viewBox="0 0 24 24"><path d="M8.5 4.5l4 4-4 4-4-4 4-4z"/><path d="M15.5 11.5l4 4-4 4-4-4 4-4z"/><line x1="10.5" y1="10.5" x2="13.5" y2="13.5"/></symbol>
   <symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/><polyline points="9 12 11 14 15.5 9"/></symbol>
   <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><line x1="8" y1="15" x2="16" y2="15"/></symbol>
@@ -704,32 +763,6 @@
   
   
 
-<script>
-  (function() {
-    var form = document.getElementById("calcForm");
-    if (!form) return;
-    var flowDivider = document.getElementById("calcFlowDivider");
-    var clinicalFlow = document.getElementById("calcClinicalFlow");
-    var nandaText = document.getElementById("calcNandaText");
-    var nicText = document.getElementById("calcNicText");
-    var nocText = document.getElementById("calcNocText");
-    form.addEventListener("submit", function() {
-      if (!clinicalFlow) return;
-      var resultEl = document.getElementById("calcResultValue");
-      var score = resultEl ? parseInt(resultEl.textContent, 10) : 10;
-      if (nandaText) nandaText.textContent = score >= 7
-        ? "Padrão respiratório ineficaz (00032) — risco baixo. Manter observação."
-        : "Padrão respiratório ineficaz (00032) — risco de comprometimento da ventilação.";
-      if (nicText) nicText.textContent = "Cuidados ao recém-nascido: imediatos (NIC 3250) e reanimação neonatal (NIC 3254).";
-      if (nocText) nocText.textContent = "Status respiratório do recém-nascido (NOC 0413) e adaptação à vida extrauterina (NOC 0415).";
-      if (flowDivider) flowDivider.style.display = "block";
-      clinicalFlow.classList.add("is-visible");
-      window.requestAnimationFrame(function() {
-        clinicalFlow.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-  })();
-</script>
 <script src="js/tool-medication-links.js"></script>
 <script src="js/partials-loader.js"></script>
 </body>
