@@ -72,14 +72,50 @@
     );
   }
 
+  function gridHtml(band) {
+    var slugs = band.slugs || [];
+    if (!slugs.length) {
+      return (
+        '<p class="med-link-empty">' +
+        esc(band.summary_pt || "Nenhuma medicação de urgência indicada para este escore.") +
+        ' <a href="' +
+        esc(assetPath("protocolos.html")) +
+        '">Ver protocolos</a> · <a href="' +
+        esc(assetPath("medicamentos.html")) +
+        '">Calculadora de medicamentos</a></p>'
+      );
+    }
+    return slugs
+      .map(function (slug) {
+        var med = medBySlug(slug);
+        return med ? renderCard(med) : "";
+      })
+      .filter(Boolean)
+      .join("");
+  }
+
+  function fillMount(mount, band) {
+    var bandEl = mount.querySelector("[data-profile-med-band]");
+    var summaryEl = mount.querySelector("[data-profile-med-summary]");
+    var gridEl = mount.querySelector("[data-profile-med-grid]");
+    if (bandEl) bandEl.textContent = band.label;
+    if (summaryEl) summaryEl.textContent = band.summary_pt || "";
+    if (gridEl) gridEl.innerHTML = gridHtml(band);
+    mount.hidden = false;
+  }
+
   function render(score) {
-    if (!root || !data) return;
+    if (!data) return;
     var band = bandForScore(score);
+    var profileMounts = document.querySelectorAll("[data-profile-med-mount]");
+
     if (!band) {
-      root.hidden = true;
+      if (root) root.hidden = true;
+      profileMounts.forEach(function (m) { m.hidden = true; });
       return;
     }
 
+    var html = gridHtml(band);
     var section = document.getElementById("calcMedicationSection");
     var title = document.getElementById("calcMedBandLabel");
     var summary = document.getElementById("calcMedSummary");
@@ -87,31 +123,13 @@
 
     if (title) title.textContent = band.label;
     if (summary) summary.textContent = band.summary_pt || "";
-
-    if (!grid) return;
-
-    var slugs = band.slugs || [];
-    if (!slugs.length) {
-      grid.innerHTML =
-        '<p class="med-link-empty">' +
-        esc(band.summary_pt || "Nenhuma medicação de urgência indicada para este escore.") +
-        ' <a href="' +
-        esc(assetPath("protocolos.html")) +
-        '">Ver protocolos</a> · <a href="' +
-        esc(assetPath("medicamentos.html")) +
-        '">Calculadora de medicamentos</a></p>';
-    } else {
-      grid.innerHTML = slugs
-        .map(function (slug) {
-          var med = medBySlug(slug);
-          return med ? renderCard(med) : "";
-        })
-        .filter(Boolean)
-        .join("");
-    }
-
+    if (grid) grid.innerHTML = html;
     if (section) section.hidden = false;
-    root.hidden = false;
+    if (root) root.hidden = false;
+
+    profileMounts.forEach(function (mount) {
+      fillMount(mount, band);
+    });
   }
 
   function readScore() {
@@ -142,7 +160,7 @@
 
   function init() {
     root = document.getElementById("calcMedicationSection");
-    if (!root) return;
+    if (!root && !document.querySelector("[data-profile-med-mount]")) return;
 
     fetch(assetPath(DATA_FILE), { credentials: "same-origin" })
       .then(function (res) {

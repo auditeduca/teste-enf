@@ -45,9 +45,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 
 </head>
-<body data-page="apgar">
+<body data-page="apgar" data-tool-cko="apgar">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
@@ -99,13 +100,13 @@
       </div>
     </div>
 
-        <div class="profile-tabs-bar">
+                <div class="profile-tabs-bar">
       <div class="tabs-inner" data-tab-group="perfil" role="tablist" aria-label="Perfil de visualização">
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
-        <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
+        <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
       </div>
     </div>
 
@@ -437,6 +438,77 @@
         </section>
 </div>
 
+<div class="tab-panel" data-tab-panel="urgencia">
+        <div class="urg-panel">
+          <div class="urg-inner">
+            <div class="urg-top">
+              <div><span class="urg-badge"><span class="dot"></span> Modo urgência ativo</span><h3>Cálculo rápido — Índice de Apgar</h3></div>
+              <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 2, &quot;tono&quot;: 2, &quot;irritabilidade&quot;: 2, &quot;cor&quot;: 2}'>Recém-nascido vigoroso <span class="p-sub">Apgar 10</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 1, &quot;tono&quot;: 1, &quot;irritabilidade&quot;: 1, &quot;cor&quot;: 0}'>Depressão moderada <span class="p-sub">Apgar 5</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 1, &quot;respiracao&quot;: 0, &quot;tono&quot;: 0, &quot;irritabilidade&quot;: 0, &quot;cor&quot;: 1}'>Depressão grave <span class="p-sub">Apgar 2</span></button></div>
+            </div>
+            <div class="urg-grid"><div class="urg-field"><label>Frequência Cardíaca</label>
+              <select class="field-select" data-calc-input="fc"><option value="0">Ausente</option><option value="1">Menor que 100 bpm</option><option value="2" selected>Maior ou igual a 100 bpm</option></select></div><div class="urg-field"><label>Esforço Respiratório</label>
+              <select class="field-select" data-calc-input="respiracao"><option value="0">Ausente</option><option value="1">Fraco / Irregular</option><option value="2" selected>Bom / Choro Forte</option></select></div><div class="urg-field"><label>Tônus Muscular</label>
+              <select class="field-select" data-calc-input="tono"><option value="0">Flácido</option><option value="1">Alguma Flexão</option><option value="2" selected>Movimento Ativo</option></select></div><div class="urg-field"><label>Irritabilidade Reflexa</label>
+              <select class="field-select" data-calc-input="irritabilidade"><option value="0">Sem Resposta</option><option value="1">Careta</option><option value="2" selected>Choro / Tosse / Espirro</option></select></div><div class="urg-field"><label>Cor da Pele</label>
+              <select class="field-select" data-calc-input="cor"><option value="0">Cianótico / Pálido</option><option value="1">Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>Completamente Rosado</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip cognitive-profile-strip--hint"></p>
+            <div class="urg-result">
+              <div><span class="urg-result-num safe" id="urgResultNum">10</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
+              <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Normal / Boa Vitalidade</span>
+            </div>
+          </div>
+        </div>
+        <div data-profile-shared="urgencia"></div>
+      </div>
+
+<div class="tab-panel" data-tab-panel="gestor">
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
+        </div>
+        <div class="gestor-grid">
+          <section class="calc-card">
+            <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Avaliações por dia (últimos 7 dias)</h2></div>
+            <div class="bar-chart">
+              <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
+              <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
+              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+            </div>
+          </section>
+          <section class="calc-card">
+            <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
+            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Gravemente Deprimido</span>
+              <div class="dist-bar-wrap"><div class="dist-bar" style="width:50%; background:#dc2626"></div></div>
+              <span class="dist-pct">50%</span></div><div class="dist-row"><span class="dist-label">Moderadamente Deprimido</span>
+              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#ea580c"></div></div>
+              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Normal / Boa Vitalidade</span>
+              <div class="dist-bar-wrap"><div class="dist-bar" style="width:17%; background:#2563eb"></div></div>
+              <span class="dist-pct">17%</span></div></div>
+          </section>
+        </div>
+        <section class="calc-card">
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
+          <div style="overflow-x:auto">
+            <table class="audit-table">
+              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
+              <tbody>
+                <tr><td>A-3021</td><td>02/07 09:14</td><td>Índice de Apgar</td><td>10 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
+                <tr><td>A-3020</td><td>02/07 08:40</td><td>Índice de Apgar</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
+                <tr><td>A-3019</td><td>01/07 22:05</td><td>Índice de Apgar</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <div data-profile-shared="gestor"></div>
+      </div>
+
 <div class="tab-panel" data-tab-panel="estudante">
         <p id="estCognitiveHint" class="cognitive-profile-strip cognitive-profile-strip--hint"></p>
         <div class="est-grid">
@@ -577,28 +649,7 @@
             </section>
           </div>
         </div>
-      </div>
-
-<div class="tab-panel" data-tab-panel="urgencia">
-        <div class="urg-panel">
-          <div class="urg-inner">
-            <div class="urg-top">
-              <div><span class="urg-badge"><span class="dot"></span> Modo urgência ativo</span><h3>Cálculo rápido — Índice de Apgar</h3></div>
-              <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 2, &quot;tono&quot;: 2, &quot;irritabilidade&quot;: 2, &quot;cor&quot;: 2}'>Recém-nascido vigoroso <span class="p-sub">Apgar 10</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 1, &quot;tono&quot;: 1, &quot;irritabilidade&quot;: 1, &quot;cor&quot;: 0}'>Depressão moderada <span class="p-sub">Apgar 5</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 1, &quot;respiracao&quot;: 0, &quot;tono&quot;: 0, &quot;irritabilidade&quot;: 0, &quot;cor&quot;: 1}'>Depressão grave <span class="p-sub">Apgar 2</span></button></div>
-            </div>
-            <div class="urg-grid"><div class="urg-field"><label>Frequência Cardíaca</label>
-              <select class="field-select" data-calc-input="fc"><option value="0">Ausente</option><option value="1">Menor que 100 bpm</option><option value="2" selected>Maior ou igual a 100 bpm</option></select></div><div class="urg-field"><label>Esforço Respiratório</label>
-              <select class="field-select" data-calc-input="respiracao"><option value="0">Ausente</option><option value="1">Fraco / Irregular</option><option value="2" selected>Bom / Choro Forte</option></select></div><div class="urg-field"><label>Tônus Muscular</label>
-              <select class="field-select" data-calc-input="tono"><option value="0">Flácido</option><option value="1">Alguma Flexão</option><option value="2" selected>Movimento Ativo</option></select></div><div class="urg-field"><label>Irritabilidade Reflexa</label>
-              <select class="field-select" data-calc-input="irritabilidade"><option value="0">Sem Resposta</option><option value="1">Careta</option><option value="2" selected>Choro / Tosse / Espirro</option></select></div><div class="urg-field"><label>Cor da Pele</label>
-              <select class="field-select" data-calc-input="cor"><option value="0">Cianótico / Pálido</option><option value="1">Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>Completamente Rosado</option></select></div></div>
-            <p id="urgCognitiveHint" class="cognitive-profile-strip cognitive-profile-strip--hint"></p>
-            <div class="urg-result">
-              <div><span class="urg-result-num safe" id="urgResultNum">10</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
-              <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Normal / Boa Vitalidade</span>
-            </div>
-          </div>
-        </div>
+        <div data-profile-shared="estudante"></div>
       </div>
 
 <div class="tab-panel" data-tab-panel="academico">
@@ -618,67 +669,6 @@
             </div>
           </div>
           <div class="aca-body" data-tab-panels="academico-conteudo">
-            <div class="tab-panel active" data-tab-panel="calculo">
-              <h4>Dados informados</h4>
-              <p>Frequência Cardíaca: <strong data-aca-value="fc">2</strong> · Esforço Respiratório: <strong data-aca-value="respiracao">2</strong> · Tônus Muscular: <strong data-aca-value="tono">2</strong> · Irritabilidade Reflexa: <strong data-aca-value="irritabilidade">2</strong> · Cor da Pele: <strong data-aca-value="cor">2</strong></p>
-              <h4>Resultado</h4>
-              <p>Índice de Apgar: <strong data-aca-value="__result__">10 pontos</strong> — <span data-aca-value="__range__">Normal / Boa Vitalidade</span></p>
-              <button type="button" class="btn btn-outline-navy aca-print-btn" onclick="window.print()"><svg class="icon icon-sm"><use href="#i-printer"/></svg> Exportar / Imprimir</button>
-            </div>
-            <div class="tab-panel" data-tab-panel="fundamentacao"><h4>Fundamentação</h4><p>O Índice de Apgar foi desenvolvido pela anestesiologista Virginia Apgar em 1952 como um método rápido e padronizado para avaliar a condição clínica do recém-nascido logo após o parto, permitindo identificar precocemente a necessidade de reanimação.</p><h4>Histórico</h4><p>Adotado mundialmente como padrão de avaliação neonatal imediata, sendo recomendado pela Academia Americana de Pediatria (AAP) e pelo Colégio Americano de Obstetras e Ginecologistas (ACOG) como parte da rotina de nascimento.</p></div>
-            <div class="tab-panel cognitive-locked" data-tab-panel="sae"><h4>NANDA — Padrão respiratório ineficaz</h4><p>Inspiração e/ou expiração que não proporciona ventilação adequada.</p><h4>NANDA — Risco de nível de glicemia instável</h4><p>Vulnerabilidade a variação nos níveis de glicose/açúcar no sangue, o que pode comprometer a saúde do recém-nascido.</p><h4>NOC — Status respiratório do recém-nascido</h4><ul class="tips-list"><li>Frequência respiratória adequada</li><li>Ausência de cianose</li><li>Choro vigoroso</li></ul><h4>NOC — Adaptação do recém-nascido à vida extrauterina</h4><ul class="tips-list"><li>Estabilidade térmica</li><li>Estabilidade cardiorrespiratória</li><li>Reflexos presentes</li></ul><h4>NIC — Cuidados ao recém-nascido: imediatos</h4><ul class="tips-list"><li>Secar e aquecer o recém-nascido</li><li>Avaliar Apgar no 1º e 5º minuto</li><li>Aspirar vias aéreas se necessário</li><li>Realizar contato pele a pele</li></ul></div>
-            <div class="tab-panel" data-tab-panel="evidencias"><h4>Validação científica</h4><p>Amplamente validado na literatura como indicador de vitalidade neonatal, embora não deva ser usado isoladamente para prever prognóstico neurológico a longo prazo.</p><h4>Limitações</h4><p>O escore de Apgar isolado não deve ser utilizado para diagnosticar asfixia perinatal nem para prever desfechos neurológicos a longo prazo — deve ser interpretado em conjunto com gasometria de cordão e exame clínico completo.</p></div>
-            <div class="tab-panel" data-tab-panel="referencias"><ol class="ref-list"><li><span class="ref-num">1</span>APGAR, V. A proposal for a new method of evaluation of the newborn infant. Current Researches in Anesthesia and Analgesia, v. 32, n. 4, p. 260-267, 1953.</li><li><span class="ref-num">2</span>AMERICAN ACADEMY OF PEDIATRICS; AMERICAN COLLEGE OF OBSTETRICIANS AND GYNECOLOGISTS. The Apgar Score. Committee Opinion, 2015 (reafirmado).</li><li><span class="ref-num">3</span>BRASIL. Ministério da Saúde. Atenção à Saúde do Recém-Nascido: Guia para os Profissionais de Saúde. Brasília: MS, 2014.</li><li><span class="ref-num">4</span>BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020.</li><li><span class="ref-num">5</span>COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017.</li></ol></div>
-          </div>
-        </div>
-      </div>
-
-<div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
-        <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
-          <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
-        </div>
-        <div class="gestor-grid">
-          <section class="calc-card">
-            <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Avaliações por dia (últimos 7 dias)</h2></div>
-            <div class="bar-chart">
-              <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
-              <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
-            </div>
-          </section>
-          <section class="calc-card">
-            <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Gravemente Deprimido</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:50%; background:#dc2626"></div></div>
-              <span class="dist-pct">50%</span></div><div class="dist-row"><span class="dist-label">Moderadamente Deprimido</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#ea580c"></div></div>
-              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Normal / Boa Vitalidade</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:17%; background:#2563eb"></div></div>
-              <span class="dist-pct">17%</span></div></div>
-          </section>
-        </div>
-        <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Índice de Apgar</td><td>10 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Índice de Apgar</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Índice de Apgar</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
 
     </div>
 
@@ -704,6 +694,75 @@
 
   </div>
 </main>
+
+
+<div class="print-area print-area--single-page no-print-screen" style="display:none;" id="printTemplate" aria-hidden="true">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Índice de Apgar</h1>
+      <p class="subtitle" id="printToolCategory">Neonatologia</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">1</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p style="font-size:11px;margin:4px 0"><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p style="font-size:11px;margin:4px 0"><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p style="font-size:11px;margin:4px 0"><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Segurança do Paciente</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

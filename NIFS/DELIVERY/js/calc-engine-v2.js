@@ -699,6 +699,13 @@
   /* ---------------------------------------------------------------------
      4b. Impressão — relatório padrão (relatorio.pdf / print-template.css)
   --------------------------------------------------------------------- */
+  function formatReference(ref) {
+    if (!ref) return "Documento gerado automaticamente.";
+    if (typeof ref === "string") return ref;
+    if (ref.text) return ref.text;
+    return ((ref.author || "") + " (" + (ref.year || "") + "). " + (ref.title || "")).trim();
+  }
+
   function populatePrintReport(total, range) {
     var pt = document.getElementById("printTemplate");
     if (!pt) return;
@@ -745,11 +752,12 @@
     el = document.getElementById("printNocText"); if (el) el.textContent = pickNocText();
     el = document.getElementById("printReference");
     if (el && evidence.references && evidence.references[0]) {
-      var ref = evidence.references[0];
-      el.textContent = typeof ref === "string" ? ref : (ref.author || "") + " (" + (ref.year || "") + "). " + (ref.title || "");
+      el.textContent = formatReference(evidence.references[0]);
     }
     applyConditionalSafety(range);
   }
+
+  var printTitleBackup = null;
 
   function initPrint() {
     var printBtn = document.getElementById("calcPrintBtn");
@@ -761,6 +769,8 @@
         }
         var r = renderAll();
         populatePrintReport(r.total, r.range);
+        printTitleBackup = document.title;
+        document.title = "relatorio";
         window.print();
       });
     }
@@ -782,10 +792,16 @@
       populatePrintReport(r.total, r.range);
       pt.style.display = "block";
       pt.classList.remove("no-print-screen");
+      if (!printTitleBackup) printTitleBackup = document.title;
+      document.title = "relatorio";
     });
     window.addEventListener("afterprint", function () {
       var pt = document.getElementById("printTemplate");
       if (pt) { pt.style.display = "none"; pt.classList.add("no-print-screen"); }
+      if (printTitleBackup) {
+        document.title = printTitleBackup;
+        printTitleBackup = null;
+      }
     });
   }
 

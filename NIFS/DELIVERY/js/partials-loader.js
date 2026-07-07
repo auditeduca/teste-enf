@@ -105,6 +105,18 @@
     assetPath("js/cognitive-ui.js")
   ];
 
+  function ckoScripts() {
+    var body = document.body;
+    if (!body) return [];
+    if (body.getAttribute("data-tool-cko") || body.getAttribute("data-page") === "apgar") {
+      return [
+        assetPath("js/tool-cko-loader.js"),
+        assetPath("js/tool-profile-engine.js")
+      ];
+    }
+    return [];
+  }
+
   var CALC_ENGINE = assetPath("js/calc-engine-v2.js");
 
   function fetchPartial(item) {
@@ -151,7 +163,7 @@
   function loadDependentScriptsInOrder(index) {
     if (index >= DEPENDENT_SCRIPTS.length) {
       if (document.getElementById("tool-config")) {
-        loadCognitiveScriptsThenCalcEngine();
+        loadCkoThenCognitive();
         return;
       }
       finishPartialsReady();
@@ -159,6 +171,17 @@
     }
     loadScriptSequentially(DEPENDENT_SCRIPTS[index]).then(function () {
       loadDependentScriptsInOrder(index + 1);
+    });
+  }
+
+  function loadScriptsList(list, idx, onDone) {
+    idx = idx || 0;
+    if (idx >= list.length) {
+      onDone();
+      return;
+    }
+    loadScriptSequentially(list[idx]).then(function () {
+      loadScriptsList(list, idx + 1, onDone);
     });
   }
 
@@ -170,6 +193,13 @@
     }
     loadScriptSequentially(COGNITIVE_SCRIPTS[idx]).then(function () {
       loadCognitiveScriptsThenCalcEngine(idx + 1);
+    });
+  }
+
+  function loadCkoThenCognitive() {
+    var list = ckoScripts();
+    loadScriptsList(list, 0, function () {
+      loadCognitiveScriptsThenCalcEngine(0);
     });
   }
 
