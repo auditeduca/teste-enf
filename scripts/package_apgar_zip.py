@@ -23,6 +23,7 @@ JS_FILES = [
     "tool-cko-loader.js",
     "tool-profile-engine.js",
     "calc-engine-v2.js",
+    "report-payload.js",
     "tool-medication-links.js",
     "partials-loader.js",
 ]
@@ -53,6 +54,14 @@ SCRIPTS = [
     "package_apgar_zip.py",
     "integrate_relatorio_fiel.py",
     "sync_brand_assets.py",
+]
+
+API_FILES = [
+    "report_server.py",
+    "report_models.py",
+    "report_schema.json",
+    "requirements.txt",
+    "templates/report_template.html.j2",
 ]
 
 REF_DATA = [
@@ -140,10 +149,24 @@ python3 scripts/build_apgar_cko.py
 Template reutilizável: `partials/relatorio-fiel.html` + `css/print-template.css`
 
 - Pré-visualização editável: `relatorio_fiel.html`
-- Preenchimento automático via `calc-engine-v2.js` → `populatePrintReport()`
-- Botão Imprimir gera `relatorio.pdf` (via `window.print()`)
+- Preenchimento automático via `calc-engine-v2.js` → `populatePrintReport()` (lê IDs da página)
+- Botão **Imprimir** gera PDF via `window.print()` (2 páginas: clínico + segurança/referência)
+- `js/report-payload.js` — monta JSON do relatório a partir do DOM
 
 Para integrar em outra ferramenta: use `<div id="printTemplateMount"></div>` e carregue via `partials-loader.js`.
+
+## API de relatórios (opcional)
+
+Pasta `api/` — gera o mesmo HTML via POST JSON (FastAPI):
+
+```bash
+pip install -r api/requirements.txt
+uvicorn report_server:app --app-dir api --reload --port 8000
+```
+
+- `POST /generate-report` — corpo JSON conforme `api/report_schema.json`
+- `GET /docs` — Swagger
+- `ReportPayload.build()` no browser monta o mesmo payload
 
 ## Notas
 
@@ -180,6 +203,11 @@ def stage() -> None:
         copy_file(DELIVERY / "partials" / name, STAGING / "partials" / name)
     copy_file(DELIVERY / "partials" / "relatorio-fiel.html", STAGING / "partials" / "relatorio-fiel.html")
     copy_file(DELIVERY / "relatorio_fiel.html", STAGING / "relatorio_fiel.html")
+
+    api_src = DELIVERY / "api"
+    if api_src.is_dir():
+        for rel in API_FILES:
+            copy_file(api_src / rel, STAGING / "api" / rel)
 
     for name in ("favicon-16x16.png", "favicon-32x32.png", "favicon.ico"):
         copy_file(DELIVERY / name, STAGING / name)
