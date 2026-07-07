@@ -306,7 +306,9 @@
     // Remove hidden state
     panelEl.classList.remove('cip-hidden');
 
-    const content = panelEl.querySelector('#cognitivePanelContent') || panelEl;
+    const content = panelEl.querySelector('#cognitivePanelContent')
+      || panelEl.querySelector('[data-cognitive-panel-content]')
+      || panelEl;
     content.innerHTML = '';
 
     // Tabs
@@ -373,7 +375,9 @@
     if (!panel) panel = document.getElementById("cognitivePanel");
     if (!panel) return null;
 
-    var content = panel.querySelector("#cognitivePanelContent") || panel;
+    var content = panel.querySelector("#cognitivePanelContent")
+      || panel.querySelector("[data-cognitive-panel-content]")
+      || panel;
     var payload = patientContextOrResult;
 
     if (payload && payload.observations && global.NursePaLM && global.NursePaLM.runCognitivePipeline) {

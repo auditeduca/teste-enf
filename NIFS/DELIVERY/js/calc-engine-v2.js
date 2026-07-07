@@ -225,10 +225,7 @@
     return range.riskLevel || "unknown";
   }
 
-  function renderCIP(total, range) {
-    var container = document.getElementById("cipContainer");
-    if (!container) return;
-
+  function buildCIPHtml(total, range) {
     var severity = getRangeSeverity(range);
     var severityColor = { critical: "#dc2626", moderate: "#f59e0b", low: "#3b82f6", normal: "#2563eb", unknown: "#64748b" }[severity] || "#64748b";
     var severityLabel = { critical: "Crítico", moderate: "Moderado", low: "Baixo Risco", normal: "Normal", unknown: "—" }[severity] || "—";
@@ -332,24 +329,63 @@
       html += "</div></div>";
     }
 
-    container.innerHTML = html;
-    container.classList.remove("cip-hidden");
-    container.style.display = "block";
+    return html;
+  }
+
+  function renderCIP(total, range) {
+    var html = buildCIPHtml(total, range);
+    if (!html) return;
+    document.querySelectorAll("#cipContainer, [data-cip-mount]").forEach(function (container) {
+      container.innerHTML = html;
+      container.classList.remove("cip-hidden");
+      container.style.display = "block";
+    });
+    document.querySelectorAll(".cip-section, [data-cip-section]").forEach(function (el) {
+      el.classList.remove("cip-hidden");
+    });
+  }
+
+  function showClinicalEngineSections() {
+    document.querySelectorAll(
+      ".cip-section, [data-cip-section], .cip-kg-links, [data-kg-section], .cog-section-wrapper, [data-cog-section]"
+    ).forEach(function (el) {
+      el.classList.remove("cip-hidden");
+    });
+  }
+
+  function renderCognitiveResult(result, range) {
+    if (!result || !window.CognitiveUI || !window.CognitiveUI.render) return;
+    document.querySelectorAll("#cognitivePanel, [data-cognitive-mount]").forEach(function (panel) {
+      panel.classList.remove("cip-hidden");
+      var header = panel.querySelector(".cognitive-panel-header h3");
+      if (header) {
+        var confPct = Math.round((result.confidence || 0) * 100);
+        header.innerHTML = '<i class="fa-solid fa-brain"></i> Nurse-PaLM — ' + (range ? range.label : "Resultado") + " · Confiança: " + confPct + "%";
+      }
+      window.CognitiveUI.render(panel, result);
+    });
   }
 
   function hideCipSections() {
-    var cip = document.getElementById("cipContainer");
-    if (cip) {
+    document.querySelectorAll("#cipContainer, [data-cip-mount]").forEach(function (cip) {
       cip.innerHTML = "";
       cip.classList.add("cip-hidden");
       cip.style.display = "none";
-    }
-    var cogPanel = document.getElementById("cognitivePanel");
-    if (cogPanel) cogPanel.classList.add("cip-hidden");
-    var cipSection = document.querySelector(".cip-section");
-    if (cipSection) cipSection.classList.add("cip-hidden");
-    document.querySelectorAll(".cip-kg-links, .cog-section-wrapper").forEach(function (el) {
+    });
+    document.querySelectorAll("#cognitivePanel, [data-cognitive-mount]").forEach(function (cogPanel) {
+      cogPanel.classList.add("cip-hidden");
+      var content = cogPanel.querySelector("#cognitivePanelContent, [data-cognitive-panel-content]");
+      if (content) content.innerHTML = "";
+    });
+    document.querySelectorAll(
+      ".cip-section, [data-cip-section], .cip-kg-links, [data-kg-section], .cog-section-wrapper, [data-cog-section]"
+    ).forEach(function (el) {
       el.classList.add("cip-hidden");
+    });
+    document.querySelectorAll("[data-profile-clinical-flow]").forEach(function (lane) {
+      if (lane.id === "calcClinicalFlow") return;
+      lane.setAttribute("hidden", "");
+      lane.classList.remove("is-visible");
     });
   }
 
@@ -424,12 +460,18 @@
   }
 
   function applyClinicalFlowTexts(range) {
+    var nanda = pickNandaText(range);
+    var nic = pickNicText();
+    var noc = pickNocText();
     var nandaText = document.getElementById("calcNandaText");
     var nicText = document.getElementById("calcNicText");
     var nocText = document.getElementById("calcNocText");
-    if (nandaText) nandaText.textContent = pickNandaText(range);
-    if (nicText) nicText.textContent = pickNicText();
-    if (nocText) nocText.textContent = pickNocText();
+    if (nandaText) nandaText.textContent = nanda;
+    if (nicText) nicText.textContent = nic;
+    if (nocText) nocText.textContent = noc;
+    document.querySelectorAll("[data-nnn-nanda]").forEach(function (el) { el.textContent = nanda; });
+    document.querySelectorAll("[data-nnn-nic]").forEach(function (el) { el.textContent = nic; });
+    document.querySelectorAll("[data-nnn-noc]").forEach(function (el) { el.textContent = noc; });
     applyConditionalSafety(range);
     applyCognitiveToProfiles(range);
     updateAcademicSaePanel(range);
@@ -527,6 +569,11 @@
     var divider = document.getElementById("calcFlowDivider");
     if (flow) flow.classList.remove("is-visible");
     if (divider) divider.style.display = "none";
+    document.querySelectorAll("[data-profile-clinical-flow]").forEach(function (lane) {
+      if (lane.id === "calcClinicalFlow") return;
+      lane.setAttribute("hidden", "");
+      lane.classList.remove("is-visible");
+    });
     document.querySelectorAll('[data-tab-panel="sae"]').forEach(function (p) {
       p.classList.add("cognitive-locked");
     });
@@ -544,35 +591,20 @@
     if (cogTimer) clearTimeout(cogTimer);
     cogTimer = setTimeout(function () {
       var ctx = buildCognitiveContext(total, range);
-      var cogPanel = document.getElementById("cognitivePanel");
       var pipeline = function (result) {
         lastCognitiveResult = result;
-        if (document.getElementById("calcClinicalFlow") && document.getElementById("calcClinicalFlow").classList.contains("is-visible")) {
-          applyClinicalFlowTexts(range);
-        }
-        if (cogPanel && result) {
-          var header = cogPanel.querySelector(".cognitive-panel-header h3");
-          if (header) {
-            var confPct = Math.round((result.confidence || 0) * 100);
-            header.innerHTML = '<i class="fa-solid fa-brain"></i> Nurse-PaLM — ' + (range ? range.label : "Resultado") + " · Confiança: " + confPct + "%";
-          }
-        }
+        applyClinicalFlowTexts(range);
+        renderCognitiveResult(result, range);
+        showClinicalEngineSections();
       };
 
-      if (cogPanel && window.CognitiveUI && window.CognitiveUI.renderCognitivePanel) {
-        cogPanel.classList.remove("cip-hidden");
-        var cipSection = document.querySelector(".cip-section");
-        if (cipSection) cipSection.classList.remove("cip-hidden");
-        document.querySelectorAll(".cip-kg-links, .cog-section-wrapper").forEach(function (el) {
-          el.classList.remove("cip-hidden");
-        });
+      if (window.CognitiveUI && window.CognitiveUI.renderCognitivePanel) {
+        showClinicalEngineSections();
         Promise.resolve(window.CognitiveUI.renderCognitivePanel("cognitivePanelContent", ctx)).then(pipeline).catch(function (e) {
           console.error("[calc-engine-v2] Cognitive UI error:", e);
         });
       } else if (window.NursePaLM && window.NursePaLM.runCognitivePipeline) {
-        document.querySelectorAll(".cip-section, .cip-kg-links, .cog-section-wrapper").forEach(function (el) {
-          el.classList.remove("cip-hidden");
-        });
+        showClinicalEngineSections();
         Promise.resolve(window.NursePaLM.runCognitivePipeline(ctx)).then(pipeline).catch(function (e) {
           console.error("[calc-engine-v2] Cognitive error:", e);
         });
@@ -588,20 +620,28 @@
     hasCalculated = true;
     var flowDivider = document.getElementById("calcFlowDivider");
     var clinicalFlow = document.getElementById("calcClinicalFlow");
-    if (!clinicalFlow) return;
     runCognitiveAnalysis(total, range);
     applyClinicalFlowTexts(range);
-    var cipSection = document.querySelector(".cip-section");
-    if (cipSection) cipSection.classList.remove("cip-hidden");
-    document.querySelectorAll(".cip-kg-links").forEach(function (el) {
+    showClinicalEngineSections();
+    document.querySelectorAll(".cip-kg-links, [data-kg-section]").forEach(function (el) {
       el.classList.remove("cip-hidden");
     });
     if (flowDivider) flowDivider.style.display = "block";
-    clinicalFlow.classList.add("is-visible");
-    if (window.showToast) window.showToast("Raciocínio clínico integrado disponível em todos os perfis", "success");
-    window.requestAnimationFrame(function () {
-      clinicalFlow.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (clinicalFlow) clinicalFlow.classList.add("is-visible");
+    document.querySelectorAll("[data-profile-clinical-flow]").forEach(function (lane) {
+      if (lane.id === "calcClinicalFlow") return;
+      lane.removeAttribute("hidden");
+      lane.classList.add("is-visible");
     });
+    if (window.showToast) window.showToast("Motor clínico integrado disponível em todos os perfis", "success");
+    var scrollTarget = document.querySelector('[data-tab-panel].active [data-profile-clinical-flow]:not([hidden])')
+      || clinicalFlow
+      || document.querySelector("[data-profile-clinical-flow]:not([hidden])");
+    if (scrollTarget) {
+      window.requestAnimationFrame(function () {
+        scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
   }
 
   function triggerIntelligence(total, range) {
@@ -1005,6 +1045,22 @@
   }
 
   document.addEventListener("partials:ready", boot);
+  document.addEventListener("tool-profile:ready", function () {
+    if (!hasCalculated) return;
+    var r = renderAll();
+    renderCIP(r.total, r.range);
+    applyClinicalFlowTexts(r.range);
+    if (lastCognitiveResult) renderCognitiveResult(lastCognitiveResult, r.range);
+    showClinicalEngineSections();
+    document.querySelectorAll("[data-profile-clinical-flow]").forEach(function (lane) {
+      lane.removeAttribute("hidden");
+      lane.classList.add("is-visible");
+    });
+    var flow = document.getElementById("calcClinicalFlow");
+    var divider = document.getElementById("calcFlowDivider");
+    if (flow) flow.classList.add("is-visible");
+    if (divider) divider.style.display = "block";
+  });
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot);
   } else {

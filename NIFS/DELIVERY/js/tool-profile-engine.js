@@ -1,5 +1,5 @@
 /* ======================================================================
-   tool-profile-engine.js — Conteúdo CKO compartilhado em todos os perfis
+   tool-profile-engine.js — CKO + mounts do motor clínico em todos os perfis
    ====================================================================== */
 (function () {
   "use strict";
@@ -50,49 +50,32 @@
     return card(pc.title || "Perfil", html);
   }
 
-  function renderCognitive(cko) {
-    var sae = (cko.reasoning && cko.reasoning.sae) || {};
-    var nanda = (sae.nanda || []).map(function (n) { return n.diagnosis; }).join("; ") || "—";
-    var nic = (sae.nic || []).map(function (n) { return n.intervention; }).join("; ") || "—";
-    var noc = (sae.noc || []).map(function (n) { return n.outcome; }).join("; ") || "—";
-    return card("Raciocínio NANDA · NIC · NOC", (
-      '<p class="flow-text"><strong>NANDA:</strong> ' + esc(nanda) + "</p>" +
-      '<p class="flow-text"><strong>NIC:</strong> ' + esc(nic) + "</p>" +
-      '<p class="flow-text"><strong>NOC:</strong> ' + esc(noc) + "</p>"
-    ));
-  }
-
-  function renderAi(cko) {
-    var ai = cko.ai || {};
-    var html = "";
-    if (ai.summary) html += '<p class="flow-text">' + esc(ai.summary) + "</p>";
-    if (ai.clinicalPearls && ai.clinicalPearls.length) {
-      html += "<h4 style=\"font-size:13px;margin:12px 0 6px\">Pérolas clínicas</h4>" + listItems(ai.clinicalPearls);
-    }
-    if (ai.commonErrors && ai.commonErrors.length) {
-      html += "<h4 style=\"font-size:13px;margin:12px 0 6px\">Erros comuns</h4>" + listItems(ai.commonErrors);
-    }
-    if (ai.explainLikeResident) {
-      html += '<p class="flow-text" style="margin-top:10px;font-style:italic">' + esc(ai.explainLikeResident) + "</p>";
-    }
-    return card("Inteligência clínica (GEO)", html);
-  }
-
-  function renderEvidence(cko) {
-    var ev = cko.evidence || {};
-    var html = "";
-    if (ev.foundation) html += "<p>" + esc(ev.foundation) + "</p>";
-    if (ev.validation) html += '<p style="margin-top:8px">' + esc(ev.validation) + "</p>";
-    if (ev.limitations) html += '<p style="margin-top:8px"><strong>Limitações:</strong> ' + esc(ev.limitations) + "</p>";
-    if (ev.references && ev.references.length) {
-      html += '<ol class="ref-list" style="margin-top:10px;font-size:12px">';
-      ev.references.forEach(function (ref, i) {
-        var text = typeof ref === "string" ? ref : (ref.text || ref.title || "");
-        html += '<li><span class="ref-num">' + (i + 1) + "</span>" + esc(text) + "</li>";
-      });
-      html += "</ol>";
-    }
-    return card("Evidências", html);
+  /** Trilha lógica: cálculo → NANDA/NIC/NOC → CIP → Nurse-PaLM → recursos */
+  function renderClinicalEngineLane(profileId) {
+    return (
+      '<div class="clinical-intelligence-lane" data-profile-clinical-flow hidden>' +
+      '<div class="flow-divider"><span>Motor clínico integrado</span></div>' +
+      '<section class="calc-card flow-card profile-cko-card">' +
+      '<div class="calc-card-header"><span class="bar" aria-hidden="true"></span>' +
+      '<h2 style="font-size:15px"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2></div>' +
+      '<div class="nnn-grid">' +
+      '<div><span class="nnn-label">Diagnóstico (NANDA-I)</span><p class="nnn-value" data-nnn-nanda>—</p></div>' +
+      '<div><span class="nnn-label">Intervenção (NIC)</span><p class="nnn-value" data-nnn-nic>—</p></div>' +
+      '<div><span class="nnn-label">Resultado (NOC)</span><p class="nnn-value" data-nnn-noc>—</p></div>' +
+      "</div></section>" +
+      '<section class="cip-section cip-hidden" data-cip-section>' +
+      '<h2 class="cip-section-title">Clinical Intelligence Package</h2>' +
+      '<p class="cip-section-intro">6 dimensões de inteligência clínica alimentadas pelo resultado do cálculo</p>' +
+      '<div class="cip-mount cip-hidden" data-cip-mount data-profile="' + esc(profileId) + '"></div>' +
+      "</section>" +
+      '<section class="cog-section-wrapper cip-hidden" data-cog-section>' +
+      '<div class="cognitive-panel cip-hidden" data-cognitive-mount data-profile="' + esc(profileId) + '">' +
+      '<div class="cognitive-panel-header">' +
+      '<h3><i class="fa-solid fa-brain"></i> Análise Cognitiva — Nurse-PaLM</h3>' +
+      '<span class="cognitive-badge">Motor Clínico</span></div>' +
+      '<div data-cognitive-panel-content></div></div></section>' +
+      "</div>"
+    );
   }
 
   function renderKgLinks(cko) {
@@ -103,7 +86,12 @@
       inner += '<a href="' + esc(l.href) + '" class="cip-kg-link"><i class="fa-solid ' + esc(l.icon) + '"></i> ' + esc(l.label) + "</a>";
     });
     inner += "</div>";
-    return card("Recursos conectados", inner);
+    return (
+      '<section class="cip-kg-links profile-kg-links" data-kg-section>' +
+      "<h3><i class=\"fa-solid fa-link\"></i> Recursos conectados</h3>" +
+      inner +
+      "</section>"
+    );
   }
 
   function renderRelated(cko) {
@@ -146,11 +134,8 @@
   }
 
   function renderKpi(cko) {
-    var kpis = (cko.presentation && cko.presentation.kpis) || [
-      "Avaliações registradas por unidade/período",
-      "Percentual de escores na faixa esperada",
-      "Casos de alto risco (Apgar ≤6) por semana"
-    ];
+    var kpis = (cko.presentation && cko.presentation.kpis) || [];
+    if (!kpis.length) return "";
     return card("Indicadores (referência NKOS)", listItems(kpis));
   }
 
@@ -172,15 +157,13 @@
   function blocksForProfile(profileId, cko) {
     return [
       renderProfileIntro(profileId, cko),
-      renderCognitive(cko),
-      renderAi(cko),
-      renderEvidence(cko),
+      renderClinicalEngineLane(profileId),
+      renderMedications(profileId),
       renderKgLinks(cko),
-      renderRelated(cko),
       renderLearning(cko),
+      renderRelated(cko),
       renderTags(cko),
-      renderKpi(cko),
-      renderMedications(profileId)
+      profileId === "gestor" ? renderKpi(cko) : ""
     ].join("");
   }
 
