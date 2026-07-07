@@ -52,6 +52,7 @@ SCRIPTS = [
     "fix_apgar_profiles.py",
     "package_apgar_zip.py",
     "integrate_relatorio_fiel.py",
+    "sync_brand_assets.py",
 ]
 
 REF_DATA = [
@@ -179,6 +180,17 @@ def stage() -> None:
         copy_file(DELIVERY / "partials" / name, STAGING / "partials" / name)
     copy_file(DELIVERY / "partials" / "relatorio-fiel.html", STAGING / "partials" / "relatorio-fiel.html")
     copy_file(DELIVERY / "relatorio_fiel.html", STAGING / "relatorio_fiel.html")
+
+    for name in ("favicon-16x16.png", "favicon-32x32.png", "favicon.ico"):
+        copy_file(DELIVERY / name, STAGING / name)
+        copy_file(DELIVERY / name, STAGING / "html" / name)
+
+    img_src = DELIVERY / "images"
+    if img_src.is_dir():
+        for item in img_src.iterdir():
+            if item.is_file():
+                copy_file(item, STAGING / "images" / item.name)
+                copy_file(item, STAGING / "html" / "images" / item.name)
 
     html_sub = STAGING / "html"
     for sub in ("css", "js", "partials"):

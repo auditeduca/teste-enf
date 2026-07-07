@@ -213,7 +213,7 @@
         return res.text();
       })
       .then(function (html) {
-        mount.innerHTML = html;
+        mount.innerHTML = rewritePartialPaths(html);
       })
       .catch(function (err) {
         console.error("[partials-loader] Falha ao carregar relatorio-fiel", err);
