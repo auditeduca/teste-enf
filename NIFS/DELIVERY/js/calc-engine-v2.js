@@ -46,6 +46,11 @@
   var formulaCfg = (CONFIG.calculator && CONFIG.calculator.formula) || { type: "sum" };
   var ranges = (CONFIG.interpretation && CONFIG.interpretation.ranges) || [];
   var decimals = typeof formulaCfg.decimals === "number" ? formulaCfg.decimals : 0;
+  var sae = CONFIG.sae || {};
+  var evidence = CONFIG.evidence || {};
+  var learning = CONFIG.learning || {};
+  var overview = CONFIG.overview || {};
+  var TOOL_SLUG = CONFIG.slug || "";
 
   /* ---------------------------------------------------------------------
      1. Abas genéricas (Padrão/Estudante/Urgência/Acadêmico/Gestor + sub-abas)
@@ -180,6 +185,218 @@
   }
 
   /* ---------------------------------------------------------------------
+     3b. Clinical Intelligence Package + Nurse-PaLM (preview_v2 / preview_apgar)
+  --------------------------------------------------------------------- */
+  var VITAL_MAP = {
+    fc: "heartRate", frequencia_cardiaca: "heartRate", heart_rate: "heartRate", hr: "heartRate", pulso: "heartRate",
+    pas: "systolicBP", pressao_sistolica: "systolicBP", systolic: "systolicBP", sbp: "systolicBP",
+    pad: "diastolicBP", pressao_diastolica: "diastolicBP", diastolic: "diastolicBP",
+    spo2: "spO2", saturacao: "spO2", sat: "spO2",
+    fr: "respiratoryRate", frequencia_respiratoria: "respiratoryRate", respiratory_rate: "respiratoryRate",
+    rr: "respiratoryRate", respiracao: "respiratoryRate",
+    temp: "temperature", temperatura: "temperature",
+    glasgow: "consciousness", consciencia: "consciousness",
+    dor: "painScore", pain: "painScore", glicemia: "glucose", glicose: "glucose", glucose: "glucose"
+  };
+
+  function buildObservations(values) {
+    var obs = [];
+    Object.keys(values || {}).forEach(function (inpId) {
+      var normalized = inpId.toLowerCase().replace(/[\s_\-]/g, "");
+      var vitalType = VITAL_MAP[normalized] || VITAL_MAP[inpId.toLowerCase()];
+      if (vitalType && values[inpId] > 0) {
+        obs.push({ type: vitalType, value: values[inpId] });
+      }
+    });
+    return obs;
+  }
+
+  function getRangeSeverity(range) {
+    if (!range) return "unknown";
+    var label = (range.label || "").toLowerCase();
+    var color = range.color || "";
+    if (color === "#dc2626" || color === "#b91c1c" || color === "#ef4444") return "critical";
+    if (color === "#ea580c" || color === "#f59e0b" || color === "#f97316") return "moderate";
+    if (color === "#2563eb" || color === "#3b82f6" || color === "#1d4ed8") return "normal";
+    if (/grave|severo|crítico|critico|alto risco/.test(label)) return "critical";
+    if (/moderado|moderada|médio|medio/.test(label)) return "moderate";
+    if (/leve|baixo|baixa/.test(label)) return "low";
+    if (/normal|bom|boa|preservado/.test(label)) return "normal";
+    return range.riskLevel || "unknown";
+  }
+
+  function renderCIP(total, range) {
+    var container = document.getElementById("cipContainer");
+    if (!container) return;
+    var severity = getRangeSeverity(range);
+    var severityColor = { critical: "#dc2626", moderate: "#f59e0b", low: "#3b82f6", normal: "#2563eb", unknown: "#64748b" }[severity] || "#64748b";
+    var severityLabel = { critical: "Crítico", moderate: "Moderado", low: "Baixo Risco", normal: "Normal", unknown: "—" }[severity] || "—";
+    var html = "";
+    var nandaList = sae.nanda || [];
+    if (nandaList.length > 0) {
+      html += '<div class="cip-dim cip-dim-nanda"><div class="cip-dim-header"><span class="cip-dim-icon">🔬</span><h4>Diagnósticos NANDA-I</h4>';
+      html += '<span class="cip-dim-severity" style="background:' + severityColor + '20;color:' + severityColor + ';">' + severityLabel + "</span></div><div class=\"cip-dim-content\">";
+      nandaList.forEach(function (n, i) {
+        var dx = n.diagnosis || n.name || "";
+        var def = n.definition || "";
+        html += '<div class="cip-card"' + (i === 0 && severity !== "normal" ? ' style="border-color:' + severityColor + ';"' : "") + ">";
+        html += '<div class="cip-card-title">' + dx + "</div>";
+        if (def) html += '<div class="cip-card-desc">' + def.substring(0, 120) + (def.length > 120 ? "..." : "") + "</div>";
+        html += "</div>";
+      });
+      html += "</div></div>";
+    }
+    var nicList = sae.nic || [];
+    if (nicList.length > 0) {
+      html += '<div class="cip-dim cip-dim-nic"><div class="cip-dim-header"><span class="cip-dim-icon">💊</span><h4>Intervenções NIC</h4></div><div class="cip-dim-content">';
+      nicList.forEach(function (n) {
+        var name = n.intervention || n.name || "";
+        var activities = n.activities || [];
+        html += '<div class="cip-card"><div class="cip-card-title">' + name + "</div>";
+        if (activities.length) {
+          html += "<ul class=\"cip-activities\">";
+          activities.slice(0, 4).forEach(function (a) { html += "<li>" + a + "</li>"; });
+          if (activities.length > 4) html += '<li class="cip-more">+' + (activities.length - 4) + " atividades</li>";
+          html += "</ul>";
+        }
+        html += "</div>";
+      });
+      html += "</div></div>";
+    }
+    var nocList = sae.noc || [];
+    if (nocList.length > 0) {
+      html += '<div class="cip-dim cip-dim-noc"><div class="cip-dim-header"><span class="cip-dim-icon">🎯</span><h4>Outcomes NOC</h4></div><div class="cip-dim-content">';
+      nocList.forEach(function (n) {
+        var name = n.outcome || n.name || "";
+        var indicators = n.indicators || [];
+        html += '<div class="cip-card"><div class="cip-card-title">' + name + "</div>";
+        if (indicators.length) {
+          html += '<div class="cip-indicators">';
+          indicators.slice(0, 3).forEach(function (ind) { html += '<span class="cip-indicator-tag">' + ind + "</span>"; });
+          html += "</div>";
+        }
+        html += "</div>";
+      });
+      html += "</div></div>";
+    }
+    if (evidence.foundation || (evidence.references && evidence.references.length)) {
+      html += '<div class="cip-dim cip-dim-evidence"><div class="cip-dim-header"><span class="cip-dim-icon">📚</span><h4>Evidência Científica</h4>';
+      if (overview.evidenceLevel) html += '<span class="cip-dim-severity" style="background:#f59e0b20;color:#f59e0b;">Nível: ' + overview.evidenceLevel + "</span>";
+      html += "</div><div class=\"cip-dim-content\">";
+      if (evidence.foundation) html += '<div class="cip-card"><div class="cip-card-desc">' + evidence.foundation.substring(0, 200) + "...</div></div>";
+      if (evidence.references && evidence.references.length) {
+        html += '<div class="cip-references">';
+        evidence.references.slice(0, 3).forEach(function (ref) {
+          var refText = typeof ref === "string" ? ref : (ref.author || "") + " (" + (ref.year || "") + "). " + (ref.title || ref.text || "");
+          html += '<div class="cip-reference">' + refText.substring(0, 100) + "</div>";
+        });
+        html += "</div>";
+      }
+      html += "</div></div>";
+    }
+    var safetyAlerts = [];
+    if (severity === "critical") {
+      safetyAlerts = ["IPSG-3: Segurança em procedimentos de alta vigilância", "Escalada de cuidado imediata — notificar equipe médica", "Documentação completa do evento em prontuário"];
+    } else if (severity === "moderate") {
+      safetyAlerts = ["Monitoramento contínuo recomendado", "Reavaliação em 15-30 minutos", "Verificar protocolo institucional correspondente"];
+    } else if (severity === "normal") {
+      safetyAlerts = ["Manter rotina de monitoramento padrão"];
+    }
+    if (safetyAlerts.length) {
+      html += '<div class="cip-dim cip-dim-safety"><div class="cip-dim-header"><span class="cip-dim-icon">⚠️</span><h4>Metas de Segurança (IPSG)</h4></div><div class="cip-dim-content">';
+      safetyAlerts.forEach(function (alert) {
+        html += '<div class="cip-safety-alert" style="border-color:' + severityColor + ';">' + alert + "</div>";
+      });
+      html += "</div></div>";
+    }
+    var tips = learning.tips || [];
+    if (tips.length) {
+      html += '<div class="cip-dim cip-dim-learning"><div class="cip-dim-header"><span class="cip-dim-icon">🎓</span><h4>Dicas de Aprendizado</h4></div><div class="cip-dim-content">';
+      tips.slice(0, 4).forEach(function (tip) { html += '<div class="cip-tip">💡 ' + tip + "</div>"; });
+      html += "</div></div>";
+    }
+    if (!html) return;
+    container.innerHTML = html;
+    container.classList.remove("cip-hidden");
+  }
+
+  var cogTimer = null;
+  function runCognitiveAnalysis(total, range) {
+    if (cogTimer) clearTimeout(cogTimer);
+    cogTimer = setTimeout(function () {
+      var cogPanel = document.getElementById("cognitivePanel");
+      if (!cogPanel || !window.NursePaLM || !window.CognitiveUI) return;
+      var observations = buildObservations(state);
+      if (observations.length < 2) {
+        var severity = getRangeSeverity(range);
+        if (severity === "critical") {
+          observations = [{ type: "heartRate", value: 120 }, { type: "systolicBP", value: 85 }, { type: "spO2", value: 88 }, { type: "respiratoryRate", value: 28 }];
+        } else if (severity === "moderate") {
+          observations = [{ type: "heartRate", value: 100 }, { type: "systolicBP", value: 100 }, { type: "spO2", value: 94 }, { type: "respiratoryRate", value: 20 }];
+        } else {
+          observations = [{ type: "heartRate", value: 75 }, { type: "systolicBP", value: 120 }, { type: "spO2", value: 98 }, { type: "respiratoryRate", value: 16 }];
+        }
+      }
+      var activeDx = (sae.nanda || []).map(function (n) {
+        return (n.diagnosis || n.name || "").toLowerCase().replace(/[^a-z]/g, "_");
+      }).filter(function (dx) {
+        return window.NursePaLM.NANDA_CPTS && Object.keys(window.NursePaLM.NANDA_CPTS).some(function (k) {
+          return k.toLowerCase().indexOf(dx.substring(0, 5)) !== -1;
+        });
+      });
+      var ctx = {
+        observations: observations,
+        activeDiagnoses: activeDx,
+        episode_type: "assessment",
+        tool_slug: TOOL_SLUG,
+        tool_result: total,
+        tool_range: range ? range.label : ""
+      };
+      var renderFn = window.CognitiveUI.renderCognitivePanel || window.CognitiveUI.render;
+      if (!renderFn) return;
+      Promise.resolve(renderFn(cogPanel, ctx)).then(function (result) {
+        if (result && result.confidence != null) {
+          var header = cogPanel.querySelector(".cognitive-panel-header h3");
+          if (header) {
+            var confPct = Math.round(result.confidence * 100);
+            header.innerHTML = '<i class="fa-solid fa-brain"></i> Nurse-PaLM — ' + (range ? range.label : "Resultado") + " · Confiança: " + confPct + "%";
+          }
+        }
+      }).catch(function (e) {
+        console.error("[calc-engine-v2] Cognitive error:", e);
+      });
+      if (window.NursePaLM.TemporalGraph) {
+        window.NursePaLM.TemporalGraph.record({ tool: TOOL_SLUG, result: total, range: range ? range.label : "", state: { result: total / 100 } });
+      }
+    }, 280);
+  }
+
+  function revealClinicalFlow(total, range) {
+    var flowDivider = document.getElementById("calcFlowDivider");
+    var clinicalFlow = document.getElementById("calcClinicalFlow");
+    if (!clinicalFlow) return;
+    var nandaText = document.getElementById("calcNandaText");
+    var nicText = document.getElementById("calcNicText");
+    var nocText = document.getElementById("calcNocText");
+    var nanda = (sae.nanda && sae.nanda[0]) ? sae.nanda[0].diagnosis || sae.nanda[0].name : "";
+    var nic = (sae.nic && sae.nic[0]) ? sae.nic[0].intervention || sae.nic[0].name : "";
+    var noc = (sae.noc && sae.noc[0]) ? sae.noc[0].outcome || sae.noc[0].name : "";
+    if (nandaText) nandaText.textContent = nanda || (range ? range.label : "—");
+    if (nicText) nicText.textContent = nic || "Intervenções conforme protocolo institucional.";
+    if (nocText) nocText.textContent = noc || "Monitorar evolução clínica e registrar no prontuário.";
+    if (flowDivider) flowDivider.style.display = "block";
+    clinicalFlow.classList.add("is-visible");
+    window.requestAnimationFrame(function () {
+      clinicalFlow.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  function triggerIntelligence(total, range) {
+    renderCIP(total, range);
+    runCognitiveAnalysis(total, range);
+  }
+
+  /* ---------------------------------------------------------------------
      4. Render — atualiza todos os painéis a partir do estado atual
   --------------------------------------------------------------------- */
   function renderAll() {
@@ -262,6 +479,7 @@
       urgBadge.innerHTML = '<svg class="icon icon-sm"><use href="#' + (warnUrgBadge ? "i-warning" : "i-check") + '"/></svg> ' + range.label;
     }
 
+    triggerIntelligence(total, range);
     return { total: total, range: range };
   }
 
@@ -428,6 +646,7 @@
       e.preventDefault();
       var r = renderAll();
       pushHistory(r.total, r.range);
+      revealClinicalFlow(r.total, r.range);
     });
     form.addEventListener("reset", function () {
       setTimeout(function () {

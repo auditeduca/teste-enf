@@ -368,8 +368,33 @@
   // ═══════════════════════════════════════════════════════════════
   // PUBLIC API
   // ═══════════════════════════════════════════════════════════════
+  async function renderCognitivePanelEntry(panelElOrId, patientContextOrResult) {
+    var panel = typeof panelElOrId === "string" ? document.getElementById(panelElOrId) : panelElOrId;
+    if (!panel) panel = document.getElementById("cognitivePanel");
+    if (!panel) return null;
+
+    var content = panel.querySelector("#cognitivePanelContent") || panel;
+    var payload = patientContextOrResult;
+
+    if (payload && payload.observations && global.NursePaLM && global.NursePaLM.runCognitivePipeline) {
+      panel.classList.remove("cip-hidden");
+      content.innerHTML = '<div class="cog-loading"><i class="fa-solid fa-spinner fa-spin"></i> Analisando raciocínio clínico...</div>';
+      try {
+        payload = await global.NursePaLM.runCognitivePipeline(patientContextOrResult);
+        content._cognitiveResult = payload;
+      } catch (e) {
+        content.innerHTML = '<div class="cog-error">Não foi possível executar a análise cognitiva.</div>';
+        throw e;
+      }
+    }
+
+    if (payload) renderCognitivePanel(panel, payload);
+    return payload;
+  }
+
   global.CognitiveUI = {
     render: renderCognitivePanel,
+    renderCognitivePanel: renderCognitivePanelEntry,
     renderAttention: renderAttentionHeatmap,
     renderBelief: renderBeliefState,
     renderDiagnoses: renderDiagnoses,

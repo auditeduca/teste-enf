@@ -16,9 +16,6 @@ CRITICAL_CSS = (
 )
 
 DISCLAIMER_RE = re.compile(r'\s*<div class="disclaimer-card">.*?</div>\s*', re.DOTALL)
-CIP_RE = re.compile(r'\s*<section class="cip-section">.*?</section>\s*', re.DOTALL)
-COG_RE = re.compile(r'\s*<section class="cog-section-wrapper">.*?</section>\s*', re.DOTALL)
-KG_RE = re.compile(r'\s*<section class="cip-kg-links">.*?</section>\s*', re.DOTALL)
 
 GESTOR_TAB_RE = re.compile(
     r'\s*<button class="tab"[^>]*\bdata-tab="gestor"[^>]*>.*?</button>\s*',
@@ -106,9 +103,6 @@ def finalize_file(path: str) -> list[str]:
 
     for pattern, name in [
         (DISCLAIMER_RE, "disclaimer"),
-        (CIP_RE, "cip"),
-        (COG_RE, "cog"),
-        (KG_RE, "kg"),
         (GESTOR_TAB_RE, "gestor_tab"),
         (TOOL_TAGS_RE, "tool_tags"),
         (RELATED_BLOCK_RE, "related_tools"),

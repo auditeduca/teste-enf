@@ -100,6 +100,11 @@
     assetPath("js/site-widgets.js")
   ];
 
+  var COGNITIVE_SCRIPTS = [
+    assetPath("js/nurse-palm.js"),
+    assetPath("js/cognitive-ui.js")
+  ];
+
   var CALC_ENGINE = assetPath("js/calc-engine-v2.js");
 
   function fetchPartial(item) {
@@ -146,7 +151,7 @@
   function loadDependentScriptsInOrder(index) {
     if (index >= DEPENDENT_SCRIPTS.length) {
       if (document.getElementById("tool-config")) {
-        loadScriptSequentially(CALC_ENGINE).then(finishPartialsReady);
+        loadCognitiveScriptsThenCalcEngine();
         return;
       }
       finishPartialsReady();
@@ -154,6 +159,17 @@
     }
     loadScriptSequentially(DEPENDENT_SCRIPTS[index]).then(function () {
       loadDependentScriptsInOrder(index + 1);
+    });
+  }
+
+  function loadCognitiveScriptsThenCalcEngine(idx) {
+    idx = idx || 0;
+    if (idx >= COGNITIVE_SCRIPTS.length) {
+      loadScriptSequentially(CALC_ENGINE).then(finishPartialsReady);
+      return;
+    }
+    loadScriptSequentially(COGNITIVE_SCRIPTS[idx]).then(function () {
+      loadCognitiveScriptsThenCalcEngine(idx + 1);
     });
   }
 
