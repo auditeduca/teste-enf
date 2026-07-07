@@ -177,8 +177,7 @@
                     <span class="formula-cap">Índice de Choque</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -405,7 +404,7 @@
     </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o Índice de Choque</h2>
           <p>O Índice de Choque é calculado dividindo a frequência cardíaca (bpm) pela pressão arterial sistólica (mmHg), identificando precocemente sinais de comprometimento hemodinâmico.</p><p><strong>Fórmula:</strong> Índice de Choque = Frequência Cardíaca ÷ Pressão Arterial Sistólica.</p><p><strong>Guia rápido:</strong> 0,5-0,7 = Normal | 0,7-0,9 = Atenção | 1,0-1,4 = Risco aumentado | ≥1,5 = Alto risco/choque estabelecido.</p>
@@ -417,46 +416,10 @@
               <p>Pode ser menos confiável nesses pacientes, já que os betabloqueadores impedem a taquicardia compensatória esperada, podendo mascarar um quadro de choque mesmo com frequência cardíaca aparentemente normal.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "17283940-5162-7384-9506-172839405162", "code": "CALC-SHOCKINDEX-001", "slug": "indice-choque", "version": "1.0.0", "status": "published", "seo": {"title": "Índice de Choque - Triagem de Choque Hipovolêmico", "description": "Calcule o Índice de Choque (Shock Index) a partir da frequência cardíaca e pressão arterial sistólica, para triagem precoce de choque. Inclui interpretação e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/indice-choque.html"}, "breadcrumb": {"category": "Emergência e Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Índice de Choque", "acronym": "Shock Index", "categoryBadge": "Emergência", "icon": "i-pulse", "objective": "Estimar precocemente a probabilidade de choque hipovolêmico/hemorrágico a partir da relação entre frequência cardíaca e pressão arterial sistólica, antes que a hipotensão franca se manifeste.", "indication": "Indicada em pacientes de trauma, hemorragia digestiva, sangramento obstétrico ou qualquer suspeita de choque hipovolêmico, especialmente na triagem inicial.", "targetPopulation": "Pacientes adultos com suspeita de choque hipovolêmico ou hemorrágico.", "specialty": ["Emergência", "Enfermagem", "Terapia Intensiva"], "averageTime": "menos de 1 minuto", "evidenceLevel": "II", "complexity": "basic", "rating": 4.6, "ratingCount": 310}, "calculator": {"inputs": [{"id": "frequencia_cardiaca", "type": "number", "label": "Frequência Cardíaca", "unit": "bpm", "defaultValue": 80, "min": 20, "max": 250, "step": 1, "description": "Frequência cardíaca do paciente em batimentos por minuto."}, {"id": "pressao_sistolica", "type": "number", "label": "Pressão Arterial Sistólica", "unit": "mmHg", "defaultValue": 120, "min": 30, "max": 260, "step": 1, "description": "Pressão arterial sistólica do paciente em mmHg."}], "formula": {"type": "expression", "expression": "frequencia_cardiaca/pressao_sistolica", "resultLabel": "Índice de Choque", "resultUnit": "", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 0.69, "label": "Normal", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Índice de choque dentro da normalidade (valor de referência normal: 0,5 a 0,7).", "recommendations": "• Manter monitorização de rotina\n• Reavaliar conforme protocolo institucional"}, {"min": 0.7, "max": 0.99, "label": "Limítrofe / Atenção", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Valor limítrofe, próximo ao limite superior da normalidade. Requer atenção e reavaliação.", "recommendations": "• Reavaliar sinais vitais com maior frequência\n• Investigar possíveis fontes de sangramento ou perda de volume"}, {"min": 1, "max": 1.49, "label": "Risco Aumentado de Choque", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Índice de choque igual ou superior a 1 está associado a maior risco de choque hipovolêmico/hemorrágico, mesmo na ausência de hipotensão franca.", "recommendations": "• Comunicar imediatamente à equipe médica\n• Investigar e tratar a fonte de sangramento/perda volêmica\n• Considerar reposição volêmica e monitorização hemodinâmica mais próxima"}, {"min": 1.5, "max": 5, "label": "Alto Risco / Choque Estabelecido", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Índice de choque muito elevado, associado a choque estabelecido e maior necessidade de intervenção (transfusão maciça, cirurgia de controle de dano).", "recommendations": "• Acionar protocolo de choque/hemorragia maciça conforme instituição\n• Reposição volêmica e hemoderivados conforme avaliação médica urgente\n• Monitorização contínua e intensiva"}]}, "sae": {"nanda": [{"diagnosis": "Risco de choque", "definition": "Risco de fluxo sanguíneo inadequado aos tecidos corporais, o que pode levar à disfunção celular potencialmente fatal."}, {"diagnosis": "Risco de volume de líquidos deficiente", "definition": "Risco de diminuição do volume de líquido intravascular, intersticial e/ou intracelular, relacionado à perda sanguínea ativa."}, {"diagnosis": "Perfusão tissular periférica ineficaz", "definition": "Redução na circulação sanguínea para a periferia, que pode comprometer a saúde."}], "noc": [{"outcome": "Gravidade do choque: hipovolêmico", "indicators": ["Frequência cardíaca dentro dos limites esperados", "Pressão arterial dentro dos limites esperados", "Perfusão periférica adequada"]}], "nic": [{"intervention": "Manejo do choque: volume", "activities": ["Calcular o Índice de Choque na triagem inicial de pacientes de risco", "Monitorar sinais vitais continuamente", "Obter acesso venoso calibroso e auxiliar na reposição volêmica conforme prescrição", "Comunicar índice elevado imediatamente à equipe médica", "Investigar e auxiliar no controle da fonte de sangramento"]}]}, "evidence": {"foundation": "O Índice de Choque é calculado pela razão entre a frequência cardíaca e a pressão arterial sistólica, permitindo identificar precocemente sinais de comprometimento hemodinâmico antes que a hipotensão franca se manifeste, já que a taquicardia compensatória frequentemente precede a queda da pressão arterial em quadros hemorrágicos.", "history": "Amplamente utilizado em trauma, obstetrícia (hemorragia pós-parto) e emergências clínicas para triagem rápida de risco de choque, sendo mais sensível que os sinais vitais isolados na detecção precoce de comprometimento hemodinâmico.", "validation": "Estudos demonstram associação entre índice de choque elevado (≥1) e maior necessidade de transfusão, intervenção cirúrgica e mortalidade em diversos contextos clínicos, incluindo trauma e hemorragia pós-parto.", "limitations": "Pode ser influenciado por condições que alteram a frequência cardíaca basal (uso de betabloqueadores, marca-passo, condicionamento físico) ou a pressão arterial basal (hipertensos crônicos), devendo ser interpretado no contexto clínico completo do paciente.", "references": [{"text": "RADY, M. Y. et al. A comparison of the shock index and conventional vital signs to identify acute, critical illness in the emergency department. Annals of Emergency Medicine, v. 24, n. 4, p. 685-690, 1994."}, {"text": "NATHAN, H. L. et al. Shock index: an effective predictor of outcome in postpartum haemorrhage? BJOG, v. 122, n. 2, p. 268-275, 2015."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["O Índice de Choque pode identificar comprometimento hemodinâmico antes que a pressão arterial caia de forma evidente.", "Valores iguais ou superiores a 1 devem motivar investigação ativa de fonte de sangramento ou perda de volume.", "Considere o uso de betabloqueadores ou marca-passo, que podem mascarar a taquicardia compensatória esperada.", "É especialmente útil em obstetrícia (hemorragia pós-parto) e trauma para triagem rápida à beira do leito."], "examples": [{"label": "Normal", "sublabel": "IC 0,67", "emoji": "✅", "values": {"frequencia_cardiaca": 80, "pressao_sistolica": 120}}, {"label": "Risco aumentado", "sublabel": "IC 1,2", "emoji": "⚠️", "values": {"frequencia_cardiaca": 108, "pressao_sistolica": 90}}, {"label": "Choque estabelecido", "sublabel": "IC 1,8", "emoji": "🚨", "values": {"frequencia_cardiaca": 126, "pressao_sistolica": 70}}], "quiz": [{"q": "Como é calculado o Índice de Choque?", "opts": ["PAS ÷ Frequência Cardíaca", "Frequência Cardíaca ÷ Pressão Arterial Sistólica", "PAS × Frequência Cardíaca", "PAS - Frequência Cardíaca"], "correct": 1, "expl": "O Índice de Choque é a razão entre a frequência cardíaca e a pressão arterial sistólica (FC ÷ PAS)."}, {"q": "Qual o valor normal de referência do Índice de Choque?", "opts": ["0,1 a 0,3", "0,5 a 0,7", "1,5 a 2,0", "2,0 a 3,0"], "correct": 1, "expl": "O valor normal de referência do Índice de Choque situa-se entre 0,5 e 0,7."}, {"q": "Por que o Índice de Choque pode detectar comprometimento hemodinâmico antes da hipotensão franca?", "opts": ["Porque usa apenas a pressão arterial", "Porque a taquicardia compensatória frequentemente precede a queda da pressão arterial", "Não há explicação fisiológica para isso", "Porque avalia apenas a temperatura corporal"], "correct": 1, "expl": "Em quadros hemorrágicos, mecanismos compensatórios elevam a frequência cardíaca antes que a pressão arterial caia de forma evidente, tornando o índice sensível a alterações precoces."}]}, "faq": [{"q": "O Índice de Choque substitui a avaliação clínica completa?", "a": "Não. É uma ferramenta de triagem rápida que complementa, mas não substitui, a avaliação clínica completa, incluindo exame físico, histórico e demais sinais vitais."}, {"q": "O Índice de Choque é confiável em pacientes que usam betabloqueadores?", "a": "Pode ser menos confiável nesses pacientes, já que os betabloqueadores impedem a taquicardia compensatória esperada, podendo mascarar um quadro de choque mesmo com frequência cardíaca aparentemente normal."}], "about": {"title": "Como funciona o Índice de Choque", "html": "<p>O Índice de Choque é calculado dividindo a frequência cardíaca (bpm) pela pressão arterial sistólica (mmHg), identificando precocemente sinais de comprometimento hemodinâmico.</p><p><strong>Fórmula:</strong> Índice de Choque = Frequência Cardíaca ÷ Pressão Arterial Sistólica.</p><p><strong>Guia rápido:</strong> 0,5-0,7 = Normal | 0,7-0,9 = Atenção | 1,0-1,4 = Risco aumentado | ≥1,5 = Alto risco/choque estabelecido.</p>"}}</script>
@@ -516,11 +479,5 @@
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+</body></html>

@@ -196,8 +196,7 @@
                     <span class="formula-cap">Volume a aspirar</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -449,7 +448,7 @@
     </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o cálculo de aspiração de insulina</h2>
           <p>A aspiração de insulina é calculada dividindo a dose prescrita (em unidades internacionais, UI) pela concentração da solução de insulina (em UI/mL). O resultado indica o volume em mL que deve ser aspirado na seringa para administração da dose correta.</p><p>Fórmula: <strong>Volume (mL) = Dose (UI) ÷ Concentração (UI/mL)</strong>.</p><p>Por exemplo, para uma dose de 20 UI de insulina U-100: 20 ÷ 100 = 0,2 mL.</p>
@@ -467,46 +466,10 @@
               <p>Utilize uma seringa de 3 mL ou maior. Verifique se a dose prescrita está correta e se a concentração da ampola foi informada corretamente. Em doses muito altas, confirme com o prescritor.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição. A insulina é classificada como medicamento de alto alerta.</p>
-        </div>
       </div>
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "7f2b3c4d-5e6f-4f70-0a2b-3c4d5e6f7082", "code": "CALC-INSULINA-001", "slug": "insulina", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Aspiração de Insulina", "description": "Calcule o volume (mL) de insulina a aspirar na seringa a partir da dose prescrita em unidades e da concentração da ampola. Ferramenta gratuita para enfermagem.", "canonical": "https://www.calculadorasdeenfermagem.com.br/insulina.html"}, "breadcrumb": {"category": "Cálculo de Medicação", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Aspiração de Insulina", "acronym": "Aspiração Insulina", "categoryBadge": "Cálculo de medicação", "icon": "i-flask", "objective": "Calcule com precisão o volume (mL) de insulina a aspirar na seringa a partir da dose prescrita em unidades e da concentração da ampola.", "indication": "Indicada sempre que houver prescrição de insulina em unidades e a necessidade de converter para volume em mL para aspiração correta.", "targetPopulation": "Pacientes diabéticos de qualquer faixa etária que necessitem de administração de insulina por via subcutânea, intramuscular ou intravenosa.", "specialty": ["Enfermagem Médico-Cirúrgica", "Endocrinologia", "Terapia Intensiva"], "averageTime": "1-2 minutos", "evidenceLevel": "III", "complexity": "basic", "rating": 4.9, "ratingCount": 2150}, "calculator": {"inputs": [{"id": "dose", "type": "number", "label": "Dose prescrita", "unit": "unidades", "defaultValue": 10, "min": 0.5, "step": 0.5, "description": "Dose de insulina prescrita pelo médico, em unidades (UI)."}, {"id": "concentration", "type": "select", "label": "Concentração da insulina", "defaultValue": 100, "description": "Concentração da ampola de insulina (unidades por mL).", "options": [{"value": 40, "label": "U-40 (40 UI/mL)", "score": 40}, {"value": 100, "label": "U-100 (100 UI/mL)", "score": 100}, {"value": 200, "label": "U-200 (200 UI/mL)", "score": 200}, {"value": 300, "label": "U-300 (300 UI/mL)", "score": 300}, {"value": 500, "label": "U-500 (500 UI/mL)", "score": 500}]}, {"id": "seringa", "type": "select", "label": "Seringa disponível", "defaultValue": 1, "description": "Tipo de seringa disponível para administração.", "options": [{"value": 1, "label": "Seringa de insulina (1 mL)", "score": 1}, {"value": 3, "label": "Seringa de 3 mL", "score": 3}, {"value": 5, "label": "Seringa de 5 mL", "score": 5}, {"value": 10, "label": "Seringa de 10 mL", "score": 10}]}], "formula": {"type": "expression", "expression": "dose/concentration", "resultLabel": "Volume a aspirar", "resultUnit": "mL", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 0.09, "label": "Volume muito baixo", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Volume muito pequeno para aspiração precisa. Verifique se a dose está correta e se a seringa de insulina (1 mL) é a mais adequada."}, {"min": 0.1, "max": 1.0, "label": "Dentro da faixa usual", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Volume compatível com seringa de insulina padrão (1 mL). Verifique a leitura correta da escala da seringa."}, {"min": 1.01, "max": 3.0, "label": "Volume elevado", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Volume acima de 1 mL. Utilize seringa de 3 mL ou maior. Confirme a dose prescrita e a concentração da ampola."}, {"min": 3.01, "max": 999999, "label": "Volume muito elevado", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Volume muito alto. Revise a dose prescrita, a concentração da ampola e a via de administração. Considere se a prescrição está correta."}]}, "evidence": {"foundation": "O cálculo de aspiração de insulina fundamenta-se na relação entre a dose prescrita em unidades internacionais (UI) e a concentração da solução de insulina (UI/mL). A fórmula padrão — Volume (mL) = Dose (UI) ÷ Concentração (UI/mL) — deriva da definição farmacêutica da concentração: cada mL de solução contém um número fixo de unidades de insulina, definido pelo fabricante (U-100 = 100 UI/mL, U-40 = 40 UI/mL, U-500 = 500 UI/mL).", "history": "A insulina U-100 é a concentração padrão mundial desde a década de 1990, substituindo a U-40. A insulina U-500 é utilizada em casos de resistência à insulina severa. As seringas de insulina de 1 mL são graduadas em unidades para facilitar a leitura direta em U-100.", "validation": "Protocolos institucionais e diretrizes de segurança do paciente recomendam a dupla checagem do cálculo de medicação antes da administração, especialmente para insulina, dado o alto risco de hipoglicemia ou hiperglicemia associado a erros de dosagem. A Organização Mundial da Saúde classifica a insulina como medicamento de alto alerta.", "limitations": "Esta calculadora realiza apenas a conversão de unidades para mL. Não substitui a avaliação clínica da indicação da insulina, a verificação da via de administração, o horário da aplicação nem o monitoramento glicêmico. Sempre confira a prescrição médica e os protocolos da instituição.", "references": [{"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "HINKLE, J. L.; CHEEVER, K. H. Brunner & Suddarth: tratado de enfermagem médico-cirúrgica. 13ª ed. Rio de Janeiro: Guanabara Koogan, 2016."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}, {"text": "BRASIL. Ministério da Saúde. Protocolo de segurança na prescrição, uso e administração de medicamentos. Brasília: MS, 2013."}, {"text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."}, {"text": "AMERICAN DIABETES ASSOCIATION. Standards of Medical Care in Diabetes—2024. Diabetes Care, v. 47, Suppl. 1, 2024."}, {"text": "INSTITUTE FOR SAFE MEDICATION PRACTICES (ISMP). High-Alert Medications: Insulin. 2023."}]}, "learning": {"tips": ["Sempre confira a concentração da ampola de insulina antes do cálculo.", "Utilize seringa de insulina (1 mL) para doses de até 100 unidades em U-100.", "Nunca misture insulinas sem verificar a compatibilidade.", "Registre a hora, a dose e a via de administração.", "Monitore a glicemia após a administração."], "examples": [{"label": "Dose comum", "sublabel": "10 UI de insulina regular U-100", "emoji": "💉", "values": {"dose": 10, "concentration": 100, "seringa": 1}}, {"label": "Dose alta", "sublabel": "50 UI de insulina NPH U-100", "emoji": "📏", "values": {"dose": 50, "concentration": 100, "seringa": 1}}, {"label": "U-500", "sublabel": "100 UI de insulina U-500", "emoji": "⚠️", "values": {"dose": 100, "concentration": 500, "seringa": 1}}], "quiz": [{"q": "Quantas unidades de insulina há em 1 mL de uma ampola U-100?", "opts": ["40 unidades", "100 unidades", "200 unidades", "500 unidades"], "correct": 1, "expl": "U-100 significa 100 unidades internacionais (UI) de insulina por mL de solução."}, {"q": "Qual é a fórmula para calcular o volume de insulina a aspirar?", "opts": ["Dose (UI) ÷ Concentração (UI/mL)", "Dose × Concentração", "Concentração ÷ Dose", "Dose + Concentração"], "correct": 0, "expl": "Volume (mL) = Dose (UI) ÷ Concentração (UI/mL). Por exemplo: 20 UI ÷ 100 UI/mL = 0,2 mL."}, {"q": "Uma seringa de insulina padrão (1 mL) é graduada em quantas unidades para U-100?", "opts": ["40 unidades", "100 unidades", "200 unidades", "500 unidades"], "correct": 1, "expl": "A seringa de insulina de 1 mL é graduada de 0 a 100 unidades quando usada com insulina U-100."}]}, "faq": [{"q": "Qual a diferença entre insulina U-100 e U-40?", "a": "U-100 contém 100 unidades de insulina por mL, enquanto U-40 contém 40 unidades por mL. A U-100 é o padrão mundial atual. Sempre use a seringa correspondente à concentração da insulina para evitar erros de dosagem."}, {"q": "Posso usar seringa comum (3 mL) para insulina?", "a": "Sim, desde que o cálculo de conversão para mL seja feito corretamente. No entanto, a seringa de insulina (1 mL) oferece maior precisão para doses pequenas, pois é graduada em unidades para U-100."}, {"q": "Esta calculadora substitui a checagem clínica?", "a": "Não. A ferramenta é um apoio ao cálculo e não substitui a avaliação clínica, a prescrição médica nem os protocolos da instituição. Sempre confira os dados antes de administrar qualquer medicação."}, {"q": "O que fazer se o volume calculado for maior que 1 mL?", "a": "Utilize uma seringa de 3 mL ou maior. Verifique se a dose prescrita está correta e se a concentração da ampola foi informada corretamente. Em doses muito altas, confirme com o prescritor."}], "about": {"title": "Como funciona o cálculo de aspiração de insulina", "html": "<p>A aspiração de insulina é calculada dividindo a dose prescrita (em unidades internacionais, UI) pela concentração da solução de insulina (em UI/mL). O resultado indica o volume em mL que deve ser aspirado na seringa para administração da dose correta.</p><p>Fórmula: <strong>Volume (mL) = Dose (UI) ÷ Concentração (UI/mL)</strong>.</p><p>Por exemplo, para uma dose de 20 UI de insulina U-100: 20 ÷ 100 = 0,2 mL.</p>"}}</script>
@@ -541,11 +504,5 @@
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+</body></html>

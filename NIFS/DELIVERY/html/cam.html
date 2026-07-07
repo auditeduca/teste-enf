@@ -199,8 +199,7 @@
                     <span class="formula-cap">Resultado CAM</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -457,7 +456,7 @@
     </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o CAM</h2>
           <p>O CAM avalia 4 critérios clínicos: início agudo/curso flutuante, desatenção, pensamento desorganizado e alteração do nível de consciência. O resultado é positivo para delirium quando os critérios 1 e 2 estão presentes, associados a pelo menos um dos critérios 3 ou 4.</p><p><strong>Guia rápido:</strong> Critérios 1 + 2 + (3 ou 4) = CAM Positivo (delirium presente). Ausência dessa combinação = CAM Negativo.</p>
@@ -469,46 +468,10 @@
               <p>Não. O delirium tem início agudo e curso flutuante, sendo geralmente reversível quando a causa de base é tratada. A demência tem início insidioso, curso progressivo e crônico. Ambos podem coexistir, dificultando o diagnóstico diferencial.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "738f9506-1728-4c3d-d4e5-f60718294051", "code": "SCALE-CAM-001", "slug": "cam", "version": "1.0.0", "status": "published", "seo": {"title": "CAM - Método de Avaliação de Confusão (Delirium)", "description": "Rastreie delirium com o CAM (Confusion Assessment Method). Ferramenta de triagem baseada em 4 critérios clínicos, com interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/cam.html"}, "breadcrumb": {"category": "Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Método de Avaliação de Confusão", "acronym": "CAM", "categoryBadge": "Terapia intensiva", "icon": "i-brain", "objective": "Rastrear a presença de delirium a partir de 4 critérios clínicos característicos, permitindo identificação precoce e intervenção oportuna.", "indication": "Indicada para pacientes hospitalizados, especialmente idosos, pós-operatório e pacientes críticos, com suspeita de alteração aguda do estado mental.", "targetPopulation": "Pacientes adultos hospitalizados, com atenção especial a idosos e pacientes em terapia intensiva (nesse contexto, usa-se a versão CAM-ICU, adaptada para pacientes não verbais/em ventilação mecânica).", "specialty": ["Enfermagem", "Terapia Intensiva", "Geriatria"], "averageTime": "2-3 minutos", "evidenceLevel": "I", "originalAuthors": ["Sharon K. Inouye"], "complexity": "intermediate", "rating": 4.7, "ratingCount": 340}, "calculator": {"inputs": [{"id": "inicio_agudo", "type": "select", "label": "1. Início Agudo e Curso Flutuante", "description": "Há evidência de mudança aguda no estado mental em relação ao basal do paciente? O comportamento anormal flutua durante o dia (piora e melhora, ou varia em gravidade)?", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Sem alteração aguda ou flutuação do estado mental."}, {"value": 1, "label": "Sim", "score": 1, "description": "Presença de início agudo e/ou curso flutuante do estado mental."}]}, {"id": "desatencao", "type": "select", "label": "2. Desatenção", "description": "O paciente apresenta dificuldade em focar a atenção, por exemplo, distraindo-se facilmente ou tendo dificuldade em acompanhar o que está sendo dito?", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Sem dificuldade de atenção evidente."}, {"value": 1, "label": "Sim", "score": 1, "description": "Presença de desatenção."}]}, {"id": "pensamento_desorganizado", "type": "select", "label": "3. Pensamento Desorganizado", "description": "O pensamento do paciente é desorganizado ou incoerente, com conversa dispersiva ou irrelevante, fluxo de ideias pouco claro ou ilógico, ou mudança imprevisível de assunto?", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Pensamento organizado e coerente."}, {"value": 1, "label": "Sim", "score": 1, "description": "Presença de pensamento desorganizado."}]}, {"id": "alteracao_consciencia", "type": "select", "label": "4. Alteração do Nível de Consciência", "description": "O nível de consciência do paciente é diferente de alerta, como por exemplo vigilante (hiperalerta), letárgico, em estupor ou coma?", "defaultValue": 0, "options": [{"value": 0, "label": "Não (Alerta)", "score": 0, "description": "Paciente alerta, nível de consciência normal."}, {"value": 1, "label": "Sim", "score": 1, "description": "Nível de consciência alterado (vigilante, letárgico, estupor ou coma)."}]}], "formula": {"type": "expression", "expression": "inicio_agudo*desatencao*(1-(1-pensamento_desorganizado)*(1-alteracao_consciencia))", "resultLabel": "Resultado CAM", "resultUnit": "", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 0, "label": "CAM Negativo", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Não preenche os critérios diagnósticos do CAM para delirium. Requer critérios 1 e 2 obrigatoriamente presentes, associados a pelo menos um dos critérios 3 ou 4.", "recommendations": "• Manter vigilância clínica de rotina\n• Reavaliar se houver mudança no estado mental\n• Investigar e corrigir fatores de risco para delirium (dor, privação de sono, polifarmácia)"}, {"min": 1, "max": 1, "label": "CAM Positivo — Delirium Presente", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Presença de delirium: critérios 1 (início agudo/curso flutuante) e 2 (desatenção) presentes, associados a pelo menos um dos critérios 3 (pensamento desorganizado) ou 4 (alteração do nível de consciência).", "recommendations": "• Comunicar imediatamente à equipe médica\n• Investigar causas reversíveis (infecção, distúrbios metabólicos, medicações, dor, retenção urinária/fecal)\n• Implementar medidas não farmacológicas de reorientação\n• Reavaliar frequentemente a evolução do quadro\n• Garantir segurança do paciente (risco de queda e remoção de dispositivos)"}]}, "sae": {"nanda": [{"diagnosis": "Confusão aguda", "definition": "Início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção que se desenvolvem em curto período."}, {"diagnosis": "Risco de quedas", "definition": "Vulnerabilidade aumentada a quedas, que pode causar dano físico, associada à confusão mental."}], "noc": [{"outcome": "Nível de confusão aguda", "indicators": ["Orientação em tempo, espaço e pessoa preservada", "Atenção mantida durante a interação", "Pensamento organizado e coerente", "Nível de consciência normal"]}], "nic": [{"intervention": "Manejo do delirium", "activities": ["Aplicar o CAM de forma sistemática em pacientes de risco", "Identificar e corrigir fatores precipitantes (dor, infecção, distúrbios metabólicos, polifarmácia)", "Promover medidas de reorientação (relógio, calendário, presença de familiares)", "Garantir ciclo sono-vigília adequado", "Comunicar achados à equipe médica para investigação e manejo"]}]}, "evidence": {"foundation": "O CAM (Confusion Assessment Method) foi desenvolvido por Sharon Inouye e colaboradores em 1990, sendo o instrumento de rastreamento de delirium mais utilizado e validado mundialmente. Baseia-se em 4 critérios: (1) início agudo e curso flutuante, (2) desatenção, (3) pensamento desorganizado e (4) alteração do nível de consciência. O diagnóstico exige a presença dos critérios 1 e 2, associados a pelo menos um dos critérios 3 ou 4.", "history": "Adaptado para o ambiente de terapia intensiva como CAM-ICU, permitindo avaliação em pacientes não verbais e sob ventilação mecânica, sendo recomendado pelas diretrizes internacionais de manejo de dor, agitação e delirium (PADIS).", "validation": "Apresenta sensibilidade entre 94% e 100% e especificidade entre 90% e 95% nos estudos originais e de validação, quando aplicado por avaliadores treinados.", "sensitivity": 0.94, "specificity": 0.9, "limitations": "Requer treinamento adequado da equipe para aplicação confiável. O CAM padrão pressupõe comunicação verbal; para pacientes não verbais ou em ventilação mecânica, deve-se utilizar a versão adaptada CAM-ICU.", "references": [{"text": "INOUYE, S. K. et al. Clarifying confusion: the confusion assessment method. Annals of Internal Medicine, v. 113, n. 12, p. 941-948, 1990."}, {"text": "ELY, E. W. et al. Delirium in mechanically ventilated patients: validity and reliability of the confusion assessment method for the intensive care unit (CAM-ICU). JAMA, v. 286, n. 21, p. 2703-2710, 2001."}, {"text": "DEVLIN, J. W. et al. Clinical Practice Guidelines for the Prevention and Management of Pain, Agitation/Sedation, Delirium, Immobility, and Sleep Disruption in Adult Patients in the ICU (PADIS). Critical Care Medicine, v. 46, n. 9, p. e825-e873, 2018."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Os critérios 1 e 2 são obrigatórios; o diagnóstico exige também pelo menos um dos critérios 3 ou 4.", "Compare sempre com o estado mental basal do paciente, não apenas o estado atual isolado.", "Em pacientes sob ventilação mecânica ou não verbais, utilize a versão adaptada CAM-ICU.", "O CAM só deve ser aplicado em pacientes com RASS entre -3 e +4 (nível de consciência compatível com avaliação)."], "examples": [{"label": "Sem delirium", "sublabel": "CAM Negativo", "emoji": "✅", "values": {"inicio_agudo": 0, "desatencao": 0, "pensamento_desorganizado": 0, "alteracao_consciencia": 0}}, {"label": "Delirium hipoativo", "sublabel": "CAM Positivo", "emoji": "🚨", "values": {"inicio_agudo": 1, "desatencao": 1, "pensamento_desorganizado": 0, "alteracao_consciencia": 1}}, {"label": "Delirium hiperativo", "sublabel": "CAM Positivo", "emoji": "🚨", "values": {"inicio_agudo": 1, "desatencao": 1, "pensamento_desorganizado": 1, "alteracao_consciencia": 0}}], "quiz": [{"q": "Quais critérios são obrigatórios para o diagnóstico positivo pelo CAM?", "opts": ["Apenas o critério 1", "Critérios 1 e 2", "Critérios 3 e 4", "Todos os 4 critérios"], "correct": 1, "expl": "O diagnóstico exige a presença obrigatória dos critérios 1 (início agudo/curso flutuante) e 2 (desatenção), associados a pelo menos um dos critérios 3 ou 4."}, {"q": "Qual versão do CAM é usada em pacientes sob ventilação mecânica?", "opts": ["CAM padrão", "CAM-ICU", "CAM-S", "Não existe versão adaptada"], "correct": 1, "expl": "O CAM-ICU foi desenvolvido especificamente para avaliação de delirium em pacientes não verbais ou sob ventilação mecânica em terapia intensiva."}, {"q": "O delirium hipoativo apresenta sempre agitação?", "opts": ["Sim, sempre", "Não, pode se manifestar com letargia e redução da atividade", "Apenas em idosos", "É sinônimo de delirium hiperativo"], "correct": 1, "expl": "O delirium hipoativo se manifesta com letargia, redução da atividade motora e sonolência, podendo passar despercebido se não houver rastreamento ativo com o CAM."}]}, "faq": [{"q": "O CAM pode ser aplicado em qualquer nível de consciência?", "a": "Não. O CAM (e o CAM-ICU) devem ser aplicados apenas quando o paciente apresenta nível de consciência compatível com avaliação, geralmente RASS entre -3 e +4. Sedação profunda (RASS -4 ou -5) impede uma avaliação confiável."}, {"q": "Delirium é o mesmo que demência?", "a": "Não. O delirium tem início agudo e curso flutuante, sendo geralmente reversível quando a causa de base é tratada. A demência tem início insidioso, curso progressivo e crônico. Ambos podem coexistir, dificultando o diagnóstico diferencial."}], "about": {"title": "Como funciona o CAM", "html": "<p>O CAM avalia 4 critérios clínicos: início agudo/curso flutuante, desatenção, pensamento desorganizado e alteração do nível de consciência. O resultado é positivo para delirium quando os critérios 1 e 2 estão presentes, associados a pelo menos um dos critérios 3 ou 4.</p><p><strong>Guia rápido:</strong> Critérios 1 + 2 + (3 ou 4) = CAM Positivo (delirium presente). Ausência dessa combinação = CAM Negativo.</p>"}}</script>
@@ -568,11 +531,5 @@
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+</body></html>

@@ -212,8 +212,7 @@
                     <span class="formula-cap">Escore de Downton</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -488,7 +487,7 @@
     </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o Índice de Downton</h2>
           <p>O Índice de Downton soma pontos de 5 domínios — quedas anteriores, uso de medicamentos de risco, déficit sensorial, estado mental e padrão de deambulação — totalizando de 0 a 7 pontos.</p><p><strong>Guia rápido:</strong> 0-2 = Baixo risco | ≥3 = Alto risco, implementar protocolo intensivo de prevenção de quedas.</p>
@@ -500,46 +499,10 @@
               <p>Recomenda-se reavaliação na admissão, após qualquer episódio de queda, mudança no esquema medicamentoso e periodicamente conforme protocolo institucional.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "293a4b5c-6274-4839-2930-4b5c63748596", "code": "SCALE-DOWNTON-001", "slug": "downton", "version": "1.0.0", "status": "published", "seo": {"title": "Índice de Downton - Avaliação de Risco de Queda", "description": "Calcule o Índice de Downton para avaliação do risco de queda em pacientes idosos. Inclui interpretação, SAE e evidências para a prática de enfermagem.", "canonical": "https://www.calculadorasdeenfermagem.com.br/downton.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Índice de Downton", "acronym": "Downton", "categoryBadge": "Segurança do paciente", "icon": "i-access", "objective": "Avaliar o risco de queda do paciente, especialmente idosos, a partir de 5 domínios: quedas anteriores, uso de medicamentos de risco, déficit sensorial, estado mental e padrão de deambulação.", "indication": "Indicada na admissão hospitalar, especialmente para pacientes idosos, e periodicamente conforme protocolo institucional de prevenção de quedas.", "targetPopulation": "Pacientes idosos hospitalizados ou em acompanhamento ambulatorial/domiciliar.", "specialty": ["Geriatria", "Enfermagem", "Segurança do Paciente"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Downton"], "complexity": "basic", "rating": 4.6, "ratingCount": 350}, "calculator": {"inputs": [{"id": "quedas_anteriores", "type": "select", "label": "Quedas Anteriores", "description": "Histórico de queda nos últimos 12 meses.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Sem histórico de queda recente."}, {"value": 1, "label": "Sim", "score": 1, "description": "Presença de queda anterior nos últimos 12 meses."}]}, {"id": "medicamentos", "type": "select", "label": "Uso de Medicamentos de Risco", "description": "Uso de diuréticos, anti-hipertensivos, antiparkinsonianos, antidepressivos ou sedativos/hipnóticos.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Não faz uso de medicamentos associados a maior risco de queda."}, {"value": 1, "label": "Sim", "score": 1, "description": "Uso de um ou mais medicamentos associados a maior risco de queda."}]}, {"id": "deficit_sensorial", "type": "select", "label": "Déficit Sensorial", "description": "Presença de deficiência visual, auditiva ou de extremidades que comprometa a percepção do ambiente.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Sem déficit sensorial relevante."}, {"value": 1, "label": "Sim", "score": 1, "description": "Presença de déficit visual, auditivo ou de extremidades."}]}, {"id": "estado_mental", "type": "select", "label": "Estado Mental", "description": "Nível de orientação e consciência do paciente.", "defaultValue": 0, "options": [{"value": 0, "label": "Orientado", "score": 0, "description": "Paciente orientado em tempo, espaço e pessoa."}, {"value": 1, "label": "Confuso", "score": 1, "description": "Paciente confuso ou desorientado."}]}, {"id": "deambulacao", "type": "select", "label": "Deambulação", "description": "Padrão de marcha e necessidade de auxílio para caminhar.", "defaultValue": 0, "options": [{"value": 0, "label": "Segura, com ou sem Auxílio de Locomoção", "score": 0, "description": "Marcha segura, mesmo se utilizar dispositivo de auxílio, ou paciente acamado/restrito à cadeira sem tentativa de deambular."}, {"value": 1, "label": "Segura com Auxílio (Bengala/Andador)", "score": 1, "description": "Marcha segura apenas quando faz uso de dispositivo de apoio (bengala, andador)."}, {"value": 2, "label": "Insegura (com ou sem Auxílio)", "score": 2, "description": "Marcha insegura, instável, independentemente do uso de dispositivo de apoio."}, {"value": 3, "label": "Impossível", "score": 3, "description": "Paciente incapaz de deambular."}]}], "formula": {"type": "sum", "resultLabel": "Escore de Downton", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 2, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixo risco de queda segundo os critérios avaliados.", "recommendations": "• Orientação geral sobre segurança e prevenção de quedas\n• Reavaliação conforme protocolo institucional\n• Ambiente livre de obstáculos"}, {"min": 3, "max": 7, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Escore igual ou superior a 3 indica alto risco de queda, segundo o ponto de corte validado do Índice de Downton.", "recommendations": "• Implementar protocolo intensivo de prevenção de quedas\n• Sinalização visual de risco no leito/quarto\n• Grades elevadas e leito em posição baixa\n• Supervisão frequente e auxílio na deambulação\n• Reavaliação a cada turno"}]}, "sae": {"nanda": [{"diagnosis": "Risco de quedas", "definition": "Vulnerabilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."}], "noc": [{"outcome": "Comportamento de prevenção de quedas", "indicators": ["Uso correto de dispositivos de apoio", "Solicita auxílio quando necessário", "Ambiente livre de riscos identificado"]}], "nic": [{"intervention": "Prevenção de quedas", "activities": ["Identificar déficits cognitivos, sensoriais e motores", "Revisar medicamentos em uso associados a risco de queda junto à equipe médica", "Sinalizar risco de queda no leito e prontuário", "Orientar paciente e família sobre medidas de segurança", "Manter grades elevadas e leito em posição baixa quando indicado"]}]}, "evidence": {"foundation": "O Índice de Downton foi desenvolvido para avaliar o risco de queda em idosos, considerando 5 domínios: histórico de quedas anteriores, uso de medicamentos de risco, déficit sensorial, estado mental e padrão de deambulação, com pontuação total de 0 a 7 (ou 11, conforme a versão utilizada).", "history": "Amplamente utilizado em serviços de geriatria e em protocolos de segurança do paciente para triagem de risco de queda, especialmente em população idosa hospitalizada.", "validation": "Estudos de validação relatam boa sensibilidade para identificar pacientes em risco de queda, com ponto de corte de 3 pontos ou mais indicando alto risco.", "limitations": "Como a maioria das escalas de risco de queda, apresenta especificidade limitada, podendo classificar um número significativo de pacientes em alto risco. Deve ser complementada por avaliação clínica individualizada e do ambiente físico.", "references": [{"text": "DOWNTON, J. H. Falls in the Elderly. London: Edward Arnold, 1993."}, {"text": "BRASIL. Agência Nacional de Vigilância Sanitária (ANVISA). Protocolo de Prevenção de Quedas. Brasília: ANVISA, 2013."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Um escore igual ou superior a 3 já é suficiente para classificar o paciente como alto risco.", "Revise a lista de medicamentos em uso, pois vários fármacos comuns em idosos aumentam o risco de queda.", "Combine a avaliação com o exame físico da marcha e do equilíbrio.", "Reavalie após qualquer mudança no estado clínico ou esquema medicamentoso do paciente."], "examples": [{"label": "Idoso sem fatores de risco", "sublabel": "Downton 0", "emoji": "✅", "values": {"quedas_anteriores": 0, "medicamentos": 0, "deficit_sensorial": 0, "estado_mental": 0, "deambulacao": 0}}, {"label": "Múltiplos fatores presentes", "sublabel": "Downton 4", "emoji": "🚨", "values": {"quedas_anteriores": 1, "medicamentos": 1, "deficit_sensorial": 0, "estado_mental": 0, "deambulacao": 2}}, {"label": "Alto risco com confusão mental", "sublabel": "Downton 5", "emoji": "🚨", "values": {"quedas_anteriores": 1, "medicamentos": 1, "deficit_sensorial": 1, "estado_mental": 1, "deambulacao": 1}}], "quiz": [{"q": "Quantos domínios compõem o Índice de Downton?", "opts": ["3", "4", "5", "6"], "correct": 2, "expl": "O Downton avalia 5 domínios: quedas anteriores, medicamentos, déficit sensorial, estado mental e deambulação."}, {"q": "A partir de qual pontuação o Índice de Downton indica alto risco de queda?", "opts": ["1 ponto", "2 pontos", "3 pontos ou mais", "5 pontos ou mais"], "correct": 2, "expl": "Um escore de 3 pontos ou mais é o ponto de corte validado para classificar o paciente como alto risco de queda."}, {"q": "Quais classes de medicamentos são consideradas de risco no Índice de Downton?", "opts": ["Apenas antibióticos", "Diuréticos, anti-hipertensivos, antiparkinsonianos, antidepressivos e sedativos", "Apenas analgésicos", "Vitaminas e suplementos"], "correct": 1, "expl": "Diuréticos, anti-hipertensivos, antiparkinsonianos, antidepressivos e sedativos/hipnóticos estão associados a maior risco de queda em idosos."}]}, "faq": [{"q": "O Índice de Downton substitui a avaliação clínica individual?", "a": "Não. É uma ferramenta de triagem que deve ser combinada com o julgamento clínico, avaliação do ambiente físico e histórico detalhado do paciente."}, {"q": "Com que frequência devo reavaliar o Índice de Downton?", "a": "Recomenda-se reavaliação na admissão, após qualquer episódio de queda, mudança no esquema medicamentoso e periodicamente conforme protocolo institucional."}], "about": {"title": "Como funciona o Índice de Downton", "html": "<p>O Índice de Downton soma pontos de 5 domínios — quedas anteriores, uso de medicamentos de risco, déficit sensorial, estado mental e padrão de deambulação — totalizando de 0 a 7 pontos.</p><p><strong>Guia rápido:</strong> 0-2 = Baixo risco | ≥3 = Alto risco, implementar protocolo intensivo de prevenção de quedas.</p>"}}</script>
@@ -599,11 +562,5 @@
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+</body></html>

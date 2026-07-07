@@ -160,8 +160,7 @@
                     <span class="formula-cap">Escore RASS</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -370,7 +369,7 @@
     </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a Escala RASS</h2>
           <p>A Escala RASS (Richmond Agitation-Sedation Scale) classifica o nível de consciência do paciente crítico em uma escala de 10 pontos, de -5 (não desperta a nenhum estímulo) a +4 (combativo), passando por 0 (alerta e calmo), que representa a meta usual de sedação em muitos protocolos.</p><p><strong>Guia rápido:</strong> +1 a +4 = Agitação | 0 = Alerta e calmo | -1 a -3 = Sedação leve a moderada | -4 a -5 = Sedação profunda.</p>
@@ -382,46 +381,10 @@
               <p>Não. O RASS avalia nível de sedação/agitação. A avaliação de delirium é feita pelo CAM-ICU, que só deve ser aplicado quando o RASS estiver entre -3 e +4.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "3f405162-7384-49a0-b1c2-d3e4f5061728", "code": "SCALE-RASS-001", "slug": "rass", "version": "1.0.0", "status": "published", "seo": {"title": "RASS - Escala de Sedação-Agitação de Richmond", "description": "Classifique o nível de sedação ou agitação do paciente crítico com a Escala RASS (Richmond Agitation-Sedation Scale). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/rass.html"}, "breadcrumb": {"category": "Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Sedação-Agitação de Richmond", "acronym": "RASS", "categoryBadge": "Terapia intensiva", "icon": "i-brain", "objective": "Classificar objetivamente o nível de sedação ou agitação do paciente crítico, orientando o ajuste da sedação e a triagem para avaliação de delirium (CAM-ICU).", "indication": "Indicada para pacientes em unidade de terapia intensiva, especialmente aqueles em ventilação mecânica e/ou uso de sedativos, para monitorização seriada do nível de consciência.", "targetPopulation": "Pacientes adultos criticamente enfermos, internados em UTI.", "specialty": ["Terapia Intensiva", "Enfermagem", "Anestesiologia"], "averageTime": "1-2 minutos", "evidenceLevel": "I", "originalAuthors": ["Curtis N. Sessler", "colaboradores"], "complexity": "intermediate", "rating": 4.8, "ratingCount": 470}, "calculator": {"inputs": [{"id": "nivel", "type": "select", "label": "Nível de Consciência", "description": "Observe o paciente e, se necessário, estimule verbalmente e depois fisicamente para classificar o nível.", "defaultValue": 0, "options": [{"value": 4, "label": "+4 — Combativo", "score": 4, "description": "Combativo, violento, representa perigo imediato para a equipe."}, {"value": 3, "label": "+3 — Muito Agitado", "score": 3, "description": "Puxa ou remove tubos/cateteres; agressivo."}, {"value": 2, "label": "+2 — Agitado", "score": 2, "description": "Movimentos frequentes e sem propósito; briga com o ventilador."}, {"value": 1, "label": "+1 — Inquieto", "score": 1, "description": "Ansioso, mas movimentos não são agressivos ou vigorosos."}, {"value": 0, "label": "0 — Alerta e Calmo", "score": 0, "description": "Nível de consciência normal, alerta e calmo."}, {"value": -1, "label": "-1 — Sonolento", "score": -1, "description": "Não totalmente alerta, mas mantém contato visual ao chamado (>10s)."}, {"value": -2, "label": "-2 — Sedação Leve", "score": -2, "description": "Acorda brevemente ao chamado, com contato visual (<10s)."}, {"value": -3, "label": "-3 — Sedação Moderada", "score": -3, "description": "Movimento ou abertura ocular ao chamado, mas sem contato visual."}, {"value": -4, "label": "-4 — Sedação Profunda", "score": -4, "description": "Sem resposta à voz, mas movimento ou abertura ocular ao estímulo físico."}, {"value": -5, "label": "-5 — Não Desperta", "score": -5, "description": "Sem resposta à voz ou ao estímulo físico."}]}], "formula": {"type": "sum", "resultLabel": "Escore RASS", "resultUnit": "", "decimals": 0}}, "interpretation": {"ranges": [{"min": 1, "max": 4, "label": "Agitação", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Paciente agitado ou combativo, com risco de auto-extubação, remoção de dispositivos e agressão à equipe.", "recommendations": "• Reavaliar causas reversíveis de agitação (dor, hipoxemia, delirium)\n• Ajustar sedação conforme prescrição médica\n• Avaliar delirium com CAM-ICU\n• Garantir segurança do paciente e da equipe"}, {"min": 0, "max": 0, "label": "Alerta e Calmo", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Nível de consciência dentro do considerado ideal para a maioria dos pacientes críticos, meta comum de sedação.", "recommendations": "• Manter conduta atual\n• Reavaliar periodicamente conforme protocolo de sedação"}, {"min": -3, "max": -1, "label": "Sedação Leve a Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Sedação leve a moderada. Pode estar dentro da meta terapêutica dependendo do objetivo clínico (ex: protocolo de sedação leve).", "recommendations": "• Verificar meta de sedação prescrita\n• Realizar interrupção diária da sedação se indicado\n• Avaliar delirium com CAM-ICU quando possível"}, {"min": -5, "max": -4, "label": "Sedação Profunda", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Sedação profunda, sem resposta ou resposta apenas a estímulo físico. Associada a maior tempo de ventilação mecânica e pior desfecho quando prolongada sem indicação clínica.", "recommendations": "• Reavaliar necessidade clínica da sedação profunda\n• Considerar redução da sedação conforme protocolo\n• Monitorar sinais vitais e nível de consciência com frequência"}]}, "sae": {"nanda": [{"diagnosis": "Confusão aguda", "definition": "Início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção que se desenvolvem em curto período."}, {"diagnosis": "Risco de síndrome do desuso", "definition": "Risco de deterioração dos sistemas corporais em decorrência de inatividade musculoesquelética prescrita ou inevitável."}], "noc": [{"outcome": "Nível de sedação", "indicators": ["Nível de consciência adequado à meta prescrita", "Ausência de agitação ou combatividade", "Sinais vitais estáveis durante a sedação"]}], "nic": [{"intervention": "Manejo da sedação", "activities": ["Avaliar o nível de sedação com escala validada (RASS)", "Ajustar infusão de sedativos conforme meta prescrita e protocolo", "Realizar interrupção diária da sedação quando indicado", "Avaliar delirium com CAM-ICU", "Documentar o escore a cada avaliação"]}]}, "evidence": {"foundation": "A escala RASS foi desenvolvida por Sessler e colaboradores (2002) para padronizar a avaliação do nível de sedação e agitação em pacientes críticos, variando de -5 (não desperta) a +4 (combativo), com 0 representando o paciente alerta e calmo.", "history": "Amplamente adotada em protocolos de sedação em UTI no mundo todo, sendo pré-requisito para a aplicação do CAM-ICU (avaliação de delirium), que só deve ser realizado em pacientes com RASS ≥ -3.", "validation": "Apresenta excelente confiabilidade interobservador e validade de constructo, sendo uma das escalas de sedação mais estudadas e recomendadas por diretrizes internacionais de manejo de dor, agitação e delirium (PADIS).", "limitations": "Requer treinamento da equipe para aplicação padronizada e reavaliação frequente, especialmente em protocolos de sedação leve dirigida por metas.", "references": [{"text": "SESSLER, C. N. et al. The Richmond Agitation-Sedation Scale: validity and reliability in adult intensive care unit patients. American Journal of Respiratory and Critical Care Medicine, v. 166, n. 10, p. 1338-1344, 2002."}, {"text": "DEVLIN, J. W. et al. Clinical Practice Guidelines for the Prevention and Management of Pain, Agitation/Sedation, Delirium, Immobility, and Sleep Disruption in Adult Patients in the ICU (PADIS). Critical Care Medicine, v. 46, n. 9, p. e825-e873, 2018."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Avalie primeiro observando o paciente, depois estimule verbalmente e só então fisicamente, seguindo a sequência da escala.", "O CAM-ICU só deve ser aplicado se o RASS estiver entre -3 e +4.", "Reavalie o RASS a cada mudança na infusão de sedativos e conforme protocolo institucional.", "Documente sempre o escore junto ao horário da avaliação e a meta de sedação prescrita."], "examples": [{"label": "Paciente na meta ideal", "sublabel": "RASS 0", "emoji": "✅", "values": {"nivel": 0}}, {"label": "Agitado, puxando tubos", "sublabel": "RASS +3", "emoji": "🚨", "values": {"nivel": 3}}, {"label": "Sedação profunda", "sublabel": "RASS -4", "emoji": "⚠️", "values": {"nivel": -4}}], "quiz": [{"q": "Qual a faixa de valores da escala RASS?", "opts": ["0 a 10", "-5 a +4", "-10 a +10", "1 a 5"], "correct": 1, "expl": "A RASS varia de -5 (não desperta) a +4 (combativo), com 0 representando alerta e calmo."}, {"q": "A partir de qual valor de RASS o CAM-ICU pode ser aplicado?", "opts": ["Apenas RASS 0", "RASS entre -3 e +4", "RASS entre -5 e -4", "Qualquer valor de RASS"], "correct": 1, "expl": "O CAM-ICU só deve ser aplicado quando o RASS estiver entre -3 e +4, pois níveis mais profundos de sedação impedem avaliação confiável de delirium."}, {"q": "Um RASS de +3 indica qual estado do paciente?", "opts": ["Sedação profunda", "Alerta e calmo", "Muito agitado", "Sonolento"], "correct": 2, "expl": "RASS +3 corresponde a 'Muito Agitado' — o paciente puxa ou remove tubos e cateteres, ou é agressivo com a equipe."}]}, "faq": [{"q": "Com que frequência o RASS deve ser reavaliado?", "a": "Recomenda-se reavaliação a cada turno, a cada ajuste na infusão de sedativos e sempre que houver mudança no quadro clínico do paciente, conforme protocolo institucional de sedação."}, {"q": "O RASS substitui a avaliação de delirium?", "a": "Não. O RASS avalia nível de sedação/agitação. A avaliação de delirium é feita pelo CAM-ICU, que só deve ser aplicado quando o RASS estiver entre -3 e +4."}], "about": {"title": "Como funciona a Escala RASS", "html": "<p>A Escala RASS (Richmond Agitation-Sedation Scale) classifica o nível de consciência do paciente crítico em uma escala de 10 pontos, de -5 (não desperta a nenhum estímulo) a +4 (combativo), passando por 0 (alerta e calmo), que representa a meta usual de sedação em muitos protocolos.</p><p><strong>Guia rápido:</strong> +1 a +4 = Agitação | 0 = Alerta e calmo | -1 a -3 = Sedação leve a moderada | -4 a -5 = Sedação profunda.</p>"}}</script>
@@ -481,11 +444,5 @@
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+</body></html>
