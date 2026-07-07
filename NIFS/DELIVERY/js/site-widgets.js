@@ -221,8 +221,8 @@
     var bar = document.getElementById("barraAcessibilidade");
     if (!bar) return;
     function toggle() {
-      if (window.scrollY > 120) bar.classList.add("show");
-      else bar.classList.remove("show");
+      if (window.scrollY > 80) bar.classList.add("is-scrolled");
+      else bar.classList.remove("is-scrolled");
     }
     window.addEventListener("scroll", toggle, { passive: true });
     toggle();
@@ -444,7 +444,13 @@
     });
   }
 
+  var inited = false;
   function init() {
+    if (inited) return;
+    if (!document.getElementById("barraAcessibilidade") && !document.querySelector("#site-header .rd-header")) {
+      return;
+    }
+    inited = true;
     initCookies();
     initBackToTop();
     initTheme();
@@ -455,6 +461,7 @@
     initDecorativeStarRatings();
   }
 
+  document.addEventListener("partials:ready", init);
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {

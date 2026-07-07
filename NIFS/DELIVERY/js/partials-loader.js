@@ -1,31 +1,34 @@
 /* ======================================================================
    partials-loader.js — Orquestrador de módulos via fetch()
    Calculadoras de Enfermagem — Global Platform
-
-   Carrega header, footer, faixa de acessibilidade e sistema de cookies
-   a partir de partials/*.html e injeta nos placeholders da página.
-   Resolve caminhos relativos à raiz do site (funciona em html/ ou na raiz).
-   Ao final, carrega os scripts dependentes e dispara partials:ready.
    ====================================================================== */
 (function () {
   "use strict";
 
-  var BASE = detectBasePath();
+  var SCRIPT = document.currentScript;
 
   function detectBasePath() {
+    if (SCRIPT && SCRIPT.src) {
+      try {
+        var url = new URL(SCRIPT.src, window.location.href);
+        return url.pathname.replace(/js\/partials-loader\.js.*$/, "");
+      } catch (e) { /* fall through */ }
+    }
     var scripts = document.getElementsByTagName("script");
     for (var i = 0; i < scripts.length; i++) {
       var src = scripts[i].getAttribute("src") || "";
       if (src.indexOf("partials-loader.js") !== -1) {
         try {
-          var url = new URL(src, window.location.href);
-          return url.pathname.replace(/js\/partials-loader\.js.*$/, "");
-        } catch (e) { /* fall through */ }
+          var u = new URL(src, window.location.href);
+          return u.pathname.replace(/js\/partials-loader\.js.*$/, "");
+        } catch (e2) { /* fall through */ }
       }
     }
     if (/\/html\//.test(window.location.pathname)) return "../";
     return "";
   }
+
+  var BASE = detectBasePath();
 
   function assetPath(path) {
     if (/^(https?:|\/|data:|#)/.test(path)) return path;
@@ -66,12 +69,24 @@
   function fixAssetLinks() {
     document.querySelectorAll('link[rel="stylesheet"][href^="css/"]').forEach(function (el) {
       var href = el.getAttribute("href");
-      if (href && href.indexOf(BASE) !== 0) el.href = assetPath(href);
+      if (href && href.indexOf(BASE) !== 0 && BASE) el.href = assetPath(href);
     });
   }
 
+  function showA11yBar() {
+    var bar = document.getElementById("barraAcessibilidade");
+    if (bar) bar.classList.add("show");
+  }
+
+  function injectFallbackHeader(target) {
+    target.innerHTML =
+      '<header class="rd-header"><div class="rd-container rd-header-inner">' +
+      '<a href="' + assetPath("index.html") + '" class="rd-logo">' +
+      '<span>Calculadoras de Enfermagem</span></a></div></header>';
+  }
+
   var PARTIALS = [
-    { url: assetPath("partials/header.html"), target: "site-header" },
+    { url: assetPath("partials/header.html"), target: "site-header", fallback: injectFallbackHeader },
     { url: assetPath("partials/accessibility-toolbar.html"), target: "site-a11y" },
     { url: assetPath("partials/footer.html"), target: "site-footer" },
     { url: assetPath("partials/cookie-system.html"), target: "site-cookie" }
@@ -90,16 +105,18 @@
   function fetchPartial(item) {
     var target = document.getElementById(item.target);
     if (!target) return Promise.resolve();
-    return fetch(item.url)
+    return fetch(item.url, { credentials: "same-origin" })
       .then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status + " ao buscar " + item.url);
         return res.text();
       })
       .then(function (html) {
         mountPartialHtml(target, html);
+        if (item.target === "site-a11y") showA11yBar();
       })
       .catch(function (err) {
         console.error("[partials-loader] Falha ao carregar", item.url, err);
+        if (item.fallback) item.fallback(target);
       });
   }
 
@@ -122,7 +139,7 @@
   }
 
   function finishPartialsReady() {
-    document.dispatchEvent(new Event("DOMContentLoaded"));
+    showA11yBar();
     document.dispatchEvent(new Event("partials:ready"));
   }
 
@@ -144,6 +161,7 @@
     ensureChromeStyles();
     fixAssetLinks();
     Promise.all(PARTIALS.map(fetchPartial)).then(function () {
+      document.body.classList.add("has-site-chrome");
       loadDependentScriptsInOrder(0);
     });
   }

@@ -5,6 +5,15 @@
    hover dos itens de mega-menu e função global de busca.
    ====================================================================== */
 (function () {
+  var wired = false;
+  function wire() {
+    if (wired) return;
+    if (!document.getElementById("gh-hamburger-btn")) return;
+    wired = true;
+    bindMegaMenu();
+  }
+
+  function bindMegaMenu() {
   var hamburger = document.getElementById("gh-hamburger-btn");
   var mobileMenu = document.getElementById("gh-mobile-menu");
 
@@ -60,4 +69,12 @@
     window.location.href = "busca.html?q=" + encodeURIComponent(query);
     return false;
   };
+  }
+
+  document.addEventListener("partials:ready", wire);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", wire);
+  } else {
+    wire();
+  }
 })();

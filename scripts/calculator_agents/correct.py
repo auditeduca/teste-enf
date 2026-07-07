@@ -160,6 +160,19 @@ def run_correction(
     if normalize_footer:
         _normalize_footer(html_path, report)
 
+    from pathlib import Path as _Path
+    _finalize = _Path(__file__).resolve().parents[1] / "finalize_calc_delivery.py"
+    if _finalize.is_file():
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("finalize_calc_delivery", _finalize)
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            changes = mod.finalize_file(str(html_path))
+            for c in changes:
+                report.add("finalize", c)
+
     if use_llm and llm_enabled():
         m = TOOL_CONFIG_RX.search(html_path.read_text(encoding="utf-8"))
         if m:

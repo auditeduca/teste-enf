@@ -443,7 +443,10 @@
   /* ---------------------------------------------------------------------
      Boot
   --------------------------------------------------------------------- */
+  var booted = false;
   function boot() {
+    if (booted) return;
+    booted = true;
     initTabs();
     bindFields();
     bindExamples();
@@ -455,6 +458,7 @@
     renderAll();
   }
 
+  document.addEventListener("partials:ready", boot);
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot);
   } else {

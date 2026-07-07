@@ -43,6 +43,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
 </head>
 <body data-page="aldrete">
@@ -99,8 +100,7 @@
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
-        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+</div>
     </div>
 
     <div data-tab-panels="perfil">
@@ -597,60 +597,7 @@
           </div>
         </div>
       </div>
-
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
-      <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
-        <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">412</div><div class="kpi-sub">▲ 12% vs. semana anterior</div></div>
-          <div class="kpi-card"><div class="kpi-label">Altas autorizadas</div><div class="kpi-value">368</div><div class="kpi-sub">89% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Permanência prolongada</div><div class="kpi-value">44</div><div class="kpi-sub" >11% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">3</div><div class="kpi-sub">Cirurgia Geral, Ortopedia, Ginecologia</div></div>
-        </div>
-        <div class="gestor-grid">
-          <section class="calc-card">
-            <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Avaliações por dia (últimos 7 dias)</h2></div>
-            <div class="bar-chart">
-              <div class="bar-col"><span class="bar-val">52</span><div class="bar" style="height:55%"></div><span class="bar-day">Seg</span></div>
-              <div class="bar-col"><span class="bar-val">61</span><div class="bar" style="height:65%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">48</span><div class="bar" style="height:51%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">73</span><div class="bar" style="height:78%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">89</span><div class="bar" style="height:95%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">45</span><div class="bar" style="height:48%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:47%"></div><span class="bar-day">Dom</span></div>
-            </div>
-          </section>
-          <section class="calc-card">
-            <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de escore</h2></div>
-            <div class="equipo-dist">
-              <div class="dist-row"><span class="dist-label">Apto para alta (9–10)</span>
-                <div class="dist-bar-wrap"><div class="dist-bar" style="width:72%; background:#2563eb"></div></div>
-                <span class="dist-pct">72%</span></div>
-              <div class="dist-row"><span class="dist-label">Observação (7–8)</span>
-                <div class="dist-bar-wrap"><div class="dist-bar" style="width:19%; background:#ca8a04"></div></div>
-                <span class="dist-pct">19%</span></div>
-              <div class="dist-row"><span class="dist-label">Não apto (0–6)</span>
-                <div class="dist-bar-wrap"><div class="dist-bar" style="width:9%; background:#dc2626"></div></div>
-                <span class="dist-pct">9%</span></div>
-            </div>
-          </section>
-        </div>
-        <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-1042</td><td>02/07 10:30</td><td>Escore de Aldrete</td><td>10 pontos</td><td><span class="audit-status ok">Alta</span></td><td>Enf. Mariana</td></tr>
-                <tr><td>A-1041</td><td>02/07 09:45</td><td>Escore de Aldrete</td><td>7 pontos</td><td><span class="audit-status alarm">Observação</span></td><td>Enf. Carlos</td></tr>
-                <tr><td>A-1040</td><td>02/07 08:20</td><td>Escore de Aldrete</td><td>9 pontos</td><td><span class="audit-status ok">Alta</span></td><td>Enf. Paula</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-
-    </div>
+</div>
 
     <section class="about-section">
       <div class="about-grid about-grid--single">

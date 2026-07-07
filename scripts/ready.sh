@@ -4,18 +4,21 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-echo "==> 1/4 Publicar HTML na raiz do site"
+echo "==> 1/5 Finalizar HTML (gestor, CSS crítico)"
+python3 scripts/finalize_calc_delivery.py
+
+echo "==> 2/5 Publicar HTML na raiz do site"
 python3 scripts/publish_delivery.py
 
-echo "==> 2/4 Orquestrador de segurança (pre_deploy)"
+echo "==> 3/5 Orquestrador de segurança (pre_deploy)"
 python3 -m scripts.calculator_agents orchestrate --mode pre_deploy || {
   echo "AVISO: gate de segurança falhou — ver artifacts/security/"
 }
 
-echo "==> 3/4 Validação estrutural"
+echo "==> 4/5 Validação estrutural"
 python3 -m scripts.calculator_agents validate
 
-echo "==> 4/4 Status APIs"
+echo "==> 5/5 Status APIs"
 python3 -m scripts.calculator_agents status
 
 echo ""
