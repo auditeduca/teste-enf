@@ -93,6 +93,18 @@ CLINICAL_FLOW_SCRIPT = """
   })();
 </script>"""
 
+MEDICATION_SECTION = """
+          <section class="calc-card flow-card" id="calcMedicationSection" aria-labelledby="calcMedTitle" hidden>
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcMedTitle"><svg class="icon icon-sm"><use href="#i-pills"/></svg> Medicamentos — Base de Dados</h2>
+            </div>
+            <p class="med-link-band" id="calcMedBandLabel"></p>
+            <p class="flow-text" id="calcMedSummary"></p>
+            <div id="calcMedicationLinks" class="related-tools-grid"></div>
+            <p class="med-link-disclaimer">Referência da base NKOS. Prescrição e administração dependem de avaliação médica e protocolo institucional.</p>
+          </section>"""
+
 
 def remove_head_style_blocks(content: str) -> str:
     start = content.find(FONT_AWESOME_MARKER)
@@ -133,7 +145,7 @@ def add_modular_shell(content: str) -> str:
         )
         content = content.replace(
             "</body>",
-            f'{CLINICAL_FLOW_SCRIPT}\n<script src="js/partials-loader.js"></script>\n</body>',
+            f'{CLINICAL_FLOW_SCRIPT}\n<script src="js/tool-medication-links.js"></script>\n<script src="js/partials-loader.js"></script>\n</body>',
         )
     return content
 
@@ -335,6 +347,21 @@ def cleanup_orphan_blocks(content: str) -> str:
     return content
 
 
+def inject_medication_section(content: str) -> str:
+    if 'id="calcMedicationSection"' in content:
+        return content
+    flow = extract_div_by_id(content, "calcClinicalFlow")
+    if not flow:
+        return content
+    marker = "</section>\n        </div>"
+    if marker not in flow:
+        marker = "</section>\n</div>"
+    if marker not in flow:
+        return content
+    new_flow = flow.replace(marker, "</section>\n" + MEDICATION_SECTION + "\n        </div>", 1)
+    return content.replace(flow, new_flow, 1)
+
+
 def dedupe_clinical_script(content: str) -> str:
     scripts = list(
         re.finditer(
@@ -361,6 +388,7 @@ def slim(content: str) -> str:
     content = reorder_panels(content)
     content = fix_about_section(content)
     content = add_modular_shell(content)
+    content = inject_medication_section(content)
     content = dedupe_clinical_script(content)
     return content
 
