@@ -78,11 +78,21 @@ SKIP_KEYS = {
 def load_env() -> None:
     if os.environ.get("DEEPSEEK_API_KEY"):
         return
-    if ENV_FILE.is_file():
-        for line in ENV_FILE.read_text(encoding="utf-8").splitlines():
+    candidates = [
+        ENV_FILE,
+        PIPELINE.parent / ".env",
+        PIPELINE.parent / "NIFS" / ".env",
+        Path(os.environ.get("CALENF_ENV_FILE", "")),
+    ]
+    for path in candidates:
+        if not path or not Path(path).is_file():
+            continue
+        for line in Path(path).read_text(encoding="utf-8").splitlines():
             m = re.match(r"^(\w+)=(.+)$", line.strip())
             if m and m.group(1) not in os.environ:
                 os.environ[m.group(1)] = m.group(2)
+        if os.environ.get("DEEPSEEK_API_KEY"):
+            return
     if not os.environ.get("DEEPSEEK_API_KEY"):
         sys.exit("DEEPSEEK_API_KEY não encontrada (env ou .env)")
 
