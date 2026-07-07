@@ -4,13 +4,16 @@ Agentes para **validação**, **correção** e **geração** de páginas de calc
 
 ## APIs suportadas
 
-Carregamento de `.env` (em ordem):
+Carregamento de `.env` (em ordem, via `scripts/env_paths.py`):
 
 1. Variáveis já definidas no ambiente
-2. `/workspace/.env`
-3. `/workspace/NIFS/.env`
-4. `CALENF_ENV_FILE` (caminho customizado)
+2. `CALENF_ENV_FILE` (caminho customizado)
+3. `.env` na raiz do repositório
+4. `NIFS/.env`
 5. `C:/Github/CALENF-NKD/.env` (legado Windows)
+6. `C:/Users/leivi/Downloads/nkos-site-i18n-completo-v1/.env` (legado Windows)
+7. Espelho WSL do caminho acima (`/mnt/c/Users/...`)
+8. `~/.calenf/.env`
 
 Chaves usadas:
 

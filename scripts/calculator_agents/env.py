@@ -3,19 +3,19 @@ from __future__ import annotations
 
 import os
 import re
+import sys
 from pathlib import Path
 
 _LOADED = False
 WORKSPACE = Path(__file__).resolve().parents[2]
 REF_SCRIPTS = WORKSPACE / "NIFS" / "reference-scripts"
 
-ENV_CANDIDATES = [
-    WORKSPACE / ".env",
-    WORKSPACE / "NIFS" / ".env",
-    Path(os.environ.get("CALENF_ENV_FILE", "")),
-    Path("C:/Github/CALENF-NKD/.env"),
-    Path.home() / ".calenf" / ".env",
-]
+_SCRIPTS = WORKSPACE / "scripts"
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+from env_paths import env_candidates  # noqa: E402
+
+ENV_CANDIDATES = env_candidates(WORKSPACE, nifs=WORKSPACE / "NIFS")
 
 
 def _parse_env_file(path: Path) -> dict[str, str]:

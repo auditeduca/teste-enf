@@ -15,7 +15,7 @@ translation_tier do NKOS).
 Uso:
   python translate_clinical.py --lang es --pages glasgow.html apgar.html
   python translate_clinical.py --lang es --pages glasgow.html --dry-run
-Requer DEEPSEEK_API_KEY (env ou C:/Github/CALENF-NKD/.env).
+Requer DEEPSEEK_API_KEY (env ou .env legado em CALENF-NKD / nkos-site-i18n-completo-v1).
 """
 
 import argparse
@@ -29,7 +29,14 @@ from pathlib import Path
 
 PIPELINE = Path(__file__).resolve().parent
 SITE = PIPELINE.parent / "reference-website"
-ENV_FILE = Path("C:/Github/CALENF-NKD/.env")
+WORKSPACE = PIPELINE.parent
+
+import sys as _sys
+
+_SCRIPTS = WORKSPACE / "scripts"
+if str(_SCRIPTS) not in _sys.path:
+    _sys.path.insert(0, str(_SCRIPTS))
+from env_paths import env_candidates  # noqa: E402
 
 API_URL = "https://api.deepseek.com/chat/completions"
 
@@ -78,12 +85,7 @@ SKIP_KEYS = {
 def load_env() -> None:
     if os.environ.get("DEEPSEEK_API_KEY"):
         return
-    candidates = [
-        ENV_FILE,
-        PIPELINE.parent / ".env",
-        PIPELINE.parent / "NIFS" / ".env",
-        Path(os.environ.get("CALENF_ENV_FILE", "")),
-    ]
+    candidates = env_candidates(WORKSPACE, nifs=WORKSPACE / "NIFS", include_home=False)
     for path in candidates:
         if not path or not Path(path).is_file():
             continue

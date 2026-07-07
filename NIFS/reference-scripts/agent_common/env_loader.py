@@ -2,12 +2,19 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 _LOADED = False
+_LOADED_FROM: Path | None = None
 # NIFS/reference-scripts/agent_common -> NIFS
 NIFS_ROOT = Path(__file__).resolve().parent.parent.parent
 WORKSPACE_ROOT = NIFS_ROOT.parent
+
+_SCRIPTS = WORKSPACE_ROOT / "scripts"
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+from env_paths import env_candidates  # noqa: E402
 
 
 def project_root() -> Path:
@@ -15,20 +22,12 @@ def project_root() -> Path:
 
 
 def _env_candidates() -> list[Path]:
-    custom = os.environ.get("CALENF_ENV_FILE", "").strip()
-    paths = [
-        WORKSPACE_ROOT / ".env",
-        NIFS_ROOT / ".env",
-        Path("C:/Github/CALENF-NKD/.env"),
-    ]
-    if custom:
-        paths.insert(0, Path(custom))
-    return paths
+    return env_candidates(WORKSPACE_ROOT, nifs=NIFS_ROOT, include_home=False)
 
 
 def load_project_env(*, force: bool = False) -> dict[str, str]:
     """Parse .env e injeta em os.environ (sem sobrescrever vars já definidas)."""
-    global _LOADED
+    global _LOADED, _LOADED_FROM
     if _LOADED and not force:
         return {}
 
@@ -41,6 +40,7 @@ def load_project_env(*, force: bool = False) -> dict[str, str]:
 
     if not env_path:
         _LOADED = True
+        _LOADED_FROM = None
         return loaded
 
     for raw_line in env_path.read_text(encoding="utf-8").splitlines():
@@ -65,12 +65,14 @@ def load_project_env(*, force: bool = False) -> dict[str, str]:
             loaded[key] = value
 
     _LOADED = True
+    _LOADED_FROM = env_path
     return loaded
 
 
 def env_status() -> dict:
     """Quais chaves de agente estão configuradas (sem expor valores)."""
     load_project_env()
+    env_path = _LOADED_FROM
     keys = [
         "ANTHROPIC_API_KEY",
         "DEEPSEEK_API_KEY",

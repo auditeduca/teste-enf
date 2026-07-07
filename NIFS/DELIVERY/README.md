@@ -38,7 +38,10 @@ cp .env.example .env
 # Edite DEEPSEEK_API_KEY=...
 ```
 
-Windows: use `C:\Github\CALENF-NKD\.env` — detectado automaticamente.
+Windows: estes `.env` são detectados automaticamente:
+
+- `C:\Github\CALENF-NKD\.env`
+- `C:\Users\leivi\Downloads\nkos-site-i18n-completo-v1\.env`
 
 ## Agentes
 
