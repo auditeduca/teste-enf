@@ -7,7 +7,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[2]
-DELIVERY_HTML = WORKSPACE / "NIFS" / "DELIVERY" / "html"
+DELIVERY_SITE = WORKSPACE / "NIFS" / "DELIVERY"
+DELIVERY_HTML = DELIVERY_SITE  # produção: HTML na raiz
+DELIVERY_SOURCE = DELIVERY_SITE / "html"  # fonte opcional (pré-publish)
 TOOLS_JSON = WORKSPACE / "reference-website" / "data" / "tools"
 SCHEMA_PATH = WORKSPACE / "reference-website" / "data" / "schemas" / "tool.schema.json"
 

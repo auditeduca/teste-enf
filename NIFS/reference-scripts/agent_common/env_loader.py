@@ -5,22 +5,41 @@ import os
 from pathlib import Path
 
 _LOADED = False
-ROOT = Path(__file__).resolve().parent.parent.parent
+# NIFS/reference-scripts/agent_common -> NIFS
+NIFS_ROOT = Path(__file__).resolve().parent.parent.parent
+WORKSPACE_ROOT = NIFS_ROOT.parent
 
 
 def project_root() -> Path:
-    return ROOT
+    return NIFS_ROOT
+
+
+def _env_candidates() -> list[Path]:
+    custom = os.environ.get("CALENF_ENV_FILE", "").strip()
+    paths = [
+        WORKSPACE_ROOT / ".env",
+        NIFS_ROOT / ".env",
+        Path("C:/Github/CALENF-NKD/.env"),
+    ]
+    if custom:
+        paths.insert(0, Path(custom))
+    return paths
 
 
 def load_project_env(*, force: bool = False) -> dict[str, str]:
-    """Parse .env na raiz e injeta em os.environ (sem sobrescrever vars já definidas)."""
+    """Parse .env e injeta em os.environ (sem sobrescrever vars já definidas)."""
     global _LOADED
     if _LOADED and not force:
         return {}
 
-    env_path = ROOT / ".env"
     loaded: dict[str, str] = {}
-    if not env_path.is_file():
+    env_path = None
+    for candidate in _env_candidates():
+        if candidate.is_file():
+            env_path = candidate
+            break
+
+    if not env_path:
         _LOADED = True
         return loaded
 
@@ -68,7 +87,7 @@ def env_status() -> dict:
         "NKOS_NO_LLM",
     ]
     return {
-        "env_file": str(ROOT / ".env"),
-        "env_file_exists": (ROOT / ".env").is_file(),
+        "env_file": str(env_path) if env_path else "",
+        "env_file_exists": env_path is not None,
         "keys": {k: bool((os.environ.get(k) or "").strip()) for k in keys},
     }

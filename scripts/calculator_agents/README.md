@@ -27,8 +27,11 @@ Chaves usadas:
 # Status das APIs
 python -m scripts.calculator_agents status
 
-# Validar todas as calculadoras em NIFS/DELIVERY/html
+# Validar todas as calculadoras (após `bash scripts/ready.sh`)
 python -m scripts.calculator_agents validate
+
+# Publicar + validar + segurança (comando único)
+bash scripts/ready.sh
 
 # Validar páginas específicas
 python -m scripts.calculator_agents validate imc glasgow apgar

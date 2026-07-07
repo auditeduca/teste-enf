@@ -10,7 +10,7 @@ from pathlib import Path
 from .env import REF_SCRIPTS, load_env, llm_enabled
 
 WORKSPACE = Path(__file__).resolve().parents[2]
-DELIVERY_HTML = WORKSPACE / "NIFS" / "DELIVERY" / "html"
+DELIVERY_HTML = WORKSPACE / "NIFS" / "DELIVERY"
 REF_WEBSITE = WORKSPACE / "reference-website"
 TOOLS_JSON = REF_WEBSITE / "data" / "tools"
 GENERATOR = REF_WEBSITE / "scripts" / "generate_tool_page.py"

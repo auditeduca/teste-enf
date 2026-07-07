@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .correct import run_correction
 from .env import env_status, llm_enabled, load_env
-from .validate import DELIVERY_HTML, run_validation
+from .validate import DELIVERY_HTML, DELIVERY_SITE, run_validation
 
 REPORT_DIR = Path(__file__).resolve().parents[2] / "artifacts" / "security"
 

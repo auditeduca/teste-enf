@@ -11,7 +11,7 @@ from .env import REF_SCRIPTS, load_env, llm_enabled
 from .validate import TOOL_CONFIG_RX, ValidationReport, run_validation
 
 WORKSPACE = Path(__file__).resolve().parents[2]
-DELIVERY_HTML = WORKSPACE / "NIFS" / "DELIVERY" / "html"
+DELIVERY_HTML = WORKSPACE / "NIFS" / "DELIVERY"
 TOOLS_JSON = WORKSPACE / "reference-website" / "data" / "tools"
 
 
