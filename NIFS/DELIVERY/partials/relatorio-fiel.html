@@ -1,105 +1,111 @@
-<div class="print-area rr-fiel print-area--single-page no-print-screen" id="printTemplate" style="display:none;" aria-hidden="true">
-  <div class="rr-page">
-    <div class="rr-header-banner">
+<div class="print-area rr-fiel print-area--ref no-print-screen" id="printTemplate" style="display:none;" aria-hidden="true">
+
+  <!-- Página 1 — cabeçalho, paciente, parâmetros, resultado, interpretação -->
+  <div class="rr-page rr-page--1" data-print-page="1">
+    <div class="rr-header-banner" id="printSectionHeader">
       <div class="rr-logo-placeholder">
         <img src="images/logotipo_footer.webp" alt="Calculadoras de Enfermagem" class="rr-logo-img" width="200" height="48" />
       </div>
       <div class="rr-header-title">
         <h2>Relatório de Resultado</h2>
-        <div class="rr-date" id="printDate">—</div>
+        <div class="rr-date" id="printDate" data-print-from="generatedAt">—</div>
       </div>
     </div>
 
     <div class="rr-content">
-      <div class="rr-exam-title-section">
+      <div class="rr-exam-title-section" id="printSectionTool" data-print-from="tool-header">
         <div class="rr-exam-title-left">
-          <div class="rr-exam-icon" id="printToolIcon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
-          </div>
+          <div class="rr-exam-icon" id="printToolIcon" data-print-from="overview.icon" aria-hidden="true"></div>
           <div class="rr-exam-name">
-            <h1 id="printToolName">Calculadora</h1>
-            <p id="printToolCategory">Escala clínica</p>
+            <h1 id="printToolName" data-print-from="overview.name">Calculadora</h1>
+            <p id="printToolCategory" data-print-from="overview.category">Escala clínica</p>
           </div>
         </div>
         <div class="rr-validation-badge">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
           Validada clinicamente
         </div>
       </div>
 
-      <div class="rr-card">
+      <div class="rr-card" id="printSectionPatient" data-print-from="patient-context">
         <div class="rr-card-title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           DADOS DO PACIENTE
         </div>
         <div class="rr-patient-grid">
-          <div class="rr-patient-field"><div class="rr-field-label">NOME</div><div class="rr-field-value" id="printPatientName">—</div></div>
-          <div class="rr-patient-field"><div class="rr-field-label">REGISTRO / PRONTUÁRIO</div><div class="rr-field-value" id="printPatientReg">—</div></div>
-          <div class="rr-patient-field"><div class="rr-field-label">IDADE</div><div class="rr-field-value" id="printPatientAge">—</div></div>
-          <div class="rr-patient-field"><div class="rr-field-label">LEITO / SETOR</div><div class="rr-field-value" id="printPatientBed">—</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">NOME</div><div class="rr-field-value" id="printPatientName" data-print-from="patient.name">—</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">REGISTRO / PRONTUÁRIO</div><div class="rr-field-value" id="printPatientReg" data-print-from="patient.reg">—</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">IDADE</div><div class="rr-field-value" id="printPatientAge" data-print-from="patient.age">—</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">LEITO / SETOR</div><div class="rr-field-value" id="printPatientBed" data-print-from="patient.bed">—</div></div>
         </div>
       </div>
 
-      <div class="rr-card">
+      <div class="rr-card" id="printSectionParams" data-print-from="calcForm">
         <div class="rr-card-title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
           PARÂMETROS INSERIDOS
         </div>
-        <div class="rr-parameters-list" id="printParamsList"></div>
+        <div class="rr-parameters-list" id="printParamsList" data-print-from="calcForm.inputs"></div>
       </div>
 
-      <div class="rr-result-card" id="printResultCard">
+      <div class="rr-result-card" id="printResultCard" data-print-from="calcStatusBanner">
         <div class="rr-score-display">
-          <div class="rr-score-number" id="printScore">—</div>
-          <div class="rr-score-text" id="printScoreMax">pontos</div>
+          <div class="rr-score-number" id="printScore" data-print-from="calcResultValue">—</div>
+          <div class="rr-score-text" id="printScoreMax" data-print-from="formula.max">pontos</div>
         </div>
         <div class="rr-classification-display">
           <div class="rr-classification-label">CLASSIFICAÇÃO</div>
-          <div class="rr-classification-badge" id="printClassification">—</div>
+          <div class="rr-classification-badge" id="printClassification" data-print-from="calcStatusTitle">—</div>
         </div>
       </div>
 
-      <div class="rr-card rr-card--transparent">
+      <div class="rr-card rr-card--transparent" id="printSectionInterpretation" data-print-from="calcStatusText">
         <div class="rr-card-title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           INTERPRETAÇÃO CLÍNICA
         </div>
-        <div class="rr-interpretation-text" id="printInterpretation"></div>
+        <div class="rr-interpretation-text" id="printInterpretation" data-print-from="calcStatusText"></div>
       </div>
 
-      <div class="rr-card" id="printNandaSection" hidden>
+      <div class="rr-card" id="printNandaSection" data-print-from="calcClinicalFlow" hidden>
         <div class="rr-card-title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
           RACIOCÍNIO CLÍNICO (NANDA · NIC · NOC)
         </div>
-        <p class="rr-nnn-line"><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
-        <p class="rr-nnn-line"><strong>NIC:</strong> <span id="printNicText">—</span></p>
-        <p class="rr-nnn-line"><strong>NOC:</strong> <span id="printNocText">—</span></p>
+        <p class="rr-nnn-line"><strong>NANDA:</strong> <span id="printNandaText" data-print-from="calcNandaText">—</span></p>
+        <p class="rr-nnn-line"><strong>NIC:</strong> <span id="printNicText" data-print-from="calcNicText">—</span></p>
+        <p class="rr-nnn-line"><strong>NOC:</strong> <span id="printNocText" data-print-from="calcNocText">—</span></p>
       </div>
+    </div>
+    <div class="rr-page-num">1/2</div>
+  </div>
 
-      <div class="rr-two-cols">
+  <!-- Página 2 — segurança, referência, assinatura -->
+  <div class="rr-page rr-page--2" data-print-page="2">
+    <div class="rr-content rr-content--page2">
+      <div class="rr-two-cols" id="printSectionSafety" data-print-from="calcSafety">
         <div class="rr-card">
           <div class="rr-card-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             METAS INTERNACIONAIS
           </div>
-          <div id="printSafetyIpsg"></div>
+          <div id="printSafetyIpsg" data-print-from="calcSafetyIpsgList"></div>
         </div>
-        <div class="rr-card" id="printSafetyMedsCol">
+        <div class="rr-card" id="printSafetyMedsCol" data-print-from="calcSafetyMeds">
           <div class="rr-card-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
             9 CERTOS DA MEDICAÇÃO
           </div>
-          <div class="rr-meds-grid" id="printSafetyMeds"></div>
+          <div class="rr-meds-grid" id="printSafetyMeds" data-print-from="calcSafetyMedsList"></div>
         </div>
       </div>
 
-      <div class="rr-reference-box">
+      <div class="rr-reference-box" id="printSectionReference" data-print-from="evidence.references">
         <div class="rr-reference-title">REFERÊNCIA</div>
-        <div id="printReference">Documento gerado automaticamente.</div>
+        <div id="printReference" data-print-from="evidence.references.0">Documento gerado automaticamente.</div>
       </div>
 
-      <div class="rr-signature-section">
+      <div class="rr-signature-section" id="printSectionSignature">
         <div>
           <div class="rr-signature-line"></div>
           <div class="rr-signature-name">Enf. Responsável</div>
@@ -121,5 +127,6 @@
       <div>calculadorasdeenfermagem.com.br</div>
       <div>Documento gerado automaticamente • não substitui avaliação profissional</div>
     </div>
+    <div class="rr-page-num">2/2</div>
   </div>
 </div>

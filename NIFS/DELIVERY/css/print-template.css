@@ -34,16 +34,30 @@
   width: 794px;
   max-width: 100%;
   min-height: 1123px;
-  margin: 0 auto;
+  margin: 0 auto 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.print-area.rr-fiel .rr-page--2 {
+  page-break-before: always;
+  break-before: page;
+}
+
+.print-area.rr-fiel .rr-page-num {
+  position: absolute;
+  bottom: 8px;
+  right: 32px;
+  font-size: 10px;
+  color: var(--rr-text-gray);
 }
 
 .print-area.rr-fiel .rr-header-banner {
   background: var(--rr-primary-blue);
   color: #fff;
-  padding: 24px 32px;
+  padding: 30px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -102,8 +116,12 @@
 }
 
 .print-area.rr-fiel .rr-content {
-  padding: 24px 32px;
+  padding: 30px 40px;
   flex: 1;
+}
+
+.print-area.rr-fiel .rr-content--page2 {
+  padding-top: 40px;
 }
 
 .print-area.rr-fiel .rr-exam-title-section {
@@ -138,6 +156,11 @@
   fill: currentColor;
 }
 
+.print-area.rr-fiel .rr-exam-icon .icon {
+  width: 20px;
+  height: 20px;
+}
+
 .print-area.rr-fiel .rr-exam-name h1 {
   margin: 0 0 5px;
   font-size: 18px;
@@ -169,8 +192,8 @@
 .print-area.rr-fiel .rr-card {
   background: var(--rr-bg-gray);
   border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .print-area.rr-fiel .rr-card--transparent {
@@ -522,9 +545,21 @@
 
   .print-area.rr-fiel .rr-page {
     width: 100%;
-    min-height: auto;
+    min-height: 297mm;
     box-shadow: none;
     margin: 0;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .print-area.rr-fiel .rr-page--2 {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .print-area--ref .rr-page--1 {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   .no-print, .no-print *,
@@ -537,14 +572,9 @@
     display: none !important;
   }
 
-  .print-area--single-page .rr-page {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  .print-area--single-page .rr-card,
-  .print-area--single-page .rr-result-card,
-  .print-area--single-page .rr-two-cols {
+  .print-area--ref .rr-card,
+  .print-area--ref .rr-result-card,
+  .print-area--ref .rr-two-cols {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
@@ -555,32 +585,4 @@
   }
 }
 
-/* Compactação para página única */
-@media print {
-  .print-area--single-page.rr-fiel .rr-header-banner {
-    padding: 16px 24px;
-  }
-  .print-area--single-page.rr-fiel .rr-content {
-    padding: 16px 24px;
-  }
-  .print-area--single-page.rr-fiel .rr-card {
-    padding: 12px;
-    margin-bottom: 10px;
-  }
-  .print-area--single-page.rr-fiel .rr-exam-title-section {
-    margin-bottom: 14px;
-  }
-  .print-area--single-page.rr-fiel .rr-score-number {
-    font-size: 32px;
-  }
-  .print-area--single-page.rr-fiel .rr-result-card {
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .print-area--single-page.rr-fiel .rr-reference-box {
-    margin-bottom: 14px;
-  }
-  .print-area--single-page.rr-fiel .rr-parameter-item {
-    padding: 8px 12px;
-  }
-}
+/* Referência fiel — sem compactação agressiva em página única */

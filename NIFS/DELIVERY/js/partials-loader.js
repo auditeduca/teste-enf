@@ -214,6 +214,7 @@
       })
       .then(function (html) {
         mount.innerHTML = rewritePartialPaths(html);
+        document.dispatchEvent(new Event("print-template:ready"));
       })
       .catch(function (err) {
         console.error("[partials-loader] Falha ao carregar relatorio-fiel", err);

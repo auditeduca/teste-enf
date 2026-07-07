@@ -408,9 +408,96 @@
     return null;
   }
 
+  function domText(id, fallback) {
+    var el = document.getElementById(id);
+    if (!el) return fallback != null ? fallback : "";
+    var t = (el.textContent || "").replace(/\s+/g, " ").trim();
+    if (!t || t === "—") return fallback != null ? fallback : "";
+    return t;
+  }
+
+  function readToolHeaderFromDOM() {
+    var header = document.querySelector(".tool-header");
+    if (!header) return null;
+    var h1 = header.querySelector("h1");
+    var badge = header.querySelector(".tool-category-badge");
+    return {
+      name: h1 ? h1.textContent.trim() : "",
+      category: badge ? badge.textContent.trim() : ""
+    };
+  }
+
+  function readReferenceFromDOM() {
+    var refLi = document.querySelector('[data-tab-panel="referencias"] .ref-list li, .ref-list li');
+    if (!refLi) return "";
+    var clone = refLi.cloneNode(true);
+    var num = clone.querySelector(".ref-num");
+    if (num) num.remove();
+    return (clone.textContent || "").replace(/\s+/g, " ").trim();
+  }
+
+  function riskClassFromBanner() {
+    var banner = document.getElementById("calcStatusBanner");
+    if (!banner) return null;
+    if (banner.classList.contains("danger") || banner.classList.contains("critical")) return "rr-risk--critical";
+    if (banner.classList.contains("warning")) return "rr-risk--moderate";
+    if (banner.classList.contains("success")) return "rr-risk--none";
+    return null;
+  }
+
+  function buildPrintParamsFromDOM(fiel) {
+    var form = document.getElementById("calcForm");
+    if (!form) return null;
+    var rows = [];
+    form.querySelectorAll(".field-row").forEach(function (row) {
+      var labelEl = row.querySelector(".field-label");
+      var input = row.querySelector("[data-calc-input]");
+      if (!labelEl || !input) return;
+      var id = input.getAttribute("data-calc-input");
+      var label = labelEl.textContent.trim();
+      var scoreBox = document.querySelector('[data-formula-box="' + id + '"]');
+      var inpCfg = inputsCfg.filter(function (i) { return i.id === id; })[0];
+      var maxSc = inpCfg ? inputScoreMax(inpCfg) : null;
+      var scoreTxt = "";
+      if (fiel && scoreBox && maxSc != null) {
+        scoreTxt = scoreBox.textContent.trim() + " / " + maxSc;
+      }
+      var display = scoreTxt;
+      if (!display && input.tagName === "SELECT" && input.options.length) {
+        display = input.options[input.selectedIndex].text.replace(/^\d+\s*—\s*/, "").trim();
+        if (fiel && scoreBox) {
+          display = scoreBox.textContent.trim() + (maxSc != null ? " / " + maxSc : "");
+        }
+      }
+      if (!display) display = input.value;
+      rows.push({ label: label, value: display });
+    });
+    return rows.length ? rows : null;
+  }
+
+  function ipsgTagForText(text, idx) {
+    var match = IPSG_FIEL_DEFAULT.filter(function (item) {
+      return text.indexOf(item.text) !== -1 || item.text.indexOf(text) !== -1;
+    })[0];
+    return match ? match.tag : "M" + (idx + 1);
+  }
+
   function renderPrintIpsg(el) {
     if (!el) return;
     if (isFielPrintTemplate()) {
+      var src = document.getElementById("calcSafetyIpsgList");
+      var items = [];
+      if (src && src.children.length) {
+        items = Array.prototype.slice.call(src.querySelectorAll("li")).map(function (li) {
+          return (li.textContent || "").replace(/\s+/g, " ").trim();
+        }).filter(Boolean);
+      }
+      if (items.length) {
+        el.innerHTML = items.map(function (text, idx) {
+          return '<div class="rr-list-item"><span class="rr-list-item-tag">' + ipsgTagForText(text, idx) + '</span><span>' + text + "</span></div>";
+        }).join("");
+        return;
+      }
       el.innerHTML = IPSG_FIEL_DEFAULT.map(function (item) {
         return '<div class="rr-list-item"><span class="rr-list-item-tag">' + item.tag + '</span><span>' + item.text + "</span></div>";
       }).join("");
@@ -423,7 +510,16 @@
   }
 
   function renderPrintMeds(el, items) {
-    if (!el || !items || !items.length) return;
+    if (!el) return;
+    if (isFielPrintTemplate()) {
+      var src = document.getElementById("calcSafetyMedsList");
+      if ((!items || !items.length) && src && src.children.length) {
+        items = Array.prototype.slice.call(src.querySelectorAll("li")).map(function (li) {
+          return (li.textContent || "").replace(/\s+/g, " ").trim();
+        }).filter(Boolean);
+      }
+    }
+    if (!items || !items.length) return;
     if (isFielPrintTemplate()) {
       var half = Math.ceil(items.length / 2);
       var col1 = items.slice(0, half);
@@ -769,14 +865,18 @@
     var pt = document.getElementById("printTemplate");
     if (!pt) return;
     var fiel = isFielPrintTemplate();
+    var headerDom = readToolHeaderFromDOM();
     var acronym = overview.acronym ? overview.acronym + " — " : "";
-    var name = acronym + (overview.name || document.title);
-    var catBase = overview.categoryBadge || (CONFIG.breadcrumb && CONFIG.breadcrumb.category) || "Escala clínica";
+    var name = (headerDom && headerDom.name) || (acronym + (overview.name || document.title));
+    var catBase = (headerDom && headerDom.category) || overview.categoryBadge || (CONFIG.breadcrumb && CONFIG.breadcrumb.category) || "Escala clínica";
     var catExtra = overview.specialty && overview.specialty[0] ? " • " + overview.specialty[0] : "";
     var cat = catBase + catExtra;
     var el;
     el = document.getElementById("printToolName"); if (el) el.textContent = name;
     el = document.getElementById("printToolCategory"); if (el) el.textContent = cat;
+    var toolIcon = document.querySelector(".tool-header .tool-icon-badge svg");
+    var printIcon = document.getElementById("printToolIcon");
+    if (printIcon && toolIcon) printIcon.innerHTML = toolIcon.innerHTML;
     el = document.getElementById("printDate");
     if (el) {
       var now = new Date();
@@ -785,15 +885,16 @@
     }
     try {
       var ctx = JSON.parse(localStorage.getItem("patientContext") || "{}");
-      el = document.getElementById("printPatientName"); if (el && ctx.name) el.textContent = ctx.name;
-      el = document.getElementById("printPatientReg"); if (el && ctx.reg) el.textContent = ctx.reg;
-      el = document.getElementById("printPatientAge"); if (el && ctx.age) el.textContent = ctx.age;
-      el = document.getElementById("printPatientBed"); if (el && ctx.bed) el.textContent = ctx.bed;
+      el = document.getElementById("printPatientName"); if (el) el.textContent = ctx.name || "—";
+      el = document.getElementById("printPatientReg"); if (el) el.textContent = ctx.reg || "—";
+      el = document.getElementById("printPatientAge"); if (el) el.textContent = ctx.age || "—";
+      el = document.getElementById("printPatientBed"); if (el) el.textContent = ctx.bed || "—";
     } catch (e) { /* ignore */ }
     var paramsList = document.getElementById("printParamsList");
     if (paramsList) {
       paramsList.innerHTML = "";
-      inputsCfg.forEach(function (inp) {
+      var domParams = buildPrintParamsFromDOM(fiel);
+      var paramRows = domParams || inputsCfg.map(function (inp) {
         var val = state[inp.id];
         var label = inp.label || inp.id;
         var scoreTxt = "";
@@ -807,53 +908,63 @@
             if (fiel && maxSc != null && formulaCfg.type === "sum") scoreTxt = scoreOf(inp.id) + " / " + maxSc;
           }
         }
+        return { label: label, value: scoreTxt || val };
+      });
+      paramRows.forEach(function (row) {
         if (fiel) {
-          var row = document.createElement("div");
-          row.className = "rr-parameter-item";
-          row.innerHTML = "<div>" + label + '</div><div class="rr-parameter-score">' + (scoreTxt || val) + "</div>";
-          paramsList.appendChild(row);
+          var div = document.createElement("div");
+          div.className = "rr-parameter-item";
+          div.innerHTML = "<div>" + row.label + '</div><div class="rr-parameter-score">' + row.value + "</div>";
+          paramsList.appendChild(div);
         } else {
           var li = document.createElement("li");
-          li.innerHTML = '<span class="param-label">' + label + '</span><span class="param-value">' + val + "</span>";
+          li.innerHTML = '<span class="param-label">' + row.label + '</span><span class="param-value">' + row.value + "</span>";
           paramsList.appendChild(li);
         }
       });
     }
-    var riskCls = printRiskClass(range);
+    var riskCls = riskClassFromBanner() || printRiskClass(range);
     var resultCard = document.getElementById("printResultCard");
     if (resultCard) {
       resultCard.className = "rr-result-card " + riskCls;
     }
+    var scoreDom = domText("calcResultValue", fmt(total));
     el = document.getElementById("printScore");
-    if (el) el.textContent = fmt(total);
+    if (el) el.textContent = scoreDom;
     el = document.getElementById("printScoreMax");
     if (el) {
       var maxScore = computeScoreMax();
-      var unit = formulaCfg.resultUnit || "pontos";
-      el.textContent = maxScore ? "de " + maxScore + " " + unit : unit;
+      var unitDom = domText("calcResultUnit", formulaCfg.resultUnit || "pontos");
+      el.textContent = maxScore ? "de " + maxScore + " " + unitDom : unitDom;
     }
+    var classLabel = domText("calcStatusTitle", range ? range.label : "—");
     el = document.getElementById("printClassification");
     if (el) {
       el.className = fiel ? "rr-classification-badge " + riskCls : "label";
-      var label = range ? range.label : "—";
       var warn = range && riskIsWarning(range.riskLevel);
       if (fiel) {
-        el.innerHTML = (warn ? PRINT_WARN_SVG : PRINT_CHECK_BADGE_SVG) + " " + label;
+        el.innerHTML = (warn ? PRINT_WARN_SVG : PRINT_CHECK_BADGE_SVG) + " " + classLabel;
       } else {
-        el.textContent = label;
+        el.textContent = classLabel;
       }
     }
     el = document.getElementById("printInterpretation");
-    if (el) el.textContent = range ? (range.clinicalImplications || "") : "";
+    if (el) el.textContent = domText("calcStatusText", range ? (range.clinicalImplications || "") : "");
     var nandaSection = document.getElementById("printNandaSection");
-    var hasSae = (sae.nanda && sae.nanda.length) || (sae.nic && sae.nic.length) || (sae.noc && sae.noc.length);
+    var flow = document.getElementById("calcClinicalFlow");
+    var nandaDom = domText("calcNandaText");
+    var hasSae = !!(flow && flow.classList.contains("is-visible") && nandaDom) ||
+      (sae.nanda && sae.nanda.length) || (sae.nic && sae.nic.length) || (sae.noc && sae.noc.length);
     if (nandaSection) nandaSection.hidden = !hasSae;
-    el = document.getElementById("printNandaText"); if (el) el.textContent = pickNandaText(range);
-    el = document.getElementById("printNicText"); if (el) el.textContent = pickNicText();
-    el = document.getElementById("printNocText"); if (el) el.textContent = pickNocText();
+    el = document.getElementById("printNandaText"); if (el) el.textContent = nandaDom || pickNandaText(range);
+    el = document.getElementById("printNicText"); if (el) el.textContent = domText("calcNicText", pickNicText());
+    el = document.getElementById("printNocText"); if (el) el.textContent = domText("calcNocText", pickNocText());
     el = document.getElementById("printReference");
-    if (el && evidence.references && evidence.references[0]) {
-      el.textContent = formatReference(evidence.references[0]);
+    if (el) {
+      var refDom = readReferenceFromDOM();
+      if (refDom) el.textContent = refDom;
+      else if (evidence.references && evidence.references[0]) el.textContent = formatReference(evidence.references[0]);
+      else el.textContent = "Documento gerado automaticamente.";
     }
     applyConditionalSafety(range);
   }
@@ -863,9 +974,15 @@
   function initPrint() {
     var printBtn = document.getElementById("calcPrintBtn");
     if (printBtn) {
-      printBtn.addEventListener("click", function () {
+      printBtn.removeAttribute("onclick");
+      printBtn.addEventListener("click", function (e) {
+        e.preventDefault();
         if (!hasCalculated) {
           if (window.showToast) window.showToast("Calcule antes de imprimir o relatório", "info");
+          return;
+        }
+        if (!document.getElementById("printTemplate")) {
+          if (window.showToast) window.showToast("Aguarde o carregamento do relatório", "info");
           return;
         }
         var r = renderAll();
@@ -1091,6 +1208,7 @@
   var booted = false;
   function boot() {
     if (booted) return;
+    if (document.getElementById("printTemplateMount") && !document.getElementById("printTemplate")) return;
     booted = true;
     initTabs();
     bindFields();
@@ -1106,6 +1224,7 @@
   }
 
   document.addEventListener("partials:ready", boot);
+  document.addEventListener("print-template:ready", boot);
   document.addEventListener("tool-profile:ready", function () {
     if (!hasCalculated) return;
     var r = renderAll();
