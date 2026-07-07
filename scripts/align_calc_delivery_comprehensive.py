@@ -239,13 +239,13 @@ def process_file(path: str) -> list[str]:
             GESTOR_TAB + '\n        <button class="tab" data-tab="academico"',
             1,
         )
-        if 'data-tab-panel="gestor"' not in content:
-            content = content.replace(
-                "\n    </div>\n\n    <section class=\"about-section\">",
-                GESTOR_PANEL + "\n    </div>\n\n    <section class=\"about-section\">",
-                1,
-            )
-        changes.append("gestor")
+        changes.append("gestor_tab")
+
+    if 'data-tab-panel="gestor"' not in content and 'data-tab="gestor"' in content:
+        marker = "\n    <section class=\"about-section\">"
+        if marker in content:
+            content = content.replace(marker, GESTOR_PANEL + marker, 1)
+            changes.append("gestor_panel")
 
     if "learning-track-wrap" not in content and "calcClinicalFlow" in content:
         content = content.replace(
