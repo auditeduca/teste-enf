@@ -90,7 +90,7 @@
     { url: assetPath("partials/accessibility-toolbar.html"), target: "site-a11y" },
     { url: assetPath("partials/footer.html"), target: "site-footer" },
     { url: assetPath("partials/cookie-system.html"), target: "site-cookie" }
-  ];
+];;
 
   var DEPENDENT_SCRIPTS = [
     assetPath("js/global-scripts.js"),
@@ -203,13 +203,32 @@
     });
   }
 
+  function loadPrintTemplate() {
+    if (document.getElementById("printTemplate")) return Promise.resolve();
+    var mount = document.getElementById("printTemplateMount");
+    if (!mount) return Promise.resolve();
+    return fetch(assetPath("partials/relatorio-fiel.html"), { credentials: "same-origin" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status + " ao buscar relatorio-fiel");
+        return res.text();
+      })
+      .then(function (html) {
+        mount.innerHTML = html;
+      })
+      .catch(function (err) {
+        console.error("[partials-loader] Falha ao carregar relatorio-fiel", err);
+      });
+  }
+
   function init() {
     ensureChromeStyles();
     fixAssetLinks();
-    Promise.all(PARTIALS.map(fetchPartial)).then(function () {
-      document.body.classList.add("has-site-chrome");
-      loadDependentScriptsInOrder(0);
-    });
+    Promise.all(PARTIALS.map(fetchPartial))
+      .then(function () { return loadPrintTemplate(); })
+      .then(function () {
+        document.body.classList.add("has-site-chrome");
+        loadDependentScriptsInOrder(0);
+      });
   }
 
   if (document.readyState === "loading") {

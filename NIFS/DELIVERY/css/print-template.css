@@ -1,56 +1,505 @@
 /* ═══════════════════════════════════════════════════════════════
-   NKOS v5 — Template de Impressão Padrão
-   Baseado no PDF de Referência (Relatório de Resultado)
-   calculadorasdeenfermagem.com.br
+   NKOS v5 — Template de Impressão Fiel (relatorio_fiel.html)
+   Reutilizável em todas as calculadoras via #printTemplate
    ═══════════════════════════════════════════════════════════════ */
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+.print-area.rr-fiel {
+  --rr-primary-blue: #1a365d;
+  --rr-secondary-blue: #2b6cb0;
+  --rr-teal: #008080;
+  --rr-light-teal: #e6f2f2;
+  --rr-bg-gray: #f8f9fa;
+  --rr-border-gray: #e2e8f0;
+  --rr-text-dark: #2d3748;
+  --rr-text-gray: #718096;
+  --rr-orange: #dd6b20;
+  --rr-light-orange: #fffaf0;
+  --rr-border-orange: #fbd38d;
+  --rr-green: #38a169;
+  --rr-light-green: #f0fff4;
+  --rr-red: #dc2626;
+  --rr-light-red: #fef2f2;
+  --rr-border-red: #fecaca;
+  --rr-blue: #2563eb;
+  --rr-light-blue: #eff6ff;
+  --rr-border-blue: #bfdbfe;
+  font-family: "Inter", "Manrope", system-ui, sans-serif;
+  color: var(--rr-text-dark);
+}
+
+.print-area.rr-fiel .rr-page {
+  background: #fff;
+  width: 794px;
+  max-width: 100%;
+  min-height: 1123px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.print-area.rr-fiel .rr-header-banner {
+  background: var(--rr-primary-blue);
+  color: #fff;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 6px solid var(--rr-teal);
+}
+
+.print-area.rr-fiel .rr-logo-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.print-area.rr-fiel .rr-logo-icon {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.print-area.rr-fiel .rr-logo-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
+}
+
+.print-area.rr-fiel .rr-logo-text {
+  font-size: 10px;
+  line-height: 1.2;
+  text-transform: lowercase;
+}
+
+.print-area.rr-fiel .rr-header-title {
+  text-align: right;
+}
+
+.print-area.rr-fiel .rr-header-title h2 {
+  margin: 0 0 5px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.print-area.rr-fiel .rr-date {
+  font-size: 12px;
+  color: #cbd5e0;
+}
+
+.print-area.rr-fiel .rr-content {
+  padding: 24px 32px;
+  flex: 1;
+}
+
+.print-area.rr-fiel .rr-exam-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.print-area.rr-fiel .rr-exam-title-left {
+  display: flex;
+  gap: 15px;
+  min-width: 0;
+}
+
+.print-area.rr-fiel .rr-exam-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--rr-light-teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rr-teal);
+  flex-shrink: 0;
+}
+
+.print-area.rr-fiel .rr-exam-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.print-area.rr-fiel .rr-exam-name h1 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: var(--rr-primary-blue);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.print-area.rr-fiel .rr-exam-name p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--rr-text-gray);
+}
+
+.print-area.rr-fiel .rr-validation-badge {
+  background: var(--rr-light-green);
+  color: var(--rr-green);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.print-area.rr-fiel .rr-card {
+  background: var(--rr-bg-gray);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.print-area.rr-fiel .rr-card--transparent {
+  background: transparent;
+  padding: 0;
+}
+
+.print-area.rr-fiel .rr-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--rr-teal);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+}
+
+.print-area.rr-fiel .rr-patient-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--rr-border-gray);
+}
+
+.print-area.rr-fiel .rr-patient-field {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--rr-border-gray);
+}
+
+.print-area.rr-fiel .rr-patient-field:nth-child(odd) {
+  border-right: 1px solid var(--rr-border-gray);
+}
+
+.print-area.rr-fiel .rr-patient-field:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+.print-area.rr-fiel .rr-field-label {
+  font-size: 10px;
+  color: var(--rr-text-gray);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.print-area.rr-fiel .rr-field-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--rr-text-dark);
+}
+
+.print-area.rr-fiel .rr-parameters-list {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--rr-border-gray);
+}
+
+.print-area.rr-fiel .rr-parameter-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--rr-border-gray);
+  font-size: 13px;
+  color: var(--rr-text-gray);
+}
+
+.print-area.rr-fiel .rr-parameter-item:last-child {
+  border-bottom: none;
+}
+
+.print-area.rr-fiel .rr-parameter-score {
+  font-weight: 700;
+  color: var(--rr-primary-blue);
+  white-space: nowrap;
+}
+
+.print-area.rr-fiel .rr-result-card {
+  background: var(--rr-light-orange);
+  border: 1px solid var(--rr-border-orange);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.print-area.rr-fiel .rr-result-card.rr-risk--none,
+.print-area.rr-fiel .rr-result-card.rr-risk--low {
+  background: var(--rr-light-blue);
+  border-color: var(--rr-border-blue);
+}
+
+.print-area.rr-fiel .rr-result-card.rr-risk--critical,
+.print-area.rr-fiel .rr-result-card.rr-risk--high {
+  background: var(--rr-light-red);
+  border-color: var(--rr-border-red);
+}
+
+.print-area.rr-fiel .rr-score-display {
+  flex: 1;
+  text-align: center;
+  border-right: 1px dashed var(--rr-border-orange);
+  padding-right: 12px;
+}
+
+.print-area.rr-fiel .rr-risk--none .rr-score-display,
+.print-area.rr-fiel .rr-risk--low .rr-score-display {
+  border-right-color: var(--rr-border-blue);
+}
+
+.print-area.rr-fiel .rr-risk--critical .rr-score-display,
+.print-area.rr-fiel .rr-risk--high .rr-score-display {
+  border-right-color: var(--rr-border-red);
+}
+
+.print-area.rr-fiel .rr-score-number {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--rr-orange);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.print-area.rr-fiel .rr-risk--none .rr-score-number,
+.print-area.rr-fiel .rr-risk--low .rr-score-number {
+  color: var(--rr-blue);
+}
+
+.print-area.rr-fiel .rr-risk--critical .rr-score-number,
+.print-area.rr-fiel .rr-risk--high .rr-score-number {
+  color: var(--rr-red);
+}
+
+.print-area.rr-fiel .rr-score-text {
+  font-size: 11px;
+  color: var(--rr-text-gray);
+}
+
+.print-area.rr-fiel .rr-classification-display {
+  flex: 2;
+  padding-left: 28px;
+}
+
+.print-area.rr-fiel .rr-classification-label {
+  font-size: 10px;
+  color: var(--rr-text-gray);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.print-area.rr-fiel .rr-classification-badge {
+  background: var(--rr-orange);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+}
+
+.print-area.rr-fiel .rr-classification-badge.rr-risk--none,
+.print-area.rr-fiel .rr-classification-badge.rr-risk--low {
+  background: var(--rr-blue);
+}
+
+.print-area.rr-fiel .rr-classification-badge.rr-risk--critical,
+.print-area.rr-fiel .rr-classification-badge.rr-risk--high {
+  background: var(--rr-red);
+}
+
+.print-area.rr-fiel .rr-interpretation-text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--rr-text-dark);
+}
+
+.print-area.rr-fiel .rr-nnn-line {
+  font-size: 12px;
+  margin: 4px 0;
+  line-height: 1.45;
+}
+
+.print-area.rr-fiel .rr-two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.print-area.rr-fiel .rr-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.print-area.rr-fiel .rr-list-item-tag {
+  background: var(--rr-light-teal);
+  color: var(--rr-teal);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.print-area.rr-fiel .rr-list-item-icon {
+  color: var(--rr-green);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.print-area.rr-fiel .rr-meds-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+}
+
+.print-area.rr-fiel .rr-reference-box {
+  border-left: 3px solid var(--rr-teal);
+  background: var(--rr-bg-gray);
+  padding: 14px;
+  font-size: 11px;
+  color: var(--rr-text-gray);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.print-area.rr-fiel .rr-reference-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--rr-teal);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.print-area.rr-fiel .rr-signature-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-bottom: 12px;
+}
+
+.print-area.rr-fiel .rr-signature-line {
+  width: 260px;
+  border-top: 1px solid var(--rr-text-dark);
+  padding-top: 5px;
+}
+
+.print-area.rr-fiel .rr-signature-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.print-area.rr-fiel .rr-signature-role {
+  font-size: 12px;
+  color: var(--rr-text-gray);
+}
+
+.print-area.rr-fiel .rr-qr-code {
+  text-align: center;
+}
+
+.print-area.rr-fiel .rr-qr-image {
+  width: 56px;
+  height: 56px;
+  background: #fff;
+  border: 1px solid var(--rr-border-gray);
+  padding: 4px;
+  margin: 0 auto 4px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.print-area.rr-fiel .rr-qr-dot {
+  background: var(--rr-primary-blue);
+}
+
+.print-area.rr-fiel .rr-qr-dot--empty {
+  background: transparent;
+}
+
+.print-area.rr-fiel .rr-qr-text {
+  font-size: 9px;
+  color: var(--rr-text-gray);
+}
+
+.print-area.rr-fiel .rr-footer {
+  background: var(--rr-bg-gray);
+  padding: 12px 32px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10px;
+  color: var(--rr-text-gray);
+  border-top: 1px solid var(--rr-border-gray);
+}
+
+/* ── Impressão / PDF ── */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 8mm 10mm;
+    margin: 0;
   }
 
   html, body {
     height: auto !important;
     overflow: visible !important;
+    background: #fff !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
-  /* Reset visibility — only print-area shows */
-  body * { visibility: hidden !important; }
-  body { background: #fff !important; }
+  body * {
+    visibility: hidden !important;
+  }
 
-  .print-area, .print-area *,
-  .tool-header, .tool-header *,
-  .calc-result, .calc-result *,
-  .result-box, .result-box *,
-  .cip-section, .cip-section *,
-  .cognitive-panel, .cognitive-panel * {
+  .print-area.rr-fiel,
+  .print-area.rr-fiel * {
     visibility: visible !important;
   }
 
-  .print-area {
+  .print-area.rr-fiel {
     display: block !important;
-    visibility: visible !important;
-  }
-
-  .print-area.no-print-screen {
-    display: block !important;
-  }
-
-  /* Hide non-print elements */
-  .no-print, .no-print *,
-  .profile-tabs-bar, .tool-footer-zone,
-  #site-header, #site-footer, #site-cookie,
-  #accessibilityToggleButton, #accessibilityPanel,
-  .hamburger-button, .menu-overlay,
-  .skip-link, .btn-print,
-  nav, .nav-bar, .breadcrumb,
-  .adsbygoogle, ins.adsbygoogle {
-    display: none !important;
-  }
-
-  /* ── Print container ── */
-  .print-area {
     position: absolute;
     left: 0;
     top: 0;
@@ -59,340 +508,71 @@
     margin: 0;
   }
 
-  /* ── Header do Relatório ── */
-  .print-header {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 2px solid #2563eb;
-    padding-bottom: 10px;
-    margin-bottom: 16px;
+  .print-area.rr-fiel.no-print-screen {
+    display: block !important;
   }
 
-  .print-header-left {
-    flex: 1;
-  }
-
-  .print-header-left h1 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #2563eb;
-    margin: 0 0 4px 0;
-  }
-
-  .print-header-left .subtitle {
-    font-size: 12px;
-    color: #64748b;
+  .print-area.rr-fiel .rr-page {
+    width: 100%;
+    min-height: auto;
+    box-shadow: none;
     margin: 0;
   }
 
-  .print-header-left .badge-validated {
-    display: inline-block;
-    font-size: 10px;
-    color: #2563eb;
-    border: 1px solid #2563eb;
-    border-radius: 4px;
-    padding: 2px 8px;
-    margin-top: 6px;
+  .no-print, .no-print *,
+  .profile-tabs-bar, .tool-footer-zone,
+  #site-header, #site-footer, #site-cookie,
+  #accessibilityToggleButton, #accessibilityPanel,
+  .hamburger-button, .menu-overlay,
+  .skip-link, nav, .tpl-breadcrumb,
+  .adsbygoogle, ins.adsbygoogle {
+    display: none !important;
   }
 
-  .print-header-right {
-    text-align: right;
-    font-size: 11px;
-    color: #64748b;
+  .print-area--single-page .rr-page {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
-  .print-header-right .report-date {
-    font-weight: 600;
-    color: #334155;
+  .print-area--single-page .rr-card,
+  .print-area--single-page .rr-result-card,
+  .print-area--single-page .rr-two-cols {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
-  /* ── Seções numeradas ── */
-  .print-section {
-    margin-bottom: 14px;
-    page-break-inside: avoid;
-  }
-
-  .print-section-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #2563eb;
-    padding: 6px 12px;
-    background: #eff6ff;
-    border-left: 3px solid #2563eb;
-    border-radius: 0 4px 4px 0;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .print-section-title .section-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #2563eb;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-  }
-
-  /* ── Dados do paciente (grid 2 colunas) ── */
-  .print-patient-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 24px;
-    font-size: 12px;
-  }
-
-  .print-patient-grid .label {
-    font-weight: 600;
-    color: #64748b;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .print-patient-grid .value {
-    color: #1e293b;
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
-
-  /* ── Parâmetros inseridos (lista) ── */
-  .print-params-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 12px;
-  }
-
-  .print-params-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    border-bottom: 1px dashed #e2e8f0;
-  }
-
-  .print-params-list li:last-child {
-    border-bottom: none;
-  }
-
-  .print-params-list .param-label {
-    color: #475569;
-  }
-
-  .print-params-list .param-value {
-    font-weight: 600;
-    color: #2563eb;
-  }
-
-  /* ── Classificação e interpretação ── */
-  .print-classification {
-    text-align: center;
-    padding: 12px;
-    background: #eff6ff;
-    border-radius: 8px;
-    margin-bottom: 8px;
-  }
-
-  .print-classification .score {
-    font-size: 28px;
-    font-weight: 700;
-    color: #2563eb;
-  }
-
-  .print-classification .label {
-    font-size: 14px;
-    color: #1e293b;
-    font-weight: 600;
-  }
-
-  .print-interpretation {
-    font-size: 11px;
-    color: #475569;
-    line-height: 1.5;
-    padding: 8px 12px;
-    background: #f8fafc;
-    border-radius: 6px;
-  }
-
-  /* ── Metas + Medication Rights (2 colunas) ── */
-  .print-safety-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 12px;
-  }
-
-  .print-safety-col h4 {
-    font-size: 12px;
-    font-weight: 700;
-    color: #2563eb;
-    margin: 0 0 6px 0;
-  }
-
-  .print-safety-col ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 10px;
-    color: #475569;
-  }
-
-  .print-safety-col ul li {
-    padding: 2px 0;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .print-safety-col ul li::before {
-    content: "✓";
-    color: #2563eb;
-    font-weight: 700;
-  }
-
-  /* ── Referência ── */
-  .print-reference {
-    font-size: 10px;
-    color: #64748b;
-    border-top: 1px solid #e2e8f0;
-    padding-top: 8px;
-    margin-top: 12px;
-    font-style: italic;
-  }
-
-  /* ── Rodapé assinatura ── */
-  .print-signature {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 20px;
-    padding-top: 12px;
-    border-top: 1px solid #e2e8f0;
-  }
-
-  .print-signature-left {
-    font-size: 11px;
-    color: #334155;
-  }
-
-  .print-signature-left .coren {
-    font-size: 10px;
-    color: #64748b;
-  }
-
-  .print-signature-right {
-    text-align: right;
-  }
-
-  .print-signature-right .url {
-    font-size: 12px;
-    font-weight: 600;
-    color: #2563eb;
-  }
-
-  .print-signature-right .disclaimer {
-    font-size: 9px;
-    color: #94a3b8;
-    margin-top: 2px;
-  }
-
-  /* ── Footer do documento ── */
-  .print-doc-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 9px;
-    color: #94a3b8;
-    padding: 4px 0;
-    border-top: 1px solid #e2e8f0;
-  }
-
-  /* ── Cores forçadas para impressão ── */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+}
 
-  /* ── Page breaks ── */
-  .print-section { page-break-inside: avoid; }
-  h1, h2, h3 { page-break-after: avoid; }
-
-  /* ── Relatório em página única (relatorio.pdf) ── */
-  .print-area--single-page {
-    font-size: 9.5px;
-    line-height: 1.3;
-    page-break-before: avoid !important;
-    page-break-after: avoid !important;
-    break-inside: avoid !important;
-    max-height: 281mm;
+/* Compactação para página única */
+@media print {
+  .print-area--single-page.rr-fiel .rr-header-banner {
+    padding: 16px 24px;
   }
-  .print-area--single-page .print-header {
-    padding-bottom: 4px;
-    margin-bottom: 6px;
+  .print-area--single-page.rr-fiel .rr-content {
+    padding: 16px 24px;
   }
-  .print-area--single-page .print-header-left h1 {
-    font-size: 14px;
+  .print-area--single-page.rr-fiel .rr-card {
+    padding: 12px;
+    margin-bottom: 10px;
   }
-  .print-area--single-page .print-section {
-    margin-bottom: 5px;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
+  .print-area--single-page.rr-fiel .rr-exam-title-section {
+    margin-bottom: 14px;
   }
-  .print-area--single-page .print-section-title {
-    padding: 4px 10px;
-    margin-bottom: 4px;
-    font-size: 11px;
+  .print-area--single-page.rr-fiel .rr-score-number {
+    font-size: 32px;
   }
-  .print-area--single-page .print-patient-grid {
-    gap: 4px 16px;
-    font-size: 10px;
+  .print-area--single-page.rr-fiel .rr-result-card {
+    padding: 14px;
+    margin-bottom: 10px;
   }
-  .print-area--single-page .print-params-list {
-    font-size: 10px;
+  .print-area--single-page.rr-fiel .rr-reference-box {
+    margin-bottom: 14px;
   }
-  .print-area--single-page .print-params-list li {
-    padding: 2px 0;
-  }
-  .print-area--single-page .print-classification {
-    padding: 6px;
-    margin-bottom: 4px;
-  }
-  .print-area--single-page .print-classification .score {
-    font-size: 20px;
-  }
-  .print-area--single-page .print-interpretation {
-    padding: 4px 8px;
-    font-size: 10px;
-  }
-  .print-area--single-page .print-safety-grid {
-    gap: 8px;
-    margin-top: 4px;
-  }
-  .print-area--single-page .print-safety-col h4 {
-    font-size: 10px;
-    margin-bottom: 3px;
-  }
-  .print-area--single-page .print-safety-col ul {
-    font-size: 9px;
-  }
-  .print-area--single-page .print-reference {
-    font-size: 9px;
-    margin-top: 4px;
-    padding-top: 4px;
-  }
-  .print-area--single-page .print-signature {
-    margin-top: 6px;
-    padding-top: 6px;
-  }
-  .print-area--single-page .print-doc-footer {
-    display: none;
+  .print-area--single-page.rr-fiel .rr-parameter-item {
+    padding: 8px 12px;
   }
 }

@@ -359,6 +359,85 @@
     "Paciente certo", "Medicamento certo", "Via certa", "Dose certa", "Hora certa",
     "Registro certo", "Ação certa", "Forma certa", "Resposta certa"
   ];
+  var IPSG_FIEL_DEFAULT = [
+    { tag: "M1", text: "Identificar o paciente corretamente" },
+    { tag: "M2", text: "Melhorar a comunicação efetiva" },
+    { tag: "M3", text: "Segurança na prescrição e administração" },
+    { tag: "M5", text: "Higiene das mãos" },
+    { tag: "M6", text: "Reduzir o risco de quedas" }
+  ];
+  var PRINT_CHECK_SVG = '<svg class="rr-list-item-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+  var PRINT_CHECK_BADGE_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+  var PRINT_WARN_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+
+  function isFielPrintTemplate() {
+    var pt = document.getElementById("printTemplate");
+    return !!(pt && pt.classList.contains("rr-fiel"));
+  }
+
+  function printRiskClass(range) {
+    var sev = getRangeSeverity(range);
+    if (sev === "critical" || sev === "high") return "rr-risk--critical";
+    if (sev === "moderate") return "rr-risk--moderate";
+    if (sev === "low" || sev === "normal") return "rr-risk--none";
+    return "rr-risk--moderate";
+  }
+
+  function inputScoreMax(inp) {
+    if (!inp.options || !inp.options.length) return null;
+    var max = 0;
+    inp.options.forEach(function (o) {
+      var s = Number(o.score != null ? o.score : o.value);
+      if (!isNaN(s) && s > max) max = s;
+    });
+    return max || null;
+  }
+
+  function computeScoreMax() {
+    if (formulaCfg.scoreMax != null) return formulaCfg.scoreMax;
+    if (ranges.length) {
+      var hi = 0;
+      ranges.forEach(function (r) { if (r.max != null && r.max > hi) hi = r.max; });
+      if (hi) return hi;
+    }
+    if (formulaCfg.type === "sum") {
+      var total = 0;
+      inputsCfg.forEach(function (inp) { var m = inputScoreMax(inp); if (m) total += m; });
+      return total || null;
+    }
+    return null;
+  }
+
+  function renderPrintIpsg(el) {
+    if (!el) return;
+    if (isFielPrintTemplate()) {
+      el.innerHTML = IPSG_FIEL_DEFAULT.map(function (item) {
+        return '<div class="rr-list-item"><span class="rr-list-item-tag">' + item.tag + '</span><span>' + item.text + "</span></div>";
+      }).join("");
+      return;
+    }
+    var severity = "unknown";
+    el.innerHTML = (IPSG_BY_SEVERITY[severity] || IPSG_BY_SEVERITY.unknown).map(function (t) {
+      return "<li>" + t + "</li>";
+    }).join("");
+  }
+
+  function renderPrintMeds(el, items) {
+    if (!el || !items || !items.length) return;
+    if (isFielPrintTemplate()) {
+      var half = Math.ceil(items.length / 2);
+      var col1 = items.slice(0, half);
+      var col2 = items.slice(half);
+      function colHtml(list) {
+        return list.map(function (t) {
+          return '<div class="rr-list-item">' + PRINT_CHECK_SVG + "<span>" + t + "</span></div>";
+        }).join("");
+      }
+      el.innerHTML = "<div>" + colHtml(col1) + "</div><div>" + colHtml(col2) + "</div>";
+      return;
+    }
+    el.innerHTML = items.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+  }
 
   function buildCognitiveContext(total, range) {
     var observations = buildObservations(state);
@@ -457,15 +536,13 @@
         return '<li><svg class="icon"><use href="#i-check"/></svg> ' + t + "</li>";
       }).join("");
     }
+    var printMedsCol = document.getElementById("printSafetyMedsCol");
     var printMeds = document.getElementById("printSafetyMeds");
     var printIpsg = document.getElementById("printSafetyIpsg");
-    if (printMeds) printMeds.style.display = showMeds ? "" : "none";
-    if (printIpsg && ipsgItems) {
-      printIpsg.innerHTML = ipsgItems.map(function (t) { return "<li>" + t + "</li>"; }).join("");
-    }
-    if (printMeds && showMeds) {
-      printMeds.innerHTML = MEDS_NINE_RIGHTS.map(function (t) { return "<li>" + t + "</li>"; }).join("");
-    }
+    if (printMedsCol) printMedsCol.hidden = !showMeds;
+    if (printMedsCol) printMedsCol.style.display = showMeds ? "" : "none";
+    if (printIpsg) renderPrintIpsg(printIpsg);
+    if (printMeds && showMeds) renderPrintMeds(printMeds, MEDS_NINE_RIGHTS);
   }
 
   function applyCognitiveToProfiles(range) {
@@ -691,15 +768,20 @@
   function populatePrintReport(total, range) {
     var pt = document.getElementById("printTemplate");
     if (!pt) return;
-    var name = overview.name || document.title;
-    var cat = overview.categoryBadge || (CONFIG.breadcrumb && CONFIG.breadcrumb.category) || "Escala clínica";
+    var fiel = isFielPrintTemplate();
+    var acronym = overview.acronym ? overview.acronym + " — " : "";
+    var name = acronym + (overview.name || document.title);
+    var catBase = overview.categoryBadge || (CONFIG.breadcrumb && CONFIG.breadcrumb.category) || "Escala clínica";
+    var catExtra = overview.specialty && overview.specialty[0] ? " • " + overview.specialty[0] : "";
+    var cat = catBase + catExtra;
     var el;
     el = document.getElementById("printToolName"); if (el) el.textContent = name;
     el = document.getElementById("printToolCategory"); if (el) el.textContent = cat;
     el = document.getElementById("printDate");
     if (el) {
       var now = new Date();
-      el.textContent = now.toLocaleDateString("pt-BR") + " — " + now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+      var sep = fiel ? " • " : " — ";
+      el.textContent = now.toLocaleDateString("pt-BR") + sep + now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
     }
     try {
       var ctx = JSON.parse(localStorage.getItem("patientContext") || "{}");
@@ -714,21 +796,58 @@
       inputsCfg.forEach(function (inp) {
         var val = state[inp.id];
         var label = inp.label || inp.id;
+        var scoreTxt = "";
         if (inp.type === "select" && inp.options) {
           var opt = inp.options.filter(function (o) { return Number(o.value) === Number(val); })[0];
-          if (opt) val = opt.label;
+          var maxSc = inputScoreMax(inp);
+          if (fiel && formulaCfg.type === "sum" && maxSc != null) {
+            scoreTxt = scoreOf(inp.id) + " / " + maxSc;
+          } else if (opt) {
+            val = opt.label;
+            if (fiel && maxSc != null && formulaCfg.type === "sum") scoreTxt = scoreOf(inp.id) + " / " + maxSc;
+          }
         }
-        var li = document.createElement("li");
-        li.innerHTML = '<span class="param-label">' + label + '</span><span class="param-value">' + val + "</span>";
-        paramsList.appendChild(li);
+        if (fiel) {
+          var row = document.createElement("div");
+          row.className = "rr-parameter-item";
+          row.innerHTML = "<div>" + label + '</div><div class="rr-parameter-score">' + (scoreTxt || val) + "</div>";
+          paramsList.appendChild(row);
+        } else {
+          var li = document.createElement("li");
+          li.innerHTML = '<span class="param-label">' + label + '</span><span class="param-value">' + val + "</span>";
+          paramsList.appendChild(li);
+        }
       });
     }
+    var riskCls = printRiskClass(range);
+    var resultCard = document.getElementById("printResultCard");
+    if (resultCard) {
+      resultCard.className = "rr-result-card " + riskCls;
+    }
     el = document.getElementById("printScore");
-    if (el) el.textContent = fmt(total) + (formulaCfg.resultUnit ? " " + formulaCfg.resultUnit : "");
+    if (el) el.textContent = fmt(total);
+    el = document.getElementById("printScoreMax");
+    if (el) {
+      var maxScore = computeScoreMax();
+      var unit = formulaCfg.resultUnit || "pontos";
+      el.textContent = maxScore ? "de " + maxScore + " " + unit : unit;
+    }
     el = document.getElementById("printClassification");
-    if (el) el.textContent = range ? range.label : "—";
+    if (el) {
+      el.className = fiel ? "rr-classification-badge " + riskCls : "label";
+      var label = range ? range.label : "—";
+      var warn = range && riskIsWarning(range.riskLevel);
+      if (fiel) {
+        el.innerHTML = (warn ? PRINT_WARN_SVG : PRINT_CHECK_BADGE_SVG) + " " + label;
+      } else {
+        el.textContent = label;
+      }
+    }
     el = document.getElementById("printInterpretation");
     if (el) el.textContent = range ? (range.clinicalImplications || "") : "";
+    var nandaSection = document.getElementById("printNandaSection");
+    var hasSae = (sae.nanda && sae.nanda.length) || (sae.nic && sae.nic.length) || (sae.noc && sae.noc.length);
+    if (nandaSection) nandaSection.hidden = !hasSae;
     el = document.getElementById("printNandaText"); if (el) el.textContent = pickNandaText(range);
     el = document.getElementById("printNicText"); if (el) el.textContent = pickNicText();
     el = document.getElementById("printNocText"); if (el) el.textContent = pickNocText();

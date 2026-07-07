@@ -51,6 +51,7 @@ SCRIPTS = [
     "complete_preview_apgar.py",
     "fix_apgar_profiles.py",
     "package_apgar_zip.py",
+    "integrate_relatorio_fiel.py",
 ]
 
 REF_DATA = [
@@ -133,10 +134,15 @@ NANDA·NIC·NOC → Nurse-PaLM → Plano/Monitoramento/Segurança/Medicamentos �
 python3 scripts/build_apgar_cko.py
 ```
 
-## PDF
+## PDF / Relatório fiel
 
-O botão Imprimir usa `window.print()` com `#printTemplate` e `css/print-template.css`.
-O nome do arquivo sugerido é `relatorio.pdf` (definido em `document.title` antes de imprimir).
+Template reutilizável: `partials/relatorio-fiel.html` + `css/print-template.css`
+
+- Pré-visualização editável: `relatorio_fiel.html`
+- Preenchimento automático via `calc-engine-v2.js` → `populatePrintReport()`
+- Botão Imprimir gera `relatorio.pdf` (via `window.print()`)
+
+Para integrar em outra ferramenta: use `<div id="printTemplateMount"></div>` e carregue via `partials-loader.js`.
 
 ## Notas
 
@@ -171,6 +177,8 @@ def stage() -> None:
 
     for name in PARTIALS:
         copy_file(DELIVERY / "partials" / name, STAGING / "partials" / name)
+    copy_file(DELIVERY / "partials" / "relatorio-fiel.html", STAGING / "partials" / "relatorio-fiel.html")
+    copy_file(DELIVERY / "relatorio_fiel.html", STAGING / "relatorio_fiel.html")
 
     html_sub = STAGING / "html"
     for sub in ("css", "js", "partials"):
