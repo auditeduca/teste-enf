@@ -39,48 +39,59 @@ RECURSOS_ADICIONAIS = """
           </div>
         </div>"""
 
-FOOTER_BLOCKS = """
-    <section class="tool-footer-zone">
-      <h2 class="related-tools-title">Ferramentas relacionadas</h2>
-      <div class="related-tools-grid">
-        <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Estimativa da idade gestacional</p></div></a>
-        <a class="related-tool-card" href="capurro.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Capurro</h3><p>Maturidade somática do recém-nascido</p></div></a>
-        <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Perfil Biofísico</h3><p>Avaliação do bem-estar fetal</p></div></a>
-        <a class="related-tool-card" href="silverman-andersen.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Silverman-Andersen</h3><p>Desconforto respiratório neonatal</p></div></a>
-        <a class="related-tool-card" href="downes.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Downes</h3><p>Escore de desconforto respiratório infantil</p></div></a>
-        <a class="related-tool-card" href="bishop.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Bishop</h3><p>Avaliação do colo uterino</p></div></a>
-        <a class="related-tool-card" href="medicamentos.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pills"/></svg></div><div><h3>Calculadora de Medicamentos</h3><p>Regra de três e dose por volume</p></div></a>
-      </div>
-    </section>
+PADRAO_FOOTER = """
+        <section class="tool-footer-zone">
+          <div class="tool-tags">
+            <a href="index.html#calculadoras" class="tool-tag">#Neonatologia</a>
+            <a href="index.html#calculadoras" class="tool-tag">#Apgar</a>
+            <a href="index.html#calculadoras" class="tool-tag">#AvaliaçãoNeonatal</a>
+            <a href="index.html#calculadoras" class="tool-tag">#ReanimaçãoNeonatal</a>
+            <a href="index.html#calculadoras" class="tool-tag">#RecémNascido</a>
+            <a href="diagnosticosnanda.html" class="tool-tag">#NANDA-I</a>
+            <a href="sae.html" class="tool-tag">#SAE</a>
+            <a href="protocolos.html" class="tool-tag">#Protocolos</a>
+            <a href="medicamentos.html" class="tool-tag">#Medicação</a>
+          </div>
+          <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+          <div class="related-tools-grid">
+            <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Estimativa da idade gestacional</p></div></a>
+            <a class="related-tool-card" href="capurro.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Capurro</h3><p>Maturidade somática do recém-nascido</p></div></a>
+            <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Perfil Biofísico</h3><p>Avaliação do bem-estar fetal</p></div></a>
+            <a class="related-tool-card" href="silverman-andersen.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Silverman-Andersen</h3><p>Desconforto respiratório neonatal</p></div></a>
+            <a class="related-tool-card" href="downes.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Downes</h3><p>Escore de desconforto respiratório infantil</p></div></a>
+            <a class="related-tool-card" href="bishop.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Bishop</h3><p>Avaliação do colo uterino</p></div></a>
+            <a class="related-tool-card" href="medicamentos.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pills"/></svg></div><div><h3>Calculadora de Medicamentos</h3><p>Regra de três e dose por volume</p></div></a>
+          </div>
+        </section>
 
-    <section class="cip-section cip-hidden">
-      <h2 class="cip-section-title">Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
+        <section class="cip-section cip-hidden">
+          <h2 class="cip-section-title">Clinical Intelligence Package</h2>
+          <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
+          <div id="cipContainer" class="cip-hidden"></div>
+        </section>
 
-    <section class="cog-section-wrapper cip-hidden">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
+        <section class="cog-section-wrapper cip-hidden">
+          <div id="cognitivePanel" class="cognitive-panel cip-hidden">
+            <div class="cognitive-panel-header">
+              <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
+              <span class="cognitive-badge">Motor Clínico</span>
+            </div>
+            <div id="cognitivePanelContent"></div>
+          </div>
+        </section>
 
-    <section class="cip-kg-links cip-hidden">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>"""
+        <section class="cip-kg-links cip-hidden">
+          <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
+          <div class="cip-kg-links-list">
+            <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
+            <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
+            <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
+            <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
+            <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
+            <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
+            <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
+          </div>
+        </section>"""
 
 SAFETY_OLD = """            <div class="safety-grid">
               <div class="safety-col">
@@ -116,6 +127,15 @@ SAFETY_NEW = """            <div class="safety-grid">
 
 I_BABY = '  <symbol id="i-baby" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M6 20c0-3.5 2.5-5.5 6-5.5s6 2 6 5.5"/><circle cx="9" cy="6.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="15" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></symbol>\n'
 
+MARKER_BEFORE_ESTUDANTE = (
+    '<h3>Vídeos</h3><p>Tutoriais e demonstrações práticas em vídeo.</p>'
+    '<span class="learn-cta">Assistir vídeos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>\n'
+    "          </div>\n"
+    "        </div>\n"
+    "</div>\n\n"
+    '<div class="tab-panel" data-tab-panel="estudante">'
+)
+
 
 def patch(content: str) -> str:
     if 'id="cognitiveProfileStrip"' not in content:
@@ -131,14 +151,14 @@ def patch(content: str) -> str:
     if 'data-tab-panel="estudante">' in content and "estCognitiveHint" not in content:
         content = content.replace(
             '<div class="tab-panel" data-tab-panel="estudante">',
-            '<div class="tab-panel" data-tab-panel="estudante">\n        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>',
+            '<div class="tab-panel" data-tab-panel="estudante">\n        <p id="estCognitiveHint" class="cognitive-profile-strip cognitive-profile-strip--hint"></p>',
             1,
         )
 
     if 'id="urgResultNum"' in content and "urgCognitiveHint" not in content:
         content = content.replace(
             '<div class="urg-result">',
-            '<p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>\n            <div class="urg-result">',
+            '<p id="urgCognitiveHint" class="cognitive-profile-strip cognitive-profile-strip--hint"></p>\n            <div class="urg-result">',
             1,
         )
 
@@ -158,12 +178,26 @@ def patch(content: str) -> str:
                 1,
             )
 
-    if "tool-footer-zone" not in content:
+    if "tool-tags" not in content and MARKER_BEFORE_ESTUDANTE in content:
         content = content.replace(
-            "  </div>\n</main>",
-            "  </div>\n" + FOOTER_BLOCKS + "\n</main>",
+            MARKER_BEFORE_ESTUDANTE,
+            MARKER_BEFORE_ESTUDANTE.replace(
+                "</div>\n\n<div class=\"tab-panel\" data-tab-panel=\"estudante\">",
+                PADRAO_FOOTER + "\n</div>\n\n<div class=\"tab-panel\" data-tab-panel=\"estudante\">",
+                1,
+            ),
             1,
         )
+
+    content = content.replace(
+        'id="calcMedicationLinks" class="related-tools-grid"',
+        'id="calcMedicationLinks" class="med-links-grid"',
+    )
+    content = content.replace(' style="background:rgba(255,255,255,.07);border-"', "")
+    content = content.replace(
+        'class="field-select-wrap" style="flex:1;min-width:220px"',
+        'class="field-select-wrap field-select-wrap--step"',
+    )
 
     if 'id="i-baby"' not in content and "i-pills" in content:
         content = content.replace(
@@ -172,7 +206,6 @@ def patch(content: str) -> str:
             1,
         )
 
-    # Remover script inline duplicado (calc-engine-v2 cuida do fluxo)
     import re
 
     content = re.sub(

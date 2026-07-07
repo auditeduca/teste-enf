@@ -326,7 +326,7 @@
             </div>
             <p class="med-link-band" id="calcMedBandLabel"></p>
             <p class="flow-text" id="calcMedSummary"></p>
-            <div id="calcMedicationLinks" class="related-tools-grid"></div>
+            <div id="calcMedicationLinks" class="med-links-grid"></div>
             <p class="med-link-disclaimer">Referência da base NKOS. Prescrição e administração dependem de avaliação médica e protocolo institucional.</p>
           </section>
         </div>
@@ -382,10 +382,63 @@
             <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-play"/></svg></div><h3>Vídeos</h3><p>Tutoriais e demonstrações práticas em vídeo.</p><span class="learn-cta">Assistir vídeos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
           </div>
         </div>
+
+        <section class="tool-footer-zone">
+          <div class="tool-tags">
+            <a href="index.html#calculadoras" class="tool-tag">#Neonatologia</a>
+            <a href="index.html#calculadoras" class="tool-tag">#Apgar</a>
+            <a href="index.html#calculadoras" class="tool-tag">#AvaliaçãoNeonatal</a>
+            <a href="index.html#calculadoras" class="tool-tag">#ReanimaçãoNeonatal</a>
+            <a href="index.html#calculadoras" class="tool-tag">#RecémNascido</a>
+            <a href="diagnosticosnanda.html" class="tool-tag">#NANDA-I</a>
+            <a href="sae.html" class="tool-tag">#SAE</a>
+            <a href="protocolos.html" class="tool-tag">#Protocolos</a>
+            <a href="medicamentos.html" class="tool-tag">#Medicação</a>
+          </div>
+          <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+          <div class="related-tools-grid">
+            <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Estimativa da idade gestacional</p></div></a>
+            <a class="related-tool-card" href="capurro.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Capurro</h3><p>Maturidade somática do recém-nascido</p></div></a>
+            <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Perfil Biofísico</h3><p>Avaliação do bem-estar fetal</p></div></a>
+            <a class="related-tool-card" href="silverman-andersen.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Silverman-Andersen</h3><p>Desconforto respiratório neonatal</p></div></a>
+            <a class="related-tool-card" href="downes.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Downes</h3><p>Escore de desconforto respiratório infantil</p></div></a>
+            <a class="related-tool-card" href="bishop.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Bishop</h3><p>Avaliação do colo uterino</p></div></a>
+            <a class="related-tool-card" href="medicamentos.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pills"/></svg></div><div><h3>Calculadora de Medicamentos</h3><p>Regra de três e dose por volume</p></div></a>
+          </div>
+        </section>
+
+        <section class="cip-section cip-hidden">
+          <h2 class="cip-section-title">Clinical Intelligence Package</h2>
+          <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
+          <div id="cipContainer" class="cip-hidden"></div>
+        </section>
+
+        <section class="cog-section-wrapper cip-hidden">
+          <div id="cognitivePanel" class="cognitive-panel cip-hidden">
+            <div class="cognitive-panel-header">
+              <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
+              <span class="cognitive-badge">Motor Clínico</span>
+            </div>
+            <div id="cognitivePanelContent"></div>
+          </div>
+        </section>
+
+        <section class="cip-kg-links cip-hidden">
+          <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
+          <div class="cip-kg-links-list">
+            <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
+            <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
+            <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
+            <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
+            <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
+            <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
+            <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
+          </div>
+        </section>
 </div>
 
 <div class="tab-panel" data-tab-panel="estudante">
-        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
+        <p id="estCognitiveHint" class="cognitive-profile-strip cognitive-profile-strip--hint"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -395,7 +448,7 @@
                 <div class="step-body">
                   <h3>Frequência Cardíaca</h3>
                   <p class="step-hint">Frequência cardíaca do recém-nascido, avaliada por ausculta ou palpação do cordão.</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
+                  <div class="step-content"><div class="field-select-wrap field-select-wrap--step">
                 <select class="field-select" data-calc-input="fc"><option value="0">0 — Ausente</option><option value="1">1 — Menor que 100 bpm</option><option value="2" selected>2 — Maior ou igual a 100 bpm</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
@@ -408,7 +461,7 @@
                 <div class="step-body">
                   <h3>Esforço Respiratório</h3>
                   <p class="step-hint">Padrão respiratório observado.</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
+                  <div class="step-content"><div class="field-select-wrap field-select-wrap--step">
                 <select class="field-select" data-calc-input="respiracao"><option value="0">0 — Ausente</option><option value="1">1 — Fraco / Irregular</option><option value="2" selected>2 — Bom / Choro Forte</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
@@ -421,7 +474,7 @@
                 <div class="step-body">
                   <h3>Tônus Muscular</h3>
                   <p class="step-hint">Grau de flexão e movimento espontâneo dos membros.</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
+                  <div class="step-content"><div class="field-select-wrap field-select-wrap--step">
                 <select class="field-select" data-calc-input="tono"><option value="0">0 — Flácido</option><option value="1">1 — Alguma Flexão</option><option value="2" selected>2 — Movimento Ativo</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
@@ -434,7 +487,7 @@
                 <div class="step-body">
                   <h3>Irritabilidade Reflexa</h3>
                   <p class="step-hint">Resposta a estímulo (ex: aspiração de vias aéreas ou estímulo tátil).</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
+                  <div class="step-content"><div class="field-select-wrap field-select-wrap--step">
                 <select class="field-select" data-calc-input="irritabilidade"><option value="0">0 — Sem Resposta</option><option value="1">1 — Careta</option><option value="2" selected>2 — Choro / Tosse / Espirro</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
@@ -447,7 +500,7 @@
                 <div class="step-body">
                   <h3>Cor da Pele</h3>
                   <p class="step-hint">Coloração da pele do recém-nascido.</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
+                  <div class="step-content"><div class="field-select-wrap field-select-wrap--step">
                 <select class="field-select" data-calc-input="cor"><option value="0">0 — Cianótico / Pálido</option><option value="1">1 — Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>2 — Completamente Rosado</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
@@ -534,12 +587,12 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 2, &quot;tono&quot;: 2, &quot;irritabilidade&quot;: 2, &quot;cor&quot;: 2}'>Recém-nascido vigoroso <span class="p-sub">Apgar 10</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 1, &quot;tono&quot;: 1, &quot;irritabilidade&quot;: 1, &quot;cor&quot;: 0}'>Depressão moderada <span class="p-sub">Apgar 5</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 1, &quot;respiracao&quot;: 0, &quot;tono&quot;: 0, &quot;irritabilidade&quot;: 0, &quot;cor&quot;: 1}'>Depressão grave <span class="p-sub">Apgar 2</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Frequência Cardíaca</label>
-              <select class="field-select" data-calc-input="fc" style="background:rgba(255,255,255,.07);border-"><option value="0">Ausente</option><option value="1">Menor que 100 bpm</option><option value="2" selected>Maior ou igual a 100 bpm</option></select></div><div class="urg-field"><label>Esforço Respiratório</label>
-              <select class="field-select" data-calc-input="respiracao" style="background:rgba(255,255,255,.07);border-"><option value="0">Ausente</option><option value="1">Fraco / Irregular</option><option value="2" selected>Bom / Choro Forte</option></select></div><div class="urg-field"><label>Tônus Muscular</label>
-              <select class="field-select" data-calc-input="tono" style="background:rgba(255,255,255,.07);border-"><option value="0">Flácido</option><option value="1">Alguma Flexão</option><option value="2" selected>Movimento Ativo</option></select></div><div class="urg-field"><label>Irritabilidade Reflexa</label>
-              <select class="field-select" data-calc-input="irritabilidade" style="background:rgba(255,255,255,.07);border-"><option value="0">Sem Resposta</option><option value="1">Careta</option><option value="2" selected>Choro / Tosse / Espirro</option></select></div><div class="urg-field"><label>Cor da Pele</label>
-              <select class="field-select" data-calc-input="cor" style="background:rgba(255,255,255,.07);border-"><option value="0">Cianótico / Pálido</option><option value="1">Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>Completamente Rosado</option></select></div></div>
-            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
+              <select class="field-select" data-calc-input="fc"><option value="0">Ausente</option><option value="1">Menor que 100 bpm</option><option value="2" selected>Maior ou igual a 100 bpm</option></select></div><div class="urg-field"><label>Esforço Respiratório</label>
+              <select class="field-select" data-calc-input="respiracao"><option value="0">Ausente</option><option value="1">Fraco / Irregular</option><option value="2" selected>Bom / Choro Forte</option></select></div><div class="urg-field"><label>Tônus Muscular</label>
+              <select class="field-select" data-calc-input="tono"><option value="0">Flácido</option><option value="1">Alguma Flexão</option><option value="2" selected>Movimento Ativo</option></select></div><div class="urg-field"><label>Irritabilidade Reflexa</label>
+              <select class="field-select" data-calc-input="irritabilidade"><option value="0">Sem Resposta</option><option value="1">Careta</option><option value="2" selected>Choro / Tosse / Espirro</option></select></div><div class="urg-field"><label>Cor da Pele</label>
+              <select class="field-select" data-calc-input="cor"><option value="0">Cianótico / Pálido</option><option value="1">Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>Completamente Rosado</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip cognitive-profile-strip--hint"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">10</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Normal / Boa Vitalidade</span>
@@ -650,48 +703,6 @@
     </section>
 
   </div>
-
-    <section class="tool-footer-zone">
-      <h2 class="related-tools-title">Ferramentas relacionadas</h2>
-      <div class="related-tools-grid">
-        <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Estimativa da idade gestacional</p></div></a>
-        <a class="related-tool-card" href="capurro.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Capurro</h3><p>Maturidade somática do recém-nascido</p></div></a>
-        <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Perfil Biofísico</h3><p>Avaliação do bem-estar fetal</p></div></a>
-        <a class="related-tool-card" href="silverman-andersen.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Silverman-Andersen</h3><p>Desconforto respiratório neonatal</p></div></a>
-        <a class="related-tool-card" href="downes.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Downes</h3><p>Escore de desconforto respiratório infantil</p></div></a>
-        <a class="related-tool-card" href="bishop.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Bishop</h3><p>Avaliação do colo uterino</p></div></a>
-        <a class="related-tool-card" href="medicamentos.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pills"/></svg></div><div><h3>Calculadora de Medicamentos</h3><p>Regra de três e dose por volume</p></div></a>
-      </div>
-    </section>
-
-    <section class="cip-section cip-hidden">
-      <h2 class="cip-section-title">Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <section class="cog-section-wrapper cip-hidden">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-
-    <section class="cip-kg-links cip-hidden">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
 </main>
 
 <div id="site-footer"></div>
