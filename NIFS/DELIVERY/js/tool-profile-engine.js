@@ -1,5 +1,5 @@
 /* ======================================================================
-   tool-profile-engine.js — CKO + mounts do motor clínico em todos os perfis
+   tool-profile-engine.js — CKO: intro e recursos por perfil (motor clínico é global)
    ====================================================================== */
 (function () {
   "use strict";
@@ -50,47 +50,12 @@
     return card(pc.title || "Perfil", html);
   }
 
-  /** Trilha lógica: cálculo → NANDA/NIC/NOC → CIP → Nurse-PaLM → recursos */
-  function renderClinicalEngineLane(profileId) {
+  function renderClinicalBridge() {
     return (
-      '<div class="clinical-intelligence-lane" data-profile-clinical-flow hidden>' +
-      '<div class="flow-divider"><span>Motor clínico integrado</span></div>' +
-      '<section class="calc-card flow-card profile-cko-card">' +
-      '<div class="calc-card-header"><span class="bar" aria-hidden="true"></span>' +
-      '<h2 style="font-size:15px"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2></div>' +
-      '<div class="nnn-grid">' +
-      '<div><span class="nnn-label">Diagnóstico (NANDA-I)</span><p class="nnn-value" data-nnn-nanda>—</p></div>' +
-      '<div><span class="nnn-label">Intervenção (NIC)</span><p class="nnn-value" data-nnn-nic>—</p></div>' +
-      '<div><span class="nnn-label">Resultado (NOC)</span><p class="nnn-value" data-nnn-noc>—</p></div>' +
-      "</div></section>" +
-      '<section class="cip-section cip-hidden" data-cip-section>' +
-      '<h2 class="cip-section-title">Clinical Intelligence Package</h2>' +
-      '<p class="cip-section-intro">6 dimensões de inteligência clínica alimentadas pelo resultado do cálculo</p>' +
-      '<div class="cip-mount cip-hidden" data-cip-mount data-profile="' + esc(profileId) + '"></div>' +
-      "</section>" +
-      '<section class="cog-section-wrapper cip-hidden" data-cog-section>' +
-      '<div class="cognitive-panel cip-hidden" data-cognitive-mount data-profile="' + esc(profileId) + '">' +
-      '<div class="cognitive-panel-header">' +
-      '<h3><i class="fa-solid fa-brain"></i> Análise Cognitiva — Nurse-PaLM</h3>' +
-      '<span class="cognitive-badge">Motor Clínico</span></div>' +
-      '<div data-cognitive-panel-content></div></div></section>' +
-      "</div>"
-    );
-  }
-
-  function renderKgLinks(cko) {
-    var links = (cko.presentation && cko.presentation.kg_links) || [];
-    if (!links.length) return "";
-    var inner = '<div class="cip-kg-links-list">';
-    links.forEach(function (l) {
-      inner += '<a href="' + esc(l.href) + '" class="cip-kg-link"><i class="fa-solid ' + esc(l.icon) + '"></i> ' + esc(l.label) + "</a>";
-    });
-    inner += "</div>";
-    return (
-      '<section class="cip-kg-links profile-kg-links" data-kg-section>' +
-      "<h3><i class=\"fa-solid fa-link\"></i> Recursos conectados</h3>" +
-      inner +
-      "</section>"
+      '<p class="profile-clinical-bridge">' +
+      '<svg class="icon icon-sm"><use href="#i-brain"/></svg> ' +
+      "Após calcular, o raciocínio clínico integrado (NANDA · Nurse-PaLM · evidências) aparece na seção única abaixo dos perfis." +
+      "</p>"
     );
   }
 
@@ -157,9 +122,8 @@
   function blocksForProfile(profileId, cko) {
     return [
       renderProfileIntro(profileId, cko),
-      renderClinicalEngineLane(profileId),
+      renderClinicalBridge(),
       renderMedications(profileId),
-      renderKgLinks(cko),
       renderLearning(cko),
       renderRelated(cko),
       renderTags(cko),
@@ -168,11 +132,7 @@
   }
 
   function mountAll(cko) {
-    var profiles = (cko.presentation && cko.presentation.profiles) ||
-      ["padrao", "urgencia", "gestor", "estudante", "academico"];
-
-    profiles.forEach(function (profileId) {
-      if (profileId === "padrao") return;
+    ["urgencia", "gestor", "estudante", "academico"].forEach(function (profileId) {
       var mount = document.querySelector('[data-profile-shared="' + profileId + '"]');
       if (!mount) return;
       mount.innerHTML = '<div class="profile-shared-stack">' + blocksForProfile(profileId, cko) + "</div>";
