@@ -240,6 +240,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -457,38 +535,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "4051627e-8495-4a0b-b1c2-d3e4f5061729", "code": "SCALE-MEWS-001", "slug": "mews", "version": "1.0.0", "status": "published", "seo": {"title": "MEWS - Escore de Alerta Precoce Modificado", "description": "Calcule o MEWS (Modified Early Warning Score) para detecção precoce de deterioração clínica do paciente. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/mews.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escore de Alerta Precoce Modificado", "acronym": "MEWS", "categoryBadge": "Segurança do paciente", "icon": "i-pulse", "objective": "Detectar precocemente sinais de deterioração clínica em pacientes hospitalizados, a partir da pontuação de parâmetros fisiológicos simples, orientando a necessidade de intervenção e escalonamento do cuidado.", "indication": "Indicada para monitorização seriada de pacientes internados em enfermaria, permitindo identificar precocemente pacientes em risco de deterioração e agilizar o acionamento do time de resposta rápida.", "targetPopulation": "Pacientes adultos hospitalizados em unidades de internação (enfermaria).", "specialty": ["Enfermagem", "Segurança do Paciente", "Emergência"], "averageTime": "2 minutos", "evidenceLevel": "II", "organizations": ["NHS (National Health Service)"], "complexity": "intermediate", "rating": 4.7, "ratingCount": 380}, "calculator": {"inputs": [{"id": "frequencia_respiratoria", "type": "select", "label": "Frequência Respiratória (irpm)", "description": "Número de incursões respiratórias por minuto.", "defaultValue": 0, "options": [{"value": 0, "label": "9 a 14 (Normal)", "score": 0, "description": "Frequência respiratória normal."}, {"value": 1, "label": "15 a 20", "score": 1, "description": "Discreto aumento da frequência respiratória."}, {"value": 2, "label": "Menor que 9 ou 21 a 29", "score": 2, "description": "Bradipneia ou taquipneia moderada."}, {"value": 3, "label": "30 ou Mais", "score": 3, "description": "Taquipneia acentuada."}]}, {"id": "frequencia_cardiaca", "type": "select", "label": "Frequência Cardíaca (bpm)", "description": "Frequência cardíaca em batimentos por minuto.", "defaultValue": 0, "options": [{"value": 0, "label": "51 a 100 (Normal)", "score": 0, "description": "Frequência cardíaca normal."}, {"value": 1, "label": "101 a 110 ou 41 a 50", "score": 1, "description": "Discreta alteração da frequência cardíaca."}, {"value": 2, "label": "111 a 129 ou Menos que 41", "score": 2, "description": "Taquicardia ou bradicardia moderada."}, {"value": 3, "label": "130 ou Mais", "score": 3, "description": "Taquicardia acentuada."}]}, {"id": "pressao_sistolica", "type": "select", "label": "Pressão Arterial Sistólica (mmHg)", "description": "Pressão arterial sistólica em mmHg.", "defaultValue": 0, "options": [{"value": 0, "label": "101 a 199 (Normal)", "score": 0, "description": "Pressão arterial sistólica normal."}, {"value": 1, "label": "81 a 100", "score": 1, "description": "Discreta hipotensão."}, {"value": 2, "label": "71 a 80 ou 200 ou Mais", "score": 2, "description": "Hipotensão moderada ou hipertensão acentuada."}, {"value": 3, "label": "70 ou Menos", "score": 3, "description": "Hipotensão grave."}]}, {"id": "temperatura", "type": "select", "label": "Temperatura (°C)", "description": "Temperatura corporal em graus Celsius.", "defaultValue": 0, "options": [{"value": 0, "label": "35 a 38,4 (Normal)", "score": 0, "description": "Temperatura dentro da normalidade."}, {"value": 2, "label": "Menor que 35 ou 38,5 ou Mais", "score": 2, "description": "Hipotermia ou febre."}]}, {"id": "nivel_consciencia", "type": "select", "label": "Nível de Consciência (AVPU)", "description": "Escala AVPU: Alerta, resposta à Voz, resposta à Dor (Pain), Não responsivo (Unresponsive).", "defaultValue": 0, "options": [{"value": 0, "label": "Alerta", "score": 0, "description": "Paciente alerta e orientado."}, {"value": 3, "label": "Voz / Dor / Não Responsivo", "score": 3, "description": "Responde apenas à voz, à dor, ou não responde."}]}], "formula": {"type": "sum", "resultLabel": "Escore MEWS", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 2, "label": "Baixo Risco", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Baixo risco de deterioração clínica. Parâmetros fisiológicos próximos da normalidade.", "recommendations": "• Manter monitorização de rotina conforme protocolo\n• Reavaliar conforme frequência padrão da unidade"}, {"min": 3, "max": 4, "label": "Risco Moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Risco moderado de deterioração. Recomenda-se aumento da frequência de monitorização e comunicação à equipe.", "recommendations": "• Aumentar frequência de monitorização dos sinais vitais\n• Comunicar à equipe médica/enfermeiro responsável\n• Reavaliar em intervalo curto"}, {"min": 5, "max": 14, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alto risco de deterioração clínica aguda. Requer avaliação médica urgente e possível necessidade de cuidados de maior complexidade.", "recommendations": "• Acionar time de resposta rápida / avaliação médica urgente\n• Monitorização contínua dos sinais vitais\n• Considerar transferência para unidade de maior complexidade\n• Reavaliação frequente até estabilização"}]}, "sae": {"nanda": [{"diagnosis": "Risco de perfusão tissular ineficaz", "definition": "Risco de diminuição na circulação sanguínea para o tecido, o que pode comprometer a saúde."}, {"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."}, {"diagnosis": "Risco de confusão aguda", "definition": "Risco de início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção."}], "noc": [{"outcome": "Sinais vitais", "indicators": ["Frequência respiratória dentro dos limites esperados", "Frequência cardíaca dentro dos limites esperados", "Pressão arterial dentro dos limites esperados", "Nível de consciência preservado"]}], "nic": [{"intervention": "Monitorização de sinais vitais", "activities": ["Mensurar e registrar frequência respiratória, frequência cardíaca, pressão arterial e temperatura", "Avaliar nível de consciência pela escala AVPU", "Calcular e documentar o escore MEWS a cada avaliação", "Comunicar escores elevados imediatamente à equipe médica", "Acionar protocolo de resposta rápida quando indicado"]}]}, "evidence": {"foundation": "O MEWS (Modified Early Warning Score) é um sistema de pontuação fisiológica desenvolvido a partir do EWS original, utilizado para identificar precocemente pacientes em risco de deterioração clínica em unidades de internação, somando pontos atribuídos a 5 parâmetros: frequência respiratória, frequência cardíaca, pressão arterial sistólica, temperatura e nível de consciência.", "history": "Amplamente adotado em hospitais do Reino Unido e posteriormente incorporado em diversos protocolos de segurança do paciente e times de resposta rápida ao redor do mundo, sendo um precursor do NEWS/NEWS2 mais atual.", "validation": "Estudos demonstram associação entre escores MEWS elevados e maior risco de admissão em UTI, parada cardiorrespiratória e mortalidade hospitalar, sendo uma ferramenta útil para triagem e priorização de cuidados.", "limitations": "Escalas de alerta precoce como o MEWS não substituem o julgamento clínico. Podem apresentar variações de sensibilidade conforme a população estudada; versões mais recentes como o NEWS2 têm sido preferidas em muitas instituições por maior precisão preditiva.", "references": [{"text": "SUBBE, C. P. et al. Validation of a modified Early Warning Score in medical admissions. QJM: An International Journal of Medicine, v. 94, n. 10, p. 521-526, 2001."}, {"text": "ROYAL COLLEGE OF PHYSICIANS. National Early Warning Score (NEWS) 2. London: RCP, 2017."}, {"text": "BRASIL. Ministério da Saúde. Protocolo de identificação de risco e resposta rápida ao paciente em deterioração clínica. Brasília: MS, 2018."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Registre todos os 5 parâmetros a cada avaliação para não subestimar o escore total.", "Um único parâmetro muito alterado já justifica comunicação à equipe, mesmo que o escore total pareça baixo.", "Aumente a frequência de reavaliação proporcionalmente ao escore obtido.", "Utilize o MEWS como complemento, nunca substituto, do julgamento clínico da equipe."], "examples": [{"label": "Paciente estável", "sublabel": "MEWS 0", "emoji": "✅", "values": {"frequencia_respiratoria": 0, "frequencia_cardiaca": 0, "pressao_sistolica": 0, "temperatura": 0, "nivel_consciencia": 0}}, {"label": "Alteração inicial", "sublabel": "MEWS 3", "emoji": "⚠️", "values": {"frequencia_respiratoria": 1, "frequencia_cardiaca": 1, "pressao_sistolica": 0, "temperatura": 0, "nivel_consciencia": 0}}, {"label": "Deterioração clínica", "sublabel": "MEWS 9", "emoji": "🚨", "values": {"frequencia_respiratoria": 3, "frequencia_cardiaca": 2, "pressao_sistolica": 3, "temperatura": 0, "nivel_consciencia": 0}}], "quiz": [{"q": "Quantos parâmetros fisiológicos compõem o MEWS?", "opts": ["3", "4", "5", "6"], "correct": 2, "expl": "O MEWS avalia 5 parâmetros: frequência respiratória, frequência cardíaca, pressão arterial sistólica, temperatura e nível de consciência (AVPU)."}, {"q": "Um escore MEWS de 6 pontos indica qual nível de risco?", "opts": ["Baixo risco", "Risco moderado", "Alto risco", "Sem risco"], "correct": 2, "expl": "Escores de 5 pontos ou mais são classificados como alto risco, exigindo avaliação médica urgente."}, {"q": "O MEWS substitui o julgamento clínico da equipe?", "opts": ["Sim, sempre", "Não, é uma ferramenta complementar", "Apenas em UTI", "Apenas para idosos"], "correct": 1, "expl": "O MEWS é uma ferramenta de triagem que complementa, mas não substitui, a avaliação clínica individualizada da equipe de saúde."}]}, "faq": [{"q": "Com que frequência o MEWS deve ser calculado?", "a": "A frequência varia conforme protocolo institucional e o escore obtido: pacientes com escore baixo podem ser reavaliados conforme rotina da unidade, enquanto escores mais altos exigem reavaliação mais frequente, muitas vezes horária."}, {"q": "Qual a diferença entre MEWS e NEWS2?", "a": "O NEWS2 é uma versão mais recente e refinada do escore de alerta precoce, desenvolvida pelo Royal College of Physicians do Reino Unido, incorporando parâmetros adicionais como saturação de oxigênio e uso de oxigenoterapia suplementar, com maior precisão preditiva que o MEWS original."}], "about": {"title": "Como funciona o MEWS", "html": "<p>O MEWS soma pontos de 0 a 3 atribuídos a 5 parâmetros fisiológicos — frequência respiratória, frequência cardíaca, pressão arterial sistólica, temperatura e nível de consciência (AVPU) — para gerar um escore total que indica o risco de deterioração clínica do paciente internado.</p><p><strong>Guia rápido:</strong> 0-2 = Baixo risco | 3-4 = Risco moderado | ≥5 = Alto risco, acionar avaliação urgente.</p>"}}</script>

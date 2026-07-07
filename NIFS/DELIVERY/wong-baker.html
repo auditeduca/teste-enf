@@ -189,6 +189,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -334,38 +412,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "84950617-2839-4061-7284-950617283940", "code": "SCALE-WONGBAKER-001", "slug": "wong-baker", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Faces de Wong-Baker - Avaliação de Dor", "description": "Avalie a intensidade da dor em crianças ou pacientes com dificuldade de comunicação verbal com a Escala de Faces de Wong-Baker. Inclui interpretação e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/wong-baker.html"}, "breadcrumb": {"category": "Avaliação da Dor", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Faces de Wong-Baker", "acronym": "Wong-Baker FACES", "categoryBadge": "Avaliação da dor", "icon": "i-gauge", "objective": "Avaliar a intensidade da dor por meio de expressões faciais, especialmente útil em crianças e pacientes com dificuldade de comunicação verbal ou de compreensão numérica.", "indication": "Indicada para crianças a partir de 3 anos e para pacientes de qualquer idade com dificuldade de compreender a escala numérica de dor.", "targetPopulation": "Crianças a partir de 3 anos, idosos com déficit cognitivo leve a moderado, e pacientes com barreiras de comunicação verbal.", "specialty": ["Pediatria", "Enfermagem", "Manejo da Dor"], "averageTime": "menos de 1 minuto", "evidenceLevel": "II", "originalAuthors": ["Donna Wong", "Connie Baker"], "complexity": "basic", "rating": 4.8, "ratingCount": 890}, "calculator": {"inputs": [{"id": "face", "type": "select", "label": "Selecione a Face que Representa a Dor", "description": "Peça para a criança ou paciente apontar a face que melhor representa a dor sentida no momento.", "defaultValue": 0, "options": [{"value": 0, "label": "😀 0 — Sem Dor", "score": 0, "description": "Rosto feliz, sem nenhuma dor."}, {"value": 2, "label": "🙂 2 — Dói Só um Pouquinho", "score": 2, "description": "Dor mínima, quase imperceptível."}, {"value": 4, "label": "😐 4 — Dói um Pouco Mais", "score": 4, "description": "Dor leve a moderada."}, {"value": 6, "label": "😣 6 — Dói Ainda Mais", "score": 6, "description": "Dor moderada."}, {"value": 8, "label": "😢 8 — Dói Muito", "score": 8, "description": "Dor intensa."}, {"value": 10, "label": "😭 10 — Dói o Máximo que se Pode Imaginar", "score": 10, "description": "Pior dor possível, insuportável."}]}], "formula": {"type": "sum", "resultLabel": "Escore de Dor (Wong-Baker)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 0, "label": "Sem Dor", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Ausência de dor relatada pela criança/paciente.", "recommendations": "• Manter conduta atual\n• Reavaliar conforme protocolo institucional"}, {"min": 2, "max": 4, "label": "Dor Leve", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Dor de intensidade leve, geralmente não interfere significativamente nas atividades.", "recommendations": "• Considerar medidas não farmacológicas de conforto (distração, colo, brinquedos)\n• Reavaliar periodicamente"}, {"min": 6, "max": 6, "label": "Dor Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Dor de intensidade moderada, pode interferir no bem-estar e nas atividades da criança/paciente.", "recommendations": "• Comunicar à equipe médica\n• Considerar analgesia conforme prescrição\n• Reavaliar após intervenção"}, {"min": 8, "max": 10, "label": "Dor Intensa", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Dor de forte intensidade, com impacto significativo no bem-estar.", "recommendations": "• Comunicar imediatamente à equipe médica\n• Priorizar intervenção analgésica\n• Reavaliar em intervalo curto após a intervenção"}]}, "sae": {"nanda": [{"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial, de início súbito ou lento, com intensidade de leve a intensa."}], "noc": [{"outcome": "Controle da dor", "indicators": ["Reconhece e comunica a dor por meio das faces", "Utiliza medidas de alívio", "Relata dor controlada após intervenção"]}], "nic": [{"intervention": "Manejo da dor", "activities": ["Utilizar a Escala de Faces de Wong-Baker de forma consistente para avaliar a dor", "Administrar analgesia conforme prescrição", "Oferecer medidas não farmacológicas de conforto (distração, presença dos pais, brinquedos)", "Reavaliar a dor após intervenções", "Registrar a intensidade da dor no prontuário"]}]}, "evidence": {"foundation": "A Escala de Faces de Wong-Baker foi desenvolvida por Donna Wong e Connie Baker, utilizando 6 desenhos de expressões faciais que variam de um rosto feliz e sorridente (sem dor) a um rosto chorando intensamente (pior dor possível), facilitando a comunicação da intensidade da dor por crianças e pacientes com dificuldade de compreensão numérica.", "history": "Amplamente utilizada em pediatria, sendo uma das escalas de dor mais reconhecidas e traduzidas no mundo, recomendada por diversas sociedades pediátricas e de manejo da dor.", "validation": "Extensivamente validada em crianças a partir de 3 anos, com boa correlação com outras escalas de dor e boa aceitação pelos pacientes devido à sua natureza visual e intuitiva.", "limitations": "Crianças muito pequenas ou com déficit cognitivo importante podem ter dificuldade em associar a face à própria experiência de dor. Em alguns contextos, a escolha da face pode ser influenciada pelo estado emocional geral da criança, não apenas pela dor física.", "references": [{"text": "WONG, D. L.; BAKER, C. M. Pain in children: comparison of assessment scales. Pediatric Nursing, v. 14, n. 1, p. 9-17, 1988."}, {"text": "HOCKENBERRY, M. J.; WILSON, D. Wong's Nursing Care of Infants and Children. 11th ed. St. Louis: Elsevier, 2019."}, {"text": "SOCIEDADE BRASILEIRA DE PEDIATRIA. Avaliação e tratamento da dor na criança e no adolescente. Rio de Janeiro: SBP, 2020."}]}, "learning": {"tips": ["Explique cada face à criança antes de pedir que ela escolha, sem sugerir qual face selecionar.", "Use a mesma escala consistentemente ao longo do tratamento para permitir comparação.", "Combine com observação comportamental (choro, postura, expressão) em crianças muito pequenas.", "Reavalie a dor após qualquer intervenção analgésica ou medida de conforto."], "examples": [{"label": "Criança confortável", "sublabel": "Escore 0", "emoji": "😀", "values": {"face": 0}}, {"label": "Dor leve pós-vacina", "sublabel": "Escore 4", "emoji": "😐", "values": {"face": 4}}, {"label": "Dor intensa não controlada", "sublabel": "Escore 10", "emoji": "😭", "values": {"face": 10}}], "quiz": [{"q": "A partir de qual idade a Escala de Faces de Wong-Baker é geralmente recomendada?", "opts": ["6 meses", "3 anos", "10 anos", "18 anos"], "correct": 1, "expl": "A escala é recomendada a partir de aproximadamente 3 anos de idade, quando a criança já consegue associar a expressão facial à própria experiência de dor."}, {"q": "Quantas faces compõem a Escala de Wong-Baker?", "opts": ["4", "5", "6", "8"], "correct": 2, "expl": "A escala utiliza 6 faces, com pontuação de 0 (sem dor) a 10 (pior dor possível), em incrementos de 2 pontos."}, {"q": "A Escala de Wong-Baker é útil apenas para crianças?", "opts": ["Sim, exclusivamente", "Não, também é útil para idosos ou pacientes com dificuldade de comunicação verbal", "É usada apenas em recém-nascidos", "Não tem validade científica"], "correct": 1, "expl": "Além de crianças, a escala é útil para qualquer paciente com dificuldade de compreender a escala numérica ou de se comunicar verbalmente, incluindo alguns idosos com déficit cognitivo leve."}]}, "faq": [{"q": "Qual a diferença entre a Escala de Wong-Baker e a Escala Numérica de Dor?", "a": "A Escala Numérica exige que o paciente compreenda e utilize números de 0 a 10. A Escala de Wong-Baker usa expressões faciais visuais, sendo mais acessível para crianças pequenas e pessoas com dificuldade de compreensão numérica."}, {"q": "A escolha da face pode ser influenciada por fatores emocionais além da dor física?", "a": "Sim, é uma limitação reconhecida da escala — em algumas crianças, medo, ansiedade ou tristeza podem influenciar a escolha da face, sendo importante combinar com observação comportamental e contexto clínico."}], "about": {"title": "Como funciona a Escala de Faces de Wong-Baker", "html": "<p>A Escala de Faces de Wong-Baker apresenta 6 desenhos de expressões faciais, de um rosto feliz (sem dor, 0 pontos) a um rosto chorando intensamente (pior dor possível, 10 pontos), em incrementos de 2 pontos. O paciente ou a criança aponta a face que melhor representa a intensidade da dor sentida.</p><p><strong>Guia rápido:</strong> 0 = Sem dor | 2-4 = Dor leve | 6 = Dor moderada | 8-10 = Dor intensa.</p>"}}</script>

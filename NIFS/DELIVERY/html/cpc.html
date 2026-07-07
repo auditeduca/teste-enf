@@ -190,6 +190,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -335,38 +413,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "06172839-4051-6273-9506-172839405162", "code": "SCALE-CPC-001", "slug": "cpc", "version": "1.0.0", "status": "published", "seo": {"title": "CPC - Categoria de Performance Cerebral Pós-Parada Cardiorrespiratória", "description": "Classifique o desfecho neurológico após parada cardiorrespiratória com a Categoria de Performance Cerebral (CPC). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/cpc.html"}, "breadcrumb": {"category": "Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Categoria de Performance Cerebral", "acronym": "CPC", "categoryBadge": "Terapia intensiva", "icon": "i-brain", "objective": "Classificar o desfecho neurológico funcional do paciente após parada cardiorrespiratória e ressuscitação, em uma escala padronizada de 1 (boa performance) a 5 (óbito/morte encefálica).", "indication": "Indicada para pacientes sobreviventes de parada cardiorrespiratória, na avaliação de desfecho neurológico durante a internação e no seguimento pós-alta.", "targetPopulation": "Pacientes adultos sobreviventes de parada cardiorrespiratória, com foco na avaliação neurológica funcional.", "specialty": ["Terapia Intensiva", "Neurologia", "Emergência"], "averageTime": "1 minuto", "evidenceLevel": "II", "organizations": ["Brain Resuscitation Clinical Trial (BRCT)"], "complexity": "basic", "rating": 4.4, "ratingCount": 130}, "calculator": {"inputs": [{"id": "categoria", "type": "select", "label": "Categoria de Performance Cerebral", "description": "Selecione a categoria que melhor descreve o desfecho neurológico funcional atual do paciente.", "defaultValue": 1, "options": [{"value": 1, "label": "CPC 1 — Boa Performance Cerebral", "score": 1, "description": "Consciente, alerta, capaz de trabalhar e levar vida normal; pode ter déficit neurológico ou psicológico leve."}, {"value": 2, "label": "CPC 2 — Incapacidade Cerebral Moderada", "score": 2, "description": "Consciente, com incapacidade suficiente para prejudicar atividades habituais, mas capaz de realizar atividades independentes de vida diária; pode trabalhar em ambiente protegido."}, {"value": 3, "label": "CPC 3 — Incapacidade Cerebral Grave", "score": 3, "description": "Consciente, mas dependente de outros para atividades diárias devido a comprometimento cerebral; varia de deambulação a demência grave ou paralisia."}, {"value": 4, "label": "CPC 4 — Coma / Estado Vegetativo", "score": 4, "description": "Inconsciente, sem interação com o ambiente, sem evidência de função cortical (coma ou estado vegetativo persistente)."}, {"value": 5, "label": "CPC 5 — Óbito / Morte Encefálica", "score": 5, "description": "Morte encefálica confirmada ou óbito."}]}], "formula": {"type": "sum", "resultLabel": "Categoria de Performance Cerebral (CPC)", "resultUnit": "", "decimals": 0}}, "interpretation": {"ranges": [{"min": 1, "max": 1, "label": "Boa Performance Cerebral", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Desfecho neurológico favorável, com paciente consciente, alerta e capaz de vida independente.", "recommendations": "• Seguimento ambulatorial de rotina\n• Avaliar necessidade de reabilitação para déficits leves residuais, se presentes"}, {"min": 2, "max": 2, "label": "Incapacidade Cerebral Moderada", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Incapacidade neurológica moderada, mas com preservação de independência para atividades básicas.", "recommendations": "• Encaminhar para reabilitação neurológica conforme necessidade\n• Seguimento multiprofissional\n• Avaliar suporte para retorno a atividades laborais adaptadas"}, {"min": 3, "max": 3, "label": "Incapacidade Cerebral Grave", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Incapacidade neurológica grave, com dependência de terceiros para atividades de vida diária.", "recommendations": "• Plano de cuidados de longo prazo com suporte de cuidador\n• Reabilitação neurológica intensiva conforme indicação\n• Suporte à família/cuidadores"}, {"min": 4, "max": 4, "label": "Coma / Estado Vegetativo", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Paciente inconsciente, sem interação com o ambiente, sem evidência de função cortical.", "recommendations": "• Cuidados de suporte prolongado\n• Discussão multiprofissional sobre prognóstico e objetivos de cuidado com a família\n• Prevenção de complicações do imobilismo"}, {"min": 5, "max": 5, "label": "Óbito / Morte Encefálica", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Morte encefálica confirmada ou óbito do paciente.", "recommendations": "• Seguir protocolos institucionais para confirmação de morte encefálica e comunicação à família\n• Considerar avaliação para doação de órgãos, conforme legislação e desejo da família"}]}, "sae": {"nanda": [{"diagnosis": "Perfusão tissular cerebral ineficaz", "definition": "Diminuição da circulação sanguínea cerebral, podendo comprometer a saúde, relacionada ao evento de parada cardiorrespiratória."}, {"diagnosis": "Processos familiares disfuncionais", "definition": "Funcionamento familiar que não consegue apoiar o bem-estar de seus membros, relacionado ao impacto do desfecho neurológico do paciente."}, {"diagnosis": "Luto", "definition": "Processo normal e complexo que inclui respostas e comportamentos emocionais, físicos, espirituais, sociais e intelectuais, pelos quais indivíduos, famílias e comunidades incorporam uma perda real, prevista ou percebida em sua vida diária."}], "noc": [{"outcome": "Status neurológico", "indicators": ["Nível de consciência compatível com a categoria identificada", "Capacidade funcional documentada e acompanhada", "Família orientada sobre o prognóstico neurológico"]}], "nic": [{"intervention": "Cuidados pós-ressuscitação", "activities": ["Classificar o desfecho neurológico com a escala CPC ao longo da internação e no seguimento", "Encaminhar para reabilitação neurológica conforme categoria identificada", "Apoiar a família na compreensão do prognóstico neurológico", "Documentar a evolução da categoria CPC ao longo do tempo"]}]}, "evidence": {"foundation": "A Categoria de Performance Cerebral (CPC) foi desenvolvida no contexto do Brain Resuscitation Clinical Trial (BRCT), classificando o desfecho neurológico funcional de sobreviventes de parada cardiorrespiratória em 5 categorias, de CPC 1 (boa performance cerebral) a CPC 5 (óbito/morte encefálica).", "history": "Amplamente utilizada em pesquisa e prática clínica sobre ressuscitação cardiopulmonar e cuidados pós-parada cardíaca, sendo um dos desfechos neurológicos padronizados mais utilizados em estudos sobre hipotermia terapêutica e outras intervenções pós-ressuscitação.", "validation": "Validada e amplamente adotada como desfecho neurológico padrão em estudos de ressuscitação, sendo recomendada pelas diretrizes internacionais de reanimação cardiopulmonar (ILCOR/AHA).", "limitations": "É uma escala relativamente simples, com apenas 5 categorias amplas, podendo não capturar nuances específicas do desfecho neurológico. A avaliação definitiva do prognóstico neurológico após parada cardiorrespiratória deve considerar múltiplos exames complementares e o tempo de evolução clínica.", "references": [{"text": "BRAIN RESUSCITATION CLINICAL TRIAL I STUDY GROUP. A randomized clinical study of cardiopulmonary-cerebral resuscitation: design, methods, and patient characteristics. American Journal of Emergency Medicine, v. 4, n. 1, p. 72-86, 1986."}, {"text": "PANCHAL, A. R. et al. 2020 American Heart Association Guidelines for CPR and Emergency Cardiovascular Care. Circulation, v. 142, n. 16_suppl_2, p. S366-S468, 2020."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["A avaliação definitiva do prognóstico neurológico após parada cardiorrespiratória geralmente é feita após 72 horas, combinando exame clínico, eletroencefalograma e outros exames complementares.", "Reavalie a categoria CPC ao longo do tempo, pois o quadro neurológico pode evoluir favorável ou desfavoravelmente nos dias/semanas seguintes.", "Utilize a escala para comunicação padronizada entre a equipe e para documentação de desfechos em registros institucionais.", "Envolva a família na discussão sobre prognóstico, com linguagem clara e acolhedora."], "examples": [{"label": "Recuperação neurológica completa", "sublabel": "CPC 1", "emoji": "✅", "values": {"categoria": 1}}, {"label": "Incapacidade moderada", "sublabel": "CPC 2", "emoji": "🔎", "values": {"categoria": 2}}, {"label": "Estado vegetativo persistente", "sublabel": "CPC 4", "emoji": "🚨", "values": {"categoria": 4}}], "quiz": [{"q": "Quantas categorias compõem a escala CPC?", "opts": ["3", "4", "5", "6"], "correct": 2, "expl": "A escala CPC possui 5 categorias, de CPC 1 (boa performance cerebral) a CPC 5 (óbito/morte encefálica)."}, {"q": "O que caracteriza o CPC 4?", "opts": ["Vida totalmente independente", "Coma ou estado vegetativo, sem evidência de função cortical", "Incapacidade leve para o trabalho", "Óbito confirmado"], "correct": 1, "expl": "CPC 4 representa coma ou estado vegetativo persistente, sem evidência de interação com o ambiente ou função cortical."}, {"q": "Em que contexto a escala CPC é mais utilizada?", "opts": ["Avaliação de feridas", "Avaliação de desfecho neurológico pós-parada cardiorrespiratória", "Triagem de dor", "Avaliação nutricional"], "correct": 1, "expl": "A CPC é utilizada especificamente para classificar o desfecho neurológico funcional de sobreviventes de parada cardiorrespiratória."}]}, "faq": [{"q": "A escala CPC pode ser usada logo após a reanimação?", "a": "Pode ser utilizada ao longo da internação para acompanhamento, mas a avaliação prognóstica definitiva geralmente é realizada após pelo menos 72 horas, combinando exame clínico e exames complementares, conforme diretrizes de ressuscitação."}, {"q": "A CPC substitui a Escala de Glasgow?", "a": "Não. São ferramentas complementares: a Escala de Glasgow avalia o nível de consciência no momento agudo, enquanto a CPC classifica o desfecho funcional neurológico global, geralmente utilizado em avaliações mais tardias ou como desfecho de estudos."}], "about": {"title": "Como funciona a Categoria de Performance Cerebral (CPC)", "html": "<p>A CPC classifica o desfecho neurológico funcional após parada cardiorrespiratória em 5 categorias: CPC 1 (boa performance cerebral), CPC 2 (incapacidade moderada), CPC 3 (incapacidade grave), CPC 4 (coma/estado vegetativo) e CPC 5 (óbito/morte encefálica).</p><p><strong>Guia rápido:</strong> CPC 1-2 = Bom desfecho neurológico | CPC 3-5 = Desfecho neurológico desfavorável.</p>"}}</script>

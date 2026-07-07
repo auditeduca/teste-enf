@@ -240,6 +240,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -457,38 +535,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "8f950617-2839-4041-e5f6-071829405162", "code": "SCALE-CURB65-001", "slug": "curb65", "version": "1.0.0", "status": "published", "seo": {"title": "CURB-65 - Gravidade da Pneumonia Adquirida na Comunidade", "description": "Calcule o escore CURB-65 para avaliar a gravidade da pneumonia adquirida na comunidade e orientar a decisão de internação. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/curb65.html"}, "breadcrumb": {"category": "Emergência e Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "CURB-65", "acronym": "CURB-65", "categoryBadge": "Emergência", "icon": "i-stetho", "objective": "Avaliar a gravidade da pneumonia adquirida na comunidade e orientar a decisão sobre necessidade de internação hospitalar ou tratamento ambulatorial.", "indication": "Indicada para pacientes adultos com diagnóstico de pneumonia adquirida na comunidade, no pronto-socorro ou na atenção primária.", "targetPopulation": "Pacientes adultos com pneumonia adquirida na comunidade confirmada ou fortemente suspeita.", "specialty": ["Emergência", "Pneumologia", "Enfermagem"], "averageTime": "2 minutos", "evidenceLevel": "I", "originalAuthors": ["W. S. Lim", "colaboradores"], "organizations": ["British Thoracic Society"], "complexity": "basic", "rating": 4.7, "ratingCount": 310}, "calculator": {"inputs": [{"id": "confusao", "type": "select", "label": "Confusão Mental", "description": "Novo episódio de confusão mental / desorientação em tempo, espaço ou pessoa.", "defaultValue": 0, "options": [{"value": 0, "label": "Ausente", "score": 0, "description": "Sem confusão mental, paciente orientado."}, {"value": 1, "label": "Presente", "score": 1, "description": "Novo episódio de confusão mental."}]}, {"id": "ureia", "type": "select", "label": "Ureia Sérica", "description": "Ureia sérica elevada.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor ou Igual a 50 mg/dL (ou 7 mmol/L)", "score": 0, "description": "Ureia dentro da normalidade."}, {"value": 1, "label": "Maior que 50 mg/dL (ou 7 mmol/L)", "score": 1, "description": "Ureia sérica elevada, acima de 50 mg/dL (7 mmol/L)."}]}, {"id": "frequencia_respiratoria", "type": "select", "label": "Frequência Respiratória", "description": "Frequência respiratória igual ou superior a 30 incursões por minuto.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor que 30 irpm", "score": 0, "description": "Frequência respiratória dentro da normalidade."}, {"value": 1, "label": "30 irpm ou Mais", "score": 1, "description": "Taquipneia significativa, FR ≥ 30 irpm."}]}, {"id": "pressao_arterial", "type": "select", "label": "Pressão Arterial", "description": "Pressão arterial sistólica menor que 90 mmHg ou diastólica menor ou igual a 60 mmHg.", "defaultValue": 0, "options": [{"value": 0, "label": "Normal", "score": 0, "description": "Pressão arterial sistólica ≥ 90 mmHg e diastólica > 60 mmHg."}, {"value": 1, "label": "Hipotensão", "score": 1, "description": "PA sistólica < 90 mmHg ou PA diastólica ≤ 60 mmHg."}]}, {"id": "idade", "type": "select", "label": "Idade", "description": "Idade do paciente igual ou superior a 65 anos.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor que 65 Anos", "score": 0, "description": "Paciente com menos de 65 anos."}, {"value": 1, "label": "65 Anos ou Mais", "score": 1, "description": "Paciente com 65 anos ou mais."}]}], "formula": {"type": "sum", "resultLabel": "Escore CURB-65", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 1, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixo risco de mortalidade (menor que 3%). Geralmente adequado para tratamento ambulatorial.", "recommendations": "• Considerar tratamento ambulatorial\n• Orientar sinais de alarme para retorno\n• Reavaliação clínica em 48-72h"}, {"min": 2, "max": 2, "label": "Risco Moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Risco intermediário de mortalidade (cerca de 9%). Considerar internação hospitalar de curta permanência ou tratamento ambulatorial supervisionado.", "recommendations": "• Considerar internação hospitalar breve ou observação\n• Reavaliação clínica próxima\n• Avaliar comorbidades e suporte social"}, {"min": 3, "max": 5, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alto risco de mortalidade (15% a mais de 40%). Indica necessidade de internação hospitalar, com escores mais altos (4-5) sugerindo avaliação para terapia intensiva.", "recommendations": "• Internação hospitalar\n• Considerar avaliação para UTI se escore 4-5\n• Iniciar antibioticoterapia precoce conforme protocolo\n• Monitorização rigorosa de sinais vitais"}]}, "sae": {"nanda": [{"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."}, {"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos."}, {"diagnosis": "Troca de gases prejudicada", "definition": "Excesso ou déficit na oxigenação e/ou eliminação de dióxido de carbono na membrana alvéolo-capilar."}], "noc": [{"outcome": "Status respiratório", "indicators": ["Frequência respiratória dentro dos limites esperados", "Ausência de confusão mental", "Sinais vitais estáveis"]}], "nic": [{"intervention": "Monitorização respiratória", "activities": ["Avaliar frequência respiratória e padrão ventilatório", "Monitorar nível de consciência", "Verificar pressão arterial regularmente", "Comunicar escore elevado à equipe médica", "Auxiliar na coleta de exames laboratoriais (ureia)"]}]}, "evidence": {"foundation": "O CURB-65 foi desenvolvido por Lim e colaboradores, validado e recomendado pela British Thoracic Society, avaliando 5 critérios: Confusão mental, Ureia elevada, frequência Respiratória, pressão arterial (Blood pressure) e idade igual ou superior a 65 anos.", "history": "Amplamente utilizado em serviços de emergência para estratificar a gravidade da pneumonia adquirida na comunidade e orientar a decisão entre tratamento ambulatorial e internação hospitalar.", "validation": "Validado em múltiplos estudos internacionais, com boa correlação entre o escore e a mortalidade em 30 dias. Uma versão simplificada sem dosagem de ureia (CRB-65) pode ser usada na atenção primária quando exames laboratoriais não estão disponíveis.", "limitations": "Não deve ser o único critério para decisão de internação — fatores como hipoxemia, comorbidades descompensadas, condições sociais e capacidade de adesão ao tratamento ambulatorial também devem ser considerados.", "references": [{"text": "LIM, W. S. et al. Defining community acquired pneumonia severity on presentation to hospital: an international derivation and validation study. Thorax, v. 58, n. 5, p. 377-382, 2003."}, {"text": "BRITISH THORACIC SOCIETY. Guidelines for the management of community acquired pneumonia in adults. Thorax, v. 64, Suppl 3, p. iii1-55, 2009."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["O CRB-65 (sem ureia) pode ser usado na atenção primária quando exames laboratoriais não estão prontamente disponíveis.", "Considere sempre fatores sociais e comorbidades associadas na decisão final, além do escore numérico.", "Escores 4-5 sugerem avaliação para terapia intensiva, não apenas internação em enfermaria.", "Reavalie a resposta ao tratamento nas primeiras 48-72 horas."], "examples": [{"label": "Baixo risco", "sublabel": "CURB-65 0", "emoji": "✅", "values": {"confusao": 0, "ureia": 0, "frequencia_respiratoria": 0, "pressao_arterial": 0, "idade": 0}}, {"label": "Risco moderado", "sublabel": "CURB-65 2", "emoji": "⚠️", "values": {"confusao": 0, "ureia": 1, "frequencia_respiratoria": 0, "pressao_arterial": 0, "idade": 1}}, {"label": "Alto risco", "sublabel": "CURB-65 4", "emoji": "🚨", "values": {"confusao": 1, "ureia": 1, "frequencia_respiratoria": 1, "pressao_arterial": 0, "idade": 1}}], "quiz": [{"q": "Quantos critérios compõem o CURB-65?", "opts": ["3", "4", "5", "6"], "correct": 2, "expl": "O CURB-65 avalia 5 critérios: Confusão mental, Ureia, Frequência respiratória, pressão arterial (Blood pressure) e idade ≥ 65 anos."}, {"q": "Um escore CURB-65 de 4 a 5 pontos sugere qual conduta?", "opts": ["Alta hospitalar", "Tratamento ambulatorial", "Avaliação para terapia intensiva", "Repetir exame em 1 semana"], "correct": 2, "expl": "Escores de 4-5 pontos indicam risco muito alto de mortalidade, sugerindo avaliação para internação em terapia intensiva."}, {"q": "Qual versão do escore pode ser usada quando não há dosagem de ureia disponível?", "opts": ["CURB-65 completo", "CRB-65", "PSI", "APACHE II"], "correct": 1, "expl": "O CRB-65 é uma versão simplificada que exclui a ureia sérica, útil quando exames laboratoriais não estão prontamente disponíveis, como na atenção primária."}]}, "faq": [{"q": "O CURB-65 substitui o julgamento clínico?", "a": "Não. É uma ferramenta de apoio à decisão que deve ser combinada com avaliação clínica individualizada, incluindo hipoxemia, comorbidades e condições sociais do paciente."}, {"q": "Qual a diferença entre CURB-65 e CRB-65?", "a": "O CRB-65 é uma versão simplificada sem a dosagem de ureia sérica, útil em ambientes sem acesso rápido a exames laboratoriais, como na atenção primária."}], "about": {"title": "Como funciona o CURB-65", "html": "<p>O CURB-65 soma 1 ponto para cada um dos 5 critérios presentes: Confusão mental, Ureia elevada, Frequência respiratória ≥30 irpm, pressão arterial baixa (Blood pressure) e idade ≥65 anos, totalizando de 0 a 5 pontos.</p><p><strong>Guia rápido:</strong> 0-1 = Baixo risco (ambulatorial) | 2 = Risco moderado (considerar internação) | 3-5 = Alto risco (internação, considerar UTI se 4-5).</p>"}}</script>

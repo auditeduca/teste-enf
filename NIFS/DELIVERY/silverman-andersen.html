@@ -241,6 +241,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -458,38 +536,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "01829405-1627-4384-9506-172940516273", "code": "SCALE-SILVERMAN-001", "slug": "silverman-andersen", "version": "1.0.0", "status": "published", "seo": {"title": "Boletim de Silverman-Andersen - Desconforto Respiratório Neonatal", "description": "Calcule o Boletim de Silverman-Andersen para avaliar a gravidade do desconforto respiratório em recém-nascidos. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/silverman-andersen.html"}, "breadcrumb": {"category": "Neonatologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Boletim de Silverman-Andersen", "acronym": "Silverman-Andersen", "categoryBadge": "Neonatologia", "icon": "i-stetho", "objective": "Avaliar objetivamente a gravidade do desconforto respiratório em recém-nascidos, a partir de 5 sinais clínicos observáveis.", "indication": "Indicada para recém-nascidos com sinais de dificuldade respiratória, na sala de parto, alojamento conjunto ou unidade neonatal.", "targetPopulation": "Recém-nascidos, especialmente prematuros ou com fatores de risco para desconforto respiratório.", "specialty": ["Neonatologia", "Enfermagem", "Pediatria"], "averageTime": "1-2 minutos", "evidenceLevel": "II", "originalAuthors": ["William A. Silverman", "Dorothy H. Andersen"], "complexity": "basic", "rating": 4.7, "ratingCount": 260}, "calculator": {"inputs": [{"id": "movimento_toracoabdominal", "type": "select", "label": "Movimento Tóraco-Abdominal", "description": "Observe a sincronia entre os movimentos do tórax e do abdome.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Rítmico e Regular (Sincrônico)", "score": 0, "description": "Tórax e abdome se movem de forma sincrônica."}, {"value": 1, "label": "1 — Tórax Imóvel, Abdome em Movimento", "score": 1, "description": "Discreta assincronia entre tórax e abdome."}, {"value": 2, "label": "2 — Movimento em Gangorra", "score": 2, "description": "Franco assincronismo tóraco-abdominal (movimento em gangorra/balancim)."}]}, {"id": "tiragem_intercostal", "type": "select", "label": "Tiragem Intercostal", "description": "Observe a retração dos espaços intercostais durante a inspiração.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Ausente", "score": 0}, {"value": 1, "label": "1 — Leve", "score": 1}, {"value": 2, "label": "2 — Acentuada e Constante", "score": 2}]}, {"id": "retracao_xifoide", "type": "select", "label": "Retração Xifoide", "description": "Observe a retração da região do apêndice xifoide durante a inspiração.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Ausente", "score": 0}, {"value": 1, "label": "1 — Leve", "score": 1}, {"value": 2, "label": "2 — Acentuada", "score": 2}]}, {"id": "batimento_asa_nasal", "type": "select", "label": "Batimento de Asas do Nariz", "description": "Observe o movimento das narinas durante a respiração.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Ausente", "score": 0}, {"value": 1, "label": "1 — Mínimo", "score": 1}, {"value": 2, "label": "2 — Acentuado", "score": 2}]}, {"id": "gemido_expiratorio", "type": "select", "label": "Gemido Expiratório", "description": "Ausculte a presença de gemido durante a expiração.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Ausente", "score": 0}, {"value": 1, "label": "1 — Audível Apenas com Estetoscópio", "score": 1}, {"value": 2, "label": "2 — Audível sem Estetoscópio (à Distância)", "score": 2}]}], "formula": {"type": "sum", "resultLabel": "Boletim de Silverman-Andersen", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 0, "label": "Sem Desconforto Respiratório", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Ausência de sinais de desconforto respiratório.", "recommendations": "• Manter observação de rotina do recém-nascido"}, {"min": 1, "max": 3, "label": "Desconforto Respiratório Leve", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Sinais leves de desconforto respiratório.", "recommendations": "• Monitorização respiratória frequente\n• Reavaliar periodicamente conforme protocolo neonatal"}, {"min": 4, "max": 6, "label": "Desconforto Respiratório Moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Sinais moderados de desconforto respiratório, exigindo atenção e monitorização mais próxima.", "recommendations": "• Comunicar à equipe médica/neonatologista\n• Considerar suporte de oxigênio conforme avaliação\n• Reavaliação frequente"}, {"min": 7, "max": 10, "label": "Desconforto Respiratório Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Desconforto respiratório grave, com risco de insuficiência respiratória iminente.", "recommendations": "• Comunicar imediatamente à equipe médica/neonatologista\n• Preparar para suporte ventilatório\n• Monitorização contínua"}]}, "sae": {"nanda": [{"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."}, {"diagnosis": "Troca de gases prejudicada", "definition": "Excesso ou déficit na oxigenação e/ou eliminação de dióxido de carbono na membrana alvéolo-capilar."}, {"diagnosis": "Risco de aspiração", "definition": "Risco de entrada de secreções gastrintestinais, orofaríngeas ou líquidos/sólidos nas vias traqueobrônquicas."}], "noc": [{"outcome": "Status respiratório do recém-nascido", "indicators": ["Frequência respiratória dentro dos limites esperados", "Ausência de tiragem e batimento de asa nasal", "Coloração de pele adequada"]}], "nic": [{"intervention": "Monitorização respiratória", "activities": ["Aplicar o Boletim de Silverman-Andersen de forma sistemática", "Avaliar padrão respiratório e sinais de desconforto", "Comunicar escores elevados à equipe médica/neonatologista", "Manter vias aéreas pérvias e posicionamento adequado"]}]}, "evidence": {"foundation": "O Boletim de Silverman-Andersen foi desenvolvido por William Silverman e Dorothy Andersen para avaliar objetivamente a gravidade do desconforto respiratório em recém-nascidos, a partir de 5 sinais clínicos: movimento tóraco-abdominal, tiragem intercostal, retração xifoide, batimento de asas do nariz e gemido expiratório.", "history": "Amplamente utilizado em unidades neonatais para triagem e acompanhamento evolutivo do desconforto respiratório neonatal, especialmente em prematuros com risco de síndrome do desconforto respiratório.", "validation": "Instrumento clássico e amplamente adotado na prática neonatal, com boa aplicabilidade clínica para triagem rápida à beira do leito.", "limitations": "É uma ferramenta de avaliação clínica rápida, não substituindo exames complementares (gasometria, radiografia de tórax) na investigação da causa do desconforto respiratório.", "references": [{"text": "SILVERMAN, W. A.; ANDERSEN, D. H. A controlled clinical trial of effects of water mist on obstructive respiratory signs, death rate and necropsy findings among premature infants. Pediatrics, v. 17, n. 1, p. 1-10, 1956."}, {"text": "BRASIL. Ministério da Saúde. Atenção à saúde do recém-nascido: guia para os profissionais de saúde. Brasília: MS, 2014."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Avalie todos os 5 sinais de forma sistemática, observando o recém-nascido em repouso, sem choro.", "Reavalie seriadamente para acompanhar a evolução do desconforto respiratório.", "Escores elevados exigem comunicação imediata à equipe médica/neonatologista.", "Combine com outros parâmetros clínicos (saturação de O2, frequência respiratória) para avaliação completa."], "examples": [{"label": "Recém-nascido sem desconforto", "sublabel": "Silverman-Andersen 0", "emoji": "✅", "values": {"movimento_toracoabdominal": 0, "tiragem_intercostal": 0, "retracao_xifoide": 0, "batimento_asa_nasal": 0, "gemido_expiratorio": 0}}, {"label": "Desconforto moderado", "sublabel": "Silverman-Andersen 5", "emoji": "⚠️", "values": {"movimento_toracoabdominal": 1, "tiragem_intercostal": 1, "retracao_xifoide": 1, "batimento_asa_nasal": 1, "gemido_expiratorio": 1}}, {"label": "Desconforto grave", "sublabel": "Silverman-Andersen 9", "emoji": "🚨", "values": {"movimento_toracoabdominal": 2, "tiragem_intercostal": 2, "retracao_xifoide": 2, "batimento_asa_nasal": 2, "gemido_expiratorio": 1}}], "quiz": [{"q": "Quantos sinais clínicos compõem o Boletim de Silverman-Andersen?", "opts": ["3", "4", "5", "6"], "correct": 2, "expl": "O boletim avalia 5 sinais: movimento tóraco-abdominal, tiragem intercostal, retração xifoide, batimento de asas do nariz e gemido expiratório."}, {"q": "Qual a pontuação máxima possível no Boletim de Silverman-Andersen?", "opts": ["5", "8", "10", "15"], "correct": 2, "expl": "Cada um dos 5 sinais varia de 0 a 2 pontos, totalizando uma pontuação máxima de 10 pontos."}, {"q": "Diferente da Escala de Apgar, o que o Silverman-Andersen avalia especificamente?", "opts": ["Vitalidade geral ao nascer", "Gravidade do desconforto respiratório", "Idade gestacional", "Icterícia neonatal"], "correct": 1, "expl": "Enquanto o Apgar avalia a vitalidade geral do recém-nascido, o Silverman-Andersen é específico para avaliar a gravidade do desconforto respiratório."}]}, "faq": [{"q": "O Silverman-Andersen substitui a gasometria arterial?", "a": "Não. É uma ferramenta de avaliação clínica rápida à beira do leito. Casos de desconforto moderado a grave geralmente requerem investigação complementar, incluindo gasometria e radiografia de tórax."}, {"q": "Com que frequência o Silverman-Andersen deve ser reavaliado?", "a": "Deve ser reavaliado seriadamente conforme a gravidade do quadro e o protocolo da unidade neonatal, especialmente em recém-nascidos com desconforto respiratório em evolução."}], "about": {"title": "Como funciona o Boletim de Silverman-Andersen", "html": "<p>O Boletim de Silverman-Andersen soma pontos de 5 sinais clínicos — movimento tóraco-abdominal, tiragem intercostal, retração xifoide, batimento de asas do nariz e gemido expiratório —, cada um pontuado de 0 a 2, totalizando de 0 a 10 pontos.</p><p><strong>Guia rápido:</strong> 0 = Sem desconforto | 1-3 = Leve | 4-6 = Moderado | 7-10 = Grave.</p>"}}</script>

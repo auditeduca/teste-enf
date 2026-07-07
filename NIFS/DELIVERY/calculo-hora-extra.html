@@ -216,6 +216,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -393,38 +471,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "8f950617-2940-4e5f-8596-0718294051627", "code": "CALC-HORAEXTRA-001", "slug": "calculo-hora-extra", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Hora Extra", "description": "Calcule o valor das horas extras a partir do salário base, quantidade de horas e percentual aplicável (50% ou 100%). Ferramenta gratuita.", "canonical": "https://www.calculadorasdeenfermagem.com.br/calculo-hora-extra.html"}, "breadcrumb": {"category": "Cálculos Trabalhistas", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Hora Extra", "acronym": "Hora Extra", "categoryBadge": "Cálculos trabalhistas", "icon": "i-calculator", "objective": "Estimar o valor das horas extras trabalhadas, a partir do salário base, da quantidade de horas extras e do percentual de acréscimo aplicável.", "indication": "Útil para profissionais de enfermagem e demais trabalhadores que realizam horas extras, para conferência do valor recebido em holerite.", "targetPopulation": "Trabalhadores celetistas que realizam jornada de trabalho extraordinária (horas extras).", "specialty": ["Gestão em Enfermagem", "Departamento Pessoal"], "averageTime": "1 minuto", "evidenceLevel": "III", "organizations": ["CLT"], "complexity": "basic", "rating": 4.6, "ratingCount": 410}, "calculator": {"inputs": [{"id": "salario_base", "type": "number", "label": "Salário Base", "unit": "R$", "defaultValue": 2500, "min": 0, "step": 0.01, "description": "Salário base mensal do trabalhador, sem outros adicionais."}, {"id": "horas_extras", "type": "number", "label": "Quantidade de Horas Extras", "unit": "horas", "defaultValue": 10, "min": 0, "step": 0.5, "description": "Total de horas extras trabalhadas no período a ser calculado."}, {"id": "percentual_hora_extra", "type": "select", "label": "Percentual da Hora Extra", "defaultValue": 50, "description": "Percentual mínimo garantido pela Constituição Federal é 50%. Domingos, feriados e algumas convenções coletivas podem prever percentual maior.", "options": [{"value": 50, "label": "50% — Padrão (Dias Úteis)", "score": 50}, {"value": 100, "label": "100% — Domingos/Feriados (Comum em Convenção Coletiva)", "score": 100}]}], "formula": {"type": "expression", "expression": "(salario_base/220)*horas_extras*(1+percentual_hora_extra/100)", "resultLabel": "Valor das Horas Extras", "resultUnit": "R$", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 999999, "label": "Valor Estimado das Horas Extras", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Valor estimado das horas extras devidas, com base no salário informado, na quantidade de horas extras e no percentual de acréscimo aplicável.", "recommendations": "• Confira o valor com o holerite e o departamento pessoal\n• Verifique se a convenção coletiva da categoria prevê percentual superior ao mínimo constitucional\n• Em caso de dúvida, consulte o sindicato da categoria ou um profissional de contabilidade/direito trabalhista"}]}, "evidence": {"foundation": "O direito à remuneração de horas extras com acréscimo mínimo de 50% sobre o valor da hora normal está previsto no Art. 7º, inciso XVI, da Constituição Federal de 1988 e regulamentado pelo Art. 59 da CLT. O divisor 220 corresponde à jornada mensal padrão de 44 horas semanais (220 = 44 horas × 5 semanas, aproximadamente).", "history": "Convenções e acordos coletivos de trabalho frequentemente estabelecem percentual de 100% para horas extras realizadas em domingos e feriados, embora esse percentual não seja um mínimo legal federal automático, dependendo da categoria profissional.", "validation": "O cálculo pode variar conforme o divisor salarial aplicável à categoria (220h é o mais comum para jornada de 44h semanais, mas pode haver divisores diferentes para outras jornadas, como 200h ou 180h).", "limitations": "Esta calculadora apresenta uma estimativa simplificada, para fins educacionais e de conferência. Não substitui o cálculo oficial da folha de pagamento nem orientação de um profissional de contabilidade ou de direito trabalhista. O banco de horas, quando aplicável, pode alterar a forma de compensação das horas extras.", "references": [{"text": "BRASIL. Constituição Federal de 1988. Art. 7º, XVI."}, {"text": "BRASIL. Decreto-Lei nº 5.452/1943 (CLT). Art. 59 — Duração do trabalho e horas extras."}]}, "learning": {"tips": ["Confirme o divisor salarial aplicável à sua categoria (220h é o padrão para jornada de 44h semanais).", "Verifique a convenção coletiva da categoria, que pode prever percentual superior ao mínimo constitucional de 50%.", "Se a empresa adotar banco de horas, as horas extras podem ser compensadas com folga em vez de pagas — verifique o acordo vigente.", "As horas extras habituais integram o cálculo de férias, 13º salário e FGTS."], "examples": [{"label": "Hora extra padrão", "sublabel": "Salário R$ 2.500, 10h a 50%", "emoji": "⏰", "values": {"salario_base": 2500, "horas_extras": 10, "percentual_hora_extra": 50}}, {"label": "Plantão em feriado", "sublabel": "Salário R$ 3.200, 12h a 100%", "emoji": "📅", "values": {"salario_base": 3200, "horas_extras": 12, "percentual_hora_extra": 100}}], "quiz": [{"q": "Qual o percentual mínimo constitucional para hora extra?", "opts": ["20%", "30%", "50%", "100%"], "correct": 2, "expl": "A Constituição Federal (Art. 7º, XVI) garante o acréscimo mínimo de 50% sobre o valor da hora normal para trabalho extraordinário."}, {"q": "O que é o divisor 220 usado no cálculo do valor da hora normal?", "opts": ["Número de dias do ano", "Jornada mensal padrão para 44h semanais", "Número de feriados no ano", "Não tem relação com o cálculo"], "correct": 1, "expl": "O divisor 220 corresponde à jornada mensal padrão para uma carga horária de 44 horas semanais, sendo o mais comum, mas pode variar conforme a categoria."}, {"q": "O banco de horas elimina o pagamento de horas extras?", "opts": ["Sim, sempre elimina o pagamento", "Pode substituir o pagamento por compensação com folga, conforme acordo", "Não tem relação com horas extras", "É proibido por lei"], "correct": 1, "expl": "O banco de horas permite compensar horas extras com folga, em vez de pagamento, desde que respeitados os limites e acordos legais vigentes."}]}, "faq": [{"q": "Esta calculadora substitui o cálculo oficial da folha de pagamento?", "a": "Não. É uma ferramenta educacional para estimativa e conferência. O cálculo oficial deve ser feito pelo departamento pessoal da empresa, considerando a convenção coletiva e o divisor salarial aplicáveis."}, {"q": "Horas extras habituais alteram o valor de outras verbas trabalhistas?", "a": "Sim. Horas extras realizadas de forma habitual integram a base de cálculo de férias, 13º salário, FGTS e podem impactar verbas rescisórias, conforme entendimento consolidado na Justiça do Trabalho."}], "about": {"title": "Como funciona o cálculo de Hora Extra", "html": "<p>O valor da hora extra é calculado a partir do valor da hora normal (salário ÷ 220, para jornada de 44h semanais), multiplicado pela quantidade de horas extras trabalhadas e acrescido do percentual de hora extra aplicável (mínimo de 50%, podendo ser maior conforme convenção coletiva ou trabalho em domingos/feriados).</p><p><strong>Fórmula:</strong> Valor da Hora Extra = (Salário ÷ 220) × Horas Extras × (1 + Percentual/100).</p>"}}</script>

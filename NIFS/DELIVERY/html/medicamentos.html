@@ -220,6 +220,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -401,38 +479,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "b0c44536-71ab-4243-8048-337c470bb6fb", "code": "CALC-MEDICAMENTOS-001", "slug": "medicamentos", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Medicamentos - Regra de Três (Dose e Volume)", "description": "Calcule o volume a administrar de um medicamento a partir da dose prescrita e da concentração disponível (regra de três), com passo a passo para conferência.", "canonical": "https://www.calculadorasdeenfermagem.com.br/medicamentos.html"}, "breadcrumb": {"category": "Calculadoras Clínicas", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Medicamentos (Regra de Três)", "acronym": "Cálculo de Medicação", "categoryBadge": "Calculadoras Clínicas", "icon": "i-pills", "objective": "Calcular o volume a ser administrado de um medicamento, a partir da dose prescrita e da concentração disponível (dose por volume), utilizando a regra de três simples.", "indication": "Indicado para conferência do volume de medicamentos injetáveis ou líquidos a serem administrados, sempre que a dose prescrita for diferente da concentração disponível na embalagem/ampola/frasco.", "targetPopulation": "Pacientes em uso de medicamentos injetáveis, orais líquidos ou diluídos, em qualquer faixa etária.", "specialty": ["Enfermagem", "Farmacologia Clínica"], "averageTime": "1-2 minutos", "evidenceLevel": "V", "complexity": "basic", "rating": 4.8, "ratingCount": 540}, "calculator": {"inputs": [{"id": "dose_prescrita", "type": "number", "label": "Dose Prescrita", "unit": "mg/mcg/UI", "defaultValue": 0, "min": 0, "max": 1000000, "step": 0.01, "description": "Dose do medicamento prescrita para o paciente (na mesma unidade de medida da dose disponível: mg, mcg, g ou UI)."}, {"id": "dose_disponivel", "type": "number", "label": "Dose Disponível (concentração)", "unit": "mg/mcg/UI", "defaultValue": 1, "min": 0.0001, "max": 1000000, "step": 0.01, "description": "Quantidade do fármaco presente na ampola/frasco/comprimido, na mesma unidade de medida da dose prescrita."}, {"id": "volume_disponivel", "type": "number", "label": "Volume Disponível", "unit": "mL", "defaultValue": 1, "min": 0.01, "max": 10000, "step": 0.01, "description": "Volume (ou número de comprimidos) que contém a dose disponível informada acima."}], "formula": {"type": "expression", "expression": "(dose_prescrita/dose_disponivel)*volume_disponivel", "resultLabel": "Volume a Administrar", "resultUnit": "mL", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 0.5, "label": "Volume Muito Pequeno (< 0,5 mL)", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Volumes muito pequenos têm maior margem de erro de medida e podem exigir diluição ou seringa de maior precisão.", "recommendations": "• Considerar o uso de seringa de precisão (1 mL/insulina) ou diluição adicional conforme orientação farmacêutica\n• Conferir a dose com outro profissional antes da administração\n• Verificar se a via de administração é compatível com o volume calculado"}, {"min": 0.51, "max": 20, "label": "Volume Dentro da Faixa Usual (0,5 a 20 mL)", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Volume calculado dentro da faixa habitualmente administrada para a maioria das vias e formulações.", "recommendations": "• Conferir sempre os 9 certos da administração de medicamentos antes de administrar\n• Registrar a administração conforme protocolo institucional"}, {"min": 20.01, "max": 100000, "label": "Volume Grande (> 20 mL)", "riskLevel": "moderate", "color": "#dc2626", "clinicalImplications": "Volumes grandes podem exigir fracionamento em mais de uma seringa/acesso, ou reavaliação da via de administração e da prescrição.", "recommendations": "• Confirmar a prescrição e a concentração disponível antes de administrar\n• Considerar fracionamento em múltiplas seringas ou vias, conforme orientação\n• Comunicar à equipe médica/farmácia em caso de dúvida sobre o volume calculado"}]}, "sae": {"nanda": [{"diagnosis": "Risco de nível glicêmico instável (ou outro conforme fármaco)", "definition": "Exemplo de risco associado a erro de dose em medicamentos de estreita margem terapêutica; adaptar o diagnóstico ao fármaco específico administrado."}, {"diagnosis": "Manutenção ineficaz da saúde", "definition": "Risco relacionado a erros de administração medicamentosa por cálculo incorreto de dose/volume."}], "noc": [{"outcome": "Resposta à medicação", "indicators": ["Dose administrada corresponde exatamente à dose prescrita", "Ausência de eventos adversos relacionados a erro de dose", "Registro correto da administração no prontuário"]}], "nic": [{"intervention": "Administração de medicamentos", "activities": ["Conferir a prescrição médica (dose, via, horário, fármaco, paciente)", "Calcular o volume a administrar usando a regra de três (dose prescrita ÷ dose disponível × volume disponível)", "Conferir o cálculo com outro profissional em medicamentos de alto risco", "Registrar a administração e monitorar resposta/eventos adversos"]}]}, "evidence": {"foundation": "O volume a administrar é calculado pela regra de três simples: Volume (mL) = (Dose Prescrita ÷ Dose Disponível) × Volume Disponível, sendo a dose prescrita e a dose disponível expressas na mesma unidade de medida.", "history": "A regra de três é um método matemático clássico de proporcionalidade, amplamente ensinado e aplicado na formação técnica e superior de enfermagem para cálculo seguro de doses e volumes de medicamentos.", "validation": "Método matemático de proporcionalidade direta, consolidado na literatura de farmacologia clínica e cálculos de enfermagem, sem controvérsia quanto à sua validade quando as unidades de medida são compatibilizadas corretamente.", "limitations": "O cálculo pressupõe que a dose prescrita e a dose disponível estejam na mesma unidade de medida (é necessário converter previamente, por exemplo, gramas para miligramas). Não substitui a checagem dos 9 certos da administração de medicamentos nem o julgamento clínico.", "references": [{"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de Enfermagem. 10. ed. Rio de Janeiro: Elsevier, 2021."}, {"text": "GRAY, L. Cálculo de Medicamentos e Terapia Intravenosa para Enfermagem. Porto Alegre: Artmed, 2015."}, {"text": "ENFERMAGEM ILUSTRADA. A Regra de Três na Enfermagem. Disponível em: enfermagemilustrada.com."}]}, "learning": {"tips": ["A fórmula é: Volume a administrar (mL) = (Dose Prescrita ÷ Dose Disponível) × Volume Disponível.", "Sempre confira se a dose prescrita e a dose disponível estão na MESMA unidade de medida antes de calcular (ex: converta gramas para miligramas se necessário).", "Após calcular, sempre confira os 9 certos da administração de medicamentos: paciente, medicamento, dose, via, horário, registro, orientação, forma e resposta.", "Em medicamentos de alta vigilância (insulina, anticoagulantes, opioides, eletrólitos concentrados), o cálculo deve ser sempre conferido por um segundo profissional."], "examples": [{"label": "Vecurônio 2 mg prescritos (ampola de 10 mg/1 mL)", "sublabel": "Volume 0,20 mL", "emoji": "🟡", "values": {"dose_prescrita": 2, "dose_disponivel": 10, "volume_disponivel": 1}}, {"label": "Ceftriaxona 500 mg prescritos (frasco reconstituído 1 g/10 mL)", "sublabel": "Volume 5,00 mL", "emoji": "🟢", "values": {"dose_prescrita": 500, "dose_disponivel": 1000, "volume_disponivel": 10}}, {"label": "Ampicilina 6 g prescritos (frasco de 1 g/5 mL)", "sublabel": "Volume 30,00 mL", "emoji": "🔴", "values": {"dose_prescrita": 6000, "dose_disponivel": 1000, "volume_disponivel": 5}}], "quiz": [{"q": "Qual a fórmula para calcular o volume a administrar de um medicamento?", "opts": ["Dose Prescrita × Dose Disponível", "(Dose Prescrita ÷ Dose Disponível) × Volume Disponível", "Volume Disponível ÷ Dose Prescrita", "Dose Disponível - Dose Prescrita"], "correct": 1, "expl": "O volume a administrar é calculado por (Dose Prescrita ÷ Dose Disponível) × Volume Disponível, aplicando a regra de três simples."}, {"q": "O que deve ser verificado antes de aplicar a regra de três no cálculo de medicamentos?", "opts": ["Se o paciente está em jejum", "Se a dose prescrita e a dose disponível estão na mesma unidade de medida", "Se o medicamento é genérico ou de marca", "Nenhuma verificação é necessária"], "correct": 1, "expl": "É essencial que a dose prescrita e a dose disponível estejam na mesma unidade de medida (ex: ambas em mg) antes de aplicar a fórmula, para evitar erros graves de dose."}, {"q": "O cálculo do volume substitui a checagem dos 9 certos da administração de medicamentos?", "opts": ["Sim, sempre", "Não, o cálculo é apenas uma etapa da checagem completa", "Apenas em emergências", "Apenas para medicamentos orais"], "correct": 1, "expl": "O cálculo do volume é apenas uma das etapas da administração segura; os 9 certos (paciente, medicamento, dose, via, horário, registro, orientação, forma e resposta) devem sempre ser conferidos."}]}, "faq": [{"q": "E se a dose prescrita estiver em uma unidade diferente da dose disponível (ex: g vs mg)?", "a": "É necessário converter as unidades para que fiquem iguais antes de aplicar a fórmula. Por exemplo, converta gramas para miligramas (1 g = 1000 mg) antes de inserir os valores na calculadora."}, {"q": "Essa calculadora serve para cálculo de gotejamento de soro?", "a": "Não. Para cálculo de velocidade de infusão/gotejamento de soro, utilize a calculadora específica de Gotejamento de Soros, que considera volume total, tempo de infusão e fator de gotejamento."}], "about": {"title": "Como funciona a Calculadora de Medicamentos (Regra de Três)", "html": "<p>Informe a dose prescrita, a dose disponível (concentração) e o volume que contém essa concentração. A calculadora aplica a regra de três: Volume = (Dose Prescrita ÷ Dose Disponível) × Volume Disponível.</p><p><strong>Importante:</strong> as unidades da dose prescrita e da dose disponível devem ser as mesmas (converta antes, se necessário).</p>"}}</script>

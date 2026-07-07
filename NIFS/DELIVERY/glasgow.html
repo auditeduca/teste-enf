@@ -215,6 +215,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -403,38 +481,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "550e8400-e29b-41d4-a716-446655440002", "code": "SCALE-GLASGOW-001", "slug": "escala-de-glasgow", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Glasgow Coma Scale (GCS) - Nível de Consciência", "description": "Avalie o nível de consciência com a Escala de Glasgow. Inclui interpretação clínica, SAE, segurança do paciente, evidências e casos clínicos.", "canonical": "https://www.calculadorasdeenfermagem.com.br/glasgow.html"}, "breadcrumb": {"category": "Avaliação Neurológica", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Glasgow Coma Scale (GCS)", "acronym": "GCS", "categoryBadge": "Avaliação neurológica", "icon": "i-brain", "objective": "Avaliar o nível de consciência de pacientes com trauma cranioencefálico, lesão neurológica ou alteração do estado mental.", "indication": "Indicada para pacientes vítimas de trauma, acidente vascular cerebral, convulsões, intoxicações, infecções do SNC e qualquer alteração do nível de consciência.", "targetPopulation": "Pacientes de todas as idades (adaptações para pediatria existem).", "specialty": ["Emergência", "UTI", "Neurologia", "Trauma", "Enfermagem"], "averageTime": "2-5 minutos", "evidenceLevel": "I", "originalAuthors": ["Graham Teasdale", "Bryan Jennett"], "organizations": ["Brain Trauma Foundation", "American College of Surgeons"], "complexity": "intermediate", "rating": 4.9, "ratingCount": 2100}, "calculator": {"inputs": [{"id": "eye", "type": "select", "label": "Abertura Ocular", "description": "Resposta espontânea ou a estímulos.", "options": [{"value": 4, "label": "Espontânea", "score": 4, "description": "Abre os olhos espontaneamente."}, {"value": 3, "label": "À fala", "score": 3, "description": "Abre os olhos quando chamado ou quando se fala com ele."}, {"value": 2, "label": "À dor", "score": 2, "description": "Abre os olhos em resposta a estímulo doloroso."}, {"value": 1, "label": "Nenhuma", "score": 1, "description": "Não abre os olhos em resposta a nenhum estímulo."}], "defaultValue": 4}, {"id": "verbal", "type": "select", "label": "Resposta Verbal", "description": "Capacidade de comunicação verbal.", "options": [{"value": 5, "label": "Orientado", "score": 5, "description": "Conversa e orientado em tempo, espaço e pessoa."}, {"value": 4, "label": "Confuso", "score": 4, "description": "Conversa mas desorientado."}, {"value": 3, "label": "Palavras Inapropriadas", "score": 3, "description": "Fala palavras inapropriadas, mas sem conversação sustentada."}, {"value": 2, "label": "Palavras Incompreensíveis", "score": 2, "description": "Emite sons incompreensíveis (gemidos, murmúrios)."}, {"value": 1, "label": "Nenhuma", "score": 1, "description": "Nenhuma resposta verbal."}], "defaultValue": 5}, {"id": "motor", "type": "select", "label": "Resposta Motora", "description": "Resposta motora a comandos ou estímulos.", "options": [{"value": 6, "label": "Obedece Comandos", "score": 6, "description": "Obedece comandos verbais simples."}, {"value": 5, "label": "Localiza Dor", "score": 5, "description": "Localiza estímulo doloroso com a mão."}, {"value": 4, "label": "Retirada da Dor", "score": 4, "description": "Retira o membro em resposta à dor."}, {"value": 3, "label": "Flexão Anormal", "score": 3, "description": "Decorticação (flexão anormal dos membros)."}, {"value": 2, "label": "Extensão Anormal", "score": 2, "description": "Descerebração (extensão anormal dos membros)."}, {"value": 1, "label": "Nenhuma", "score": 1, "description": "Nenhuma resposta motora."}], "defaultValue": 6}], "formula": {"type": "sum", "resultLabel": "Escore de Glasgow (GCS)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 3, "max": 3, "label": "Coma Profundo", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Coma profundo. Prognóstico reservado. Necessita de intubação orotraqueal, ventilação mecânica e monitorização intracraniana.", "recommendations": "• Intubação imediata\n• Ventilação mecânica\n• Monitorização intracraniana\n• TC de crânio emergencial\n• Avaliação neurocirúrgica"}, {"min": 4, "max": 7, "label": "Coma Grave", "riskLevel": "critical", "color": "#dc2626", "clinicalImplications": "Coma grave. Alto risco de mortalidade. Manter via aérea protegida, monitorização contínua e investigação etiológica urgente.", "recommendations": "• Via aérea protegida\n• Monitorização hemodinâmica\n• TC de crânio\n• Laboratorial completo"}, {"min": 8, "max": 12, "label": "Coma Moderado / Trauma Moderado", "riskLevel": "high", "color": "#ea580c", "clinicalImplications": "Lesão neurológica moderada. Requer observação em UTI, monitorização neurológica serial e prevenção de complicações.", "recommendations": "• UTI\n• Monitorização neurológica a cada 1h\n• Prevenção de úlcera de estresse\n• Fisioterapia respiratória"}, {"min": 13, "max": 15, "label": "Leve / Sem Comprometimento", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Consciência preservada ou levemente alterada. Monitorização padrão e reavaliação conforme protocolo.", "recommendations": "• Monitorização padrão\n• Reavaliação a cada 4h\n• Observação por 24h pós-trauma"}]}, "sae": {"nanda": [{"diagnosis": "Risco de aspiração", "definition": "Vulnerável à entrada de secreções orais, sólidos ou líquidos na traqueia e brônquios."}, {"diagnosis": "Risco de lesão", "definition": "Vulnerável a lesão física devido a condições ambientais e/ou processo de saúde."}], "noc": [{"outcome": "Status neurológico: consciência", "indicators": ["Abertura ocular", "Resposta verbal", "Resposta motora", "Orientação"]}, {"outcome": "Via aérea patente", "indicators": ["Respiração espontânea", "Saturação adequada", "Sem sons adventícios"]}], "nic": [{"intervention": "Monitorização neurológica", "activities": ["Avaliar GCS a cada 1-2h", "Monitorar pupilas", "Avaliar sinais vitais", "Documentar alterações"]}, {"intervention": "Manutenção da via aérea", "activities": ["Posicionamento da cabeça", "Aspiração de vias aéreas", "Monitorização de SpO2", "Preparo para intubação"]}]}, "evidence": {"foundation": "Desenvolvida em 1974 por Teasdale e Jennett na Universidade de Glasgow. É a escala mais utilizada mundialmente para avaliação do nível de consciência.", "history": "Validada em milhares de estudos. Recomendada pela Brain Trauma Foundation, ATLS e diretrizes internacionais de trauma.", "validation": "Alta confiabilidade interobservador (kappa 0.8-0.9). Preditor independente de mortalidade e desfecho neurológico.", "sensitivity": 0.85, "specificity": 0.88, "limitations": "Não avalia função cerebelar ou tronco cerebral isoladamente. Pode ser difícil em pacientes com trauma facial, intubação ou afasia.", "references": [{"text": "TEASDALE, G.; JENNETT, B. Assessment of coma and impaired consciousness: a practical scale. The Lancet, v. 304, n. 7872, p. 81-84, 1974."}, {"text": "BRAIN TRAUMA FOUNDATION. Guidelines for the Management of Severe Traumatic Brain Injury. 4th ed. New York: BTF, 2020."}, {"text": "AMERICAN COLLEGE OF SURGEONS. Advanced Trauma Life Support (ATLS) Student Course Manual. 10th ed. Chicago: ACS, 2018."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}, {"text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."}]}, "learning": {"tips": ["Sempre documentar os 3 componentes (E_V_M_), não apenas o total.", "Em intubados, registrar V como '1T' ou '3T'.", "Testar dor em todos os 4 membros para avaliar assimetria."], "examples": [{"label": "Consciência normal", "sublabel": "E4 V5 M6 = 15", "emoji": "✅", "values": {"eye": 4, "verbal": 5, "motor": 6}}, {"label": "Trauma moderado", "sublabel": "E3 V4 M5 = 12", "emoji": "⚠️", "values": {"eye": 3, "verbal": 4, "motor": 5}}, {"label": "Coma grave", "sublabel": "E2 V2 M4 = 8", "emoji": "🚨", "values": {"eye": 2, "verbal": 2, "motor": 4}}, {"label": "Coma profundo", "sublabel": "E1 V1 M1 = 3", "emoji": "🆘", "values": {"eye": 1, "verbal": 1, "motor": 1}}], "quiz": [{"q": "Qual a pontuação máxima possível na Escala de Glasgow?", "opts": ["12 pontos", "15 pontos", "10 pontos", "20 pontos"], "correct": 1, "expl": "O máximo é 15 (abertura ocular 4 + resposta verbal 5 + resposta motora 6), indicando consciência normal."}, {"q": "Um score de Glasgow igual a 7 geralmente indica necessidade de qual conduta?", "opts": ["Alta hospitalar", "Intubação orotraqueal", "Fisioterapia motora", "Repetir exame em 24h"], "correct": 1, "expl": "GCS ≤8 é o limiar clássico para considerar intubação orotraqueal, por indicar incapacidade de proteger a via aérea."}, {"q": "Qual componente da Escala de Glasgow tem o maior valor preditivo isolado de prognóstico?", "opts": ["Abertura ocular", "Resposta verbal", "Resposta motora", "Todos têm peso igual"], "correct": 2, "expl": "A resposta motora isolada é frequentemente citada como o componente de maior valor preditivo, sendo usada quando os outros não podem ser avaliados."}]}, "faq": [{"q": "O que fazer se GCS = 8?", "a": "GCS ≤8 indica incapacidade de proteger via aérea. Considerar intubação orotraqueal e ventilação mecânica protetora."}, {"q": "Como avaliar verbal em paciente intubado?", "a": "Registre como '1T' (tubo) ou '3T' (palavras inapropriadas com tubo). Sempre documentar que o paciente está intubado."}, {"q": "Por que a resposta motora é considerada o componente mais importante?", "a": "Estudos mostram que a resposta motora isolada tem alto valor preditivo de prognóstico, sendo usada isoladamente em protocolos quando os outros componentes não podem ser avaliados (ex: paciente intubado ou com edema periorbital)."}], "about": {"title": "Como funciona a Escala de Glasgow", "html": "<p>GCS avalia 3 domínios: abertura ocular (1-4), resposta verbal (1-5) e resposta motora (1-6). Mínimo 3, máximo 15. Score <8 sugere intubação. Resposta motora isolada é o melhor preditor.</p><p><strong>Guia rápido:</strong> E4 V5 M6 = 15 (Normal) | E2 V2 M4 = 8 (Coma) | E1 V1 M1 = 3 (Coma profundo). Motor <5 = alerta.</p>"}}</script>

@@ -266,6 +266,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -519,38 +597,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "51627384-9506-4739-4051-627384950617", "code": "SCALE-WELLSTEP-001", "slug": "wells-tep", "version": "1.0.0", "status": "published", "seo": {"title": "Escore de Wells para TEP - Probabilidade de Embolia Pulmonar", "description": "Calcule o Escore de Wells para estimar a probabilidade clínica de tromboembolismo pulmonar (TEP). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/wells-tep.html"}, "breadcrumb": {"category": "Emergência e Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escore de Wells para TEP", "acronym": "Wells (TEP)", "categoryBadge": "Emergência", "icon": "i-stetho", "objective": "Estimar a probabilidade clínica pré-teste de tromboembolismo pulmonar (TEP), orientando a estratégia diagnóstica (D-dímero versus angiotomografia de tórax direta).", "indication": "Indicada para pacientes com suspeita clínica de embolia pulmonar (dispneia súbita, dor torácica pleurítica, taquicardia inexplicada).", "targetPopulation": "Pacientes adultos com sinais e sintomas sugestivos de tromboembolismo pulmonar.", "specialty": ["Emergência", "Pneumologia", "Enfermagem"], "averageTime": "2-3 minutos", "evidenceLevel": "I", "originalAuthors": ["Philip S. Wells", "colaboradores"], "complexity": "intermediate", "rating": 4.6, "ratingCount": 240}, "calculator": {"inputs": [{"id": "sinais_tvp", "type": "select", "label": "Sinais Clínicos e Sintomas de TVP", "description": "Edema de membro inferior e dor à palpação do sistema venoso profundo.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 3, "label": "Sim", "score": 3}]}, {"id": "diagnostico_alternativo", "type": "select", "label": "Diagnóstico Alternativo Menos Provável que TEP", "description": "Não há outro diagnóstico que explique o quadro tão bem ou melhor que o TEP.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 3, "label": "Sim", "score": 3}]}, {"id": "frequencia_cardiaca", "type": "select", "label": "Frequência Cardíaca Maior que 100 bpm", "description": "Taquicardia com frequência cardíaca superior a 100 batimentos por minuto.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1.5, "label": "Sim", "score": 1.5}]}, {"id": "imobilizacao_cirurgia", "type": "select", "label": "Imobilização ou Cirurgia Recente", "description": "Imobilização por 3 dias ou mais, ou cirurgia nas últimas 4 semanas.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1.5, "label": "Sim", "score": 1.5}]}, {"id": "tvp_tep_previo", "type": "select", "label": "TVP ou TEP Prévios", "description": "Histórico prévio de trombose venosa profunda ou tromboembolismo pulmonar.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1.5, "label": "Sim", "score": 1.5}]}, {"id": "hemoptise", "type": "select", "label": "Hemoptise", "description": "Presença de escarro com sangue (hemoptise).", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "malignidade", "type": "select", "label": "Malignidade Ativa", "description": "Tratamento oncológico ativo, nos últimos 6 meses, ou tratamento paliativo em curso.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Escore de Wells (TEP)", "resultUnit": "pontos", "decimals": 1}}, "interpretation": {"ranges": [{"min": 0, "max": 1.9, "label": "Baixa Probabilidade", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixa probabilidade clínica pré-teste de tromboembolismo pulmonar.", "recommendations": "• Considerar dosagem de D-dímero como próximo passo\n• D-dímero negativo com baixa probabilidade geralmente exclui TEP\n• Investigar diagnósticos diferenciais"}, {"min": 2, "max": 6, "label": "Probabilidade Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Probabilidade clínica intermediária de tromboembolismo pulmonar.", "recommendations": "• Considerar D-dímero; se positivo ou indisponível, prosseguir com angiotomografia de tórax\n• Monitorização de sinais vitais e oxigenação"}, {"min": 6.1, "max": 12.5, "label": "Alta Probabilidade", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alta probabilidade clínica de tromboembolismo pulmonar.", "recommendations": "• Priorizar angiotomografia de tórax diretamente (D-dímero não deve ser usado para excluir TEP nesse cenário)\n• Comunicar à equipe médica para avaliação de anticoagulação empírica conforme protocolo\n• Monitorização contínua de sinais vitais e oxigenação"}]}, "sae": {"nanda": [{"diagnosis": "Troca de gases prejudicada", "definition": "Excesso ou déficit na oxigenação e/ou eliminação de dióxido de carbono na membrana alvéolo-capilar."}, {"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."}, {"diagnosis": "Débito cardíaco diminuído", "definition": "Quantidade inadequada de sangue bombeada pelo coração para atender às demandas metabólicas do corpo, associada à sobrecarga do ventrículo direito no TEP maciço."}], "noc": [{"outcome": "Status respiratório: troca gasosa", "indicators": ["Saturação de oxigênio adequada", "Ausência de dispneia em repouso", "Frequência respiratória dentro dos limites esperados"]}], "nic": [{"intervention": "Cuidados respiratórios", "activities": ["Aplicar o Escore de Wells para TEP de forma sistemática", "Monitorar saturação de oxigênio e frequência respiratória continuamente", "Auxiliar na obtenção de D-dímero e preparo para angiotomografia conforme indicação", "Comunicar sinais de instabilidade hemodinâmica imediatamente à equipe médica"]}]}, "evidence": {"foundation": "O Escore de Wells para TEP foi desenvolvido por Philip Wells e colaboradores para estratificar a probabilidade clínica pré-teste de tromboembolismo pulmonar, combinando sinais clínicos, fatores de risco e a presença de diagnóstico alternativo.", "history": "Amplamente utilizado em serviços de emergência para orientar a estratégia diagnóstica, evitando exames de imagem desnecessários em pacientes de baixa probabilidade com D-dímero negativo.", "validation": "Validado extensivamente na literatura, com boa capacidade de estratificação de risco quando combinado ao D-dímero, sendo um dos escores mais utilizados mundialmente para essa finalidade, ao lado do escore de Genebra revisado.", "limitations": "Em pacientes de alta probabilidade clínica, o D-dímero não deve ser utilizado como triagem para excluir TEP — a investigação por imagem (angiotomografia) deve ser priorizada diretamente.", "references": [{"text": "WELLS, P. S. et al. Derivation of a simple clinical model to categorize patients probability of pulmonary embolism. Thrombosis and Haemostasis, v. 83, n. 3, p. 416-420, 2000."}, {"text": "VAN BELLE, A. et al. Effectiveness of managing suspected pulmonary embolism using an algorithm combining clinical probability, D-dimer testing, and CT. JAMA, v. 295, n. 2, p. 172-179, 2006."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Os itens 'sinais de TVP' e 'diagnóstico alternativo menos provável' têm o maior peso (3 pontos cada) no escore.", "Em pacientes de alta probabilidade clínica, não use o D-dímero para excluir TEP — priorize a angiotomografia de tórax diretamente.", "Combine sempre com sinais de instabilidade hemodinâmica, que podem indicar TEP maciço e exigir conduta imediata.", "Reavalie o paciente clinicamente se os sintomas persistirem apesar de investigação inicial negativa."], "examples": [{"label": "Baixa probabilidade", "sublabel": "Wells (TEP) 1", "emoji": "✅", "values": {"sinais_tvp": 0, "diagnostico_alternativo": 0, "frequencia_cardiaca": 0, "imobilizacao_cirurgia": 0, "tvp_tep_previo": 0, "hemoptise": 1, "malignidade": 0}}, {"label": "Probabilidade moderada", "sublabel": "Wells (TEP) 4.5", "emoji": "⚠️", "values": {"sinais_tvp": 0, "diagnostico_alternativo": 0, "frequencia_cardiaca": 1.5, "imobilizacao_cirurgia": 1.5, "tvp_tep_previo": 1.5, "hemoptise": 0, "malignidade": 0}}, {"label": "Alta probabilidade", "sublabel": "Wells (TEP) 9.5", "emoji": "🚨", "values": {"sinais_tvp": 3, "diagnostico_alternativo": 3, "frequencia_cardiaca": 1.5, "imobilizacao_cirurgia": 1.5, "tvp_tep_previo": 0, "hemoptise": 0, "malignidade": 1}}], "quiz": [{"q": "Quais os dois itens de maior peso no Escore de Wells para TEP?", "opts": ["Hemoptise e malignidade", "Sinais de TVP e diagnóstico alternativo menos provável que TEP", "Frequência cardíaca e imobilização", "Idade e sexo"], "correct": 1, "expl": "Sinais clínicos de TVP e a ausência de diagnóstico alternativo mais provável valem 3 pontos cada, os maiores pesos do escore."}, {"q": "Em caso de alta probabilidade clínica de TEP, qual exame deve ser priorizado?", "opts": ["D-dímero isoladamente", "Angiotomografia de tórax diretamente", "Radiografia de tórax simples", "Nenhum exame é necessário"], "correct": 1, "expl": "Em pacientes de alta probabilidade, o D-dímero não deve ser usado para exclusão — a angiotomografia de tórax deve ser priorizada diretamente."}, {"q": "O Escore de Wells para TEP é o mesmo usado para TVP?", "opts": ["Sim, idêntico", "Não, são escores distintos, com critérios diferentes", "É o mesmo, apenas com nome diferente", "TVP não tem escore de Wells"], "correct": 1, "expl": "Existem versões distintas do Escore de Wells: uma para probabilidade de TVP e outra para probabilidade de TEP, com critérios e pesos diferentes."}]}, "faq": [{"q": "O Escore de Wells para TEP confirma o diagnóstico isoladamente?", "a": "Não. É uma ferramenta de estratificação de probabilidade pré-teste, que deve ser combinada com D-dímero e/ou angiotomografia de tórax para confirmação ou exclusão diagnóstica."}, {"q": "Por que não usar D-dímero em pacientes de alta probabilidade?", "a": "O D-dímero tem alta sensibilidade, mas baixa especificidade. Em pacientes de alta probabilidade clínica, mesmo um D-dímero negativo não exclui TEP com segurança suficiente, sendo necessária investigação por imagem diretamente."}], "about": {"title": "Como funciona o Escore de Wells para TEP", "html": "<p>O Escore de Wells para TEP soma pontos ponderados de 7 critérios clínicos — sinais de TVP, diagnóstico alternativo, frequência cardíaca, imobilização/cirurgia recente, TVP/TEP prévios, hemoptise e malignidade —, totalizando até 12,5 pontos.</p><p><strong>Guia rápido:</strong> menos de 2 = Baixa probabilidade | 2-6 = Probabilidade moderada | mais de 6 = Alta probabilidade.</p>"}}</script>

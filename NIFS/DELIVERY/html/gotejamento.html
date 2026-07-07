@@ -218,6 +218,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -402,38 +480,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "6f1a2b3c-4d5e-4f60-9a1b-2c3d4e5f6071", "code": "CALC-GOTEJAMENTO-001", "slug": "gotejamento", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Gotejamento de Soro (IV)", "description": "Calcule o gotejamento de soluções intravenosas (gotas/min) a partir do volume, tempo de infusão e fator do equipo. Ferramenta gratuita para enfermagem.", "canonical": "https://www.calculadorasdeenfermagem.com.br/gotejamento.html"}, "breadcrumb": {"category": "Cálculo de Medicação", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Gotejamento de Soro", "acronym": "Gotejamento IV", "categoryBadge": "Cálculo de medicação", "icon": "i-calculator", "objective": "Calcule com precisão o gotejamento (gotas/min) de soluções intravenosas a partir do volume, tempo de infusão e fator do equipo.", "indication": "Indicada sempre que uma solução intravenosa for administrada por equipo de macro ou microgotas, sem bomba de infusão eletrônica.", "targetPopulation": "Pacientes em uso de terapia intravenosa por gravidade, em qualquer faixa etária.", "specialty": ["Enfermagem Médico-Cirúrgica", "Terapia Intravenosa"], "averageTime": "1-2 minutos", "evidenceLevel": "III", "complexity": "basic", "rating": 4.8, "ratingCount": 1240}, "calculator": {"inputs": [{"id": "volume", "type": "number", "label": "Volume total", "unit": "mL", "defaultValue": 1000, "min": 1, "step": 1, "description": "Volume total da solução prescrita."}, {"id": "hours", "type": "select", "label": "Tempo total", "defaultValue": 8, "description": "Tempo total de infusão prescrito.", "options": [{"value": 1, "label": "1 hora", "score": 1}, {"value": 2, "label": "2 horas", "score": 2}, {"value": 4, "label": "4 horas", "score": 4}, {"value": 6, "label": "6 horas", "score": 6}, {"value": 8, "label": "8 horas", "score": 8}, {"value": 12, "label": "12 horas", "score": 12}, {"value": 24, "label": "24 horas", "score": 24}]}, {"id": "factor", "type": "number", "label": "Equipo (fator de gotejamento)", "unit": "gotas/mL", "defaultValue": 20, "min": 1, "step": 1, "description": "Macrogotas = 20 gotas/mL. Microgotas = 60 gotas/mL."}], "formula": {"type": "expression", "expression": "(volume*factor)/(hours*60)", "resultLabel": "Gotejamento calculado", "resultUnit": "gotas/min", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 4, "label": "Abaixo da faixa usual", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Gotejamento muito lento. Confira o volume, o tempo prescrito e considere se uma bomba de infusão seria mais adequada para este ritmo."}, {"min": 5, "max": 120, "label": "Dentro da faixa usual", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Valor dentro da faixa prática mais comum em adultos. Verifique sempre o paciente e siga os protocolos da instituição."}, {"min": 121, "max": 999999, "label": "Acima da faixa usual", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Gotejamento muito rápido. Revise o volume, o fator do equipo e o tempo de infusão — considere usar bomba de infusão."}]}, "evidence": {"foundation": "O cálculo de gotejamento fundamenta-se na relação entre o volume da solução prescrita, o fator de gotejamento do equipo utilizado (macrogotas ou microgotas) e o tempo total de infusão. A fórmula padrão — Gotas/min = (Volume × Fator) ÷ Tempo em minutos — deriva da definição do próprio equipo: cada mL de solução corresponde a um número fixo de gotas, definido pelo fabricante do equipo (20 gotas/mL para macrogotas, 60 gotas/mL para microgotas).", "history": "Equipos de macrogotas são utilizados na maioria das infusões de rotina em adultos. Equipos de microgotas oferecem maior precisão e são indicados em pediatria, neonatologia e infusões de baixo volume ou alta precisão.", "validation": "Protocolos institucionais e sociedades de terapia infusional recomendam a dupla checagem do cálculo de gotejamento antes da administração, especialmente em populações vulneráveis (pediatria, idosos, pacientes renais ou cardiopatas), dado o risco de sobrecarga volêmica associado a erros de infusão.", "limitations": "Embora não exista um limite universal, valores entre 5 e 120 gotas/minuto são frequentemente citados como faixa prática de verificação em adultos — valores fora dessa faixa costumam indicar necessidade de revisão da prescrição, do equipo selecionado ou de uso de bomba de infusão.", "references": [{"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "HINKLE, J. L.; CHEEVER, K. H. Brunner & Suddarth: tratado de enfermagem médico-cirúrgica. 13ª ed. Rio de Janeiro: Guanabara Koogan, 2016."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}, {"text": "BRASIL. Ministério da Saúde. Protocolo de segurança na prescrição, uso e administração de medicamentos. Brasília: MS, 2013."}, {"text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."}, {"text": "WHITNEY, R. et al. Guidelines for the administration of medication via intravenous infusion. Journal of Infusion Nursing, v. 44, n. 2, p. 74-92, 2021."}, {"text": "INFUSION NURSES SOCIETY. Infusion therapy standards of practice. 9th ed. Norwood: INS, 2023."}]}, "learning": {"tips": ["Confirme o fator de gotejamento do equipo antes do cálculo.", "Utilize bomba de infusão quando disponível.", "Reavalie o gotejamento periodicamente.", "Registre o cálculo e a resposta do paciente."], "examples": [{"label": "Clássico", "sublabel": "SF 0,9% · 1000mL em 8h", "emoji": "💧", "values": {"volume": 1000, "hours": 8, "factor": 20}}, {"label": "Reposição rápida", "sublabel": "SF 500mL em 2h", "emoji": "⚡", "values": {"volume": 500, "hours": 2, "factor": 20}}, {"label": "Microgotas pediátrico", "sublabel": "250mL em 4h", "emoji": "🔬", "values": {"volume": 250, "hours": 4, "factor": 60}}], "quiz": [{"q": "Quantas gotas equivalem a 1 mL em um equipo macrogotas?", "opts": ["10 gotas", "20 gotas", "60 gotas", "100 gotas"], "correct": 1, "expl": "Macrogotas administram 20 gotas por mL — é o equipo padrão para a maioria das infusões de rotina."}, {"q": "Qual é a fórmula do gotejamento em gotas/min?", "opts": ["(Volume × Fator) ÷ Tempo em minutos", "Volume ÷ Fator", "Tempo × Fator", "Volume × Tempo"], "correct": 0, "expl": "Gotas/min = (Volume × Fator do equipo) ÷ Tempo total de infusão em minutos."}, {"q": "Um equipo microgotas administra quantas gotas por mL?", "opts": ["20 gotas", "40 gotas", "60 gotas", "80 gotas"], "correct": 2, "expl": "Microgotas administram 60 gotas por mL e são indicadas quando é preciso maior controle, como em pediatria."}]}, "faq": [{"q": "Qual a diferença entre macrogotas e microgotas?", "a": "Macrogotas administram 20 gotas por mL e são usadas na maioria das infusões de rotina. Microgotas administram 60 gotas por mL e são indicadas quando é necessário maior controle e precisão, como em pediatria ou infusões de baixo volume."}, {"q": "Esta calculadora substitui a checagem clínica?", "a": "Não. A ferramenta é um apoio ao cálculo e não substitui a avaliação clínica, a prescrição médica nem os protocolos da instituição. Sempre confira os dados antes de administrar qualquer medicação ou solução."}, {"q": "Como faço o cálculo para uma bomba de infusão eletrônica?", "a": "Bombas de infusão são programadas diretamente em mL/h, sem usar o fator de gotejamento: basta dividir o volume total pelo tempo total em horas (mL/h = Volume ÷ Tempo em horas)."}], "about": {"title": "Como funciona o cálculo de gotejamento", "html": "<p>O gotejamento intravenoso é calculado multiplicando o volume total da solução (em mL) pelo fator de gotejamento do equipo (gotas/mL) e dividindo pelo tempo total de infusão em minutos. O resultado indica quantas gotas por minuto devem ser administradas para que todo o volume seja infundido no tempo prescrito.</p><p>Fórmula: <strong>Gotas/min = (Volume × Fator) ÷ Tempo em minutos</strong>.</p>"}}</script>

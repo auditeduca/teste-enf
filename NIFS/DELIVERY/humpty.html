@@ -265,6 +265,84 @@
             </section>
           </div>
         </form>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
+                </ul>
+              </div>
+              <div class="safety-col">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list">
+                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
+                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
@@ -518,38 +596,6 @@
     </section>
 
   </div>
-
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
-
 </main>
 
 <script type="application/json" id="tool-config">{"id": "73849506-1728-3940-5162-738495061728", "code": "SCALE-HUMPTYDUMPTY-001", "slug": "humpty", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Humpty Dumpty - Risco de Queda Pediátrico", "description": "Calcule a Escala de Humpty Dumpty para avaliar o risco de quedas em pacientes pediátricos hospitalizados. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/humpty.html"}, "breadcrumb": {"category": "Pediatria", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Humpty Dumpty", "acronym": "HDFS", "categoryBadge": "Pediatria", "icon": "i-shieldcheck", "objective": "Identificar pacientes pediátricos hospitalizados com risco aumentado de quedas, a partir de 7 fatores clínicos e desenvolvimentais.", "indication": "Indicada na triagem de risco de quedas em pacientes pediátricos hospitalizados, na admissão e reavaliada periodicamente durante a internação.", "targetPopulation": "Pacientes pediátricos hospitalizados (não validada para uso em pacientes adultos).", "specialty": ["Pediatria", "Enfermagem", "Segurança do Paciente"], "averageTime": "3-5 minutos", "evidenceLevel": "II", "complexity": "intermediate", "rating": 4.5, "ratingCount": 160}, "calculator": {"inputs": [{"id": "idade", "type": "select", "label": "Idade", "defaultValue": 1, "description": "Faixa etária do paciente.", "options": [{"value": 1, "label": "Maior que 13 anos", "score": 1}, {"value": 2, "label": "7 a 13 anos", "score": 2}, {"value": 3, "label": "3 a 7 anos", "score": 3}, {"value": 4, "label": "Menor que 3 anos", "score": 4}]}, {"id": "sexo", "type": "select", "label": "Sexo", "defaultValue": 1, "description": "Sexo do paciente.", "options": [{"value": 1, "label": "Feminino", "score": 1}, {"value": 2, "label": "Masculino", "score": 2}]}, {"id": "diagnostico", "type": "select", "label": "Diagnóstico", "defaultValue": 1, "description": "Categoria diagnóstica principal do paciente.", "options": [{"value": 1, "label": "Outro diagnóstico", "score": 1}, {"value": 2, "label": "Distúrbio psiquiátrico/comportamental", "score": 2}, {"value": 3, "label": "Distúrbio respiratório/de oxigenação", "score": 3}, {"value": 4, "label": "Distúrbio neurológico", "score": 4}]}, {"id": "comprometimento_cognitivo", "type": "select", "label": "Comprometimento Cognitivo", "defaultValue": 1, "description": "Nível de percepção do paciente sobre suas próprias limitações.", "options": [{"value": 1, "label": "Orientado quanto à própria capacidade", "score": 1}, {"value": 2, "label": "Não tem consciência de suas limitações (comprometido)", "score": 2}, {"value": 3, "label": "Esquece suas limitações (esquecido)", "score": 3}]}, {"id": "fatores_ambientais", "type": "select", "label": "Fatores Ambientais", "defaultValue": 1, "description": "Fatores ambientais e histórico de quedas.", "options": [{"value": 1, "label": "Histórico de quedas restrito ao berço/cama/mobília", "score": 1}, {"value": 2, "label": "Paciente utiliza mobília para se apoiar/deambular", "score": 2}, {"value": 3, "label": "Paciente utiliza dispositivo de auxílio (andador, cadeira de rodas)", "score": 3}, {"value": 4, "label": "Histórico de quedas prévias", "score": 4}]}, {"id": "resposta_cirurgia", "type": "select", "label": "Resposta à Cirurgia/Sedação/Anestesia", "defaultValue": 1, "description": "Tempo desde procedimento cirúrgico, sedação ou anestesia.", "options": [{"value": 1, "label": "Mais de 48 horas / não se aplica", "score": 1}, {"value": 2, "label": "Dentro de 48 horas", "score": 2}, {"value": 3, "label": "Dentro de 24 horas", "score": 3}]}, {"id": "uso_medicacao", "type": "select", "label": "Uso de Medicação", "defaultValue": 1, "description": "Uso de medicações associadas a risco de queda (sedativos, hipnóticos, diuréticos, etc.).", "options": [{"value": 1, "label": "Nenhuma medicação de risco", "score": 1}, {"value": 2, "label": "Uma medicação de risco", "score": 2}, {"value": 3, "label": "Múltiplas medicações de risco ou uso de sedativos", "score": 3}]}], "formula": {"type": "sum", "resultLabel": "Escala de Humpty Dumpty", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 7, "max": 11, "label": "Baixo Risco de Queda", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Pontuação entre 7 e 11 pontos indica baixo risco de quedas em relação à população pediátrica de base.", "recommendations": "• Manter precauções padrão de segurança pediátrica (cama em posição baixa, ambiente livre de obstáculos)\n• Orientar paciente e família sobre segurança no ambiente hospitalar\n• Reavaliar periodicamente e após mudanças no estado clínico"}, {"min": 12, "max": 23, "label": "Alto Risco de Queda", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação de 12 pontos ou mais indica alto risco de quedas, exigindo protocolo de prevenção intensificado.", "recommendations": "• Implementar protocolo de alto risco (identificação visual, pulseira/sinalização de risco de queda)\n• Considerar supervisão aumentada, incluindo possível vigilância direta\n• Orientar detalhadamente a família sobre os riscos e a importância de não deixar a criança sozinha\n• Revisar medicações de risco com a equipe médica/farmácia"}]}, "sae": {"nanda": [{"diagnosis": "Risco de quedas", "definition": "Suscetibilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde, relacionada a fatores desenvolvimentais e clínicos da criança."}, {"diagnosis": "Risco de trauma físico", "definition": "Suscetibilidade aumentada a lesão tecidual acidental, relacionada à idade, mobilidade e ambiente hospitalar."}, {"diagnosis": "Processos familiares disfuncionais", "definition": "Funcionamento familiar que não consegue apoiar o bem-estar de seus membros, relevante quando há necessidade de orientação intensiva dos cuidadores sobre supervisão da criança."}], "noc": [{"outcome": "Ocorrência de quedas", "indicators": ["Escore de Humpty Dumpty avaliado na admissão e reavaliado periodicamente", "Protocolo de prevenção de quedas implementado conforme risco identificado", "Família orientada sobre medidas de segurança e supervisão"]}], "nic": [{"intervention": "Prevenção de quedas em pediatria", "activities": ["Aplicar a Escala de Humpty Dumpty na admissão e reavaliar periodicamente", "Implementar identificação visual de risco (pulseira, sinalização na porta/leito) conforme protocolo institucional", "Orientar pais/cuidadores sobre a importância de não deixar a criança de alto risco sem supervisão", "Manter grades do leito elevadas e ambiente livre de obstáculos", "Revisar medicações sedativas ou de risco com a equipe médica/farmácia"]}]}, "evidence": {"foundation": "A Escala de Humpty Dumpty avalia 7 parâmetros — idade, sexo, diagnóstico, comprometimento cognitivo, fatores ambientais, resposta a cirurgia/sedação/anestesia e uso de medicação — cada um pontuado conforme tabela específica, somando um escore total entre 7 e 23 pontos.", "history": "Desenvolvida especificamente para a população pediátrica hospitalizada, diferentemente de escalas de queda voltadas a adultos, incorporando fatores desenvolvimentais próprios da infância, como a instabilidade física inerente a determinadas faixas etárias.", "validation": "Validada em estudos caso-controle em ambiente hospitalar pediátrico, demonstrando boa sensibilidade na identificação de pacientes de alto risco, sendo amplamente adotada em protocolos de segurança do paciente pediátrico.", "limitations": "Não deve ser utilizada em pacientes adultos, pois foi desenvolvida e validada especificamente para a população pediátrica. Versões revisadas da escala (HDFS 2.0) removeram os parâmetros de sexo e medicação e ajustaram a pontuação por idade, podendo gerar diferenças em relação à versão original aqui utilizada.", "references": [{"text": "HILL-RODRIGUEZ, D. et al. The Humpty Dumpty Falls Scale: a case-control study. Journal for Specialists in Pediatric Nursing, v. 14, n. 1, p. 22-32, 2009."}, {"text": "SARIK, D. A. et al. The revised Humpty Dumpty Fall Scale: an update to improve tool performance and predictive validity. Journal of Pediatric Nursing, v. 67, p. 34-37, 2022."}, {"text": "SOCIEDADE BRASILEIRA DE PEDIATRIA. Segurança do paciente pediátrico: prevenção de quedas. Rio de Janeiro: SBP, 2019."}]}, "learning": {"tips": ["A Escala de Humpty Dumpty é específica para pacientes pediátricos — não deve ser aplicada em adultos.", "O fator 'histórico de quedas prévias' no domínio de fatores ambientais representa o maior sinal de alerta isolado nesse domínio.", "Crianças menores de 3 anos recebem a maior pontuação no fator idade, devido à instabilidade física e falta de percepção de risco inerentes a essa faixa etária.", "Reavalie o escore sempre que houver mudança no estado clínico, cognitivo ou na medicação da criança."], "examples": [{"label": "Baixo risco", "sublabel": "Escore 8", "emoji": "✅", "values": {"idade": 1, "sexo": 1, "diagnostico": 1, "comprometimento_cognitivo": 1, "fatores_ambientais": 2, "resposta_cirurgia": 1, "uso_medicacao": 1}}, {"label": "Alto risco — criança pequena com diagnóstico neurológico", "sublabel": "Escore 16", "emoji": "⚠️", "values": {"idade": 4, "sexo": 2, "diagnostico": 4, "comprometimento_cognitivo": 2, "fatores_ambientais": 2, "resposta_cirurgia": 1, "uso_medicacao": 1}}, {"label": "Alto risco — múltiplos fatores", "sublabel": "Escore 22", "emoji": "🚨", "values": {"idade": 4, "sexo": 2, "diagnostico": 4, "comprometimento_cognitivo": 3, "fatores_ambientais": 4, "resposta_cirurgia": 2, "uso_medicacao": 3}}], "quiz": [{"q": "A Escala de Humpty Dumpty pode ser usada em pacientes adultos?", "opts": ["Sim, sem restrições", "Não, é validada especificamente para a população pediátrica", "Apenas em idosos frágeis", "Apenas em gestantes"], "correct": 1, "expl": "A Escala de Humpty Dumpty foi desenvolvida e validada especificamente para pacientes pediátricos, considerando fatores desenvolvimentais próprios da infância."}, {"q": "Qual pontuação total indica alto risco de queda na versão original da escala?", "opts": ["7 a 11 pontos", "12 pontos ou mais", "Menor que 7 pontos", "Acima de 30 pontos"], "correct": 1, "expl": "Uma pontuação de 12 pontos ou mais classifica o paciente pediátrico como de alto risco de queda."}, {"q": "Qual faixa etária recebe a maior pontuação no fator idade?", "opts": ["Maiores de 13 anos", "7 a 13 anos", "3 a 7 anos", "Menores de 3 anos"], "correct": 3, "expl": "Crianças menores de 3 anos recebem a pontuação mais alta (4 pontos) no fator idade, devido à maior instabilidade física e menor percepção de risco."}]}, "faq": [{"q": "A Escala de Humpty Dumpty serve para adultos?", "a": "Não. É validada especificamente para a população pediátrica hospitalizada. Para adultos, utilizam-se outras ferramentas específicas, como a Escala de Morse ou o Hendrich II Fall Risk Model."}, {"q": "Existe uma versão atualizada da escala?", "a": "Sim. A versão revisada (HDFS 2.0) removeu os parâmetros de sexo e medicação e ajustou a pontuação do fator idade, buscando melhorar o desempenho preditivo da ferramenta. Esta calculadora utiliza a versão original de 7 itens, amplamente adotada em protocolos institucionais."}], "about": {"title": "Como funciona a Escala de Humpty Dumpty", "html": "<p>A Escala de Humpty Dumpty soma a pontuação de 7 parâmetros — idade, sexo, diagnóstico, comprometimento cognitivo, fatores ambientais, resposta a cirurgia/sedação/anestesia e uso de medicação — totalizando de 7 a 23 pontos.</p><p><strong>Guia rápido:</strong> 7-11 pontos = Baixo risco | ≥12 pontos = Alto risco de queda.</p>"}}</script>
