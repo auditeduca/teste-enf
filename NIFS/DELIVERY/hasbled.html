@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="hasbled">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -347,32 +357,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -595,6 +595,7 @@
               <select class="field-select" data-calc-input="idade"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Uso de Medicamentos de Risco</label>
               <select class="field-select" data-calc-input="medicamentos"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Uso Abusivo de Álcool</label>
               <select class="field-select" data-calc-input="alcool"><option value="0" selected>Não</option><option value="1">Sim</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco de Sangramento</span>
@@ -654,6 +655,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "84950617-2839-4051-7384-950617283940", "code": "SCALE-HASBLED-001", "slug": "hasbled", "version": "1.0.0", "status": "published", "seo": {"title": "HAS-BLED - Risco de Sangramento em Anticoagulação", "description": "Calcule o escore HAS-BLED para estimar o risco de sangramento em pacientes em uso de anticoagulação, especialmente na fibrilação atrial. Inclui interpretação e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/hasbled.html"}, "breadcrumb": {"category": "Cardiologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "HAS-BLED", "acronym": "HAS-BLED", "categoryBadge": "Cardiologia", "icon": "i-pulse", "objective": "Estimar o risco de sangramento maior em pacientes em uso ou com indicação de terapia anticoagulante, especialmente em fibrilação atrial, orientando a monitorização e o manejo de fatores de risco modificáveis.", "indication": "Indicada para pacientes com fibrilação atrial em uso ou com indicação de anticoagulação, como complemento à avaliação de risco tromboembólico (CHA2DS2-VASc).", "targetPopulation": "Pacientes adultos com fibrilação atrial em uso ou candidatos à terapia anticoagulante.", "specialty": ["Cardiologia", "Enfermagem", "Atenção Primária"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Ron Pisters", "colaboradores"], "organizations": ["European Society of Cardiology (ESC)"], "complexity": "intermediate", "rating": 4.6, "ratingCount": 185}, "calculator": {"inputs": [{"id": "hipertensao", "type": "select", "label": "Hipertensão Não Controlada", "description": "Pressão arterial sistólica maior que 160 mmHg.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "funcao_renal", "type": "select", "label": "Função Renal Anormal", "description": "Diálise, transplante renal, ou creatinina sérica maior que 2,26 mg/dL.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "funcao_hepatica", "type": "select", "label": "Função Hepática Anormal", "description": "Cirrose, bilirrubina maior que 2x o limite superior da normalidade, ou AST/ALT/fosfatase alcalina maior que 3x o normal.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "avc_previo", "type": "select", "label": "AVC Prévio", "description": "História prévia de acidente vascular cerebral.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "sangramento_previo", "type": "select", "label": "Sangramento Prévio ou Predisposição", "description": "História de sangramento maior prévio, anemia significativa ou predisposição conhecida a sangramentos.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "inr_labil", "type": "select", "label": "INR Lábil", "description": "INR instável ou elevado, ou tempo em faixa terapêutica menor que 60% (aplicável a pacientes em uso de varfarina).", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "idade", "type": "select", "label": "Idade Maior que 65 Anos", "description": "Idade do paciente superior a 65 anos.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "medicamentos", "type": "select", "label": "Uso de Medicamentos de Risco", "description": "Uso concomitante de antiplaquetários (AAS, clopidogrel) ou anti-inflamatórios não esteroidais (AINEs).", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "alcool", "type": "select", "label": "Uso Abusivo de Álcool", "description": "Consumo de álcool igual ou superior a 8 doses por semana.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Escore HAS-BLED", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 2, "label": "Baixo Risco de Sangramento", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixo risco de sangramento maior associado à terapia anticoagulante.", "recommendations": "• Manter anticoagulação conforme indicação, com monitorização de rotina\n• Reavaliar periodicamente fatores de risco modificáveis"}, {"min": 3, "max": 9, "label": "Alto Risco de Sangramento", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alto risco de sangramento. Isso não contraindica automaticamente a anticoagulação, mas indica necessidade de monitorização mais cuidadosa e atenção a fatores de risco modificáveis.", "recommendations": "• Não suspender anticoagulação automaticamente apenas pelo escore elevado — reavaliar risco-benefício com a equipe médica\n• Corrigir fatores de risco modificáveis (controle da PA, revisão de medicamentos concomitantes, redução do consumo de álcool)\n• Monitorização mais frequente, especialmente do INR se em uso de varfarina"}]}, "sae": {"nanda": [{"diagnosis": "Risco de sangramento", "definition": "Suscetibilidade a uma diminuição no volume de sangue, que pode comprometer a saúde, associada ao uso de terapia anticoagulante."}, {"diagnosis": "Conhecimento deficiente", "definition": "Ausência ou deficiência de informação cognitiva relacionada à terapia anticoagulante e seus riscos."}], "noc": [{"outcome": "Controle de risco: sangramento", "indicators": ["Reconhece sinais de sangramento", "Adere ao monitoramento laboratorial prescrito (ex: INR)", "Evita uso concomitante de medicamentos de risco sem orientação médica"]}], "nic": [{"intervention": "Precauções contra sangramento", "activities": ["Calcular o escore HAS-BLED na avaliação inicial e periodicamente", "Identificar e corrigir fatores de risco modificáveis (pressão arterial, medicamentos concomitantes, consumo de álcool)", "Orientar o paciente sobre sinais de alarme de sangramento", "Monitorar exames laboratoriais relacionados à anticoagulação (ex: INR)"]}]}, "evidence": {"foundation": "O escore HAS-BLED foi desenvolvido por Pisters e colaboradores para estimar o risco de sangramento maior em pacientes com fibrilação atrial em uso de terapia anticoagulante, avaliando 9 fatores de risco, a maioria modificável.", "history": "Recomendado pelas diretrizes europeias de cardiologia como ferramenta complementar ao CHA2DS2-VASc, não para contraindicar anticoagulação, mas para identificar e corrigir fatores de risco modificáveis e determinar a necessidade de monitorização mais próxima.", "validation": "Validado extensivamente na literatura cardiológica, com boa capacidade preditiva de sangramento maior, sendo amplamente utilizado em conjunto com escores de risco tromboembólico.", "limitations": "Um escore elevado não deve, isoladamente, contraindicar a anticoagulação quando esta é clinicamente indicada — deve motivar a correção de fatores modificáveis e monitorização mais cuidadosa, não a suspensão automática do tratamento.", "references": [{"text": "PISTERS, R. et al. A novel user-friendly score (HAS-BLED) to assess 1-year risk of major bleeding in patients with atrial fibrillation. Chest, v. 138, n. 5, p. 1093-1100, 2010."}, {"text": "HINDRICKS, G. et al. 2020 ESC Guidelines for the diagnosis and management of atrial fibrillation. European Heart Journal, v. 42, n. 5, p. 373-498, 2021."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Um HAS-BLED elevado não é motivo automático para suspender a anticoagulação — use-o para identificar e corrigir fatores de risco modificáveis.", "Avalie sempre em conjunto com o CHA2DS2-VASc para uma decisão terapêutica equilibrada entre risco de AVC e risco de sangramento.", "Fatores modificáveis incluem controle pressórico, revisão de medicamentos concomitantes e redução do consumo de álcool.", "Reavalie periodicamente, especialmente após mudanças na função renal, hepática ou no esquema medicamentoso."], "examples": [{"label": "Baixo risco de sangramento", "sublabel": "HAS-BLED 1", "emoji": "✅", "values": {"hipertensao": 0, "funcao_renal": 0, "funcao_hepatica": 0, "avc_previo": 0, "sangramento_previo": 0, "inr_labil": 0, "idade": 1, "medicamentos": 0, "alcool": 0}}, {"label": "Alto risco de sangramento", "sublabel": "HAS-BLED 4", "emoji": "⚠️", "values": {"hipertensao": 1, "funcao_renal": 0, "funcao_hepatica": 0, "avc_previo": 1, "sangramento_previo": 0, "inr_labil": 1, "idade": 1, "medicamentos": 0, "alcool": 0}}], "quiz": [{"q": "Quantos fatores de risco compõem o HAS-BLED?", "opts": ["7", "8", "9", "10"], "correct": 2, "expl": "O HAS-BLED avalia 9 fatores de risco, a maioria valendo 1 ponto cada."}, {"q": "Um HAS-BLED elevado (≥3) deve levar à suspensão automática da anticoagulação?", "opts": ["Sim, sempre", "Não, deve motivar correção de fatores modificáveis e monitorização mais próxima", "Apenas se o paciente tiver mais de 80 anos", "Sim, é uma contraindicação absoluta"], "correct": 1, "expl": "Um escore elevado não contraindica automaticamente a anticoagulação — deve motivar identificação e correção de fatores de risco modificáveis, além de monitorização mais cuidadosa."}, {"q": "Com qual outro escore o HAS-BLED é frequentemente utilizado em conjunto?", "opts": ["Glasgow", "CHA2DS2-VASc", "Braden", "APACHE II"], "correct": 1, "expl": "O HAS-BLED é usado em conjunto com o CHA2DS2-VASc para equilibrar a decisão entre risco de AVC (tromboembólico) e risco de sangramento na fibrilação atrial."}]}, "faq": [{"q": "O HAS-BLED contraindica a anticoagulação em escores altos?", "a": "Não diretamente. Um escore elevado indica maior necessidade de monitorização e correção de fatores de risco modificáveis, mas a decisão final sobre anticoagulação deve ponderar também o risco tromboembólico (CHA2DS2-VASc) e ser individualizada."}, {"q": "Quais fatores de risco do HAS-BLED são modificáveis?", "a": "Hipertensão não controlada, uso concomitante de antiplaquetários/AINEs, INR lábil e consumo abusivo de álcool são exemplos de fatores potencialmente modificáveis com intervenção clínica."}], "about": {"title": "Como funciona o HAS-BLED", "html": "<p>O HAS-BLED soma pontos de 9 fatores de risco — hipertensão, função renal e hepática anormais, AVC prévio, sangramento prévio, INR lábil, idade avançada, uso de medicamentos de risco e consumo abusivo de álcool —, cada um valendo 1 ponto, totalizando de 0 a 9 pontos.</p><p><strong>Guia rápido:</strong> 0-2 = Baixo risco | ≥3 = Alto risco de sangramento (não contraindica anticoagulação, mas exige monitorização mais próxima).</p>"}}</script>
@@ -709,6 +723,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="cries">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -296,32 +306,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -476,6 +476,7 @@
               <select class="field-select" data-calc-input="sinais_vitais"><option value="0" selected>FC e PA inalteradas ou menores que o basal</option><option value="1">Aumento de FC ou PA em menos de 20% do basal</option><option value="2">Aumento de FC ou PA em mais de 20% do basal</option></select></div><div class="urg-field"><label>Expressão (Expression)</label>
               <select class="field-select" data-calc-input="expressao"><option value="0" selected>Sem careta</option><option value="1">Careta isolada</option><option value="2">Careta associada a vocalização não-choro (grunhido)</option></select></div><div class="urg-field"><label>Insônia/Vigília (Sleepless)</label>
               <select class="field-select" data-calc-input="insonia"><option value="0" selected>Dormiu continuamente</option><option value="1">Despertou em intervalos frequentes</option><option value="2">Permaneceu acordado constantemente</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Dor ou Dor Mínima</span>
@@ -535,6 +536,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "8667bd1a-e2ae-4b64-90e8-5055b76e1e8f", "code": "SCALE-CRIES-001", "slug": "cries", "version": "1.0.0", "status": "published", "seo": {"title": "Escala CRIES - Dor Pós-Operatória Neonatal", "description": "Calcule a Escala CRIES para avaliar a dor pós-operatória em recém-nascidos por meio de indicadores fisiológicos e comportamentais. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/cries.html"}, "breadcrumb": {"category": "Neonatologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala CRIES", "acronym": "CRIES", "categoryBadge": "Neonatologia", "icon": "i-gauge", "objective": "Avaliar a dor pós-operatória em recém-nascidos por meio de 5 indicadores: choro, necessidade de oxigênio suplementar, aumento dos sinais vitais, expressão facial e insônia/vigília.", "indication": "Indicada na avaliação de dor pós-operatória em recém-nascidos com idade gestacional igual ou superior a 32 semanas, internados em UTI neonatal.", "targetPopulation": "Recém-nascidos com 32 semanas de idade gestacional ou mais, no período pós-operatório.", "specialty": ["Neonatologia", "Enfermagem", "Manejo da Dor"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Sharon W. Krechel", "Judy Bildner"], "complexity": "intermediate", "rating": 4.5, "ratingCount": 110}, "calculator": {"inputs": [{"id": "choro", "type": "select", "label": "Choro (Crying)", "defaultValue": 0, "description": "O choro característico da dor é agudo (alta frequência).", "options": [{"value": 0, "label": "Sem choro, ou choro não é agudo", "score": 0}, {"value": 1, "label": "Choro agudo, mas facilmente consolável", "score": 1}, {"value": 2, "label": "Choro agudo e inconsolável", "score": 2}]}, {"id": "requer_o2", "type": "select", "label": "Necessidade de O2 para SatO2 > 95% (Requires O2)", "defaultValue": 0, "description": "Observar alterações na oxigenação; recém-nascidos com dor podem apresentar quedas na saturação de oxigênio.", "options": [{"value": 0, "label": "Não necessita de oxigênio suplementar", "score": 0}, {"value": 1, "label": "Necessita de FiO2 < 30%", "score": 1}, {"value": 2, "label": "Necessita de FiO2 > 30%", "score": 2}]}, {"id": "sinais_vitais", "type": "select", "label": "Aumento dos Sinais Vitais (Increased Vital Signs)", "defaultValue": 0, "description": "Comparar FC e PA com os valores basais pré-operatórios (período sem estresse). Aferir a PA por último, pois pode despertar o recém-nascido.", "options": [{"value": 0, "label": "FC e PA inalteradas ou menores que o basal", "score": 0}, {"value": 1, "label": "Aumento de FC ou PA em menos de 20% do basal", "score": 1}, {"value": 2, "label": "Aumento de FC ou PA em mais de 20% do basal", "score": 2}]}, {"id": "expressao", "type": "select", "label": "Expressão (Expression)", "defaultValue": 0, "description": "A expressão facial mais associada à dor é a careta (franzir da testa, olhos apertados, aprofundamento do sulco nasolabial, lábios e boca abertos).", "options": [{"value": 0, "label": "Sem careta", "score": 0}, {"value": 1, "label": "Careta isolada", "score": 1}, {"value": 2, "label": "Careta associada a vocalização não-choro (grunhido)", "score": 2}]}, {"id": "insonia", "type": "select", "label": "Insônia/Vigília (Sleepless)", "defaultValue": 0, "description": "Avaliar o estado do recém-nascido na hora anterior ao registro do escore.", "options": [{"value": 0, "label": "Dormiu continuamente", "score": 0}, {"value": 1, "label": "Despertou em intervalos frequentes", "score": 1}, {"value": 2, "label": "Permaneceu acordado constantemente", "score": 2}]}], "formula": {"type": "sum", "resultLabel": "Escala CRIES", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 3, "label": "Sem Dor ou Dor Mínima", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Pontuação de 0 a 3 pontos, compatível com ausência de dor ou dor mínima.", "recommendations": "• Manter conduta atual\n• Reavaliar conforme protocolo institucional"}, {"min": 4, "max": 5, "label": "Dor Presente - Reavaliação Necessária", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação de 4 a 5 pontos sugere dor presente, exigindo avaliação adicional.", "recommendations": "• Realizar avaliação adicional da dor\n• Considerar medidas não farmacológicas de conforto (sucção não nutritiva, contenção facilitada, colo)\n• Reavaliar em intervalo curto"}, {"min": 6, "max": 10, "label": "Dor Significativa - Analgesia Indicada", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação de 6 pontos ou mais indica dor significativa, com indicação de administração de analgesia.", "recommendations": "• Comunicar imediatamente à equipe médica\n• Priorizar intervenção analgésica farmacológica conforme prescrição\n• Associar medidas não farmacológicas de conforto\n• Reavaliar em intervalo curto após a intervenção"}]}, "sae": {"nanda": [{"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real (pós-operatória), identificada por indicadores fisiológicos e comportamentais no recém-nascido."}], "noc": [{"outcome": "Controle da dor", "indicators": ["Escore CRIES avaliado de forma sistemática no pós-operatório", "Utiliza medidas de alívio farmacológicas e não farmacológicas conforme indicação", "Redução do escore CRIES após intervenção analgésica"]}], "nic": [{"intervention": "Manejo da dor pós-operatória neonatal", "activities": ["Aplicar a CRIES regularmente no período pós-operatório conforme protocolo institucional", "Comparar os sinais vitais com os valores basais pré-operatórios do próprio recém-nascido", "Utilizar medidas não farmacológicas de conforto (sucção não nutritiva, glicose oral, contenção facilitada)", "Administrar analgesia conforme prescrição em pontuações elevadas (≥6)", "Registrar a pontuação CRIES e a resposta à intervenção no prontuário"]}]}, "evidence": {"foundation": "A CRIES avalia 5 indicadores — choro, necessidade de oxigênio suplementar, aumento dos sinais vitais, expressão facial e insônia — cada um pontuado de 0 a 2, totalizando um escore de 0 a 10 pontos, específico para dor pós-operatória em recém-nascidos.", "history": "Desenvolvida por Krechel e Bildner em 1995, a CRIES foi uma das primeiras escalas construídas especificamente para avaliação de dor pós-operatória em neonatos, combinando indicadores fisiológicos objetivos com indicadores comportamentais.", "validation": "Validada para recém-nascidos com idade gestacional igual ou superior a 32 semanas em unidades de terapia intensiva neonatal, com boa confiabilidade e validade na detecção de dor pós-operatória.", "limitations": "Requer acesso a parâmetros basais pré-operatórios (FC, PA, saturação) do próprio recém-nascido para comparação adequada. Outras causas de alteração de sinais vitais e oxigenação (atelectasia, pneumotórax, sedação excessiva) devem ser consideradas antes de atribuir a alteração exclusivamente à dor.", "references": [{"text": "KRECHEL, S. W.; BILDNER, J. CRIES: a new neonatal postoperative pain measurement score. Initial testing of validity and reliability. Paediatric Anaesthesia, v. 5, n. 1, p. 53-61, 1995."}, {"text": "SOCIEDADE BRASILEIRA DE PEDIATRIA. Avaliação e tratamento da dor no recém-nascido. Rio de Janeiro: SBP, 2021."}, {"text": "MOTTA, G. C. P.; CUNHA, M. L. C. Avaliação e tratamento da dor em recém-nascidos internados na unidade de terapia intensiva. Revista Gaúcha de Enfermagem, v. 31, n. 1, p. 174-181, 2010."}]}, "learning": {"tips": ["O nome CRIES é um acrônimo em inglês: Crying (choro), Requires O2 (necessita de O2), Increased vital signs (sinais vitais aumentados), Expression (expressão) e Sleeplessness (insônia).", "É essencial comparar a frequência cardíaca e a pressão arterial com os valores basais pré-operatórios do próprio recém-nascido, obtidos em período sem estresse.", "Afira a pressão arterial por último, pois o procedimento pode despertar o recém-nascido e dificultar a avaliação dos demais itens.", "Considere outras causas de alteração da oxigenação (atelectasia, pneumotórax, sedação) antes de atribuir a queda de saturação exclusivamente à dor."], "examples": [{"label": "Recém-nascido confortável", "sublabel": "CRIES 0", "emoji": "😴", "values": {"choro": 0, "requer_o2": 0, "sinais_vitais": 0, "expressao": 0, "insonia": 0}}, {"label": "Dor presente, requer reavaliação", "sublabel": "CRIES 5", "emoji": "😣", "values": {"choro": 1, "requer_o2": 1, "sinais_vitais": 1, "expressao": 1, "insonia": 1}}, {"label": "Dor significativa, analgesia indicada", "sublabel": "CRIES 9", "emoji": "😭", "values": {"choro": 2, "requer_o2": 2, "sinais_vitais": 2, "expressao": 1, "insonia": 2}}], "quiz": [{"q": "O que significa o acrônimo CRIES?", "opts": ["Crying, Requires O2, Increased vital signs, Expression, Sleeplessness", "Crying, Reflex, Irritability, Extremities, Sound", "Consciousness, Respiration, Infection, Eyes, Skin", "Color, Respiration, Increased HR, Expression, Sedation"], "correct": 0, "expl": "CRIES é a sigla para Crying (choro), Requires O2 (necessita de O2), Increased vital signs (sinais vitais aumentados), Expression (expressão) e Sleeplessness (insônia)."}, {"q": "A partir de qual pontuação a administração de analgesia é considerada indicada na CRIES?", "opts": ["A partir de 2 pontos", "A partir de 4 pontos", "A partir de 6 pontos", "Apenas com pontuação máxima de 10"], "correct": 2, "expl": "Pontuações de 4 ou mais já indicam necessidade de avaliação adicional, e a partir de 6 pontos a administração de analgesia é indicada."}, {"q": "Para avaliar o item 'sinais vitais', com o que a FC e a PA atuais devem ser comparadas?", "opts": ["Com valores de referência padrão para a idade", "Com os valores basais pré-operatórios do próprio recém-nascido", "Com os valores do último plantão", "Com os valores de outro recém-nascido da mesma idade gestacional"], "correct": 1, "expl": "A CRIES utiliza os valores basais pré-operatórios do próprio recém-nascido (obtidos em período sem estresse) como referência de comparação."}]}, "faq": [{"q": "A CRIES pode ser usada em qualquer recém-nascido?", "a": "A CRIES foi validada para recém-nascidos com idade gestacional igual ou superior a 32 semanas, sendo específica para o contexto de dor pós-operatória em UTI neonatal."}, {"q": "Uma queda na saturação de oxigênio sempre indica dor?", "a": "Não necessariamente. Outras causas como atelectasia, pneumotórax ou sedação excessiva também podem causar quedas na oxigenação e devem ser consideradas na avaliação clínica antes de atribuir a alteração exclusivamente à dor."}], "about": {"title": "Como funciona a Escala CRIES", "html": "<p>A CRIES soma a pontuação (0 a 2) de 5 indicadores — choro, necessidade de O2, aumento dos sinais vitais, expressão facial e insônia — totalizando de 0 a 10 pontos.</p><p><strong>Guia rápido:</strong> 0-3 = Sem dor/mínima | 4-5 = Dor presente, reavaliar | 6-10 = Dor significativa, analgesia indicada.</p>"}}</script>
@@ -590,6 +604,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

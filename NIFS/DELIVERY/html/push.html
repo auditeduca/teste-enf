@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="push">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -270,32 +280,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -414,6 +414,7 @@
               <select class="field-select" data-calc-input="area"><option value="0" selected>0 cm² (Lesão Fechada)</option><option value="1">Menos de 0,3 cm²</option><option value="2">0,3 a 0,6 cm²</option><option value="3">0,7 a 1,0 cm²</option><option value="4">1,1 a 2,0 cm²</option><option value="5">2,1 a 3,0 cm²</option><option value="6">3,1 a 4,0 cm²</option><option value="7">4,1 a 8,0 cm²</option><option value="8">8,1 a 12,0 cm²</option><option value="9">12,1 a 24,0 cm²</option><option value="10">Mais de 24,0 cm²</option></select></div><div class="urg-field"><label>Quantidade de Exsudato</label>
               <select class="field-select" data-calc-input="exsudato"><option value="0" selected>Nenhum</option><option value="1">Leve</option><option value="2">Moderado</option><option value="3">Intenso</option></select></div><div class="urg-field"><label>Tipo de Tecido</label>
               <select class="field-select" data-calc-input="tipo_tecido"><option value="0" selected>Fechado / Cicatrizado</option><option value="1">Tecido Epitelial</option><option value="2">Tecido de Granulação</option><option value="3">Esfacelo</option><option value="4">Tecido Necrótico (Escara)</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Lesão Cicatrizada</span>
@@ -473,6 +474,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "4b5c6d7e-8496-4a0b-4152-6d7e85960718", "code": "SCALE-PUSH-001", "slug": "push", "version": "1.0.0", "status": "published", "seo": {"title": "PUSH Tool - Escala de Cicatrização de Lesão por Pressão", "description": "Calcule o PUSH Tool (Pressure Ulcer Scale for Healing) para monitorar a evolução da cicatrização de lesões por pressão. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/push.html"}, "breadcrumb": {"category": "Cuidados com a Pele", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "PUSH Tool", "acronym": "PUSH", "categoryBadge": "Cuidados com a pele", "icon": "i-leaf", "objective": "Monitorar objetivamente a evolução da cicatrização de lesões por pressão ao longo do tempo, a partir de 3 parâmetros: área da lesão, quantidade de exsudato e tipo de tecido predominante no leito da ferida.", "indication": "Indicada para reavaliação seriada de lesões por pressão já existentes, permitindo acompanhar objetivamente se a lesão está em processo de cicatrização, estável ou em piora.", "targetPopulation": "Pacientes com lesão por pressão diagnosticada, em qualquer estágio, em ambiente hospitalar, ambulatorial ou domiciliar.", "specialty": ["Estomaterapia", "Enfermagem", "Cuidados com a Pele"], "averageTime": "3-5 minutos", "evidenceLevel": "II", "organizations": ["National Pressure Ulcer Advisory Panel (NPUAP)"], "complexity": "intermediate", "rating": 4.6, "ratingCount": 245}, "calculator": {"inputs": [{"id": "area", "type": "select", "label": "Área da Lesão (comprimento × largura)", "description": "Meça o maior comprimento e a maior largura da lesão (em cm) e multiplique para obter a área em cm².", "defaultValue": 0, "options": [{"value": 0, "label": "0 cm² (Lesão Fechada)", "score": 0, "description": "Lesão completamente epitelizada/fechada."}, {"value": 1, "label": "Menos de 0,3 cm²", "score": 1}, {"value": 2, "label": "0,3 a 0,6 cm²", "score": 2}, {"value": 3, "label": "0,7 a 1,0 cm²", "score": 3}, {"value": 4, "label": "1,1 a 2,0 cm²", "score": 4}, {"value": 5, "label": "2,1 a 3,0 cm²", "score": 5}, {"value": 6, "label": "3,1 a 4,0 cm²", "score": 6}, {"value": 7, "label": "4,1 a 8,0 cm²", "score": 7}, {"value": 8, "label": "8,1 a 12,0 cm²", "score": 8}, {"value": 9, "label": "12,1 a 24,0 cm²", "score": 9}, {"value": 10, "label": "Mais de 24,0 cm²", "score": 10}]}, {"id": "exsudato", "type": "select", "label": "Quantidade de Exsudato", "description": "Quantidade de exsudato observada após a remoção do curativo, antes da aplicação de qualquer produto tópico.", "defaultValue": 0, "options": [{"value": 0, "label": "Nenhum", "score": 0, "description": "Leito da ferida seco."}, {"value": 1, "label": "Leve", "score": 1, "description": "Pequena quantidade de exsudato."}, {"value": 2, "label": "Moderado", "score": 2, "description": "Quantidade moderada de exsudato."}, {"value": 3, "label": "Intenso", "score": 3, "description": "Grande quantidade de exsudato."}]}, {"id": "tipo_tecido", "type": "select", "label": "Tipo de Tecido", "description": "Tipo de tecido predominante presente no leito da ferida.", "defaultValue": 0, "options": [{"value": 0, "label": "Fechado / Cicatrizado", "score": 0, "description": "Pele totalmente reepitelizada ou fechada."}, {"value": 1, "label": "Tecido Epitelial", "score": 1, "description": "Tecido epitelial novo, róseo ou brilhante, cobrindo parte ou toda a lesão."}, {"value": 2, "label": "Tecido de Granulação", "score": 2, "description": "Tecido róseo/vermelho brilhante, com aspecto granular e úmido."}, {"value": 3, "label": "Esfacelo", "score": 3, "description": "Tecido amarelado ou esbranquiçado, aderido ou solto, tipo fibrinoso."}, {"value": 4, "label": "Tecido Necrótico (Escara)", "score": 4, "description": "Tecido enegrecido, endurecido ou amolecido, aderido ao leito ou às bordas da ferida."}]}], "formula": {"type": "sum", "resultLabel": "Escore PUSH", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 0, "label": "Lesão Cicatrizada", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Lesão completamente fechada/epitelizada, sem área mensurável nem exsudato.", "recommendations": "• Manter proteção da pele recém-cicatrizada\n• Continuar medidas de prevenção de nova lesão"}, {"min": 1, "max": 9, "label": "Evolução Favorável", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Pontuação mais baixa dentro da faixa possível, geralmente associada a lesão em processo de cicatrização. O PUSH deve ser interpretado pela tendência ao longo do tempo (queda progressiva do escore), não apenas pelo valor isolado.", "recommendations": "• Manter o plano de cuidados da ferida vigente\n• Reavaliar semanalmente (ou conforme protocolo) para acompanhar tendência\n• Documentar e comparar com avaliações anteriores"}, {"min": 10, "max": 17, "label": "Lesão Extensa — Monitorar Evolução", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação mais alta, indicando lesão mais extensa e/ou com tecido menos favorável. Fundamental acompanhar a tendência do escore nas reavaliações seriadas.", "recommendations": "• Reavaliar o plano terapêutico da ferida com a equipe\n• Investigar fatores que possam estar dificultando a cicatrização (nutrição, perfusão, infecção, pressão persistente)\n• Reavaliação mais frequente conforme gravidade"}]}, "sae": {"nanda": [{"diagnosis": "Integridade da pele prejudicada", "definition": "Alteração na epiderme e/ou derme."}, {"diagnosis": "Integridade tissular prejudicada", "definition": "Dano ao tecido mucoso, córneo, subcutâneo, muscular, cartilaginoso, ósseo ou vascular."}, {"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos, relacionado à solução de continuidade da pele."}], "noc": [{"outcome": "Cicatrização de feridas: segunda intenção", "indicators": ["Diminuição do tamanho da lesão", "Formação de tecido de granulação", "Redução do exsudato", "Ausência de sinais de infecção"]}], "nic": [{"intervention": "Cuidados com a lesão", "activities": ["Mensurar e documentar área, exsudato e tipo de tecido a cada avaliação", "Realizar curativo conforme protocolo e características da lesão", "Monitorar sinais de infecção", "Registrar a evolução do escore PUSH ao longo do tempo", "Orientar sobre reposicionamento e alívio de pressão"]}]}, "evidence": {"foundation": "O PUSH Tool foi desenvolvido pelo National Pressure Ulcer Advisory Panel (NPUAP) como um instrumento simples e padronizado para monitorar a evolução da cicatrização de lesões por pressão ao longo do tempo, avaliando área, exsudato e tipo de tecido.", "history": "Amplamente utilizado em serviços de estomaterapia e cuidados com feridas para documentar objetivamente a evolução clínica de lesões por pressão, permitindo comparação padronizada entre avaliações seriadas.", "validation": "Estudos de validação demonstram boa sensibilidade para detectar mudanças ao longo do tempo, sendo uma ferramenta confiável para monitorar tendência de cicatrização, embora não substitua a avaliação clínica completa da ferida.", "limitations": "O PUSH Tool foi desenhado para monitorar tendência ao longo do tempo (redução progressiva do escore indica cicatrização), não para classificar gravidade em um único momento isolado. Não avalia profundidade da lesão nem descolamento/túneis.", "references": [{"text": "NATIONAL PRESSURE ULCER ADVISORY PANEL (NPUAP). Pressure Ulcer Scale for Healing (PUSH) Tool. Reston: NPUAP, 1998."}, {"text": "THOMAS, D. R. et al. Pressure ulcer scale for healing: derivation and validation of the PUSH tool. Advances in Wound Care, v. 10, n. 5, p. 96-101, 1997."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Reavalie sempre com a mesma técnica de mensuração para garantir comparabilidade entre avaliações.", "O mais importante é a tendência do escore ao longo do tempo, não o valor isolado de uma única avaliação.", "Registre fotografias padronizadas junto com o escore para documentação mais completa.", "Investigue causas de estagnação ou piora do escore (nutrição, perfusão, pressão persistente, infecção)."], "examples": [{"label": "Lesão em cicatrização", "sublabel": "PUSH 3", "emoji": "✅", "values": {"area": 2, "exsudato": 0, "tipo_tecido": 1}}, {"label": "Lesão moderada, granulando", "sublabel": "PUSH 8", "emoji": "⚠️", "values": {"area": 4, "exsudato": 2, "tipo_tecido": 2}}, {"label": "Lesão extensa com necrose", "sublabel": "PUSH 15", "emoji": "🚨", "values": {"area": 9, "exsudato": 2, "tipo_tecido": 4}}], "quiz": [{"q": "Quantos parâmetros compõem o PUSH Tool?", "opts": ["2", "3", "4", "5"], "correct": 1, "expl": "O PUSH avalia 3 parâmetros: área da lesão, quantidade de exsudato e tipo de tecido predominante."}, {"q": "O que uma redução progressiva do escore PUSH ao longo das reavaliações indica?", "opts": ["Piora da lesão", "Cicatrização em progresso", "Infecção ativa", "Nenhuma mudança relevante"], "correct": 1, "expl": "O PUSH Tool foi desenhado para monitorar tendência: uma redução progressiva do escore ao longo do tempo indica que a lesão está evoluindo para cicatrização."}, {"q": "O PUSH Tool avalia profundidade da lesão?", "opts": ["Sim, é o principal parâmetro", "Não, avalia área, exsudato e tipo de tecido", "Apenas em lesões estágio IV", "Sim, mas apenas em lesões fechadas"], "correct": 1, "expl": "O PUSH Tool não avalia profundidade diretamente; seus 3 parâmetros são área, exsudato e tipo de tecido do leito da ferida."}]}, "faq": [{"q": "Com que frequência o PUSH deve ser reaplicado?", "a": "Recomenda-se reavaliação semanal, ou conforme protocolo institucional, para acompanhar a tendência de cicatrização ao longo do tempo."}, {"q": "Um escore PUSH baixo sempre significa lesão pequena e simples?", "a": "Não necessariamente isoladamente — o valor deve ser interpretado em conjunto com a tendência das avaliações anteriores e o contexto clínico geral do paciente."}], "about": {"title": "Como funciona o PUSH Tool", "html": "<p>O PUSH Tool soma pontos de 3 parâmetros — área da lesão (0-10 pontos), quantidade de exsudato (0-3 pontos) e tipo de tecido predominante (0-4 pontos) — totalizando de 0 a 17 pontos. O valor deve ser acompanhado ao longo de avaliações seriadas: a redução progressiva do escore indica evolução favorável da cicatrização.</p><p><strong>Guia rápido:</strong> 0 = Lesão cicatrizada | Escores mais baixos = tendência favorável | Escores mais altos = lesão mais extensa, requer monitorização mais próxima.</p>"}}</script>
@@ -528,6 +542,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

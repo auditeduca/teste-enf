@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="glasgow-pupilas">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -284,32 +294,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -446,6 +446,7 @@
               <select class="field-select" data-calc-input="resposta_verbal"><option value="5" selected>Orientada</option><option value="4">Confusa</option><option value="3">Palavras Inapropriadas</option><option value="2">Sons Incompreensíveis</option><option value="1">Ausente</option></select></div><div class="urg-field"><label>Melhor Resposta Motora</label>
               <select class="field-select" data-calc-input="resposta_motora"><option value="6" selected>Obedece a Comandos</option><option value="5">Localiza a Dor</option><option value="4">Flexão Inespecífica (Retirada)</option><option value="3">Flexão Anormal (Decorticação)</option><option value="2">Extensão Anormal (Descerebração)</option><option value="1">Ausente</option></select></div><div class="urg-field"><label>Reatividade Pupilar</label>
               <select class="field-select" data-calc-input="reatividade_pupilar"><option value="0" selected>Ambas as Pupilas Reagem à Luz</option><option value="1">Apenas uma Pupila Reage à Luz</option><option value="2">Nenhuma Pupila Reage à Luz</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">15</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Lesão Neurológica Leve / Sem Comprometimento Grave</span>
@@ -505,6 +506,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Behavioral Pain Scale</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cam.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Método de Avaliação de Confusão</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "50617283-9405-1728-3940-506172839405", "code": "SCALE-GCSP-001", "slug": "glasgow-pupilas", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Glasgow com Pupilas (GCS-P) - Avaliação Neurológica", "description": "Calcule a Escala de Coma de Glasgow com Reatividade Pupilar (GCS-P), que combina o GCS tradicional com a resposta pupilar. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/glasgow-pupilas.html"}, "breadcrumb": {"category": "Neurologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Glasgow com Pupilas", "acronym": "GCS-P", "categoryBadge": "Neurologia", "icon": "i-brain", "objective": "Combinar a Escala de Coma de Glasgow (GCS) tradicional com a avaliação da reatividade pupilar, ampliando o poder prognóstico da escala em pacientes com lesão neurológica aguda.", "indication": "Indicada em pacientes com traumatismo cranioencefálico, AVC ou outras condições neurológicas agudas, especialmente quando o GCS isolado tem valor prognóstico limitado em escores muito baixos.", "targetPopulation": "Pacientes adultos e pediátricos com alteração do nível de consciência de origem neurológica.", "specialty": ["Neurologia", "Terapia Intensiva", "Emergência"], "averageTime": "2 minutos", "evidenceLevel": "II", "organizations": ["International Mission for Prognosis and Analysis of Clinical Trials (IMPACT)"], "complexity": "intermediate", "rating": 4.5, "ratingCount": 175}, "calculator": {"inputs": [{"id": "abertura_ocular", "type": "select", "label": "Abertura Ocular", "defaultValue": 4, "description": "Melhor resposta de abertura ocular observada.", "options": [{"value": 4, "label": "Espontânea", "score": 4}, {"value": 3, "label": "Ao Comando Verbal", "score": 3}, {"value": 2, "label": "À Dor", "score": 2}, {"value": 1, "label": "Ausente", "score": 1}]}, {"id": "resposta_verbal", "type": "select", "label": "Melhor Resposta Verbal", "defaultValue": 5, "description": "Melhor resposta verbal observada.", "options": [{"value": 5, "label": "Orientada", "score": 5}, {"value": 4, "label": "Confusa", "score": 4}, {"value": 3, "label": "Palavras Inapropriadas", "score": 3}, {"value": 2, "label": "Sons Incompreensíveis", "score": 2}, {"value": 1, "label": "Ausente", "score": 1}]}, {"id": "resposta_motora", "type": "select", "label": "Melhor Resposta Motora", "defaultValue": 6, "description": "Melhor resposta motora observada.", "options": [{"value": 6, "label": "Obedece a Comandos", "score": 6}, {"value": 5, "label": "Localiza a Dor", "score": 5}, {"value": 4, "label": "Flexão Inespecífica (Retirada)", "score": 4}, {"value": 3, "label": "Flexão Anormal (Decorticação)", "score": 3}, {"value": 2, "label": "Extensão Anormal (Descerebração)", "score": 2}, {"value": 1, "label": "Ausente", "score": 1}]}, {"id": "reatividade_pupilar", "type": "select", "label": "Reatividade Pupilar", "defaultValue": 0, "description": "Reatividade pupilar à luz, avaliada bilateralmente.", "options": [{"value": 0, "label": "Ambas as Pupilas Reagem à Luz", "score": 0}, {"value": 1, "label": "Apenas uma Pupila Reage à Luz", "score": 1}, {"value": 2, "label": "Nenhuma Pupila Reage à Luz", "score": 2}]}], "formula": {"type": "expression", "expression": "abertura_ocular+resposta_verbal+resposta_motora-reatividade_pupilar", "resultLabel": "Escala de Glasgow com Pupilas (GCS-P)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": -1, "max": 3, "label": "Lesão Neurológica Extremamente Grave", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "GCS-P muito baixo, associado a lesão neurológica extremamente grave e prognóstico reservado.", "recommendations": "• Priorizar proteção de via aérea e estabilização\n• Avaliação neurocirúrgica/neurológica urgente\n• Monitorização neurológica intensiva e contínua"}, {"min": 4, "max": 8, "label": "Lesão Neurológica Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "GCS-P baixo, compatível com lesão neurológica grave (coma).", "recommendations": "• Avaliar necessidade de via aérea definitiva\n• Encaminhar para terapia intensiva/neurocirurgia conforme indicação\n• Monitorização neurológica seriada"}, {"min": 9, "max": 12, "label": "Lesão Neurológica Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "GCS-P intermediário, compatível com lesão neurológica moderada.", "recommendations": "• Monitorização neurológica frequente\n• Reavaliar tendência do GCS-P ao longo do tempo\n• Investigar causas reversíveis de rebaixamento do nível de consciência"}, {"min": 13, "max": 15, "label": "Lesão Neurológica Leve / Sem Comprometimento Grave", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "GCS-P preservado, compatível com ausência de comprometimento neurológico grave ou lesão leve.", "recommendations": "• Manter monitorização neurológica de rotina\n• Reavaliar conforme protocolo institucional, especialmente após TCE"}]}, "sae": {"nanda": [{"diagnosis": "Perfusão tissular cerebral ineficaz", "definition": "Diminuição da circulação sanguínea cerebral, podendo comprometer a saúde."}, {"diagnosis": "Risco de aspiração", "definition": "Risco de entrada de secreções gastrintestinais, orofaríngeas, sólidos ou líquidos nas vias traqueobrônquicas, relacionado ao rebaixamento do nível de consciência."}, {"diagnosis": "Ventilação espontânea prejudicada", "definition": "Diminuição das reservas de energia, resultando na incapacidade do indivíduo em manter respiração adequada para sustentar a vida."}], "noc": [{"outcome": "Status neurológico", "indicators": ["GCS-P estável ou em melhora", "Reatividade pupilar preservada ou monitorada", "Ausência de sinais de deterioração neurológica aguda"]}], "nic": [{"intervention": "Monitorização neurológica", "activities": ["Avaliar e registrar o GCS-P em intervalos regulares", "Avaliar reatividade pupilar bilateralmente a cada avaliação", "Comunicar imediatamente qualquer queda do GCS-P ou assimetria pupilar", "Manter proteção de via aérea conforme nível de consciência", "Monitorar sinais de hipertensão intracraniana"]}]}, "evidence": {"foundation": "A GCS-P combina a Escala de Coma de Glasgow tradicional (3-15 pontos) com a reatividade pupilar (0-2 pontos subtraídos), ampliando a faixa de escores possíveis e melhorando o poder discriminativo prognóstico, especialmente em escores muito baixos onde o GCS isolado tem menor variabilidade.", "history": "Desenvolvida como parte de estudos do consórcio IMPACT sobre prognóstico em traumatismo cranioencefálico, incorporando a reatividade pupilar — um forte preditor prognóstico independente — à escala de Glasgow tradicional.", "validation": "Estudos demonstram que a GCS-P tem maior correlação com desfechos (mortalidade e incapacidade) em TCE grave comparada ao GCS isolado, sendo incorporada em calculadoras prognósticas como o IMPACT e CRASH.", "limitations": "Fatores que alteram a reatividade pupilar independentemente da lesão neurológica (uso de midriáticos, cirurgia oftalmológica prévia, trauma ocular direto) podem confundir a interpretação. A escala não substitui exames de imagem e avaliação neurológica completa.", "references": [{"text": "MURRAY, G. D. et al. Multivariable prognostic analysis in traumatic brain injury: results from the IMPACT study. Journal of Neurotrauma, v. 24, n. 2, p. 329-337, 2007."}, {"text": "BRENNAN, P. M.; MURRAY, G. D.; TEASDALE, G. M. Simplifying the use of prognostic information in traumatic brain injury. Part 1: The GCS-Pupils score. Journal of Neurosurgery, v. 128, n. 6, p. 1612-1620, 2018."}, {"text": "TEASDALE, G.; JENNETT, B. Assessment of coma and impaired consciousness: a practical scale. The Lancet, v. 304, n. 7872, p. 81-84, 1974."}]}, "learning": {"tips": ["A reatividade pupilar é subtraída do escore total do GCS, resultando em uma faixa de -1 a 15 (na prática, geralmente reportada de 1 a 15).", "Avalie a reatividade pupilar com uma fonte de luz direta em ambiente com pouca luminosidade, comparando ambos os olhos.", "Descarte causas locais de midríase (uso de colírios midriáticos, trauma ocular direto) antes de atribuir a alteração pupilar à lesão neurológica.", "A GCS-P é especialmente útil para estratificar prognóstico em pacientes com GCS muito baixo (3-5), onde o GCS isolado tem menor capacidade discriminativa."], "examples": [{"label": "Sem comprometimento grave", "sublabel": "GCS-P 15", "emoji": "✅", "values": {"abertura_ocular": 4, "resposta_verbal": 5, "resposta_motora": 6, "reatividade_pupilar": 0}}, {"label": "TCE moderado", "sublabel": "GCS-P 10", "emoji": "⚠️", "values": {"abertura_ocular": 3, "resposta_verbal": 3, "resposta_motora": 4, "reatividade_pupilar": 0}}, {"label": "TCE grave com pupilas fixas", "sublabel": "GCS-P 1", "emoji": "🚨", "values": {"abertura_ocular": 1, "resposta_verbal": 1, "resposta_motora": 3, "reatividade_pupilar": 2}}], "quiz": [{"q": "O que a GCS-P adiciona à Escala de Coma de Glasgow tradicional?", "opts": ["Frequência respiratória", "Reatividade pupilar", "Temperatura corporal", "Nível de glicemia"], "correct": 1, "expl": "A GCS-P subtrai do escore total do GCS uma pontuação de 0 a 2 relacionada à reatividade pupilar, ampliando o poder prognóstico da escala."}, {"q": "Quantos pontos são subtraídos quando nenhuma pupila reage à luz?", "opts": ["0", "1", "2", "3"], "correct": 2, "expl": "Quando nenhuma pupila reage à luz, 2 pontos são subtraídos do escore total do GCS."}, {"q": "Por que a GCS-P é especialmente útil em escores de GCS muito baixos?", "opts": ["Porque ignora a resposta motora", "Porque amplia a capacidade discriminativa prognóstica nessa faixa", "Porque só se aplica a crianças", "Porque substitui a necessidade de exames de imagem"], "correct": 1, "expl": "Em escores de GCS muito baixos (3-5), a variabilidade prognóstica é limitada; a reatividade pupilar acrescenta informação discriminativa relevante nesses casos."}]}, "faq": [{"q": "A GCS-P substitui o GCS tradicional?", "a": "Não substitui, mas complementa. A GCS-P é calculada a partir do GCS tradicional (soma de abertura ocular, resposta verbal e resposta motora) subtraindo a pontuação de reatividade pupilar, ampliando o poder prognóstico especialmente em escores baixos."}, {"q": "O que pode confundir a avaliação da reatividade pupilar?", "a": "Uso de colírios midriáticos ou mióticos, cirurgia oftalmológica prévia, trauma ocular direto e certas medicações sistêmicas podem alterar a reatividade pupilar independentemente da condição neurológica, devendo ser considerados na interpretação."}], "about": {"title": "Como funciona a Escala de Glasgow com Pupilas (GCS-P)", "html": "<p>A GCS-P é calculada somando abertura ocular (1-4), resposta verbal (1-5) e resposta motora (1-6) — como no GCS tradicional — e subtraindo a pontuação de reatividade pupilar (0 se ambas reagem, 1 se apenas uma reage, 2 se nenhuma reage).</p><p><strong>Guia rápido:</strong> 13-15 = Leve | 9-12 = Moderado | 4-8 = Grave | ≤3 = Extremamente grave.</p>"}}</script>
@@ -560,6 +574,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

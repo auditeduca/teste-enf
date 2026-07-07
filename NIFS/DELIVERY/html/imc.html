@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="imc">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -264,32 +274,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -390,6 +390,7 @@
             <div class="urg-grid"><div class="urg-field"><label>Peso</label>
               <input aria-label="Number" type="number" data-calc-input="peso" value="70"></div><div class="urg-field"><label>Altura</label>
               <input aria-label="Number" type="number" data-calc-input="altura" value="1.7"></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">24.2</span><span class="urg-result-unit" id="urgResultUnit">kg/m²</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Peso Normal</span>
@@ -449,6 +450,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "ad5e6f70-8192-4a3b-cd4e-5f6072839405", "code": "CALC-IMC-001", "slug": "imc", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de IMC - Índice de Massa Corporal", "description": "Calcule o Índice de Massa Corporal (IMC) a partir do peso e altura. Inclui classificação segundo a OMS, evidências e orientações de enfermagem.", "canonical": "https://www.calculadorasdeenfermagem.com.br/imc.html"}, "breadcrumb": {"category": "Avaliação Nutricional", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de IMC", "acronym": "IMC", "categoryBadge": "Avaliação nutricional", "icon": "i-gauge", "objective": "Calcular o Índice de Massa Corporal (IMC) a partir do peso e da altura, classificando a faixa de peso segundo os critérios da Organização Mundial da Saúde (OMS).", "indication": "Indicada como triagem inicial do estado nutricional em pacientes adultos, em consultas de enfermagem, admissão hospitalar e acompanhamento ambulatorial.", "targetPopulation": "Adultos (não recomendado para gestantes, atletas de alta performance ou crianças, que possuem curvas específicas).", "specialty": ["Nutrição", "Enfermagem", "Atenção Primária"], "averageTime": "1 minuto", "evidenceLevel": "II", "organizations": ["Organização Mundial da Saúde (OMS)"], "complexity": "basic", "rating": 4.7, "ratingCount": 3200}, "calculator": {"inputs": [{"id": "peso", "type": "number", "label": "Peso", "unit": "kg", "defaultValue": 70, "min": 1, "step": 0.1, "description": "Peso corporal atual em quilogramas."}, {"id": "altura", "type": "number", "label": "Altura", "unit": "m", "defaultValue": 1.7, "min": 0.3, "max": 2.5, "step": 0.01, "description": "Altura em metros (ex: 1,70)."}], "formula": {"type": "expression", "expression": "peso/(altura*altura)", "resultLabel": "Índice de Massa Corporal", "resultUnit": "kg/m²", "decimals": 1}}, "interpretation": {"ranges": [{"min": 0, "max": 18.49, "label": "Abaixo do Peso", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "IMC abaixo da faixa considerada saudável. Avaliar padrão alimentar e possíveis causas de baixo peso.", "recommendations": "• Avaliação nutricional detalhada\n• Investigar causas de baixo peso\n• Encaminhamento à nutrição se indicado"}, {"min": 18.5, "max": 24.99, "label": "Peso Normal", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "IMC dentro da faixa considerada saudável pela OMS para a população adulta.", "recommendations": "• Manter hábitos alimentares saudáveis\n• Reavaliação de rotina"}, {"min": 25, "max": 29.99, "label": "Sobrepeso", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "IMC acima da faixa considerada saudável. Risco aumentado de complicações metabólicas e cardiovasculares.", "recommendations": "• Orientação nutricional\n• Estímulo à atividade física\n• Reavaliação periódica"}, {"min": 30, "max": 34.99, "label": "Obesidade Grau I", "riskLevel": "moderate", "color": "#ea580c", "clinicalImplications": "Obesidade grau I. Risco moderado a alto de comorbidades associadas (diabetes, hipertensão, dislipidemia).", "recommendations": "• Avaliação multiprofissional\n• Plano de mudança de estilo de vida\n• Rastreamento de comorbidades"}, {"min": 35, "max": 39.99, "label": "Obesidade Grau II", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Obesidade grau II (severa). Alto risco de comorbidades metabólicas e cardiovasculares.", "recommendations": "• Avaliação multiprofissional especializada\n• Considerar encaminhamento a programa de obesidade\n• Rastreamento ativo de comorbidades"}, {"min": 40, "max": 999, "label": "Obesidade Grau III (Mórbida)", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Obesidade grau III (mórbida). Risco muito alto de comorbidades graves; pode haver indicação de avaliação para cirurgia bariátrica.", "recommendations": "• Avaliação multiprofissional especializada\n• Considerar avaliação para cirurgia bariátrica\n• Manejo intensivo de comorbidades"}]}, "evidence": {"foundation": "O Índice de Massa Corporal (IMC), originalmente descrito por Adolphe Quetelet no século XIX, é calculado dividindo-se o peso (kg) pelo quadrado da altura (m²). É a medida antropométrica mais utilizada mundialmente para triagem do estado nutricional em adultos.", "history": "Adotado pela Organização Mundial da Saúde (OMS) como classificação padrão internacional de peso corporal desde a década de 1990, sendo usado em vigilância epidemiológica e na prática clínica.", "validation": "É uma medida de triagem populacional útil, mas apresenta limitações individuais por não diferenciar massa magra de massa gorda.", "limitations": "Não distingue massa muscular de massa gorda — atletas com grande massa muscular podem ter IMC elevado sem excesso de gordura corporal. Não deve ser usado isoladamente em gestantes, idosos muito frágeis ou crianças, que possuem critérios específicos.", "references": [{"text": "WORLD HEALTH ORGANIZATION. Obesity: preventing and managing the global epidemic. Geneva: WHO, 2000."}, {"text": "BRASIL. Ministério da Saúde. Vigitel Brasil: vigilância de fatores de risco e proteção para doenças crônicas por inquérito telefônico. Brasília: MS, 2023."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}]}, "learning": {"tips": ["O IMC é uma ferramenta de triagem, não um diagnóstico isolado — combine com circunferência abdominal e avaliação clínica.", "Em atletas e pessoas com grande massa muscular, o IMC pode superestimar o excesso de peso.", "Não utilize esta fórmula para gestantes, crianças ou idosos muito frágeis sem ajuste clínico.", "Reavalie periodicamente para acompanhar tendências, não apenas o valor isolado."], "examples": [{"label": "Peso normal", "sublabel": "70kg, 1,75m", "emoji": "✅", "values": {"peso": 70, "altura": 1.75}}, {"label": "Sobrepeso", "sublabel": "85kg, 1,70m", "emoji": "⚠️", "values": {"peso": 85, "altura": 1.7}}, {"label": "Obesidade grau I", "sublabel": "95kg, 1,65m", "emoji": "🚨", "values": {"peso": 95, "altura": 1.65}}], "quiz": [{"q": "Qual a fórmula do IMC?", "opts": ["Peso ÷ Altura", "Peso ÷ Altura²", "Altura² ÷ Peso", "Peso × Altura"], "correct": 1, "expl": "IMC = Peso (kg) ÷ Altura² (m²)."}, {"q": "Segundo a OMS, qual faixa de IMC é considerada peso normal em adultos?", "opts": ["16-18", "18,5-24,9", "25-29,9", "30-35"], "correct": 1, "expl": "A faixa de 18,5 a 24,9 kg/m² é classificada como peso normal pela OMS."}, {"q": "Por que o IMC pode ser impreciso em atletas?", "opts": ["Porque eles comem mais", "Porque não distingue massa muscular de gordura", "Porque são mais altos", "O IMC não é impreciso em atletas"], "correct": 1, "expl": "O IMC não diferencia massa muscular de massa gorda, podendo superestimar o excesso de peso em pessoas com muita massa muscular."}]}, "faq": [{"q": "O IMC é confiável para todas as pessoas?", "a": "Não. É uma boa ferramenta de triagem populacional, mas tem limitações individuais — não diferencia massa magra de gordura e não deve ser usado isoladamente em atletas, gestantes, crianças ou idosos muito frágeis."}, {"q": "Qual a diferença entre sobrepeso e obesidade?", "a": "Sobrepeso corresponde a IMC entre 25 e 29,9 kg/m². Obesidade é IMC igual ou superior a 30 kg/m², subdividida em graus I (30-34,9), II (35-39,9) e III ou mórbida (≥40)."}], "about": {"title": "Como funciona o cálculo do IMC", "html": "<p>O Índice de Massa Corporal (IMC) é calculado dividindo-se o peso corporal (em kg) pelo quadrado da altura (em metros). É amplamente utilizado como triagem inicial do estado nutricional, mas deve ser complementado por avaliação clínica individualizada.</p><p><strong>Fórmula:</strong> IMC = Peso (kg) ÷ Altura² (m²).</p>"}}</script>
@@ -504,6 +518,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

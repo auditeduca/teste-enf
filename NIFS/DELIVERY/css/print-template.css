@@ -1,0 +1,313 @@
+/* ═══════════════════════════════════════════════════════════════
+   NKOS v5 — Template de Impressão Padrão
+   Baseado no PDF de Referência (Relatório de Resultado)
+   calculadorasdeenfermagem.com.br
+   ═══════════════════════════════════════════════════════════════ */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm;
+  }
+
+  /* Reset visibility — only print-area shows */
+  body * { visibility: hidden !important; }
+  body { background: #fff !important; }
+
+  .print-area, .print-area *,
+  .tool-header, .tool-header *,
+  .calc-result, .calc-result *,
+  .result-box, .result-box *,
+  .cip-section, .cip-section *,
+  .cognitive-panel, .cognitive-panel * {
+    visibility: visible !important;
+  }
+
+  /* Hide non-print elements */
+  .no-print, .no-print *,
+  .profile-tabs-bar, .tool-footer-zone,
+  #site-header, #site-footer, #site-cookie,
+  #accessibilityToggleButton, #accessibilityPanel,
+  .hamburger-button, .menu-overlay,
+  .skip-link, .btn-print,
+  nav, .nav-bar, .breadcrumb,
+  .adsbygoogle, ins.adsbygoogle {
+    display: none !important;
+  }
+
+  /* ── Print container ── */
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* ── Header do Relatório ── */
+  .print-header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+
+  .print-header-left {
+    flex: 1;
+  }
+
+  .print-header-left h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2563eb;
+    margin: 0 0 4px 0;
+  }
+
+  .print-header-left .subtitle {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+  }
+
+  .print-header-left .badge-validated {
+    display: inline-block;
+    font-size: 10px;
+    color: #2563eb;
+    border: 1px solid #2563eb;
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-top: 6px;
+  }
+
+  .print-header-right {
+    text-align: right;
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .print-header-right .report-date {
+    font-weight: 600;
+    color: #334155;
+  }
+
+  /* ── Seções numeradas ── */
+  .print-section {
+    margin-bottom: 14px;
+    page-break-inside: avoid;
+  }
+
+  .print-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2563eb;
+    padding: 6px 12px;
+    background: #eff6ff;
+    border-left: 3px solid #2563eb;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .print-section-title .section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* ── Dados do paciente (grid 2 colunas) ── */
+  .print-patient-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    font-size: 12px;
+  }
+
+  .print-patient-grid .label {
+    font-weight: 600;
+    color: #64748b;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .print-patient-grid .value {
+    color: #1e293b;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  /* ── Parâmetros inseridos (lista) ── */
+  .print-params-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+  }
+
+  .print-params-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+
+  .print-params-list li:last-child {
+    border-bottom: none;
+  }
+
+  .print-params-list .param-label {
+    color: #475569;
+  }
+
+  .print-params-list .param-value {
+    font-weight: 600;
+    color: #2563eb;
+  }
+
+  /* ── Classificação e interpretação ── */
+  .print-classification {
+    text-align: center;
+    padding: 12px;
+    background: #eff6ff;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+
+  .print-classification .score {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2563eb;
+  }
+
+  .print-classification .label {
+    font-size: 14px;
+    color: #1e293b;
+    font-weight: 600;
+  }
+
+  .print-interpretation {
+    font-size: 11px;
+    color: #475569;
+    line-height: 1.5;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-radius: 6px;
+  }
+
+  /* ── Metas + Medication Rights (2 colunas) ── */
+  .print-safety-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+
+  .print-safety-col h4 {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2563eb;
+    margin: 0 0 6px 0;
+  }
+
+  .print-safety-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 10px;
+    color: #475569;
+  }
+
+  .print-safety-col ul li {
+    padding: 2px 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .print-safety-col ul li::before {
+    content: "✓";
+    color: #2563eb;
+    font-weight: 700;
+  }
+
+  /* ── Referência ── */
+  .print-reference {
+    font-size: 10px;
+    color: #64748b;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 8px;
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* ── Rodapé assinatura ── */
+  .print-signature {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  .print-signature-left {
+    font-size: 11px;
+    color: #334155;
+  }
+
+  .print-signature-left .coren {
+    font-size: 10px;
+    color: #64748b;
+  }
+
+  .print-signature-right {
+    text-align: right;
+  }
+
+  .print-signature-right .url {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2563eb;
+  }
+
+  .print-signature-right .disclaimer {
+    font-size: 9px;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  /* ── Footer do documento ── */
+  .print-doc-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 9px;
+    color: #94a3b8;
+    padding: 4px 0;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  /* ── Cores forçadas para impressão ── */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ── Page breaks ── */
+  .print-section { page-break-inside: avoid; }
+  h1, h2, h3 { page-break-after: avoid; }
+}

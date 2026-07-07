@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="fast">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -269,32 +279,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -413,6 +413,7 @@
               <select class="field-select" data-calc-input="face"><option value="0" selected>Normal - sorriso simétrico</option><option value="1">Alterado - um lado do rosto está caído/dormente</option></select></div><div class="urg-field"><label>A - Arm (Braço)</label>
               <select class="field-select" data-calc-input="braco"><option value="0" selected>Normal - ambos os braços se mantêm elevados</option><option value="1">Alterado - um braço cai ou está fraco</option></select></div><div class="urg-field"><label>S - Speech (Fala)</label>
               <select class="field-select" data-calc-input="fala"><option value="0" selected>Normal - fala clara e compreensível</option><option value="1">Alterado - fala arrastada, confusa ou ausente</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">achados alterados</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Sinais de Alerta</span>
@@ -472,6 +473,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "e113b372-9a9f-4bbf-91fb-567989798581", "code": "SCALE-FAST-001", "slug": "fast", "version": "1.0.0", "status": "published", "seo": {"title": "Escala FAST - Reconhecimento Rápido de AVC", "description": "Calcule a Escala FAST (Face, Arm, Speech, Time) para reconhecimento rápido de suspeita de AVC. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/fast.html"}, "breadcrumb": {"category": "Avaliação Neurológica", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala FAST", "acronym": "FAST", "categoryBadge": "Avaliação neurológica", "icon": "i-brain", "objective": "Reconhecer rapidamente a suspeita de Acidente Vascular Cerebral (AVC) por meio de 3 achados clínicos (face, braço, fala), reforçando a importância do tempo (Time) para o início do tratamento.", "indication": "Indicada para reconhecimento rápido de suspeita de AVC pelo público leigo, socorristas e equipes de emergência pré-hospitalar.", "targetPopulation": "Qualquer pessoa com suspeita de déficit neurológico agudo/AVC.", "specialty": ["Emergência", "Neurologia", "Enfermagem"], "averageTime": "1 minuto", "evidenceLevel": "II", "complexity": "basic", "rating": 4.7, "ratingCount": 240}, "calculator": {"inputs": [{"id": "face", "type": "select", "label": "F - Face (Rosto)", "defaultValue": 0, "description": "Peça para a pessoa sorrir. Um dos lados do rosto está caído ou dormente?", "options": [{"value": 0, "label": "Normal - sorriso simétrico", "score": 0}, {"value": 1, "label": "Alterado - um lado do rosto está caído/dormente", "score": 1}]}, {"id": "braco", "type": "select", "label": "A - Arm (Braço)", "defaultValue": 0, "description": "Peça para a pessoa levantar os dois braços. Um dos braços cai ou está fraco/dormente?", "options": [{"value": 0, "label": "Normal - ambos os braços se mantêm elevados", "score": 0}, {"value": 1, "label": "Alterado - um braço cai ou está fraco", "score": 1}]}, {"id": "fala", "type": "select", "label": "S - Speech (Fala)", "defaultValue": 0, "description": "Peça para a pessoa repetir uma frase simples. A fala está arrastada ou estranha?", "options": [{"value": 0, "label": "Normal - fala clara e compreensível", "score": 0}, {"value": 1, "label": "Alterado - fala arrastada, confusa ou ausente", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Escala FAST", "resultUnit": "achados alterados", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 0, "label": "Sem Sinais de Alerta", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Nenhum dos 3 achados (face, braço, fala) está alterado.", "recommendations": "• Manter vigilância caso surjam novos sintomas\n• A ausência de sinais no FAST não exclui totalmente o AVC — buscar avaliação médica se houver qualquer outra suspeita clínica"}, {"min": 1, "max": 3, "label": "Suspeita de AVC - T de Tempo (Time) é Crítico", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Um ou mais achados alterados (face, braço ou fala) são fortemente sugestivos de AVC.", "recommendations": "• Acionar o serviço de emergência (ex: SAMU 192) IMEDIATAMENTE\n• Anotar o horário exato do início dos sintomas (ou da última vez que a pessoa foi vista normal)\n• Manter a pessoa em jejum e não administrar alimentos, líquidos ou medicamentos por via oral\n• Cada minuto conta: o tempo até o tratamento impacta diretamente o prognóstico neurológico"}]}, "sae": {"nanda": [{"diagnosis": "Perfusão tissular cerebral ineficaz", "definition": "Redução da circulação sanguínea cerebral, capaz de comprometer a saúde, suspeitada pelos achados de alteração facial, do braço e/ou da fala."}], "noc": [{"outcome": "Perfusão tissular: cerebral", "indicators": ["FAST aplicado rapidamente diante de qualquer suspeita de déficit neurológico agudo", "Horário de início dos sintomas registrado com precisão", "Serviço de emergência acionado imediatamente quando indicado"]}], "nic": [{"intervention": "Manejo de emergência neurológica", "activities": ["Aplicar o FAST rapidamente diante de qualquer suspeita de AVC", "Registrar com precisão o horário de início dos sintomas ou da última vez que a pessoa foi vista normal", "Acionar imediatamente o serviço de emergência quando qualquer achado estiver alterado", "Manter a pessoa em jejum, sem administrar alimentos, líquidos ou medicamentos por via oral", "Orientar familiares/comunidade sobre o reconhecimento precoce dos sinais de AVC"]}]}, "evidence": {"foundation": "O FAST avalia 3 achados clínicos — Face (rosto), Arm (braço) e Speech (fala) — cada um pontuado como 0 (normal) ou 1 (alterado), somando de 0 a 3 achados alterados. O 'T' de Time (tempo) não é pontuado, mas reforça a urgência de buscar atendimento médico imediato diante de qualquer achado alterado.", "history": "O mnemônico FAST foi popularizado no Reino Unido como campanha de conscientização pública para reconhecimento rápido de AVC, derivado da Escala Pré-Hospitalar de Cincinnati (CPSS), com o acréscimo do 'T' de Time para reforçar a urgência do tratamento.", "validation": "Amplamente utilizado em campanhas públicas de conscientização e por equipes de emergência, com boa sensibilidade para detecção de AVC de circulação anterior. Possui alta sensibilidade, sendo uma ferramenta eficaz para triagem inicial rápida.", "limitations": "Pode ter menor sensibilidade para AVCs de circulação posterior/cerebelo, que podem se apresentar com sintomas diferentes (tontura, incoordenação, alterações visuais) não capturados pelos 3 achados clássicos. Algumas variações incluem itens adicionais (ex: BE-FAST, que acrescenta Balance/equilíbrio e Eyes/visão) para aumentar a sensibilidade.", "references": [{"text": "KOTHARI, R. U. et al. Cincinnati Prehospital Stroke Scale: reproducibility and validity. Annals of Emergency Medicine, v. 33, n. 4, p. 373-378, 1999."}, {"text": "HARBISON, J. et al. Diagnostic accuracy of stroke referrals from primary care, emergency room physicians, and ambulance staff using the face arm speech test. Stroke, v. 34, n. 1, p. 71-76, 2003."}, {"text": "MARTINS, S. C. O. et al. Diretrizes assistenciais no acidente vascular cerebral isquêmico agudo. São Paulo: Hospital Israelita Albert Einstein, 2022."}]}, "learning": {"tips": ["FAST é um mnemônico: Face (rosto), Arm (braço), Speech (fala) e Time (tempo) — os 3 primeiros são testados, o T reforça a urgência.", "A presença de qualquer um dos 3 achados alterados já é suficiente para suspeitar fortemente de AVC e acionar o serviço de emergência.", "Sempre registre o horário exato do início dos sintomas — essa informação é essencial para decisões sobre terapias de reperfusão (trombólise/trombectomia).", "O FAST pode ter menor sensibilidade para AVCs de circulação posterior — variações como o BE-FAST (que acrescenta Balance e Eyes) buscam aumentar a detecção desses casos."], "examples": [{"label": "Sem sinais de alerta", "sublabel": "FAST 0", "emoji": "✅", "values": {"face": 0, "braco": 0, "fala": 0}}, {"label": "Suspeita de AVC - um achado", "sublabel": "FAST 1", "emoji": "⚠️", "values": {"face": 1, "braco": 0, "fala": 0}}, {"label": "Suspeita de AVC - todos os achados", "sublabel": "FAST 3", "emoji": "🚨", "values": {"face": 1, "braco": 1, "fala": 1}}], "quiz": [{"q": "O que significa cada letra do mnemônico FAST?", "opts": ["Face, Arm, Speech, Time", "Fever, Age, Sugar, Temperature", "Facial, Auditory, Sensory, Tactile", "Fast, Accurate, Safe, Timely"], "correct": 0, "expl": "FAST significa Face (rosto), Arm (braço), Speech (fala) e Time (tempo), sendo um mnemônico para reconhecimento rápido de AVC."}, {"q": "O 'T' de Time no FAST é pontuado numericamente?", "opts": ["Sim, vale 1 ponto adicional", "Não, reforça apenas a urgência de buscar atendimento imediato", "Sim, vale 2 pontos", "O T substitui os outros 3 itens"], "correct": 1, "expl": "O 'T' de Time não é pontuado numericamente; ele reforça que, diante de qualquer achado alterado, o tempo até o atendimento é crítico para o prognóstico."}, {"q": "O FAST tem a mesma sensibilidade para todos os tipos de AVC?", "opts": ["Sim, detecta igualmente todos os tipos", "Não, pode ter menor sensibilidade para AVCs de circulação posterior/cerebelo", "Não se aplica a nenhum tipo de AVC", "Detecta apenas AVC hemorrágico"], "correct": 1, "expl": "O FAST pode ter menor sensibilidade para AVCs de circulação posterior, que podem cursar com sintomas como tontura e incoordenação, não capturados pelos 3 achados clássicos (face, braço, fala)."}]}, "faq": [{"q": "Qual a diferença entre o FAST e a Escala de Cincinnati (CPSS)?", "a": "O FAST e a CPSS avaliam essencialmente os mesmos 3 achados clínicos (face, braço, fala), sendo o FAST popularizado como ferramenta de conscientização pública com o acréscimo do 'T' de Time para reforçar a urgência do atendimento."}, {"q": "Existem variações do FAST com mais itens?", "a": "Sim. Variações como o BE-FAST acrescentam avaliação de Balance (equilíbrio) e Eyes (alterações visuais), buscando aumentar a sensibilidade para detecção de AVCs de circulação posterior, que podem não ser capturados pelos 3 achados clássicos do FAST."}], "about": {"title": "Como funciona a Escala FAST", "html": "<p>O FAST avalia 3 achados — Face, Arm (braço) e Speech (fala) — cada um pontuado como 0 (normal) ou 1 (alterado), reforçando a importância do Time (tempo) para buscar atendimento imediato.</p><p><strong>Guia rápido:</strong> 0 = Sem sinais de alerta | 1-3 = Suspeita de AVC, o tempo é crítico — acione o serviço de emergência imediatamente.</p>"}}</script>
@@ -527,6 +541,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

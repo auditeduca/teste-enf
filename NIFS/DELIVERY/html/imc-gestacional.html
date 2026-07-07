@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="imc-gestacional">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -262,32 +272,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -388,6 +388,7 @@
             <div class="urg-grid"><div class="urg-field"><label>Peso Atual</label>
               <input aria-label="Number" type="number" data-calc-input="peso" value="65"></div><div class="urg-field"><label>Altura</label>
               <input aria-label="Number" type="number" data-calc-input="altura" value="1.65"></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">23.9</span><span class="urg-result-unit" id="urgResultUnit">kg/m²</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Peso Adequado</span>
@@ -447,6 +448,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "94051627-3840-5162-7394-940516273840", "code": "CALC-IMCGESTACIONAL-001", "slug": "imc-gestacional", "version": "1.0.0", "status": "published", "seo": {"title": "IMC Gestacional - Avaliação Nutricional na Gravidez", "description": "Calcule o Índice de Massa Corporal (IMC) na gestação e obtenha orientações sobre classificação nutricional e ganho de peso recomendado. Inclui interpretação e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/imc-gestacional.html"}, "breadcrumb": {"category": "Obstetrícia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "IMC Gestacional", "acronym": "IMC Gestacional", "categoryBadge": "Obstetrícia", "icon": "i-heart-pulse", "objective": "Calcular o Índice de Massa Corporal (IMC) da gestante e orientar sobre a classificação do estado nutricional, auxiliando no acompanhamento pré-natal e na definição de metas de ganho de peso gestacional.", "indication": "Indicada no acompanhamento pré-natal, para avaliação e monitoramento do estado nutricional da gestante ao longo da gravidez.", "targetPopulation": "Gestantes em acompanhamento pré-natal.", "specialty": ["Obstetrícia", "Enfermagem", "Nutrição"], "averageTime": "menos de 1 minuto", "evidenceLevel": "III", "organizations": ["Ministério da Saúde", "Institute of Medicine (IOM)"], "complexity": "basic", "rating": 4.6, "ratingCount": 340}, "calculator": {"inputs": [{"id": "peso", "type": "number", "label": "Peso Atual", "unit": "kg", "defaultValue": 65, "min": 30, "max": 200, "step": 0.1, "description": "Peso atual da gestante, em quilogramas."}, {"id": "altura", "type": "number", "label": "Altura", "unit": "m", "defaultValue": 1.65, "min": 1.2, "max": 2.2, "step": 0.01, "description": "Altura da gestante, em metros."}], "formula": {"type": "expression", "expression": "peso/(altura*altura)", "resultLabel": "Índice de Massa Corporal (IMC)", "resultUnit": "kg/m²", "decimals": 1}}, "interpretation": {"ranges": [{"min": 0, "max": 18.4, "label": "Baixo Peso", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Baixo peso, associado a maior risco de recém-nascido pequeno para a idade gestacional e ganho de peso gestacional recomendado mais elevado.", "recommendations": "• Encaminhar para avaliação e acompanhamento nutricional\n• Meta de ganho de peso gestacional total recomendada geralmente entre 12,5 e 18 kg (conforme diretrizes vigentes)\n• Monitorar crescimento fetal e ganho de peso ao longo do pré-natal"}, {"min": 18.5, "max": 24.9, "label": "Peso Adequado", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Estado nutricional adequado no início da gestação, associado a menor risco de complicações relacionadas ao peso.", "recommendations": "• Manter alimentação equilibrada e acompanhamento pré-natal de rotina\n• Meta de ganho de peso gestacional total recomendada geralmente entre 11,5 e 16 kg\n• Monitorar ganho de peso a cada consulta"}, {"min": 25, "max": 29.9, "label": "Sobrepeso", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Sobrepeso, associado a maior risco de diabetes gestacional, hipertensão gestacional e macrossomia fetal.", "recommendations": "• Encaminhar para avaliação e acompanhamento nutricional\n• Meta de ganho de peso gestacional total recomendada geralmente entre 7 e 11,5 kg\n• Monitorar glicemia e pressão arterial conforme protocolo de pré-natal"}, {"min": 30, "max": 70, "label": "Obesidade", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Obesidade, associada a maior risco de diabetes gestacional, hipertensão gestacional, pré-eclâmpsia, macrossomia fetal e complicações no parto.", "recommendations": "• Encaminhar para acompanhamento nutricional e pré-natal de alto risco conforme avaliação\n• Meta de ganho de peso gestacional total recomendada geralmente entre 5 e 9 kg\n• Monitorização rigorosa de glicemia, pressão arterial e crescimento fetal"}]}, "sae": {"nanda": [{"diagnosis": "Nutrição desequilibrada: menos do que as necessidades corporais", "definition": "Ingestão de nutrientes insuficiente para suprir as necessidades metabólicas, relacionada ao baixo peso gestacional."}, {"diagnosis": "Risco de nutrição desequilibrada: mais do que as necessidades corporais", "definition": "Risco de ingestão de nutrientes que excede as necessidades metabólicas, relacionado ao sobrepeso/obesidade gestacional."}, {"diagnosis": "Disposição para nutrição melhorada", "definition": "Padrão de ingestão de nutrientes suficiente para suprir as necessidades metabólicas, que pode ser fortalecido, aplicável a gestantes com peso adequado buscando manutenção saudável."}], "noc": [{"outcome": "Estado nutricional", "indicators": ["IMC gestacional monitorado ao longo do pré-natal", "Ganho de peso gestacional dentro da meta recomendada para a classificação nutricional", "Ausência de complicações relacionadas ao estado nutricional"]}], "nic": [{"intervention": "Aconselhamento nutricional", "activities": ["Calcular e monitorar o IMC gestacional a cada consulta de pré-natal", "Orientar sobre a meta de ganho de peso gestacional conforme classificação nutricional", "Encaminhar para acompanhamento nutricional especializado quando indicado", "Monitorar sinais de complicações associadas ao estado nutricional (diabetes gestacional, hipertensão)", "Orientar sobre alimentação equilibrada e atividade física compatível com a gestação"]}]}, "evidence": {"foundation": "O IMC gestacional é calculado da mesma forma que o IMC convencional (peso em kg dividido pela altura em metros ao quadrado), sendo utilizado no início da gestação para classificar o estado nutricional pré-gestacional e orientar as metas de ganho de peso ao longo da gravidez.", "history": "As recomendações de ganho de peso gestacional por categoria de IMC pré-gestacional foram estabelecidas por instituições como o Institute of Medicine (IOM), sendo adotadas e adaptadas por diretrizes de pré-natal, incluindo as do Ministério da Saúde do Brasil.", "validation": "A classificação por IMC e as metas de ganho de peso associadas são amplamente adotadas em protocolos de pré-natal, embora o acompanhamento mais preciso ao longo da gestação utilize curvas específicas (como a curva de Atalah), que consideram o IMC em função da idade gestacional, não apenas o valor isolado.", "limitations": "Esta calculadora aplica a fórmula padrão de IMC (peso/altura²), útil principalmente como avaliação inicial. Para o acompanhamento da adequação do ganho de peso ao longo da gestação, recomenda-se o uso de curvas específicas de IMC por idade gestacional (curva de Atalah), adotadas pelo Ministério da Saúde, que não estão incorporadas nesta calculadora simplificada.", "references": [{"text": "INSTITUTE OF MEDICINE. Weight Gain During Pregnancy: Reexamining the Guidelines. Washington, DC: National Academies Press, 2009."}, {"text": "BRASIL. Ministério da Saúde. Atenção ao pré-natal de baixo risco. Brasília: Ministério da Saúde, 2012."}, {"text": "ATALAH, E. et al. Propuesta de un nuevo estándar de evaluación nutricional en embarazadas. Revista Médica de Chile, v. 125, n. 12, p. 1429-1436, 1997."}]}, "learning": {"tips": ["O IMC gestacional utiliza a mesma fórmula do IMC convencional: peso (kg) dividido pela altura (m) ao quadrado.", "Idealmente, o IMC deve ser calculado com o peso pré-gestacional ou obtido na primeira consulta de pré-natal, para definir corretamente a meta de ganho de peso.", "Para acompanhamento mais preciso ao longo da gestação, utilize curvas específicas de IMC por idade gestacional (curva de Atalah), adotadas pelo Ministério da Saúde.", "Gestantes com baixo peso ou obesidade devem ser encaminhadas para acompanhamento nutricional especializado."], "examples": [{"label": "Peso adequado", "sublabel": "IMC 22,7", "emoji": "✅", "values": {"peso": 65, "altura": 1.69}}, {"label": "Sobrepeso", "sublabel": "IMC 27,5", "emoji": "⚠️", "values": {"peso": 75, "altura": 1.65}}, {"label": "Obesidade", "sublabel": "IMC 33,9", "emoji": "🚨", "values": {"peso": 90, "altura": 1.63}}], "quiz": [{"q": "Qual a fórmula utilizada para calcular o IMC gestacional?", "opts": ["Peso × Altura", "Peso ÷ Altura", "Peso ÷ (Altura × Altura)", "Altura ÷ Peso"], "correct": 2, "expl": "O IMC é calculado dividindo o peso (kg) pela altura ao quadrado (m²), a mesma fórmula utilizada fora da gestação."}, {"q": "Qual instituição estabeleceu as metas de ganho de peso gestacional por categoria de IMC amplamente utilizadas?", "opts": ["Organização Mundial da Saúde exclusivamente", "Institute of Medicine (IOM)", "CDC exclusivamente", "Não existem metas estabelecidas"], "correct": 1, "expl": "O Institute of Medicine (IOM) estabeleceu as recomendações de ganho de peso gestacional por categoria de IMC pré-gestacional amplamente adotadas em diretrizes de pré-natal."}, {"q": "O IMC isolado é suficiente para acompanhar a adequação do ganho de peso ao longo de toda a gestação?", "opts": ["Sim, totalmente suficiente", "Não, recomenda-se o uso de curvas específicas de IMC por idade gestacional, como a curva de Atalah", "Não tem nenhuma utilidade na gestação", "Só é válido no terceiro trimestre"], "correct": 1, "expl": "Para o acompanhamento da adequação do ganho de peso ao longo da gestação, recomenda-se o uso de curvas específicas que consideram o IMC em função da idade gestacional, como a curva de Atalah adotada pelo Ministério da Saúde."}]}, "faq": [{"q": "Devo usar o peso atual ou o peso pré-gestacional para calcular o IMC gestacional?", "a": "Idealmente, utiliza-se o peso pré-gestacional (ou o peso obtido na primeira consulta de pré-natal) para classificar o estado nutricional inicial e definir a meta de ganho de peso adequada para o restante da gestação."}, {"q": "Esta calculadora considera a idade gestacional na classificação do IMC?", "a": "Não. Esta calculadora aplica a fórmula padrão de IMC, útil principalmente como avaliação inicial. Para o acompanhamento da adequação do peso ao longo da gestação, o ideal é utilizar curvas específicas de IMC por idade gestacional, como a curva de Atalah adotada pelo Ministério da Saúde."}], "about": {"title": "Como funciona o cálculo do IMC Gestacional", "html": "<p>O IMC Gestacional é calculado dividindo o peso (kg) pela altura ao quadrado (m²), da mesma forma que o IMC convencional, sendo utilizado para classificar o estado nutricional da gestante e orientar a meta de ganho de peso na gravidez.</p><p><strong>Guia rápido:</strong> &lt;18,5 = Baixo peso | 18,5-24,9 = Adequado | 25-29,9 = Sobrepeso | ≥30 = Obesidade.</p>"}}</script>
@@ -502,6 +516,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

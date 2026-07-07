@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="insulina">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -281,32 +291,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
 
@@ -432,6 +432,7 @@
               <input aria-label="Number" type="number" data-calc-input="dose" value="10"></div><div class="urg-field"><label>Concentração</label>
               <select class="field-select" data-calc-input="concentration"><option value="40">U-40</option><option value="100" selected>U-100</option><option value="200">U-200</option><option value="300">U-300</option><option value="500">U-500</option></select></div><div class="urg-field"><label>Seringa</label>
               <select class="field-select" data-calc-input="seringa"><option value="1" selected>1 mL</option><option value="3">3 mL</option><option value="5">5 mL</option><option value="10">10 mL</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0.10</span><span class="urg-result-unit" id="urgResultUnit">mL</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Dentro da faixa usual</span>
@@ -497,6 +498,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Behavioral Pain Scale</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cam.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Método de Avaliação de Confusão</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cpc.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Categoria de Performance Cerebral</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="escala-de-braden.html"><div class="icon-wrap"><svg class="icon"><use href="#i-shieldcheck"/></svg></div><div><h3>Escala de Braden</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "7f2b3c4d-5e6f-4f70-0a2b-3c4d5e6f7082", "code": "CALC-INSULINA-001", "slug": "insulina", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Aspiração de Insulina", "description": "Calcule o volume (mL) de insulina a aspirar na seringa a partir da dose prescrita em unidades e da concentração da ampola. Ferramenta gratuita para enfermagem.", "canonical": "https://www.calculadorasdeenfermagem.com.br/insulina.html"}, "breadcrumb": {"category": "Cálculo de Medicação", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Aspiração de Insulina", "acronym": "Aspiração Insulina", "categoryBadge": "Cálculo de medicação", "icon": "i-flask", "objective": "Calcule com precisão o volume (mL) de insulina a aspirar na seringa a partir da dose prescrita em unidades e da concentração da ampola.", "indication": "Indicada sempre que houver prescrição de insulina em unidades e a necessidade de converter para volume em mL para aspiração correta.", "targetPopulation": "Pacientes diabéticos de qualquer faixa etária que necessitem de administração de insulina por via subcutânea, intramuscular ou intravenosa.", "specialty": ["Enfermagem Médico-Cirúrgica", "Endocrinologia", "Terapia Intensiva"], "averageTime": "1-2 minutos", "evidenceLevel": "III", "complexity": "basic", "rating": 4.9, "ratingCount": 2150}, "calculator": {"inputs": [{"id": "dose", "type": "number", "label": "Dose prescrita", "unit": "unidades", "defaultValue": 10, "min": 0.5, "step": 0.5, "description": "Dose de insulina prescrita pelo médico, em unidades (UI)."}, {"id": "concentration", "type": "select", "label": "Concentração da insulina", "defaultValue": 100, "description": "Concentração da ampola de insulina (unidades por mL).", "options": [{"value": 40, "label": "U-40 (40 UI/mL)", "score": 40}, {"value": 100, "label": "U-100 (100 UI/mL)", "score": 100}, {"value": 200, "label": "U-200 (200 UI/mL)", "score": 200}, {"value": 300, "label": "U-300 (300 UI/mL)", "score": 300}, {"value": 500, "label": "U-500 (500 UI/mL)", "score": 500}]}, {"id": "seringa", "type": "select", "label": "Seringa disponível", "defaultValue": 1, "description": "Tipo de seringa disponível para administração.", "options": [{"value": 1, "label": "Seringa de insulina (1 mL)", "score": 1}, {"value": 3, "label": "Seringa de 3 mL", "score": 3}, {"value": 5, "label": "Seringa de 5 mL", "score": 5}, {"value": 10, "label": "Seringa de 10 mL", "score": 10}]}], "formula": {"type": "expression", "expression": "dose/concentration", "resultLabel": "Volume a aspirar", "resultUnit": "mL", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 0.09, "label": "Volume muito baixo", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Volume muito pequeno para aspiração precisa. Verifique se a dose está correta e se a seringa de insulina (1 mL) é a mais adequada."}, {"min": 0.1, "max": 1.0, "label": "Dentro da faixa usual", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Volume compatível com seringa de insulina padrão (1 mL). Verifique a leitura correta da escala da seringa."}, {"min": 1.01, "max": 3.0, "label": "Volume elevado", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Volume acima de 1 mL. Utilize seringa de 3 mL ou maior. Confirme a dose prescrita e a concentração da ampola."}, {"min": 3.01, "max": 999999, "label": "Volume muito elevado", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Volume muito alto. Revise a dose prescrita, a concentração da ampola e a via de administração. Considere se a prescrição está correta."}]}, "evidence": {"foundation": "O cálculo de aspiração de insulina fundamenta-se na relação entre a dose prescrita em unidades internacionais (UI) e a concentração da solução de insulina (UI/mL). A fórmula padrão — Volume (mL) = Dose (UI) ÷ Concentração (UI/mL) — deriva da definição farmacêutica da concentração: cada mL de solução contém um número fixo de unidades de insulina, definido pelo fabricante (U-100 = 100 UI/mL, U-40 = 40 UI/mL, U-500 = 500 UI/mL).", "history": "A insulina U-100 é a concentração padrão mundial desde a década de 1990, substituindo a U-40. A insulina U-500 é utilizada em casos de resistência à insulina severa. As seringas de insulina de 1 mL são graduadas em unidades para facilitar a leitura direta em U-100.", "validation": "Protocolos institucionais e diretrizes de segurança do paciente recomendam a dupla checagem do cálculo de medicação antes da administração, especialmente para insulina, dado o alto risco de hipoglicemia ou hiperglicemia associado a erros de dosagem. A Organização Mundial da Saúde classifica a insulina como medicamento de alto alerta.", "limitations": "Esta calculadora realiza apenas a conversão de unidades para mL. Não substitui a avaliação clínica da indicação da insulina, a verificação da via de administração, o horário da aplicação nem o monitoramento glicêmico. Sempre confira a prescrição médica e os protocolos da instituição.", "references": [{"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "HINKLE, J. L.; CHEEVER, K. H. Brunner & Suddarth: tratado de enfermagem médico-cirúrgica. 13ª ed. Rio de Janeiro: Guanabara Koogan, 2016."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}, {"text": "BRASIL. Ministério da Saúde. Protocolo de segurança na prescrição, uso e administração de medicamentos. Brasília: MS, 2013."}, {"text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."}, {"text": "AMERICAN DIABETES ASSOCIATION. Standards of Medical Care in Diabetes—2024. Diabetes Care, v. 47, Suppl. 1, 2024."}, {"text": "INSTITUTE FOR SAFE MEDICATION PRACTICES (ISMP). High-Alert Medications: Insulin. 2023."}]}, "learning": {"tips": ["Sempre confira a concentração da ampola de insulina antes do cálculo.", "Utilize seringa de insulina (1 mL) para doses de até 100 unidades em U-100.", "Nunca misture insulinas sem verificar a compatibilidade.", "Registre a hora, a dose e a via de administração.", "Monitore a glicemia após a administração."], "examples": [{"label": "Dose comum", "sublabel": "10 UI de insulina regular U-100", "emoji": "💉", "values": {"dose": 10, "concentration": 100, "seringa": 1}}, {"label": "Dose alta", "sublabel": "50 UI de insulina NPH U-100", "emoji": "📏", "values": {"dose": 50, "concentration": 100, "seringa": 1}}, {"label": "U-500", "sublabel": "100 UI de insulina U-500", "emoji": "⚠️", "values": {"dose": 100, "concentration": 500, "seringa": 1}}], "quiz": [{"q": "Quantas unidades de insulina há em 1 mL de uma ampola U-100?", "opts": ["40 unidades", "100 unidades", "200 unidades", "500 unidades"], "correct": 1, "expl": "U-100 significa 100 unidades internacionais (UI) de insulina por mL de solução."}, {"q": "Qual é a fórmula para calcular o volume de insulina a aspirar?", "opts": ["Dose (UI) ÷ Concentração (UI/mL)", "Dose × Concentração", "Concentração ÷ Dose", "Dose + Concentração"], "correct": 0, "expl": "Volume (mL) = Dose (UI) ÷ Concentração (UI/mL). Por exemplo: 20 UI ÷ 100 UI/mL = 0,2 mL."}, {"q": "Uma seringa de insulina padrão (1 mL) é graduada em quantas unidades para U-100?", "opts": ["40 unidades", "100 unidades", "200 unidades", "500 unidades"], "correct": 1, "expl": "A seringa de insulina de 1 mL é graduada de 0 a 100 unidades quando usada com insulina U-100."}]}, "faq": [{"q": "Qual a diferença entre insulina U-100 e U-40?", "a": "U-100 contém 100 unidades de insulina por mL, enquanto U-40 contém 40 unidades por mL. A U-100 é o padrão mundial atual. Sempre use a seringa correspondente à concentração da insulina para evitar erros de dosagem."}, {"q": "Posso usar seringa comum (3 mL) para insulina?", "a": "Sim, desde que o cálculo de conversão para mL seja feito corretamente. No entanto, a seringa de insulina (1 mL) oferece maior precisão para doses pequenas, pois é graduada em unidades para U-100."}, {"q": "Esta calculadora substitui a checagem clínica?", "a": "Não. A ferramenta é um apoio ao cálculo e não substitui a avaliação clínica, a prescrição médica nem os protocolos da instituição. Sempre confira os dados antes de administrar qualquer medicação."}, {"q": "O que fazer se o volume calculado for maior que 1 mL?", "a": "Utilize uma seringa de 3 mL ou maior. Verifique se a dose prescrita está correta e se a concentração da ampola foi informada corretamente. Em doses muito altas, confirme com o prescritor."}], "about": {"title": "Como funciona o cálculo de aspiração de insulina", "html": "<p>A aspiração de insulina é calculada dividindo a dose prescrita (em unidades internacionais, UI) pela concentração da solução de insulina (em UI/mL). O resultado indica o volume em mL que deve ser aspirado na seringa para administração da dose correta.</p><p>Fórmula: <strong>Volume (mL) = Dose (UI) ÷ Concentração (UI/mL)</strong>.</p><p>Por exemplo, para uma dose de 20 UI de insulina U-100: 20 ÷ 100 = 0,2 mL.</p>"}}</script>
@@ -527,6 +541,75 @@
   <symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/><polyline points="9 12 11 14 15.5 9"/></symbol>
   <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><line x1="8" y1="15" x2="16" y2="15"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

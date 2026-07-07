@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="meem">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -374,32 +384,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -662,6 +662,7 @@
               <select class="field-select" data-calc-input="leitura_execucao"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div><div class="urg-field"><label>Escrita de Frase</label>
               <select class="field-select" data-calc-input="escrita_frase"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div><div class="urg-field"><label>Cópia do Desenho (Dois Pentágonos Sobrepostos)</label>
               <select class="field-select" data-calc-input="copia_desenho"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">30</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Cognição Normal</span>
@@ -721,6 +722,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "28394051-6273-9405-1627-283940516273", "code": "SCALE-MEEM-001", "slug": "meem", "version": "1.0.0", "status": "published", "seo": {"title": "Mini Exame do Estado Mental (MEEM) - Rastreio Cognitivo", "description": "Calcule o Mini Exame do Estado Mental (MEEM/MMSE) para rastreio de comprometimento cognitivo. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/meem.html"}, "breadcrumb": {"category": "Neurologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Mini Exame do Estado Mental", "acronym": "MEEM", "categoryBadge": "Neurologia", "icon": "i-brain", "objective": "Rastrear o comprometimento cognitivo global por meio da avaliação de orientação, registro, atenção/cálculo, evocação e linguagem.", "indication": "Indicado no rastreio de comprometimento cognitivo em idosos, pacientes com suspeita de demência, ou como parte de avaliação neurológica/geriátrica ampla.", "targetPopulation": "Pacientes adultos e idosos com suspeita de comprometimento cognitivo.", "specialty": ["Neurologia", "Geriatria", "Enfermagem"], "averageTime": "7-10 minutos", "evidenceLevel": "II", "originalAuthors": ["Marshal Folstein", "Susan Folstein"], "complexity": "advanced", "rating": 4.5, "ratingCount": 275}, "calculator": {"inputs": [{"id": "orientacao_temporal", "type": "select", "label": "Orientação Temporal", "defaultValue": 5, "description": "Ano, estação, mês, dia do mês e dia da semana (1 ponto cada, máximo 5).", "options": [{"value": 5, "label": "5 — Todos corretos", "score": 5}, {"value": 4, "label": "4 corretos", "score": 4}, {"value": 3, "label": "3 corretos", "score": 3}, {"value": 2, "label": "2 corretos", "score": 2}, {"value": 1, "label": "1 correto", "score": 1}, {"value": 0, "label": "0 — Nenhum correto", "score": 0}]}, {"id": "orientacao_espacial", "type": "select", "label": "Orientação Espacial", "defaultValue": 5, "description": "Estado, cidade, bairro, local e andar/setor (1 ponto cada, máximo 5).", "options": [{"value": 5, "label": "5 — Todos corretos", "score": 5}, {"value": 4, "label": "4 corretos", "score": 4}, {"value": 3, "label": "3 corretos", "score": 3}, {"value": 2, "label": "2 corretos", "score": 2}, {"value": 1, "label": "1 correto", "score": 1}, {"value": 0, "label": "0 — Nenhum correto", "score": 0}]}, {"id": "registro", "type": "select", "label": "Registro de 3 Palavras", "defaultValue": 3, "description": "Repetir imediatamente 3 palavras não relacionadas (1 ponto cada, máximo 3).", "options": [{"value": 3, "label": "3 — Todas repetidas", "score": 3}, {"value": 2, "label": "2 repetidas", "score": 2}, {"value": 1, "label": "1 repetida", "score": 1}, {"value": 0, "label": "0 — Nenhuma repetida", "score": 0}]}, {"id": "atencao_calculo", "type": "select", "label": "Atenção e Cálculo (Série de 7 ou soletrar 'MUNDO' ao contrário)", "defaultValue": 5, "description": "5 subtrações consecutivas de 7 a partir de 100, ou soletrar a palavra 'MUNDO' de trás para frente (máximo 5).", "options": [{"value": 5, "label": "5 — Todas corretas", "score": 5}, {"value": 4, "label": "4 corretas", "score": 4}, {"value": 3, "label": "3 corretas", "score": 3}, {"value": 2, "label": "2 corretas", "score": 2}, {"value": 1, "label": "1 correta", "score": 1}, {"value": 0, "label": "0 — Nenhuma correta", "score": 0}]}, {"id": "evocacao", "type": "select", "label": "Evocação das 3 Palavras", "defaultValue": 3, "description": "Recordar as 3 palavras registradas anteriormente (1 ponto cada, máximo 3).", "options": [{"value": 3, "label": "3 — Todas evocadas", "score": 3}, {"value": 2, "label": "2 evocadas", "score": 2}, {"value": 1, "label": "1 evocada", "score": 1}, {"value": 0, "label": "0 — Nenhuma evocada", "score": 0}]}, {"id": "nomeacao", "type": "select", "label": "Nomeação de 2 Objetos", "defaultValue": 2, "description": "Nomear corretamente 2 objetos mostrados (ex: caneta, relógio).", "options": [{"value": 2, "label": "2 — Ambos corretos", "score": 2}, {"value": 1, "label": "1 correto", "score": 1}, {"value": 0, "label": "0 — Nenhum correto", "score": 0}]}, {"id": "repeticao_frase", "type": "select", "label": "Repetição de Frase", "defaultValue": 1, "description": "Repetir corretamente a frase 'Nem aqui, nem ali, nem lá'.", "options": [{"value": 1, "label": "Correta", "score": 1}, {"value": 0, "label": "Incorreta", "score": 0}]}, {"id": "comando_3_estagios", "type": "select", "label": "Comando de 3 Estágios", "defaultValue": 3, "description": "Executar corretamente as 3 etapas do comando (ex: 'pegue o papel com a mão direita, dobre-o ao meio e coloque-o no chão').", "options": [{"value": 3, "label": "3 — Todas as etapas corretas", "score": 3}, {"value": 2, "label": "2 etapas corretas", "score": 2}, {"value": 1, "label": "1 etapa correta", "score": 1}, {"value": 0, "label": "0 — Nenhuma etapa correta", "score": 0}]}, {"id": "leitura_execucao", "type": "select", "label": "Leitura e Execução ('Feche os olhos')", "defaultValue": 1, "description": "Ler e executar corretamente o comando escrito 'Feche os olhos'.", "options": [{"value": 1, "label": "Correta", "score": 1}, {"value": 0, "label": "Incorreta", "score": 0}]}, {"id": "escrita_frase", "type": "select", "label": "Escrita de Frase", "defaultValue": 1, "description": "Escrever espontaneamente uma frase com sentido, contendo sujeito e verbo.", "options": [{"value": 1, "label": "Correta", "score": 1}, {"value": 0, "label": "Incorreta", "score": 0}]}, {"id": "copia_desenho", "type": "select", "label": "Cópia do Desenho (Dois Pentágonos Sobrepostos)", "defaultValue": 1, "description": "Copiar corretamente o desenho de dois pentágonos sobrepostos.", "options": [{"value": 1, "label": "Correta", "score": 1}, {"value": 0, "label": "Incorreta", "score": 0}]}], "formula": {"type": "sum", "resultLabel": "Mini Exame do Estado Mental (MEEM)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 17, "label": "Comprometimento Cognitivo Importante", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação abaixo de 18 pontos sugere comprometimento cognitivo importante, frequentemente associado a quadros demenciais.", "recommendations": "• Encaminhar para avaliação neurológica/geriátrica especializada\n• Investigar causas de comprometimento cognitivo (demência, delirium, causas reversíveis)\n• Avaliar segurança e capacidade funcional do paciente\n• Envolver a família no plano de cuidados"}, {"min": 18, "max": 23, "label": "Comprometimento Cognitivo Leve a Moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação entre 18 e 23 pontos sugere comprometimento cognitivo leve a moderado.", "recommendations": "• Encaminhar para avaliação neuropsicológica complementar\n• Reavaliar periodicamente a evolução cognitiva\n• Investigar causas potencialmente reversíveis"}, {"min": 24, "max": 30, "label": "Cognição Normal", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Pontuação de 24 pontos ou mais é geralmente considerada dentro da normalidade cognitiva (sem ajuste por escolaridade).", "recommendations": "• Manter acompanhamento de rotina\n• Reavaliar periodicamente, especialmente em caso de queixas cognitivas subjetivas"}]}, "sae": {"nanda": [{"diagnosis": "Memória prejudicada", "definition": "Incapacidade de lembrar ou recuperar pedaços de informação ou habilidades comportamentais aprendidas anteriormente."}, {"diagnosis": "Confusão crônica", "definition": "Deterioração irreversível, de longa duração e/ou progressiva do intelecto e da personalidade, caracterizada por diminuição da capacidade de interpretar estímulos ambientais e de processos de pensamento."}, {"diagnosis": "Risco de quedas", "definition": "Suscetibilidade aumentada a quedas, relacionada ao comprometimento cognitivo identificado que pode afetar julgamento e segurança."}], "noc": [{"outcome": "Cognição", "indicators": ["Escore do MEEM avaliado e monitorado ao longo do tempo", "Encaminhamento para avaliação especializada quando indicado", "Ambiente adaptado para segurança do paciente conforme grau de comprometimento"]}], "nic": [{"intervention": "Estimulação cognitiva", "activities": ["Aplicar o MEEM no rastreio de comprometimento cognitivo", "Encaminhar para avaliação neuropsicológica especializada conforme resultado", "Orientar a família sobre estratégias de comunicação e segurança", "Investigar causas potencialmente reversíveis de comprometimento cognitivo (medicações, distúrbios metabólicos, depressão)", "Reavaliar periodicamente a evolução cognitiva do paciente"]}]}, "evidence": {"foundation": "O MEEM avalia 7 domínios cognitivos — orientação temporal (5 pontos), orientação espacial (5 pontos), registro (3 pontos), atenção e cálculo (5 pontos), evocação (3 pontos) e linguagem (9 pontos, distribuídos em nomeação, repetição, comando, leitura, escrita e cópia) — totalizando 30 pontos.", "history": "Desenvolvido por Marshal e Susan Folstein em 1975, é um dos instrumentos de rastreio cognitivo mais utilizados mundialmente, por sua rapidez de aplicação e ampla validação em diferentes populações e idiomas.", "validation": "Extensivamente validado e traduzido para diversos idiomas, incluindo o português brasileiro, com pontos de corte ajustados por escolaridade amplamente estudados na população brasileira (Bertolucci et al., 1994; Brucki et al., 2003).", "limitations": "O desempenho no MEEM é fortemente influenciado pela escolaridade — os pontos de corte apresentados aqui não consideram esse ajuste. Recomenda-se, sempre que possível, utilizar pontos de corte ajustados por escolaridade conforme validação brasileira. Não avalia funções executivas de forma aprofundada.", "references": [{"text": "FOLSTEIN, M. F.; FOLSTEIN, S. E.; MCHUGH, P. R. Mini-mental state: a practical method for grading the cognitive state of patients for the clinician. Journal of Psychiatric Research, v. 12, n. 3, p. 189-198, 1975."}, {"text": "BERTOLUCCI, P. H. F. et al. O Mini-Exame do Estado Mental em uma população geral: impacto da escolaridade. Arquivos de Neuro-Psiquiatria, v. 52, n. 1, p. 1-7, 1994."}, {"text": "BRUCKI, S. M. D. et al. Sugestões para o uso do mini-exame do estado mental no Brasil. Arquivos de Neuro-Psiquiatria, v. 61, n. 3B, p. 777-781, 2003."}]}, "learning": {"tips": ["O desempenho no MEEM é fortemente influenciado pela escolaridade — utilize, sempre que possível, pontos de corte ajustados conforme validação brasileira (Bertolucci et al., 1994).", "Os pontos de corte gerais (≥24 normal, 18-23 leve a moderado, <18 importante) não consideram escolaridade e devem ser interpretados com cautela.", "O MEEM é uma ferramenta de rastreio, não de diagnóstico definitivo de demência.", "Considere fatores como déficit sensorial (visual/auditivo), fadiga e ansiedade, que podem influenciar o desempenho no teste."], "examples": [{"label": "Cognição normal", "sublabel": "MEEM 29", "emoji": "✅", "values": {"orientacao_temporal": 5, "orientacao_espacial": 5, "registro": 3, "atencao_calculo": 4, "evocacao": 3, "nomeacao": 2, "repeticao_frase": 1, "comando_3_estagios": 3, "leitura_execucao": 1, "escrita_frase": 1, "copia_desenho": 1}}, {"label": "Comprometimento leve a moderado", "sublabel": "MEEM 20", "emoji": "🔎", "values": {"orientacao_temporal": 3, "orientacao_espacial": 3, "registro": 3, "atencao_calculo": 2, "evocacao": 1, "nomeacao": 2, "repeticao_frase": 1, "comando_3_estagios": 2, "leitura_execucao": 1, "escrita_frase": 1, "copia_desenho": 1}}, {"label": "Comprometimento importante", "sublabel": "MEEM 7", "emoji": "🚨", "values": {"orientacao_temporal": 1, "orientacao_espacial": 1, "registro": 2, "atencao_calculo": 0, "evocacao": 0, "nomeacao": 1, "repeticao_frase": 0, "comando_3_estagios": 1, "leitura_execucao": 1, "escrita_frase": 0, "copia_desenho": 0}}], "quiz": [{"q": "Qual a pontuação máxima do MEEM?", "opts": ["20 pontos", "24 pontos", "28 pontos", "30 pontos"], "correct": 3, "expl": "O MEEM tem pontuação máxima de 30 pontos, distribuídos entre orientação, registro, atenção/cálculo, evocação e linguagem."}, {"q": "O que influencia fortemente o desempenho no MEEM, exigindo ajuste dos pontos de corte?", "opts": ["Cor dos olhos", "Escolaridade", "Altura", "Tipo sanguíneo"], "correct": 1, "expl": "A escolaridade influencia fortemente o desempenho no MEEM, sendo recomendado o uso de pontos de corte ajustados por nível educacional."}, {"q": "O MEEM substitui a avaliação diagnóstica de demência?", "opts": ["Sim, é suficiente isoladamente", "Não, é uma ferramenta de rastreio", "Apenas em pacientes analfabetos", "Não tem relação com demência"], "correct": 1, "expl": "O MEEM é uma ferramenta de rastreio cognitivo; o diagnóstico de demência requer avaliação clínica e neuropsicológica mais aprofundada."}]}, "faq": [{"q": "Os pontos de corte do MEEM são os mesmos para todos os níveis de escolaridade?", "a": "Não deveriam ser. A escolaridade influencia fortemente o desempenho no teste. Estudos brasileiros (Bertolucci et al., 1994; Brucki et al., 2003) propõem pontos de corte ajustados por nível educacional, que devem ser priorizados sempre que disponíveis."}, {"q": "O MEEM diagnostica demência?", "a": "Não. É uma ferramenta de rastreio cognitivo que identifica pacientes que necessitam de avaliação mais aprofundada. O diagnóstico de demência requer avaliação clínica completa, exames complementares e, frequentemente, avaliação neuropsicológica especializada."}], "about": {"title": "Como funciona o Mini Exame do Estado Mental (MEEM)", "html": "<p>O MEEM soma pontos de 7 domínios cognitivos — orientação temporal (5), orientação espacial (5), registro (3), atenção/cálculo (5), evocação (3) e linguagem (9) — totalizando 30 pontos.</p><p><strong>Guia rápido (sem ajuste por escolaridade):</strong> ≥24 = Normal | 18-23 = Leve a moderado | <18 = Importante.</p>"}}</script>
@@ -776,6 +790,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

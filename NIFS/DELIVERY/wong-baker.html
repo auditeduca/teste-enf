@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="wong-baker">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -245,32 +255,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -353,6 +353,7 @@
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Selecione a Face que Representa a Dor</label>
               <select class="field-select" data-calc-input="face"><option value="0" selected>😀 0 — Sem Dor</option><option value="2">🙂 2 — Dói Só um Pouquinho</option><option value="4">😐 4 — Dói um Pouco Mais</option><option value="6">😣 6 — Dói Ainda Mais</option><option value="8">😢 8 — Dói Muito</option><option value="10">😭 10 — Dói o Máximo que se Pode Imaginar</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Dor</span>
@@ -412,6 +413,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "84950617-2839-4061-7284-950617283940", "code": "SCALE-WONGBAKER-001", "slug": "wong-baker", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Faces de Wong-Baker - Avaliação de Dor", "description": "Avalie a intensidade da dor em crianças ou pacientes com dificuldade de comunicação verbal com a Escala de Faces de Wong-Baker. Inclui interpretação e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/wong-baker.html"}, "breadcrumb": {"category": "Avaliação da Dor", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Faces de Wong-Baker", "acronym": "Wong-Baker FACES", "categoryBadge": "Avaliação da dor", "icon": "i-gauge", "objective": "Avaliar a intensidade da dor por meio de expressões faciais, especialmente útil em crianças e pacientes com dificuldade de comunicação verbal ou de compreensão numérica.", "indication": "Indicada para crianças a partir de 3 anos e para pacientes de qualquer idade com dificuldade de compreender a escala numérica de dor.", "targetPopulation": "Crianças a partir de 3 anos, idosos com déficit cognitivo leve a moderado, e pacientes com barreiras de comunicação verbal.", "specialty": ["Pediatria", "Enfermagem", "Manejo da Dor"], "averageTime": "menos de 1 minuto", "evidenceLevel": "II", "originalAuthors": ["Donna Wong", "Connie Baker"], "complexity": "basic", "rating": 4.8, "ratingCount": 890}, "calculator": {"inputs": [{"id": "face", "type": "select", "label": "Selecione a Face que Representa a Dor", "description": "Peça para a criança ou paciente apontar a face que melhor representa a dor sentida no momento.", "defaultValue": 0, "options": [{"value": 0, "label": "😀 0 — Sem Dor", "score": 0, "description": "Rosto feliz, sem nenhuma dor."}, {"value": 2, "label": "🙂 2 — Dói Só um Pouquinho", "score": 2, "description": "Dor mínima, quase imperceptível."}, {"value": 4, "label": "😐 4 — Dói um Pouco Mais", "score": 4, "description": "Dor leve a moderada."}, {"value": 6, "label": "😣 6 — Dói Ainda Mais", "score": 6, "description": "Dor moderada."}, {"value": 8, "label": "😢 8 — Dói Muito", "score": 8, "description": "Dor intensa."}, {"value": 10, "label": "😭 10 — Dói o Máximo que se Pode Imaginar", "score": 10, "description": "Pior dor possível, insuportável."}]}], "formula": {"type": "sum", "resultLabel": "Escore de Dor (Wong-Baker)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 0, "label": "Sem Dor", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Ausência de dor relatada pela criança/paciente.", "recommendations": "• Manter conduta atual\n• Reavaliar conforme protocolo institucional"}, {"min": 2, "max": 4, "label": "Dor Leve", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Dor de intensidade leve, geralmente não interfere significativamente nas atividades.", "recommendations": "• Considerar medidas não farmacológicas de conforto (distração, colo, brinquedos)\n• Reavaliar periodicamente"}, {"min": 6, "max": 6, "label": "Dor Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Dor de intensidade moderada, pode interferir no bem-estar e nas atividades da criança/paciente.", "recommendations": "• Comunicar à equipe médica\n• Considerar analgesia conforme prescrição\n• Reavaliar após intervenção"}, {"min": 8, "max": 10, "label": "Dor Intensa", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Dor de forte intensidade, com impacto significativo no bem-estar.", "recommendations": "• Comunicar imediatamente à equipe médica\n• Priorizar intervenção analgésica\n• Reavaliar em intervalo curto após a intervenção"}]}, "sae": {"nanda": [{"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial, de início súbito ou lento, com intensidade de leve a intensa."}], "noc": [{"outcome": "Controle da dor", "indicators": ["Reconhece e comunica a dor por meio das faces", "Utiliza medidas de alívio", "Relata dor controlada após intervenção"]}], "nic": [{"intervention": "Manejo da dor", "activities": ["Utilizar a Escala de Faces de Wong-Baker de forma consistente para avaliar a dor", "Administrar analgesia conforme prescrição", "Oferecer medidas não farmacológicas de conforto (distração, presença dos pais, brinquedos)", "Reavaliar a dor após intervenções", "Registrar a intensidade da dor no prontuário"]}]}, "evidence": {"foundation": "A Escala de Faces de Wong-Baker foi desenvolvida por Donna Wong e Connie Baker, utilizando 6 desenhos de expressões faciais que variam de um rosto feliz e sorridente (sem dor) a um rosto chorando intensamente (pior dor possível), facilitando a comunicação da intensidade da dor por crianças e pacientes com dificuldade de compreensão numérica.", "history": "Amplamente utilizada em pediatria, sendo uma das escalas de dor mais reconhecidas e traduzidas no mundo, recomendada por diversas sociedades pediátricas e de manejo da dor.", "validation": "Extensivamente validada em crianças a partir de 3 anos, com boa correlação com outras escalas de dor e boa aceitação pelos pacientes devido à sua natureza visual e intuitiva.", "limitations": "Crianças muito pequenas ou com déficit cognitivo importante podem ter dificuldade em associar a face à própria experiência de dor. Em alguns contextos, a escolha da face pode ser influenciada pelo estado emocional geral da criança, não apenas pela dor física.", "references": [{"text": "WONG, D. L.; BAKER, C. M. Pain in children: comparison of assessment scales. Pediatric Nursing, v. 14, n. 1, p. 9-17, 1988."}, {"text": "HOCKENBERRY, M. J.; WILSON, D. Wong's Nursing Care of Infants and Children. 11th ed. St. Louis: Elsevier, 2019."}, {"text": "SOCIEDADE BRASILEIRA DE PEDIATRIA. Avaliação e tratamento da dor na criança e no adolescente. Rio de Janeiro: SBP, 2020."}]}, "learning": {"tips": ["Explique cada face à criança antes de pedir que ela escolha, sem sugerir qual face selecionar.", "Use a mesma escala consistentemente ao longo do tratamento para permitir comparação.", "Combine com observação comportamental (choro, postura, expressão) em crianças muito pequenas.", "Reavalie a dor após qualquer intervenção analgésica ou medida de conforto."], "examples": [{"label": "Criança confortável", "sublabel": "Escore 0", "emoji": "😀", "values": {"face": 0}}, {"label": "Dor leve pós-vacina", "sublabel": "Escore 4", "emoji": "😐", "values": {"face": 4}}, {"label": "Dor intensa não controlada", "sublabel": "Escore 10", "emoji": "😭", "values": {"face": 10}}], "quiz": [{"q": "A partir de qual idade a Escala de Faces de Wong-Baker é geralmente recomendada?", "opts": ["6 meses", "3 anos", "10 anos", "18 anos"], "correct": 1, "expl": "A escala é recomendada a partir de aproximadamente 3 anos de idade, quando a criança já consegue associar a expressão facial à própria experiência de dor."}, {"q": "Quantas faces compõem a Escala de Wong-Baker?", "opts": ["4", "5", "6", "8"], "correct": 2, "expl": "A escala utiliza 6 faces, com pontuação de 0 (sem dor) a 10 (pior dor possível), em incrementos de 2 pontos."}, {"q": "A Escala de Wong-Baker é útil apenas para crianças?", "opts": ["Sim, exclusivamente", "Não, também é útil para idosos ou pacientes com dificuldade de comunicação verbal", "É usada apenas em recém-nascidos", "Não tem validade científica"], "correct": 1, "expl": "Além de crianças, a escala é útil para qualquer paciente com dificuldade de compreender a escala numérica ou de se comunicar verbalmente, incluindo alguns idosos com déficit cognitivo leve."}]}, "faq": [{"q": "Qual a diferença entre a Escala de Wong-Baker e a Escala Numérica de Dor?", "a": "A Escala Numérica exige que o paciente compreenda e utilize números de 0 a 10. A Escala de Wong-Baker usa expressões faciais visuais, sendo mais acessível para crianças pequenas e pessoas com dificuldade de compreensão numérica."}, {"q": "A escolha da face pode ser influenciada por fatores emocionais além da dor física?", "a": "Sim, é uma limitação reconhecida da escala — em algumas crianças, medo, ansiedade ou tristeza podem influenciar a escolha da face, sendo importante combinar com observação comportamental e contexto clínico."}], "about": {"title": "Como funciona a Escala de Faces de Wong-Baker", "html": "<p>A Escala de Faces de Wong-Baker apresenta 6 desenhos de expressões faciais, de um rosto feliz (sem dor, 0 pontos) a um rosto chorando intensamente (pior dor possível, 10 pontos), em incrementos de 2 pontos. O paciente ou a criança aponta a face que melhor representa a intensidade da dor sentida.</p><p><strong>Guia rápido:</strong> 0 = Sem dor | 2-4 = Dor leve | 6 = Dor moderada | 8-10 = Dor intensa.</p>"}}</script>
@@ -467,6 +481,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

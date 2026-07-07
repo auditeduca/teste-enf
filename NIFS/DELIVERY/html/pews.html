@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="pews">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -272,32 +282,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -416,6 +416,7 @@
               <select class="field-select" data-calc-input="comportamento"><option value="0" selected>0 - Brincando/alerta, apropriado, no seu basal</option><option value="1">1 - Dormindo ou manhoso, mas consolável</option><option value="2">2 - Irritável/inconsolável</option><option value="3">3 - Letárgico, confuso ou com resposta reduzida à dor</option></select></div><div class="urg-field"><label>Cardiovascular</label>
               <select class="field-select" data-calc-input="cardiovascular"><option value="0" selected>0 - Rosada, enchimento capilar de 1-2 segundos</option><option value="1">1 - Pálida, enchimento capilar ≥3 segundos</option><option value="2">2 - Acinzentada, enchimento capilar de 4 segundos, ou taquicardia 20 bpm acima do normal para idade</option><option value="3">3 - Acinzentada e mosqueada, enchimento capilar ≥5 segundos, ou taquicardia ≥30 bpm acima do normal (ou bradicardia) para idade</option></select></div><div class="urg-field"><label>Respiratório</label>
               <select class="field-select" data-calc-input="respiratorio"><option value="0" selected>0 - FR normal para idade, sem retrações, sem O2 suplementar</option><option value="1">1 - FR &gt;10 acima do normal, retrações, uso de O2 (FiO2 até 30% ou ≥3 L/min)</option><option value="2">2 - FR &gt;20 acima do normal, batimento de asa de nariz e retrações, uso de O2 (FiO2 até 40% ou 6 L/min)</option><option value="3">3 - FR abaixo do normal com retrações e gemido, ou uso de O2 &gt;50%/&gt;8L/min, ou apneia</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Sinais de Alerta</span>
@@ -475,6 +476,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "a49fef71-a73e-4f08-a969-e03fa5793b13", "code": "SCALE-PEWS-001", "slug": "pews", "version": "1.0.0", "status": "published", "seo": {"title": "PEWS - Escore de Alerta Pediátrico Precoce", "description": "Calcule o PEWS (Pediatric Early Warning Score) para detectar deterioração clínica precoce em pacientes pediátricos. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/pews.html"}, "breadcrumb": {"category": "Pediatria", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escore de Alerta Pediátrico Precoce", "acronym": "PEWS", "categoryBadge": "Pediatria", "icon": "i-notes-medical", "objective": "Detectar precocemente sinais de deterioração clínica em pacientes pediátricos hospitalizados, por meio da avaliação de 3 domínios: comportamento, sistema cardiovascular e sistema respiratório.", "indication": "Indicado para monitorização seriada de pacientes pediátricos hospitalizados (fora da UTI), para identificar precocemente sinais de deterioração e orientar a necessidade de reavaliação ou escalonamento do cuidado.", "targetPopulation": "Pacientes pediátricos hospitalizados, do período neonatal à adolescência.", "specialty": ["Pediatria", "Enfermagem"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "complexity": "intermediate", "rating": 4.5, "ratingCount": 140}, "calculator": {"inputs": [{"id": "comportamento", "type": "select", "label": "Comportamento", "defaultValue": 0, "description": "Nível de atividade e resposta comportamental da criança.", "options": [{"value": 0, "label": "0 - Brincando/alerta, apropriado, no seu basal", "score": 0}, {"value": 1, "label": "1 - Dormindo ou manhoso, mas consolável", "score": 1}, {"value": 2, "label": "2 - Irritável/inconsolável", "score": 2}, {"value": 3, "label": "3 - Letárgico, confuso ou com resposta reduzida à dor", "score": 3}]}, {"id": "cardiovascular", "type": "select", "label": "Cardiovascular", "defaultValue": 0, "description": "Cor da pele, tempo de enchimento capilar e frequência cardíaca.", "options": [{"value": 0, "label": "0 - Rosada, enchimento capilar de 1-2 segundos", "score": 0}, {"value": 1, "label": "1 - Pálida, enchimento capilar ≥3 segundos", "score": 1}, {"value": 2, "label": "2 - Acinzentada, enchimento capilar de 4 segundos, ou taquicardia 20 bpm acima do normal para idade", "score": 2}, {"value": 3, "label": "3 - Acinzentada e mosqueada, enchimento capilar ≥5 segundos, ou taquicardia ≥30 bpm acima do normal (ou bradicardia) para idade", "score": 3}]}, {"id": "respiratorio", "type": "select", "label": "Respiratório", "defaultValue": 0, "description": "Frequência respiratória, uso de musculatura acessória e necessidade de oxigênio suplementar.", "options": [{"value": 0, "label": "0 - FR normal para idade, sem retrações, sem O2 suplementar", "score": 0}, {"value": 1, "label": "1 - FR >10 acima do normal, retrações, uso de O2 (FiO2 até 30% ou ≥3 L/min)", "score": 1}, {"value": 2, "label": "2 - FR >20 acima do normal, batimento de asa de nariz e retrações, uso de O2 (FiO2 até 40% ou 6 L/min)", "score": 2}, {"value": 3, "label": "3 - FR abaixo do normal com retrações e gemido, ou uso de O2 >50%/>8L/min, ou apneia", "score": 3}]}], "formula": {"type": "sum", "resultLabel": "PEWS", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 2, "label": "Sem Sinais de Alerta", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Pontuação de 0 a 2 pontos, sem indicação de notificação adicional.", "recommendations": "• Reavaliar a cada 4 horas conforme rotina\n• Manter monitorização padrão"}, {"min": 3, "max": 3, "label": "Atenção - Reavaliação Frequente", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Pontuação total de 3 pontos, ou qualquer parâmetro isolado pontuando 2 ou mais.", "recommendations": "• Reavaliar a cada 3 horas até a pontuação reduzir a ≤2\n• Avaliação à beira do leito pela equipe em até 30 minutos"}, {"min": 4, "max": 4, "label": "Risco Aumentado - Notificar Equipe", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação total de 4 pontos.", "recommendations": "• Enfermagem notifica o médico residente/equipe assistente\n• Reavaliar a cada 2 horas até a pontuação reduzir a ≤2\n• Avaliação à beira do leito em até 30 minutos"}, {"min": 5, "max": 5, "label": "Alto Risco - Considerar Equipe de Resposta Rápida", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação total de 5 pontos.", "recommendations": "• Considerar acionamento da equipe de resposta rápida (ex: PMET)\n• Notificar médico residente sênior, que comunica o médico assistente\n• Avaliação à beira do leito em até 15 minutos\n• Reavaliar a cada 2 horas até a pontuação reduzir a ≤2"}, {"min": 6, "max": 9, "label": "Risco Crítico - Acionar Resposta Rápida", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Pontuação total de 6 pontos ou mais.", "recommendations": "• Acionar imediatamente a equipe de resposta rápida institucional\n• Notificar médico residente sênior e médico assistente imediatamente\n• Reavaliar a cada 1 hora até a pontuação reduzir a ≤2"}]}, "sae": {"nanda": [{"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada, identificado pelo domínio respiratório do PEWS."}, {"diagnosis": "Débito cardíaco diminuído", "definition": "Quantidade de sangue bombeada pelo coração inadequada para suprir as demandas metabólicas do corpo, identificado pelo domínio cardiovascular do PEWS."}, {"diagnosis": "Confusão aguda", "definition": "Início súbito de distúrbios reversíveis da consciência, atenção, cognição e percepção, identificado pelo domínio comportamental do PEWS."}], "noc": [{"outcome": "Sinais vitais", "indicators": ["PEWS avaliado sistematicamente conforme protocolo institucional", "Deterioração clínica identificada e comunicada precocemente", "Resposta clínica escalonada proporcionalmente ao escore obtido"]}], "nic": [{"intervention": "Monitorização de deterioração pediátrica", "activities": ["Aplicar o PEWS de forma seriada conforme protocolo institucional", "Somar a pontuação dos 3 domínios (comportamento, cardiovascular, respiratório) para obter o escore total", "Escalonar a frequência de reavaliação e a notificação da equipe conforme o escore obtido", "Considerar acionamento da equipe de resposta rápida para escores ≥5, especialmente ≥6", "Registrar o escore, a hora da avaliação e as ações tomadas no prontuário"]}]}, "evidence": {"foundation": "O PEWS avalia 3 domínios — comportamento, cardiovascular e respiratório — cada um pontuado de 0 a 3, totalizando um escore de 0 a 9 pontos, para detecção precoce de deterioração clínica em pacientes pediátricos hospitalizados.", "history": "Desenvolvido a partir dos escores de alerta precoce (Early Warning Scores) utilizados em adultos, o PEWS foi adaptado para a população pediátrica considerando os valores normais de frequência cardíaca e respiratória por faixa etária, sendo adotado por diversos serviços de pediatria e hospitais infantis.", "validation": "Amplamente utilizado como ferramenta de triagem para detecção precoce de deterioração clínica em enfermarias pediátricas, auxiliando na decisão de reavaliação e escalonamento do cuidado, incluindo o acionamento de equipes de resposta rápida.", "limitations": "Existem múltiplas versões do PEWS (ex: Brighton, CHEWS, CHAM-PEWS), com pequenas variações nos parâmetros e pontos de corte — é importante seguir a versão adotada pela instituição. Um estudo recente apontou que o PEWS tem capacidade limitada de prever transferências para UTI antes de uma resposta rápida.", "references": [{"text": "PARSHURAM, C. S. et al. Multicentre validation of the bedside paediatric early warning system score: a severity of illness score to detect evolving critical illness in hospitalised children. Critical Care, v. 15, n. 4, p. R184, 2011."}, {"text": "AKRE, M. et al. Sensitivity of the pediatric early warning score to identify patient deterioration. Pediatrics, v. 134, n. 2, p. e763-e769, 2014."}, {"text": "SOCIEDADE BRASILEIRA DE PEDIATRIA. Identificação precoce da deterioração clínica em pediatria. Rio de Janeiro: SBP, 2021."}]}, "learning": {"tips": ["O PEWS avalia 3 domínios: comportamento, cardiovascular e respiratório, cada um pontuado de 0 a 3.", "Um único parâmetro pontuando 2 ou mais já justifica reavaliação mais frequente, mesmo que o total não atinja o limiar geral.", "Existem diferentes versões do PEWS (Brighton, CHEWS, CHAM-PEWS, entre outras) — siga sempre o protocolo específico adotado pela instituição.", "Escores ≥5-6 geralmente indicam necessidade de acionamento da equipe de resposta rápida pediátrica."], "examples": [{"label": "Sem sinais de alerta", "sublabel": "PEWS 0", "emoji": "✅", "values": {"comportamento": 0, "cardiovascular": 0, "respiratorio": 0}}, {"label": "Atenção - reavaliação frequente", "sublabel": "PEWS 3", "emoji": "🔎", "values": {"comportamento": 1, "cardiovascular": 1, "respiratorio": 1}}, {"label": "Risco crítico", "sublabel": "PEWS 9", "emoji": "🚨", "values": {"comportamento": 3, "cardiovascular": 3, "respiratorio": 3}}], "quiz": [{"q": "Quais os 3 domínios avaliados pelo PEWS?", "opts": ["Temperatura, pressão arterial e diurese", "Comportamento, cardiovascular e respiratório", "Glicemia, dor e sono", "Peso, altura e idade"], "correct": 1, "expl": "O PEWS avalia 3 domínios: comportamento, sistema cardiovascular e sistema respiratório, cada um pontuado de 0 a 3."}, {"q": "Qual a pontuação máxima possível no PEWS (nesta versão)?", "opts": ["6 pontos", "9 pontos", "12 pontos", "15 pontos"], "correct": 1, "expl": "O PEWS soma 3 domínios pontuados de 0 a 3 cada, totalizando um escore máximo de 9 pontos."}, {"q": "O que deve ser feito se um único parâmetro do PEWS pontuar 2 ou mais, mesmo com escore total baixo?", "opts": ["Pode ser ignorado", "Justifica reavaliação mais frequente e avaliação à beira do leito", "Reduz automaticamente o escore total", "Só é relevante em pacientes de UTI"], "correct": 1, "expl": "Um parâmetro isolado pontuando 2 ou mais já justifica reavaliação mais frequente e avaliação à beira do leito pela equipe, mesmo que o escore total não atinja o limiar geral."}]}, "faq": [{"q": "O PEWS é padronizado internacionalmente, com uma única versão?", "a": "Não. Existem diferentes versões do PEWS (Brighton, CHEWS, CHAM-PEWS, entre outras), com pequenas variações nos parâmetros avaliados e nos pontos de corte. É essencial seguir a versão e o protocolo específico adotado pela instituição de saúde."}, {"q": "O PEWS substitui o julgamento clínico da equipe de enfermagem?", "a": "Não. O PEWS é uma ferramenta complementar de triagem. Preocupações da família ou da equipe sobre o estado clínico da criança devem sempre ser valorizadas e podem justificar escalonamento do cuidado, independentemente da pontuação numérica."}], "about": {"title": "Como funciona o PEWS", "html": "<p>O PEWS soma a pontuação (0 a 3) de 3 domínios — comportamento, cardiovascular e respiratório — totalizando de 0 a 9 pontos.</p><p><strong>Guia rápido:</strong> 0-2 = Sem alerta | 3 = Reavaliação frequente | 4 = Notificar equipe | 5 = Considerar resposta rápida | 6-9 = Acionar resposta rápida imediatamente.</p>"}}</script>
@@ -530,6 +544,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

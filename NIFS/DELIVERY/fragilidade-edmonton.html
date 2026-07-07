@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="fragilidade-edmonton">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -350,32 +360,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -602,6 +602,7 @@
               <select class="field-select" data-calc-input="humor"><option value="0" selected>Sem Sintomas de Tristeza/Desânimo</option><option value="2">Sintomas Presentes</option></select></div><div class="urg-field"><label>Continência</label>
               <select class="field-select" data-calc-input="continencia"><option value="0" selected>Sem Problemas de Continência</option><option value="2">Problemas de Continência Presentes</option></select></div><div class="urg-field"><label>Desempenho Funcional (Timed Up and Go)</label>
               <select class="field-select" data-calc-input="desempenho_funcional"><option value="0" selected>Normal</option><option value="1">Levemente Lentificado ou com Adaptações</option><option value="2">Muito Lentificado / Necessita Ajuda</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Fragilidade / Vigoroso</span>
@@ -661,6 +662,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "83940516-2739-4051-6273-839405162739", "code": "SCALE-EFS-001", "slug": "fragilidade-edmonton", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Fragilidade de Edmonton - Avaliação Geriátrica", "description": "Calcule a Escala de Fragilidade de Edmonton (EFS) para avaliar o grau de fragilidade em idosos, considerando 9 domínios clínicos e funcionais. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/fragilidade-edmonton.html"}, "breadcrumb": {"category": "Geriatria", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Fragilidade de Edmonton", "acronym": "EFS", "categoryBadge": "Geriatria", "icon": "i-user-heart", "objective": "Avaliar o grau de fragilidade em idosos por meio de 9 domínios clínicos e funcionais, auxiliando no planejamento de cuidados e na identificação de pacientes com maior risco de desfechos adversos.", "indication": "Indicada na avaliação geriátrica ampla, especialmente em idosos em consultas ambulatoriais, pré-operatório ou antes de decisões terapêuticas relevantes.", "targetPopulation": "Pacientes idosos (geralmente 65 anos ou mais) em avaliação clínica ou geriátrica.", "specialty": ["Geriatria", "Enfermagem", "Atenção Primária"], "averageTime": "5 minutos", "evidenceLevel": "II", "originalAuthors": ["Darryl Rolfson"], "complexity": "intermediate", "rating": 4.5, "ratingCount": 165}, "calculator": {"inputs": [{"id": "cognicao", "type": "select", "label": "Cognição", "defaultValue": 0, "description": "Avaliação da memória/cognição do paciente (ex: teste do relógio ou impressão clínica).", "options": [{"value": 0, "label": "Normal", "score": 0}, {"value": 1, "label": "Comprometimento Leve", "score": 1}, {"value": 2, "label": "Comprometimento Moderado a Grave", "score": 2}]}, {"id": "estado_geral_saude", "type": "select", "label": "Estado Geral de Saúde", "defaultValue": 0, "description": "Número de internações hospitalares no último ano e autopercepção de saúde.", "options": [{"value": 0, "label": "Nenhuma Internação / Boa Autopercepção", "score": 0}, {"value": 1, "label": "1-2 Internações ou Percepção Regular", "score": 1}, {"value": 2, "label": "≥2 Internações e Percepção Ruim de Saúde", "score": 2}]}, {"id": "independencia_funcional", "type": "select", "label": "Independência Funcional", "defaultValue": 0, "description": "Necessidade de ajuda para atividades instrumentais de vida diária (compras, transporte, finanças, medicação).", "options": [{"value": 0, "label": "Independente em Todas as Atividades", "score": 0}, {"value": 1, "label": "Dependente em 1-2 Atividades", "score": 1}, {"value": 2, "label": "Dependente em 3 ou Mais Atividades", "score": 2}]}, {"id": "suporte_social", "type": "select", "label": "Suporte Social", "defaultValue": 0, "description": "Disponibilidade de apoio quando necessário.", "options": [{"value": 0, "label": "Sempre Disponível Quando Necessário", "score": 0}, {"value": 1, "label": "Às Vezes Disponível", "score": 1}, {"value": 2, "label": "Nunca Disponível", "score": 2}]}, {"id": "uso_medicacoes", "type": "select", "label": "Uso de Medicações", "defaultValue": 0, "description": "Uso de 5 ou mais medicações regulares e/ou esquecimento de doses.", "options": [{"value": 0, "label": "Nenhum dos Fatores Presentes", "score": 0}, {"value": 1, "label": "Um dos Fatores Presente", "score": 1}, {"value": 2, "label": "Ambos os Fatores Presentes", "score": 2}]}, {"id": "nutricao", "type": "select", "label": "Nutrição", "defaultValue": 0, "description": "Perda de peso não intencional recente.", "options": [{"value": 0, "label": "Sem Perda de Peso", "score": 0}, {"value": 2, "label": "Perda de Peso Não Intencional Recente", "score": 2}]}, {"id": "humor", "type": "select", "label": "Humor", "defaultValue": 0, "description": "Presença de sintomas sugestivos de tristeza persistente ou desânimo.", "options": [{"value": 0, "label": "Sem Sintomas de Tristeza/Desânimo", "score": 0}, {"value": 2, "label": "Sintomas Presentes", "score": 2}]}, {"id": "continencia", "type": "select", "label": "Continência", "defaultValue": 0, "description": "Presença de problemas com controle de urina/fezes.", "options": [{"value": 0, "label": "Sem Problemas de Continência", "score": 0}, {"value": 2, "label": "Problemas de Continência Presentes", "score": 2}]}, {"id": "desempenho_funcional", "type": "select", "label": "Desempenho Funcional (Timed Up and Go)", "defaultValue": 0, "description": "Desempenho no teste Timed Up and Go (levantar da cadeira, caminhar 3 metros, voltar e sentar).", "options": [{"value": 0, "label": "Normal", "score": 0}, {"value": 1, "label": "Levemente Lentificado ou com Adaptações", "score": 1}, {"value": 2, "label": "Muito Lentificado / Necessita Ajuda", "score": 2}]}], "formula": {"type": "sum", "resultLabel": "Escala de Fragilidade de Edmonton (EFS)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 5, "label": "Sem Fragilidade / Vigoroso", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Ausência de fragilidade, compatível com idoso vigoroso e independente.", "recommendations": "• Manter acompanhamento geriátrico de rotina\n• Estimular atividade física e hábitos saudáveis\n• Reavaliar periodicamente"}, {"min": 6, "max": 7, "label": "Aparentemente Vulnerável", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Idoso aparentemente vulnerável, sem fragilidade estabelecida, mas com fatores de atenção.", "recommendations": "• Investigar e intervir sobre fatores de vulnerabilidade identificados\n• Reavaliar em intervalo mais curto\n• Considerar avaliação geriátrica ampla"}, {"min": 8, "max": 9, "label": "Fragilidade Leve", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Fragilidade leve, com maior risco de desfechos adversos (quedas, hospitalização, declínio funcional).", "recommendations": "• Encaminhar para avaliação geriátrica ampla\n• Plano de cuidados individualizado, incluindo reabilitação e suporte social conforme necessidade\n• Revisão da polifarmácia"}, {"min": 10, "max": 11, "label": "Fragilidade Moderada", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Fragilidade moderada, com risco significativo de desfechos adversos e maior necessidade de suporte.", "recommendations": "• Avaliação geriátrica ampla prioritária\n• Plano de cuidados multiprofissional intensivo\n• Envolver família/cuidadores no planejamento de cuidados"}, {"min": 12, "max": 17, "label": "Fragilidade Grave", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Fragilidade grave, com alto risco de desfechos adversos, dependência funcional e mortalidade.", "recommendations": "• Avaliação geriátrica ampla urgente e plano de cuidados intensivo\n• Discutir objetivos de cuidado com paciente e família\n• Suporte multiprofissional (enfermagem, fisioterapia, nutrição, serviço social) estruturado"}]}, "sae": {"nanda": [{"diagnosis": "Síndrome do idoso frágil", "definition": "Estado clínico dinâmico e não linear de instabilidade que aumenta o risco de declínio funcional e/ou de saúde física e/ou cognitiva, aumento da vulnerabilidade e diminuição da capacidade de recuperação após um evento estressante."}, {"diagnosis": "Risco de quedas", "definition": "Suscetibilidade aumentada a quedas, que pode causar dano físico, relacionado ao comprometimento funcional e cognitivo identificado na avaliação de fragilidade."}, {"diagnosis": "Risco de nutrição desequilibrada: menos do que as necessidades corporais", "definition": "Risco de ingestão de nutrientes insuficiente para suprir as necessidades metabólicas, relacionado à perda de peso não intencional identificada."}], "noc": [{"outcome": "Status de fragilidade", "indicators": ["Escore de fragilidade avaliado e monitorado ao longo do tempo", "Plano de cuidados individualizado implementado conforme grau de fragilidade", "Suporte social e familiar adequado identificado ou providenciado"]}], "nic": [{"intervention": "Cuidados geriátricos", "activities": ["Aplicar a Escala de Fragilidade de Edmonton na avaliação geriátrica ampla", "Encaminhar para avaliação multiprofissional conforme grau de fragilidade identificado", "Revisar a polifarmácia e simplificar esquemas medicamentosos quando possível", "Avaliar e fortalecer a rede de suporte social do idoso", "Monitorar peso, humor e desempenho funcional periodicamente"]}]}, "evidence": {"foundation": "A Escala de Fragilidade de Edmonton avalia 9 domínios — cognição, estado geral de saúde, independência funcional, suporte social, uso de medicações, nutrição, humor, continência e desempenho funcional — somando pontuações de 0 a 2 em cada domínio, para um escore total de 0 a 17 pontos.", "history": "Desenvolvida por Rolfson e colaboradores na Universidade de Edmonton (Canadá), é uma das ferramentas de rastreamento de fragilidade mais utilizadas por sua abordagem multidimensional e aplicabilidade rápida em diferentes contextos clínicos.", "validation": "Validada em diversos contextos clínicos e populações, incluindo avaliação pré-operatória, apresentando boa correlação com desfechos adversos como hospitalização, institucionalização e mortalidade.", "limitations": "Alguns itens dependem de avaliação subjetiva (ex: percepção de saúde, humor) e da colaboração do paciente. A escala rastreia fragilidade, mas não substitui uma avaliação geriátrica ampla completa para o planejamento terapêutico definitivo.", "references": [{"text": "ROLFSON, D. B. et al. Validity and reliability of the Edmonton Frail Scale. Age and Ageing, v. 35, n. 5, p. 526-529, 2006."}, {"text": "PERNA, S. et al. Performance of Edmonton Frail Scale on frailty assessment: its association with multi-dimensional geriatric conditions assessed with specific screening tools. BMC Geriatrics, v. 17, n. 1, p. 2, 2017."}, {"text": "SOCIEDADE BRASILEIRA DE GERIATRIA E GERONTOLOGIA. Diretrizes de avaliação da fragilidade em idosos. São Paulo: SBGG, 2019."}]}, "learning": {"tips": ["A EFS avalia 9 domínios diferentes, oferecendo uma visão multidimensional da fragilidade, além dos aspectos puramente físicos.", "O componente de desempenho funcional utiliza o teste Timed Up and Go, que pode ser cronometrado durante a própria avaliação.", "Fragilidade não é sinônimo de dependência — idosos frágeis ainda podem ser independentes, mas com maior vulnerabilidade a eventos estressores.", "Utilize o resultado para direcionar encaminhamentos: fragilidade leve a moderada geralmente se beneficia de avaliação geriátrica ampla e intervenções multiprofissionais."], "examples": [{"label": "Idoso vigoroso", "sublabel": "EFS 1", "emoji": "✅", "values": {"cognicao": 0, "estado_geral_saude": 0, "independencia_funcional": 0, "suporte_social": 0, "uso_medicacoes": 1, "nutricao": 0, "humor": 0, "continencia": 0, "desempenho_funcional": 0}}, {"label": "Fragilidade leve", "sublabel": "EFS 8", "emoji": "⚠️", "values": {"cognicao": 1, "estado_geral_saude": 1, "independencia_funcional": 1, "suporte_social": 1, "uso_medicacoes": 1, "nutricao": 0, "humor": 0, "continencia": 2, "desempenho_funcional": 1}}, {"label": "Fragilidade grave", "sublabel": "EFS 14", "emoji": "🚨", "values": {"cognicao": 2, "estado_geral_saude": 2, "independencia_funcional": 2, "suporte_social": 2, "uso_medicacoes": 2, "nutricao": 2, "humor": 0, "continencia": 0, "desempenho_funcional": 2}}], "quiz": [{"q": "Quantos domínios compõem a Escala de Fragilidade de Edmonton?", "opts": ["5", "7", "9", "12"], "correct": 2, "expl": "A EFS avalia 9 domínios: cognição, estado geral de saúde, independência funcional, suporte social, uso de medicações, nutrição, humor, continência e desempenho funcional."}, {"q": "Qual teste é utilizado para avaliar o domínio 'desempenho funcional' na EFS?", "opts": ["Índice de Barthel", "Timed Up and Go", "Mini Exame do Estado Mental", "Escala de Katz"], "correct": 1, "expl": "O domínio de desempenho funcional utiliza o teste Timed Up and Go, cronometrando o tempo do paciente para levantar, caminhar e retornar sentado."}, {"q": "Fragilidade é sinônimo de dependência funcional total?", "opts": ["Sim, sempre", "Não, um idoso frágil ainda pode ser independente, mas com maior vulnerabilidade", "Só se aplica a idosos institucionalizados", "É o mesmo que demência"], "correct": 1, "expl": "Fragilidade representa maior vulnerabilidade a eventos estressores e risco de declínio, mas não é sinônimo de dependência funcional total — muitos idosos frágeis ainda realizam atividades de forma independente."}]}, "faq": [{"q": "A Escala de Fragilidade de Edmonton substitui a avaliação geriátrica ampla?", "a": "Não. É uma ferramenta de rastreamento rápido que ajuda a identificar idosos com maior risco, direcionando quais pacientes se beneficiariam de uma avaliação geriátrica ampla e mais detalhada."}, {"q": "Fragilidade é o mesmo que velhice avançada?", "a": "Não. Fragilidade é uma síndrome clínica caracterizada por maior vulnerabilidade a eventos estressores, que pode ocorrer em diferentes idades avançadas e não está presente em todos os idosos, mesmo os muito idosos."}], "about": {"title": "Como funciona a Escala de Fragilidade de Edmonton", "html": "<p>A EFS soma pontuações (0 a 2) em 9 domínios: cognição, estado geral de saúde, independência funcional, suporte social, uso de medicações, nutrição, humor, continência e desempenho funcional (Timed Up and Go), totalizando de 0 a 17 pontos.</p><p><strong>Guia rápido:</strong> 0-5 = Sem fragilidade | 6-7 = Vulnerável | 8-9 = Fragilidade leve | 10-11 = Moderada | 12-17 = Grave.</p>"}}</script>
@@ -716,6 +730,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

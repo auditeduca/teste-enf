@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="abcd2">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -296,32 +306,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -476,6 +476,7 @@
               <select class="field-select" data-calc-input="caracteristica_clinica"><option value="0" selected>Outros Sintomas (Sem Fraqueza ou Alteração de Fala)</option><option value="1">Alteração da Fala, Sem Fraqueza Unilateral</option><option value="2">Fraqueza Unilateral (com ou sem Alteração de Fala)</option></select></div><div class="urg-field"><label>D — Duração dos Sintomas</label>
               <select class="field-select" data-calc-input="duracao_sintomas"><option value="0" selected>Menos de 10 Minutos</option><option value="1">10 a 59 Minutos</option><option value="2">60 Minutos ou Mais</option></select></div><div class="urg-field"><label>D — Diabetes Mellitus</label>
               <select class="field-select" data-calc-input="diabetes"><option value="0" selected>Não</option><option value="1">Sim</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco</span>
@@ -535,6 +536,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="berg.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Escala de Equilíbrio de Berg</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "39405162-7384-4516-2839-405162738495", "code": "SCALE-ABCD2-001", "slug": "abcd2", "version": "1.0.0", "status": "published", "seo": {"title": "ABCD2 Score - Risco de AVC após Ataque Isquêmico Transitório", "description": "Calcule o ABCD2 Score para estimar o risco de AVC nos dias seguintes a um ataque isquêmico transitório (AIT). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/abcd2.html"}, "breadcrumb": {"category": "Neurologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "ABCD2 Score", "acronym": "ABCD2", "categoryBadge": "Neurologia", "icon": "i-brain", "objective": "Estimar o risco de acidente vascular cerebral (AVC) nos dias seguintes a um ataque isquêmico transitório (AIT), orientando a necessidade de internação e investigação urgente.", "indication": "Indicada para pacientes com diagnóstico de ataque isquêmico transitório recente, no pronto-socorro ou ambulatório de neurologia.", "targetPopulation": "Pacientes adultos com AIT recente (últimas 24-72 horas).", "specialty": ["Neurologia", "Emergência", "Enfermagem"], "averageTime": "1-2 minutos", "evidenceLevel": "II", "originalAuthors": ["Peter Rothwell", "colaboradores"], "complexity": "basic", "rating": 4.6, "ratingCount": 195}, "calculator": {"inputs": [{"id": "idade", "type": "select", "label": "A — Idade Igual ou Superior a 60 Anos", "description": "Idade do paciente igual ou superior a 60 anos.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "pressao_arterial", "type": "select", "label": "B — Pressão Arterial Igual ou Superior a 140/90 mmHg", "description": "Pressão arterial na avaliação inicial igual ou superior a 140/90 mmHg.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "caracteristica_clinica", "type": "select", "label": "C — Características Clínicas", "description": "Principal característica clínica do episódio de AIT.", "defaultValue": 0, "options": [{"value": 0, "label": "Outros Sintomas (Sem Fraqueza ou Alteração de Fala)", "score": 0}, {"value": 1, "label": "Alteração da Fala, Sem Fraqueza Unilateral", "score": 1}, {"value": 2, "label": "Fraqueza Unilateral (com ou sem Alteração de Fala)", "score": 2}]}, {"id": "duracao_sintomas", "type": "select", "label": "D — Duração dos Sintomas", "description": "Duração total do episódio de sintomas do AIT.", "defaultValue": 0, "options": [{"value": 0, "label": "Menos de 10 Minutos", "score": 0}, {"value": 1, "label": "10 a 59 Minutos", "score": 1}, {"value": 2, "label": "60 Minutos ou Mais", "score": 2}]}, {"id": "diabetes", "type": "select", "label": "D — Diabetes Mellitus", "description": "Diagnóstico de diabetes mellitus.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "ABCD2 Score", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 3, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixo risco de AVC nos dias seguintes ao AIT (aproximadamente 1% em 2 dias).", "recommendations": "• Investigação ambulatorial pode ser considerada, conforme avaliação médica\n• Orientar sinais de alarme para retorno imediato\n• Iniciar/otimizar prevenção secundária conforme etiologia identificada"}, {"min": 4, "max": 5, "label": "Risco Moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Risco moderado de AVC nos dias seguintes ao AIT (aproximadamente 4% em 2 dias).", "recommendations": "• Considerar internação para investigação e observação\n• Investigação urgente (imagem cerebral, avaliação carotídea, ecocardiograma) conforme protocolo\n• Iniciar prevenção secundária o mais precocemente possível"}, {"min": 6, "max": 7, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alto risco de AVC nos dias seguintes ao AIT (aproximadamente 8% em 2 dias).", "recommendations": "• Internação hospitalar recomendada\n• Investigação urgente e completa (imagem cerebral, avaliação carotídea, monitorização cardíaca)\n• Iniciar prevenção secundária imediatamente conforme etiologia identificada"}]}, "sae": {"nanda": [{"diagnosis": "Risco de perfusão tissular cerebral ineficaz", "definition": "Risco de diminuição na circulação sanguínea cerebral, que pode comprometer a saúde."}, {"diagnosis": "Ansiedade", "definition": "Sensação vaga e incômoda de desconforto ou temor, relacionada ao risco de novo evento neurológico."}, {"diagnosis": "Conhecimento deficiente", "definition": "Ausência ou deficiência de informação cognitiva relacionada a fatores de risco e sinais de alarme de AVC."}], "noc": [{"outcome": "Perfusão tissular: cerebral", "indicators": ["Ausência de novos déficits neurológicos", "Pressão arterial controlada", "Adesão à investigação e tratamento preventivo"]}], "nic": [{"intervention": "Monitorização neurológica", "activities": ["Aplicar o ABCD2 Score na avaliação inicial do AIT", "Monitorar sinais vitais e status neurológico seriadamente", "Auxiliar na investigação diagnóstica urgente (imagem, avaliação carotídea, cardíaca)", "Orientar o paciente sobre sinais de alarme de AVC e necessidade de retorno imediato"]}]}, "evidence": {"foundation": "O ABCD2 Score foi desenvolvido por Rothwell e colaboradores, combinando 5 fatores — idade (Age), pressão arterial (Blood pressure), características clínicas (Clinical features), duração dos sintomas (Duration) e diabetes — para estimar o risco de AVC nos dias seguintes a um ataque isquêmico transitório.", "history": "Amplamente utilizado em serviços de emergência e neurologia para triagem de urgência da investigação e definição da necessidade de internação após um AIT, contribuindo para a prevenção precoce de AVC subsequente.", "validation": "Validado em múltiplos estudos internacionais, demonstrando boa capacidade discriminativa de risco, especialmente para os desfechos em 2 e 7 dias após o AIT.", "limitations": "Alguns estudos sugerem que mesmo pacientes de baixo escore podem se beneficiar de investigação e tratamento preventivo precoces, especialmente quando há sinais de alto risco na neuroimagem (estenose significativa, evento cardioembólico). O escore não deve ser o único critério de decisão.", "references": [{"text": "JOHNSTON, S. C. et al. Validation and refinement of scores to predict very early stroke risk after transient ischaemic attack. The Lancet, v. 369, n. 9558, p. 283-292, 2007."}, {"text": "ROTHWELL, P. M. et al. A simple score (ABCD) to identify individuals at high early risk of stroke after transient ischaemic attack. The Lancet, v. 366, n. 9479, p. 29-36, 2005."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Mesmo pacientes de baixo escore ABCD2 podem necessitar investigação urgente se houver achados de alto risco na neuroimagem ou avaliação cardíaca.", "A prevenção secundária (antiagregantes, estatinas, controle pressórico) deve ser iniciada o mais precocemente possível após o AIT.", "Reavalie o paciente clinicamente se novos sintomas neurológicos surgirem, independentemente do escore inicial.", "O ABCD2 é uma ferramenta de triagem inicial, não substituindo a investigação etiológica completa do AIT."], "examples": [{"label": "Baixo risco", "sublabel": "ABCD2 1", "emoji": "✅", "values": {"idade": 0, "pressao_arterial": 1, "caracteristica_clinica": 0, "duracao_sintomas": 0, "diabetes": 0}}, {"label": "Risco moderado", "sublabel": "ABCD2 4", "emoji": "⚠️", "values": {"idade": 1, "pressao_arterial": 1, "caracteristica_clinica": 1, "duracao_sintomas": 1, "diabetes": 0}}, {"label": "Alto risco", "sublabel": "ABCD2 7", "emoji": "🚨", "values": {"idade": 1, "pressao_arterial": 1, "caracteristica_clinica": 2, "duracao_sintomas": 2, "diabetes": 1}}], "quiz": [{"q": "O que significa o 'C' no ABCD2 Score?", "opts": ["Colesterol", "Características clínicas do episódio", "Creatinina", "Consciência"], "correct": 1, "expl": "O 'C' representa as características clínicas do AIT, com pontuação diferenciada para fraqueza unilateral (2 pontos) e alteração de fala sem fraqueza (1 ponto)."}, {"q": "Qual a pontuação máxima do ABCD2 Score?", "opts": ["5", "6", "7", "9"], "correct": 2, "expl": "A soma máxima possível é 7 pontos, considerando os pesos de cada componente (até 2 pontos para características clínicas e duração dos sintomas)."}, {"q": "Um ABCD2 Score de 6-7 pontos indica qual conduta geral?", "opts": ["Alta com acompanhamento ambulatorial em 1 mês", "Internação hospitalar e investigação urgente", "Nenhuma investigação necessária", "Repetir avaliação em 1 semana"], "correct": 1, "expl": "Escores de 6 a 7 pontos indicam alto risco de AVC nos dias seguintes, geralmente motivando internação hospitalar e investigação urgente."}]}, "faq": [{"q": "O ABCD2 Score substitui a investigação etiológica do AIT?", "a": "Não. É uma ferramenta de triagem de risco inicial. A investigação completa (neuroimagem, avaliação carotídea, cardíaca) é essencial para identificar a causa do AIT e guiar a prevenção secundária, independentemente do escore."}, {"q": "Um escore ABCD2 baixo significa que não há risco de AVC?", "a": "Não elimina o risco, apenas indica um risco relativamente menor nos primeiros dias. Alguns pacientes de baixo escore ainda podem ter achados de alto risco em exames complementares, justificando investigação e tratamento preventivo precoces."}], "about": {"title": "Como funciona o ABCD2 Score", "html": "<p>O ABCD2 Score soma pontos de 5 fatores — idade, pressão arterial, características clínicas, duração dos sintomas e diabetes —, totalizando de 0 a 7 pontos, que estimam o risco de AVC nos dias seguintes a um ataque isquêmico transitório.</p><p><strong>Guia rápido:</strong> 0-3 = Baixo risco | 4-5 = Risco moderado | 6-7 = Alto risco.</p>"}}</script>
@@ -590,6 +604,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

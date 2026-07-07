@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="manchester">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -246,32 +256,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -354,6 +354,7 @@
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Categoria de Prioridade</label>
               <select class="field-select" data-calc-input="prioridade"><option value="1" selected>Azul - Não Urgente</option><option value="2">Verde - Pouco Urgente</option><option value="3">Amarelo - Urgente</option><option value="4">Laranja - Muito Urgente</option><option value="5">Vermelho - Emergência</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">1</span><span class="urg-result-unit" id="urgResultUnit"></span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Azul - Não Urgente (até 240 min)</span>
@@ -413,6 +414,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "42cbe3ad-77d6-4682-a44e-6c65c53bce47", "code": "SCALE-MANCHESTER-001", "slug": "manchester", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Manchester - Sistema de Triagem por Cores", "description": "Consulte o Sistema de Triagem de Manchester (Manchester Triage System) para classificar a prioridade de atendimento em unidades de urgência e emergência. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/manchester.html"}, "breadcrumb": {"category": "Emergência", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Sistema de Triagem de Manchester", "acronym": "Manchester / MTS", "categoryBadge": "Emergência", "icon": "i-triage", "objective": "Classificar a prioridade clínica de atendimento em serviços de urgência e emergência, por meio de 5 categorias de risco codificadas por cor, com base em fluxogramas de discriminadores clínicos.", "indication": "Indicado para triagem de pacientes em pronto-socorro e unidades de pronto atendimento, determinando o tempo-alvo máximo até a primeira avaliação médica.", "targetPopulation": "Pacientes de qualquer idade que buscam atendimento em serviços de urgência e emergência.", "specialty": ["Emergência", "Enfermagem"], "averageTime": "2-5 minutos", "evidenceLevel": "II", "organizations": ["Manchester Triage Group"], "complexity": "advanced", "rating": 4.6, "ratingCount": 260}, "calculator": {"inputs": [{"id": "prioridade", "type": "select", "label": "Categoria de Prioridade", "defaultValue": 1, "description": "Selecione a categoria de prioridade identificada com base nos discriminadores clínicos do fluxograma correspondente à queixa principal do paciente.", "options": [{"value": 1, "label": "Azul - Não Urgente", "score": 1, "description": "Ausência de discriminadores de risco. Atendimento em até 240 minutos (4 horas)."}, {"value": 2, "label": "Verde - Pouco Urgente", "score": 2, "description": "Discriminadores de baixo risco. Atendimento em até 120 minutos (2 horas)."}, {"value": 3, "label": "Amarelo - Urgente", "score": 3, "description": "Discriminadores de risco moderado. Atendimento em até 60 minutos."}, {"value": 4, "label": "Laranja - Muito Urgente", "score": 4, "description": "Discriminadores de alto risco (ex: dor intensa, hemorragia importante, alteração aguda da consciência). Atendimento em até 10 minutos."}, {"value": 5, "label": "Vermelho - Emergência", "score": 5, "description": "Discriminadores de risco iminente de morte (ex: via aérea comprometida, parada cardiorrespiratória). Atendimento imediato."}]}], "formula": {"type": "sum", "resultLabel": "Prioridade de Manchester", "resultUnit": "", "decimals": 0}}, "interpretation": {"ranges": [{"min": 1, "max": 1, "label": "Azul - Não Urgente (até 240 min)", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Categoria azul, sem discriminadores de risco identificados.", "recommendations": "• Atendimento em até 240 minutos (4 horas)\n• Reavaliar caso surjam novos sintomas ou piora clínica durante a espera"}, {"min": 2, "max": 2, "label": "Verde - Pouco Urgente (até 120 min)", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Categoria verde, com discriminadores de baixo risco.", "recommendations": "• Atendimento em até 120 minutos (2 horas)\n• Reavaliar caso surjam novos sintomas ou piora clínica durante a espera"}, {"min": 3, "max": 3, "label": "Amarelo - Urgente (até 60 min)", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Categoria amarela, com discriminadores de risco moderado.", "recommendations": "• Atendimento em até 60 minutos\n• Monitorizar sinais vitais durante a espera\n• Reavaliar caso haja piora clínica"}, {"min": 4, "max": 4, "label": "Laranja - Muito Urgente (até 10 min)", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Categoria laranja, com discriminadores de alto risco.", "recommendations": "• Atendimento em até 10 minutos\n• Monitorização contínua durante a espera\n• Comunicar imediatamente qualquer piora à equipe médica"}, {"min": 5, "max": 5, "label": "Vermelho - Emergência (Imediato)", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Categoria vermelha, com risco iminente de morte.", "recommendations": "• Atendimento médico imediato\n• Acionar sala de emergência/equipe de resposta rápida\n• Iniciar suporte de vida conforme protocolo institucional"}]}, "sae": {"nanda": [{"diagnosis": "Risco de morte súbita", "definition": "Risco de que a criança ou adulto morra inesperadamente, aplicável a pacientes classificados na categoria vermelha da triagem."}, {"diagnosis": "Ansiedade", "definition": "Sensação vaga e incômoda de desconforto ou temor, comum em pacientes e familiares durante o processo de triagem e espera por atendimento."}], "noc": [{"outcome": "Resposta à triagem", "indicators": ["Categoria de prioridade atribuída corretamente conforme discriminadores clínicos", "Tempo-alvo de atendimento respeitado conforme categoria", "Reavaliação realizada em caso de mudança do quadro clínico durante a espera"]}], "nic": [{"intervention": "Triagem/classificação de risco", "activities": ["Identificar a queixa principal do paciente e selecionar o fluxograma correspondente", "Avaliar sistematicamente os discriminadores de risco (gerais e específicos do fluxograma)", "Atribuir a categoria de prioridade com o tempo-alvo de atendimento correspondente", "Comunicar à equipe qualquer discriminador de risco iminente de morte imediatamente", "Reavaliar pacientes em espera prolongada, especialmente se houver mudança clínica"]}]}, "evidence": {"foundation": "O Sistema de Triagem de Manchester classifica os pacientes em 5 categorias de prioridade codificadas por cor — vermelho (emergência, atendimento imediato), laranja (muito urgente, 10 minutos), amarelo (urgente, 60 minutos), verde (pouco urgente, 120 minutos) e azul (não urgente, 240 minutos) — com base em 54 fluxogramas de apresentação clínica e seus respectivos discriminadores.", "history": "Desenvolvido entre 1994 e 1996 por enfermeiros e médicos de emergência de 9 hospitais da cidade de Manchester (Reino Unido), tornou-se um dos sistemas de triagem mais utilizados no mundo, incluindo amplamente no Brasil.", "validation": "Amplamente validado e adotado internacionalmente como sistema de triagem em serviços de urgência e emergência, com boa capacidade de identificar pacientes que necessitam de atendimento prioritário.", "limitations": "A aplicação correta exige treinamento específico no uso dos 54 fluxogramas e seus discriminadores. Esta calculadora apresenta uma simplificação educacional das 5 categorias e não substitui a aplicação completa do protocolo com os fluxogramas específicos de cada queixa clínica.", "references": [{"text": "MACKWAY-JONES, K.; MARSDEN, J.; WINDLE, J. Emergency Triage: Manchester Triage Group. 3rd ed. Oxford: Wiley-Blackwell, 2014."}, {"text": "GRUPO BRASILEIRO DE CLASSIFICAÇÃO DE RISCO. Sistema Manchester de Classificação de Risco. São Paulo: GBCR, 2020."}, {"text": "MINISTÉRIO DA SAÚDE. Manual de acolhimento e classificação de risco em serviços de urgência. Brasília: MS, 2012."}]}, "learning": {"tips": ["O Sistema de Manchester usa 54 fluxogramas diferentes de apresentação clínica, cada um com discriminadores específicos, além dos discriminadores gerais (risco de morte, dor, hemorragia, temperatura, nível de consciência, agudeza).", "A cor vermelha indica atendimento imediato (risco iminente de morte); a azul indica o menor grau de urgência (até 240 minutos).", "A classificação deve ser reavaliada se o paciente apresentar piora clínica durante o tempo de espera.", "Esta calculadora apresenta uma simplificação educacional das 5 categorias — a aplicação completa do protocolo exige treinamento específico nos fluxogramas do Grupo de Manchester."], "examples": [{"label": "Queixa sem sinais de risco", "sublabel": "Manchester Azul", "emoji": "🔵", "values": {"prioridade": 1}}, {"label": "Dor moderada, discriminadores de risco moderado", "sublabel": "Manchester Amarelo", "emoji": "🟡", "values": {"prioridade": 3}}, {"label": "Via aérea comprometida", "sublabel": "Manchester Vermelho", "emoji": "🔴", "values": {"prioridade": 5}}], "quiz": [{"q": "Quantas categorias de prioridade compõem o Sistema de Manchester?", "opts": ["3", "4", "5", "7"], "correct": 2, "expl": "O Sistema de Manchester classifica os pacientes em 5 categorias codificadas por cor: vermelho, laranja, amarelo, verde e azul."}, {"q": "Qual o tempo-alvo de atendimento para a categoria laranja (muito urgente)?", "opts": ["Imediato", "10 minutos", "60 minutos", "120 minutos"], "correct": 1, "expl": "A categoria laranja (muito urgente) tem tempo-alvo de atendimento de até 10 minutos."}, {"q": "O que determina a categoria de prioridade no Sistema de Manchester?", "opts": ["Apenas a idade do paciente", "Discriminadores clínicos de fluxogramas específicos para cada queixa", "Apenas a ordem de chegada", "Apenas os sinais vitais"], "correct": 1, "expl": "A categoria de prioridade é determinada pelos discriminadores clínicos (gerais e específicos) do fluxograma correspondente à queixa principal do paciente."}]}, "faq": [{"q": "O Sistema de Manchester determina o diagnóstico do paciente?", "a": "Não. O sistema determina apenas a prioridade e o tempo-alvo de atendimento, com base em discriminadores de risco, e não estabelece um diagnóstico clínico."}, {"q": "Um paciente pode mudar de categoria durante a espera?", "a": "Sim. Pacientes devem ser reavaliados periodicamente, especialmente em caso de piora clínica ou tempo de espera prolongado, podendo ser reclassificados para uma categoria de maior prioridade."}], "about": {"title": "Como funciona o Sistema de Triagem de Manchester", "html": "<p>O Sistema de Manchester classifica os pacientes em 5 categorias de prioridade codificadas por cor, com base em discriminadores clínicos de 54 fluxogramas de apresentação.</p><p><strong>Guia rápido:</strong> Vermelho = Imediato | Laranja = 10 min | Amarelo = 60 min | Verde = 120 min | Azul = 240 min.</p>"}}</script>
@@ -468,6 +482,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="glasgow-pediatrico">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -270,32 +280,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -414,6 +414,7 @@
               <select class="field-select" data-calc-input="ocular"><option value="4" selected>4 — Espontânea</option><option value="3">3 — Ao Som/Chamado</option><option value="2">2 — À Dor</option><option value="1">1 — Nenhuma Resposta</option></select></div><div class="urg-field"><label>Melhor Resposta Verbal (Adaptada)</label>
               <select class="field-select" data-calc-input="verbal"><option value="5" selected>5 — Sorri, Orientado aos Sons, Interage e Segue Objetos</option><option value="4">4 — Choro Consolável, Interação Inadequada</option><option value="3">3 — Choro Inconsistentemente Consolável, Gemidos</option><option value="2">2 — Inconsolável, Agitado</option><option value="1">1 — Nenhuma Resposta</option></select></div><div class="urg-field"><label>Melhor Resposta Motora (Adaptada)</label>
               <select class="field-select" data-calc-input="motora"><option value="6" selected>6 — Movimentos Espontâneos Normais</option><option value="5">5 — Retirada ao Toque</option><option value="4">4 — Retirada à Dor</option><option value="3">3 — Flexão Anormal à Dor (Decorticação)</option><option value="2">2 — Extensão Anormal à Dor (Descerebração)</option><option value="1">1 — Nenhuma Resposta</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">15</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Leve / Sem Comprometimento</span>
@@ -473,6 +474,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "73849506-1728-4950-6273-849506172839", "code": "SCALE-GCSPED-001", "slug": "glasgow-pediatrico", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Coma de Glasgow Pediátrica", "description": "Calcule a Escala de Coma de Glasgow adaptada para lactentes e crianças pequenas, com critérios verbais e motores ajustados. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/glasgow-pediatrico.html"}, "breadcrumb": {"category": "Pediatria", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Coma de Glasgow Pediátrica", "acronym": "GCS Pediátrica", "categoryBadge": "Pediatria", "icon": "i-brain", "objective": "Avaliar objetivamente o nível de consciência de lactentes e crianças pequenas (geralmente menores de 2 anos), a partir de critérios verbais e motores adaptados ao estágio de desenvolvimento neurológico infantil.", "indication": "Indicada para lactentes e crianças pequenas com trauma cranioencefálico, alteração do nível de consciência ou outras condições neurológicas agudas.", "targetPopulation": "Lactentes e crianças pequenas, tipicamente menores de 2 anos ou pré-verbais.", "specialty": ["Pediatria", "Neurologia", "Enfermagem"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Graham Teasdale", "Bryan Jennett (adaptação pediátrica por diversos autores)"], "complexity": "intermediate", "rating": 4.6, "ratingCount": 200}, "calculator": {"inputs": [{"id": "ocular", "type": "select", "label": "Abertura Ocular", "description": "Avalie a abertura ocular espontânea ou em resposta a estímulos.", "defaultValue": 4, "options": [{"value": 4, "label": "4 — Espontânea", "score": 4, "description": "Abre os olhos espontaneamente."}, {"value": 3, "label": "3 — Ao Som/Chamado", "score": 3, "description": "Abre os olhos em resposta à voz ou som."}, {"value": 2, "label": "2 — À Dor", "score": 2, "description": "Abre os olhos apenas em resposta a estímulo doloroso."}, {"value": 1, "label": "1 — Nenhuma Resposta", "score": 1, "description": "Não abre os olhos a nenhum estímulo."}]}, {"id": "verbal", "type": "select", "label": "Melhor Resposta Verbal (Adaptada)", "description": "Avalie sons, choro e interação social apropriados à idade.", "defaultValue": 5, "options": [{"value": 5, "label": "5 — Sorri, Orientado aos Sons, Interage e Segue Objetos", "score": 5, "description": "Balbucia apropriadamente, sorri, interage de forma adequada à idade."}, {"value": 4, "label": "4 — Choro Consolável, Interação Inadequada", "score": 4, "description": "Choro consolável, mas interação social prejudicada."}, {"value": 3, "label": "3 — Choro Inconsistentemente Consolável, Gemidos", "score": 3, "description": "Consegue ser consolado apenas às vezes, apresenta gemidos."}, {"value": 2, "label": "2 — Inconsolável, Agitado", "score": 2, "description": "Não consegue ser consolado, apresenta-se agitado."}, {"value": 1, "label": "1 — Nenhuma Resposta", "score": 1, "description": "Sem resposta verbal ou sonora."}]}, {"id": "motora", "type": "select", "label": "Melhor Resposta Motora (Adaptada)", "description": "Avalie a resposta motora espontânea ou a estímulos.", "defaultValue": 6, "options": [{"value": 6, "label": "6 — Movimentos Espontâneos Normais", "score": 6, "description": "Movimenta-se espontaneamente e de forma apropriada."}, {"value": 5, "label": "5 — Retirada ao Toque", "score": 5, "description": "Retira o membro ao toque (localiza estímulo tátil)."}, {"value": 4, "label": "4 — Retirada à Dor", "score": 4, "description": "Retira o membro em resposta a estímulo doloroso."}, {"value": 3, "label": "3 — Flexão Anormal à Dor (Decorticação)", "score": 3, "description": "Postura de flexão anormal dos membros superiores em resposta à dor."}, {"value": 2, "label": "2 — Extensão Anormal à Dor (Descerebração)", "score": 2, "description": "Postura de extensão anormal dos membros em resposta à dor."}, {"value": 1, "label": "1 — Nenhuma Resposta", "score": 1, "description": "Ausência de resposta motora a qualquer estímulo."}]}], "formula": {"type": "sum", "resultLabel": "Escala de Coma de Glasgow Pediátrica", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 13, "max": 15, "label": "Leve / Sem Comprometimento", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Nível de consciência preservado ou com comprometimento leve.", "recommendations": "• Manter observação neurológica de rotina\n• Reavaliar conforme protocolo institucional de trauma pediátrico"}, {"min": 9, "max": 12, "label": "Moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Comprometimento moderado do nível de consciência.", "recommendations": "• Comunicar à equipe médica/neuropediatria\n• Monitorização neurológica seriada mais frequente\n• Investigar causas do rebaixamento do nível de consciência"}, {"min": 3, "max": 8, "label": "Grave / Coma", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Comprometimento grave do nível de consciência, compatível com coma.", "recommendations": "• Comunicar imediatamente à equipe médica\n• Avaliar necessidade de proteção de via aérea e suporte ventilatório\n• Monitorização neurológica contínua\n• Investigação de imagem urgente conforme avaliação médica"}]}, "sae": {"nanda": [{"diagnosis": "Perfusão tissular cerebral ineficaz", "definition": "Diminuição da circulação sanguínea cerebral, podendo comprometer a saúde."}, {"diagnosis": "Risco de aspiração", "definition": "Risco de entrada de secreções gastrintestinais, orofaríngeas ou líquidos/sólidos nas vias traqueobrônquicas, associado a reflexos protetores diminuídos."}, {"diagnosis": "Ansiedade dos pais/cuidadores", "definition": "Sensação vaga e incômoda de desconforto ou temor dos pais/cuidadores relacionada à condição neurológica da criança."}], "noc": [{"outcome": "Status neurológico", "indicators": ["Nível de consciência adequado à idade e ao quadro clínico", "Resposta motora e verbal apropriadas", "Ausência de sinais de deterioração neurológica"]}], "nic": [{"intervention": "Monitorização neurológica", "activities": ["Avaliar abertura ocular, resposta verbal e motora adaptadas à idade", "Documentar o escore a cada avaliação", "Comunicar imediatamente qualquer queda no escore à equipe médica", "Envolver os pais/cuidadores na observação de mudanças comportamentais da criança"]}]}, "evidence": {"foundation": "A Escala de Coma de Glasgow Pediátrica é uma adaptação da Escala de Glasgow original (Teasdale e Jennett, 1974) para lactentes e crianças pequenas, ajustando os critérios de resposta verbal e motora para considerar o estágio de desenvolvimento neurológico esperado nessa faixa etária, já que crianças pré-verbais não conseguem responder aos critérios verbais originais da escala adulta.", "history": "Amplamente utilizada em pediatria e neonatologia para avaliação de trauma cranioencefálico e outras condições neurológicas agudas em crianças que ainda não desenvolveram linguagem verbal plena.", "validation": "Adaptações pediátricas da Escala de Glasgow são amplamente utilizadas na prática clínica, mantendo a mesma faixa de pontuação (3 a 15) e lógica geral da escala original adulta, com critérios adaptados à idade.", "limitations": "A avaliação em lactentes pode ser mais desafiadora e sujeita a maior variabilidade interobservador, dado o caráter subjetivo da interpretação do comportamento infantil. Deve ser complementada por avaliação neurológica pediátrica completa.", "references": [{"text": "TEASDALE, G.; JENNETT, B. Assessment of coma and impaired consciousness: a practical scale. The Lancet, v. 304, n. 7872, p. 81-84, 1974."}, {"text": "HOLMES, J. F. et al. Performance of the pediatric Glasgow Coma Scale in children with blunt head trauma. Academic Emergency Medicine, v. 12, n. 9, p. 814-819, 2005."}, {"text": "BRASIL. Sociedade Brasileira de Pediatria. Manual de emergências pediátricas. Rio de Janeiro: SBP, 2021."}]}, "learning": {"tips": ["Use esta versão adaptada para lactentes e crianças pequenas, geralmente menores de 2 anos ou pré-verbais.", "Para crianças maiores, capazes de verbalizar adequadamente, utilize a Escala de Glasgow padrão (adulto/criança maior).", "Envolva os pais/cuidadores na avaliação, pois eles frequentemente reconhecem melhor mudanças sutis no comportamento da criança.", "Reavalie frequentemente e compare com o estado basal da criança relatado pelos pais."], "examples": [{"label": "Lactente neurologicamente normal", "sublabel": "GCS Pediátrica 15", "emoji": "✅", "values": {"ocular": 4, "verbal": 5, "motora": 6}}, {"label": "Comprometimento moderado", "sublabel": "GCS Pediátrica 10", "emoji": "⚠️", "values": {"ocular": 3, "verbal": 3, "motora": 4}}, {"label": "Comprometimento grave", "sublabel": "GCS Pediátrica 5", "emoji": "🚨", "values": {"ocular": 1, "verbal": 2, "motora": 2}}], "quiz": [{"q": "Para qual faixa etária a Escala de Coma de Glasgow Pediátrica foi adaptada?", "opts": ["Adolescentes", "Lactentes e crianças pequenas, geralmente menores de 2 anos", "Apenas recém-nascidos a termo", "Crianças acima de 10 anos"], "correct": 1, "expl": "A versão pediátrica é destinada a lactentes e crianças pequenas, tipicamente menores de 2 anos ou ainda pré-verbais, cujos critérios de resposta verbal e motora são adaptados ao desenvolvimento esperado nessa idade."}, {"q": "Qual a faixa de pontuação total da Escala de Coma de Glasgow Pediátrica?", "opts": ["0 a 10", "3 a 15", "1 a 5", "0 a 20"], "correct": 1, "expl": "Assim como a escala adulta original, a versão pediátrica mantém a faixa de pontuação de 3 a 15 pontos."}, {"q": "Por que é necessária uma versão pediátrica da Escala de Glasgow?", "opts": ["Porque crianças não sentem dor", "Porque crianças pequenas/lactentes não conseguem responder aos critérios verbais da escala original", "Porque a escala original é muito simples", "Não há necessidade real, é apenas uma formalidade"], "correct": 1, "expl": "Lactentes e crianças pequenas ainda não desenvolveram linguagem verbal plena, exigindo critérios adaptados de resposta verbal e motora, baseados no comportamento esperado para a idade."}]}, "faq": [{"q": "Quando devo usar a versão pediátrica ao invés da Escala de Glasgow padrão?", "a": "A versão pediátrica deve ser usada em lactentes e crianças pequenas, geralmente menores de 2 anos ou que ainda não desenvolveram linguagem verbal adequada. Para crianças maiores, capazes de verbalizar, utiliza-se a escala padrão (adulto)."}, {"q": "A interpretação dos escores é a mesma da Escala de Glasgow adulta?", "a": "Sim. As mesmas faixas de interpretação são utilizadas: 13-15 leve, 9-12 moderado e 3-8 grave/coma, mantendo a mesma lógica geral da escala original."}], "about": {"title": "Como funciona a Escala de Coma de Glasgow Pediátrica", "html": "<p>A Escala de Coma de Glasgow Pediátrica soma pontos de 3 domínios — abertura ocular, resposta verbal e resposta motora, todos adaptados ao desenvolvimento neurológico esperado em lactentes e crianças pequenas —, totalizando de 3 a 15 pontos.</p><p><strong>Guia rápido:</strong> 13-15 = Leve/sem comprometimento | 9-12 = Moderado | 3-8 = Grave/coma.</p>"}}</script>
@@ -528,6 +542,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

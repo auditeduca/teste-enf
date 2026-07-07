@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="ranson">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -375,32 +385,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -663,6 +663,7 @@
               <select class="field-select" data-calc-input="pao2"><option value="0" selected>Não</option><option value="1">Sim (&lt; 60 mmHg)</option></select></div><div class="urg-field"><label>Déficit de Base &gt; 4 mEq/L (48h)</label>
               <select class="field-select" data-calc-input="deficit_base"><option value="0" selected>Não</option><option value="1">Sim (&gt; 4 mEq/L)</option></select></div><div class="urg-field"><label>Sequestro Estimado de Líquidos &gt; 6 L (48h)</label>
               <select class="field-select" data-calc-input="sequestro_liquidos"><option value="0" selected>Não</option><option value="1">Sim (&gt; 6 L)</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">critérios</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Pancreatite Leve</span>
@@ -722,6 +723,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Behavioral Pain Scale</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cam.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Método de Avaliação de Confusão</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "61728394-0516-2839-4051-617283940516", "code": "SCALE-RANSON-001", "slug": "ranson", "version": "1.0.0", "status": "published", "seo": {"title": "Critérios de Ranson - Prognóstico na Pancreatite Aguda", "description": "Calcule os Critérios de Ranson para estimar a gravidade e mortalidade da pancreatite aguda, considerando os critérios de admissão e das primeiras 48 horas. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/ranson.html"}, "breadcrumb": {"category": "Gastroenterologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Critérios de Ranson", "acronym": "Ranson", "categoryBadge": "Gastroenterologia", "icon": "i-activity", "objective": "Estimar a gravidade e o risco de mortalidade da pancreatite aguda a partir de critérios clínicos e laboratoriais avaliados na admissão e nas primeiras 48 horas.", "indication": "Indicada em pacientes com diagnóstico de pancreatite aguda, para estratificação prognóstica precoce.", "targetPopulation": "Pacientes adultos com pancreatite aguda, avaliados na admissão e reavaliados após 48 horas.", "specialty": ["Gastroenterologia", "Terapia Intensiva", "Emergência"], "averageTime": "3-4 minutos", "evidenceLevel": "II", "originalAuthors": ["John Ranson"], "complexity": "advanced", "rating": 4.3, "ratingCount": 145}, "calculator": {"inputs": [{"id": "idade", "type": "select", "label": "Idade > 55 Anos (Admissão)", "defaultValue": 0, "description": "Idade do paciente na admissão.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (> 55 anos)", "score": 1}]}, {"id": "leucocitos", "type": "select", "label": "Leucócitos > 16.000/mm³ (Admissão)", "defaultValue": 0, "description": "Contagem de leucócitos na admissão.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (> 16.000/mm³)", "score": 1}]}, {"id": "glicemia", "type": "select", "label": "Glicemia > 200 mg/dL (Admissão)", "defaultValue": 0, "description": "Glicemia sérica na admissão.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (> 200 mg/dL)", "score": 1}]}, {"id": "ldh", "type": "select", "label": "LDH > 350 UI/L (Admissão)", "defaultValue": 0, "description": "Desidrogenase láctica sérica na admissão.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (> 350 UI/L)", "score": 1}]}, {"id": "ast", "type": "select", "label": "AST (TGO) > 250 UI/L (Admissão)", "defaultValue": 0, "description": "Aspartato aminotransferase sérica na admissão.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (> 250 UI/L)", "score": 1}]}, {"id": "queda_hematocrito", "type": "select", "label": "Queda do Hematócrito > 10% (48h)", "defaultValue": 0, "description": "Queda do hematócrito em relação ao valor da admissão, em 48 horas.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (queda > 10%)", "score": 1}]}, {"id": "aumento_ureia", "type": "select", "label": "Aumento da Ureia > 5 mg/dL (48h)", "defaultValue": 0, "description": "Aumento da ureia sérica em relação ao valor da admissão, apesar de hidratação, em 48 horas.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (aumento > 5 mg/dL)", "score": 1}]}, {"id": "calcio", "type": "select", "label": "Cálcio Sérico < 8 mg/dL (48h)", "defaultValue": 0, "description": "Cálcio sérico em 48 horas.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (< 8 mg/dL)", "score": 1}]}, {"id": "pao2", "type": "select", "label": "PaO2 < 60 mmHg (48h)", "defaultValue": 0, "description": "Pressão parcial de oxigênio arterial em 48 horas.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (< 60 mmHg)", "score": 1}]}, {"id": "deficit_base", "type": "select", "label": "Déficit de Base > 4 mEq/L (48h)", "defaultValue": 0, "description": "Déficit de base em 48 horas.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (> 4 mEq/L)", "score": 1}]}, {"id": "sequestro_liquidos", "type": "select", "label": "Sequestro Estimado de Líquidos > 6 L (48h)", "defaultValue": 0, "description": "Sequestro estimado de líquidos em 48 horas.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (> 6 L)", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Critérios de Ranson Positivos", "resultUnit": "critérios", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 2, "label": "Pancreatite Leve", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixo número de critérios positivos, associado a mortalidade estimada inferior a 5% e menor probabilidade de curso grave.", "recommendations": "• Manter suporte clínico padrão (hidratação, analgesia, jejum conforme protocolo)\n• Reavaliar critérios completos em 48 horas se ainda na fase inicial\n• Monitorização de rotina"}, {"min": 3, "max": 4, "label": "Pancreatite Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Número intermediário de critérios positivos, associado a mortalidade estimada em torno de 15-20% e maior risco de complicações.", "recommendations": "• Considerar monitorização em unidade de cuidados intermediários/intensivos\n• Reavaliação clínica e laboratorial frequente\n• Investigar e tratar complicações precocemente"}, {"min": 5, "max": 6, "label": "Pancreatite Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Número elevado de critérios positivos, associado a mortalidade estimada em torno de 40% e alto risco de complicações sistêmicas.", "recommendations": "• Internação em terapia intensiva\n• Monitorização hemodinâmica e de órgãos-alvo\n• Avaliação multiprofissional para suporte de órgãos conforme necessidade"}, {"min": 7, "max": 11, "label": "Pancreatite Extremamente Grave", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Número muito elevado de critérios positivos, associado a mortalidade estimada próxima a 100% em algumas séries históricas.", "recommendations": "• Cuidados intensivos com suporte avançado de múltiplos órgãos\n• Discussão multiprofissional sobre prognóstico e objetivos de cuidado com a família\n• Reavaliação contínua da resposta terapêutica"}]}, "sae": {"nanda": [{"diagnosis": "Volume de líquidos deficiente", "definition": "Diminuição do líquido intravascular, intersticial e/ou intracelular, relacionado ao sequestro de líquidos e à resposta inflamatória sistêmica na pancreatite grave."}, {"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial, relacionada à inflamação pancreática."}, {"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos, relacionado à necrose pancreática e possível infecção secundária."}, {"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada, relacionado a complicações sistêmicas da pancreatite grave (ex: síndrome do desconforto respiratório agudo)."}], "noc": [{"outcome": "Gravidade da infecção/inflamação sistêmica", "indicators": ["Critérios de Ranson avaliados na admissão e em 48 horas", "Sinais vitais e função de órgãos monitorados", "Ausência ou controle de complicações sistêmicas"]}], "nic": [{"intervention": "Cuidados na pancreatite", "activities": ["Coletar exames laboratoriais necessários para o cálculo dos critérios de Ranson na admissão e em 48 horas", "Monitorar sinais vitais, diurese e função respiratória continuamente", "Auxiliar na reposição volêmica conforme prescrição", "Comunicar imediatamente resultado com critérios elevados à equipe médica", "Avaliar necessidade de transferência para unidade de terapia intensiva"]}]}, "evidence": {"foundation": "Os Critérios de Ranson avaliam 11 parâmetros clínicos e laboratoriais: 5 na admissão (idade, leucócitos, glicemia, LDH e AST) e 6 em 48 horas (queda do hematócrito, aumento da ureia, cálcio, PaO2, déficit de base e sequestro de líquidos), somando o número de critérios positivos para estimar a gravidade e mortalidade da pancreatite aguda.", "history": "Desenvolvidos por John Ranson em 1974, originalmente para pancreatite de etiologia alcoólica (com um conjunto ligeiramente diferente de critérios para pancreatite biliar), foram um dos primeiros sistemas prognósticos objetivos para pancreatite aguda.", "validation": "Amplamente utilizados historicamente, embora sistemas mais recentes como APACHE II e BISAP tenham a vantagem de poderem ser calculados integralmente já na admissão, sem necessidade de aguardar 48 horas.", "limitations": "Requer aguardar 48 horas para o cálculo completo, atrasando a estratificação de risco total. Alguns dos parâmetros laboratoriais (déficit de base, sequestro de líquidos) podem não estar rotineiramente disponíveis em todos os serviços. Escalas mais modernas (BISAP, APACHE II) são calculáveis integralmente na admissão.", "references": [{"text": "RANSON, J. H. et al. Prognostic signs and the role of operative management in acute pancreatitis. Surgery, Gynecology & Obstetrics, v. 139, n. 1, p. 69-81, 1974."}, {"text": "BANKS, P. A. et al. Classification of acute pancreatitis—2012: revision of the Atlanta classification and definitions by international consensus. Gut, v. 62, n. 1, p. 102-111, 2013."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Os Critérios de Ranson exigem duas avaliações: uma na admissão (5 critérios) e outra em 48 horas (6 critérios adicionais).", "O escore completo só está disponível após 48 horas, o que é uma limitação em relação a escalas como BISAP e APACHE II.", "Cada critério positivo soma 1 ponto; o resultado é o número total de critérios positivos, não uma soma de valores numéricos.", "Considere associar os Critérios de Ranson a outros escores prognósticos (BISAP, APACHE II) para uma avaliação mais completa e precoce."], "examples": [{"label": "Pancreatite leve", "sublabel": "1 critério positivo", "emoji": "✅", "values": {"idade": 1, "leucocitos": 0, "glicemia": 0, "ldh": 0, "ast": 0, "queda_hematocrito": 0, "aumento_ureia": 0, "calcio": 0, "pao2": 0, "deficit_base": 0, "sequestro_liquidos": 0}}, {"label": "Pancreatite grave", "sublabel": "5 critérios positivos", "emoji": "⚠️", "values": {"idade": 1, "leucocitos": 1, "glicemia": 1, "ldh": 0, "ast": 0, "queda_hematocrito": 1, "aumento_ureia": 1, "calcio": 0, "pao2": 0, "deficit_base": 0, "sequestro_liquidos": 0}}, {"label": "Pancreatite extremamente grave", "sublabel": "8 critérios positivos", "emoji": "🚨", "values": {"idade": 1, "leucocitos": 1, "glicemia": 1, "ldh": 1, "ast": 1, "queda_hematocrito": 1, "aumento_ureia": 1, "calcio": 1, "pao2": 0, "deficit_base": 0, "sequestro_liquidos": 0}}], "quiz": [{"q": "Quantos critérios compõem o escore de Ranson?", "opts": ["5", "8", "11", "15"], "correct": 2, "expl": "O escore de Ranson é composto por 11 critérios: 5 avaliados na admissão e 6 avaliados em 48 horas."}, {"q": "Quando o escore de Ranson completo pode ser calculado?", "opts": ["Imediatamente na admissão", "Somente após 48 horas", "Após 7 dias", "Não há prazo definido"], "correct": 1, "expl": "O escore completo requer critérios avaliados na admissão e critérios avaliados em 48 horas, portanto só está totalmente disponível após esse período."}, {"q": "Qual a principal limitação prática dos Critérios de Ranson em relação a escalas como BISAP?", "opts": ["Não avalia gravidade", "Necessidade de aguardar 48 horas para o escore completo", "Só se aplica a crianças", "Não tem validação científica"], "correct": 1, "expl": "Diferente do BISAP e do APACHE II, que podem ser calculados integralmente já na admissão, os Critérios de Ranson exigem uma segunda avaliação em 48 horas para o escore completo."}]}, "faq": [{"q": "Os Critérios de Ranson são específicos para algum tipo de pancreatite?", "a": "Foram originalmente descritos para pancreatite de etiologia alcoólica. Existe uma variação dos critérios para pancreatite de etiologia biliar, com pequenas diferenças nos valores de corte."}, {"q": "Por que preciso esperar 48 horas para o escore completo?", "a": "Seis dos onze critérios (queda do hematócrito, aumento da ureia, cálcio, PaO2, déficit de base e sequestro de líquidos) só podem ser avaliados comparando-se com os valores da admissão após 48 horas de evolução clínica."}], "about": {"title": "Como funcionam os Critérios de Ranson", "html": "<p>Os Critérios de Ranson somam o número de critérios positivos entre 11 parâmetros: 5 avaliados na admissão (idade, leucócitos, glicemia, LDH, AST) e 6 avaliados em 48 horas (queda do hematócrito, aumento da ureia, cálcio, PaO2, déficit de base, sequestro de líquidos).</p><p><strong>Guia rápido:</strong> 0-2 = Leve | 3-4 = Moderada | 5-6 = Grave | ≥7 = Extremamente grave.</p>"}}</script>
@@ -777,6 +791,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

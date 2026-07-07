@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="mascc">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -321,32 +331,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -533,6 +533,7 @@
               <select class="field-select" data-calc-input="desidratacao"><option value="0">Não (Desidratado)</option><option value="3" selected>Sim (Sem Desidratação)</option></select></div><div class="urg-field"><label>Status no Início da Febre</label>
               <select class="field-select" data-calc-input="status_inicio_febre"><option value="0">Paciente Hospitalizado no Início da Febre</option><option value="3" selected>Paciente Ambulatorial no Início da Febre</option></select></div><div class="urg-field"><label>Idade Menor que 60 Anos</label>
               <select class="field-select" data-calc-input="idade"><option value="0">Não (60 Anos ou Mais)</option><option value="2" selected>Sim (Menos de 60 Anos)</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">26</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco</span>
@@ -592,6 +593,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "62738495-0617-4850-5162-738495061728", "code": "SCALE-MASCC-001", "slug": "mascc", "version": "1.0.0", "status": "published", "seo": {"title": "MASCC Score - Risco de Complicações em Neutropenia Febril", "description": "Calcule o MASCC Score para estimar o risco de complicações em pacientes oncológicos com neutropenia febril. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/mascc.html"}, "breadcrumb": {"category": "Oncologia e Cuidados Paliativos", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "MASCC Score", "acronym": "MASCC", "categoryBadge": "Oncologia e cuidados paliativos", "icon": "i-clipboard", "objective": "Estimar o risco de complicações graves em pacientes oncológicos com neutropenia febril, orientando a decisão entre tratamento ambulatorial (via oral) ou internação com antibioticoterapia endovenosa.", "indication": "Indicada para pacientes oncológicos com febre e neutropenia (contagem de neutrófilos abaixo de 500-1000/mm³), no momento do diagnóstico do episódio febril.", "targetPopulation": "Pacientes adultos em tratamento oncológico que desenvolvem neutropenia febril.", "specialty": ["Oncologia", "Emergência", "Enfermagem"], "averageTime": "2-3 minutos", "evidenceLevel": "I", "organizations": ["Multinational Association for Supportive Care in Cancer (MASCC)"], "complexity": "advanced", "rating": 4.5, "ratingCount": 150}, "calculator": {"inputs": [{"id": "carga_doenca", "type": "select", "label": "Carga da Doença (Gravidade dos Sintomas)", "description": "Intensidade geral dos sintomas relacionados à neutropenia febril, excluindo pacientes moribundos.", "defaultValue": 5, "options": [{"value": 5, "label": "Sintomas Ausentes ou Leves", "score": 5}, {"value": 3, "label": "Sintomas Moderados", "score": 3}, {"value": 0, "label": "Sintomas Graves", "score": 0}]}, {"id": "hipotensao", "type": "select", "label": "Ausência de Hipotensão", "description": "Pressão arterial sistólica maior que 90 mmHg, sem necessidade de vasopressores.", "defaultValue": 5, "options": [{"value": 0, "label": "Não (Hipotenso)", "score": 0}, {"value": 5, "label": "Sim (Sem Hipotensão)", "score": 5}]}, {"id": "dpoc", "type": "select", "label": "Ausência de DPOC", "description": "Ausência de Doença Pulmonar Obstrutiva Crônica ativa.", "defaultValue": 4, "options": [{"value": 0, "label": "Não (Presença de DPOC Ativa)", "score": 0}, {"value": 4, "label": "Sim (Sem DPOC)", "score": 4}]}, {"id": "tipo_tumor", "type": "select", "label": "Tipo de Tumor / Infecção Fúngica Prévia", "description": "Tumor sólido, ou neoplasia hematológica sem infecção fúngica invasiva prévia.", "defaultValue": 4, "options": [{"value": 0, "label": "Não (Infecção Fúngica Prévia)", "score": 0}, {"value": 4, "label": "Sim (Tumor Sólido ou sem Infecção Fúngica Prévia)", "score": 4}]}, {"id": "desidratacao", "type": "select", "label": "Ausência de Desidratação", "description": "Ausência de desidratação que necessite de reposição de fluidos por via parenteral.", "defaultValue": 3, "options": [{"value": 0, "label": "Não (Desidratado)", "score": 0}, {"value": 3, "label": "Sim (Sem Desidratação)", "score": 3}]}, {"id": "status_inicio_febre", "type": "select", "label": "Status no Início da Febre", "description": "Condição do paciente no momento em que a febre se iniciou.", "defaultValue": 3, "options": [{"value": 0, "label": "Paciente Hospitalizado no Início da Febre", "score": 0}, {"value": 3, "label": "Paciente Ambulatorial no Início da Febre", "score": 3}]}, {"id": "idade", "type": "select", "label": "Idade Menor que 60 Anos", "description": "Idade do paciente inferior a 60 anos (não aplicável a pacientes pediátricos).", "defaultValue": 2, "options": [{"value": 0, "label": "Não (60 Anos ou Mais)", "score": 0}, {"value": 2, "label": "Sim (Menos de 60 Anos)", "score": 2}]}], "formula": {"type": "sum", "resultLabel": "MASCC Score", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 21, "max": 26, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixo risco de complicações graves. Pacientes com escore igual ou superior a 21 podem ser candidatos a tratamento ambulatorial com antibioticoterapia oral, conforme avaliação médica individualizada.", "recommendations": "• Considerar tratamento ambulatorial com antibiótico oral, conforme protocolo institucional e avaliação médica\n• Garantir acesso rápido a reavaliação em caso de piora\n• Orientar sinais de alarme para retorno imediato"}, {"min": 0, "max": 20, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alto risco de complicações graves em neutropenia febril. Escore abaixo de 21 geralmente indica necessidade de internação hospitalar e antibioticoterapia endovenosa.", "recommendations": "• Internação hospitalar\n• Iniciar antibioticoterapia endovenosa de amplo espectro em caráter de urgência, conforme protocolo institucional\n• Monitorização rigorosa de sinais vitais e de sepse"}]}, "sae": {"nanda": [{"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos, significativamente elevada pela neutropenia."}, {"diagnosis": "Risco de choque", "definition": "Risco de fluxo sanguíneo inadequado aos tecidos corporais, que pode levar à disfunção celular potencialmente fatal (sepse neutropênica)."}, {"diagnosis": "Hipertermia", "definition": "Temperatura corporal central acima da faixa normal diurna, devido a falha da termorregulação."}], "noc": [{"outcome": "Controle de risco: neutropenia febril", "indicators": ["Início precoce da antibioticoterapia", "Sinais vitais monitorizados de forma contínua", "Ausência de sinais de sepse/choque séptico"]}], "nic": [{"intervention": "Controle de infecção: neutropenia febril", "activities": ["Calcular o MASCC Score imediatamente na avaliação do episódio febril", "Coletar hemoculturas antes do início da antibioticoterapia", "Administrar antibiótico de amplo espectro dentro de 1 hora, conforme protocolo institucional (porta-antibiótico)", "Monitorar sinais vitais continuamente", "Orientar medidas de proteção contra infecção (higiene das mãos, restrição de visitas com sintomas infecciosos)"]}]}, "evidence": {"foundation": "O MASCC Score foi desenvolvido pela Multinational Association for Supportive Care in Cancer, combinando 7 fatores clínicos para estimar o risco de complicações graves em pacientes com neutropenia febril, permitindo identificar pacientes de baixo risco potencialmente elegíveis para tratamento ambulatorial.", "history": "Amplamente incorporado em diretrizes internacionais de manejo da neutropenia febril, contribuindo para reduzir internações desnecessárias em pacientes de baixo risco, mantendo a segurança do tratamento.", "validation": "Validado extensivamente na literatura oncológica, com boa capacidade preditiva de complicações graves, sendo referência nas principais diretrizes de sociedades de oncologia e doenças infecciosas.", "limitations": "A decisão final sobre tratamento ambulatorial deve sempre considerar também fatores logísticos e sociais (acesso a reavaliação rápida, suporte familiar, distância do serviço de saúde), além do escore numérico.", "references": [{"text": "KLASTERSKY, J. et al. The Multinational Association for Supportive Care in Cancer risk index: a multinational scoring system for identifying low-risk febrile neutropenic cancer patients. Journal of Clinical Oncology, v. 18, n. 16, p. 3038-3051, 2000."}, {"text": "FREIFELD, A. G. et al. Clinical Practice Guideline for the Use of Antimicrobial Agents in Neutropenic Patients with Cancer. Clinical Infectious Diseases, v. 52, n. 4, p. e56-e93, 2011."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["A antibioticoterapia deve ser iniciada rapidamente (idealmente dentro de 1 hora) em todo paciente com neutropenia febril, independentemente do escore, enquanto se aguarda a decisão sobre local de tratamento.", "O MASCC Score usa lógica inversa: quanto maior a pontuação, menor o risco (diferente da maioria dos outros escores clínicos).", "A decisão por tratamento ambulatorial deve considerar também critérios logísticos e sociais, não apenas o escore numérico.", "Reavalie o paciente clinicamente de forma frequente, mesmo se classificado como baixo risco inicialmente."], "examples": [{"label": "Baixo risco", "sublabel": "MASCC 24", "emoji": "✅", "values": {"carga_doenca": 5, "hipotensao": 5, "dpoc": 4, "tipo_tumor": 4, "desidratacao": 3, "status_inicio_febre": 3, "idade": 0}}, {"label": "Alto risco", "sublabel": "MASCC 12", "emoji": "🚨", "values": {"carga_doenca": 3, "hipotensao": 0, "dpoc": 4, "tipo_tumor": 4, "desidratacao": 0, "status_inicio_febre": 0, "idade": 0}}], "quiz": [{"q": "No MASCC Score, uma pontuação mais alta indica o quê?", "opts": ["Maior risco de complicações", "Menor risco de complicações", "Não tem relação com risco", "Necessidade obrigatória de internação"], "correct": 1, "expl": "Diferente da maioria dos escores clínicos, no MASCC uma pontuação mais alta indica MENOR risco de complicações graves."}, {"q": "A partir de qual pontuação o MASCC Score indica baixo risco?", "opts": ["10 pontos ou mais", "15 pontos ou mais", "21 pontos ou mais", "26 pontos apenas"], "correct": 2, "expl": "Escores de 21 pontos ou mais (de um máximo de 26) indicam baixo risco, podendo o paciente ser considerado para tratamento ambulatorial conforme avaliação médica."}, {"q": "O MASCC Score substitui o início rápido da antibioticoterapia?", "opts": ["Sim, deve-se aguardar o cálculo antes de tratar", "Não, a antibioticoterapia deve ser iniciada rapidamente independentemente do escore", "Apenas em pacientes de alto risco", "O MASCC Score não tem relação com antibióticos"], "correct": 1, "expl": "A antibioticoterapia de amplo espectro deve ser iniciada rapidamente em todo paciente com neutropenia febril, e o MASCC Score orienta a decisão sobre via de administração e local de tratamento, não o início do tratamento em si."}]}, "faq": [{"q": "Todo paciente de baixo risco pelo MASCC pode ser tratado em casa?", "a": "Não necessariamente de forma automática. A decisão deve considerar também critérios logísticos e sociais, como acesso a reavaliação rápida, suporte familiar e distância do serviço de saúde, além do escore numérico."}, {"q": "O MASCC Score é usado antes ou depois do início do antibiótico?", "a": "O MASCC Score é calculado no momento do diagnóstico da neutropenia febril, mas isso não deve atrasar o início da antibioticoterapia de amplo espectro, que deve ser iniciada o mais rapidamente possível."}], "about": {"title": "Como funciona o MASCC Score", "html": "<p>O MASCC Score soma pontos ponderados de 7 fatores clínicos — carga da doença, ausência de hipotensão, ausência de DPOC, tipo de tumor, ausência de desidratação, status no início da febre e idade —, totalizando de 0 a 26 pontos. Diferente da maioria dos escores, uma pontuação mais alta indica MENOR risco.</p><p><strong>Guia rápido:</strong> ≥21 = Baixo risco (considerar tratamento ambulatorial) | menos de 21 = Alto risco (internação com antibioticoterapia endovenosa).</p>"}}</script>
@@ -647,6 +661,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

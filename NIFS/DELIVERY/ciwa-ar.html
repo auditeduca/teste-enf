@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="ciwa-ar">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -361,32 +371,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -631,6 +631,7 @@
               <select class="field-select" data-calc-input="disturbios_visuais"><option value="0" selected>0 — Ausente</option><option value="1">1 — Sensibilidade Muito Leve</option><option value="2">2 — Sensibilidade Leve</option><option value="3">3 — Sensibilidade Moderada</option><option value="4">4 — Alucinações Moderadamente Graves</option><option value="5">5 — Alucinações Graves</option><option value="6">6 — Alucinações Extremamente Graves</option><option value="7">7 — Alucinações Contínuas</option></select></div><div class="urg-field"><label>Cefaleia / Sensação de Peso na Cabeça</label>
               <select class="field-select" data-calc-input="cefaleia"><option value="0" selected>0 — Não Presente</option><option value="1">1 — Muito Leve</option><option value="2">2 — Leve</option><option value="3">3 — Moderada</option><option value="4">4 — Moderadamente Grave</option><option value="5">5 — Grave</option><option value="6">6 — Muito Grave</option><option value="7">7 — Extremamente Grave</option></select></div><div class="urg-field"><label>Orientação e Obnubilação do Sensório</label>
               <select class="field-select" data-calc-input="orientacao"><option value="0" selected>0 — Orientado, Realiza Somas Seriadas</option><option value="1">1 — Não Realiza Somas Seriadas ou Incerto sobre a Data</option><option value="2">2 — Desorientado para Data (até 2 Dias)</option><option value="3">3 — Desorientado para Data (Mais de 2 Dias)</option><option value="4">4 — Desorientado para Lugar e/ou Pessoa</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Abstinência Leve</span>
@@ -690,6 +691,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "e8f95071-8294-4051-7384-9f9507182940", "code": "SCALE-CIWAAR-001", "slug": "ciwa-ar", "version": "1.0.0", "status": "published", "seo": {"title": "CIWA-Ar - Avaliação da Síndrome de Abstinência Alcoólica", "description": "Calcule o CIWA-Ar (Clinical Institute Withdrawal Assessment for Alcohol) para avaliar a gravidade da síndrome de abstinência alcoólica. Inclui interpretação e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/ciwa-ar.html"}, "breadcrumb": {"category": "Saúde Mental", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "CIWA-Ar", "acronym": "CIWA-Ar", "categoryBadge": "Saúde mental", "icon": "i-brain", "objective": "Avaliar objetivamente a gravidade da síndrome de abstinência alcoólica, orientando a necessidade de tratamento farmacológico e o nível de monitorização necessário.", "indication": "Indicada para pacientes com histórico de uso abusivo de álcool em processo de desintoxicação, especialmente nas primeiras 72 horas após a última ingestão.", "targetPopulation": "Pacientes adultos em risco ou com síndrome de abstinência alcoólica estabelecida, internados ou em unidades de desintoxicação.", "specialty": ["Saúde Mental", "Enfermagem", "Emergência"], "averageTime": "5-8 minutos", "evidenceLevel": "I", "originalAuthors": ["John T. Sullivan", "colaboradores"], "complexity": "advanced", "rating": 4.5, "ratingCount": 190}, "calculator": {"inputs": [{"id": "nausea", "type": "select", "label": "Náusea e Vômito", "description": "Pergunte: 'Você sente enjoo no estômago? Vomitou?'", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Nenhuma", "score": 0}, {"value": 1, "label": "1 — Náusea Leve, Sem Vômito", "score": 1}, {"value": 2, "label": "2", "score": 2}, {"value": 3, "label": "3", "score": 3}, {"value": 4, "label": "4 — Náusea Intermitente com Ânsia Seca", "score": 4}, {"value": 5, "label": "5", "score": 5}, {"value": 6, "label": "6", "score": 6}, {"value": 7, "label": "7 — Náusea Constante, Ânsias e Vômitos Frequentes", "score": 7}]}, {"id": "tremor", "type": "select", "label": "Tremor", "description": "Observe com os braços estendidos e dedos separados.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Nenhum", "score": 0}, {"value": 1, "label": "1 — Não Visível, mas Sentido Ponta a Ponta dos Dedos", "score": 1}, {"value": 2, "label": "2", "score": 2}, {"value": 3, "label": "3", "score": 3}, {"value": 4, "label": "4 — Moderado, com Braços Estendidos", "score": 4}, {"value": 5, "label": "5", "score": 5}, {"value": 6, "label": "6", "score": 6}, {"value": 7, "label": "7 — Grave, Mesmo com Braços Não Estendidos", "score": 7}]}, {"id": "sudorese", "type": "select", "label": "Sudorese Paroxística", "description": "Observe a presença de suor.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Nenhuma Sudorese Visível", "score": 0}, {"value": 1, "label": "1 — Sudorese Apenas nas Palmas, Mal Percebida", "score": 1}, {"value": 2, "label": "2", "score": 2}, {"value": 3, "label": "3", "score": 3}, {"value": 4, "label": "4 — Gotas de Suor Visíveis na Testa", "score": 4}, {"value": 5, "label": "5", "score": 5}, {"value": 6, "label": "6", "score": 6}, {"value": 7, "label": "7 — Sudorese Profusa", "score": 7}]}, {"id": "ansiedade", "type": "select", "label": "Ansiedade", "description": "Pergunte: 'Você se sente nervoso?'", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Sem Ansiedade, à Vontade", "score": 0}, {"value": 1, "label": "1 — Levemente Ansioso", "score": 1}, {"value": 2, "label": "2", "score": 2}, {"value": 3, "label": "3", "score": 3}, {"value": 4, "label": "4 — Moderadamente Ansioso ou Reservado", "score": 4}, {"value": 5, "label": "5", "score": 5}, {"value": 6, "label": "6", "score": 6}, {"value": 7, "label": "7 — Equivalente a Estado de Pânico/Delirium Grave", "score": 7}]}, {"id": "agitacao", "type": "select", "label": "Agitação", "description": "Observe o comportamento durante a entrevista.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Atividade Normal", "score": 0}, {"value": 1, "label": "1 — Um Pouco Mais de Atividade que o Normal", "score": 1}, {"value": 2, "label": "2", "score": 2}, {"value": 3, "label": "3", "score": 3}, {"value": 4, "label": "4 — Moderadamente Inquieto e Agitado", "score": 4}, {"value": 5, "label": "5", "score": 5}, {"value": 6, "label": "6", "score": 6}, {"value": 7, "label": "7 — Anda de um Lado a Outro / Contorce-se Constantemente", "score": 7}]}, {"id": "disturbios_tateis", "type": "select", "label": "Distúrbios Táteis", "description": "Pergunte sobre coceira, formigamento, queimação ou dormência; observe sinais de alucinação tátil.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Nenhum", "score": 0}, {"value": 1, "label": "1 — Muito Leve", "score": 1}, {"value": 2, "label": "2 — Leve", "score": 2}, {"value": 3, "label": "3 — Moderado", "score": 3}, {"value": 4, "label": "4 — Alucinações Moderadamente Graves", "score": 4}, {"value": 5, "label": "5 — Alucinações Graves", "score": 5}, {"value": 6, "label": "6 — Alucinações Extremamente Graves", "score": 6}, {"value": 7, "label": "7 — Alucinações Contínuas", "score": 7}]}, {"id": "disturbios_auditivos", "type": "select", "label": "Distúrbios Auditivos", "description": "Pergunte sobre sons ao redor; observe sinais de alucinação auditiva.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Ausente", "score": 0}, {"value": 1, "label": "1 — Muito Leve", "score": 1}, {"value": 2, "label": "2 — Leve", "score": 2}, {"value": 3, "label": "3 — Moderado", "score": 3}, {"value": 4, "label": "4 — Alucinações Moderadamente Graves", "score": 4}, {"value": 5, "label": "5 — Alucinações Graves", "score": 5}, {"value": 6, "label": "6 — Alucinações Extremamente Graves", "score": 6}, {"value": 7, "label": "7 — Alucinações Auditivas Contínuas", "score": 7}]}, {"id": "disturbios_visuais", "type": "select", "label": "Distúrbios Visuais", "description": "Pergunte sobre sensibilidade à luz/cores; observe sinais de alucinação visual.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Ausente", "score": 0}, {"value": 1, "label": "1 — Sensibilidade Muito Leve", "score": 1}, {"value": 2, "label": "2 — Sensibilidade Leve", "score": 2}, {"value": 3, "label": "3 — Sensibilidade Moderada", "score": 3}, {"value": 4, "label": "4 — Alucinações Moderadamente Graves", "score": 4}, {"value": 5, "label": "5 — Alucinações Graves", "score": 5}, {"value": 6, "label": "6 — Alucinações Extremamente Graves", "score": 6}, {"value": 7, "label": "7 — Alucinações Contínuas", "score": 7}]}, {"id": "cefaleia", "type": "select", "label": "Cefaleia / Sensação de Peso na Cabeça", "description": "Pergunte: 'Sua cabeça está diferente? Sente como se tivesse uma faixa em volta dela?'", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Não Presente", "score": 0}, {"value": 1, "label": "1 — Muito Leve", "score": 1}, {"value": 2, "label": "2 — Leve", "score": 2}, {"value": 3, "label": "3 — Moderada", "score": 3}, {"value": 4, "label": "4 — Moderadamente Grave", "score": 4}, {"value": 5, "label": "5 — Grave", "score": 5}, {"value": 6, "label": "6 — Muito Grave", "score": 6}, {"value": 7, "label": "7 — Extremamente Grave", "score": 7}]}, {"id": "orientacao", "type": "select", "label": "Orientação e Obnubilação do Sensório", "description": "Pergunte a data, local e realize somas seriadas simples.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Orientado, Realiza Somas Seriadas", "score": 0}, {"value": 1, "label": "1 — Não Realiza Somas Seriadas ou Incerto sobre a Data", "score": 1}, {"value": 2, "label": "2 — Desorientado para Data (até 2 Dias)", "score": 2}, {"value": 3, "label": "3 — Desorientado para Data (Mais de 2 Dias)", "score": 3}, {"value": 4, "label": "4 — Desorientado para Lugar e/ou Pessoa", "score": 4}]}], "formula": {"type": "sum", "resultLabel": "Escore CIWA-Ar", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 9, "label": "Abstinência Leve", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Sintomas leves de abstinência alcoólica. Geralmente não há necessidade de tratamento farmacológico específico.", "recommendations": "• Monitorização de sinais vitais\n• Suporte de conforto e reidratação conforme necessário\n• Reavaliação periódica com o CIWA-Ar"}, {"min": 10, "max": 18, "label": "Abstinência Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Sintomas moderados de abstinência alcoólica. Pode haver indicação de tratamento farmacológico conforme protocolo médico.", "recommendations": "• Comunicar à equipe médica para avaliação de tratamento farmacológico\n• Monitorização mais frequente\n• Reavaliação seriada com o CIWA-Ar (geralmente a cada 1-2 horas)"}, {"min": 19, "max": 67, "label": "Abstinência Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Sintomas graves de abstinência alcoólica, com risco aumentado de convulsões e delirium tremens.", "recommendations": "• Comunicar imediatamente à equipe médica\n• Tratamento farmacológico geralmente indicado\n• Monitorização contínua\n• Considerar transferência para unidade de maior complexidade"}]}, "sae": {"nanda": [{"diagnosis": "Confusão aguda", "definition": "Início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção que se desenvolvem em curto período."}, {"diagnosis": "Ansiedade", "definition": "Sensação vaga e incômoda de desconforto ou temor, acompanhada de resposta autonômica."}, {"diagnosis": "Risco de quedas", "definition": "Vulnerabilidade aumentada a quedas, associada a tremor, agitação e alteração do estado mental."}], "noc": [{"outcome": "Gravidade dos sintomas de abstinência de substância", "indicators": ["Redução dos sinais autonômicos (tremor, sudorese)", "Ausência de alucinações", "Orientação preservada"]}], "nic": [{"intervention": "Manejo da abstinência de substância: álcool", "activities": ["Aplicar o CIWA-Ar de forma sistemática e seriada", "Administrar medicação conforme prescrição e escore obtido", "Manter ambiente seguro e com estímulos reduzidos", "Monitorar sinais vitais e nível de consciência", "Comunicar imediatamente sinais de agravamento à equipe médica"]}]}, "evidence": {"foundation": "O CIWA-Ar (Clinical Institute Withdrawal Assessment for Alcohol, Revised) foi desenvolvido por Sullivan e colaboradores em 1989, avaliando 10 itens relacionados a sinais e sintomas de abstinência alcoólica, permitindo quantificar objetivamente a gravidade da síndrome e orientar a necessidade de tratamento farmacológico.", "history": "Amplamente utilizado em protocolos de desintoxicação alcoólica hospitalar, permitindo o tratamento guiado por sintomas (symptom-triggered therapy), que reduz a quantidade total de medicação utilizada em comparação a esquemas fixos de dose.", "validation": "Validado extensivamente na literatura, sendo considerado padrão-ouro para avaliação da gravidade da abstinência alcoólica em ambiente clínico, com boa confiabilidade quando aplicado por profissionais treinados.", "limitations": "Requer treinamento adequado da equipe para aplicação padronizada. Não deve ser aplicado em pacientes com rebaixamento importante do nível de consciência por outras causas, o que pode comprometer a avaliação de itens subjetivos.", "references": [{"text": "SULLIVAN, J. T. et al. Assessment of alcohol withdrawal: the revised clinical institute withdrawal assessment for alcohol scale (CIWA-Ar). British Journal of Addiction, v. 84, n. 11, p. 1353-1357, 1989."}, {"text": "MAYO-SMITH, M. F. Pharmacological management of alcohol withdrawal: a meta-analysis and evidence-based practice guideline. JAMA, v. 278, n. 2, p. 144-151, 1997."}, {"text": "BRASIL. Ministério da Saúde. Diretrizes de tratamento da síndrome de abstinência alcoólica. Brasília: MS, 2019."}]}, "learning": {"tips": ["Reavalie o CIWA-Ar de forma seriada (geralmente a cada 1-2 horas nas primeiras 24-72h) para acompanhar a evolução do quadro.", "O tratamento guiado por sintomas (usando o CIWA-Ar) tende a usar menos medicação total do que esquemas de dose fixa.", "Alucinações presentes em qualquer dos itens sensoriais aumentam significativamente o risco e merecem atenção imediata.", "Mantenha ambiente calmo, com estímulos reduzidos, para auxiliar no controle dos sintomas."], "examples": [{"label": "Abstinência leve", "sublabel": "CIWA-Ar 5", "emoji": "✅", "values": {"nausea": 1, "tremor": 1, "sudorese": 1, "ansiedade": 1, "agitacao": 1, "disturbios_tateis": 0, "disturbios_auditivos": 0, "disturbios_visuais": 0, "cefaleia": 0, "orientacao": 0}}, {"label": "Abstinência moderada", "sublabel": "CIWA-Ar 14", "emoji": "⚠️", "values": {"nausea": 2, "tremor": 2, "sudorese": 2, "ansiedade": 2, "agitacao": 2, "disturbios_tateis": 1, "disturbios_auditivos": 1, "disturbios_visuais": 1, "cefaleia": 1, "orientacao": 0}}, {"label": "Abstinência grave, risco de DT", "sublabel": "CIWA-Ar 28", "emoji": "🚨", "values": {"nausea": 4, "tremor": 4, "sudorese": 4, "ansiedade": 4, "agitacao": 4, "disturbios_tateis": 2, "disturbios_auditivos": 2, "disturbios_visuais": 2, "cefaleia": 2, "orientacao": 2}}], "quiz": [{"q": "Quantos itens compõem o CIWA-Ar?", "opts": ["7", "8", "9", "10"], "correct": 3, "expl": "O CIWA-Ar avalia 10 itens: náusea/vômito, tremor, sudorese, ansiedade, agitação, distúrbios táteis, auditivos e visuais, cefaleia e orientação."}, {"q": "A partir de qual escore o CIWA-Ar indica abstinência grave, com maior risco de delirium tremens?", "opts": ["5 pontos", "10 pontos", "19 pontos ou mais", "67 pontos apenas"], "correct": 2, "expl": "Escores de 19 pontos ou mais indicam abstinência grave, com risco aumentado de convulsões e delirium tremens."}, {"q": "Qual a vantagem do tratamento guiado por sintomas usando o CIWA-Ar em relação a esquemas de dose fixa?", "opts": ["Usa mais medicação", "Tende a usar menos medicação total, individualizando o tratamento", "Não tem vantagem comprovada", "É mais lento"], "correct": 1, "expl": "O tratamento guiado por sintomas (symptom-triggered therapy) usando o CIWA-Ar tende a resultar em menor quantidade total de medicação utilizada, comparado a esquemas fixos de dose."}]}, "faq": [{"q": "O CIWA-Ar pode ser usado em qualquer paciente com rebaixamento do nível de consciência?", "a": "Não. O CIWA-Ar depende de itens subjetivos relatados pelo paciente, sendo menos confiável em pacientes com rebaixamento importante do nível de consciência por outras causas associadas."}, {"q": "Com que frequência o CIWA-Ar deve ser reavaliado?", "a": "Geralmente a cada 1 a 2 horas nas primeiras 24 a 72 horas após a última ingestão de álcool, ou conforme protocolo institucional, especialmente em pacientes com escore elevado."}], "about": {"title": "Como funciona o CIWA-Ar", "html": "<p>O CIWA-Ar soma pontos de 10 itens relacionados a sinais e sintomas de abstinência alcoólica — náusea/vômito, tremor, sudorese, ansiedade, agitação, distúrbios táteis, auditivos e visuais, cefaleia e orientação — totalizando de 0 a 67 pontos.</p><p><strong>Guia rápido:</strong> 0-9 = Leve | 10-18 = Moderada | ≥19 = Grave, risco de delirium tremens.</p>"}}</script>
@@ -745,6 +759,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

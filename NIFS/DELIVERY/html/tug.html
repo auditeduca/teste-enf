@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="tug">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -247,32 +257,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -355,6 +355,7 @@
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Tempo Cronometrado</label>
               <input aria-label="Number" type="number" data-calc-input="tempo" value="10"></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">10.0</span><span class="urg-result-unit" id="urgResultUnit">segundos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Boa Mobilidade / Geralmente Independente</span>
@@ -414,6 +415,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "3a4b5c6d-7385-49a0-3041-5c6d74859607", "code": "CALC-TUG-001", "slug": "tug", "version": "1.0.0", "status": "published", "seo": {"title": "Timed Up and Go (TUG) - Teste de Mobilidade e Risco de Queda", "description": "Calcule e classifique o resultado do teste Timed Up and Go (TUG), utilizado para avaliar mobilidade funcional e risco de queda em idosos.", "canonical": "https://www.calculadorasdeenfermagem.com.br/tug.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Timed Up and Go", "acronym": "TUG", "categoryBadge": "Segurança do paciente", "icon": "i-access", "objective": "Avaliar a mobilidade funcional e o risco de queda a partir do tempo cronometrado que o paciente leva para levantar de uma cadeira, caminhar 3 metros, retornar e sentar novamente.", "indication": "Indicada para triagem de mobilidade e risco de queda em idosos, tanto em ambiente hospitalar quanto ambulatorial ou domiciliar.", "targetPopulation": "Pacientes idosos ou adultos com suspeita de comprometimento de mobilidade e equilíbrio.", "specialty": ["Geriatria", "Enfermagem", "Fisioterapia"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Diane Podsiadlo", "Sandra Richardson"], "complexity": "basic", "rating": 4.7, "ratingCount": 275}, "calculator": {"inputs": [{"id": "tempo", "type": "number", "label": "Tempo Cronometrado", "unit": "segundos", "defaultValue": 10, "min": 0, "max": 300, "step": 0.1, "description": "Tempo, em segundos, para o paciente levantar de uma cadeira com braços, caminhar 3 metros, virar, retornar e sentar novamente, sem auxílio físico de outra pessoa."}], "formula": {"type": "expression", "expression": "tempo", "resultLabel": "Tempo do TUG", "resultUnit": "segundos", "decimals": 1}}, "interpretation": {"ranges": [{"min": 0, "max": 9.99, "label": "Mobilidade Normal", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Mobilidade funcional dentro da normalidade, baixo risco de queda associado a esta medida.", "recommendations": "• Manter avaliação de rotina\n• Estímulo à atividade física regular"}, {"min": 10, "max": 19.99, "label": "Boa Mobilidade / Geralmente Independente", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Mobilidade geralmente compatível com independência na maioria das atividades de vida diária, mas pode indicar necessidade de acompanhamento em idosos frágeis.", "recommendations": "• Reavaliar periodicamente\n• Considerar avaliação de equilíbrio e força muscular"}, {"min": 20, "max": 29.99, "label": "Necessita de Avaliação Adicional", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Tempo aumentado, sugerindo comprometimento de mobilidade e risco aumentado de queda. Recomenda-se avaliação funcional mais aprofundada.", "recommendations": "• Encaminhar para avaliação de fisioterapia\n• Investigar causas de comprometimento da marcha e equilíbrio\n• Considerar uso de dispositivo de auxílio à marcha"}, {"min": 30, "max": 999, "label": "Alto Risco de Queda / Dependência", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Tempo igual ou superior a 30 segundos está associado a maior dependência funcional e risco significativamente aumentado de queda.", "recommendations": "• Encaminhar para avaliação multiprofissional (fisioterapia, terapia ocupacional)\n• Implementar medidas de prevenção de quedas\n• Avaliar necessidade de dispositivo de auxílio e adaptação do ambiente"}]}, "sae": {"nanda": [{"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."}, {"diagnosis": "Risco de quedas", "definition": "Vulnerabilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde."}], "noc": [{"outcome": "Ambulação", "indicators": ["Levanta-se sem auxílio de terceiros", "Marcha com passos firmes", "Mantém equilíbrio ao caminhar e virar"]}], "nic": [{"intervention": "Terapia de exercícios: deambulação", "activities": ["Aplicar o teste TUG de forma padronizada", "Encaminhar para fisioterapia quando indicado", "Orientar uso adequado de dispositivos de auxílio à marcha", "Reavaliar periodicamente a evolução da mobilidade"]}]}, "evidence": {"foundation": "O teste Timed Up and Go foi desenvolvido por Podsiadlo e Richardson em 1991, a partir do teste 'Get Up and Go' original, medindo o tempo que o paciente leva para levantar de uma cadeira com braços, caminhar 3 metros em linha reta, virar, retornar e sentar novamente, sem auxílio físico.", "history": "Amplamente utilizado em avaliação geriátrica como ferramenta rápida e simples de triagem de mobilidade funcional e risco de queda, recomendado por diversas diretrizes internacionais de prevenção de quedas em idosos.", "validation": "Estudos demonstram boa confiabilidade teste-reteste e interobservador, com tempos de 12 a 14 segundos ou mais frequentemente associados a maior risco de queda em idosos da comunidade, e tempos de 30 segundos ou mais associados a maior dependência funcional.", "limitations": "O ponto de corte ideal pode variar conforme a população estudada (idosos da comunidade vs. hospitalizados vs. institucionalizados). O teste avalia mobilidade, mas não substitui uma avaliação de equilíbrio e marcha mais detalhada quando clinicamente indicada.", "references": [{"text": "PODSIADLO, D.; RICHARDSON, S. The timed \"Up & Go\": a test of basic functional mobility for frail elderly persons. Journal of the American Geriatrics Society, v. 39, n. 2, p. 142-148, 1991."}, {"text": "SHUMWAY-COOK, A. et al. Predicting the probability for falls in community-dwelling older adults using the Timed Up & Go Test. Physical Therapy, v. 80, n. 9, p. 896-903, 2000."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Utilize uma cadeira padronizada com braços e um percurso de exatamente 3 metros marcado no chão.", "Instrua o paciente a realizar o percurso em seu ritmo habitual, sem auxílio físico de outra pessoa (dispositivos de apoio habituais são permitidos).", "Cronometre a partir do comando 'vá' até o momento em que o paciente se senta novamente.", "Considere repetir o teste em outro momento se o resultado for limítrofe ou inconsistente com a impressão clínica."], "examples": [{"label": "Mobilidade normal", "sublabel": "TUG 8s", "emoji": "✅", "values": {"tempo": 8}}, {"label": "Necessita avaliação adicional", "sublabel": "TUG 24s", "emoji": "⚠️", "values": {"tempo": 24}}, {"label": "Alto risco de queda", "sublabel": "TUG 35s", "emoji": "🚨", "values": {"tempo": 35}}], "quiz": [{"q": "O que o teste TUG mede exatamente?", "opts": ["Força muscular isolada", "Tempo para levantar, caminhar 3 metros, virar, retornar e sentar", "Amplitude de movimento articular", "Capacidade cognitiva"], "correct": 1, "expl": "O TUG mede o tempo total para o paciente levantar de uma cadeira, caminhar 3 metros, virar, retornar e sentar novamente."}, {"q": "A partir de qual tempo o TUG geralmente indica alto risco de queda e dependência?", "opts": ["10 segundos", "20 segundos", "30 segundos ou mais", "5 segundos"], "correct": 2, "expl": "Tempos de 30 segundos ou mais estão associados a maior dependência funcional e risco significativamente aumentado de queda."}, {"q": "O paciente pode usar bengala ou andador durante o teste TUG?", "opts": ["Não, nunca", "Sim, se for seu dispositivo de auxílio habitual", "Apenas em ambiente hospitalar", "Somente com autorização médica prévia"], "correct": 1, "expl": "O paciente deve usar seu dispositivo de auxílio habitual durante o teste, refletindo sua mobilidade real no dia a dia."}]}, "faq": [{"q": "O TUG substitui uma avaliação fisioterapêutica completa?", "a": "Não. É um teste de triagem rápido. Resultados alterados devem motivar encaminhamento para avaliação mais aprofundada de equilíbrio, força e marcha."}, {"q": "Com que frequência o TUG deve ser reaplicado?", "a": "Pode ser reaplicado periodicamente conforme protocolo institucional, após intervenções de reabilitação, ou sempre que houver mudança relevante na mobilidade do paciente."}], "about": {"title": "Como funciona o Timed Up and Go", "html": "<p>O TUG cronometra o tempo que o paciente leva para levantar de uma cadeira com braços, caminhar 3 metros em linha reta, virar, retornar e sentar novamente, sem auxílio físico de outra pessoa.</p><p><strong>Guia rápido:</strong> menos de 10s = Normal | 10-19s = Boa mobilidade | 20-29s = Avaliação adicional necessária | 30s ou mais = Alto risco de queda/dependência.</p>"}}</script>
@@ -469,6 +483,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

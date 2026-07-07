@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="norton">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -297,32 +307,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -477,6 +477,7 @@
               <select class="field-select" data-calc-input="atividade"><option value="4" selected>Deambula</option><option value="3">Anda com Ajuda</option><option value="2">Confinado à Cadeira</option><option value="1">Acamado</option></select></div><div class="urg-field"><label>Mobilidade</label>
               <select class="field-select" data-calc-input="mobilidade"><option value="4" selected>Total</option><option value="3">Levemente Limitada</option><option value="2">Muito Limitada</option><option value="1">Imóvel</option></select></div><div class="urg-field"><label>Incontinência</label>
               <select class="field-select" data-calc-input="incontinencia"><option value="4" selected>Nenhuma</option><option value="3">Ocasional</option><option value="2">Geralmente Urinária</option><option value="1">Urinária e Fecal</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">20</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco</span>
@@ -536,6 +537,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "06172839-4051-6273-8495-061728394051", "code": "SCALE-NORTON-001", "slug": "norton", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Norton - Risco de Lesão por Pressão", "description": "Calcule a Escala de Norton para avaliar o risco de desenvolvimento de lesão por pressão (úlcera de pressão). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/norton.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Norton", "acronym": "Norton", "categoryBadge": "Segurança do paciente", "icon": "i-shieldcheck", "objective": "Avaliar o risco de desenvolvimento de lesão por pressão a partir de 5 domínios: condição física, condição mental, atividade, mobilidade e incontinência.", "indication": "Indicada na avaliação de risco de lesão por pressão em pacientes hospitalizados, especialmente idosos e acamados.", "targetPopulation": "Pacientes hospitalizados, especialmente idosos, acamados ou com mobilidade reduzida.", "specialty": ["Enfermagem", "Segurança do Paciente", "Geriatria"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Doreen Norton"], "complexity": "basic", "rating": 4.4, "ratingCount": 260}, "calculator": {"inputs": [{"id": "condicao_fisica", "type": "select", "label": "Condição Física", "defaultValue": 4, "description": "Estado físico geral do paciente.", "options": [{"value": 4, "label": "Boa", "score": 4}, {"value": 3, "label": "Razoável", "score": 3}, {"value": 2, "label": "Ruim", "score": 2}, {"value": 1, "label": "Muito Ruim", "score": 1}]}, {"id": "condicao_mental", "type": "select", "label": "Condição Mental", "defaultValue": 4, "description": "Estado de consciência e orientação do paciente.", "options": [{"value": 4, "label": "Alerta", "score": 4}, {"value": 3, "label": "Apático", "score": 3}, {"value": 2, "label": "Confuso", "score": 2}, {"value": 1, "label": "Estupor/Torpor", "score": 1}]}, {"id": "atividade", "type": "select", "label": "Atividade", "defaultValue": 4, "description": "Nível de atividade física do paciente.", "options": [{"value": 4, "label": "Deambula", "score": 4}, {"value": 3, "label": "Anda com Ajuda", "score": 3}, {"value": 2, "label": "Confinado à Cadeira", "score": 2}, {"value": 1, "label": "Acamado", "score": 1}]}, {"id": "mobilidade", "type": "select", "label": "Mobilidade", "defaultValue": 4, "description": "Capacidade de mudar e controlar a posição do corpo.", "options": [{"value": 4, "label": "Total", "score": 4}, {"value": 3, "label": "Levemente Limitada", "score": 3}, {"value": 2, "label": "Muito Limitada", "score": 2}, {"value": 1, "label": "Imóvel", "score": 1}]}, {"id": "incontinencia", "type": "select", "label": "Incontinência", "defaultValue": 4, "description": "Presença e tipo de incontinência.", "options": [{"value": 4, "label": "Nenhuma", "score": 4}, {"value": 3, "label": "Ocasional", "score": 3}, {"value": 2, "label": "Geralmente Urinária", "score": 2}, {"value": 1, "label": "Urinária e Fecal", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Escala de Norton", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 5, "max": 9, "label": "Risco Muito Alto", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Pontuação de 5 a 9 pontos indica risco muito alto de desenvolvimento de lesão por pressão.", "recommendations": "• Implementar protocolo intensivo de prevenção de lesão por pressão (mudança de decúbito frequente, superfícies especiais)\n• Avaliar a pele a cada turno\n• Envolver equipe multiprofissional (nutrição, fisioterapia) no plano de cuidados"}, {"min": 10, "max": 14, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação de 10 a 14 pontos indica alto risco de desenvolvimento de lesão por pressão.", "recommendations": "• Implementar protocolo de prevenção de lesão por pressão\n• Realizar mudança de decúbito regular conforme protocolo\n• Avaliar necessidade de superfícies de suporte especiais"}, {"min": 15, "max": 18, "label": "Risco Médio", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação de 15 a 18 pontos indica risco médio de desenvolvimento de lesão por pressão.", "recommendations": "• Manter vigilância e reavaliação periódica da pele\n• Orientar sobre posicionamento adequado\n• Reavaliar o escore periodicamente, especialmente após mudanças no estado clínico"}, {"min": 19, "max": 20, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Pontuação de 19 a 20 pontos indica baixo risco de desenvolvimento de lesão por pressão.", "recommendations": "• Manter cuidados de rotina com a pele\n• Reavaliar periodicamente, especialmente após mudanças no estado clínico"}]}, "sae": {"nanda": [{"diagnosis": "Risco de integridade tissular prejudicada", "definition": "Risco de dano ao tecido mucoso, córneo, subcutâneo, muscular, cartilaginoso, ósseo ou vascular, relacionado a fatores de risco identificados pela Escala de Norton."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação no movimento físico independente e intencional do corpo ou de uma ou mais extremidades."}, {"diagnosis": "Risco de integridade da pele prejudicada", "definition": "Risco de alteração na epiderme e/ou derme, relacionado a imobilidade, incontinência e condição física comprometida."}], "noc": [{"outcome": "Integridade tissular: pele e mucosas", "indicators": ["Escore de Norton avaliado e reavaliado periodicamente", "Pele íntegra, sem sinais de lesão por pressão", "Plano de prevenção implementado conforme risco identificado"]}], "nic": [{"intervention": "Prevenção de úlcera por pressão", "activities": ["Aplicar a Escala de Norton na admissão e reavaliar periodicamente", "Realizar mudança de decúbito conforme risco identificado e protocolo institucional", "Avaliar a pele regularmente, especialmente em proeminências ósseas", "Utilizar superfícies de suporte especiais conforme indicação", "Orientar equipe e cuidadores sobre medidas de prevenção"]}]}, "evidence": {"foundation": "A Escala de Norton avalia 5 domínios — condição física, condição mental, atividade, mobilidade e incontinência — cada um pontuado de 1 a 4, totalizando um escore de 5 a 20 pontos, sendo que pontuações mais baixas indicam maior risco de lesão por pressão.", "history": "Desenvolvida por Doreen Norton em 1962, é uma das primeiras e mais simples ferramentas de avaliação de risco de lesão por pressão, amplamente utilizada como base para escalas posteriores, como a Escala de Braden.", "validation": "Amplamente utilizada na prática clínica por sua simplicidade e rapidez de aplicação, embora escalas mais recentes (como a Escala de Braden) sejam consideradas mais detalhadas e com melhor poder preditivo em algumas populações.", "limitations": "É uma escala mais simples que outras ferramentas mais recentes, podendo ter menor sensibilidade em populações específicas. Não avalia diretamente fatores nutricionais e de fricção/cisalhamento de forma tão detalhada quanto a Escala de Braden.", "references": [{"text": "NORTON, D.; MCLAREN, R.; EXTON-SMITH, A. N. An investigation of geriatric nursing problems in hospital. Edinburgh: Churchill Livingstone, 1962."}, {"text": "SCIRE PROJECT. Norton Pressure Ulcer Risk Scale. SCIRE Professional, 2020."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Na Escala de Norton, ao contrário de outras escalas de risco, pontuações mais BAIXAS indicam MAIOR risco de lesão por pressão.", "A escala soma 5 domínios, cada um pontuado de 1 a 4, totalizando de 5 a 20 pontos.", "É uma das escalas mais simples e rápidas de aplicar, sendo historicamente a base para escalas posteriores como a Braden.", "Reavalie o escore periodicamente, especialmente após mudanças no estado clínico, cognitivo ou de mobilidade do paciente."], "examples": [{"label": "Baixo risco", "sublabel": "Norton 20", "emoji": "✅", "values": {"condicao_fisica": 4, "condicao_mental": 4, "atividade": 4, "mobilidade": 4, "incontinencia": 4}}, {"label": "Risco médio", "sublabel": "Norton 16", "emoji": "🔎", "values": {"condicao_fisica": 3, "condicao_mental": 4, "atividade": 3, "mobilidade": 3, "incontinencia": 3}}, {"label": "Risco muito alto", "sublabel": "Norton 7", "emoji": "🚨", "values": {"condicao_fisica": 1, "condicao_mental": 2, "atividade": 1, "mobilidade": 1, "incontinencia": 2}}], "quiz": [{"q": "Na Escala de Norton, o que indica uma pontuação mais baixa?", "opts": ["Menor risco de lesão por pressão", "Maior risco de lesão por pressão", "Nenhuma relação com risco de lesão", "Melhor estado nutricional"], "correct": 1, "expl": "Diferente de escalas como a Braden, na Escala de Norton pontuações mais baixas indicam MAIOR risco de lesão por pressão."}, {"q": "Quantos domínios compõem a Escala de Norton?", "opts": ["3", "4", "5", "7"], "correct": 2, "expl": "A Escala de Norton avalia 5 domínios: condição física, condição mental, atividade, mobilidade e incontinência."}, {"q": "Qual a pontuação máxima possível na Escala de Norton?", "opts": ["16 pontos", "20 pontos", "23 pontos", "25 pontos"], "correct": 1, "expl": "A pontuação máxima é 20 pontos (5 domínios × 4 pontos cada), indicando o menor risco."}]}, "faq": [{"q": "A Escala de Norton é igual à Escala de Braden?", "a": "Não. São escalas diferentes de avaliação de risco de lesão por pressão. A Norton é mais simples, com 5 domínios, enquanto a Braden avalia 6 domínios com maior detalhamento, incluindo fricção/cisalhamento e percepção sensorial, sendo geralmente considerada mais completa."}, {"q": "Por que pontuações mais baixas indicam maior risco na Escala de Norton?", "a": "Cada domínio é pontuado de 1 (pior condição) a 4 (melhor condição), portanto a soma de condições mais comprometidas resulta em uma pontuação total mais baixa, refletendo maior risco de lesão por pressão."}], "about": {"title": "Como funciona a Escala de Norton", "html": "<p>A Escala de Norton soma a pontuação (1 a 4) de 5 domínios — condição física, condição mental, atividade, mobilidade e incontinência — totalizando de 5 a 20 pontos. Pontuações mais baixas indicam maior risco.</p><p><strong>Guia rápido:</strong> 5-9 = Risco muito alto | 10-14 = Alto risco | 15-18 = Risco médio | 19-20 = Baixo risco.</p>"}}</script>
@@ -591,6 +605,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

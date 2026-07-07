@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="indice-choque">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -262,32 +272,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -388,6 +388,7 @@
             <div class="urg-grid"><div class="urg-field"><label>Frequência Cardíaca</label>
               <input aria-label="Number" type="number" data-calc-input="frequencia_cardiaca" value="80"></div><div class="urg-field"><label>Pressão Arterial Sistólica</label>
               <input aria-label="Number" type="number" data-calc-input="pressao_sistolica" value="120"></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0.67</span><span class="urg-result-unit" id="urgResultUnit"></span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Normal</span>
@@ -447,6 +448,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "17283940-5162-7384-9506-172839405162", "code": "CALC-SHOCKINDEX-001", "slug": "indice-choque", "version": "1.0.0", "status": "published", "seo": {"title": "Índice de Choque - Triagem de Choque Hipovolêmico", "description": "Calcule o Índice de Choque (Shock Index) a partir da frequência cardíaca e pressão arterial sistólica, para triagem precoce de choque. Inclui interpretação e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/indice-choque.html"}, "breadcrumb": {"category": "Emergência e Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Índice de Choque", "acronym": "Shock Index", "categoryBadge": "Emergência", "icon": "i-pulse", "objective": "Estimar precocemente a probabilidade de choque hipovolêmico/hemorrágico a partir da relação entre frequência cardíaca e pressão arterial sistólica, antes que a hipotensão franca se manifeste.", "indication": "Indicada em pacientes de trauma, hemorragia digestiva, sangramento obstétrico ou qualquer suspeita de choque hipovolêmico, especialmente na triagem inicial.", "targetPopulation": "Pacientes adultos com suspeita de choque hipovolêmico ou hemorrágico.", "specialty": ["Emergência", "Enfermagem", "Terapia Intensiva"], "averageTime": "menos de 1 minuto", "evidenceLevel": "II", "complexity": "basic", "rating": 4.6, "ratingCount": 310}, "calculator": {"inputs": [{"id": "frequencia_cardiaca", "type": "number", "label": "Frequência Cardíaca", "unit": "bpm", "defaultValue": 80, "min": 20, "max": 250, "step": 1, "description": "Frequência cardíaca do paciente em batimentos por minuto."}, {"id": "pressao_sistolica", "type": "number", "label": "Pressão Arterial Sistólica", "unit": "mmHg", "defaultValue": 120, "min": 30, "max": 260, "step": 1, "description": "Pressão arterial sistólica do paciente em mmHg."}], "formula": {"type": "expression", "expression": "frequencia_cardiaca/pressao_sistolica", "resultLabel": "Índice de Choque", "resultUnit": "", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 0.69, "label": "Normal", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Índice de choque dentro da normalidade (valor de referência normal: 0,5 a 0,7).", "recommendations": "• Manter monitorização de rotina\n• Reavaliar conforme protocolo institucional"}, {"min": 0.7, "max": 0.99, "label": "Limítrofe / Atenção", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Valor limítrofe, próximo ao limite superior da normalidade. Requer atenção e reavaliação.", "recommendations": "• Reavaliar sinais vitais com maior frequência\n• Investigar possíveis fontes de sangramento ou perda de volume"}, {"min": 1, "max": 1.49, "label": "Risco Aumentado de Choque", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Índice de choque igual ou superior a 1 está associado a maior risco de choque hipovolêmico/hemorrágico, mesmo na ausência de hipotensão franca.", "recommendations": "• Comunicar imediatamente à equipe médica\n• Investigar e tratar a fonte de sangramento/perda volêmica\n• Considerar reposição volêmica e monitorização hemodinâmica mais próxima"}, {"min": 1.5, "max": 5, "label": "Alto Risco / Choque Estabelecido", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Índice de choque muito elevado, associado a choque estabelecido e maior necessidade de intervenção (transfusão maciça, cirurgia de controle de dano).", "recommendations": "• Acionar protocolo de choque/hemorragia maciça conforme instituição\n• Reposição volêmica e hemoderivados conforme avaliação médica urgente\n• Monitorização contínua e intensiva"}]}, "sae": {"nanda": [{"diagnosis": "Risco de choque", "definition": "Risco de fluxo sanguíneo inadequado aos tecidos corporais, o que pode levar à disfunção celular potencialmente fatal."}, {"diagnosis": "Risco de volume de líquidos deficiente", "definition": "Risco de diminuição do volume de líquido intravascular, intersticial e/ou intracelular, relacionado à perda sanguínea ativa."}, {"diagnosis": "Perfusão tissular periférica ineficaz", "definition": "Redução na circulação sanguínea para a periferia, que pode comprometer a saúde."}], "noc": [{"outcome": "Gravidade do choque: hipovolêmico", "indicators": ["Frequência cardíaca dentro dos limites esperados", "Pressão arterial dentro dos limites esperados", "Perfusão periférica adequada"]}], "nic": [{"intervention": "Manejo do choque: volume", "activities": ["Calcular o Índice de Choque na triagem inicial de pacientes de risco", "Monitorar sinais vitais continuamente", "Obter acesso venoso calibroso e auxiliar na reposição volêmica conforme prescrição", "Comunicar índice elevado imediatamente à equipe médica", "Investigar e auxiliar no controle da fonte de sangramento"]}]}, "evidence": {"foundation": "O Índice de Choque é calculado pela razão entre a frequência cardíaca e a pressão arterial sistólica, permitindo identificar precocemente sinais de comprometimento hemodinâmico antes que a hipotensão franca se manifeste, já que a taquicardia compensatória frequentemente precede a queda da pressão arterial em quadros hemorrágicos.", "history": "Amplamente utilizado em trauma, obstetrícia (hemorragia pós-parto) e emergências clínicas para triagem rápida de risco de choque, sendo mais sensível que os sinais vitais isolados na detecção precoce de comprometimento hemodinâmico.", "validation": "Estudos demonstram associação entre índice de choque elevado (≥1) e maior necessidade de transfusão, intervenção cirúrgica e mortalidade em diversos contextos clínicos, incluindo trauma e hemorragia pós-parto.", "limitations": "Pode ser influenciado por condições que alteram a frequência cardíaca basal (uso de betabloqueadores, marca-passo, condicionamento físico) ou a pressão arterial basal (hipertensos crônicos), devendo ser interpretado no contexto clínico completo do paciente.", "references": [{"text": "RADY, M. Y. et al. A comparison of the shock index and conventional vital signs to identify acute, critical illness in the emergency department. Annals of Emergency Medicine, v. 24, n. 4, p. 685-690, 1994."}, {"text": "NATHAN, H. L. et al. Shock index: an effective predictor of outcome in postpartum haemorrhage? BJOG, v. 122, n. 2, p. 268-275, 2015."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["O Índice de Choque pode identificar comprometimento hemodinâmico antes que a pressão arterial caia de forma evidente.", "Valores iguais ou superiores a 1 devem motivar investigação ativa de fonte de sangramento ou perda de volume.", "Considere o uso de betabloqueadores ou marca-passo, que podem mascarar a taquicardia compensatória esperada.", "É especialmente útil em obstetrícia (hemorragia pós-parto) e trauma para triagem rápida à beira do leito."], "examples": [{"label": "Normal", "sublabel": "IC 0,67", "emoji": "✅", "values": {"frequencia_cardiaca": 80, "pressao_sistolica": 120}}, {"label": "Risco aumentado", "sublabel": "IC 1,2", "emoji": "⚠️", "values": {"frequencia_cardiaca": 108, "pressao_sistolica": 90}}, {"label": "Choque estabelecido", "sublabel": "IC 1,8", "emoji": "🚨", "values": {"frequencia_cardiaca": 126, "pressao_sistolica": 70}}], "quiz": [{"q": "Como é calculado o Índice de Choque?", "opts": ["PAS ÷ Frequência Cardíaca", "Frequência Cardíaca ÷ Pressão Arterial Sistólica", "PAS × Frequência Cardíaca", "PAS - Frequência Cardíaca"], "correct": 1, "expl": "O Índice de Choque é a razão entre a frequência cardíaca e a pressão arterial sistólica (FC ÷ PAS)."}, {"q": "Qual o valor normal de referência do Índice de Choque?", "opts": ["0,1 a 0,3", "0,5 a 0,7", "1,5 a 2,0", "2,0 a 3,0"], "correct": 1, "expl": "O valor normal de referência do Índice de Choque situa-se entre 0,5 e 0,7."}, {"q": "Por que o Índice de Choque pode detectar comprometimento hemodinâmico antes da hipotensão franca?", "opts": ["Porque usa apenas a pressão arterial", "Porque a taquicardia compensatória frequentemente precede a queda da pressão arterial", "Não há explicação fisiológica para isso", "Porque avalia apenas a temperatura corporal"], "correct": 1, "expl": "Em quadros hemorrágicos, mecanismos compensatórios elevam a frequência cardíaca antes que a pressão arterial caia de forma evidente, tornando o índice sensível a alterações precoces."}]}, "faq": [{"q": "O Índice de Choque substitui a avaliação clínica completa?", "a": "Não. É uma ferramenta de triagem rápida que complementa, mas não substitui, a avaliação clínica completa, incluindo exame físico, histórico e demais sinais vitais."}, {"q": "O Índice de Choque é confiável em pacientes que usam betabloqueadores?", "a": "Pode ser menos confiável nesses pacientes, já que os betabloqueadores impedem a taquicardia compensatória esperada, podendo mascarar um quadro de choque mesmo com frequência cardíaca aparentemente normal."}], "about": {"title": "Como funciona o Índice de Choque", "html": "<p>O Índice de Choque é calculado dividindo a frequência cardíaca (bpm) pela pressão arterial sistólica (mmHg), identificando precocemente sinais de comprometimento hemodinâmico.</p><p><strong>Fórmula:</strong> Índice de Choque = Frequência Cardíaca ÷ Pressão Arterial Sistólica.</p><p><strong>Guia rápido:</strong> 0,5-0,7 = Normal | 0,7-0,9 = Atenção | 1,0-1,4 = Risco aumentado | ≥1,5 = Alto risco/choque estabelecido.</p>"}}</script>
@@ -502,6 +516,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="downton">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -295,32 +305,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -475,6 +475,7 @@
               <select class="field-select" data-calc-input="deficit_sensorial"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Estado Mental</label>
               <select class="field-select" data-calc-input="estado_mental"><option value="0" selected>Orientado</option><option value="1">Confuso</option></select></div><div class="urg-field"><label>Deambulação</label>
               <select class="field-select" data-calc-input="deambulacao"><option value="0" selected>Segura, com ou sem Auxílio de Locomoção</option><option value="1">Segura com Auxílio (Bengala/Andador)</option><option value="2">Insegura (com ou sem Auxílio)</option><option value="3">Impossível</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco</span>
@@ -534,6 +535,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "293a4b5c-6274-4839-2930-4b5c63748596", "code": "SCALE-DOWNTON-001", "slug": "downton", "version": "1.0.0", "status": "published", "seo": {"title": "Índice de Downton - Avaliação de Risco de Queda", "description": "Calcule o Índice de Downton para avaliação do risco de queda em pacientes idosos. Inclui interpretação, SAE e evidências para a prática de enfermagem.", "canonical": "https://www.calculadorasdeenfermagem.com.br/downton.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Índice de Downton", "acronym": "Downton", "categoryBadge": "Segurança do paciente", "icon": "i-access", "objective": "Avaliar o risco de queda do paciente, especialmente idosos, a partir de 5 domínios: quedas anteriores, uso de medicamentos de risco, déficit sensorial, estado mental e padrão de deambulação.", "indication": "Indicada na admissão hospitalar, especialmente para pacientes idosos, e periodicamente conforme protocolo institucional de prevenção de quedas.", "targetPopulation": "Pacientes idosos hospitalizados ou em acompanhamento ambulatorial/domiciliar.", "specialty": ["Geriatria", "Enfermagem", "Segurança do Paciente"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Downton"], "complexity": "basic", "rating": 4.6, "ratingCount": 350}, "calculator": {"inputs": [{"id": "quedas_anteriores", "type": "select", "label": "Quedas Anteriores", "description": "Histórico de queda nos últimos 12 meses.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Sem histórico de queda recente."}, {"value": 1, "label": "Sim", "score": 1, "description": "Presença de queda anterior nos últimos 12 meses."}]}, {"id": "medicamentos", "type": "select", "label": "Uso de Medicamentos de Risco", "description": "Uso de diuréticos, anti-hipertensivos, antiparkinsonianos, antidepressivos ou sedativos/hipnóticos.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Não faz uso de medicamentos associados a maior risco de queda."}, {"value": 1, "label": "Sim", "score": 1, "description": "Uso de um ou mais medicamentos associados a maior risco de queda."}]}, {"id": "deficit_sensorial", "type": "select", "label": "Déficit Sensorial", "description": "Presença de deficiência visual, auditiva ou de extremidades que comprometa a percepção do ambiente.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Sem déficit sensorial relevante."}, {"value": 1, "label": "Sim", "score": 1, "description": "Presença de déficit visual, auditivo ou de extremidades."}]}, {"id": "estado_mental", "type": "select", "label": "Estado Mental", "description": "Nível de orientação e consciência do paciente.", "defaultValue": 0, "options": [{"value": 0, "label": "Orientado", "score": 0, "description": "Paciente orientado em tempo, espaço e pessoa."}, {"value": 1, "label": "Confuso", "score": 1, "description": "Paciente confuso ou desorientado."}]}, {"id": "deambulacao", "type": "select", "label": "Deambulação", "description": "Padrão de marcha e necessidade de auxílio para caminhar.", "defaultValue": 0, "options": [{"value": 0, "label": "Segura, com ou sem Auxílio de Locomoção", "score": 0, "description": "Marcha segura, mesmo se utilizar dispositivo de auxílio, ou paciente acamado/restrito à cadeira sem tentativa de deambular."}, {"value": 1, "label": "Segura com Auxílio (Bengala/Andador)", "score": 1, "description": "Marcha segura apenas quando faz uso de dispositivo de apoio (bengala, andador)."}, {"value": 2, "label": "Insegura (com ou sem Auxílio)", "score": 2, "description": "Marcha insegura, instável, independentemente do uso de dispositivo de apoio."}, {"value": 3, "label": "Impossível", "score": 3, "description": "Paciente incapaz de deambular."}]}], "formula": {"type": "sum", "resultLabel": "Escore de Downton", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 2, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixo risco de queda segundo os critérios avaliados.", "recommendations": "• Orientação geral sobre segurança e prevenção de quedas\n• Reavaliação conforme protocolo institucional\n• Ambiente livre de obstáculos"}, {"min": 3, "max": 7, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Escore igual ou superior a 3 indica alto risco de queda, segundo o ponto de corte validado do Índice de Downton.", "recommendations": "• Implementar protocolo intensivo de prevenção de quedas\n• Sinalização visual de risco no leito/quarto\n• Grades elevadas e leito em posição baixa\n• Supervisão frequente e auxílio na deambulação\n• Reavaliação a cada turno"}]}, "sae": {"nanda": [{"diagnosis": "Risco de quedas", "definition": "Vulnerabilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."}], "noc": [{"outcome": "Comportamento de prevenção de quedas", "indicators": ["Uso correto de dispositivos de apoio", "Solicita auxílio quando necessário", "Ambiente livre de riscos identificado"]}], "nic": [{"intervention": "Prevenção de quedas", "activities": ["Identificar déficits cognitivos, sensoriais e motores", "Revisar medicamentos em uso associados a risco de queda junto à equipe médica", "Sinalizar risco de queda no leito e prontuário", "Orientar paciente e família sobre medidas de segurança", "Manter grades elevadas e leito em posição baixa quando indicado"]}]}, "evidence": {"foundation": "O Índice de Downton foi desenvolvido para avaliar o risco de queda em idosos, considerando 5 domínios: histórico de quedas anteriores, uso de medicamentos de risco, déficit sensorial, estado mental e padrão de deambulação, com pontuação total de 0 a 7 (ou 11, conforme a versão utilizada).", "history": "Amplamente utilizado em serviços de geriatria e em protocolos de segurança do paciente para triagem de risco de queda, especialmente em população idosa hospitalizada.", "validation": "Estudos de validação relatam boa sensibilidade para identificar pacientes em risco de queda, com ponto de corte de 3 pontos ou mais indicando alto risco.", "limitations": "Como a maioria das escalas de risco de queda, apresenta especificidade limitada, podendo classificar um número significativo de pacientes em alto risco. Deve ser complementada por avaliação clínica individualizada e do ambiente físico.", "references": [{"text": "DOWNTON, J. H. Falls in the Elderly. London: Edward Arnold, 1993."}, {"text": "BRASIL. Agência Nacional de Vigilância Sanitária (ANVISA). Protocolo de Prevenção de Quedas. Brasília: ANVISA, 2013."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Um escore igual ou superior a 3 já é suficiente para classificar o paciente como alto risco.", "Revise a lista de medicamentos em uso, pois vários fármacos comuns em idosos aumentam o risco de queda.", "Combine a avaliação com o exame físico da marcha e do equilíbrio.", "Reavalie após qualquer mudança no estado clínico ou esquema medicamentoso do paciente."], "examples": [{"label": "Idoso sem fatores de risco", "sublabel": "Downton 0", "emoji": "✅", "values": {"quedas_anteriores": 0, "medicamentos": 0, "deficit_sensorial": 0, "estado_mental": 0, "deambulacao": 0}}, {"label": "Múltiplos fatores presentes", "sublabel": "Downton 4", "emoji": "🚨", "values": {"quedas_anteriores": 1, "medicamentos": 1, "deficit_sensorial": 0, "estado_mental": 0, "deambulacao": 2}}, {"label": "Alto risco com confusão mental", "sublabel": "Downton 5", "emoji": "🚨", "values": {"quedas_anteriores": 1, "medicamentos": 1, "deficit_sensorial": 1, "estado_mental": 1, "deambulacao": 1}}], "quiz": [{"q": "Quantos domínios compõem o Índice de Downton?", "opts": ["3", "4", "5", "6"], "correct": 2, "expl": "O Downton avalia 5 domínios: quedas anteriores, medicamentos, déficit sensorial, estado mental e deambulação."}, {"q": "A partir de qual pontuação o Índice de Downton indica alto risco de queda?", "opts": ["1 ponto", "2 pontos", "3 pontos ou mais", "5 pontos ou mais"], "correct": 2, "expl": "Um escore de 3 pontos ou mais é o ponto de corte validado para classificar o paciente como alto risco de queda."}, {"q": "Quais classes de medicamentos são consideradas de risco no Índice de Downton?", "opts": ["Apenas antibióticos", "Diuréticos, anti-hipertensivos, antiparkinsonianos, antidepressivos e sedativos", "Apenas analgésicos", "Vitaminas e suplementos"], "correct": 1, "expl": "Diuréticos, anti-hipertensivos, antiparkinsonianos, antidepressivos e sedativos/hipnóticos estão associados a maior risco de queda em idosos."}]}, "faq": [{"q": "O Índice de Downton substitui a avaliação clínica individual?", "a": "Não. É uma ferramenta de triagem que deve ser combinada com o julgamento clínico, avaliação do ambiente físico e histórico detalhado do paciente."}, {"q": "Com que frequência devo reavaliar o Índice de Downton?", "a": "Recomenda-se reavaliação na admissão, após qualquer episódio de queda, mudança no esquema medicamentoso e periodicamente conforme protocolo institucional."}], "about": {"title": "Como funciona o Índice de Downton", "html": "<p>O Índice de Downton soma pontos de 5 domínios — quedas anteriores, uso de medicamentos de risco, déficit sensorial, estado mental e padrão de deambulação — totalizando de 0 a 7 pontos.</p><p><strong>Guia rápido:</strong> 0-2 = Baixo risco | ≥3 = Alto risco, implementar protocolo intensivo de prevenção de quedas.</p>"}}</script>
@@ -589,6 +603,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

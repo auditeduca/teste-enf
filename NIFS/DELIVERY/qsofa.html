@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="qsofa">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -269,32 +279,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -413,6 +413,7 @@
               <select class="field-select" data-calc-input="estado_mental"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Frequência Respiratória</label>
               <select class="field-select" data-calc-input="frequencia_respiratoria"><option value="0" selected>Menor que 22 irpm</option><option value="1">22 irpm ou Mais</option></select></div><div class="urg-field"><label>Pressão Arterial Sistólica</label>
               <select class="field-select" data-calc-input="pressao_sistolica"><option value="0" selected>Maior que 100 mmHg</option><option value="1">100 mmHg ou Menos</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco</span>
@@ -472,6 +473,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "1d2e3f40-5162-4738-8f90-a1b2c3d4e5f6", "code": "SCALE-QSOFA-001", "slug": "qsofa", "version": "1.0.0", "status": "published", "seo": {"title": "qSOFA - Triagem Rápida de Sepse", "description": "Calcule o escore qSOFA (quick SOFA) para triagem rápida à beira do leito de pacientes com suspeita de sepse. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/qsofa.html"}, "breadcrumb": {"category": "Emergência e Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "qSOFA", "acronym": "qSOFA", "categoryBadge": "Emergência", "icon": "i-warning", "objective": "Realizar triagem rápida à beira do leito para identificar pacientes com suspeita de infecção em risco de desfecho desfavorável (sepse), fora do ambiente de terapia intensiva.", "indication": "Indicada em pronto-socorro, enfermaria e qualquer ambiente fora da UTI, em pacientes adultos com suspeita de infecção.", "targetPopulation": "Pacientes adultos com suspeita ou confirmação de processo infeccioso, atendidos fora da UTI.", "specialty": ["Emergência", "Terapia Intensiva", "Enfermagem"], "averageTime": "1 minuto", "evidenceLevel": "I", "organizations": ["Society of Critical Care Medicine (SCCM)", "European Society of Intensive Care Medicine (ESICM)"], "complexity": "basic", "rating": 4.8, "ratingCount": 520}, "calculator": {"inputs": [{"id": "estado_mental", "type": "select", "label": "Alteração do Estado Mental", "description": "Escala de Coma de Glasgow menor que 15 (rebaixamento do nível de consciência).", "defaultValue": 0, "options": [{"value": 0, "label": "Ausente", "score": 0, "description": "Glasgow igual a 15, sem alteração do estado mental."}, {"value": 1, "label": "Presente", "score": 1, "description": "Glasgow menor que 15, com alteração do estado mental."}]}, {"id": "frequencia_respiratoria", "type": "select", "label": "Frequência Respiratória", "description": "Frequência respiratória igual ou superior a 22 incursões por minuto.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor que 22 irpm", "score": 0, "description": "Frequência respiratória dentro da normalidade."}, {"value": 1, "label": "22 irpm ou Mais", "score": 1, "description": "Taquipneia, frequência respiratória ≥ 22 irpm."}]}, {"id": "pressao_sistolica", "type": "select", "label": "Pressão Arterial Sistólica", "description": "Pressão arterial sistólica igual ou inferior a 100 mmHg.", "defaultValue": 0, "options": [{"value": 0, "label": "Maior que 100 mmHg", "score": 0, "description": "Pressão arterial sistólica acima de 100 mmHg."}, {"value": 1, "label": "100 mmHg ou Menos", "score": 1, "description": "Hipotensão, pressão arterial sistólica ≤ 100 mmHg."}]}], "formula": {"type": "sum", "resultLabel": "Escore qSOFA", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 1, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixo risco de desfecho desfavorável relacionado à sepse. Não exclui infecção, mas o risco de mau prognóstico associado é menor.", "recommendations": "• Manter vigilância clínica\n• Reavaliar se houver piora do quadro\n• Investigar e tratar o foco infeccioso conforme protocolo"}, {"min": 2, "max": 3, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "qSOFA ≥ 2 está associado a maior risco de mortalidade e tempo prolongado de internação em pacientes com suspeita de infecção, sugerindo possível sepse.", "recommendations": "• Acionar protocolo de sepse institucional\n• Coletar lactato e hemoculturas\n• Iniciar antibioticoterapia precoce conforme protocolo\n• Considerar transferência para unidade de maior complexidade\n• Reavaliação frequente de sinais vitais"}]}, "sae": {"nanda": [{"diagnosis": "Risco de choque", "definition": "Risco de fluxo sanguíneo inadequado aos tecidos corporais, o que pode levar à disfunção celular potencialmente fatal."}, {"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."}, {"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos."}], "noc": [{"outcome": "Controle de risco: sepse", "indicators": ["Sinais vitais monitorizados", "Nível de consciência avaliado", "Foco infeccioso identificado precocemente"]}], "nic": [{"intervention": "Monitorização de sinais vitais", "activities": ["Verificar estado mental e nível de consciência", "Monitorar frequência respiratória", "Monitorar pressão arterial continuamente", "Comunicar imediatamente alterações à equipe médica"]}, {"intervention": "Controle de infecção", "activities": ["Coletar culturas antes da antibioticoterapia", "Administrar antibióticos conforme prescrição e protocolo", "Monitorar sinais de piora clínica"]}]}, "evidence": {"foundation": "O qSOFA (quick Sequential Organ Failure Assessment) foi proposto no Terceiro Consenso Internacional de Definições de Sepse e Choque Séptico (Sepsis-3, 2016) como uma ferramenta simples de triagem à beira do leito, fora do ambiente de UTI, para identificar pacientes com suspeita de infecção em risco de desfecho desfavorável.", "history": "Desenvolvido como alternativa mais simples e rápida ao SOFA completo, que exige exames laboratoriais. O qSOFA utiliza apenas 3 critérios clínicos, avaliáveis sem necessidade de exames complementares.", "validation": "Estudos multicêntricos demonstraram que qSOFA ≥ 2 está associado a maior risco de mortalidade hospitalar e tempo prolongado em UTI em pacientes com suspeita de infecção fora do ambiente de terapia intensiva.", "sensitivity": 0.61, "specificity": 0.72, "limitations": "O qSOFA tem sensibilidade moderada e não deve ser usado isoladamente para descartar sepse — um escore baixo não exclui a doença. É uma ferramenta de triagem, não diagnóstica, e deve ser complementada por julgamento clínico e demais protocolos institucionais (ex: SIRS, lactato sérico).", "references": [{"text": "SINGER, M. et al. The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). JAMA, v. 315, n. 8, p. 801-810, 2016."}, {"text": "SEYMOUR, C. W. et al. Assessment of Clinical Criteria for Sepsis: For the Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). JAMA, v. 315, n. 8, p. 762-774, 2016."}, {"text": "ILAS - Instituto Latino Americano de Sepse. Protocolo de tratamento e manejo da sepse. São Paulo: ILAS, 2023."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["O qSOFA não substitui a avaliação clínica completa nem os protocolos institucionais de sepse.", "Um qSOFA baixo não descarta sepse — mantenha vigilância se houver forte suspeita clínica de infecção.", "Use em conjunto com o lactato sérico e critérios de SIRS quando disponíveis.", "Reavalie o escore a cada mudança no quadro clínico do paciente."], "examples": [{"label": "Paciente estável", "sublabel": "qSOFA 0", "emoji": "✅", "values": {"estado_mental": 0, "frequencia_respiratoria": 0, "pressao_sistolica": 0}}, {"label": "Suspeita de sepse", "sublabel": "qSOFA 2", "emoji": "🚨", "values": {"estado_mental": 1, "frequencia_respiratoria": 1, "pressao_sistolica": 0}}, {"label": "Choque séptico provável", "sublabel": "qSOFA 3", "emoji": "🚨", "values": {"estado_mental": 1, "frequencia_respiratoria": 1, "pressao_sistolica": 1}}], "quiz": [{"q": "Quantos critérios compõem o qSOFA?", "opts": ["2", "3", "4", "5"], "correct": 1, "expl": "O qSOFA avalia 3 critérios: alteração do estado mental, frequência respiratória ≥22 irpm e pressão arterial sistólica ≤100 mmHg."}, {"q": "A partir de qual pontuação o qSOFA indica alto risco?", "opts": ["1 ponto", "2 pontos", "3 pontos", "0 pontos"], "correct": 1, "expl": "qSOFA ≥ 2 pontos está associado a maior risco de mau desfecho em pacientes com suspeita de infecção."}, {"q": "O qSOFA exige exames laboratoriais para ser calculado?", "opts": ["Sim, sempre", "Não, usa apenas critérios clínicos", "Apenas o lactato", "Apenas hemograma"], "correct": 1, "expl": "O qSOFA foi desenhado para ser calculado rapidamente à beira do leito, usando apenas critérios clínicos (estado mental, FR e PA), sem necessidade de exames laboratoriais."}]}, "faq": [{"q": "O qSOFA diagnostica sepse?", "a": "Não. O qSOFA é uma ferramenta de triagem rápida que identifica pacientes com suspeita de infecção em maior risco de desfecho desfavorável. O diagnóstico de sepse exige avaliação clínica completa e critérios específicos (Sepsis-3)."}, {"q": "Qual a diferença entre qSOFA e SOFA completo?", "a": "O SOFA completo avalia disfunção orgânica através de 6 sistemas usando exames laboratoriais, sendo usado em ambiente de UTI. O qSOFA é uma versão simplificada com apenas 3 critérios clínicos, destinada à triagem rápida fora da UTI."}], "about": {"title": "Como funciona o qSOFA", "html": "<p>O qSOFA (quick SOFA) avalia 3 critérios clínicos à beira do leito: alteração do estado mental, frequência respiratória ≥ 22 irpm e pressão arterial sistólica ≤ 100 mmHg. Cada critério presente soma 1 ponto, totalizando de 0 a 3 pontos.</p><p><strong>Guia rápido:</strong> 0-1 = Baixo risco | 2-3 = Alto risco, acionar protocolo de sepse.</p>"}}</script>
@@ -527,6 +541,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

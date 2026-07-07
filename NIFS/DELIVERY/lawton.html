@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="lawton">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -335,32 +345,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -569,6 +569,7 @@
               <select class="field-select" data-calc-input="transporte"><option value="0">Dependente</option><option value="1" selected>Independente</option></select></div><div class="urg-field"><label>Responsabilidade sobre Medicamentos</label>
               <select class="field-select" data-calc-input="medicamentos"><option value="0">Dependente</option><option value="1" selected>Independente</option></select></div><div class="urg-field"><label>Capacidade de Manusear Finanças</label>
               <select class="field-select" data-calc-input="financas"><option value="0">Dependente</option><option value="1" selected>Independente</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">8</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Independência</span>
@@ -628,6 +629,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "17293a4b-5162-4738-1829-3a4b52637485", "code": "SCALE-LAWTON-001", "slug": "lawton", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Lawton - Atividades Instrumentais de Vida Diária (AIVDs)", "description": "Calcule a Escala de Lawton para avaliação da independência em atividades instrumentais de vida diária (AIVDs). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/lawton.html"}, "breadcrumb": {"category": "Geriatria", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Lawton", "acronym": "Lawton", "categoryBadge": "Geriatria", "icon": "i-person", "objective": "Avaliar o grau de independência do paciente em 8 atividades instrumentais de vida diária (AIVDs), mais complexas que as atividades básicas avaliadas pelo Índice de Katz.", "indication": "Indicada para pacientes idosos ou com suspeita de comprometimento funcional, como complemento à avaliação de atividades básicas de vida diária (Katz/Barthel).", "targetPopulation": "Pacientes idosos ou adultos com suspeita de comprometimento funcional, atendidos em ambiente ambulatorial, domiciliar ou hospitalar.", "specialty": ["Geriatria", "Enfermagem", "Terapia Ocupacional"], "averageTime": "3-5 minutos", "evidenceLevel": "II", "originalAuthors": ["M. Powell Lawton", "Elaine M. Brody"], "complexity": "basic", "rating": 4.6, "ratingCount": 290}, "calculator": {"inputs": [{"id": "telefone", "type": "select", "label": "Uso do Telefone", "description": "Capacidade de usar o telefone de forma independente.", "defaultValue": 1, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Não usa o telefone ou necessita de ajuda total."}, {"value": 1, "label": "Independente", "score": 1, "description": "Usa o telefone por iniciativa própria, procura e disca números."}]}, {"id": "compras", "type": "select", "label": "Compras", "description": "Capacidade de realizar compras de forma independente.", "defaultValue": 1, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Incapaz de fazer compras, ou necessita de acompanhamento em qualquer compra."}, {"value": 1, "label": "Independente", "score": 1, "description": "Faz compras pequenas ou todas as compras necessárias de forma independente."}]}, {"id": "preparo_refeicoes", "type": "select", "label": "Preparo de Refeições", "description": "Capacidade de planejar e preparar refeições adequadas de forma independente.", "defaultValue": 1, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Necessita que as refeições sejam preparadas e servidas por outra pessoa."}, {"value": 1, "label": "Independente", "score": 1, "description": "Planeja, prepara e serve refeições adequadas de forma independente."}]}, {"id": "trabalho_domestico", "type": "select", "label": "Trabalho Doméstico", "description": "Capacidade de realizar tarefas domésticas de forma independente.", "defaultValue": 1, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Não participa de nenhuma tarefa doméstica."}, {"value": 1, "label": "Independente", "score": 1, "description": "Mantém a casa sozinho ou com ajuda ocasional para tarefas pesadas."}]}, {"id": "lavanderia", "type": "select", "label": "Lavanderia", "description": "Capacidade de lavar suas próprias roupas.", "defaultValue": 1, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Toda a roupa deve ser lavada por outra pessoa."}, {"value": 1, "label": "Independente", "score": 1, "description": "Lava roupas pequenas ou toda a roupa pessoal de forma independente."}]}, {"id": "transporte", "type": "select", "label": "Meio de Transporte", "description": "Capacidade de se deslocar de forma independente utilizando algum meio de transporte.", "defaultValue": 1, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Não viaja, ou necessita de acompanhante em qualquer deslocamento."}, {"value": 1, "label": "Independente", "score": 1, "description": "Viaja de forma independente em transporte público ou dirige seu próprio carro."}]}, {"id": "medicamentos", "type": "select", "label": "Responsabilidade sobre Medicamentos", "description": "Capacidade de tomar seus medicamentos corretamente, nas doses e horários certos.", "defaultValue": 1, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Não é capaz de tomar seus medicamentos sem supervisão."}, {"value": 1, "label": "Independente", "score": 1, "description": "É responsável pelo uso correto dos medicamentos, nas doses e horários corretos."}]}, {"id": "financas", "type": "select", "label": "Capacidade de Manusear Finanças", "description": "Capacidade de gerenciar suas próprias finanças de forma independente.", "defaultValue": 1, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Incapaz de lidar com dinheiro ou necessita de ajuda total nas finanças."}, {"value": 1, "label": "Independente", "score": 1, "description": "Gerencia as questões financeiras de forma independente."}]}], "formula": {"type": "sum", "resultLabel": "Escore de Lawton", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 2, "label": "Grande Dependência", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Grande dependência para atividades instrumentais de vida diária. Necessita de suporte substancial no ambiente domiciliar.", "recommendations": "• Avaliação multiprofissional\n• Plano de cuidados individualizado com suporte de cuidador\n• Avaliar segurança do ambiente domiciliar"}, {"min": 3, "max": 5, "label": "Dependência Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Dependência parcial em atividades instrumentais, necessitando de auxílio em algumas tarefas complexas.", "recommendations": "• Estímulo à independência residual\n• Suporte familiar/social nas atividades comprometidas\n• Reavaliação periódica"}, {"min": 6, "max": 8, "label": "Independência", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Independência ou dependência mínima nas atividades instrumentais de vida diária avaliadas.", "recommendations": "• Manter estímulo à autonomia\n• Reavaliação periódica de rotina"}]}, "sae": {"nanda": [{"diagnosis": "Manutenção do lar prejudicada", "definition": "Incapacidade de manter de forma independente um ambiente doméstico imediato seguro e propício ao crescimento."}, {"diagnosis": "Disposição para autocontrole da saúde melhorado", "definition": "Padrão de regulação e integração à vida diária de um regime terapêutico para o tratamento da doença que pode ser fortalecido."}], "noc": [{"outcome": "Autocuidado: atividades instrumentais de vida diária", "indicators": ["Gerencia medicamentos corretamente", "Realiza compras e preparo de refeições", "Administra finanças pessoais", "Utiliza transporte de forma independente"]}], "nic": [{"intervention": "Assistência ao autocuidado: AIVDs", "activities": ["Avaliar capacidade funcional para atividades instrumentais", "Identificar necessidade de suporte domiciliar", "Orientar sobre uso correto e seguro de medicamentos", "Envolver família/cuidador no planejamento do suporte necessário"]}]}, "evidence": {"foundation": "A Escala de Lawton foi desenvolvida por M. Powell Lawton e Elaine Brody em 1969, avaliando a capacidade do indivíduo para realizar atividades instrumentais de vida diária (AIVDs), mais complexas que as atividades básicas de autocuidado avaliadas pelo Índice de Katz.", "history": "Amplamente utilizada em geriatria e gerontologia como complemento ao Katz, permitindo uma avaliação mais completa da funcionalidade do idoso, especialmente relevante para decisões sobre necessidade de suporte domiciliar ou institucionalização.", "validation": "Validada em diversas populações, com boa confiabilidade interobservador, sendo amplamente utilizada em avaliações geriátricas abrangentes.", "limitations": "Pode ser influenciada por fatores culturais e de gênero na versão original (algumas tarefas historicamente atribuídas de forma diferente entre homens e mulheres); a versão simplificada e dicotomizada usada nesta calculadora é a mais comumente adotada na prática clínica atual, aplicada de forma igual a ambos os sexos.", "references": [{"text": "LAWTON, M. P.; BRODY, E. M. Assessment of older people: self-maintaining and instrumental activities of daily living. The Gerontologist, v. 9, n. 3, p. 179-186, 1969."}, {"text": "SANTOS, R. L.; VIRTUOSO JÚNIOR, J. S. Confiabilidade da versão brasileira da Escala de Atividades Instrumentais da Vida Diária. RBPS, v. 21, n. 4, 2008."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Combine sempre com o Índice de Katz para uma avaliação funcional completa (AVDs básicas + AIVDs).", "Avalie o desempenho real observado ou relatado, não a capacidade teórica do paciente.", "A dependência em AIVDs geralmente precede a dependência em AVDs básicas no processo de declínio funcional.", "Reavalie periodicamente, especialmente após intercorrências clínicas."], "examples": [{"label": "Idoso independente", "sublabel": "Lawton 8", "emoji": "✅", "values": {"telefone": 1, "compras": 1, "preparo_refeicoes": 1, "trabalho_domestico": 1, "lavanderia": 1, "transporte": 1, "medicamentos": 1, "financas": 1}}, {"label": "Dependência moderada", "sublabel": "Lawton 4", "emoji": "⚠️", "values": {"telefone": 1, "compras": 0, "preparo_refeicoes": 0, "trabalho_domestico": 1, "lavanderia": 0, "transporte": 1, "medicamentos": 1, "financas": 0}}, {"label": "Grande dependência", "sublabel": "Lawton 1", "emoji": "🚨", "values": {"telefone": 1, "compras": 0, "preparo_refeicoes": 0, "trabalho_domestico": 0, "lavanderia": 0, "transporte": 0, "medicamentos": 0, "financas": 0}}], "quiz": [{"q": "Quantas atividades instrumentais de vida diária a Escala de Lawton avalia?", "opts": ["6", "7", "8", "10"], "correct": 2, "expl": "A Escala de Lawton avalia 8 AIVDs: telefone, compras, preparo de refeições, trabalho doméstico, lavanderia, transporte, medicamentos e finanças."}, {"q": "Qual a diferença entre AVDs e AIVDs?", "opts": ["Não há diferença", "AVDs são atividades básicas de autocuidado; AIVDs são atividades mais complexas de vida independente", "AIVDs são mais simples que AVDs", "AVDs só se aplicam a crianças"], "correct": 1, "expl": "AVDs (avaliadas pelo Katz/Barthel) são atividades básicas de autocuidado; AIVDs (avaliadas pelo Lawton) são atividades mais complexas necessárias para viver de forma independente na comunidade."}, {"q": "Qual escala geralmente é combinada com o Lawton para avaliação funcional completa?", "opts": ["Glasgow", "Katz ou Barthel", "Morse", "Braden"], "correct": 1, "expl": "O Lawton avalia AIVDs, enquanto o Katz e o Barthel avaliam AVDs básicas — juntas, oferecem uma visão completa da funcionalidade do paciente."}]}, "faq": [{"q": "A dependência em AIVDs é mais grave que em AVDs?", "a": "Não necessariamente mais grave, mas geralmente surge antes no processo de declínio funcional. A perda de independência em AIVDs (atividades complexas) costuma preceder a perda de independência em AVDs básicas (autocuidado)."}, {"q": "A Escala de Lawton pode ser aplicada por familiares?", "a": "Sim, especialmente em pacientes com déficit cognitivo, a informação pode ser obtida com um cuidador ou familiar que conhece bem a rotina do paciente, complementando a autoavaliação quando possível."}], "about": {"title": "Como funciona a Escala de Lawton", "html": "<p>A Escala de Lawton avalia 8 atividades instrumentais de vida diária — uso do telefone, compras, preparo de refeições, trabalho doméstico, lavanderia, transporte, responsabilidade sobre medicamentos e manuseio de finanças — classificando cada uma como independente (1 ponto) ou dependente (0 pontos). A soma varia de 0 a 8 pontos.</p><p><strong>Guia rápido:</strong> 6-8 = Independência | 3-5 = Dependência moderada | 0-2 = Grande dependência.</p>"}}</script>
@@ -683,6 +697,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 <style>
   .flow-divider{text-align:center; margin:28px 0 20px; position:relative;}
   .flow-divider::before{content:''; position:absolute; left:0; right:0; top:50%; height:1px; background:var(--line);}
@@ -157,8 +158,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
 <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
       </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -353,257 +363,18 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do recém-nascido</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança na reanimação neonatal</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Redução do risco de infecção</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-        <!-- Recursos Adicionais — 10 cards, sempre visivel -->
-        <div class="flow-divider"><span>Recursos Adicionais</span></div>
-
-        <div class="learning-track-wrap">
-          <div class="learning-track-grid">
-            <a class="learn-card" href="#">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-book"/></svg></div>
-              <h3>Artigos</h3>
-              <p>Evidência científica e literatura de referência sobre o tema.</p>
-              <span class="learn-cta">Ler artigos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn-card" href="#">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div>
-              <h3>Protocolos</h3>
-              <p>Protocolos institucionais e fluxos operacionais de enfermagem.</p>
-              <span class="learn-cta">Ver protocolos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn-card" href="#">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-file"/></svg></div>
-              <h3>Casos Clínicos</h3>
-              <p>Situações reais com tomada de decisão e raciocínio clínico.</p>
-              <span class="learn-cta">Ver casos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn-card" href="#">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-clipcheck"/></svg></div>
-              <h3>Check-lists</h3>
-              <p>Listas de verificação para prática segura e auditoria.</p>
-              <span class="learn-cta">Baixar check-lists <svg class="icon icon-sm"><use href="#i-download"/></svg></span>
-            </a>
-            <a class="learn-card" href="simulados.html">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div>
-              <h3>Simulados</h3>
-              <p>Cenários práticos com decisões clínicas em tempo real.</p>
-              <span class="learn-cta">Simular agora <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn-card" href="flashcards.html">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-bulb"/></svg></div>
-              <h3>Flashcards</h3>
-              <p>Fichas de revisão rápida para fixação de conceitos-chave.</p>
-              <span class="learn-cta">Estudar flashcards <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn-card" href="#">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-network"/></svg></div>
-              <h3>Infográficos</h3>
-              <p>Visualizações gráficas para ensino e treinamento em serviço.</p>
-              <span class="learn-cta">Ver infográficos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn-card" href="#">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-flask"/></svg></div>
-              <h3>Guia de Bolso</h3>
-              <p>Resumo rápido para consulta à beira do leito.</p>
-              <span class="learn-cta">Consultar guia <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn-card" href="#">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-monitor"/></svg></div>
-              <h3>Slides</h3>
-              <p>Material de apresentação para aulas e treinamentos.</p>
-              <span class="learn-cta">Baixar slides <svg class="icon icon-sm"><use href="#i-download"/></svg></span>
-            </a>
-            <a class="learn-card" href="#">
-              <div class="icon-wrap"><svg class="icon"><use href="#i-play"/></svg></div>
-              <h3>Vídeos</h3>
-              <p>Tutoriais e demonstrações práticas em vídeo.</p>
-              <span class="learn-cta">Assistir vídeos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
-            </a>
-          </div>
-        </div>
-
-      <!-- ================= PERFIL: MODO URGÊNCIA ================= -->
-      <div class="tab-panel" data-tab-panel="urgencia">
-        <div class="urg-panel">
-          <div class="urg-inner">
-            <div class="urg-top">
-              <div><span class="urg-badge"><span class="dot"></span> Modo urgência ativo</span><h3>Cálculo rápido — Índice de Apgar</h3></div>
-              <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 2, &quot;tono&quot;: 2, &quot;irritabilidade&quot;: 2, &quot;cor&quot;: 2}'>Recém-nascido vigoroso <span class="p-sub">Apgar 10</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 1, &quot;tono&quot;: 1, &quot;irritabilidade&quot;: 1, &quot;cor&quot;: 0}'>Depressão moderada <span class="p-sub">Apgar 5</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;fc&quot;: 1, &quot;respiracao&quot;: 0, &quot;tono&quot;: 0, &quot;irritabilidade&quot;: 0, &quot;cor&quot;: 1}'>Depressão grave <span class="p-sub">Apgar 2</span></button></div>
-            </div>
-            <div class="urg-grid"><div class="urg-field"><label>Frequência Cardíaca</label>
-              <select class="field-select" data-calc-input="fc"><option value="0">Ausente</option><option value="1">Menor que 100 bpm</option><option value="2" selected>Maior ou igual a 100 bpm</option></select></div><div class="urg-field"><label>Esforço Respiratório</label>
-              <select class="field-select" data-calc-input="respiracao"><option value="0">Ausente</option><option value="1">Fraco / Irregular</option><option value="2" selected>Bom / Choro Forte</option></select></div><div class="urg-field"><label>Tônus Muscular</label>
-              <select class="field-select" data-calc-input="tono"><option value="0">Flácido</option><option value="1">Alguma Flexão</option><option value="2" selected>Movimento Ativo</option></select></div><div class="urg-field"><label>Irritabilidade Reflexa</label>
-              <select class="field-select" data-calc-input="irritabilidade"><option value="0">Sem Resposta</option><option value="1">Careta</option><option value="2" selected>Choro / Tosse / Espirro</option></select></div><div class="urg-field"><label>Cor da Pele</label>
-              <select class="field-select" data-calc-input="cor"><option value="0">Cianótico / Pálido</option><option value="1">Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>Completamente Rosado</option></select></div></div>
-            <div class="urg-result">
-              <div><span class="urg-result-num safe" id="urgResultNum">10</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
-              <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Normal / Boa Vitalidade</span>
-            </div>
-          </div>
-        </div>
-      </div>
-<!-- ================= PERFIL: ESTUDANTE ================= -->
-      <div class="tab-panel" data-tab-panel="estudante">
-        <div class="est-grid">
-          <div class="side-stack">
-            
-            <section class="calc-card">
-              <div class="step-card">
-                <div class="step-num">1</div>
-                <div class="step-body">
-                  <h3>Frequência Cardíaca</h3>
-                  <p class="step-hint">Frequência cardíaca do recém-nascido, avaliada por ausculta ou palpação do cordão.</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="fc"><option value="0">0 — Ausente</option><option value="1">1 — Menor que 100 bpm</option><option value="2" selected>2 — Maior ou igual a 100 bpm</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step-card">
-                <div class="step-num">2</div>
-                <div class="step-body">
-                  <h3>Esforço Respiratório</h3>
-                  <p class="step-hint">Padrão respiratório observado.</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="respiracao"><option value="0">0 — Ausente</option><option value="1">1 — Fraco / Irregular</option><option value="2" selected>2 — Bom / Choro Forte</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step-card">
-                <div class="step-num">3</div>
-                <div class="step-body">
-                  <h3>Tônus Muscular</h3>
-                  <p class="step-hint">Grau de flexão e movimento espontâneo dos membros.</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="tono"><option value="0">0 — Flácido</option><option value="1">1 — Alguma Flexão</option><option value="2" selected>2 — Movimento Ativo</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step-card">
-                <div class="step-num">4</div>
-                <div class="step-body">
-                  <h3>Irritabilidade Reflexa</h3>
-                  <p class="step-hint">Resposta a estímulo (ex: aspiração de vias aéreas ou estímulo tátil).</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="irritabilidade"><option value="0">0 — Sem Resposta</option><option value="1">1 — Careta</option><option value="2" selected>2 — Choro / Tosse / Espirro</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step-card">
-                <div class="step-num">5</div>
-                <div class="step-body">
-                  <h3>Cor da Pele</h3>
-                  <p class="step-hint">Coloração da pele do recém-nascido.</p>
-                  <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="cor"><option value="0">0 — Cianótico / Pálido</option><option value="1">1 — Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>2 — Completamente Rosado</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <div class="formula-dark">
-              <div class="fd-eyebrow"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Como chegamos aqui</div>
-              <h3>Construindo o cálculo, passo a passo</h3>
-              <div class="fd-steps">
-                <div class="fd-step">
-              <div class="fd-step-num">1</div>
-              <div class="fd-step-label"><div class="l1">Frequência Cardíaca</div></div>
-              <div class="fd-step-value" data-fd-step="fc">2</div>
-            </div><div class="fd-step">
-              <div class="fd-step-num">2</div>
-              <div class="fd-step-label"><div class="l1">Esforço Respiratório</div></div>
-              <div class="fd-step-value" data-fd-step="respiracao">2</div>
-            </div><div class="fd-step">
-              <div class="fd-step-num">3</div>
-              <div class="fd-step-label"><div class="l1">Tônus Muscular</div></div>
-              <div class="fd-step-value" data-fd-step="tono">2</div>
-            </div><div class="fd-step">
-              <div class="fd-step-num">4</div>
-              <div class="fd-step-label"><div class="l1">Irritabilidade Reflexa</div></div>
-              <div class="fd-step-value" data-fd-step="irritabilidade">2</div>
-            </div><div class="fd-step">
-              <div class="fd-step-num">5</div>
-              <div class="fd-step-label"><div class="l1">Cor da Pele</div></div>
-              <div class="fd-step-value" data-fd-step="cor">2</div>
-            </div>
-                <div class="fd-divider"><div class="line"></div><div class="op">=</div><div class="line"></div></div>
-                <div class="fd-final">
-                  <div>
-                    <div style="font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;opacity:.85;font-weight:800;margin-bottom:4px">Índice de Apgar</div>
-                    <span class="fd-final-num" data-fd-step="__result__">10</span><span class="fd-final-unit">pontos</span>
-                  </div>
-                  <span class="fd-final-badge" id="estFdBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Normal / Boa Vitalidade</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="side-stack">
-            <section class="calc-card">
-              <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Exemplos prontos</h2></div>
-              <div class="example-grid"><button type="button" class="example-btn" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 2, &quot;tono&quot;: 2, &quot;irritabilidade&quot;: 2, &quot;cor&quot;: 2}'>
-              <div class="ex-emoji">✅</div>
-              <div class="ex-label">Recém-nascido vigoroso</div>
-              <div class="ex-desc">Apgar 10</div>
-            </button><button type="button" class="example-btn" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 1, &quot;tono&quot;: 1, &quot;irritabilidade&quot;: 1, &quot;cor&quot;: 0}'>
-              <div class="ex-emoji">⚠️</div>
-              <div class="ex-label">Depressão moderada</div>
-              <div class="ex-desc">Apgar 5</div>
-            </button><button type="button" class="example-btn" data-example data-values='{&quot;fc&quot;: 1, &quot;respiracao&quot;: 0, &quot;tono&quot;: 0, &quot;irritabilidade&quot;: 0, &quot;cor&quot;: 1}'>
-              <div class="ex-emoji">🚨</div>
-              <div class="ex-label">Depressão grave</div>
-              <div class="ex-desc">Apgar 2</div>
-            </button></div>
-            </section>
-            <section class="calc-card">
-              <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Glossário rápido</h2></div>
-              <ul class="glossary-list"><li><span class="glossary-dot"></span><div><div class="glossary-term">Frequência Cardíaca</div><div class="glossary-def">Frequência cardíaca do recém-nascido, avaliada por ausculta ou palpação do cordão.</div></div></li><li><span class="glossary-dot"></span><div><div class="glossary-term">Esforço Respiratório</div><div class="glossary-def">Padrão respiratório observado.</div></div></li><li><span class="glossary-dot"></span><div><div class="glossary-term">Tônus Muscular</div><div class="glossary-def">Grau de flexão e movimento espontâneo dos membros.</div></div></li><li><span class="glossary-dot"></span><div><div class="glossary-term">Irritabilidade Reflexa</div><div class="glossary-def">Resposta a estímulo (ex: aspiração de vias aéreas ou estímulo tátil).</div></div></li><li><span class="glossary-dot"></span><div><div class="glossary-term">Cor da Pele</div><div class="glossary-def">Coloração da pele do recém-nascido.</div></div></li></ul>
-            </section>
-            <section class="calc-card quiz-card" id="estQuizCard">
-              <div class="calc-card-header" style="justify-content:space-between">
-                <div style="display:flex; align-items:center; gap:10px"><span class="bar" style="background:#7c3aed" aria-hidden="true"></span><h2 style="font-size:15px">Quiz rápido</h2></div>
-                <span class="quiz-progress" id="estQuizProgress">1/1</span>
-              </div>
-              <p class="quiz-question" id="estQuizQuestion"></p>
-              <ul class="quiz-opts" id="estQuizOpts"></ul>
-              <div class="quiz-expl" id="estQuizExpl"></div>
-              <button type="button" class="quiz-next" id="estQuizNext" style="display:none">Próxima pergunta →</button>
-            </section>
-          </div>
-        </div>
       </div>
       <!-- ================= PERFIL: ACADÊMICO ================= -->
       <div class="tab-panel" data-tab-panel="academico">
@@ -715,6 +486,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

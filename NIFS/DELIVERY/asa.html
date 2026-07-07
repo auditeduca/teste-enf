@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="asa">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -258,32 +268,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -384,6 +384,7 @@
             <div class="urg-grid"><div class="urg-field"><label>Classificação ASA</label>
               <select class="field-select" data-calc-input="asa"><option value="1" selected>ASA I — Paciente sadio</option><option value="2">ASA II — Doença sistêmica leve</option><option value="3">ASA III — Doença sistêmica grave</option><option value="4">ASA IV — Doença grave, ameaça à vida</option><option value="5">ASA V — Moribundo</option><option value="6">ASA VI — Doador de órgãos</option></select></div><div class="urg-field"><label>Situação</label>
               <select class="field-select" data-calc-input="emergencia"><option value="0" selected>Eletivo — Procedimento programado</option><option value="1">Emergência — Procedimento de emergência</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">1</span><span class="urg-result-unit" id="urgResultUnit"></span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Risco baixo</span>
@@ -446,6 +447,18 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="aldrete.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div><div><h3>Calculadora de Escore de Aldrete</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="charlson.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div><div><h3>Índice de Comorbidade de Charlson</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ramsay.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Escala de Ramsay</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="rass.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Escala de Sedação-Agitação de Richmond</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="stop-bang.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div><div><h3>STOP-BANG</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "8c3d4e5f-6a7b-4c80-9d3e-4f5a6b7c8d9e", "code": "CALC-ASA-001", "slug": "asa", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Escore ASA", "description": "Classifique o estado físico do paciente com o escore ASA (American Society of Anesthesiologists) de I a VI. Ferramenta gratuita para enfermagem.", "canonical": "https://www.calculadorasdeenfermagem.com.br/asa.html"}, "breadcrumb": {"category": "Avaliação e Escore", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Escore ASA", "acronym": "ASA", "categoryBadge": "Avaliação e escore", "icon": "i-clipboard", "objective": "Classifique o estado físico do paciente com o escore ASA (American Society of Anesthesiologists), de I a VI, para avaliação pré-anestésica.", "indication": "Indicada para todos os pacientes submetidos a procedimentos anestésicos, como parte da avaliação pré-anestésica.", "targetPopulation": "Pacientes de qualquer faixa etária que serão submetidos a procedimentos com anestesia.", "specialty": ["Anestesiologia", "Enfermagem Cirúrgica", "Avaliação Pré-Anestésica"], "averageTime": "1–2 minutos", "evidenceLevel": "II", "complexity": "basic", "rating": 4.8, "ratingCount": 1340}, "calculator": {"inputs": [{"id": "asa", "type": "select", "label": "Classificação ASA", "defaultValue": 1, "description": "Selecione a classe que melhor descreve o estado físico do paciente.", "options": [{"value": 1, "label": "ASA I — Paciente sadio", "score": 1}, {"value": 2, "label": "ASA II — Doença sistêmica leve", "score": 2}, {"value": 3, "label": "ASA III — Doença sistêmica grave", "score": 3}, {"value": 4, "label": "ASA IV — Doença grave, ameaça à vida", "score": 4}, {"value": 5, "label": "ASA V — Moribundo", "score": 5}, {"value": 6, "label": "ASA VI — Doador de órgãos", "score": 6}]}, {"id": "emergencia", "type": "select", "label": "Situação", "defaultValue": 0, "description": "Indique se o procedimento é eletivo ou de emergência.", "options": [{"value": 0, "label": "Eletivo — Procedimento programado", "score": 0}, {"value": 1, "label": "Emergência — Procedimento de emergência", "score": 1}]}], "formula": {"type": "sum", "expression": "asa+emergencia", "resultLabel": "Classificação ASA", "resultUnit": "", "decimals": 0}}, "interpretation": {"ranges": [{"min": 1, "max": 2, "label": "Risco baixo", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Paciente sem doença sistêmica ou com doença leve. Risco de complicações perianestésicas muito baixo a baixo. Procedimento pode ser realizado em centro cirúrgico convencional."}, {"min": 3, "max": 3, "label": "Risco moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Doença sistêmica grave, mas compensada. Risco intermediário. Avaliação especializada e monitorização cuidadosa recomendadas."}, {"min": 4, "max": 5, "label": "Risco alto", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Doença grave com ameaça à vida ou paciente moribundo. Alto risco. Requer cuidados intensivos e anestesiologista experiente."}, {"min": 6, "max": 6, "label": "Doador de órgãos", "riskLevel": "none", "color": "#6b7280", "clinicalImplications": "Paciente declarado morte encefálica, mantido para doação de órgãos. Procedimento realizado para aferição de órgãos."}]}, "evidence": {"foundation": "O escore ASA foi desenvolvido em 1941 pela American Society of Anesthesiologists como uma forma padronizada de descrever o estado físico geral do paciente antes da administração de anestesia. A classificação não mede o risco anestésico em si, mas sim o estado de saúde do paciente no momento da avaliação.", "history": "A classificação original continha apenas cinco classes (I a V). A sexta classe (VI) foi adicionada em 1963 para pacientes declarados morte encefálica e mantidos vivos para doação de órgãos. O sufixo \"E\" para emergência foi introduzido para diferenciar procedimentos eletivos de emergência.", "validation": "Estudos demonstram correlação entre a classificação ASA e a mortalidade perianestésica. A classificação possui boa concordância interobservador quando realizada por anestesiologistas experientes.", "limitations": "O escore ASA não considera a idade, o tipo de cirurgia, a experiência do anestesiologista nem as condições institucionais. A classificação deve ser complementada por avaliação individualizada de risco.", "references": [{"text": "AMERICAN SOCIETY OF ANESTHESIOLOGISTS. ASA physical status classification system. Schaumburg: ASA, 2020."}, {"text": "SAKAI, T. et al. The ASA physical status classification: inter-observer consistency. Anesthesiology, v. 117, n. 1, p. 117-121, 2012."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}, {"text": "SOCIEDADE BRASILEIRA DE ANESTESIOLOGISTAS. Diretrizes de avaliação pré-anestésica. São Paulo: SBA, 2021."}, {"text": "OWENS, W. D. et al. ASA physical status classifications: a study of consistency of ratings. Anesthesiology, v. 49, n. 4, p. 239-243, 1978."}, {"text": "HAYNES, S. R.; LAWLER, P. G. An assessment of the consistency of ASA physical status classification allocation. Anaesthesia, v. 50, n. 3, p. 195-199, 1995."}]}, "learning": {"tips": ["Avalie o paciente no momento da indução anestésica.", "A classificação pode mudar se o estado clínico se alterar.", "O escore ASA não substitui a avaliação individual de risco.", "Documente a classificação no prontuário do paciente."], "examples": [{"label": "Jovem saudável", "sublabel": "ASA I — Apendicectomia eletiva", "emoji": "✅", "values": {"asa": 1, "emergencia": 0}}, {"label": "DM descompensada", "sublabel": "ASA III — Cirurgia eletiva", "emoji": "⚠️", "values": {"asa": 3, "emergencia": 0}}, {"label": "Sepse + cirurgia", "sublabel": "ASA IV-E — Emergência", "emoji": "🚨", "values": {"asa": 4, "emergencia": 1}}], "quiz": [{"q": "Qual é a classificação máxima do escore ASA?", "opts": ["ASA V", "ASA VI", "ASA VII", "ASA X"], "correct": 1, "expl": "O escore ASA vai de I a VI. A classe VI foi adicionada em 1963 para doadores de órgãos declarados morte encefálica."}, {"q": "O que significa o sufixo \"E\" no escore ASA?", "opts": ["Especial", "Eletivo", "Emergência", "Exame"], "correct": 2, "expl": "O sufixo \"E\" indica que o procedimento é de emergência, diferenciando-o de procedimentos eletivos na mesma classe."}, {"q": "O escore ASA mede diretamente o risco anestésico?", "opts": ["Sim, sempre", "Não, descreve o estado físico", "Apenas em cirurgias cardíacas", "Somente para pacientes pediátricos"], "correct": 1, "expl": "O escore ASA descreve o estado físico do paciente, não o risco anestésico específico. O risco depende também do tipo de cirurgia e da instituição."}]}, "faq": [{"q": "O escore ASA mede o risco anestésico?", "a": "Não. O escore ASA descreve o estado físico do paciente, não o risco específico da anestesia. Um paciente ASA III pode ter risco anestésico baixo em procedimentos simples, enquanto um paciente ASA II pode ter risco elevado em cirurgias de grande porte."}, {"q": "Quem deve classificar o paciente?", "a": "A classificação deve ser realizada pelo anestesiologista responsável pelo caso. A equipe de enfermagem pode auxiliar na coleta de dados clínicos, mas a atribuição da classe é de responsabilidade médica."}, {"q": "A classificação pode mudar após a indução?", "a": "Sim. O escore ASA deve refletir o estado do paciente no momento da avaliação. Se houver deterioração clínica durante o procedimento, a classificação pode ser reavaliada e atualizada."}], "about": {"title": "Como funciona o escore ASA", "html": "<p>O escore ASA (American Society of Anesthesiologists) é uma classificação subjetiva do estado físico geral do paciente, realizada antes da administração de anestesia. Vai de ASA I (paciente sem doença sistêmica) a ASA VI (morte encefálica), com a possibilidade de adicionar o sufixo \"E\" quando o procedimento é de emergência.</p><p>A classificação deve ser realizada pelo anestesiologista responsável, com base na história clínica, exame físico e exames complementares disponíveis. Não é uma medida de risco anestésico, mas sim uma descrição do estado de saúde do paciente.</p>"}}</script>
@@ -501,6 +514,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

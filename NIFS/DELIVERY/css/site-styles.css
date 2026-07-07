@@ -24,8 +24,8 @@
   --blue-600:#2563eb;
   --blue-500:#2563eb;
   --blue-400:#3b82f6;
-  --blue-100:#e3faf1;
-  --blue-50:#e6f7f5;
+  --blue-100:#eff6ff;
+  --blue-50:#eff6ff;
   --ink:#0b1f38;
   --ink-900:#101828;
   --ink-600:#475467;
@@ -1841,7 +1841,7 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
 .tool-icon-badge .icon{width:26px; height:26px; stroke-width:1.6;}
 .tool-category-badge{
   display:inline-flex; align-items:center; height:24px; padding:0 10px; border-radius:999px;
-  background:var(--blue-100); border:1px solid rgba(15,157,116,.25);
+  background:var(--blue-100); border:1px solid rgba(37,99,235,.2);
   font-size:10.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--blue-600);
   margin-bottom:8px;
 }
@@ -1884,7 +1884,7 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
 }
 .field-input{padding-right:74px;}
 .field-select{padding-right:36px; cursor:pointer;}
-.field-input:hover, .field-select:hover{border-color:#a9d9cd;}
+.field-input:hover, .field-select:hover{border-color:#93c5fd;}
 .field-input:focus, .field-select:focus{outline:none; border-color:var(--blue-500); box-shadow:0 0 0 4px rgba(37,99,235,.12);}
 .field-suffix{position:absolute; right:14px; top:50%; transform:translateY(-50%); font-size:12px; color:var(--muted); font-weight:600; pointer-events:none;}
 .field-select-wrap{position:relative;}
@@ -1893,7 +1893,7 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
 
 .tip-callout{
   display:flex; gap:12px; padding:14px; border-radius:14px; margin-top:20px;
-  background:linear-gradient(150deg, var(--blue-100), #fff); border:1px solid rgba(15,157,116,.2);
+  background:linear-gradient(150deg, var(--blue-100), #fff); border:1px solid rgba(37,99,235,.18);
 }
 .tip-callout .icon-wrap{width:32px; height:32px; border-radius:50%; background:#fff; box-shadow:var(--shadow-sm); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
 .tip-callout .icon-wrap .icon{width:15px; height:15px; color:var(--blue-600);}
@@ -1919,7 +1919,7 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
 .status-banner.success .icon-wrap .icon{color:#2563eb;}
 .status-banner.warning .icon-wrap .icon{color:#ef4444;}
 .status-banner strong{display:block; font-size:13px; margin-bottom:2px;}
-.status-banner.success strong{color:#0b6b52;}
+.status-banner.success strong{color:var(--navy-900);}
 .status-banner.warning strong{color:#b42318;}
 .status-banner p{font-size:11.5px; line-height:1.5; color:var(--muted);}
 
@@ -2130,7 +2130,7 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
 .faq-item summary .icon{width:14px; height:14px; color:var(--blue-600); transition:transform .2s; flex-shrink:0; transform:rotate(90deg);}
 .faq-item[open] summary .icon{transform:rotate(270deg);}
 .faq-item p{font-size:12.5px; color:var(--muted); line-height:1.7; margin-top:10px;}
-.disclaimer-card{background:linear-gradient(160deg,#0e3a2e,#0b2a22 60%,#081f1a); color:#fff; border-radius:18px; padding:24px; box-shadow:var(--shadow-md);}
+.disclaimer-card{background:linear-gradient(160deg,var(--navy-900),var(--navy-800) 60%,var(--navy-950)); color:#fff; border-radius:18px; padding:24px; box-shadow:var(--shadow-md);}
 .disclaimer-card h3{font-size:14.5px; font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
 .disclaimer-card h3 .icon{width:16px; height:16px; color:var(--blue-400);}
 .disclaimer-card p{font-size:12px; line-height:1.7; color:#c7d3e0;}
@@ -2155,6 +2155,91 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
   .kpi-grid{grid-template-columns:1fr;}
   .dist-label{width:110px;}
 }
+
+/* ===== Raciocínio Clínico Integrado + Trilha de Aprendizagem (preview_v2) ===== */
+.flow-divider{text-align:center; margin:28px 0 20px; position:relative;}
+.flow-divider::before{content:''; position:absolute; left:0; right:0; top:50%; height:1px; background:var(--line);}
+.flow-divider span{
+  background:var(--bg-app);
+  padding:0 14px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--blue-600);
+  position:relative;
+  z-index:1;
+}
+
+.clinical-flow-wrap{display:none; width:100%; margin-top:4px;}
+.clinical-flow-wrap.is-visible{display:block;}
+.flow-card{margin-bottom:16px;}
+.flow-card:last-child{margin-bottom:0;}
+.flow-card .calc-card-header h2{display:flex; align-items:center; gap:8px;}
+.flow-card .calc-card-header h2 .icon{width:16px; height:16px; color:var(--blue-600); flex-shrink:0;}
+
+.nnn-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:18px;}
+.nnn-label{display:block; font-size:10.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;}
+.nnn-value{font-size:13px; color:var(--navy-900); font-weight:700; line-height:1.5; margin:0;}
+.flow-text{font-size:13px; color:var(--navy-800); line-height:1.6; margin:0;}
+.safety-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:24px;}
+.safety-col .nnn-label{margin-bottom:10px;}
+
+.learning-track-wrap{width:100%; margin-top:8px;}
+.learning-track-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px;}
+.learn-card{
+  background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px;
+  box-shadow:var(--shadow-sm); text-decoration:none; display:flex; flex-direction:column; gap:10px;
+  transition:box-shadow .2s, transform .2s;
+}
+.learn-card:hover{box-shadow:var(--shadow-md); transform:translateY(-2px);}
+.learn-card .icon-wrap{width:40px; height:40px; border-radius:12px; background:var(--blue-100); display:flex; align-items:center; justify-content:center;}
+.learn-card .icon-wrap .icon{width:20px; height:20px; color:var(--blue-600);}
+.learn-card h3{font-size:13.5px; font-weight:800; color:var(--navy-900); margin:0;}
+.learn-card p{font-size:11.5px; color:var(--muted); line-height:1.5; margin:0;}
+.learn-card .learn-cta{font-size:11.5px; font-weight:700; color:var(--blue-600); display:flex; align-items:center; gap:4px; margin-top:auto;}
+
+/* Faixa cognitiva integrada (todos os perfis, após calcular) */
+.cognitive-profile-strip{
+  display:none; margin:0 0 20px; padding:14px 18px;
+  background:linear-gradient(135deg, var(--blue-100), #fff);
+  border:1px solid var(--line); border-left:4px solid var(--blue-600);
+  border-radius:14px; font-size:12.5px; color:var(--navy-800); line-height:1.5;
+}
+.cognitive-profile-strip.is-visible{display:block;}
+.cognitive-profile-strip strong{color:var(--navy-900);}
+.cognitive-profile-strip .cog-kicker{
+  display:block; font-size:10px; font-weight:800; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--blue-600); margin-bottom:6px;
+}
+
+/* Acadêmico / SAE — bloqueado até primeiro cálculo */
+[data-tab-panel="sae"].cognitive-locked::before{
+  content:"Calcule no perfil Padrão para desbloquear o raciocínio clínico integrado (NANDA · NIC · NOC).";
+  display:block; padding:16px; margin-bottom:12px; border-radius:12px;
+  background:var(--blue-100); color:var(--navy-800); font-size:13px; font-weight:600;
+}
+[data-tab-panel="sae"].cognitive-locked > *{display:none;}
+
+/* Ferramentas relacionadas */
+.tool-footer-zone{margin-top:32px; padding-top:24px; border-top:1px solid var(--line);}
+.related-tools-title{font-size:16px; font-weight:800; color:var(--navy-900); margin-bottom:14px;}
+.related-tools-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px;}
+.related-tool-card{
+  display:flex; align-items:flex-start; gap:12px; padding:14px 16px;
+  background:#fff; border:1px solid var(--line); border-radius:14px;
+  text-decoration:none; transition:box-shadow .2s, border-color .2s;
+}
+.related-tool-card:hover{box-shadow:var(--shadow-md); border-color:var(--blue-400);}
+.related-tool-card .icon-wrap{
+  width:36px; height:36px; border-radius:10px; background:var(--blue-100);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.related-tool-card .icon{width:18px; height:18px; color:var(--blue-600);}
+.related-tool-card h3{font-size:13px; font-weight:800; color:var(--navy-900); margin:0 0 4px;}
+.related-tool-card p{font-size:11px; color:var(--muted); margin:0; line-height:1.4;}
+
+.no-print-screen{display:none !important;}
 
 /* Anti-FOUC: reserva o espaço do header/footer antes do fetch injetar o HTML real. */
 #site-header:empty { display: block; min-height: var(--chrome-header-height); }

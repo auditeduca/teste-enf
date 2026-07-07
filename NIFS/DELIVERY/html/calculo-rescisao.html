@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="calculo-rescisao">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -334,32 +344,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -546,6 +546,7 @@
               <input aria-label="Number" type="number" data-calc-input="meses_proporcionais_ferias" value="6"></div><div class="urg-field"><label>Meses Trabalhados no Ano Corrente (13º Proporcional)</label>
               <input aria-label="Number" type="number" data-calc-input="meses_proporcionais_13" value="6"></div><div class="urg-field"><label>Saldo Total do FGTS</label>
               <input aria-label="Number" type="number" data-calc-input="saldo_fgts" value="3000"></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">8366.67</span><span class="urg-result-unit" id="urgResultUnit">R$</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Valor Total Estimado das Verbas Rescisórias</span>
@@ -605,6 +606,18 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="adicional-noturno.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Adicional Noturno</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-de-ferias.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Férias</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-hora-extra.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Hora Extra</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="dimensionamento.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users-cog"/></svg></div><div><h3>Calculadora de Dimensionamento de Equipe de Enfermagem</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="fugulin.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipcheck"/></svg></div><div><h3>Sistema de Classificação de Pacientes de Fugulin</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "a4b5c6d7-e8f9-4051-a273-4b5c6d7e8f95", "code": "CALC-RESCISAO-001", "slug": "calculo-rescisao", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Rescisão Trabalhista (Demissão Sem Justa Causa)", "description": "Calcule uma estimativa das verbas rescisórias em caso de demissão sem justa causa: saldo de salário, aviso prévio, férias, 13º proporcional e multa do FGTS.", "canonical": "https://www.calculadorasdeenfermagem.com.br/calculo-rescisao.html"}, "breadcrumb": {"category": "Cálculos Trabalhistas", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Rescisão Trabalhista", "acronym": "Rescisão", "categoryBadge": "Cálculos trabalhistas", "icon": "i-calculator", "objective": "Estimar o total das principais verbas rescisórias devidas em caso de demissão sem justa causa: saldo de salário, aviso prévio, férias vencidas e proporcionais + 1/3, 13º salário proporcional e multa de 40% sobre o FGTS.", "indication": "Útil para profissionais de enfermagem e demais trabalhadores conferirem uma estimativa do valor total a receber em caso de demissão sem justa causa.", "targetPopulation": "Trabalhadores celetistas desligados por demissão sem justa causa (iniciativa do empregador).", "specialty": ["Gestão em Enfermagem", "Departamento Pessoal"], "averageTime": "3-5 minutos", "evidenceLevel": "III", "organizations": ["CLT"], "complexity": "intermediate", "rating": 4.5, "ratingCount": 610}, "calculator": {"inputs": [{"id": "salario_base", "type": "number", "label": "Salário Base", "unit": "R$", "defaultValue": 2500, "min": 0, "step": 0.01, "description": "Salário base mensal do trabalhador na data da rescisão."}, {"id": "dias_trabalhados_mes", "type": "number", "label": "Dias Trabalhados no Mês da Rescisão", "unit": "dias", "defaultValue": 15, "min": 0, "max": 30, "step": 1, "description": "Quantidade de dias trabalhados no mês em que ocorreu o desligamento (saldo de salário)."}, {"id": "anos_completos", "type": "number", "label": "Anos Completos na Empresa", "unit": "anos", "defaultValue": 2, "min": 0, "max": 30, "step": 1, "description": "Anos completos trabalhados na empresa, usados para o cálculo do aviso prévio proporcional (3 dias adicionais por ano completo, até o limite legal de 90 dias)."}, {"id": "ferias_vencidas_dias", "type": "number", "label": "Dias de Férias Vencidas Não Gozadas", "unit": "dias", "defaultValue": 0, "min": 0, "max": 30, "step": 1, "description": "Dias de férias de período aquisitivo já completo, ainda não gozadas nem pagas."}, {"id": "meses_proporcionais_ferias", "type": "number", "label": "Meses do Período Aquisitivo Atual de Férias", "unit": "meses", "defaultValue": 6, "min": 0, "max": 12, "step": 1, "description": "Meses trabalhados no período aquisitivo de férias em curso (férias proporcionais)."}, {"id": "meses_proporcionais_13", "type": "number", "label": "Meses Trabalhados no Ano Corrente (13º Proporcional)", "unit": "meses", "defaultValue": 6, "min": 0, "max": 12, "step": 1, "description": "Meses trabalhados no ano corrente, para cálculo do 13º salário proporcional."}, {"id": "saldo_fgts", "type": "number", "label": "Saldo Total do FGTS", "unit": "R$", "defaultValue": 3000, "min": 0, "step": 0.01, "description": "Saldo total depositado na conta do FGTS do trabalhador, para cálculo da multa rescisória de 40%."}], "formula": {"type": "expression", "expression": "((salario_base/30)*dias_trabalhados_mes) + ((salario_base/30)*(30+3*anos_completos)) + ((salario_base/30)*ferias_vencidas_dias*(4/3)) + ((salario_base/12)*meses_proporcionais_ferias*(4/3)) + ((salario_base/12)*meses_proporcionais_13) + (saldo_fgts*0.40)", "resultLabel": "Total Estimado da Rescisão", "resultUnit": "R$", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 99999999, "label": "Valor Total Estimado das Verbas Rescisórias", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Estimativa do total de verbas rescisórias para demissão sem justa causa, somando saldo de salário, aviso prévio (indenizado, proporcional aos anos de casa), férias vencidas e proporcionais + 1/3, 13º salário proporcional e multa de 40% sobre o saldo do FGTS.", "recommendations": "• Confira o valor com o Termo de Rescisão do Contrato de Trabalho (TRCT)\n• O aviso prévio proporcional é limitado a 90 dias totais por lei — revise manualmente se o colaborador tiver mais de 20 anos de empresa\n• Em caso de dúvida, consulte o sindicato da categoria ou um profissional de contabilidade/direito trabalhista"}]}, "evidence": {"foundation": "O cálculo de rescisão trabalhista por demissão sem justa causa soma diversas verbas: saldo de salário (dias trabalhados no mês), aviso prévio indenizado (30 dias mais 3 dias por ano completo de casa, conforme Lei nº 12.506/2011, limitado a 90 dias), férias vencidas e proporcionais acrescidas de 1/3 constitucional, 13º salário proporcional e multa rescisória de 40% sobre o saldo do FGTS (Art. 18, §1º, da Lei nº 8.036/1990).", "history": "Cada tipo de desligamento (demissão sem justa causa, pedido de demissão, demissão por justa causa, acordo mútuo entre empregado e empregador conforme Art. 484-A da CLT) gera direito a verbas diferentes. Esta calculadora contempla apenas o cenário de demissão sem justa causa por iniciativa do empregador, o mais comum e completo em termos de direitos.", "validation": "O valor real pode variar conforme convenção coletiva, médias de adicionais habituais (horas extras, adicional noturno, comissões) que devem compor a base de cálculo, e eventuais descontos (INSS, IRRF, adiantamentos, vale-transporte).", "limitations": "Esta calculadora apresenta uma estimativa simplificada, para fins educacionais, considerando apenas o cenário de demissão sem justa causa. Não inclui descontos de INSS/IRRF, médias de adicionais habituais, nem contempla os demais tipos de desligamento (pedido de demissão, justa causa, acordo mútuo, término de contrato de experiência), que possuem regras próprias. Não substitui o cálculo oficial da rescisão nem orientação de um profissional de contabilidade ou de direito trabalhista.", "references": [{"text": "BRASIL. Decreto-Lei nº 5.452/1943 (CLT). Arts. 477 a 486 — Da rescisão do contrato de trabalho."}, {"text": "BRASIL. Lei nº 12.506/2011 — Aviso prévio proporcional ao tempo de serviço."}, {"text": "BRASIL. Lei nº 8.036/1990. Art. 18, §1º — Multa rescisória do FGTS."}, {"text": "BRASIL. Lei nº 13.467/2017 — Reforma Trabalhista (inclui o Art. 484-A da CLT, sobre rescisão por acordo)."}]}, "learning": {"tips": ["Esta calculadora contempla apenas demissão sem justa causa — pedido de demissão e demissão por justa causa têm direitos bem diferentes (sem aviso prévio indenizado do empregador e sem multa do FGTS, por exemplo).", "O aviso prévio proporcional é limitado a 90 dias totais por lei, mesmo que o cálculo simples (30 + 3×anos) ultrapasse esse valor para trabalhadores com mais de 20 anos de empresa.", "Lembre-se de incluir médias de horas extras e adicional noturno habituais na base de cálculo real, que não são contempladas nesta estimativa simplificada.", "O Termo de Rescisão do Contrato de Trabalho (TRCT) deve detalhar cada verba paga separadamente — use-o para conferência."], "examples": [{"label": "Rescisão recente, pouco tempo de casa", "sublabel": "Salário R$ 2.500, 1 ano", "emoji": "📄", "values": {"salario_base": 2500, "dias_trabalhados_mes": 10, "anos_completos": 1, "ferias_vencidas_dias": 0, "meses_proporcionais_ferias": 5, "meses_proporcionais_13": 5, "saldo_fgts": 2000}}, {"label": "Rescisão com férias vencidas", "sublabel": "Salário R$ 3.500, 5 anos", "emoji": "📋", "values": {"salario_base": 3500, "dias_trabalhados_mes": 20, "anos_completos": 5, "ferias_vencidas_dias": 30, "meses_proporcionais_ferias": 3, "meses_proporcionais_13": 8, "saldo_fgts": 15000}}], "quiz": [{"q": "Quais verbas compõem tipicamente uma rescisão por demissão sem justa causa?", "opts": ["Apenas o salário do último mês", "Saldo de salário, aviso prévio, férias + 1/3, 13º proporcional e multa do FGTS", "Apenas a multa do FGTS", "Apenas as férias vencidas"], "correct": 1, "expl": "A rescisão sem justa causa tipicamente soma saldo de salário, aviso prévio, férias vencidas/proporcionais + 1/3, 13º salário proporcional e multa de 40% do FGTS."}, {"q": "Qual o limite máximo legal do aviso prévio proporcional?", "opts": ["30 dias", "60 dias", "90 dias", "120 dias"], "correct": 2, "expl": "A Lei nº 12.506/2011 estabelece 30 dias de aviso prévio mais 3 dias por ano completo de casa, limitado a um total de 90 dias."}, {"q": "A multa de 40% do FGTS é devida em qualquer tipo de desligamento?", "opts": ["Sim, sempre", "Não, apenas em demissão sem justa causa por iniciativa do empregador", "Apenas em pedido de demissão", "Apenas em demissão por justa causa"], "correct": 1, "expl": "A multa de 40% do FGTS é devida especificamente em caso de demissão sem justa causa por iniciativa do empregador, não se aplicando a pedido de demissão ou demissão por justa causa."}]}, "faq": [{"q": "Esta calculadora serve para pedido de demissão ou demissão por justa causa?", "a": "Não. Esta calculadora contempla apenas o cenário de demissão sem justa causa por iniciativa do empregador. Pedido de demissão e demissão por justa causa seguem regras diferentes, com direitos reduzidos (sem aviso prévio indenizado pago pelo empregador e sem multa do FGTS)."}, {"q": "O resultado desta calculadora é o valor exato que vou receber?", "a": "Não. É uma estimativa educacional simplificada. O valor real pode variar conforme descontos de INSS/IRRF, médias de adicionais habituais e outras particularidades contratuais. Consulte o Termo de Rescisão (TRCT) oficial ou um profissional de contabilidade/direito trabalhista para o valor exato."}], "about": {"title": "Como funciona o cálculo de Rescisão", "html": "<p>Esta calculadora soma as principais verbas de uma rescisão por demissão sem justa causa: saldo de salário, aviso prévio indenizado (proporcional aos anos de casa), férias vencidas e proporcionais acrescidas de 1/3, 13º salário proporcional, e multa de 40% sobre o saldo do FGTS.</p><p><strong>Atenção:</strong> este é um cálculo educacional simplificado. Não substitui o Termo de Rescisão do Contrato de Trabalho (TRCT) oficial nem a orientação de um profissional de contabilidade ou de direito trabalhista.</p>"}}</script>
@@ -660,6 +673,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

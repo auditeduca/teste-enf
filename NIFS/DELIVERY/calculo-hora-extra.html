@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="calculo-hora-extra">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -272,32 +282,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -412,6 +412,7 @@
               <input aria-label="Number" type="number" data-calc-input="salario_base" value="2500"></div><div class="urg-field"><label>Quantidade de Horas Extras</label>
               <input aria-label="Number" type="number" data-calc-input="horas_extras" value="10"></div><div class="urg-field"><label>Percentual da Hora Extra</label>
               <select class="field-select" data-calc-input="percentual_hora_extra"><option value="50" selected>50% — Padrão (Dias Úteis)</option><option value="100">100% — Domingos/Feriados (Comum em Convenção Coletiva)</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">170.45</span><span class="urg-result-unit" id="urgResultUnit">R$</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Valor Estimado das Horas Extras</span>
@@ -471,6 +472,18 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="adicional-noturno.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Adicional Noturno</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-de-ferias.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Férias</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-rescisao.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Rescisão Trabalhista</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="dimensionamento.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users-cog"/></svg></div><div><h3>Calculadora de Dimensionamento de Equipe de Enfermagem</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="fugulin.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipcheck"/></svg></div><div><h3>Sistema de Classificação de Pacientes de Fugulin</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "8f950617-2940-4e5f-8596-0718294051627", "code": "CALC-HORAEXTRA-001", "slug": "calculo-hora-extra", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Hora Extra", "description": "Calcule o valor das horas extras a partir do salário base, quantidade de horas e percentual aplicável (50% ou 100%). Ferramenta gratuita.", "canonical": "https://www.calculadorasdeenfermagem.com.br/calculo-hora-extra.html"}, "breadcrumb": {"category": "Cálculos Trabalhistas", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Hora Extra", "acronym": "Hora Extra", "categoryBadge": "Cálculos trabalhistas", "icon": "i-calculator", "objective": "Estimar o valor das horas extras trabalhadas, a partir do salário base, da quantidade de horas extras e do percentual de acréscimo aplicável.", "indication": "Útil para profissionais de enfermagem e demais trabalhadores que realizam horas extras, para conferência do valor recebido em holerite.", "targetPopulation": "Trabalhadores celetistas que realizam jornada de trabalho extraordinária (horas extras).", "specialty": ["Gestão em Enfermagem", "Departamento Pessoal"], "averageTime": "1 minuto", "evidenceLevel": "III", "organizations": ["CLT"], "complexity": "basic", "rating": 4.6, "ratingCount": 410}, "calculator": {"inputs": [{"id": "salario_base", "type": "number", "label": "Salário Base", "unit": "R$", "defaultValue": 2500, "min": 0, "step": 0.01, "description": "Salário base mensal do trabalhador, sem outros adicionais."}, {"id": "horas_extras", "type": "number", "label": "Quantidade de Horas Extras", "unit": "horas", "defaultValue": 10, "min": 0, "step": 0.5, "description": "Total de horas extras trabalhadas no período a ser calculado."}, {"id": "percentual_hora_extra", "type": "select", "label": "Percentual da Hora Extra", "defaultValue": 50, "description": "Percentual mínimo garantido pela Constituição Federal é 50%. Domingos, feriados e algumas convenções coletivas podem prever percentual maior.", "options": [{"value": 50, "label": "50% — Padrão (Dias Úteis)", "score": 50}, {"value": 100, "label": "100% — Domingos/Feriados (Comum em Convenção Coletiva)", "score": 100}]}], "formula": {"type": "expression", "expression": "(salario_base/220)*horas_extras*(1+percentual_hora_extra/100)", "resultLabel": "Valor das Horas Extras", "resultUnit": "R$", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 999999, "label": "Valor Estimado das Horas Extras", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Valor estimado das horas extras devidas, com base no salário informado, na quantidade de horas extras e no percentual de acréscimo aplicável.", "recommendations": "• Confira o valor com o holerite e o departamento pessoal\n• Verifique se a convenção coletiva da categoria prevê percentual superior ao mínimo constitucional\n• Em caso de dúvida, consulte o sindicato da categoria ou um profissional de contabilidade/direito trabalhista"}]}, "evidence": {"foundation": "O direito à remuneração de horas extras com acréscimo mínimo de 50% sobre o valor da hora normal está previsto no Art. 7º, inciso XVI, da Constituição Federal de 1988 e regulamentado pelo Art. 59 da CLT. O divisor 220 corresponde à jornada mensal padrão de 44 horas semanais (220 = 44 horas × 5 semanas, aproximadamente).", "history": "Convenções e acordos coletivos de trabalho frequentemente estabelecem percentual de 100% para horas extras realizadas em domingos e feriados, embora esse percentual não seja um mínimo legal federal automático, dependendo da categoria profissional.", "validation": "O cálculo pode variar conforme o divisor salarial aplicável à categoria (220h é o mais comum para jornada de 44h semanais, mas pode haver divisores diferentes para outras jornadas, como 200h ou 180h).", "limitations": "Esta calculadora apresenta uma estimativa simplificada, para fins educacionais e de conferência. Não substitui o cálculo oficial da folha de pagamento nem orientação de um profissional de contabilidade ou de direito trabalhista. O banco de horas, quando aplicável, pode alterar a forma de compensação das horas extras.", "references": [{"text": "BRASIL. Constituição Federal de 1988. Art. 7º, XVI."}, {"text": "BRASIL. Decreto-Lei nº 5.452/1943 (CLT). Art. 59 — Duração do trabalho e horas extras."}]}, "learning": {"tips": ["Confirme o divisor salarial aplicável à sua categoria (220h é o padrão para jornada de 44h semanais).", "Verifique a convenção coletiva da categoria, que pode prever percentual superior ao mínimo constitucional de 50%.", "Se a empresa adotar banco de horas, as horas extras podem ser compensadas com folga em vez de pagas — verifique o acordo vigente.", "As horas extras habituais integram o cálculo de férias, 13º salário e FGTS."], "examples": [{"label": "Hora extra padrão", "sublabel": "Salário R$ 2.500, 10h a 50%", "emoji": "⏰", "values": {"salario_base": 2500, "horas_extras": 10, "percentual_hora_extra": 50}}, {"label": "Plantão em feriado", "sublabel": "Salário R$ 3.200, 12h a 100%", "emoji": "📅", "values": {"salario_base": 3200, "horas_extras": 12, "percentual_hora_extra": 100}}], "quiz": [{"q": "Qual o percentual mínimo constitucional para hora extra?", "opts": ["20%", "30%", "50%", "100%"], "correct": 2, "expl": "A Constituição Federal (Art. 7º, XVI) garante o acréscimo mínimo de 50% sobre o valor da hora normal para trabalho extraordinário."}, {"q": "O que é o divisor 220 usado no cálculo do valor da hora normal?", "opts": ["Número de dias do ano", "Jornada mensal padrão para 44h semanais", "Número de feriados no ano", "Não tem relação com o cálculo"], "correct": 1, "expl": "O divisor 220 corresponde à jornada mensal padrão para uma carga horária de 44 horas semanais, sendo o mais comum, mas pode variar conforme a categoria."}, {"q": "O banco de horas elimina o pagamento de horas extras?", "opts": ["Sim, sempre elimina o pagamento", "Pode substituir o pagamento por compensação com folga, conforme acordo", "Não tem relação com horas extras", "É proibido por lei"], "correct": 1, "expl": "O banco de horas permite compensar horas extras com folga, em vez de pagamento, desde que respeitados os limites e acordos legais vigentes."}]}, "faq": [{"q": "Esta calculadora substitui o cálculo oficial da folha de pagamento?", "a": "Não. É uma ferramenta educacional para estimativa e conferência. O cálculo oficial deve ser feito pelo departamento pessoal da empresa, considerando a convenção coletiva e o divisor salarial aplicáveis."}, {"q": "Horas extras habituais alteram o valor de outras verbas trabalhistas?", "a": "Sim. Horas extras realizadas de forma habitual integram a base de cálculo de férias, 13º salário, FGTS e podem impactar verbas rescisórias, conforme entendimento consolidado na Justiça do Trabalho."}], "about": {"title": "Como funciona o cálculo de Hora Extra", "html": "<p>O valor da hora extra é calculado a partir do valor da hora normal (salário ÷ 220, para jornada de 44h semanais), multiplicado pela quantidade de horas extras trabalhadas e acrescido do percentual de hora extra aplicável (mínimo de 50%, podendo ser maior conforme convenção coletiva ou trabalho em domingos/feriados).</p><p><strong>Fórmula:</strong> Valor da Hora Extra = (Salário ÷ 220) × Horas Extras × (1 + Percentual/100).</p>"}}</script>
@@ -526,6 +539,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

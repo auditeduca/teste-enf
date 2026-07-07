@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="lanss">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -321,32 +331,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -537,6 +537,7 @@
               <select class="field-select" data-calc-input="alteracao_temperatura"><option value="0" selected>Não</option><option value="1">Sim (1 ponto)</option></select></div><div class="urg-field"><label>6. Exame: Alodinia</label>
               <select class="field-select" data-calc-input="alodinia"><option value="0" selected>Ausente - sensação normal em ambas as áreas</option><option value="5">Presente - dor/desconforto apenas na área dolorosa (5 pontos)</option></select></div><div class="urg-field"><label>7. Exame: Limiar de Picada de Agulha Alterado</label>
               <select class="field-select" data-calc-input="limiar_picada_alterado"><option value="0" selected>Ausente - sensação igual em ambas as áreas</option><option value="3">Presente - limiar alterado na área dolorosa (3 pontos)</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Mecanismo Neuropático Improvável</span>
@@ -596,6 +597,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "1bd317a3-2f56-4e10-8a4e-411c9a166def", "code": "SCALE-LANSS-001", "slug": "lanss", "version": "1.0.0", "status": "published", "seo": {"title": "Escala LANSS - Avaliação de Dor Neuropática", "description": "Calcule a Escala LANSS (Leeds Assessment of Neuropathic Symptoms and Signs) para identificar dor de predomínio neuropático. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/lanss.html"}, "breadcrumb": {"category": "Avaliação da Dor", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala LANSS", "acronym": "LANSS", "categoryBadge": "Avaliação da dor", "icon": "i-gauge", "objective": "Identificar se um quadro de dor crônica tem predomínio de mecanismo neuropático, combinando 5 itens de questionário sobre sintomas e 2 itens de exame clínico sensitivo (alodinia e limiar de picada de agulha alterado).", "indication": "Indicada para pacientes com dor crônica de qualquer origem, para diferenciar dor predominantemente neuropática de dor nociceptiva, auxiliando na escolha terapêutica.", "targetPopulation": "Adultos com dor crônica (ex: neuropatia diabética, dor pós-AVC, dor oncológica, lombalgia crônica, síndrome dolorosa complexa regional).", "specialty": ["Enfermagem", "Neurologia", "Manejo da Dor"], "averageTime": "5-10 minutos", "evidenceLevel": "II", "originalAuthors": ["Michael I. Bennett"], "complexity": "intermediate", "rating": 4.4, "ratingCount": 60}, "calculator": {"inputs": [{"id": "sensacoes_desagradaveis", "type": "select", "label": "1. Sensações Cutâneas Desagradáveis", "defaultValue": 0, "description": "A dor causa sensações estranhas e desagradáveis na pele, como formigamento, agulhadas ou alfinetadas?", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 5, "label": "Sim, com frequência (5 pontos)", "score": 5}]}, {"id": "alteracao_aparencia_pele", "type": "select", "label": "2. Alteração na Aparência da Pele", "defaultValue": 0, "description": "A dor faz a pele da área afetada parecer diferente do normal (manchada, mais vermelha ou rosada)?", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 5, "label": "Sim (5 pontos)", "score": 5}]}, {"id": "sensibilidade_anormal_toque", "type": "select", "label": "3. Sensibilidade Anormal ao Toque", "defaultValue": 0, "description": "A pele afetada fica anormalmente sensível ao toque (desconforto ao roçar levemente ou ao usar roupas justas)?", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 3, "label": "Sim (3 pontos)", "score": 3}]}, {"id": "crises_subitas", "type": "select", "label": "4. Crises Súbitas de Dor", "defaultValue": 0, "description": "A dor surge de forma súbita e em crises, sem motivo aparente, mesmo em repouso (tipo choque elétrico, pontadas)?", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 2, "label": "Sim (2 pontos)", "score": 2}]}, {"id": "alteracao_temperatura", "type": "select", "label": "5. Alteração na Temperatura da Pele", "defaultValue": 0, "description": "A dor parece vir acompanhada de alteração anormal na temperatura da pele da área afetada (quente, queimação)?", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim (1 ponto)", "score": 1}]}, {"id": "alodinia", "type": "select", "label": "6. Exame: Alodinia", "defaultValue": 0, "description": "Comparar a resposta ao roçar levemente um chumaço de algodão na área não dolorosa e depois na área dolorosa.", "options": [{"value": 0, "label": "Ausente - sensação normal em ambas as áreas", "score": 0}, {"value": 5, "label": "Presente - dor/desconforto apenas na área dolorosa (5 pontos)", "score": 5}]}, {"id": "limiar_picada_alterado", "type": "select", "label": "7. Exame: Limiar de Picada de Agulha Alterado", "defaultValue": 0, "description": "Comparar a resposta a uma picada de agulha (calibre 23G) na área não dolorosa e depois na área dolorosa.", "options": [{"value": 0, "label": "Ausente - sensação igual em ambas as áreas", "score": 0}, {"value": 3, "label": "Presente - limiar alterado na área dolorosa (3 pontos)", "score": 3}]}], "formula": {"type": "sum", "resultLabel": "Escala LANSS", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 11, "label": "Mecanismo Neuropático Improvável", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Pontuação abaixo de 12 pontos, sugerindo que mecanismos neuropáticos provavelmente não contribuem de forma predominante para a dor.", "recommendations": "• Investigar outras causas de dor nociceptiva\n• Considerar abordagem terapêutica direcionada à causa identificada\n• Reavaliar caso o quadro álgico mude de característica"}, {"min": 12, "max": 24, "label": "Mecanismo Neuropático Provável", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação de 12 pontos ou mais, sugerindo que mecanismos neuropáticos provavelmente contribuem de forma predominante para a dor.", "recommendations": "• Considerar abordagem terapêutica específica para dor neuropática (ex: anticonvulsivantes, antidepressivos tricíclicos, conforme prescrição)\n• Encaminhar para avaliação especializada em dor/neurologia\n• Reavaliar a resposta ao tratamento periodicamente"}]}, "sae": {"nanda": [{"diagnosis": "Dor crônica", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial, ou descrita em tais termos, com início gradual ou súbito, de intensidade leve a intensa, constante ou recorrente, sem um término antecipado ou previsível."}, {"diagnosis": "Percepção sensorial perturbada", "definition": "Mudança na quantidade ou no padrão de estímulos recebidos, acompanhada por uma resposta diminuída, exagerada, distorcida ou prejudicada a tais estímulos, relacionada às alterações sensitivas identificadas no exame."}], "noc": [{"outcome": "Controle da dor", "indicators": ["Escore LANSS avaliado para caracterizar o mecanismo predominante da dor", "Terapêutica ajustada conforme o mecanismo de dor identificado (neuropático vs. nociceptivo)", "Redução da intensidade da dor relatada após intervenção direcionada"]}], "nic": [{"intervention": "Manejo da dor neuropática", "activities": ["Aplicar a LANSS combinando questionário de sintomas e exame sensitivo (alodinia e limiar de picada de agulha)", "Comunicar à equipe médica a suspeita de mecanismo neuropático quando o escore for ≥12", "Colaborar na introdução de terapêutica específica para dor neuropática conforme prescrição", "Orientar o paciente sobre a natureza da dor neuropática e expectativas de tratamento", "Reavaliar periodicamente a resposta ao tratamento instituído"]}]}, "evidence": {"foundation": "A LANSS combina 5 itens de questionário sobre sintomas sensoriais (com pesos de 1 a 5 pontos) e 2 itens de exame clínico sensitivo — alodinia (5 pontos) e limiar de picada de agulha alterado (3 pontos) — totalizando um escore máximo de 24 pontos.", "history": "Desenvolvida por Michael Bennett em 2001 na cidade de Leeds (Reino Unido), foi um dos primeiros instrumentos validados para diferenciar clinicamente dor neuropática de dor nociceptiva à beira do leito, sem necessidade de exames complementares.", "validation": "Validada em diversas condições de dor crônica, incluindo dor oncológica e lombalgia crônica, com sensibilidade entre 82-91% e especificidade entre 80-94% para identificar dor de predomínio neuropático.", "sensitivity": 0.85, "specificity": 0.87, "limitations": "Ferramentas de rastreio como a LANSS podem não identificar entre 10-20% dos pacientes com dor neuropática, sendo essencial associar o julgamento clínico e achados do exame físico completo à pontuação da escala.", "references": [{"text": "BENNETT, M. The LANSS Pain Scale: the Leeds Assessment of Neuropathic Symptoms and Signs. Pain, v. 92, n. 1-2, p. 147-157, 2001."}, {"text": "BENNETT, M. I. et al. Using screening tools to identify neuropathic pain. Pain, v. 127, n. 3, p. 199-203, 2007."}, {"text": "SOCIEDADE BRASILEIRA PARA O ESTUDO DA DOR. Diretrizes para o diagnóstico e tratamento da dor neuropática. São Paulo: SBED, 2021."}]}, "learning": {"tips": ["Diferente de muitas escalas, os itens da LANSS têm pesos diferentes (1, 2, 3 ou 5 pontos), e não uma pontuação uniforme — preste atenção ao peso de cada item positivo.", "Os 2 itens de exame físico (alodinia e limiar de picada de agulha) exigem comparação entre a área dolorosa e uma área não dolorosa/contralateral do paciente.", "Um escore igual ou maior que 12 sugere mecanismo neuropático predominante, orientando a escolha de terapêutica específica (ex: anticonvulsivantes, antidepressivos).", "A LANSS não substitui o julgamento clínico — cerca de 10-20% dos pacientes com dor neuropática podem não ser identificados apenas pela ferramenta de rastreio."], "examples": [{"label": "Dor nociceptiva (mecanismo neuropático improvável)", "sublabel": "LANSS 3", "emoji": "🙂", "values": {"sensacoes_desagradaveis": 0, "alteracao_aparencia_pele": 0, "sensibilidade_anormal_toque": 3, "crises_subitas": 0, "alteracao_temperatura": 0, "alodinia": 0, "limiar_picada_alterado": 0}}, {"label": "Dor neuropática provável", "sublabel": "LANSS 16", "emoji": "⚡", "values": {"sensacoes_desagradaveis": 5, "alteracao_aparencia_pele": 0, "sensibilidade_anormal_toque": 3, "crises_subitas": 2, "alteracao_temperatura": 1, "alodinia": 5, "limiar_picada_alterado": 0}}, {"label": "Dor neuropática marcante", "sublabel": "LANSS 24", "emoji": "🚨", "values": {"sensacoes_desagradaveis": 5, "alteracao_aparencia_pele": 5, "sensibilidade_anormal_toque": 3, "crises_subitas": 2, "alteracao_temperatura": 1, "alodinia": 5, "limiar_picada_alterado": 3}}], "quiz": [{"q": "Qual a pontuação de corte da LANSS para sugerir mecanismo neuropático predominante?", "opts": ["≥6", "≥12", "≥18", "≥24 (apenas pontuação máxima)"], "correct": 1, "expl": "Uma pontuação igual ou superior a 12 pontos sugere que mecanismos neuropáticos provavelmente contribuem de forma predominante para a dor."}, {"q": "Os itens da LANSS têm todos o mesmo peso de pontuação?", "opts": ["Sim, todos valem 1 ponto", "Não, os pesos variam de 1 a 5 pontos conforme o item", "Sim, todos valem 2 pontos", "Não, apenas os itens de exame físico têm peso"], "correct": 1, "expl": "Diferentemente de escalas com pontuação uniforme, os itens da LANSS têm pesos diferentes (1, 2, 3 ou 5 pontos), refletindo a força de associação de cada sintoma/sinal com dor neuropática."}, {"q": "Quais são os 2 itens de exame clínico (e não apenas questionário) da LANSS?", "opts": ["Reflexos tendíneos e força muscular", "Alodinia e limiar de picada de agulha alterado", "Temperatura corporal e pressão arterial", "Amplitude de movimento articular"], "correct": 1, "expl": "A LANSS inclui 2 itens de exame físico sensitivo: presença de alodinia (dor ao toque leve) e alteração do limiar de picada de agulha, comparando a área dolorosa com uma área não dolorosa."}]}, "faq": [{"q": "A LANSS pode ser aplicada sem o exame físico (apenas com o questionário)?", "a": "A versão original da LANSS inclui obrigatoriamente os 2 itens de exame físico (alodinia e limiar de picada de agulha). Existe uma versão de autorrelato sem exame físico, chamada S-LANSS, mas com sensibilidade um pouco menor que a versão original."}, {"q": "Um escore baixo na LANSS exclui completamente a presença de dor neuropática?", "a": "Não totalmente. Ferramentas de rastreio como a LANSS podem não identificar entre 10-20% dos pacientes com dor neuropática, sendo essencial combinar o resultado da escala com o julgamento clínico e a história detalhada do paciente."}], "about": {"title": "Como funciona a Escala LANSS", "html": "<p>A LANSS soma pesos variáveis (1 a 5 pontos) de 5 itens de sintomas e 2 itens de exame físico (alodinia e limiar de picada de agulha), totalizando até 24 pontos.</p><p><strong>Guia rápido:</strong> <12 = Mecanismo neuropático improvável | ≥12 = Mecanismo neuropático provável.</p>"}}</script>
@@ -651,6 +665,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

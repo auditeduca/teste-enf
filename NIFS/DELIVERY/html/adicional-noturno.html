@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="adicional-noturno">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -285,32 +295,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -443,6 +443,7 @@
               <input aria-label="Number" type="number" data-calc-input="horas_noturnas" value="30"></div><div class="urg-field"><label>Percentual do Adicional</label>
               <select class="field-select" data-calc-input="percentual_adicional"><option value="20" selected>20% — Trabalho Urbano (CLT, Art. 73)</option><option value="25">25% — Trabalho Rural (Lei nº 5.889/1973)</option></select></div><div class="urg-field"><label>Aplicar Hora Noturna Reduzida?</label>
               <select class="field-select" data-calc-input="hora_reduzida"><option value="1" selected>Sim (Padrão para Trabalho Urbano)</option><option value="0">Não (Trabalho Rural ou Convenção Específica)</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">77.92</span><span class="urg-result-unit" id="urgResultUnit">R$</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Valor Estimado do Adicional Noturno</span>
@@ -502,6 +503,18 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="calculo-de-ferias.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Férias</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-hora-extra.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Hora Extra</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-rescisao.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Rescisão Trabalhista</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="dimensionamento.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users-cog"/></svg></div><div><h3>Calculadora de Dimensionamento de Equipe de Enfermagem</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="fugulin.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipcheck"/></svg></div><div><h3>Sistema de Classificação de Pacientes de Fugulin</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "7e8f9506-1829-4d3e-7485-9607182940516", "code": "CALC-ADNOTURNO-001", "slug": "adicional-noturno", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Adicional Noturno", "description": "Calcule o valor do adicional noturno (CLT) a partir do salário base, horas trabalhadas em período noturno e percentual aplicável. Ferramenta gratuita.", "canonical": "https://www.calculadorasdeenfermagem.com.br/adicional-noturno.html"}, "breadcrumb": {"category": "Cálculos Trabalhistas", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Adicional Noturno", "acronym": "Adicional Noturno", "categoryBadge": "Cálculos trabalhistas", "icon": "i-calculator", "objective": "Estimar o valor do adicional noturno devido ao trabalhador que presta serviços em horário noturno, conforme a legislação trabalhista.", "indication": "Útil para profissionais de enfermagem e demais trabalhadores que atuam em escalas noturnas, para conferência do valor recebido em holerite.", "targetPopulation": "Trabalhadores urbanos ou rurais que prestam serviço em horário considerado noturno pela legislação.", "specialty": ["Gestão em Enfermagem", "Departamento Pessoal"], "averageTime": "1-2 minutos", "evidenceLevel": "III", "organizations": ["CLT"], "complexity": "basic", "rating": 4.5, "ratingCount": 180}, "calculator": {"inputs": [{"id": "salario_base", "type": "number", "label": "Salário Base", "unit": "R$", "defaultValue": 2500, "min": 0, "step": 0.01, "description": "Salário base mensal do trabalhador, sem outros adicionais."}, {"id": "horas_noturnas", "type": "number", "label": "Horas Trabalhadas em Período Noturno", "unit": "horas", "defaultValue": 30, "min": 0, "step": 0.5, "description": "Total de horas de relógio trabalhadas em horário noturno no mês (urbano: 22h às 5h)."}, {"id": "percentual_adicional", "type": "select", "label": "Percentual do Adicional", "defaultValue": 20, "description": "Percentual legal mínimo do adicional noturno. Verifique se a convenção coletiva da categoria prevê percentual maior.", "options": [{"value": 20, "label": "20% — Trabalho Urbano (CLT, Art. 73)", "score": 20}, {"value": 25, "label": "25% — Trabalho Rural (Lei nº 5.889/1973)", "score": 25}]}, {"id": "hora_reduzida", "type": "select", "label": "Aplicar Hora Noturna Reduzida?", "defaultValue": 1, "description": "No trabalho urbano, cada hora noturna de 60 minutos é computada como 52min30s (hora reduzida), aumentando o número de horas pagas. Não se aplica ao trabalho rural.", "options": [{"value": 1, "label": "Sim (Padrão para Trabalho Urbano)", "score": 1}, {"value": 0, "label": "Não (Trabalho Rural ou Convenção Específica)", "score": 0}]}], "formula": {"type": "expression", "expression": "(salario_base/220)*(horas_noturnas*(1+hora_reduzida*0.1428571))*(percentual_adicional/100)", "resultLabel": "Valor do Adicional Noturno", "resultUnit": "R$", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 999999, "label": "Valor Estimado do Adicional Noturno", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Valor estimado do adicional noturno devido, com base no salário informado, nas horas trabalhadas em período noturno e no percentual legal aplicável.", "recommendations": "• Confira o valor com o holerite e o departamento pessoal\n• Verifique se a convenção coletiva da categoria prevê percentual superior ao mínimo legal\n• Em caso de dúvida, consulte o sindicato da categoria ou um profissional de contabilidade/direito trabalhista"}]}, "evidence": {"foundation": "O adicional noturno é um direito previsto no Art. 73 da CLT, garantindo ao trabalhador urbano que presta serviços entre 22h e 5h um acréscimo mínimo de 20% sobre o valor da hora diurna. Para o trabalho rural, a Lei nº 5.889/1973 prevê adicional de 25%, com período noturno diferente (agricultura: 21h às 5h; pecuária: 20h às 4h).", "history": "Além do percentual, o Art. 73 §1º da CLT estabelece a 'hora noturna reduzida': cada hora noturna trabalhada é computada como 52 minutos e 30 segundos, fazendo com que o número de horas pagas seja proporcionalmente maior que o número de horas de relógio efetivamente trabalhadas. Essa redução não se aplica ao trabalho rural.", "validation": "O valor exato pode variar conforme convenções e acordos coletivos de trabalho da categoria profissional, que frequentemente estabelecem percentuais superiores ao mínimo legal.", "limitations": "Esta calculadora apresenta uma estimativa simplificada, para fins educacionais e de conferência. Não substitui o cálculo oficial da folha de pagamento nem orientação de um profissional de contabilidade ou de direito trabalhista. Consulte sempre a convenção coletiva da sua categoria.", "references": [{"text": "BRASIL. Decreto-Lei nº 5.452/1943 (CLT). Art. 73 — Adicional noturno."}, {"text": "BRASIL. Lei nº 5.889/1973 — Estatuto do Trabalhador Rural. Art. 7º."}, {"text": "BRASIL. Constituição Federal de 1988. Art. 7º, IX."}]}, "learning": {"tips": ["Verifique sempre a convenção coletiva da sua categoria, que pode prever percentual de adicional noturno superior ao mínimo legal.", "A hora noturna reduzida (52min30s) aumenta o número de horas pagas — não esqueça de aplicá-la no trabalho urbano.", "O período noturno urbano vai das 22h às 5h; no trabalho rural, os horários são diferentes conforme a atividade (agricultura ou pecuária).", "O adicional noturno integra a remuneração para efeito de cálculo de férias, 13º salário e FGTS."], "examples": [{"label": "Enfermeiro plantonista urbano", "sublabel": "Salário R$ 3.000, 40h noturnas", "emoji": "🌙", "values": {"salario_base": 3000, "horas_noturnas": 40, "percentual_adicional": 20, "hora_reduzida": 1}}, {"label": "Trabalhador rural", "sublabel": "Salário R$ 1.800, 20h noturnas", "emoji": "🌾", "values": {"salario_base": 1800, "horas_noturnas": 20, "percentual_adicional": 25, "hora_reduzida": 0}}], "quiz": [{"q": "Qual o percentual mínimo do adicional noturno para trabalhador urbano segundo a CLT?", "opts": ["10%", "20%", "25%", "50%"], "correct": 1, "expl": "O Art. 73 da CLT garante o mínimo de 20% de adicional noturno para o trabalhador urbano, podendo ser maior conforme convenção coletiva."}, {"q": "O que é a 'hora noturna reduzida'?", "opts": ["Uma hora de folga extra", "Cada hora noturna de 60 minutos é computada como 52min30s para pagamento", "Redução do salário no período noturno", "Não existe esse conceito na CLT"], "correct": 1, "expl": "A hora noturna reduzida (Art. 73 §1º da CLT) faz com que cada hora noturna trabalhada seja paga como se fossem 60 minutos, mesmo correspondendo a apenas 52min30s reais, aumentando o total de horas pagas."}, {"q": "A hora noturna reduzida se aplica ao trabalho rural?", "opts": ["Sim, sempre", "Não, é exclusiva do trabalho urbano", "Apenas na agricultura", "Apenas na pecuária"], "correct": 1, "expl": "A hora noturna reduzida é uma regra específica do trabalho urbano (CLT), não se aplicando ao trabalhador rural, regido pela Lei nº 5.889/1973."}]}, "faq": [{"q": "Esta calculadora substitui o cálculo oficial da folha de pagamento?", "a": "Não. É uma ferramenta educacional para estimativa e conferência. O cálculo oficial deve ser feito pelo departamento pessoal da empresa, considerando a convenção coletiva aplicável e demais particularidades contratuais."}, {"q": "O adicional noturno é pago mesmo se o trabalhador iniciar o turno antes das 22h?", "a": "Sim, apenas as horas efetivamente trabalhadas dentro do período noturno legal (22h às 5h, no trabalho urbano) geram direito ao adicional noturno."}], "about": {"title": "Como funciona o cálculo do Adicional Noturno", "html": "<p>O adicional noturno é calculado sobre o valor da hora normal do trabalhador, aplicado às horas trabalhadas em período noturno, acrescido do percentual legal (20% urbano ou 25% rural) e, no caso do trabalho urbano, da hora noturna reduzida (52min30s).</p><p><strong>Fórmula simplificada:</strong> Adicional = (Salário ÷ 220) × Horas Noturnas (ajustadas pela hora reduzida, se aplicável) × Percentual do Adicional.</p>"}}</script>
@@ -557,6 +570,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

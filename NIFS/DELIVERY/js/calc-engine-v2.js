@@ -227,6 +227,20 @@
 
   var lastCognitiveResult = null;
   var cogTimer = null;
+  var hasCalculated = false;
+
+  var MEDICATION_TOOL_SLUGS = /gotejamento|insulina|medicamentos|dose|hora-extra|ferias|rescisao|adicional/i;
+  var IPSG_BY_SEVERITY = {
+    critical: ["Identificação correta do paciente", "Comunicação efetiva na transferência de cuidado", "Segurança em procedimentos de alta vigilância", "Notificar equipe e escalar cuidado"],
+    moderate: ["Identificação correta do paciente", "Monitoramento contínuo conforme protocolo", "Comunicação SBAR em alterações"],
+    low: ["Identificação correta do paciente", "Manter rotina de monitoramento"],
+    normal: ["Identificação correta do paciente", "Documentação adequada no prontuário"],
+    unknown: ["Identificação correta do paciente"]
+  };
+  var MEDS_NINE_RIGHTS = [
+    "Paciente certo", "Medicamento certo", "Via certa", "Dose certa", "Hora certa",
+    "Registro certo", "Ação certa", "Forma certa", "Resposta certa"
+  ];
 
   function buildCognitiveContext(total, range) {
     var observations = buildObservations(state);
@@ -288,6 +302,112 @@
     if (nandaText) nandaText.textContent = pickNandaText(range);
     if (nicText) nicText.textContent = pickNicText();
     if (nocText) nocText.textContent = pickNocText();
+    applyConditionalSafety(range);
+    applyCognitiveToProfiles(range);
+    updateAcademicSaePanel(range);
+  }
+
+  function needsMedicationSafety() {
+    if (CONFIG.calculator && CONFIG.calculator.involvesMedication) return true;
+    return MEDICATION_TOOL_SLUGS.test(TOOL_SLUG) || MEDICATION_TOOL_SLUGS.test((overview.name || ""));
+  }
+
+  function applyConditionalSafety(range) {
+    var severity = getRangeSeverity(range);
+    var medsCol = document.getElementById("calcSafetyMeds");
+    var ipsgCol = document.getElementById("calcSafetyIpsg");
+    var medsList = document.getElementById("calcSafetyMedsList");
+    var ipsgList = document.getElementById("calcSafetyIpsgList");
+    var showMeds = needsMedicationSafety() || severity === "critical" || severity === "moderate";
+    if (medsCol) medsCol.style.display = showMeds ? "" : "none";
+    if (ipsgCol) ipsgCol.style.display = "";
+    var ipsgItems = IPSG_BY_SEVERITY[severity] || IPSG_BY_SEVERITY.unknown;
+    if (ipsgList) {
+      ipsgList.innerHTML = ipsgItems.map(function (t) {
+        return '<li><svg class="icon"><use href="#i-check"/></svg> ' + t + "</li>";
+      }).join("");
+    }
+    if (medsList && showMeds) {
+      var medCount = severity === "critical" ? 9 : (severity === "moderate" ? 7 : 5);
+      medsList.innerHTML = MEDS_NINE_RIGHTS.slice(0, medCount).map(function (t) {
+        return '<li><svg class="icon"><use href="#i-check"/></svg> ' + t + "</li>";
+      }).join("");
+    }
+    var printMeds = document.getElementById("printSafetyMeds");
+    var printIpsg = document.getElementById("printSafetyIpsg");
+    if (printMeds) printMeds.style.display = showMeds ? "" : "none";
+    if (printIpsg && ipsgItems) {
+      printIpsg.innerHTML = ipsgItems.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    }
+    if (printMeds && showMeds) {
+      printMeds.innerHTML = MEDS_NINE_RIGHTS.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    }
+  }
+
+  function applyCognitiveToProfiles(range) {
+    var strip = document.getElementById("cognitiveProfileStrip");
+    if (strip) {
+      strip.classList.add("is-visible");
+      var n = document.getElementById("cogStripNanda");
+      var i = document.getElementById("cogStripNic");
+      var o = document.getElementById("cogStripNoc");
+      if (n) n.textContent = pickNandaText(range);
+      if (i) i.textContent = pickNicText();
+      if (o) o.textContent = pickNocText();
+    }
+    var urgHint = document.getElementById("urgCognitiveHint");
+    if (urgHint) {
+      urgHint.style.display = "block";
+      urgHint.textContent = "Decisão clínica: " + pickNandaText(range) + " → " + pickNicText();
+    }
+    var estHint = document.getElementById("estCognitiveHint");
+    if (estHint) {
+      estHint.style.display = "block";
+      estHint.textContent = "NOC esperado: " + pickNocText();
+    }
+    document.querySelectorAll('[data-tab-panel="sae"]').forEach(function (p) {
+      p.classList.remove("cognitive-locked");
+    });
+  }
+
+  function updateAcademicSaePanel(range) {
+    var panel = document.querySelector('[data-tab-panel="sae"]');
+    if (!panel || panel.classList.contains("cognitive-locked")) return;
+    if (!hasCalculated) return;
+    var html = "";
+    var nandaList = (lastCognitiveResult && lastCognitiveResult.diagnoses && lastCognitiveResult.diagnoses.length)
+      ? lastCognitiveResult.diagnoses.slice(0, 3).map(function (d) {
+          return "<h4>NANDA — " + (d.name || "") + "</h4><p>Hipótese integrada pelo motor clínico (confiança " + Math.round((d.probability || 0) * 100) + "%).</p>";
+        }).join("")
+      : (sae.nanda || []).map(function (n) {
+          return "<h4>NANDA — " + (n.diagnosis || n.name || "") + "</h4><p>" + (n.definition || "") + "</p>";
+        }).join("");
+    var nicList = (sae.nic || []).map(function (n) {
+      var acts = (n.activities || []).slice(0, 4).map(function (a) { return "<li>" + a + "</li>"; }).join("");
+      return "<h4>NIC — " + (n.intervention || n.name || pickNicText()) + "</h4><ul class=\"tips-list\">" + acts + "</ul>";
+    }).join("");
+    var nocList = (sae.noc || []).map(function (n) {
+      var ind = (n.indicators || []).slice(0, 4).map(function (a) { return "<li>" + a + "</li>"; }).join("");
+      return "<h4>NOC — " + (n.outcome || n.name || pickNocText()) + "</h4><ul class=\"tips-list\">" + ind + "</ul>";
+    }).join("");
+    html = nandaList + nicList + nocList;
+    if (html) panel.innerHTML = html;
+  }
+
+  function hideClinicalUntilCalculated() {
+    var flow = document.getElementById("calcClinicalFlow");
+    var divider = document.getElementById("calcFlowDivider");
+    if (flow) flow.classList.remove("is-visible");
+    if (divider) divider.style.display = "none";
+    document.querySelectorAll('[data-tab-panel="sae"]').forEach(function (p) {
+      p.classList.add("cognitive-locked");
+    });
+    ["urgCognitiveHint", "estCognitiveHint"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    });
+    var strip = document.getElementById("cognitiveProfileStrip");
+    if (strip) strip.classList.remove("is-visible");
   }
 
   function runCognitiveAnalysis(total, range) {
@@ -310,18 +430,22 @@
   }
 
   function revealClinicalFlow(total, range) {
+    hasCalculated = true;
     var flowDivider = document.getElementById("calcFlowDivider");
     var clinicalFlow = document.getElementById("calcClinicalFlow");
     if (!clinicalFlow) return;
+    runCognitiveAnalysis(total, range);
     applyClinicalFlowTexts(range);
     if (flowDivider) flowDivider.style.display = "block";
     clinicalFlow.classList.add("is-visible");
+    if (window.showToast) window.showToast("Raciocínio clínico integrado disponível em todos os perfis", "success");
     window.requestAnimationFrame(function () {
       clinicalFlow.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }
 
   function triggerIntelligence(total, range) {
+    if (!hasCalculated) return;
     runCognitiveAnalysis(total, range);
   }
 
@@ -410,6 +534,99 @@
 
     triggerIntelligence(total, range);
     return { total: total, range: range };
+  }
+
+  /* ---------------------------------------------------------------------
+     4b. Impressão — relatório padrão (relatorio.pdf / print-template.css)
+  --------------------------------------------------------------------- */
+  function populatePrintReport(total, range) {
+    var pt = document.getElementById("printTemplate");
+    if (!pt) return;
+    var name = overview.name || document.title;
+    var cat = overview.categoryBadge || (CONFIG.breadcrumb && CONFIG.breadcrumb.category) || "Escala clínica";
+    var el;
+    el = document.getElementById("printToolName"); if (el) el.textContent = name;
+    el = document.getElementById("printToolCategory"); if (el) el.textContent = cat;
+    el = document.getElementById("printDate");
+    if (el) {
+      var now = new Date();
+      el.textContent = now.toLocaleDateString("pt-BR") + " — " + now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+    }
+    try {
+      var ctx = JSON.parse(localStorage.getItem("patientContext") || "{}");
+      el = document.getElementById("printPatientName"); if (el && ctx.name) el.textContent = ctx.name;
+      el = document.getElementById("printPatientReg"); if (el && ctx.reg) el.textContent = ctx.reg;
+      el = document.getElementById("printPatientAge"); if (el && ctx.age) el.textContent = ctx.age;
+      el = document.getElementById("printPatientBed"); if (el && ctx.bed) el.textContent = ctx.bed;
+    } catch (e) { /* ignore */ }
+    var paramsList = document.getElementById("printParamsList");
+    if (paramsList) {
+      paramsList.innerHTML = "";
+      inputsCfg.forEach(function (inp) {
+        var val = state[inp.id];
+        var label = inp.label || inp.id;
+        if (inp.type === "select" && inp.options) {
+          var opt = inp.options.filter(function (o) { return Number(o.value) === Number(val); })[0];
+          if (opt) val = opt.label;
+        }
+        var li = document.createElement("li");
+        li.innerHTML = '<span class="param-label">' + label + '</span><span class="param-value">' + val + "</span>";
+        paramsList.appendChild(li);
+      });
+    }
+    el = document.getElementById("printScore");
+    if (el) el.textContent = fmt(total) + (formulaCfg.resultUnit ? " " + formulaCfg.resultUnit : "");
+    el = document.getElementById("printClassification");
+    if (el) el.textContent = range ? range.label : "—";
+    el = document.getElementById("printInterpretation");
+    if (el) el.textContent = range ? (range.clinicalImplications || "") : "";
+    el = document.getElementById("printNandaText"); if (el) el.textContent = pickNandaText(range);
+    el = document.getElementById("printNicText"); if (el) el.textContent = pickNicText();
+    el = document.getElementById("printNocText"); if (el) el.textContent = pickNocText();
+    el = document.getElementById("printReference");
+    if (el && evidence.references && evidence.references[0]) {
+      var ref = evidence.references[0];
+      el.textContent = typeof ref === "string" ? ref : (ref.author || "") + " (" + (ref.year || "") + "). " + (ref.title || "");
+    }
+    applyConditionalSafety(range);
+  }
+
+  function initPrint() {
+    var printBtn = document.getElementById("calcPrintBtn");
+    if (printBtn) {
+      printBtn.addEventListener("click", function () {
+        if (!hasCalculated) {
+          if (window.showToast) window.showToast("Calcule antes de imprimir o relatório", "info");
+          return;
+        }
+        var r = renderAll();
+        populatePrintReport(r.total, r.range);
+        window.print();
+      });
+    }
+    document.querySelectorAll(".aca-print-btn").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        if (!hasCalculated) {
+          e.preventDefault();
+          if (window.showToast) window.showToast("Calcule antes de exportar", "info");
+          return;
+        }
+        var r = renderAll();
+        populatePrintReport(r.total, r.range);
+      });
+    });
+    window.addEventListener("beforeprint", function () {
+      var pt = document.getElementById("printTemplate");
+      if (!pt || !hasCalculated) return;
+      var r = renderAll();
+      populatePrintReport(r.total, r.range);
+      pt.style.display = "block";
+      pt.classList.remove("no-print-screen");
+    });
+    window.addEventListener("afterprint", function () {
+      var pt = document.getElementById("printTemplate");
+      if (pt) { pt.style.display = "none"; pt.classList.add("no-print-screen"); }
+    });
   }
 
   /* ---------------------------------------------------------------------
@@ -578,6 +795,9 @@
       revealClinicalFlow(r.total, r.range);
     });
     form.addEventListener("reset", function () {
+      hasCalculated = false;
+      lastCognitiveResult = null;
+      hideClinicalUntilCalculated();
       setTimeout(function () {
         inputsCfg.forEach(function (inp) {
           state[inp.id] = inp.defaultValue !== undefined ? inp.defaultValue : (inp.options && inp.options[0] ? inp.options[0].value : 0);
@@ -601,7 +821,9 @@
     initQuiz();
     initTimer();
     initActions();
+    initPrint();
     initForm();
+    hideClinicalUntilCalculated();
     syncFieldsFromState();
     renderAll();
   }

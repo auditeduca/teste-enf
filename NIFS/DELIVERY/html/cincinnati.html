@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="cincinnati">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -270,32 +280,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -414,6 +414,7 @@
               <select class="field-select" data-calc-input="paralisia_facial"><option value="0" selected>Normal - ambos os lados do rosto se movem simetricamente</option><option value="1">Anormal - um dos lados do rosto não se move tão bem quanto o outro (queda facial)</option></select></div><div class="urg-field"><label>Queda do Braço (Arm Drift)</label>
               <select class="field-select" data-calc-input="queda_braco"><option value="0" selected>Normal - ambos os braços se movem igualmente ou não se movem</option><option value="1">Anormal - um braço não se move ou cai em comparação ao outro</option></select></div><div class="urg-field"><label>Fala Alterada</label>
               <select class="field-select" data-calc-input="fala_alterada"><option value="0" selected>Normal - o paciente usa as palavras corretas, sem enrolar a fala</option><option value="1">Anormal - o paciente enrola as palavras, usa palavras erradas ou não consegue falar</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">achados alterados</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixa Probabilidade de AVC</span>
@@ -473,6 +474,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "81b1ccfc-143a-48dc-8a51-c9f160cbdc8f", "code": "SCALE-CINCINNATI-001", "slug": "cincinnati", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Cincinnati - Avaliação Pré-Hospitalar de AVC (CPSS)", "description": "Calcule a Escala Pré-Hospitalar de Cincinnati (CPSS) para rastreio rápido de Acidente Vascular Cerebral (AVC). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/cincinnati.html"}, "breadcrumb": {"category": "Avaliação Neurológica", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala Pré-Hospitalar de Cincinnati para AVC", "acronym": "CPSS", "categoryBadge": "Avaliação neurológica", "icon": "i-brain", "objective": "Rastrear rapidamente a suspeita de Acidente Vascular Cerebral (AVC) no ambiente pré-hospitalar e na triagem inicial, por meio de 3 achados clínicos: paralisia facial, queda do braço e alteração da fala.", "indication": "Indicada para triagem rápida de suspeita de AVC por profissionais de emergência (pré-hospitalar) e na avaliação inicial em pronto-socorro.", "targetPopulation": "Pacientes adultos com suspeita de déficit neurológico agudo/AVC.", "specialty": ["Emergência", "Neurologia", "Enfermagem"], "averageTime": "1 minuto", "evidenceLevel": "II", "organizations": ["University of Cincinnati Medical Center"], "complexity": "basic", "rating": 4.7, "ratingCount": 205}, "calculator": {"inputs": [{"id": "paralisia_facial", "type": "select", "label": "Paralisia Facial", "defaultValue": 0, "description": "Peça ao paciente para sorrir ou mostrar os dentes.", "options": [{"value": 0, "label": "Normal - ambos os lados do rosto se movem simetricamente", "score": 0}, {"value": 1, "label": "Anormal - um dos lados do rosto não se move tão bem quanto o outro (queda facial)", "score": 1}]}, {"id": "queda_braco", "type": "select", "label": "Queda do Braço (Arm Drift)", "defaultValue": 0, "description": "Peça ao paciente para fechar os olhos e estender os braços à frente por 10 segundos.", "options": [{"value": 0, "label": "Normal - ambos os braços se movem igualmente ou não se movem", "score": 0}, {"value": 1, "label": "Anormal - um braço não se move ou cai em comparação ao outro", "score": 1}]}, {"id": "fala_alterada", "type": "select", "label": "Fala Alterada", "defaultValue": 0, "description": "Peça ao paciente para repetir uma frase simples (ex.: \"o rato roeu a roupa do rei de Roma\").", "options": [{"value": 0, "label": "Normal - o paciente usa as palavras corretas, sem enrolar a fala", "score": 0}, {"value": 1, "label": "Anormal - o paciente enrola as palavras, usa palavras erradas ou não consegue falar", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Escala de Cincinnati (CPSS)", "resultUnit": "achados alterados", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 0, "label": "Baixa Probabilidade de AVC", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Nenhum dos 3 achados está alterado, o que reduz (mas não exclui) a probabilidade de AVC.", "recommendations": "• Manter vigilância clínica, pois a escala não exclui completamente o AVC\n• Reavaliar caso surjam novos sinais ou sintomas\n• Considerar outras causas para os sintomas apresentados"}, {"min": 1, "max": 1, "label": "Probabilidade Aumentada de AVC (~72%)", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Um dos 3 achados está alterado, associado a uma probabilidade de aproximadamente 72% de AVC.", "recommendations": "• Ativar protocolo de AVC/linha de cuidado imediatamente\n• Registrar o horário de início dos sintomas (ou última vez visto bem)\n• Transportar com prioridade para centro capacitado em AVC, mantendo o paciente em jejum"}, {"min": 2, "max": 3, "label": "Alta Probabilidade de AVC (≥85%)", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Dois ou três achados estão alterados, associado a uma probabilidade igual ou superior a 85% de AVC.", "recommendations": "• Ativar protocolo de AVC/linha de cuidado com máxima prioridade\n• Registrar o horário de início dos sintomas (ou última vez visto bem)\n• Transportar imediatamente para centro capacitado em AVC, mantendo o paciente em jejum e monitorização contínua"}]}, "sae": {"nanda": [{"diagnosis": "Perfusão tissular cerebral ineficaz", "definition": "Redução da circulação sanguínea cerebral, capaz de comprometer a saúde, suspeitada pelos achados de paralisia facial, queda de braço e/ou alteração de fala."}, {"diagnosis": "Risco de aspiração", "definition": "Risco de entrada de secreções gastrintestinais, orofaríngeas, sólidos ou líquidos nas vias traqueobrônquicas, relacionado a possível comprometimento da deglutição em suspeita de AVC."}], "noc": [{"outcome": "Perfusão tissular: cerebral", "indicators": ["CPSS aplicada rapidamente diante de suspeita de déficit neurológico agudo", "Horário de início dos sintomas registrado e comunicado à equipe", "Protocolo de AVC ativado prontamente quando indicado"]}], "nic": [{"intervention": "Manejo de emergência neurológica", "activities": ["Aplicar a CPSS rapidamente diante de qualquer suspeita de déficit neurológico agudo", "Registrar com precisão o horário de início dos sintomas ou da última vez que o paciente foi visto bem", "Ativar imediatamente o protocolo/linha de cuidado de AVC quando qualquer achado estiver alterado", "Manter o paciente em jejum e monitorizar sinais vitais e glicemia capilar", "Transportar/encaminhar com prioridade para serviço capacitado em terapias de reperfusão"]}]}, "evidence": {"foundation": "A CPSS avalia 3 achados clínicos — paralisia facial, queda de braço (arm drift) e alteração da fala — cada um pontuado como 0 (normal) ou 1 (alterado), totalizando de 0 a 3 achados alterados. A presença de qualquer achado alterado já é considerada significativa para suspeita de AVC.", "history": "Desenvolvida em 1997 na Universidade de Cincinnati, é uma adaptação simplificada da NIHSS para uso rápido no ambiente pré-hospitalar por equipes de emergência, sem necessidade de treinamento neurológico especializado extenso.", "validation": "Amplamente validada e utilizada internacionalmente em protocolos de atendimento pré-hospitalar. A presença de 1 achado alterado está associada a uma probabilidade de aproximadamente 72% de AVC, e a presença dos 3 achados, a uma probabilidade igual ou superior a 85%.", "sensitivity": 0.66, "specificity": 0.87, "limitations": "É uma ferramenta de triagem rápida, e não substitui a avaliação neurológica completa (ex: NIHSS) realizada no ambiente hospitalar. Pode não detectar AVCs com apresentação atípica, como alguns casos de circulação posterior/cerebelo.", "references": [{"text": "KOTHARI, R. U. et al. Cincinnati Prehospital Stroke Scale: reproducibility and validity. Annals of Emergency Medicine, v. 33, n. 4, p. 373-378, 1999."}, {"text": "BROTT, T. et al. Measurements of acute cerebral infarction: a clinical examination scale. Stroke, v. 20, n. 7, p. 864-870, 1989."}, {"text": "MARTINS, S. C. O. et al. Diretrizes assistenciais no acidente vascular cerebral isquêmico agudo. São Paulo: Hospital Israelita Albert Einstein, 2022."}]}, "learning": {"tips": ["A CPSS foi desenvolvida para uso rápido e simples por equipes de emergência pré-hospitalar, sem necessidade de treinamento neurológico especializado.", "A presença de apenas 1 dos 3 achados alterados já é suficiente para uma probabilidade significativa de AVC (~72%) e deve motivar a ativação do protocolo de AVC.", "Sempre registre com precisão o horário de início dos sintomas (ou da última vez que o paciente foi visto normal) — essa informação é essencial para decisões terapêuticas.", "A CPSS é uma ferramenta de triagem rápida e não substitui a avaliação neurológica completa (ex: NIHSS) realizada posteriormente no hospital."], "examples": [{"label": "Sem achados alterados", "sublabel": "CPSS 0", "emoji": "✅", "values": {"paralisia_facial": 0, "queda_braco": 0, "fala_alterada": 0}}, {"label": "Um achado alterado", "sublabel": "CPSS 1", "emoji": "⚠️", "values": {"paralisia_facial": 1, "queda_braco": 0, "fala_alterada": 0}}, {"label": "Todos os achados alterados", "sublabel": "CPSS 3", "emoji": "🚨", "values": {"paralisia_facial": 1, "queda_braco": 1, "fala_alterada": 1}}], "quiz": [{"q": "Quais são os 3 achados avaliados pela Escala de Cincinnati?", "opts": ["Nível de consciência, pupilas e força motora", "Paralisia facial, queda do braço e alteração da fala", "Frequência cardíaca, pressão arterial e saturação", "Glicemia, temperatura e escala de coma"], "correct": 1, "expl": "A CPSS avalia 3 achados: paralisia facial (assimetria ao sorrir), queda do braço (arm drift) e alteração da fala."}, {"q": "Qual a probabilidade aproximada de AVC quando apenas 1 dos 3 achados da CPSS está alterado?", "opts": ["Cerca de 20%", "Cerca de 50%", "Cerca de 72%", "100%"], "correct": 2, "expl": "A presença de 1 achado alterado na CPSS está associada a uma probabilidade de aproximadamente 72% de AVC."}, {"q": "A CPSS substitui a avaliação neurológica completa (ex: NIHSS) no hospital?", "opts": ["Sim, é equivalente e substitui totalmente", "Não, é uma ferramenta de triagem rápida pré-hospitalar, não substituindo avaliação completa posterior", "Sim, mas apenas em pacientes idosos", "Não tem relação com a NIHSS"], "correct": 1, "expl": "A CPSS é uma ferramenta de triagem rápida derivada da NIHSS, útil no ambiente pré-hospitalar, mas não substitui a avaliação neurológica completa realizada posteriormente no hospital."}]}, "faq": [{"q": "A CPSS pode ser usada por qualquer profissional de saúde, sem treinamento prévio?", "a": "A CPSS foi desenhada para ser simples e rápida, mas ainda requer treinamento básico sobre como conduzir e interpretar os 3 testes (sorriso, extensão dos braços e repetição de frase), sendo amplamente utilizada por equipes de emergência pré-hospitalar."}, {"q": "Um resultado normal na CPSS exclui a possibilidade de AVC?", "a": "Não. A CPSS reduz, mas não exclui completamente, a probabilidade de AVC, especialmente em apresentações atípicas como alguns AVCs de circulação posterior/cerebelo. A vigilância clínica deve ser mantida mesmo com resultado normal na presença de outros sinais de alerta."}], "about": {"title": "Como funciona a Escala de Cincinnati (CPSS)", "html": "<p>A CPSS avalia 3 achados — paralisia facial, queda do braço e alteração da fala — cada um pontuado como 0 (normal) ou 1 (alterado).</p><p><strong>Guia rápido:</strong> 0 = Baixa probabilidade | 1 achado = ~72% de probabilidade de AVC | 2-3 achados = ≥85% de probabilidade de AVC.</p>"}}</script>
@@ -528,6 +542,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

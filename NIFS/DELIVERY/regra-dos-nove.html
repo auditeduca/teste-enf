@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="regra-dos-nove">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -336,32 +346,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -570,6 +570,7 @@
               <select class="field-select" data-calc-input="membro_inferior_direito"><option value="0" selected>Não Acometido</option><option value="18">Totalmente Acometido</option></select></div><div class="urg-field"><label>Membro Inferior Esquerdo (18%)</label>
               <select class="field-select" data-calc-input="membro_inferior_esquerdo"><option value="0" selected>Não Acometido</option><option value="18">Totalmente Acometido</option></select></div><div class="urg-field"><label>Genitália / Períneo (1%)</label>
               <select class="field-select" data-calc-input="genitalia"><option value="0" selected>Não Acometido</option><option value="1">Acometido</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">%</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Queimadura Pequena</span>
@@ -629,6 +630,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "28394051-6273-8495-0617-283940516273", "code": "CALC-RULEOFNINES-001", "slug": "regra-dos-nove", "version": "1.0.0", "status": "published", "seo": {"title": "Regra dos Nove - Estimativa de Superfície Corporal Queimada", "description": "Calcule a superfície corporal queimada (SCQ) em adultos com a Regra dos Nove de Wallace. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/regra-dos-nove.html"}, "breadcrumb": {"category": "Emergência e Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Regra dos Nove", "acronym": "Regra dos Nove", "categoryBadge": "Emergência", "icon": "i-warning", "objective": "Estimar rapidamente o percentual de superfície corporal queimada (SCQ) em pacientes adultos, orientando a gravidade da queimadura e o cálculo de reposição volêmica.", "indication": "Indicada na avaliação inicial de pacientes adultos vítimas de queimaduras, para estimativa da extensão da área acometida.", "targetPopulation": "Pacientes adultos vítimas de queimaduras (a Regra dos Nove adulta não deve ser usada em crianças pequenas, que possuem proporções corporais diferentes).", "specialty": ["Emergência", "Enfermagem", "Cirurgia Plástica"], "averageTime": "2-3 minutos", "evidenceLevel": "III", "originalAuthors": ["Alexander Wallace"], "complexity": "basic", "rating": 4.6, "ratingCount": 280}, "calculator": {"inputs": [{"id": "cabeca_pescoco", "type": "select", "label": "Cabeça e Pescoço (9%)", "description": "Queimadura envolvendo toda a região da cabeça e pescoço.", "defaultValue": 0, "options": [{"value": 0, "label": "Não Acometido", "score": 0}, {"value": 9, "label": "Totalmente Acometido", "score": 9}]}, {"id": "membro_superior_direito", "type": "select", "label": "Membro Superior Direito (9%)", "description": "Queimadura envolvendo todo o membro superior direito.", "defaultValue": 0, "options": [{"value": 0, "label": "Não Acometido", "score": 0}, {"value": 9, "label": "Totalmente Acometido", "score": 9}]}, {"id": "membro_superior_esquerdo", "type": "select", "label": "Membro Superior Esquerdo (9%)", "description": "Queimadura envolvendo todo o membro superior esquerdo.", "defaultValue": 0, "options": [{"value": 0, "label": "Não Acometido", "score": 0}, {"value": 9, "label": "Totalmente Acometido", "score": 9}]}, {"id": "tronco_anterior", "type": "select", "label": "Tronco Anterior (18%)", "description": "Queimadura envolvendo toda a face anterior do tronco (tórax e abdome).", "defaultValue": 0, "options": [{"value": 0, "label": "Não Acometido", "score": 0}, {"value": 18, "label": "Totalmente Acometido", "score": 18}]}, {"id": "tronco_posterior", "type": "select", "label": "Tronco Posterior (18%)", "description": "Queimadura envolvendo toda a face posterior do tronco (dorso).", "defaultValue": 0, "options": [{"value": 0, "label": "Não Acometido", "score": 0}, {"value": 18, "label": "Totalmente Acometido", "score": 18}]}, {"id": "membro_inferior_direito", "type": "select", "label": "Membro Inferior Direito (18%)", "description": "Queimadura envolvendo todo o membro inferior direito.", "defaultValue": 0, "options": [{"value": 0, "label": "Não Acometido", "score": 0}, {"value": 18, "label": "Totalmente Acometido", "score": 18}]}, {"id": "membro_inferior_esquerdo", "type": "select", "label": "Membro Inferior Esquerdo (18%)", "description": "Queimadura envolvendo todo o membro inferior esquerdo.", "defaultValue": 0, "options": [{"value": 0, "label": "Não Acometido", "score": 0}, {"value": 18, "label": "Totalmente Acometido", "score": 18}]}, {"id": "genitalia", "type": "select", "label": "Genitália / Períneo (1%)", "description": "Queimadura envolvendo a região genital/perineal.", "defaultValue": 0, "options": [{"value": 0, "label": "Não Acometido", "score": 0}, {"value": 1, "label": "Acometido", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Superfície Corporal Queimada (SCQ)", "resultUnit": "%", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 9, "label": "Queimadura Pequena", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Extensão pequena de superfície corporal queimada. A gravidade real depende também da profundidade, localização (face, mãos, genitália, articulações) e idade do paciente.", "recommendations": "• Avaliar profundidade da queimadura e necessidade de encaminhamento especializado\n• Cuidados locais da ferida conforme protocolo\n• Analgesia conforme avaliação médica"}, {"min": 10, "max": 19, "label": "Queimadura Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Extensão moderada de superfície corporal queimada, geralmente indicando necessidade de reposição volêmica e avaliação especializada.", "recommendations": "• Calcular reposição volêmica conforme protocolo (ex: Fórmula de Parkland)\n• Considerar encaminhamento para centro de queimados, especialmente se áreas especiais acometidas\n• Monitorização de sinais vitais e diurese"}, {"min": 20, "max": 39, "label": "Queimadura Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Extensão grave de superfície corporal queimada, com indicação frequente de internação em centro de queimados especializado.", "recommendations": "• Encaminhamento para centro de queimados\n• Reposição volêmica agressiva conforme protocolo\n• Monitorização intensiva de sinais vitais, diurese e função respiratória"}, {"min": 40, "max": 100, "label": "Queimadura Crítica", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Extensão crítica de superfície corporal queimada, com risco significativo de vida.", "recommendations": "• Internação imediata em centro de queimados/terapia intensiva\n• Reposição volêmica agressiva e monitorização hemodinâmica contínua\n• Avaliação de via aérea e função respiratória (risco de lesão por inalação)"}]}, "sae": {"nanda": [{"diagnosis": "Integridade tissular prejudicada", "definition": "Dano ao tecido mucoso, córneo, subcutâneo, muscular, cartilaginoso, ósseo ou vascular."}, {"diagnosis": "Risco de volume de líquidos deficiente", "definition": "Risco de diminuição do volume de líquido intravascular, intersticial e/ou intracelular, relacionado à perda de líquidos pela área queimada."}, {"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos, relacionado à perda da barreira cutânea."}, {"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real, de início súbito, com intensidade de leve a intensa."}], "noc": [{"outcome": "Gravidade da lesão física", "indicators": ["Extensão da SCQ documentada corretamente", "Reposição volêmica adequada ao percentual estimado", "Ausência de sinais de choque hipovolêmico"]}], "nic": [{"intervention": "Cuidados com lesões: queimaduras", "activities": ["Estimar a superfície corporal queimada utilizando a Regra dos Nove", "Calcular a reposição volêmica conforme protocolo institucional", "Monitorar sinais vitais, diurese e perfusão continuamente", "Realizar curativos conforme protocolo de queimados", "Avaliar via aérea e sinais de lesão por inalação em queimaduras faciais/torácicas"]}]}, "evidence": {"foundation": "A Regra dos Nove foi desenvolvida por Alexander Wallace, dividindo a superfície corporal do adulto em múltiplos de 9% (cabeça e pescoço, cada membro superior, tronco anterior, tronco posterior, cada membro inferior) mais 1% para a região genital, totalizando 100% da superfície corporal.", "history": "Amplamente utilizada na avaliação inicial de queimaduras em serviços de emergência, por sua rapidez e simplicidade, especialmente útil em queimaduras extensas. Para crianças, utilizam-se tabelas específicas (como a de Lund-Browder), pois as proporções corporais infantis diferem significativamente das do adulto.", "validation": "É uma ferramenta de estimativa rápida amplamente aceita na prática clínica de emergência, embora menos precisa que métodos mais detalhados (como a tabela de Lund-Browder) para queimaduras de distribuição irregular ou em crianças.", "limitations": "A Regra dos Nove desta calculadora é específica para adultos e não deve ser aplicada em crianças pequenas, que possuem proporções corporais diferentes (cabeça proporcionalmente maior). Para áreas parciais de queimadura dentro de uma região, ou queimaduras de distribuição irregular, o método da palma da mão do paciente (aproximadamente 1% da superfície corporal) pode complementar a estimativa.", "references": [{"text": "WALLACE, A. B. The exposure treatment of burns. The Lancet, v. 257, n. 6653, p. 501-504, 1951."}, {"text": "AMERICAN BURN ASSOCIATION. Guidelines for burn care. Chicago: ABA, 2018."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["A Regra dos Nove é específica para adultos — utilize tabelas específicas (Lund-Browder) para crianças pequenas.", "Para áreas parciais ou de distribuição irregular, use o método da palma da mão do paciente (aproximadamente 1% da superfície corporal) para complementar a estimativa.", "A gravidade real da queimadura depende também da profundidade (superficial, espessura parcial, espessura total) e da localização (face, mãos, articulações, genitália são áreas especiais).", "Reavalie a estimativa de SCQ conforme a queimadura evolui e é melhor delimitada."], "examples": [{"label": "Queimadura pequena", "sublabel": "SCQ 9%", "emoji": "✅", "values": {"cabeca_pescoco": 9, "membro_superior_direito": 0, "membro_superior_esquerdo": 0, "tronco_anterior": 0, "tronco_posterior": 0, "membro_inferior_direito": 0, "membro_inferior_esquerdo": 0, "genitalia": 0}}, {"label": "Queimadura moderada", "sublabel": "SCQ 18%", "emoji": "⚠️", "values": {"cabeca_pescoco": 0, "membro_superior_direito": 9, "membro_superior_esquerdo": 9, "tronco_anterior": 0, "tronco_posterior": 0, "membro_inferior_direito": 0, "membro_inferior_esquerdo": 0, "genitalia": 0}}, {"label": "Queimadura grave", "sublabel": "SCQ 45%", "emoji": "🚨", "values": {"cabeca_pescoco": 9, "membro_superior_direito": 9, "membro_superior_esquerdo": 9, "tronco_anterior": 18, "tronco_posterior": 0, "membro_inferior_direito": 0, "membro_inferior_esquerdo": 0, "genitalia": 0}}], "quiz": [{"q": "Quanto vale cada membro superior na Regra dos Nove para adultos?", "opts": ["4,5%", "9%", "18%", "1%"], "correct": 1, "expl": "Cada membro superior corresponde a 9% da superfície corporal total na Regra dos Nove adulta."}, {"q": "A Regra dos Nove adulta pode ser usada em crianças pequenas sem ajuste?", "opts": ["Sim, sem restrições", "Não, crianças pequenas têm proporções corporais diferentes e requerem tabelas específicas", "Apenas em recém-nascidos", "Sim, mas apenas para queimaduras leves"], "correct": 1, "expl": "Crianças pequenas têm a cabeça proporcionalmente maior e membros inferiores proporcionalmente menores, exigindo tabelas específicas como a de Lund-Browder."}, {"q": "Qual método pode complementar a Regra dos Nove em áreas parciais ou de distribuição irregular?", "opts": ["Método da palma da mão do paciente (~1% da superfície corporal)", "Cálculo por peso corporal", "Fórmula de Parkland", "Escala de Glasgow"], "correct": 0, "expl": "O método da palma da mão do próprio paciente (incluindo os dedos), que corresponde a aproximadamente 1% da superfície corporal, é útil para estimar áreas pequenas ou de distribuição irregular."}]}, "faq": [{"q": "A Regra dos Nove serve para crianças?", "a": "Não deve ser usada em crianças pequenas sem ajuste, pois suas proporções corporais são diferentes das do adulto. Recomenda-se o uso de tabelas específicas, como a de Lund-Browder, nessa população."}, {"q": "A SCQ calculada aqui já indica a gravidade completa da queimadura?", "a": "Não isoladamente. A gravidade da queimadura depende também da profundidade da lesão (superficial, espessura parcial ou total) e da localização (face, mãos, articulações e genitália são consideradas áreas especiais de maior gravidade), além da extensão percentual."}], "about": {"title": "Como funciona a Regra dos Nove", "html": "<p>A Regra dos Nove divide a superfície corporal do adulto em segmentos: cabeça e pescoço (9%), cada membro superior (9%), tronco anterior (18%), tronco posterior (18%), cada membro inferior (18%) e genitália/períneo (1%), somando os percentuais das áreas acometidas para estimar a superfície corporal total queimada (SCQ).</p><p><strong>Guia rápido:</strong> menos de 10% = Pequena | 10-19% = Moderada | 20-39% = Grave | ≥40% = Crítica.</p>"}}</script>
@@ -684,6 +698,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

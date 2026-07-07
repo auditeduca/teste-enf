@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="wells-tvp">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -348,32 +358,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -600,6 +600,7 @@
               <select class="field-select" data-calc-input="edema_cacifo"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Veias Colaterais Superficiais Não Varicosas</label>
               <select class="field-select" data-calc-input="veias_colaterais"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Diagnóstico Alternativo Pelo Menos Tão Provável quanto TVP</label>
               <select class="field-select" data-calc-input="diagnostico_alternativo"><option value="0" selected>Não</option><option value="-2">Sim</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixa Probabilidade</span>
@@ -659,6 +660,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "62839405-1728-4950-5162-738495061728", "code": "SCALE-WELLSTVP-001", "slug": "wells-tvp", "version": "1.0.0", "status": "published", "seo": {"title": "Escore de Wells - Probabilidade de Trombose Venosa Profunda (TVP)", "description": "Calcule o Escore de Wells para estimar a probabilidade clínica de trombose venosa profunda (TVP). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/wells-tvp.html"}, "breadcrumb": {"category": "Emergência e Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escore de Wells para TVP", "acronym": "Wells (TVP)", "categoryBadge": "Emergência", "icon": "i-stetho", "objective": "Estimar a probabilidade clínica pré-teste de trombose venosa profunda (TVP), orientando a necessidade de exames complementares (D-dímero, ultrassonografia com Doppler).", "indication": "Indicada para pacientes com suspeita clínica de trombose venosa profunda de membros inferiores.", "targetPopulation": "Pacientes adultos com sinais e sintomas sugestivos de TVP de membro inferior.", "specialty": ["Emergência", "Enfermagem", "Angiologia"], "averageTime": "2-3 minutos", "evidenceLevel": "I", "originalAuthors": ["Philip S. Wells", "colaboradores"], "complexity": "intermediate", "rating": 4.6, "ratingCount": 210}, "calculator": {"inputs": [{"id": "cancer_ativo", "type": "select", "label": "Câncer Ativo", "description": "Tratamento oncológico nos últimos 6 meses, ou tratamento paliativo em curso.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "paralisia_imobilizacao", "type": "select", "label": "Paralisia, Paresia ou Imobilização Gessada Recente", "description": "Paralisia, paresia ou imobilização gessada recente de membro inferior.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "repouso_cirurgia", "type": "select", "label": "Repouso no Leito ou Cirurgia Recente", "description": "Repouso no leito maior que 3 dias ou cirurgia de grande porte nas últimas 12 semanas.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "dor_trajeto_venoso", "type": "select", "label": "Dor Localizada no Trajeto Venoso Profundo", "description": "Dor à palpação ao longo do trajeto do sistema venoso profundo.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "edema_membro_todo", "type": "select", "label": "Edema de Todo o Membro Inferior", "description": "Edema envolvendo todo o membro inferior acometido.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "edema_panturrilha", "type": "select", "label": "Edema de Panturrilha (>3cm)", "description": "Diferença de circunferência da panturrilha maior que 3cm em relação ao membro assintomático (medida 10cm abaixo da tuberosidade tibial).", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "edema_cacifo", "type": "select", "label": "Edema Depressível (Cacifo) Maior no Membro Sintomático", "description": "Edema com cacifo mais evidente no membro sintomático.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "veias_colaterais", "type": "select", "label": "Veias Colaterais Superficiais Não Varicosas", "description": "Presença de veias colaterais superficiais visíveis, não varicosas.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "diagnostico_alternativo", "type": "select", "label": "Diagnóstico Alternativo Pelo Menos Tão Provável quanto TVP", "description": "Existe outro diagnóstico que explique o quadro tão bem ou melhor que a TVP.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": -2, "label": "Sim", "score": -2}]}], "formula": {"type": "sum", "resultLabel": "Escore de Wells (TVP)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": -2, "max": 0, "label": "Baixa Probabilidade", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixa probabilidade clínica pré-teste de trombose venosa profunda.", "recommendations": "• Considerar dosagem de D-dímero como próximo passo\n• D-dímero negativo com baixa probabilidade geralmente exclui TVP\n• Investigar diagnósticos diferenciais"}, {"min": 1, "max": 2, "label": "Probabilidade Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Probabilidade clínica intermediária de trombose venosa profunda.", "recommendations": "• Considerar D-dímero e ultrassonografia com Doppler venoso\n• Reavaliação clínica seriada se investigação inicial negativa"}, {"min": 3, "max": 9, "label": "Alta Probabilidade", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alta probabilidade clínica de trombose venosa profunda.", "recommendations": "• Priorizar ultrassonografia com Doppler venoso\n• Comunicar à equipe médica para avaliação de anticoagulação empírica conforme protocolo\n• Monitorizar sinais de embolia pulmonar (dispneia, dor torácica, taquicardia)"}]}, "sae": {"nanda": [{"diagnosis": "Perfusão tissular periférica ineficaz", "definition": "Redução na circulação sanguínea para a periferia, que pode comprometer a saúde."}, {"diagnosis": "Risco de perfusão tissular ineficaz", "definition": "Risco de diminuição na circulação sanguínea para o tecido, associado a possível trombose venosa."}, {"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial."}], "noc": [{"outcome": "Perfusão tissular: periférica", "indicators": ["Ausência de edema periférico localizado", "Coloração da pele adequada", "Ausência de dor no trajeto venoso"]}], "nic": [{"intervention": "Cuidados circulatórios: insuficiência venosa", "activities": ["Aplicar o Escore de Wells de forma sistemática", "Avaliar sinais de TVP (edema, dor, calor, coloração)", "Auxiliar na coleta de D-dímero conforme solicitação médica", "Monitorar sinais de possível embolia pulmonar", "Orientar sobre mobilização e prevenção conforme indicação médica"]}]}, "evidence": {"foundation": "O Escore de Wells para TVP foi desenvolvido por Philip Wells e colaboradores para estratificar a probabilidade clínica pré-teste de trombose venosa profunda, combinando fatores de risco, sinais clínicos e um item de diagnóstico alternativo (pontuação negativa).", "history": "Amplamente utilizado em serviços de emergência para orientar a estratégia diagnóstica (D-dímero versus ultrassonografia direta), otimizando o uso de recursos e reduzindo exames desnecessários em pacientes de baixa probabilidade.", "validation": "Validado extensivamente na literatura, com boa capacidade de estratificação de risco quando combinado ao D-dímero, sendo um dos escores mais utilizados mundialmente para essa finalidade.", "limitations": "Não deve ser usado isoladamente para excluir ou confirmar TVP — a combinação com D-dímero e/ou ultrassonografia é essencial para a decisão diagnóstica final.", "references": [{"text": "WELLS, P. S. et al. Value of assessment of pretest probability of deep-vein thrombosis in clinical management. The Lancet, v. 350, n. 9094, p. 1795-1798, 1997."}, {"text": "WELLS, P. S. et al. Evaluation of D-dimer in the diagnosis of suspected deep-vein thrombosis. New England Journal of Medicine, v. 349, n. 13, p. 1227-1235, 2003."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["O item 'diagnóstico alternativo' subtrai 2 pontos e pode reduzir significativamente o escore total.", "Combine sempre com o D-dímero: baixa probabilidade + D-dímero negativo geralmente exclui TVP com segurança.", "Alta probabilidade clínica justifica investigação direta por ultrassonografia com Doppler, independentemente do D-dímero.", "Reavalie o paciente clinicamente se os sintomas persistirem apesar de investigação inicial negativa."], "examples": [{"label": "Baixa probabilidade", "sublabel": "Wells -1", "emoji": "✅", "values": {"cancer_ativo": 0, "paralisia_imobilizacao": 0, "repouso_cirurgia": 0, "dor_trajeto_venoso": 0, "edema_membro_todo": 0, "edema_panturrilha": 0, "edema_cacifo": 0, "veias_colaterais": 0, "diagnostico_alternativo": -2}}, {"label": "Probabilidade moderada", "sublabel": "Wells 2", "emoji": "⚠️", "values": {"cancer_ativo": 0, "paralisia_imobilizacao": 0, "repouso_cirurgia": 1, "dor_trajeto_venoso": 1, "edema_membro_todo": 0, "edema_panturrilha": 0, "edema_cacifo": 0, "veias_colaterais": 0, "diagnostico_alternativo": 0}}, {"label": "Alta probabilidade", "sublabel": "Wells 5", "emoji": "🚨", "values": {"cancer_ativo": 1, "paralisia_imobilizacao": 0, "repouso_cirurgia": 1, "dor_trajeto_venoso": 1, "edema_membro_todo": 1, "edema_panturrilha": 1, "edema_cacifo": 0, "veias_colaterais": 0, "diagnostico_alternativo": 0}}], "quiz": [{"q": "Qual item do Escore de Wells para TVP subtrai pontos ao invés de somar?", "opts": ["Câncer ativo", "Diagnóstico alternativo pelo menos tão provável quanto TVP", "Edema de panturrilha", "Repouso no leito"], "correct": 1, "expl": "O item 'diagnóstico alternativo pelo menos tão provável quanto TVP' subtrai 2 pontos do escore total."}, {"q": "Qual exame é frequentemente combinado ao Escore de Wells para decisão diagnóstica de TVP?", "opts": ["Radiografia de tórax", "D-dímero", "Eletrocardiograma", "Hemograma completo"], "correct": 1, "expl": "O D-dímero é frequentemente combinado ao Escore de Wells: baixa probabilidade clínica associada a D-dímero negativo geralmente exclui TVP com segurança."}, {"q": "Um escore de Wells de 4 pontos indica qual probabilidade de TVP?", "opts": ["Baixa", "Moderada", "Alta", "Nula"], "correct": 2, "expl": "Escores de 3 pontos ou mais indicam alta probabilidade clínica de trombose venosa profunda."}]}, "faq": [{"q": "O Escore de Wells confirma o diagnóstico de TVP isoladamente?", "a": "Não. É uma ferramenta de estratificação de probabilidade pré-teste, que deve ser combinada com D-dímero e/ou ultrassonografia com Doppler venoso para confirmação ou exclusão diagnóstica."}, {"q": "Existe uma versão do Escore de Wells para embolia pulmonar?", "a": "Sim. Existe uma versão específica do Escore de Wells para probabilidade clínica de embolia pulmonar, com critérios diferentes dos utilizados na avaliação de TVP."}], "about": {"title": "Como funciona o Escore de Wells para TVP", "html": "<p>O Escore de Wells soma pontos de 8 critérios clínicos e de risco (cada um valendo 1 ponto) e subtrai 2 pontos caso exista diagnóstico alternativo pelo menos tão provável quanto TVP, totalizando de -2 a 9 pontos.</p><p><strong>Guia rápido:</strong> ≤0 = Baixa probabilidade | 1-2 = Probabilidade moderada | ≥3 = Alta probabilidade.</p>"}}</script>
@@ -714,6 +728,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

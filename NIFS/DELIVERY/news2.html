@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="news2">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -322,32 +332,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -538,6 +538,7 @@
               <select class="field-select" data-calc-input="frequencia_cardiaca"><option value="0" selected>51 a 90 (Normal)</option><option value="1">41 a 50, ou 91 a 110</option><option value="2">111 a 130</option><option value="3">40 ou Menos, ou 131 ou Mais</option></select></div><div class="urg-field"><label>Nível de Consciência</label>
               <select class="field-select" data-calc-input="nivel_consciencia"><option value="0" selected>Alerta</option><option value="3">Confusão Nova / Voz / Dor / Não Responsivo</option></select></div><div class="urg-field"><label>Temperatura (°C)</label>
               <select class="field-select" data-calc-input="temperatura"><option value="0" selected>36,1 a 38,0 (Normal)</option><option value="1">35,1 a 36,0, ou 38,1 a 39,0</option><option value="2">39,1 ou Mais</option><option value="3">35,0 ou Menos</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco</span>
@@ -597,6 +598,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "62738f95-0617-4a2b-c3d4-e5f607182940", "code": "SCALE-NEWS2-001", "slug": "news2", "version": "1.0.0", "status": "published", "seo": {"title": "NEWS2 - National Early Warning Score 2", "description": "Calcule o NEWS2 (National Early Warning Score 2) para detecção precoce de deterioração clínica do paciente hospitalizado. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/news2.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "National Early Warning Score 2", "acronym": "NEWS2", "categoryBadge": "Segurança do paciente", "icon": "i-pulse", "objective": "Detectar precocemente sinais de deterioração clínica aguda em pacientes adultos hospitalizados, padronizando a resposta clínica conforme o grau de risco.", "indication": "Indicada para monitorização seriada de pacientes adultos internados em enfermaria, emergência e outros ambientes não intensivos.", "targetPopulation": "Pacientes adultos (18 anos ou mais), exceto gestantes. Não deve ser a única ferramenta usada em pacientes com insuficiência respiratória hipercápnica crônica sem ajuste de escala de SpO2.", "specialty": ["Enfermagem", "Segurança do Paciente", "Emergência"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "organizations": ["Royal College of Physicians (RCP)", "NHS (National Health Service)"], "complexity": "intermediate", "rating": 4.8, "ratingCount": 610}, "calculator": {"inputs": [{"id": "frequencia_respiratoria", "type": "select", "label": "Frequência Respiratória (irpm)", "description": "Número de incursões respiratórias por minuto.", "defaultValue": 0, "options": [{"value": 0, "label": "12 a 20 (Normal)", "score": 0, "description": "Frequência respiratória normal."}, {"value": 1, "label": "9 a 11", "score": 1, "description": "Discreta redução da frequência respiratória."}, {"value": 2, "label": "21 a 24", "score": 2, "description": "Discreto aumento da frequência respiratória."}, {"value": 3, "label": "8 ou Menos, ou 25 ou Mais", "score": 3, "description": "Bradipneia acentuada ou taquipneia acentuada."}]}, {"id": "saturacao_o2", "type": "select", "label": "Saturação de O2 (Escala 1)", "description": "SpO2 em ar ambiente ou oxigenoterapia, escala padrão (sem hipercapnia crônica).", "defaultValue": 0, "options": [{"value": 0, "label": "96% ou Mais", "score": 0, "description": "Saturação de oxigênio normal."}, {"value": 1, "label": "94 a 95%", "score": 1, "description": "Discreta redução da saturação de oxigênio."}, {"value": 2, "label": "92 a 93%", "score": 2, "description": "Redução moderada da saturação de oxigênio."}, {"value": 3, "label": "91% ou Menos", "score": 3, "description": "Hipoxemia significativa."}]}, {"id": "oxigenio_suplementar", "type": "select", "label": "Uso de Oxigênio Suplementar", "description": "Paciente em ar ambiente ou recebendo qualquer forma de oxigenoterapia suplementar.", "defaultValue": 0, "options": [{"value": 0, "label": "Ar Ambiente", "score": 0, "description": "Paciente respirando ar ambiente, sem suplementação de oxigênio."}, {"value": 2, "label": "Oxigênio Suplementar", "score": 2, "description": "Paciente em uso de qualquer forma de oxigenoterapia suplementar."}]}, {"id": "pressao_sistolica", "type": "select", "label": "Pressão Arterial Sistólica (mmHg)", "description": "Pressão arterial sistólica em mmHg.", "defaultValue": 0, "options": [{"value": 0, "label": "111 a 219 (Normal)", "score": 0, "description": "Pressão arterial sistólica normal."}, {"value": 1, "label": "101 a 110", "score": 1, "description": "Discreta hipotensão."}, {"value": 2, "label": "91 a 100", "score": 2, "description": "Hipotensão moderada."}, {"value": 3, "label": "90 ou Menos, ou 220 ou Mais", "score": 3, "description": "Hipotensão grave ou hipertensão acentuada."}]}, {"id": "frequencia_cardiaca", "type": "select", "label": "Frequência Cardíaca (bpm)", "description": "Frequência cardíaca em batimentos por minuto.", "defaultValue": 0, "options": [{"value": 0, "label": "51 a 90 (Normal)", "score": 0, "description": "Frequência cardíaca normal."}, {"value": 1, "label": "41 a 50, ou 91 a 110", "score": 1, "description": "Discreta alteração da frequência cardíaca."}, {"value": 2, "label": "111 a 130", "score": 2, "description": "Taquicardia moderada."}, {"value": 3, "label": "40 ou Menos, ou 131 ou Mais", "score": 3, "description": "Bradicardia ou taquicardia acentuada."}]}, {"id": "nivel_consciencia", "type": "select", "label": "Nível de Consciência", "description": "Escala AVPU (Alerta, Voz, Dor, Não responsivo) ou confusão de início recente.", "defaultValue": 0, "options": [{"value": 0, "label": "Alerta", "score": 0, "description": "Paciente alerta e orientado."}, {"value": 3, "label": "Confusão Nova / Voz / Dor / Não Responsivo", "score": 3, "description": "Confusão de início recente, ou responde apenas à voz, à dor, ou não responde (CVPU)."}]}, {"id": "temperatura", "type": "select", "label": "Temperatura (°C)", "description": "Temperatura corporal em graus Celsius.", "defaultValue": 0, "options": [{"value": 0, "label": "36,1 a 38,0 (Normal)", "score": 0, "description": "Temperatura dentro da normalidade."}, {"value": 1, "label": "35,1 a 36,0, ou 38,1 a 39,0", "score": 1, "description": "Discreta hipotermia ou febre."}, {"value": 2, "label": "39,1 ou Mais", "score": 2, "description": "Febre acentuada."}, {"value": 3, "label": "35,0 ou Menos", "score": 3, "description": "Hipotermia significativa."}]}], "formula": {"type": "sum", "resultLabel": "Escore NEWS2", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 4, "label": "Baixo Risco", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Baixo risco de deterioração clínica. Nota: se qualquer parâmetro isolado pontuar 3, o risco deve ser reclassificado como baixo-médio, exigindo revisão urgente por enfermeiro responsável mesmo com escore total baixo.", "recommendations": "• Monitorização de rotina conforme protocolo (mínimo a cada 12h)\n• Reavaliar se qualquer parâmetro isolado pontuar 3"}, {"min": 5, "max": 6, "label": "Risco Médio", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Risco médio de deterioração clínica. Requer resposta urgente da equipe assistencial.", "recommendations": "• Comunicação urgente à equipe médica responsável\n• Aumentar frequência de monitorização (mínimo a cada 1h)\n• Considerar necessidade de monitorização contínua"}, {"min": 7, "max": 21, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alto risco de deterioração clínica aguda. Requer avaliação médica de urgência, geralmente por equipe de terapia intensiva ou time de resposta rápida.", "recommendations": "• Acionar avaliação médica de emergência/time de resposta rápida imediatamente\n• Monitorização contínua dos sinais vitais\n• Considerar transferência para unidade de maior complexidade (UTI/semi-intensiva)"}]}, "sae": {"nanda": [{"diagnosis": "Risco de perfusão tissular ineficaz", "definition": "Risco de diminuição na circulação sanguínea para o tecido, o que pode comprometer a saúde."}, {"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."}, {"diagnosis": "Risco de confusão aguda", "definition": "Risco de início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção."}], "noc": [{"outcome": "Sinais vitais", "indicators": ["Frequência respiratória dentro dos limites esperados", "Saturação de oxigênio adequada", "Frequência cardíaca e pressão arterial dentro dos limites esperados", "Nível de consciência preservado"]}], "nic": [{"intervention": "Monitorização de sinais vitais", "activities": ["Mensurar e registrar todos os 7 parâmetros do NEWS2", "Calcular e documentar o escore a cada avaliação", "Comunicar escores elevados e parâmetros isolados críticos imediatamente à equipe médica", "Acionar protocolo de resposta rápida quando indicado", "Aumentar frequência de monitorização proporcionalmente ao risco"]}]}, "evidence": {"foundation": "O NEWS2 foi desenvolvido pelo Royal College of Physicians do Reino Unido em 2017, como atualização do NEWS original, padronizando a avaliação de deterioração clínica aguda através da pontuação de 7 parâmetros fisiológicos: frequência respiratória, saturação de O2, uso de oxigênio suplementar, pressão arterial sistólica, frequência cardíaca, nível de consciência e temperatura.", "history": "Amplamente adotado pelo NHS (Reino Unido) como padrão nacional para detecção de deterioração clínica, e progressivamente incorporado em protocolos de segurança do paciente em outros países, sendo considerado sucessor do MEWS.", "validation": "Estudos de validação em larga escala demonstram boa capacidade preditiva para desfechos como admissão em UTI, parada cardiorrespiratória e mortalidade em 24 horas, superior ao NEWS original e ao MEWS.", "limitations": "Requer ajuste da escala de SpO2 (Escala 2) em pacientes com insuficiência respiratória hipercápnica crônica conhecida (ex: DPOC grave), o que não está modelado nesta calculadora simplificada — nesses casos, a interpretação deve ser complementada por avaliação clínica especializada.", "references": [{"text": "ROYAL COLLEGE OF PHYSICIANS. National Early Warning Score (NEWS) 2: Standardising the assessment of acute-illness severity in the NHS. London: RCP, 2017."}, {"text": "SMITH, G. B. et al. The National Early Warning Score 2 (NEWS2). Clinical Medicine, v. 19, n. 3, p. 260, 2019."}, {"text": "BRASIL. Ministério da Saúde. Protocolo de identificação de risco e resposta rápida ao paciente em deterioração clínica. Brasília: MS, 2018."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Um único parâmetro pontuando 3 já exige revisão urgente por enfermeiro, mesmo que o escore total seja baixo.", "Pacientes com DPOC grave e retenção crônica de CO2 requerem a Escala 2 de SpO2 (não incluída nesta versão simplificada) — consulte protocolo institucional.", "Registre todos os 7 parâmetros para não subestimar o escore.", "Aumente a frequência de reavaliação proporcionalmente ao escore obtido, conforme protocolo local."], "examples": [{"label": "Paciente estável", "sublabel": "NEWS2 0", "emoji": "✅", "values": {"frequencia_respiratoria": 0, "saturacao_o2": 0, "oxigenio_suplementar": 0, "pressao_sistolica": 0, "frequencia_cardiaca": 0, "nivel_consciencia": 0, "temperatura": 0}}, {"label": "Alteração inicial", "sublabel": "NEWS2 5", "emoji": "⚠️", "values": {"frequencia_respiratoria": 2, "saturacao_o2": 1, "oxigenio_suplementar": 2, "pressao_sistolica": 0, "frequencia_cardiaca": 0, "nivel_consciencia": 0, "temperatura": 0}}, {"label": "Deterioração clínica", "sublabel": "NEWS2 12", "emoji": "🚨", "values": {"frequencia_respiratoria": 3, "saturacao_o2": 3, "oxigenio_suplementar": 2, "pressao_sistolica": 3, "frequencia_cardiaca": 1, "nivel_consciencia": 0, "temperatura": 0}}], "quiz": [{"q": "Quantos parâmetros fisiológicos compõem o NEWS2?", "opts": ["5", "6", "7", "8"], "correct": 2, "expl": "O NEWS2 avalia 7 parâmetros: frequência respiratória, SpO2, uso de O2 suplementar, pressão arterial sistólica, frequência cardíaca, nível de consciência e temperatura."}, {"q": "O que deve acontecer se um único parâmetro do NEWS2 pontuar 3, mesmo com escore total baixo?", "opts": ["Nada, o escore total é o que importa", "Revisão urgente por enfermeiro responsável", "Apenas anotar no prontuário", "Repetir em 24 horas"], "correct": 1, "expl": "Uma pontuação isolada de 3 em qualquer parâmetro exige revisão urgente, independentemente do escore total, pois pode indicar deterioração aguda em um único sistema."}, {"q": "Qual escala de SpO2 deve ser usada em pacientes com DPOC grave e retenção crônica de CO2?", "opts": ["Escala 1 (padrão)", "Escala 2 (ajustada)", "Não se aplica NEWS2", "Qualquer uma"], "correct": 1, "expl": "Pacientes com insuficiência respiratória hipercápnica crônica devem usar a Escala 2 de SpO2 do NEWS2, com metas de saturação diferentes."}]}, "faq": [{"q": "O NEWS2 substitui o julgamento clínico da equipe?", "a": "Não. O NEWS2 é uma ferramenta de triagem e padronização da comunicação sobre gravidade, mas não substitui a avaliação clínica individualizada nem o protocolo institucional de resposta rápida."}, {"q": "Esta calculadora contempla a Escala 2 de SpO2 para pacientes com DPOC?", "a": "Não. Esta versão utiliza a Escala 1 padrão de SpO2. Pacientes com insuficiência respiratória hipercápnica crônica conhecida devem ser avaliados com a Escala 2 específica, conforme protocolo institucional."}], "about": {"title": "Como funciona o NEWS2", "html": "<p>O NEWS2 soma pontos de 0 a 3 (ou 0 a 2, no caso do oxigênio suplementar) atribuídos a 7 parâmetros fisiológicos — frequência respiratória, saturação de oxigênio, uso de oxigênio suplementar, pressão arterial sistólica, frequência cardíaca, nível de consciência e temperatura — gerando um escore total que indica o risco de deterioração clínica aguda.</p><p><strong>Guia rápido:</strong> 0-4 = Baixo risco | 5-6 = Risco médio | ≥7 = Alto risco, resposta urgente. Atenção: pontuação isolada de 3 em qualquer parâmetro também exige revisão urgente.</p>"}}</script>
@@ -652,6 +666,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="rass">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -245,32 +255,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -353,6 +353,7 @@
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Nível de Consciência</label>
               <select class="field-select" data-calc-input="nivel"><option value="4">+4 — Combativo</option><option value="3">+3 — Muito Agitado</option><option value="2">+2 — Agitado</option><option value="1">+1 — Inquieto</option><option value="0" selected>0 — Alerta e Calmo</option><option value="-1">-1 — Sonolento</option><option value="-2">-2 — Sedação Leve</option><option value="-3">-3 — Sedação Moderada</option><option value="-4">-4 — Sedação Profunda</option><option value="-5">-5 — Não Desperta</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit"></span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Alerta e Calmo</span>
@@ -412,6 +413,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="aldrete.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div><div><h3>Calculadora de Escore de Aldrete</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="asa.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div><div><h3>Calculadora de Escore ASA</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "3f405162-7384-49a0-b1c2-d3e4f5061728", "code": "SCALE-RASS-001", "slug": "rass", "version": "1.0.0", "status": "published", "seo": {"title": "RASS - Escala de Sedação-Agitação de Richmond", "description": "Classifique o nível de sedação ou agitação do paciente crítico com a Escala RASS (Richmond Agitation-Sedation Scale). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/rass.html"}, "breadcrumb": {"category": "Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Sedação-Agitação de Richmond", "acronym": "RASS", "categoryBadge": "Terapia intensiva", "icon": "i-brain", "objective": "Classificar objetivamente o nível de sedação ou agitação do paciente crítico, orientando o ajuste da sedação e a triagem para avaliação de delirium (CAM-ICU).", "indication": "Indicada para pacientes em unidade de terapia intensiva, especialmente aqueles em ventilação mecânica e/ou uso de sedativos, para monitorização seriada do nível de consciência.", "targetPopulation": "Pacientes adultos criticamente enfermos, internados em UTI.", "specialty": ["Terapia Intensiva", "Enfermagem", "Anestesiologia"], "averageTime": "1-2 minutos", "evidenceLevel": "I", "originalAuthors": ["Curtis N. Sessler", "colaboradores"], "complexity": "intermediate", "rating": 4.8, "ratingCount": 470}, "calculator": {"inputs": [{"id": "nivel", "type": "select", "label": "Nível de Consciência", "description": "Observe o paciente e, se necessário, estimule verbalmente e depois fisicamente para classificar o nível.", "defaultValue": 0, "options": [{"value": 4, "label": "+4 — Combativo", "score": 4, "description": "Combativo, violento, representa perigo imediato para a equipe."}, {"value": 3, "label": "+3 — Muito Agitado", "score": 3, "description": "Puxa ou remove tubos/cateteres; agressivo."}, {"value": 2, "label": "+2 — Agitado", "score": 2, "description": "Movimentos frequentes e sem propósito; briga com o ventilador."}, {"value": 1, "label": "+1 — Inquieto", "score": 1, "description": "Ansioso, mas movimentos não são agressivos ou vigorosos."}, {"value": 0, "label": "0 — Alerta e Calmo", "score": 0, "description": "Nível de consciência normal, alerta e calmo."}, {"value": -1, "label": "-1 — Sonolento", "score": -1, "description": "Não totalmente alerta, mas mantém contato visual ao chamado (>10s)."}, {"value": -2, "label": "-2 — Sedação Leve", "score": -2, "description": "Acorda brevemente ao chamado, com contato visual (<10s)."}, {"value": -3, "label": "-3 — Sedação Moderada", "score": -3, "description": "Movimento ou abertura ocular ao chamado, mas sem contato visual."}, {"value": -4, "label": "-4 — Sedação Profunda", "score": -4, "description": "Sem resposta à voz, mas movimento ou abertura ocular ao estímulo físico."}, {"value": -5, "label": "-5 — Não Desperta", "score": -5, "description": "Sem resposta à voz ou ao estímulo físico."}]}], "formula": {"type": "sum", "resultLabel": "Escore RASS", "resultUnit": "", "decimals": 0}}, "interpretation": {"ranges": [{"min": 1, "max": 4, "label": "Agitação", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Paciente agitado ou combativo, com risco de auto-extubação, remoção de dispositivos e agressão à equipe.", "recommendations": "• Reavaliar causas reversíveis de agitação (dor, hipoxemia, delirium)\n• Ajustar sedação conforme prescrição médica\n• Avaliar delirium com CAM-ICU\n• Garantir segurança do paciente e da equipe"}, {"min": 0, "max": 0, "label": "Alerta e Calmo", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Nível de consciência dentro do considerado ideal para a maioria dos pacientes críticos, meta comum de sedação.", "recommendations": "• Manter conduta atual\n• Reavaliar periodicamente conforme protocolo de sedação"}, {"min": -3, "max": -1, "label": "Sedação Leve a Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Sedação leve a moderada. Pode estar dentro da meta terapêutica dependendo do objetivo clínico (ex: protocolo de sedação leve).", "recommendations": "• Verificar meta de sedação prescrita\n• Realizar interrupção diária da sedação se indicado\n• Avaliar delirium com CAM-ICU quando possível"}, {"min": -5, "max": -4, "label": "Sedação Profunda", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Sedação profunda, sem resposta ou resposta apenas a estímulo físico. Associada a maior tempo de ventilação mecânica e pior desfecho quando prolongada sem indicação clínica.", "recommendations": "• Reavaliar necessidade clínica da sedação profunda\n• Considerar redução da sedação conforme protocolo\n• Monitorar sinais vitais e nível de consciência com frequência"}]}, "sae": {"nanda": [{"diagnosis": "Confusão aguda", "definition": "Início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção que se desenvolvem em curto período."}, {"diagnosis": "Risco de síndrome do desuso", "definition": "Risco de deterioração dos sistemas corporais em decorrência de inatividade musculoesquelética prescrita ou inevitável."}], "noc": [{"outcome": "Nível de sedação", "indicators": ["Nível de consciência adequado à meta prescrita", "Ausência de agitação ou combatividade", "Sinais vitais estáveis durante a sedação"]}], "nic": [{"intervention": "Manejo da sedação", "activities": ["Avaliar o nível de sedação com escala validada (RASS)", "Ajustar infusão de sedativos conforme meta prescrita e protocolo", "Realizar interrupção diária da sedação quando indicado", "Avaliar delirium com CAM-ICU", "Documentar o escore a cada avaliação"]}]}, "evidence": {"foundation": "A escala RASS foi desenvolvida por Sessler e colaboradores (2002) para padronizar a avaliação do nível de sedação e agitação em pacientes críticos, variando de -5 (não desperta) a +4 (combativo), com 0 representando o paciente alerta e calmo.", "history": "Amplamente adotada em protocolos de sedação em UTI no mundo todo, sendo pré-requisito para a aplicação do CAM-ICU (avaliação de delirium), que só deve ser realizado em pacientes com RASS ≥ -3.", "validation": "Apresenta excelente confiabilidade interobservador e validade de constructo, sendo uma das escalas de sedação mais estudadas e recomendadas por diretrizes internacionais de manejo de dor, agitação e delirium (PADIS).", "limitations": "Requer treinamento da equipe para aplicação padronizada e reavaliação frequente, especialmente em protocolos de sedação leve dirigida por metas.", "references": [{"text": "SESSLER, C. N. et al. The Richmond Agitation-Sedation Scale: validity and reliability in adult intensive care unit patients. American Journal of Respiratory and Critical Care Medicine, v. 166, n. 10, p. 1338-1344, 2002."}, {"text": "DEVLIN, J. W. et al. Clinical Practice Guidelines for the Prevention and Management of Pain, Agitation/Sedation, Delirium, Immobility, and Sleep Disruption in Adult Patients in the ICU (PADIS). Critical Care Medicine, v. 46, n. 9, p. e825-e873, 2018."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Avalie primeiro observando o paciente, depois estimule verbalmente e só então fisicamente, seguindo a sequência da escala.", "O CAM-ICU só deve ser aplicado se o RASS estiver entre -3 e +4.", "Reavalie o RASS a cada mudança na infusão de sedativos e conforme protocolo institucional.", "Documente sempre o escore junto ao horário da avaliação e a meta de sedação prescrita."], "examples": [{"label": "Paciente na meta ideal", "sublabel": "RASS 0", "emoji": "✅", "values": {"nivel": 0}}, {"label": "Agitado, puxando tubos", "sublabel": "RASS +3", "emoji": "🚨", "values": {"nivel": 3}}, {"label": "Sedação profunda", "sublabel": "RASS -4", "emoji": "⚠️", "values": {"nivel": -4}}], "quiz": [{"q": "Qual a faixa de valores da escala RASS?", "opts": ["0 a 10", "-5 a +4", "-10 a +10", "1 a 5"], "correct": 1, "expl": "A RASS varia de -5 (não desperta) a +4 (combativo), com 0 representando alerta e calmo."}, {"q": "A partir de qual valor de RASS o CAM-ICU pode ser aplicado?", "opts": ["Apenas RASS 0", "RASS entre -3 e +4", "RASS entre -5 e -4", "Qualquer valor de RASS"], "correct": 1, "expl": "O CAM-ICU só deve ser aplicado quando o RASS estiver entre -3 e +4, pois níveis mais profundos de sedação impedem avaliação confiável de delirium."}, {"q": "Um RASS de +3 indica qual estado do paciente?", "opts": ["Sedação profunda", "Alerta e calmo", "Muito agitado", "Sonolento"], "correct": 2, "expl": "RASS +3 corresponde a 'Muito Agitado' — o paciente puxa ou remove tubos e cateteres, ou é agressivo com a equipe."}]}, "faq": [{"q": "Com que frequência o RASS deve ser reavaliado?", "a": "Recomenda-se reavaliação a cada turno, a cada ajuste na infusão de sedativos e sempre que houver mudança no quadro clínico do paciente, conforme protocolo institucional de sedação."}, {"q": "O RASS substitui a avaliação de delirium?", "a": "Não. O RASS avalia nível de sedação/agitação. A avaliação de delirium é feita pelo CAM-ICU, que só deve ser aplicado quando o RASS estiver entre -3 e +4."}], "about": {"title": "Como funciona a Escala RASS", "html": "<p>A Escala RASS (Richmond Agitation-Sedation Scale) classifica o nível de consciência do paciente crítico em uma escala de 10 pontos, de -5 (não desperta a nenhum estímulo) a +4 (combativo), passando por 0 (alerta e calmo), que representa a meta usual de sedação em muitos protocolos.</p><p><strong>Guia rápido:</strong> +1 a +4 = Agitação | 0 = Alerta e calmo | -1 a -3 = Sedação leve a moderada | -4 a -5 = Sedação profunda.</p>"}}</script>
@@ -467,6 +481,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

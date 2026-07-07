@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="barthel">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -363,32 +373,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -633,6 +633,7 @@
               <select class="field-select" data-calc-input="transferencia"><option value="0">Incapaz</option><option value="5">Grande Ajuda</option><option value="10">Pequena Ajuda</option><option value="15" selected>Independente</option></select></div><div class="urg-field"><label>Mobilidade (deambulação)</label>
               <select class="field-select" data-calc-input="mobilidade"><option value="0">Imóvel</option><option value="5">Independente em Cadeira de Rodas</option><option value="10">Anda com Ajuda</option><option value="15" selected>Independente</option></select></div><div class="urg-field"><label>Escadas</label>
               <select class="field-select" data-calc-input="escadas"><option value="0">Incapaz</option><option value="5">Necessita de Ajuda</option><option value="10" selected>Independente</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">100</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Independência Total</span>
@@ -692,6 +693,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="berg.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Escala de Equilíbrio de Berg</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "be6f7081-9203-4a4c-de5f-607283940516", "code": "SCALE-BARTHEL-001", "slug": "barthel", "version": "1.0.0", "status": "published", "seo": {"title": "Índice de Barthel - Atividades de Vida Diária", "description": "Calcule o Índice de Barthel para avaliação detalhada da independência funcional em atividades de vida diária. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/barthel.html"}, "breadcrumb": {"category": "Geriatria", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Índice de Barthel", "acronym": "Barthel", "categoryBadge": "Geriatria", "icon": "i-person", "objective": "Avaliar de forma detalhada o grau de independência funcional do paciente em 10 atividades de vida diária, com pontuação proporcional ao nível de assistência necessário.", "indication": "Indicada em reabilitação, geriatria, avaliação pré e pós-alta hospitalar e acompanhamento longitudinal da capacidade funcional.", "targetPopulation": "Pacientes idosos, em reabilitação ou com sequelas funcionais de qualquer etiologia.", "specialty": ["Geriatria", "Reabilitação", "Enfermagem"], "averageTime": "5-8 minutos", "evidenceLevel": "II", "originalAuthors": ["Florence Mahoney", "Dorothea Barthel"], "complexity": "intermediate", "rating": 4.7, "ratingCount": 380}, "calculator": {"inputs": [{"id": "alimentacao", "type": "select", "label": "Alimentação", "description": "Capacidade de se alimentar sem auxílio.", "defaultValue": 10, "options": [{"value": 0, "label": "Incapaz", "score": 0, "description": "Necessita ser alimentado por outra pessoa."}, {"value": 5, "label": "Necessita de Ajuda", "score": 5, "description": "Necessita de ajuda para cortar, passar manteiga, etc., mas consegue comer sozinho."}, {"value": 10, "label": "Independente", "score": 10, "description": "Come sozinho em tempo razoável."}]}, {"id": "banho", "type": "select", "label": "Banho", "description": "Capacidade de tomar banho completo.", "defaultValue": 5, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Necessita de ajuda para o banho."}, {"value": 5, "label": "Independente", "score": 5, "description": "Toma banho sozinho (entra e sai do chuveiro/banheira sem supervisão)."}]}, {"id": "higiene_pessoal", "type": "select", "label": "Higiene Pessoal", "description": "Capacidade de lavar o rosto, pentear cabelo, escovar dentes, fazer a barba.", "defaultValue": 5, "options": [{"value": 0, "label": "Necessita de Ajuda", "score": 0, "description": "Necessita de ajuda para higiene pessoal."}, {"value": 5, "label": "Independente", "score": 5, "description": "Realiza a higiene pessoal sem ajuda."}]}, {"id": "vestir", "type": "select", "label": "Vestir-se", "description": "Capacidade de vestir e despir roupas, calçar sapatos.", "defaultValue": 10, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Necessita de ajuda total para se vestir."}, {"value": 5, "label": "Necessita de Ajuda", "score": 5, "description": "Realiza pelo menos metade da tarefa sozinho em tempo razoável."}, {"value": 10, "label": "Independente", "score": 10, "description": "Veste-se, despe-se e ajeita a roupa sem ajuda."}]}, {"id": "intestino", "type": "select", "label": "Controle Intestinal", "description": "Controle esfincteriano intestinal.", "defaultValue": 10, "options": [{"value": 0, "label": "Incontinente", "score": 0, "description": "Incontinência fecal ou necessita de enemas."}, {"value": 5, "label": "Acidente Ocasional", "score": 5, "description": "Episódio ocasional de incontinência (até 1x por semana)."}, {"value": 10, "label": "Continente", "score": 10, "description": "Controle completo, sem episódios de incontinência."}]}, {"id": "bexiga", "type": "select", "label": "Controle Vesical", "description": "Controle esfincteriano urinário.", "defaultValue": 10, "options": [{"value": 0, "label": "Incontinente", "score": 0, "description": "Incontinência urinária ou uso de cateter sem controle."}, {"value": 5, "label": "Acidente Ocasional", "score": 5, "description": "Episódio ocasional de incontinência (máximo 1x/24h)."}, {"value": 10, "label": "Continente", "score": 10, "description": "Controle completo, inclusive de dispositivos (sonda/coletor) se aplicável."}]}, {"id": "banheiro", "type": "select", "label": "Uso do Vaso Sanitário", "description": "Capacidade de ir ao banheiro, despir-se, higienizar-se e vestir-se.", "defaultValue": 10, "options": [{"value": 0, "label": "Dependente", "score": 0, "description": "Necessita de ajuda total."}, {"value": 5, "label": "Necessita de Ajuda", "score": 5, "description": "Necessita de alguma ajuda, mas realiza parte da tarefa sozinho."}, {"value": 10, "label": "Independente", "score": 10, "description": "Usa o banheiro sem qualquer ajuda."}]}, {"id": "transferencia", "type": "select", "label": "Transferência (cama-cadeira)", "description": "Capacidade de se transferir da cama para a cadeira e vice-versa.", "defaultValue": 15, "options": [{"value": 0, "label": "Incapaz", "score": 0, "description": "Não tem equilíbrio para sentar, necessita de transferência mecânica ou por 2 pessoas."}, {"value": 5, "label": "Grande Ajuda", "score": 5, "description": "Necessita de ajuda de uma pessoa forte/treinada, ou de duas pessoas."}, {"value": 10, "label": "Pequena Ajuda", "score": 10, "description": "Necessita de pequena ajuda física ou supervisão verbal."}, {"value": 15, "label": "Independente", "score": 15, "description": "Não necessita de qualquer ajuda para a transferência."}]}, {"id": "mobilidade", "type": "select", "label": "Mobilidade (deambulação)", "description": "Capacidade de se locomover em superfície plana.", "defaultValue": 15, "options": [{"value": 0, "label": "Imóvel", "score": 0, "description": "Incapaz de se locomover ou desloca-se menos de 50 metros."}, {"value": 5, "label": "Independente em Cadeira de Rodas", "score": 5, "description": "Move-se de forma independente em cadeira de rodas, incluindo curvas, por mais de 50 metros."}, {"value": 10, "label": "Anda com Ajuda", "score": 10, "description": "Anda com ajuda de uma pessoa ou andador, por mais de 50 metros."}, {"value": 15, "label": "Independente", "score": 15, "description": "Anda sozinho (pode usar apoio como bengala) por mais de 50 metros."}]}, {"id": "escadas", "type": "select", "label": "Escadas", "description": "Capacidade de subir e descer um lance de escadas.", "defaultValue": 10, "options": [{"value": 0, "label": "Incapaz", "score": 0, "description": "Incapaz de subir/descer escadas mesmo com ajuda."}, {"value": 5, "label": "Necessita de Ajuda", "score": 5, "description": "Necessita de ajuda física ou supervisão."}, {"value": 10, "label": "Independente", "score": 10, "description": "Sobe e desce escadas sem ajuda (pode usar corrimão)."}]}], "formula": {"type": "sum", "resultLabel": "Índice de Barthel", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 20, "label": "Dependência Total", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Dependência total para as atividades de vida diária. Necessita de assistência completa em praticamente todas as tarefas.", "recommendations": "• Plano de cuidados integral\n• Avaliação multiprofissional urgente\n• Prevenção de complicações do imobilismo\n• Suporte de cuidador em tempo integral"}, {"min": 21, "max": 60, "label": "Dependência Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Dependência grave. Necessita de ajuda significativa na maioria das atividades básicas de vida diária.", "recommendations": "• Reabilitação intensiva\n• Fisioterapia/terapia ocupacional\n• Suporte de cuidador\n• Reavaliação periódica"}, {"min": 61, "max": 90, "label": "Dependência Moderada", "riskLevel": "moderate", "color": "#ea580c", "clinicalImplications": "Dependência moderada. Necessita de ajuda parcial em várias atividades, mantendo alguma autonomia.", "recommendations": "• Estímulo à independência residual\n• Fisioterapia/terapia ocupacional\n• Adaptação do ambiente domiciliar"}, {"min": 91, "max": 99, "label": "Dependência Leve", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Dependência leve, com boa autonomia funcional na maioria das atividades.", "recommendations": "• Manter estímulo à autonomia\n• Reavaliação periódica de rotina"}, {"min": 100, "max": 100, "label": "Independência Total", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Independência total para todas as atividades básicas de vida diária avaliadas.", "recommendations": "• Reavaliação periódica de rotina\n• Manutenção de hábitos saudáveis"}]}, "sae": {"nanda": [{"diagnosis": "Déficit no autocuidado para banho", "definition": "Capacidade prejudicada de realizar ou completar atividades de banho/higiene por si mesmo."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."}, {"diagnosis": "Incontinência intestinal/urinária", "definition": "Mudança no hábito normal de eliminação intestinal ou urinária, caracterizada por eliminação involuntária."}], "noc": [{"outcome": "Autocuidado: atividades de vida diária", "indicators": ["Realiza higiene pessoal", "Veste-se sem ajuda", "Alimenta-se sem ajuda", "Mobiliza-se com segurança"]}], "nic": [{"intervention": "Assistência ao autocuidado", "activities": ["Avaliar capacidade funcional detalhada", "Estimular independência residual", "Adaptar ambiente e dispositivos de auxílio", "Planejar alta com suporte adequado"]}]}, "evidence": {"foundation": "O Índice de Barthel foi desenvolvido por Florence Mahoney e Dorothea Barthel em 1965, oferecendo uma avaliação mais granular da independência funcional do que escalas binárias simples, ao atribuir pesos diferentes conforme a complexidade da tarefa.", "history": "Amplamente utilizado em reabilitação, geriatria e pesquisa clínica internacional, sendo um dos instrumentos de avaliação funcional mais citados na literatura.", "validation": "Extensivamente validado em diversas populações, com boa confiabilidade interobservador e sensibilidade para detectar mudanças ao longo do tempo, sendo útil para acompanhar evolução em processos de reabilitação.", "limitations": "Não avalia atividades instrumentais mais complexas (finanças, telefone, compras) — para isso, recomenda-se associar a Escala de Lawton. Pode apresentar efeito teto em pacientes com alta funcionalidade.", "references": [{"text": "MAHONEY, F. I.; BARTHEL, D. W. Functional evaluation: the Barthel Index. Maryland State Medical Journal, v. 14, p. 61-65, 1965."}, {"text": "COLLIN, C. et al. The Barthel ADL Index: a reliability study. International Disability Studies, v. 10, n. 2, p. 61-63, 1988."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}]}, "learning": {"tips": ["Avalie o desempenho real observado, não a capacidade teórica relatada pelo paciente.", "Combine com a Escala de Lawton para uma visão completa da funcionalidade (AVDs + AIVDs).", "Use a mesma escala em avaliações seriadas para acompanhar evolução funcional.", "Considere o uso de dispositivos de auxílio ao pontuar cada item."], "examples": [{"label": "Independência total", "sublabel": "Barthel 100", "emoji": "✅", "values": {"alimentacao": 10, "banho": 5, "higiene_pessoal": 5, "vestir": 10, "intestino": 10, "bexiga": 10, "banheiro": 10, "transferencia": 15, "mobilidade": 15, "escadas": 10}}, {"label": "Dependência moderada", "sublabel": "Barthel ~65", "emoji": "⚠️", "values": {"alimentacao": 10, "banho": 0, "higiene_pessoal": 5, "vestir": 5, "intestino": 10, "bexiga": 5, "banheiro": 5, "transferencia": 10, "mobilidade": 10, "escadas": 5}}, {"label": "Dependência grave", "sublabel": "Barthel ~30", "emoji": "🚨", "values": {"alimentacao": 5, "banho": 0, "higiene_pessoal": 0, "vestir": 0, "intestino": 5, "bexiga": 5, "banheiro": 0, "transferencia": 5, "mobilidade": 10, "escadas": 0}}], "quiz": [{"q": "Qual a pontuação máxima do Índice de Barthel?", "opts": ["50 pontos", "80 pontos", "100 pontos", "120 pontos"], "correct": 2, "expl": "A soma máxima possível é 100 pontos, indicando independência total."}, {"q": "Por que o Barthel usa pesos diferentes para cada item, ao contrário do Katz?", "opts": ["Por erro histórico", "Para refletir a complexidade relativa de cada tarefa", "Não há diferença de peso", "Para facilitar o cálculo"], "correct": 1, "expl": "O Barthel atribui pontuações proporcionais à complexidade e ao grau de assistência necessário em cada tarefa, oferecendo uma avaliação mais granular que escalas binárias."}, {"q": "O Índice de Barthel avalia atividades instrumentais como manejo financeiro?", "opts": ["Sim", "Não, apenas AVDs básicas", "Apenas em versão estendida oficial", "Depende da instituição"], "correct": 1, "expl": "O Barthel avalia apenas atividades básicas de vida diária; atividades instrumentais são avaliadas pela Escala de Lawton."}]}, "faq": [{"q": "Com que frequência devo reaplicar o Índice de Barthel?", "a": "Recomenda-se reavaliação na admissão, na alta e periodicamente durante processos de reabilitação, para documentar evolução funcional."}, {"q": "O Barthel é mais detalhado que o Katz?", "a": "Sim. O Barthel usa uma escala de pontos ponderada (0, 5, 10 ou 15 por item) que reflete o grau de assistência necessário, enquanto o Katz usa apenas pontuação binária (independente/dependente)."}], "about": {"title": "Como funciona o Índice de Barthel", "html": "<p>O Índice de Barthel avalia 10 atividades de vida diária — alimentação, banho, higiene pessoal, vestir-se, controle intestinal e vesical, uso do banheiro, transferência, mobilidade e uso de escadas — com pontuações proporcionais ao grau de independência em cada uma. A soma varia de 0 a 100 pontos.</p><p><strong>Guia rápido:</strong> 100 = Independência total | 91-99 = Dependência leve | 61-90 = Moderada | 21-60 = Grave | 0-20 = Total.</p>"}}</script>
@@ -747,6 +761,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="hendrich">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -334,32 +344,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -568,6 +568,7 @@
               <select class="field-select" data-calc-input="antiepilepticos"><option value="0" selected>Não</option><option value="2">Sim</option></select></div><div class="urg-field"><label>Uso de Benzodiazepínicos / Tranquilizantes</label>
               <select class="field-select" data-calc-input="benzodiazepinicos"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Teste Get-Up-and-Go (Levantar-se da Cadeira)</label>
               <select class="field-select" data-calc-input="get_up_go"><option value="0" selected>Capaz de levantar em um único movimento, sem perda de equilíbrio</option><option value="1">Impulsiona-se com as mãos, bem-sucedido na primeira tentativa</option><option value="3">Múltiplas tentativas, mas bem-sucedido</option><option value="4">Incapaz de levantar-se sem assistência</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco de Queda</span>
@@ -627,6 +628,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "62738495-0617-2839-4051-627384950617", "code": "SCALE-HENDRICH-001", "slug": "hendrich", "version": "1.0.0", "status": "published", "seo": {"title": "Hendrich II Fall Risk Model - Risco de Queda em Adultos", "description": "Calcule o Hendrich II Fall Risk Model para avaliar o risco de quedas em pacientes adultos hospitalizados. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/hendrich.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Hendrich II Fall Risk Model", "acronym": "Hendrich II", "categoryBadge": "Segurança do paciente", "icon": "i-shieldcheck", "objective": "Identificar pacientes adultos hospitalizados com risco aumentado de quedas, a partir de fatores clínicos e do desempenho no teste Get-Up-and-Go.", "indication": "Indicada na triagem de risco de quedas em pacientes adultos hospitalizados, geralmente na admissão e reavaliada periodicamente.", "targetPopulation": "Pacientes adultos hospitalizados.", "specialty": ["Enfermagem", "Segurança do Paciente", "Geriatria"], "averageTime": "3-5 minutos", "evidenceLevel": "II", "originalAuthors": ["Ann Hendrich"], "complexity": "intermediate", "rating": 4.5, "ratingCount": 240}, "calculator": {"inputs": [{"id": "confusao", "type": "select", "label": "Confusão / Desorientação / Impulsividade", "defaultValue": 0, "description": "Presença de confusão mental, desorientação ou impulsividade.", "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 4, "label": "Presente", "score": 4}]}, {"id": "depressao", "type": "select", "label": "Depressão Sintomática", "defaultValue": 0, "description": "Presença de sintomas depressivos.", "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 2, "label": "Presente", "score": 2}]}, {"id": "eliminacao_alterada", "type": "select", "label": "Alteração na Eliminação", "defaultValue": 0, "description": "Incontinência, urgência urinária/intestinal ou necessidade de eliminação frequente.", "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 1, "label": "Presente", "score": 1}]}, {"id": "tontura", "type": "select", "label": "Tontura / Vertigem", "defaultValue": 0, "description": "Presença de tontura ou vertigem relatada.", "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 1, "label": "Presente", "score": 1}]}, {"id": "sexo", "type": "select", "label": "Sexo", "defaultValue": 0, "description": "Sexo do paciente.", "options": [{"value": 0, "label": "Feminino", "score": 0}, {"value": 1, "label": "Masculino", "score": 1}]}, {"id": "antiepilepticos", "type": "select", "label": "Uso de Antiepilépticos / Anticonvulsivantes", "defaultValue": 0, "description": "Uso de qualquer medicação antiepiléptica/anticonvulsivante.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 2, "label": "Sim", "score": 2}]}, {"id": "benzodiazepinicos", "type": "select", "label": "Uso de Benzodiazepínicos / Tranquilizantes", "defaultValue": 0, "description": "Uso de qualquer benzodiazepínico ou tranquilizante.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "get_up_go", "type": "select", "label": "Teste Get-Up-and-Go (Levantar-se da Cadeira)", "defaultValue": 0, "description": "Observe o paciente se levantando de uma cadeira sem apoio dos braços, se possível.", "options": [{"value": 0, "label": "Capaz de levantar em um único movimento, sem perda de equilíbrio", "score": 0}, {"value": 1, "label": "Impulsiona-se com as mãos, bem-sucedido na primeira tentativa", "score": 1}, {"value": 3, "label": "Múltiplas tentativas, mas bem-sucedido", "score": 3}, {"value": 4, "label": "Incapaz de levantar-se sem assistência", "score": 4}]}], "formula": {"type": "sum", "resultLabel": "Hendrich II Fall Risk Model", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 4, "label": "Baixo Risco de Queda", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Pontuação abaixo de 5, associada a baixo risco de quedas.", "recommendations": "• Manter precauções padrão de segurança (cama em posição baixa, campainha ao alcance)\n• Reavaliar periodicamente e após mudanças no estado clínico ou medicações"}, {"min": 5, "max": 16, "label": "Alto Risco de Queda", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação igual ou superior a 5 indica alto risco de quedas.", "recommendations": "• Implementar protocolo institucional de prevenção de quedas (identificação visual, supervisão aumentada)\n• Revisar medicações associadas a risco (antiepilépticos, benzodiazepínicos)\n• Orientar paciente e família sobre medidas de segurança\n• Reavaliar frequentemente durante a internação"}]}, "sae": {"nanda": [{"diagnosis": "Risco de quedas", "definition": "Suscetibilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde."}, {"diagnosis": "Confusão aguda", "definition": "Início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção, quando presente como fator de risco identificado."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação no movimento físico independente e intencional do corpo ou de uma ou mais extremidades, relacionada ao desempenho no teste Get-Up-and-Go."}], "noc": [{"outcome": "Ocorrência de quedas", "indicators": ["Escore de Hendrich II avaliado na admissão e reavaliado periodicamente", "Protocolo de prevenção de quedas implementado conforme risco identificado", "Ausência de quedas durante a internação"]}], "nic": [{"intervention": "Prevenção de quedas", "activities": ["Aplicar o Hendrich II Fall Risk Model na admissão e reavaliar periodicamente", "Implementar identificação visual de risco de queda (pulseira, sinalização) conforme protocolo institucional", "Revisar medicações associadas a risco de queda com a equipe médica/farmácia", "Orientar paciente e acompanhantes sobre medidas de segurança", "Manter cama em posição baixa e campainha de chamada ao alcance"]}]}, "evidence": {"foundation": "O Hendrich II Fall Risk Model avalia 7 fatores de risco clínicos (confusão/desorientação/impulsividade, depressão sintomática, alteração na eliminação, tontura, sexo masculino, uso de antiepilépticos e uso de benzodiazepínicos) somados ao desempenho no teste Get-Up-and-Go, totalizando uma pontuação de 0 a 16 pontos.", "history": "Desenvolvido por Ann Hendrich e colaboradores, é uma ferramenta amplamente utilizada em hospitais para triagem de risco de quedas em pacientes adultos, com boa capacidade preditiva validada em diversos contextos hospitalares.", "validation": "Validado em múltiplos estudos com boa sensibilidade e especificidade para predição de quedas em pacientes hospitalizados, sendo uma das ferramentas recomendadas para triagem sistemática de risco de queda.", "limitations": "Como toda ferramenta de triagem, não substitui o julgamento clínico individualizado. A pontuação deve ser reavaliada sempre que houver mudança no estado clínico, cognitivo ou na medicação do paciente.", "references": [{"text": "HENDRICH, A. L.; BENDER, P. S.; NYHUIS, A. Validation of the Hendrich II Fall Risk Model: a large concurrent case/control study of hospitalized patients. Applied Nursing Research, v. 16, n. 1, p. 9-21, 2003."}, {"text": "HU, M. H. et al. Validating the accuracy of the Hendrich II Fall Risk Model for hospitalized patients using the ROC curve analysis. The Kaohsiung Journal of Medical Sciences, 2024."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["O teste Get-Up-and-Go pode contribuir com até 4 dos 16 pontos totais — observe atentamente o desempenho do paciente ao se levantar da cadeira.", "O ponto de corte de 5 pontos ou mais para alto risco é o mais amplamente utilizado na prática clínica.", "Reavalie o escore sempre que houver alteração no estado clínico, cognitivo ou na medicação do paciente.", "Combine o resultado com a observação de fatores ambientais (iluminação, calçados, dispositivos de auxílio) para um plano de prevenção mais completo."], "examples": [{"label": "Baixo risco", "sublabel": "Escore 1", "emoji": "✅", "values": {"confusao": 0, "depressao": 0, "eliminacao_alterada": 1, "tontura": 0, "sexo": 0, "antiepilepticos": 0, "benzodiazepinicos": 0, "get_up_go": 0}}, {"label": "Alto risco — confusão e medicações", "sublabel": "Escore 8", "emoji": "⚠️", "values": {"confusao": 4, "depressao": 0, "eliminacao_alterada": 1, "tontura": 0, "sexo": 1, "antiepilepticos": 2, "benzodiazepinicos": 1, "get_up_go": 0}}, {"label": "Alto risco — múltiplos fatores", "sublabel": "Escore 14", "emoji": "🚨", "values": {"confusao": 4, "depressao": 2, "eliminacao_alterada": 1, "tontura": 1, "sexo": 1, "antiepilepticos": 2, "benzodiazepinicos": 0, "get_up_go": 3}}], "quiz": [{"q": "Qual fator de risco tem o maior peso isolado no Hendrich II?", "opts": ["Sexo masculino (1 ponto)", "Confusão/desorientação/impulsividade (4 pontos)", "Tontura/vertigem (1 ponto)", "Alteração na eliminação (1 ponto)"], "correct": 1, "expl": "Confusão/desorientação/impulsividade tem o maior peso isolado entre os fatores de risco fixos, valendo 4 pontos."}, {"q": "Qual pontuação de corte é utilizada para indicar alto risco de queda?", "opts": ["≥2 pontos", "≥5 pontos", "≥10 pontos", "≥16 pontos"], "correct": 1, "expl": "Uma pontuação igual ou superior a 5 pontos indica alto risco de quedas no Hendrich II Fall Risk Model."}, {"q": "Quantos pontos, no máximo, o teste Get-Up-and-Go pode contribuir para o escore total?", "opts": ["1 ponto", "2 pontos", "4 pontos", "8 pontos"], "correct": 2, "expl": "O teste Get-Up-and-Go pode contribuir com até 4 pontos, no caso de o paciente ser incapaz de se levantar sem assistência."}]}, "faq": [{"q": "O Hendrich II é usado em pacientes de qualquer idade?", "a": "É validado principalmente para pacientes adultos hospitalizados. Para a população pediátrica, utilizam-se escalas específicas, como a Humpty Dumpty Falls Scale."}, {"q": "Com que frequência o Hendrich II deve ser reaplicado?", "a": "Geralmente é aplicado na admissão e reavaliado periodicamente conforme protocolo institucional, além de sempre que houver mudança significativa no estado clínico, cognitivo ou na medicação do paciente."}], "about": {"title": "Como funciona o Hendrich II Fall Risk Model", "html": "<p>O Hendrich II soma a pontuação de 7 fatores de risco (confusão, depressão, alteração na eliminação, tontura, sexo masculino, antiepilépticos e benzodiazepínicos) ao desempenho no teste Get-Up-and-Go, totalizando de 0 a 16 pontos.</p><p><strong>Guia rápido:</strong> <5 pontos = Baixo risco | ≥5 pontos = Alto risco de queda.</p>"}}</script>
@@ -682,6 +696,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

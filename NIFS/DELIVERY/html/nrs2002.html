@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="nrs2002">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -269,32 +279,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -413,6 +413,7 @@
               <select class="field-select" data-calc-input="comprometimento_nutricional"><option value="0" selected>0 — Estado Nutricional Normal</option><option value="1">1 — Leve</option><option value="2">2 — Moderado</option><option value="3">3 — Grave</option></select></div><div class="urg-field"><label>Gravidade da Doença (Aumento das Necessidades Metabólicas)</label>
               <select class="field-select" data-calc-input="gravidade_doenca"><option value="0" selected>0 — Necessidades Nutricionais Normais</option><option value="1">1 — Leve</option><option value="2">2 — Moderado</option><option value="3">3 — Grave</option></select></div><div class="urg-field"><label>Idade Igual ou Superior a 70 Anos</label>
               <select class="field-select" data-calc-input="idade"><option value="0" selected>Menor que 70 Anos</option><option value="1">70 Anos ou Mais</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Risco Nutricional</span>
@@ -472,6 +473,19 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "17283940-5162-4394-0516-283940516273", "code": "SCALE-NRS2002-001", "slug": "nrs2002", "version": "1.0.0", "status": "published", "seo": {"title": "NRS-2002 - Triagem de Risco Nutricional", "description": "Calcule o NRS-2002 (Nutritional Risk Screening) para triagem de risco nutricional em pacientes hospitalizados. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/nrs2002.html"}, "breadcrumb": {"category": "Avaliação Nutricional", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "NRS-2002 (Nutritional Risk Screening)", "acronym": "NRS-2002", "categoryBadge": "Avaliação nutricional", "icon": "i-leaf", "objective": "Identificar pacientes hospitalizados em risco nutricional, combinando o grau de comprometimento do estado nutricional com a gravidade da doença de base, para orientar a necessidade de intervenção nutricional precoce.", "indication": "Indicada na admissão hospitalar de todos os pacientes adultos, como parte da avaliação inicial de enfermagem/nutrição.", "targetPopulation": "Pacientes adultos hospitalizados.", "specialty": ["Nutrição", "Enfermagem", "Terapia Intensiva"], "averageTime": "3-5 minutos", "evidenceLevel": "I", "organizations": ["European Society for Clinical Nutrition and Metabolism (ESPEN)"], "complexity": "intermediate", "rating": 4.6, "ratingCount": 250}, "calculator": {"inputs": [{"id": "comprometimento_nutricional", "type": "select", "label": "Comprometimento do Estado Nutricional", "description": "Avalie perda de peso recente, IMC e ingesta alimentar da última semana.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Estado Nutricional Normal", "score": 0, "description": "Sem perda de peso significativa, IMC e ingesta adequados."}, {"value": 1, "label": "1 — Leve", "score": 1, "description": "Perda de peso >5% em 3 meses, ou ingesta entre 50-75% da necessidade na última semana."}, {"value": 2, "label": "2 — Moderado", "score": 2, "description": "Perda de peso >5% em 2 meses, ou IMC 18,5-20,5 com condição geral comprometida, ou ingesta entre 25-50% da necessidade."}, {"value": 3, "label": "3 — Grave", "score": 3, "description": "Perda de peso >5% em 1 mês (>15% em 3 meses), ou IMC <18,5 com condição geral comprometida, ou ingesta entre 0-25% da necessidade."}]}, {"id": "gravidade_doenca", "type": "select", "label": "Gravidade da Doença (Aumento das Necessidades Metabólicas)", "description": "Avalie a condição clínica de base e seu impacto nas necessidades nutricionais.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Necessidades Nutricionais Normais", "score": 0, "description": "Doença crônica estável, sem aumento significativo das necessidades metabólicas."}, {"value": 1, "label": "1 — Leve", "score": 1, "description": "Fratura de quadril, pacientes crônicos com complicações agudas (cirrose, DPOC, hemodiálise, diabetes, câncer)."}, {"value": 2, "label": "2 — Moderado", "score": 2, "description": "Cirurgia abdominal de grande porte, AVC, pneumonia grave, neoplasia hematológica."}, {"value": 3, "label": "3 — Grave", "score": 3, "description": "Traumatismo cranioencefálico, transplante de medula óssea, paciente crítico em terapia intensiva (APACHE II >10)."}]}, {"id": "idade", "type": "select", "label": "Idade Igual ou Superior a 70 Anos", "description": "Adicione 1 ponto se o paciente tiver 70 anos ou mais.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor que 70 Anos", "score": 0}, {"value": 1, "label": "70 Anos ou Mais", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Escore NRS-2002", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 2, "label": "Sem Risco Nutricional", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Ausência de risco nutricional significativo no momento da avaliação.", "recommendations": "• Reavaliar semanalmente durante a internação\n• Reaplicar o NRS-2002 se houver mudança no quadro clínico"}, {"min": 3, "max": 7, "label": "Risco Nutricional Presente", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Presença de risco nutricional, indicando necessidade de elaboração de um plano de cuidado nutricional.", "recommendations": "• Encaminhar para avaliação nutricional detalhada\n• Elaborar plano de terapia nutricional individualizado\n• Reavaliar periodicamente a resposta à intervenção nutricional"}]}, "sae": {"nanda": [{"diagnosis": "Nutrição desequilibrada: menos do que as necessidades corporais", "definition": "Ingestão de nutrientes insuficiente para atender às necessidades metabólicas."}, {"diagnosis": "Risco de nutrição desequilibrada: menos do que as necessidades corporais", "definition": "Risco de ingestão de nutrientes insuficiente para atender às necessidades metabólicas."}, {"diagnosis": "Deglutição prejudicada", "definition": "Funcionamento anormal do mecanismo de deglutição associado a déficit na estrutura ou função oral, faríngea ou esofágica, quando aplicável."}], "noc": [{"outcome": "Estado nutricional", "indicators": ["Ingestão alimentar adequada às necessidades", "Peso corporal estável ou em recuperação", "Ausência de sinais de desnutrição"]}], "nic": [{"intervention": "Monitorização nutricional", "activities": ["Aplicar o NRS-2002 na admissão e semanalmente durante a internação", "Encaminhar para avaliação nutricional especializada quando indicado", "Monitorar peso, ingesta alimentar e sinais de desnutrição", "Colaborar com a equipe de nutrição na elaboração do plano terapêutico"]}]}, "evidence": {"foundation": "O NRS-2002 foi desenvolvido pela European Society for Clinical Nutrition and Metabolism (ESPEN) como ferramenta de triagem de risco nutricional em pacientes hospitalizados, combinando o grau de comprometimento nutricional com a gravidade da doença de base e um ajuste adicional para idade avançada.", "history": "Amplamente recomendado por diretrizes internacionais de terapia nutricional como instrumento de triagem inicial em todos os pacientes hospitalizados, permitindo identificar precocemente aqueles que se beneficiariam de intervenção nutricional.", "validation": "Validado com base em mais de 100 estudos clínicos randomizados, sendo um dos instrumentos de triagem nutricional mais recomendados na literatura científica internacional.", "limitations": "É uma ferramenta de triagem inicial, não substituindo a avaliação nutricional completa realizada por nutricionista, que deve ser acionada sempre que o risco nutricional for identificado.", "references": [{"text": "KONDRUP, J. et al. Nutritional risk screening (NRS 2002): a new method based on an analysis of controlled clinical trials. Clinical Nutrition, v. 22, n. 3, p. 321-336, 2003."}, {"text": "EUROPEAN SOCIETY FOR CLINICAL NUTRITION AND METABOLISM (ESPEN). Guidelines for nutrition screening 2002. Clinical Nutrition, v. 22, n. 4, p. 415-421, 2003."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Aplique o NRS-2002 na admissão de todo paciente hospitalizado, independentemente do motivo da internação.", "Reavalie semanalmente, ou antes se houver mudança significativa no quadro clínico.", "Um escore igual ou maior que 3 já indica a necessidade de elaboração de plano de cuidado nutricional.", "O ajuste de idade (+1 ponto para 70 anos ou mais) reflete o maior risco nutricional dessa população."], "examples": [{"label": "Sem risco nutricional", "sublabel": "NRS-2002: 1", "emoji": "✅", "values": {"comprometimento_nutricional": 1, "gravidade_doenca": 0, "idade": 0}}, {"label": "Risco nutricional presente", "sublabel": "NRS-2002: 4", "emoji": "⚠️", "values": {"comprometimento_nutricional": 2, "gravidade_doenca": 1, "idade": 1}}, {"label": "Alto risco, paciente crítico", "sublabel": "NRS-2002: 7", "emoji": "🚨", "values": {"comprometimento_nutricional": 3, "gravidade_doenca": 3, "idade": 1}}], "quiz": [{"q": "A partir de qual escore o NRS-2002 indica risco nutricional presente?", "opts": ["1 ponto", "2 pontos", "3 pontos ou mais", "5 pontos ou mais"], "correct": 2, "expl": "Escores de 3 pontos ou mais indicam risco nutricional presente, motivando elaboração de plano de cuidado nutricional."}, {"q": "Quais componentes são somados no NRS-2002?", "opts": ["Apenas o IMC", "Comprometimento nutricional, gravidade da doença e ajuste de idade", "Apenas exames laboratoriais", "Apenas a idade do paciente"], "correct": 1, "expl": "O NRS-2002 soma o grau de comprometimento do estado nutricional, a gravidade da doença (aumento das necessidades metabólicas) e um ponto adicional para idade igual ou superior a 70 anos."}, {"q": "Qual organização desenvolveu e recomenda o NRS-2002?", "opts": ["OMS", "ESPEN", "ANVISA", "COFEN"], "correct": 1, "expl": "O NRS-2002 foi desenvolvido pela European Society for Clinical Nutrition and Metabolism (ESPEN) e é amplamente recomendado em diretrizes internacionais de terapia nutricional."}]}, "faq": [{"q": "O NRS-2002 substitui a avaliação nutricional completa?", "a": "Não. É uma ferramenta de triagem inicial. Pacientes identificados com risco nutricional (escore ≥3) devem ser encaminhados para avaliação nutricional detalhada por profissional especializado."}, {"q": "Com que frequência o NRS-2002 deve ser reaplicado?", "a": "Recomenda-se reavaliação semanal durante toda a internação, ou antes se houver mudança significativa no quadro clínico ou na ingesta alimentar do paciente."}], "about": {"title": "Como funciona o NRS-2002", "html": "<p>O NRS-2002 soma o grau de comprometimento do estado nutricional (0-3 pontos), a gravidade da doença de base (0-3 pontos) e um ponto adicional para pacientes com 70 anos ou mais, totalizando de 0 a 7 pontos.</p><p><strong>Guia rápido:</strong> 0-2 = Sem risco nutricional | ≥3 = Risco nutricional presente, elaborar plano de cuidado nutricional.</p>"}}</script>
@@ -527,6 +541,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

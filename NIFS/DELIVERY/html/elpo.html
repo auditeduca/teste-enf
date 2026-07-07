@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="elpo">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -99,8 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
+        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
         <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
 </div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -321,32 +331,22 @@
               <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
             </div>
             <div class="safety-grid">
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyMeds">
                 <span class="nnn-label">9 Certos da Medicação</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
               </div>
-              <div class="safety-col">
+              <div class="safety-col" id="calcSafetyIpsg">
                 <span class="nnn-label">Metas Internacionais (IPSG)</span>
-                <ul class="tips-list">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do paciente</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Comunicação efetiva na transferência de cuidado</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança em procedimentos de alta vigilância</li>
-                </ul>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
               </div>
             </div>
           </section>
         </div>
 
-      </div>
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -537,6 +537,7 @@
               <select class="field-select" data-calc-input="posicao_membros"><option value="1" selected>Alinhamento corporal</option><option value="2">Abertura dos membros superiores &lt; 90°</option><option value="3">Elevação dos joelhos &lt; 90° e abertura dos membros inferiores &lt; 90°, ou pescoço sem alinhamento mento-esternal</option><option value="4">Elevação dos joelhos &gt; 90° ou abertura dos membros inferiores &gt; 90°</option><option value="5">Elevação dos joelhos &gt; 90° e abertura dos membros inferiores &gt; 90°, ou abertura dos membros superiores &gt; 90°</option></select></div><div class="urg-field"><label>Comorbidades</label>
               <select class="field-select" data-calc-input="comorbidades"><option value="1" selected>Sem comorbidades</option><option value="2">Doença vascular</option><option value="3">Diabetes mellitus</option><option value="4">Obesidade ou desnutrição</option><option value="5">Úlcera por pressão ou neuropatia previamente diagnosticada, ou trombose venosa profunda</option></select></div><div class="urg-field"><label>Idade do Paciente</label>
               <select class="field-select" data-calc-input="idade_paciente"><option value="1" selected>18 a 39 anos</option><option value="2">40 a 59 anos</option><option value="3">60 a 69 anos</option><option value="4">70 a 79 anos</option><option value="5">&gt; 80 anos</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">7</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Risco Menor (≤ 19 pontos)</span>
@@ -596,6 +597,17 @@
     </section>
 
   </div>
+
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="glasgow.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Escala de Glasgow</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="morse.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Escala de Morse</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="braden.html"><div class="icon-wrap"><svg class="icon"><use href="#i-shield"/></svg></div><div><h3>Escala de Braden</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="news2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>NEWS 2</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
+
 </main>
 
 <script type="application/json" id="tool-config">{"id": "19865e82-c033-4163-bfd0-9bff77974976", "code": "SCALE-ELPO-001", "slug": "elpo", "version": "1.0.0", "status": "published", "seo": {"title": "Escala ELPO - Risco de Lesão por Posicionamento Cirúrgico", "description": "Calcule a Escala ELPO (Avaliação de Risco para Lesões Decorrentes do Posicionamento Cirúrgico) para identificar o risco de lesão por pressão no período perioperatório. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/elpo.html"}, "breadcrumb": {"category": "Centro Cirúrgico", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Avaliação de Risco para Lesões Decorrentes do Posicionamento Cirúrgico", "acronym": "ELPO", "categoryBadge": "Centro Cirúrgico", "icon": "i-surgery", "objective": "Avaliar o risco de desenvolvimento de lesões por pressão e outras complicações decorrentes do posicionamento cirúrgico do paciente, considerando 7 fatores de risco intraoperatórios.", "indication": "Indicada para pacientes cirúrgicos, no período pré-operatório, para planejamento de medidas preventivas de posicionamento na mesa cirúrgica.", "targetPopulation": "Pacientes adultos submetidos a procedimentos cirúrgicos sob anestesia geral, regional ou local.", "specialty": ["Centro Cirúrgico", "Enfermagem Perioperatória"], "averageTime": "3-5 minutos", "evidenceLevel": "II", "originalAuthors": "Camila Mendonça de Moraes Lopes (EERP-USP, 2013)", "complexity": "advanced", "rating": 4.6, "ratingCount": 118}, "calculator": {"inputs": [{"id": "posicao_cirurgica", "type": "select", "label": "Tipo de Posição Cirúrgica", "defaultValue": 1, "description": "Selecione a posição cirúrgica adotada para o procedimento.", "options": [{"value": 1, "label": "Supina", "score": 1, "description": "Menor risco de desenvolvimento de lesões."}, {"value": 2, "label": "Lateral", "score": 2, "description": "Risco baixo."}, {"value": 3, "label": "Trendelemburg", "score": 3, "description": "Risco moderado."}, {"value": 4, "label": "Prona", "score": 4, "description": "Risco alto."}, {"value": 5, "label": "Litotômica", "score": 5, "description": "Maior risco de desenvolvimento de lesões."}]}, {"id": "tempo_cirurgia", "type": "select", "label": "Tempo de Cirurgia", "defaultValue": 1, "description": "Selecione a duração estimada ou real do procedimento cirúrgico.", "options": [{"value": 1, "label": "< 1 hora", "score": 1, "description": "Menor risco de desenvolvimento de lesões."}, {"value": 2, "label": "< 2 horas", "score": 2, "description": "Risco baixo."}, {"value": 3, "label": "≥ 2 horas", "score": 3, "description": "Risco moderado."}, {"value": 4, "label": "> 4 horas", "score": 4, "description": "Risco alto."}, {"value": 5, "label": "> 6 horas", "score": 5, "description": "Maior risco de desenvolvimento de lesões."}]}, {"id": "tipo_anestesia", "type": "select", "label": "Tipo de Anestesia", "defaultValue": 1, "description": "Selecione o tipo de anestesia utilizada no procedimento.", "options": [{"value": 1, "label": "Local", "score": 1, "description": "Menor risco de desenvolvimento de lesões."}, {"value": 2, "label": "Sedação", "score": 2, "description": "Risco baixo."}, {"value": 3, "label": "Regional", "score": 3, "description": "Risco moderado."}, {"value": 4, "label": "Geral", "score": 4, "description": "Risco alto."}, {"value": 5, "label": "Geral + Regional", "score": 5, "description": "Maior risco de desenvolvimento de lesões."}]}, {"id": "superficie_suporte", "type": "select", "label": "Superfície de Suporte", "defaultValue": 1, "description": "Selecione o tipo de colchão e coxins utilizados no posicionamento.", "options": [{"value": 1, "label": "Colchão de viscoelástico + coxins de viscoelástico", "score": 1, "description": "Menor risco de desenvolvimento de lesões."}, {"value": 2, "label": "Colchão de espuma (convencional) + coxins de viscoelástico", "score": 2, "description": "Risco baixo."}, {"value": 3, "label": "Colchão de espuma (convencional) + coxins de espuma", "score": 3, "description": "Risco moderado."}, {"value": 4, "label": "Colchão de espuma (convencional) + coxins de campos de algodão", "score": 4, "description": "Risco alto."}, {"value": 5, "label": "Sem superfície de suporte, ou suportes rígidos sem acolchoamento, ou perneiras estreitas", "score": 5, "description": "Maior risco de desenvolvimento de lesões."}]}, {"id": "posicao_membros", "type": "select", "label": "Posição dos Membros", "defaultValue": 1, "description": "Selecione a condição de posicionamento dos membros do paciente.", "options": [{"value": 1, "label": "Alinhamento corporal", "score": 1, "description": "Menor risco de desenvolvimento de lesões."}, {"value": 2, "label": "Abertura dos membros superiores < 90°", "score": 2, "description": "Risco baixo."}, {"value": 3, "label": "Elevação dos joelhos < 90° e abertura dos membros inferiores < 90°, ou pescoço sem alinhamento mento-esternal", "score": 3, "description": "Risco moderado."}, {"value": 4, "label": "Elevação dos joelhos > 90° ou abertura dos membros inferiores > 90°", "score": 4, "description": "Risco alto."}, {"value": 5, "label": "Elevação dos joelhos > 90° e abertura dos membros inferiores > 90°, ou abertura dos membros superiores > 90°", "score": 5, "description": "Maior risco de desenvolvimento de lesões."}]}, {"id": "comorbidades", "type": "select", "label": "Comorbidades", "defaultValue": 1, "description": "Selecione a comorbidade mais relevante apresentada pelo paciente.", "options": [{"value": 1, "label": "Sem comorbidades", "score": 1, "description": "Menor risco de desenvolvimento de lesões."}, {"value": 2, "label": "Doença vascular", "score": 2, "description": "Risco baixo."}, {"value": 3, "label": "Diabetes mellitus", "score": 3, "description": "Risco moderado."}, {"value": 4, "label": "Obesidade ou desnutrição", "score": 4, "description": "Risco alto."}, {"value": 5, "label": "Úlcera por pressão ou neuropatia previamente diagnosticada, ou trombose venosa profunda", "score": 5, "description": "Maior risco de desenvolvimento de lesões."}]}, {"id": "idade_paciente", "type": "select", "label": "Idade do Paciente", "defaultValue": 1, "description": "Selecione a faixa etária do paciente.", "options": [{"value": 1, "label": "18 a 39 anos", "score": 1, "description": "Menor risco de desenvolvimento de lesões."}, {"value": 2, "label": "40 a 59 anos", "score": 2, "description": "Risco baixo."}, {"value": 3, "label": "60 a 69 anos", "score": 3, "description": "Risco moderado."}, {"value": 4, "label": "70 a 79 anos", "score": 4, "description": "Risco alto."}, {"value": 5, "label": "> 80 anos", "score": 5, "description": "Maior risco de desenvolvimento de lesões."}]}], "formula": {"type": "sum", "resultLabel": "Escore ELPO", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 7, "max": 19, "label": "Risco Menor (≤ 19 pontos)", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Menor risco de desenvolvimento de lesões decorrentes do posicionamento cirúrgico.", "recommendations": "• Manter posicionamento adequado conforme protocolo institucional\n• Reavaliar em cirurgias prolongadas ou mudanças de posição\n• Documentar o posicionamento e os dispositivos utilizados"}, {"min": 20, "max": 35, "label": "Risco Maior (≥ 20 pontos)", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Maior risco de desenvolvimento de lesões por pressão e complicações decorrentes do posicionamento cirúrgico (respiratórias, vasculares, neurológicas ou tegumentares).", "recommendations": "• Priorizar superfícies de suporte de viscoelástico e coxins específicos\n• Redobrar atenção ao alinhamento corporal e proeminências ósseas\n• Considerar reposicionamento/reavaliação em cirurgias muito prolongadas\n• Comunicar a equipe cirúrgica sobre o risco elevado identificado"}]}, "sae": {"nanda": [{"diagnosis": "Risco de integridade da pele prejudicada", "definition": "Risco de alteração na epiderme e/ou derme relacionado à pressão prolongada e ao posicionamento cirúrgico inadequado."}, {"diagnosis": "Risco de disfunção neurovascular periférica", "definition": "Risco de perturbação na circulação, sensibilidade ou movimento de uma extremidade, relacionado a posicionamento com compressão de estruturas vasculonervosas."}], "noc": [{"outcome": "Integridade tissular: pele e mucosas", "indicators": ["Ausência de lesão por pressão no pós-operatório", "Perfusão tecidual mantida nas áreas de maior pressão", "Ausência de queixas de dor ou parestesia em membros após o procedimento"]}], "nic": [{"intervention": "Posicionamento cirúrgico", "activities": ["Avaliar os 7 itens da escala ELPO no pré-operatório", "Selecionar superfícies de suporte e coxins adequados ao risco identificado", "Posicionar o paciente mantendo alinhamento corporal sempre que possível", "Proteger proeminências ósseas e estruturas neurovasculares", "Reavaliar o posicionamento em cirurgias prolongadas", "Documentar a posição, os dispositivos utilizados e o escore ELPO obtido"]}]}, "evidence": {"foundation": "A ELPO avalia 7 itens (tipo de posição cirúrgica, tempo de cirurgia, tipo de anestesia, superfície de suporte, posição dos membros, comorbidades e idade do paciente), cada um com 5 subitens pontuados de 1 (menor risco) a 5 (maior risco), totalizando de 7 a 35 pontos. Escores a partir de 20 pontos indicam maior risco de complicações decorrentes do posicionamento cirúrgico.", "history": "Desenvolvida por Camila Mendonça de Moraes Lopes como parte de sua tese de doutorado na Escola de Enfermagem de Ribeirão Preto da Universidade de São Paulo (EERP-USP), defendida em 2013, com publicação da validação em 2016 na Revista Latino-Americana de Enfermagem.", "validation": "Validada quanto ao conteúdo e à aparência por especialistas, e aplicada em diferentes contextos cirúrgicos brasileiros (incluindo cirurgias cardiovasculares, urológicas e ortopédicas), demonstrando-se instrumento útil para identificar pacientes com maior risco de lesão por posicionamento.", "limitations": "A pontuação de cada item considera apenas a condição de maior risco presente; não pondera a interação simultânea entre múltiplos fatores de risco. Recomenda-se treinamento específico da equipe de enfermagem perioperatória para aplicação padronizada.", "references": [{"text": "LOPES, C. M. M. Escala de avaliação de risco para o desenvolvimento de lesões decorrentes do posicionamento cirúrgico: construção e validação. Tese (Doutorado) - Escola de Enfermagem de Ribeirão Preto, Universidade de São Paulo, Ribeirão Preto, 2013."}, {"text": "LOPES, C. M. M.; HAAS, V. J.; DANTAS, R. A. S.; OLIVEIRA, C. G.; GALVÃO, C. M. Escala de avaliação de risco para lesões decorrentes do posicionamento cirúrgico. Revista Latino-Americana de Enfermagem, v. 24, e2704, 2016."}, {"text": "ESKILDESEN, L. et al. Aplicação da escala ELPO em pacientes submetidos a cirurgias cardiovasculares. Cuidado é Fundamental, v. 13, n. 2, p. 116-121, 2019."}]}, "learning": {"tips": ["A ELPO possui 7 itens, cada um com 5 subitens pontuados de 1 (menor risco) a 5 (maior risco), totalizando de 7 a 35 pontos.", "Escores a partir de 20 pontos indicam maior risco de lesões decorrentes do posicionamento cirúrgico.", "A superfície de suporte é um dos fatores modificáveis mais importantes: o uso de colchão e coxins de viscoelástico reduz significativamente o escore de risco.", "A avaliação deve ser feita no pré-operatório, considerando a posição planejada e o tempo estimado de cirurgia."], "examples": [{"label": "Colecistectomia videolaparoscópica curta, jovem, sem comorbidades", "sublabel": "ELPO 7", "emoji": "🟢", "values": {"posicao_cirurgica": 1, "tempo_cirurgia": 1, "tipo_anestesia": 1, "superficie_suporte": 1, "posicao_membros": 1, "comorbidades": 1, "idade_paciente": 1}}, {"label": "Revascularização do miocárdio, supina, 5h, anestesia geral, idoso com doença vascular", "sublabel": "ELPO 22", "emoji": "🟠", "values": {"posicao_cirurgica": 1, "tempo_cirurgia": 4, "tipo_anestesia": 4, "superficie_suporte": 4, "posicao_membros": 3, "comorbidades": 2, "idade_paciente": 4}}, {"label": "Cirurgia urológica robótica em posição litotômica prolongada, idoso com neuropatia", "sublabel": "ELPO 33", "emoji": "🔴", "values": {"posicao_cirurgica": 5, "tempo_cirurgia": 5, "tipo_anestesia": 5, "superficie_suporte": 4, "posicao_membros": 5, "comorbidades": 5, "idade_paciente": 4}}], "quiz": [{"q": "Quantos itens compõem a escala ELPO?", "opts": ["5", "6", "7", "10"], "correct": 2, "expl": "A ELPO é composta por 7 itens: tipo de posição cirúrgica, tempo de cirurgia, tipo de anestesia, superfície de suporte, posição dos membros, comorbidades e idade do paciente."}, {"q": "A partir de qual escore o paciente é classificado como de maior risco na ELPO?", "opts": ["≥ 10", "≥ 15", "≥ 20", "≥ 30"], "correct": 2, "expl": "Escores a partir de 20 pontos (de um total possível de 7 a 35) classificam o paciente como de maior risco para desenvolvimento de lesões por posicionamento cirúrgico."}, {"q": "Qual posição cirúrgica recebe a maior pontuação de risco na ELPO?", "opts": ["Supina", "Lateral", "Trendelemburg", "Litotômica"], "correct": 3, "expl": "A posição litotômica recebe pontuação 5 (maior risco), enquanto a posição supina recebe pontuação 1 (menor risco)."}]}, "faq": [{"q": "Quando a escala ELPO deve ser aplicada?", "a": "No período pré-operatório, para planejar antecipadamente as medidas preventivas de posicionamento e os dispositivos de suporte a serem utilizados durante a cirurgia."}, {"q": "A ELPO substitui a avaliação de risco de lesão por pressão geral (ex: Braden)?", "a": "Não. A ELPO é específica para os riscos decorrentes do posicionamento cirúrgico intraoperatório, complementando (e não substituindo) escalas gerais de risco de lesão por pressão como a Braden."}], "about": {"title": "Como funciona a Escala ELPO", "html": "<p>A ELPO avalia 7 fatores de risco para lesões decorrentes do posicionamento cirúrgico, cada um pontuado de 1 a 5, totalizando de 7 a 35 pontos.</p><p><strong>Interpretação:</strong> ≤ 19 pontos = risco menor | ≥ 20 pontos = risco maior de complicações por posicionamento cirúrgico.</p>"}}</script>
@@ -651,6 +663,75 @@
   <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
+
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
