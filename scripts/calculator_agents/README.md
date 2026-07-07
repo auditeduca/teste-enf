@@ -48,7 +48,28 @@ python -m scripts.calculator_agents generate nova-escala --draft --llm \
 
 # Pipeline completo
 python -m scripts.calculator_agents pipeline imc apgar --llm
+
+# Orquestrador de segurança (pre-deploy)
+python -m scripts.calculator_agents orchestrate --mode pre_deploy
+python -m scripts.calculator_agents orchestrate imc glasgow --dry-run
 ```
+
+Relatórios salvos em `artifacts/security/orchestration_*.json`.
+
+## DAG do orquestrador de segurança
+
+```
+security_scan → validate → correct → security_scan → validate
+```
+
+Verificações de segurança:
+- Vazamento de secrets (API keys, tokens)
+- Padrões JS inseguros (`eval`, `new Function`)
+- Landmarks de acessibilidade (skip-link, main, header, a11y)
+- Seções bloqueadas (CIP, disclaimer)
+- Estrutura tool-config + partials-loader
+
+Gate `pre_deploy`: 0 critical, 0 high, 0 erros de validação.
 
 ## Agentes
 

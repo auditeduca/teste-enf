@@ -11,6 +11,12 @@ DELIVERY_HTML = WORKSPACE / "NIFS" / "DELIVERY" / "html"
 TOOLS_JSON = WORKSPACE / "reference-website" / "data" / "tools"
 SCHEMA_PATH = WORKSPACE / "reference-website" / "data" / "schemas" / "tool.schema.json"
 
+EXCLUDED_SLUGS = frozenset({
+    "calculadora-template",
+    "calculadora-template-v2",
+    "calculadora-preview",
+})
+
 REQUIRED_TOP = ["id", "slug", "seo", "overview", "calculator"]
 TOOL_CONFIG_RX = re.compile(
     r'<script type="application/json" id="tool-config">(.*?)</script>',
@@ -155,19 +161,18 @@ def run_validation(
     source_tools = _load_json_tools()
 
     if slugs:
-        paths = [root / f"{s}.html" for s in slugs]
+        paths = [root / f"{s}.html" for s in slugs if s not in EXCLUDED_SLUGS]
     else:
-        paths = sorted(root.glob("*.html"))
+        paths = sorted(
+            p for p in root.glob("*.html")
+            if p.stem not in EXCLUDED_SLUGS
+            and 'id="tool-config"' in p.read_text(encoding="utf-8", errors="replace")
+        )
 
     for html_path in paths:
         if not html_path.is_file():
             report.add(html_path.stem, "error", "file_not_found", str(html_path))
             continue
-        m = TOOL_CONFIG_RX.search(html_path.read_text(encoding="utf-8", errors="replace"))
-        if not m and slugs is None:
-            # Pula páginas não-calculadora quando validando em massa
-            if 'id="tool-config"' not in html_path.read_text(encoding="utf-8", errors="replace"):
-                continue
         validate_page(html_path, source_tools, report)
 
     return report

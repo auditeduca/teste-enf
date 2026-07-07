@@ -9,6 +9,7 @@ from pathlib import Path
 from .correct import run_correction
 from .env import env_status, load_env
 from .generate import run_generation
+from .orchestrate import orchestrate
 from .validate import run_validation
 
 
@@ -65,6 +66,21 @@ def cmd_pipeline(args: argparse.Namespace) -> int:
     return 1 if after.to_dict()["errors"] else 0
 
 
+def cmd_orchestrate(args: argparse.Namespace) -> int:
+    slugs = args.slugs if args.slugs else None
+    use_llm = args.llm and not args.no_llm
+    result = orchestrate(
+        slugs=slugs,
+        mode=args.mode,
+        auto_correct=not args.dry_run,
+        use_llm=use_llm,
+        write_report=True,
+    )
+    payload = result.to_dict()
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+    return 0 if result.gate_passed else 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Agentes de validação, correção e geração — calculadoras/escalas",
@@ -98,6 +114,22 @@ def main(argv: list[str] | None = None) -> int:
     p_pipe.add_argument("--llm", action="store_true")
     p_pipe.add_argument("--no-llm", action="store_true")
     p_pipe.set_defaults(func=cmd_pipeline)
+
+    p_orch = sub.add_parser(
+        "orchestrate",
+        help="Orquestrador de segurança: scan → validate → correct → re-scan",
+    )
+    p_orch.add_argument("slugs", nargs="*", help="Slugs (vazio = todas calculadoras)")
+    p_orch.add_argument(
+        "--mode",
+        default="pre_deploy",
+        choices=["pre_deploy", "monitor", "full"],
+        help="Modo de orquestração",
+    )
+    p_orch.add_argument("--dry-run", action="store_true", help="Apenas scan/validate, sem corrigir")
+    p_orch.add_argument("--llm", action="store_true", help="Revisão clínica via API na etapa de correção")
+    p_orch.add_argument("--no-llm", action="store_true")
+    p_orch.set_defaults(func=cmd_orchestrate)
 
     args = parser.parse_args(argv)
     return args.func(args)
