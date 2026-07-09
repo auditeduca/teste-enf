@@ -1,0 +1,207 @@
+{
+  "cko_id": "CKO-APGAR-001",
+  "metadata": {
+    "name": "Índice de Apgar",
+    "domain": "Neonatologia",
+    "version": "3.0.0",
+    "last_review": "2026-07-08",
+    "validated_by": "Nurse-PaLM Engine V9",
+    "nifs_chapter": "Avaliação e Monitorização",
+    "nifs_principle": "Objetividade diagnóstica baseada em evidência"
+  },
+  "assessment_model": {
+    "concept": "Vitalidade Neonatal",
+    "assessment_points": [
+      { "id": "fc", "label": "Frequência Cardíaca", "weight": 2 },
+      { "id": "respiracao", "label": "Esforço Respiratório", "weight": 2 },
+      { "id": "tono", "label": "Tônus Muscular", "weight": 2 },
+      { "id": "irritabilidade", "label": "Irritabilidade Reflexa", "weight": 2 },
+      { "id": "cor", "label": "Cor da Pele", "weight": 2 }
+    ]
+  },
+  "terminology": {
+    "nanda": [
+      { "code": "00032", "label": "Padrão respiratório ineficaz", "axis": "Diagnóstico" },
+      { "code": "00109", "label": "Risco de desequilíbrio na temperatura corporal", "axis": "Diagnóstico de risco" }
+    ],
+    "nic": [
+      { "code": "3350", "label": "Monitorização respiratória" },
+      { "code": "3900", "label": "Regulação da temperatura" },
+      { "code": "6680", "label": "Monitorização dos sinais vitais" }
+    ],
+    "noc": [
+      { "code": "0415", "label": "Estado respiratório" },
+      { "code": "0800", "label": "Termorregulação" },
+      { "code": "0115", "label": "Adaptação do recém-nascido" }
+    ]
+  },
+  "knowledge_sources": {
+    "types": ["guideline", "original_research", "consensus", "textbook"],
+    "references": [
+      {
+        "type": "original_research",
+        "authors": ["Apgar V."],
+        "year": 1953,
+        "title": "A proposal for a new method of evaluation of the newborn infant",
+        "journal": "Current Researches in Anesthesia & Analgesia",
+        "volume": "32",
+        "pages": "260-267",
+        "doi": "10.1213/00000539-195301000-00041"
+      },
+      {
+        "type": "guideline",
+        "authors": ["American Academy of Pediatrics", "American Heart Association"],
+        "year": 2020,
+        "title": "Neonatal Resuscitation Program (NRP) 8th Edition Guidelines",
+        "publisher": "AAP/AHA"
+      },
+      {
+        "type": "consensus",
+        "authors": ["WHO"],
+        "year": 2022,
+        "title": "WHO recommendations on newborn health",
+        "publisher": "World Health Organization"
+      }
+    ]
+  },
+  "clinical_reasoning": {
+    "observations": [
+      "Recém-nascido em transição extrauterina",
+      "Presença ou ausência de choro vigoroso",
+      "Coloração inicial (acrocianose vs cianose central)",
+      "Resposta a estímulo tátil (aspiração leve)"
+    ],
+    "findings": [
+      "FC > 100 bpm indica boa perfusão e oxigenação central",
+      "Esforço respiratório fraco/irregular sugere depressão neurológica ou pulmonar",
+      "Tônus flácido está associado a acidose ou hipóxia prolongada",
+      "Cor pálida/cianótica persistente requer avaliação de oxigenação"
+    ],
+    "hypotheses": [
+      "Adaptação neonatal normal (Apgar 8-10)",
+      "Depressão cardiorrespiratória leve a moderada (Apgar 4-7)",
+      "Asfixia perinatal grave (Apgar 0-3)"
+    ],
+    "priorities": [
+      "Frequência cardíaca: valor preditivo mais forte para sobrevida e necessidade de reanimação",
+      "Esforço respiratório: segundo marcador mais crítico",
+      "A cor da pele é o último parâmetro a se normalizar; não deve retardar intervenções"
+    ],
+    "recommendations": [
+      "Avaliar Apgar no 1º e 5º minutos de vida",
+      "Se Apgar < 7 no 5º minuto, continuar avaliação a cada 5 minutos até pontuação ≥ 7",
+      "Iniciar reanimação imediatamente se FC ausente ou < 60 bpm, independentemente do índice"
+    ],
+    "justifications": [
+      "Estudos de Apgar (1953) e NRP (2020) demonstram que a FC é o parâmetro mais determinante",
+      "A demora na reanimação está associada a piores desfechos neurológicos"
+    ]
+  },
+  "nursing_process": {
+    "diagnosis": [
+      "Padrão respiratório ineficaz (NANDA 00032)",
+      "Risco de desequilíbrio na temperatura corporal (NANDA 00109)"
+    ],
+    "interventions": [
+      "Monitorização respiratória (NIC 3350)",
+      "Monitorização dos sinais vitais (NIC 6680)",
+      "Regulação da temperatura (NIC 3900)"
+    ],
+    "outcomes": [
+      "Estado respiratório adequado (NOC 0415)",
+      "Termorregulação mantida (NOC 0800)",
+      "Adaptação do recém-nascido (NOC 0115)"
+    ]
+  },
+  "interoperability": {
+    "fhir": {
+      "resource_types": [
+        "Observation (Apgar score total e componentes)",
+        "RiskAssessment (risco de asfixia/perda de calor)",
+        "CarePlan (plano de cuidados imediatos)"
+      ],
+      "profiles": [
+        "http://hl7.org/fhir/StructureDefinition/Observation",
+        "http://hl7.org/fhir/StructureDefinition/nursing-intervention"
+      ]
+    },
+    "openEHR": {
+      "archetypes": [
+        "openEHR-EHR-OBSERVATION.apgar.v1",
+        "openEHR-EHR-EVALUATION.risk_asphyxia.v1"
+      ]
+    },
+    "OMOP": {
+      "mappings": [
+        { "vocabulary": "SNOMED", "code": "281318005", "name": "Apgar score" },
+        { "vocabulary": "LOINC", "code": "9272-6", "name": "Apgar panel" }
+      ]
+    },
+    "HL7v2": { "segments": ["OBX (Apgar score)", "PR1 (interventions)"] },
+    "CSV": { "columns": ["timestamp", "fc", "respiracao", "tono", "irritabilidade", "cor", "total"] },
+    "API": {
+      "endpoints": [
+        { "method": "GET", "path": "/cko/apgar", "description": "Retorna o CKO completo" },
+        { "method": "POST", "path": "/calculate/apgar", "description": "Calcula escore a partir de parâmetros" }
+      ]
+    },
+    "JSON-LD": { "context": "https://schema.nursing.org/context/cko-apgar.jsonld" }
+  },
+  "ai": {
+    "summary": "Ferramenta para avaliação da vitalidade neonatal nos primeiros minutos de vida. O escore de Apgar orienta decisões de reanimação e monitorização.",
+    "clinical_pearls": [
+      "A frequência cardíaca é o indicador mais importante; uma FC > 100 bpm geralmente tranquiliza.",
+      "A cor da pele pode permanecer acrocianótica em bebês saudáveis; cianose central é o sinal de alarme.",
+      "A irritabilidade reflexa avalia a resposta neurológica a estímulos como aspiração nasal."
+    ],
+    "common_errors": [
+      "Aguardar o resultado do Apgar de 1 minuto para iniciar reanimação quando há apneia.",
+      "Supervalorizar a cor da pele e subestimar a ausência de esforço respiratório.",
+      "Não reavaliar a cada 5 minutos quando o índice permanece baixo."
+    ],
+    "keywords": [
+      "Apgar",
+      "Neonatologia",
+      "Recém-nascido",
+      "Vitalidade",
+      "Reanimação neonatal",
+      "Escore de Apgar",
+      "Sala de parto"
+    ],
+    "machine_representation": {
+      "embedding_text": "Avaliação da vitalidade neonatal por meio do índice de Apgar, que pontua frequência cardíaca, esforço respiratório, tônus muscular, irritabilidade reflexa e cor da pele nos primeiros minutos de vida.",
+      "retrieval_chunks": [
+        "O índice de Apgar é uma escala de 0 a 10, pontuada no 1º e 5º minutos. A frequência cardíaca é o parâmetro mais crítico.",
+        "Valores abaixo de 7 no 5º minuto indicam necessidade de reanimação contínua e reavaliação a cada 5 minutos."
+      ],
+      "citations": ["Apgar V. (1953). Curr Res Anesth Analg.", "NRP Guidelines 8th Ed. (2020)."],
+      "machine_summary": "Escala padronizada para avaliação rápida da transição extrauterina, com ênfase na FC > 100 bpm como sinal de boa adaptação.",
+      "reasoning_chain": "Ao aplicar o Apgar, prioriza-se a FC; se ausente ou < 60 bpm, inicia-se reanimação imediatamente. A pontuação total orienta, mas não substitui a avaliação clínica contínua."
+    }
+  },
+  "semantic_graph": {
+    "parent_domain": "Neonatologia",
+    "edges": [
+      { "edge_id": "EDGE-00001", "source": "CKO-APGAR-001", "source_type": "CKO", "relation": "assesses", "target": "Vitalidade Neonatal", "target_type": "ClinicalConcept", "confidence": 1.0 },
+      { "edge_id": "EDGE-00002", "source": "CKO-APGAR-001", "source_type": "CKO", "relation": "supports", "target": "CKO-NRP-001", "target_type": "CKO", "confidence": 1.0 },
+      { "edge_id": "EDGE-00003", "source": "CKO-APGAR-001", "source_type": "CKO", "relation": "related_to", "target": "Termorregulação", "target_type": "ClinicalConcept", "confidence": 0.9 },
+      { "edge_id": "EDGE-00004", "source": "CKO-APGAR-001", "source_type": "CKO", "relation": "related_to", "target": "Asfixia Perinatal", "target_type": "ClinicalConcept", "confidence": 1.0 },
+      { "edge_id": "EDGE-00005", "source": "CKO-APGAR-001", "source_type": "CKO", "relation": "compared_with", "target": "Escala de Silverman-Andersen", "target_type": "AssessmentScale", "confidence": 0.85 }
+    ]
+  },
+  "presentation": {
+    "targets": [
+      { "channel": "web", "renderer": "HTML5", "component": "<apgar-calculator />" },
+      { "channel": "mobile", "renderer": "React Native" },
+      { "channel": "pdf", "renderer": "LaTeX / PDF" },
+      { "channel": "voice", "renderer": "SSML", "command": "avaliar apgar do recém-nascido" },
+      { "channel": "chat", "renderer": "Markdown" },
+      { "channel": "watch", "renderer": "WatchKit" },
+      { "channel": "dashboard", "renderer": "Grafana JSON" }
+    ],
+    "theme": "Calculadoras de Enfermagem Blue",
+    "primary_color": "#1a3e74",
+    "secondary_color": "#2563eb",
+    "logo": "cko_apgar_logo.svg"
+  }
+}
