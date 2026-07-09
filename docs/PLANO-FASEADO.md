@@ -1,6 +1,17 @@
 # Plano faseado — globais primeiro, particularizadores depois
 
-Roadmap **honesto** para evoluir o repositório atual até a arquitetura NIFS completa, minimizando retrabalho, tokens e duplicação de dados. Inclui estratégia de internacionalização do website (30 locales: pt-BR + 29).
+Roadmap para evoluir o repositório com **execução 100% de cada fase** antes de avançar. Foco em **padronização** (schemas, CKO, DOM, CSS) e **responsividade total** (mobile, tablet, desktop) em todo artefato entregue.
+
+**Não é um plano de documentação:** cada fase melhora código e dados existentes ou cria o que falta de implementação.
+
+## Meta do programa
+
+| Princípio | Significado |
+|-----------|-------------|
+| **100% por fase** | Nenhuma fase é dada por encerrada com itens parciais; checklist da fase zerado antes da próxima |
+| **Padronização** | Mesmos contratos (CKO 3.0, IDs DOM, bundles gerados, breakpoints CSS) em todas as ferramentas |
+| **Responsividade total** | Layout, formulários, painéis clínicos e PDF pré-visualização usáveis em viewport estreita e ampla |
+| **Sem retrabalho de tradução** | Fases 5–6 **não iniciam** tradução em massa sem autorização explícita (há trabalho paralelo em andamento) |
 
 ## Por que globais primeiro?
 
@@ -26,13 +37,15 @@ Roadmap **honesto** para evoluir o repositório atual até a arquitetura NIFS co
 | `scripts/README.md` (ativos vs arquivados) | ✅ |
 | Raiz sem `preview_apgar.html`, `apgar-completo/` | ✅ |
 
-**Critério de saída:** novo colaborador sabe onde editar em &lt; 5 min (`docs/ESTRUTURA-REPOSITORIO.md`).
+**Critério de saída Fase 0:** ✅ concluída.
 
 ---
 
 ## Fase 1 — Dados globais e contratos (prioridade máxima)
 
 **Objetivo:** congelar camada de conhecimento compartilhado antes de adicionar calculadoras.
+
+**Inclui responsividade:** tokens CSS globais e grids do chrome (`site-styles.css`, partials) validados em breakpoints definidos (ex.: 360px, 768px, 1280px).
 
 ### 1.1 Inventário e schema
 
@@ -62,22 +75,23 @@ Roadmap **honesto** para evoluir o repositório atual até a arquitetura NIFS co
 - [ ] Definir blocos obrigatórios: `meta`, `calculator`, `profiles`, `clinical_links`, `localization`
 - [ ] Apgar como **referência de conformidade** (`CKO-APGAR-001.json`)
 
-### 1.4 i18n global (chrome + terminologia)
+### 1.4 i18n — infraestrutura apenas (sem tradução em massa)
 
-**Não traduzir 205 páginas × 29 idiomas manualmente como estratégia final.**
+Preparação técnica para quando as Fases 5–6 forem autorizadas. **Não** dispara tradução clínica nem sobrescreve trabalho já feito em paralelo.
 
-| Sub-fase | Ação | Economia |
-|----------|------|----------|
-| 1.4a | Extrair dicionário **global** único: `i18n/global/{lang}.json` (menu, botões, labels comuns) | ~1.500 strings × 1 vez |
-| 1.4b | Migrar `lang-selector.js` para consumir JSON (já preparado em `i18n-loader.js`) | Remove hardcode duplicado |
-| 1.4c | Terminologia: `localized_labels` nos datasets clínicos | NANDA “Ansiedade” traduzida 1× |
-| 1.4d | Alinhar `reference-datasets/global/languages.json` com `i18n-pipeline` (29 locales) | Uma lista autoritativa |
+| Sub-fase | Ação |
+|----------|------|
+| 1.4a | Estrutura `i18n/global/{lang}.json` (chrome) — chaves, não conteúdo novo |
+| 1.4b | `lang-selector.js` consumir JSON via `i18n-loader.js` |
+| 1.4c | Campo `localized_labels` nos datasets clínicos (schema pronto; pt-BR preenchido) |
+| 1.4d | Lista única de locales alinhada a `languages.json` e `i18n-pipeline` |
 
-**Idiomas (29 + pt-BR):** en, es, fr, de, it, zh-CN, ja, ar, hi-IN, ru-RU, ko-KR, tr-TR, pl-PL, nl-NL, sv-SE, no-NO, da-DK, fi-FI, cs-CZ, hu-HU, ro-RO, bg-BG, hr-HR, sr-RS, sl-SI, uk-UA, vi-VN, th-TH, id-ID.
+**Critério de saída Fase 1 (100%):**
 
-**Prioridade de tradução clínica:** es-419 → en → demais (por audiência).
-
-**Critério de saída Fase 1:** Apgar consome NANDA/NIC/NOC **somente por ID**; chrome do DELIVERY troca de idioma sem HTML paralelo; schemas validados no CI.
+- [ ] Todos os itens 1.1–1.4 marcados
+- [ ] Apgar consome NANDA/NIC/NOC **somente por ID**
+- [ ] CI valida JSON e schemas
+- [ ] Chrome responsivo nos partials compartilhados (header, footer, toolbar a11y)
 
 ---
 
@@ -96,7 +110,10 @@ Roadmap **honesto** para evoluir o repositório atual até a arquitetura NIFS co
 - [ ] Manifest de versões (`artifacts/manifest.json`) para cache busting
 - [ ] Proibir edição manual de artefatos gerados (comentário + CI diff)
 
-**Critério de saída:** `python3 compiler/build_all.py` regenera DELIVERY a partir de fontes.
+**Critério de saída Fase 2 (100%):**
+
+- [ ] `python3 compiler/build_all.py` regenera DELIVERY a partir de fontes
+- [ ] Manifest de versões publicado; diff CI bloqueia edição manual de bundles
 
 ---
 
@@ -109,7 +126,10 @@ Roadmap **honesto** para evoluir o repositório atual até a arquitetura NIFS co
 - [ ] Resolver NANDA/NIC/NOC via IDs → labels localizados em runtime
 - [ ] Testes unitários com casos clínicos (score 3, 7, 10…)
 
-**Critério de saída:** alterar uma aresta em `apgar_edges.json` muda o plano sem editar HTML.
+**Critério de saída Fase 3 (100%):**
+
+- [ ] Alterar aresta em `apgar_edges.json` muda o plano sem editar HTML
+- [ ] Todos os painéis do fluxo clínico (`#calcClinicalFlow`) populados via IDs + datasets
 
 ---
 
@@ -122,25 +142,79 @@ Roadmap **honesto** para evoluir o repositório atual até a arquitetura NIFS co
 - [ ] `populatePrintReport()` + botão Imprimir → `window.print()` **ou** API
 - [ ] Segunda calculadora (ex.: Glasgow) só com CKO novo + edges — **sem copiar Apgar HTML**
 
-**Critério de saída:** Glasgow publicada com &lt; 20% do esforço do Apgar.
+**Critério de saída Fase 4 (100%):**
+
+- [ ] Template shell reutilizável documentado e usado pela 2ª calculadora
+- [ ] PDF/API ligados ao botão Imprimir
+- [ ] Apgar + piloto **100% responsivos** (formulário, abas de perfil, fluxo clínico, relatório pré-impressão)
+- [ ] Checklist de IDs DOM estáveis passa em ambas as ferramentas
 
 ---
 
-## Fase 5 — Runtime servidor (opcional, escala)
+## Fase 5 — Scanner 100% em português (pt-BR)
 
-- [ ] API FastAPI: `/calculate`, `/report`, `/terminology/{lang}`
-- [ ] PostgreSQL ou Neo4j para grafo (conforme NIFS-500)
-- [ ] Autenticação e perfis (datasets `users/`)
+**Objetivo:** inventário exaustivo e deduplicado de **todo** texto visível da ferramenta (e do site piloto) em português, como base única para qualquer tradução futura.
 
-**Critério de saída:** browser pode ser só presentation; lógica clínica no servidor.
+**Escopo técnico (implementação, não documentação):**
+
+- [ ] Evoluir `i18n-pipeline/scanner_deep.py` (ou equivalente no compiler) para cobertura **100%** por página/ferramenta: corpo HTML, atributos (`aria-label`, `title`, `placeholder`), metas, `tool-config` JSON, textos CKO em pt-BR
+- [ ] Corpus global deduplicado: `extracted/corpus_pt.json` (ou path canônico único) com hash por string
+- [ ] Relatório de cobertura: % por página, strings órfãs, strings só em HTML vs só em JSON
+- [ ] Integração com Apgar piloto primeiro; depois extensível ao catálogo (`clinical_tools_catalog.json`)
+
+**O que esta fase NÃO faz:**
+
+- Não traduz para outros idiomas
+- Não sobrescreve arquivos em `reference-website/` ou `i18n-pipeline/translations/`
+- Não assume que traduções existentes estão erradas
+
+**Critério de saída Fase 5 (100%):**
+
+- [ ] Scanner reporta **100%** das strings da ferramenta piloto (Apgar) em pt-BR
+- [ ] Corpus deduplicado versionado e reproduzível (`python3 … --tool apgar`)
+- [ ] Gap report gerado (JSON/CSV) pronto para cruzar com inventário da Fase 6
 
 ---
 
-## Fase 6 — Interoperabilidade e IA
+## Fase 6 — Inventário de traduções e continuidade
 
-- [ ] Export FHIR R4 (Observation, CarePlan) a partir do payload do relatório
-- [ ] Nurse-PaLM: RAG sobre datasets + prompts em `metadata/ai_prompt_templates.json`
-- [ ] Revisão humana e governança (NIFS-1100)
+**Objetivo:** cruzar o corpus pt-BR (Fase 5) com **tudo que já foi traduzido** (incluindo trabalho paralelo fora do repo) e continuar só o que falta.
+
+### 🔒 Portão de autorização
+
+> **Não iniciar a Fase 6 sem autorização explícita do responsável pelo conteúdo.**
+>
+> Motivo: há tradução em andamento em paralelo; o agente não deve retraduzir nem sobrescrever material já validado.
+
+**Quando autorizado, executar nesta ordem:**
+
+1. **Inventário do que existe** — varrer sem modificar:
+   - `i18n-pipeline/translations/{lang}/`
+   - `reference-website/{lang}/`
+   - `NIFS/DELIVERY/i18n/`
+   - CKO `localization` em ferramentas já publicadas
+   - Artefatos externos que o responsável indicar (planilhas, ZIPs, branches)
+2. **Cruzamento** — corpus pt-BR × traduções por locale: `covered`, `partial`, `missing`, `divergent`
+3. **Plano de continuidade** — fila só de `missing`/`divergent` aprovados; reutilizar `covered` sem reprocessar
+4. **Execução incremental** — idioma e ferramenta por prioridade acordada na autorização (ex.: es-419 → en)
+
+**Critério de saída Fase 6 (100%):**
+
+- [ ] Relatório de cobertura por idioma e por ferramenta (não necessariamente 29 idiomas × 97 calculadoras de uma vez — escopo definido na autorização)
+- [ ] Zero retradução de strings já marcadas como `reviewed` ou equivalente
+- [ ] Páginas entregues no escopo autorizado passam QA de responsividade no idioma alvo
+
+---
+
+## Fora do escopo atual (sem número de fase)
+
+Itens da spec NIFS que **não** entram neste ciclo até nova decisão de produto:
+
+- Runtime servidor (FastAPI + PostgreSQL/Neo4j)
+- Export FHIR R4 em produção
+- Nurse-PaLM com RAG e modelo dedicado
+
+Podem ser retomados após Fases 1–6 no escopo acordado.
 
 ---
 
@@ -156,20 +230,25 @@ Quando Fase 1–3 estiverem estáveis, cada **nova** escala exige apenas:
 | HTML shell | 0 (gerado) ou cópia mínima | partials, JS globais |
 | Tradução | bloco `localization` no CKO | terminologia global já traduzida |
 
+**Tradução em massa:** só após Fase 6 autorizada, usando corpus da Fase 5.
+
 **Não fazer por calculadora:** copiar NANDA/NIC/NOC, traduzir menu/footer, reimplementar PDF, reescrever Nurse-PaLM do zero.
 
 ---
 
-## Ordem de execução recomendada (próximas 4 sprints técnicas)
+## Ordem de execução
 
 ```
-Sprint A │ Fase 1.1–1.3  │ schemas + labels localizados em datasets
-Sprint B │ Fase 1.4      │ i18n global JSON + migrar lang-selector
-Sprint C │ Fase 2 + 3    │ compiler + edges na inferência Apgar
-Sprint D │ Fase 4        │ PDF/API wire + piloto Glasgow
+Fase 1 (100%) → Fase 2 (100%) → Fase 3 (100%) → Fase 4 (100%)
+                                                      │
+                                                      ▼
+                                            Fase 5 — scanner pt-BR 100%
+                                                      │
+                                                      ▼
+                              Fase 6 — 🔒 só com autorização — inventário + continuidade
 ```
 
-Paralelizável: revisão humana es-419 no `i18n-pipeline` (Fase 1.4d) enquanto desenvolve compiler.
+Não avançar de fase com checklist incompleto.
 
 ---
 
@@ -177,10 +256,11 @@ Paralelizável: revisão humana es-419 no `i18n-pipeline` (Fase 1.4d) enquanto d
 
 | Risco | Mitigação |
 |-------|-----------|
-| `reference-website/` diverge do DELIVERY | DELIVERY é canônico; legado só para injetor histórico |
-| Escopo NIFS (261 docs) vs entrega | Este plano implementa **subconjunto** alinhado ao site atual |
-| Tradução LLM sem revisão | `review_status: machine` até revisão clínica |
-| Tokens em chat para 97 calculadoras | Nunca gerar JSON clínico completo no chat — usar compiler + datasets |
+| `reference-website/` diverge do DELIVERY | DELIVERY é canônico; legado só para inventário na Fase 6 |
+| Escopo NIFS (261 docs) vs entrega | Fases 1–4 = MVP replicável; 5–6 = i18n com gate |
+| Retraduzir trabalho paralelo | Fase 6 bloqueada sem autorização; inventário antes de escrever |
+| Tokens em chat para 97 calculadoras | Compiler + corpus; nunca gerar JSON clínico completo no chat |
+| Layout quebrado em mobile | Responsividade no critério de saída de cada fase |
 
 ---
 

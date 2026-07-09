@@ -114,9 +114,18 @@ Código em `NIFS/DELIVERY/api/`. O browser monta o mesmo payload via `report-pay
 
 Três camadas de texto — **não misturar**:
 
-1. **Chrome global** (menu, footer, botões, acessibilidade): dicionário único, 29 idiomas, pipeline `i18n-pipeline/` → futuro `i18n/global/{lang}.json`.
-2. **Terminologia clínica** (NANDA, NIC, NOC, nomes de escalas): dataset global com `localized_label` por locale — traduzir **uma vez**.
-3. **Particularizador por ferramenta** (dicas de perfil, interpretação específica): bloco `localization` no CKO — traduzir por ferramenta, reutilizando chaves globais quando possível.
+1. **Chrome global** (menu, footer, botões, acessibilidade): dicionário único → `i18n/global/{lang}.json` (infra na Fase 1).
+2. **Terminologia clínica** (NANDA, NIC, NOC, nomes de escalas): dataset global com `localized_labels` — traduzir **uma vez**.
+3. **Particularizador por ferramenta**: bloco `localization` no CKO.
+
+**Fluxo de tradução (Fases 5–6):**
+
+| Fase | Ação |
+|------|------|
+| **5** | Scanner **100%** em pt-BR → corpus deduplicado (sem traduzir) |
+| **6** | 🔒 Com autorização — inventariar o que já existe, cruzar gaps, continuar só o faltante |
+
+Não iniciar Fase 6 nem sobrescrever `reference-website/` / `translations/` sem OK explícito — há tradução paralela em andamento.
 
 Evitar: 97 cópias de `nanda.json` embutidas em cada HTML traduzido.
 
