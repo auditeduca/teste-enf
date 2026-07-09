@@ -1,0 +1,105 @@
+<!-- ================= FAIXA 3 — PREFERÊNCIAS (acessibilidade/utilitários) ================= -->
+<div id="barraAcessibilidade" role="region" aria-label="Barra de utilitários">
+  <div class="rd-container a11y-bar-inner">
+    <div class="a11y-bar-left">
+      <button type="button" class="a11y-icon-btn" id="a11y-trigger" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-modal-overlay" aria-label="Preferências de acessibilidade">
+        <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+      </button>
+      <span class="a11y-sep" aria-hidden="true"></span>
+      <button type="button" class="a11y-util-btn" id="a11y-read" aria-pressed="false"><i class="fa-solid fa-headphones" aria-hidden="true"></i> <span data-i18n="content.leitura">Leitura</span></button>
+      <button type="button" class="a11y-util-btn" id="a11y-share"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> <span data-i18n="content.compartilhar">Compartilhar</span></button>
+      <button type="button" class="a11y-util-btn" id="a11y-save" aria-pressed="false"><i class="fa-solid fa-bookmark" aria-hidden="true"></i> <span data-i18n="content.salvar">Salvar</span></button>
+      <button type="button" class="a11y-util-btn" id="a11y-print"><i class="fa-solid fa-print" aria-hidden="true"></i> <span data-i18n="content.imprimir">Imprimir</span></button>
+    </div>
+    <div class="a11y-bar-rate">
+      <span data-i18n="content.avaliar">Avalie este conteúdo</span>
+      <span class="a11y-stars" id="a11y-stars">
+        <button type="button" data-star="5" aria-label="5 estrelas" data-i18n-aria="aria.star5"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+        <button type="button" data-star="4" aria-label="4 estrelas" data-i18n-aria="aria.star4"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+        <button type="button" data-star="3" aria-label="3 estrelas" data-i18n-aria="aria.star3"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+        <button type="button" data-star="2" aria-label="2 estrelas" data-i18n-aria="aria.star2"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+        <button type="button" data-star="1" aria-label="1 estrela" data-i18n-aria="aria.star1"><i class="fa-solid fa-star" aria-hidden="true"></i></button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Preferências de Acessibilidade -->
+<div class="ck-modal-overlay" id="a11y-modal-overlay">
+  <div class="ck-modal" role="dialog" aria-modal="true" aria-label="Preferências de acessibilidade" data-i18n-aria="a11y.tituloModal">
+    <div class="ck-modal-head">
+      <h3 data-i18n="a11y.tituloModal">Preferências de acessibilidade</h3>
+      <button type="button" class="ck-modal-close" id="a11y-modal-close" aria-label="Fechar" data-i18n-aria="aria.fechar">✕</button>
+    </div>
+    <div class="ck-modal-body">
+      <p data-i18n="a11y.introModal">Ajuste a exibição do site conforme sua preferência. As escolhas ficam salvas neste navegador.</p>
+
+      <div class="ck-cat">
+        <div>
+          <div class="ck-cat-title" data-i18n="a11y.fonteTitulo">Tamanho da fonte</div>
+          <div class="ck-cat-desc" data-i18n="a11y.fonteDesc">Aumenta ou diminui o tamanho do texto em todo o site.</div>
+        </div>
+        <div class="a11y-fontstepper">
+          <button type="button" id="a11y-font-dec" aria-label="Diminuir fonte" data-i18n-aria="aria.fonteDec">A-</button>
+          <span id="a11y-font-label">100%</span>
+          <button type="button" id="a11y-font-inc" aria-label="Aumentar fonte" data-i18n-aria="aria.fonteInc">A+</button>
+        </div>
+      </div>
+
+      <div class="ck-cat">
+        <div>
+          <div class="ck-cat-title" data-i18n="a11y.contrasteTitulo">Alto contraste</div>
+          <div class="ck-cat-desc" data-i18n="a11y.contrasteDesc">Aumenta o contraste de cores para melhorar a legibilidade.</div>
+        </div>
+        <label class="ck-switch">
+          <input aria-label="A11Y Contrast" type="checkbox" id="a11y-contrast" />
+          <span class="ck-switch-track"></span>
+        </label>
+      </div>
+
+      <div class="ck-cat">
+        <div>
+          <div class="ck-cat-title" data-i18n="a11y.temaTitulo">Modo escuro</div>
+          <div class="ck-cat-desc" data-i18n="a11y.temaDesc">Alterna a exibição para um tema com fundo escuro.</div>
+        </div>
+        <label class="ck-switch">
+          <input aria-label="Theme Toggle" type="checkbox" id="theme-toggle" />
+          <span class="ck-switch-track"></span>
+        </label>
+      </div>
+
+      <div class="ck-cat">
+        <div>
+          <div class="ck-cat-title" data-i18n="a11y.dislexiaTitulo">Fonte para dislexia</div>
+          <div class="ck-cat-desc" data-i18n="a11y.dislexiaDesc">Substitui a tipografia por uma fonte de leitura facilitada.</div>
+        </div>
+        <label class="ck-switch">
+          <input aria-label="A11Y Dyslexia" type="checkbox" id="a11y-dyslexia" />
+          <span class="ck-switch-track"></span>
+        </label>
+      </div>
+    </div>
+    <div class="ck-modal-footer">
+      <button type="button" class="ck-btn ck-btn-outline" id="a11y-reset" data-i18n="a11y.redefinir">Redefinir tudo</button>
+      <button type="button" class="ck-btn ck-btn-primary" id="a11y-shortcuts" data-i18n="a11y.atalhos">Atalhos de teclado</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Atalhos de Teclado -->
+<div class="ck-modal-overlay" id="keyboardShortcutsModal">
+  <div class="ck-modal" role="dialog" aria-modal="true" aria-label="Atalhos de teclado" data-i18n-aria="a11y.atalhosTitulo">
+    <div class="ck-modal-head">
+      <h3 data-i18n="a11y.atalhosTitulo">Atalhos de teclado</h3>
+      <button type="button" class="ck-modal-close" id="a11y-shortcuts-close" aria-label="Fechar" data-i18n-aria="aria.fechar">✕</button>
+    </div>
+    <div class="ck-modal-body">
+      <ul>
+        <li><strong>Tab</strong> — <span data-i18n="a11y.atalho1">navegar entre elementos</span></li>
+        <li><strong>Esc</strong> — <span data-i18n="a11y.atalho2">fechar menus, modais e o menu mobile</span></li>
+        <li><strong>Enter / Espaço</strong> — <span data-i18n="a11y.atalho3">ativar botões e links</span></li>
+        <li><strong>Setas ← →</strong> — <span data-i18n="a11y.atalho4">mover-se entre itens do menu</span></li>
+      </ul>
+    </div>
+  </div>
+</div>

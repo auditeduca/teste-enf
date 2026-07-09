@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+<link rel="shortcut icon" href="favicon.ico" />
+
+  <title>Relatório de Resultado — template editável</title>
+  <link rel="stylesheet" href="css/print-template.css">
+  <style>
+    body { background:#e2e8f0; padding:24px; margin:0; }
+    .print-area.rr-fiel { display:block !important; }
+    .editable { outline:none; border-bottom:1px dashed transparent; }
+    .editable:hover { border-bottom-color:#008080; background:rgba(0,128,128,.05); cursor:text; }
+    .editable:focus { border-bottom:1px solid #008080; background:#fff; }
+    @media print { body { background:#fff; padding:0; } }
+  </style>
+</head>
+<body>
+<div class="print-area rr-fiel print-area--single-page no-print-screen" id="printTemplate" style="display:block;" >
+  <div class="rr-page">
+    <div class="rr-header-banner">
+      <div class="rr-logo-placeholder">
+        <img src="images/logotipo_footer.webp" alt="Calculadoras de Enfermagem" class="rr-logo-img" width="200" height="48" />
+      </div>
+      <div class="rr-header-title">
+        <h2>Relatório de Resultado</h2>
+        <div class="rr-date" id="printDate">—</div>
+      </div>
+    </div>
+
+    <div class="rr-content">
+      <div class="rr-exam-title-section">
+        <div class="rr-exam-title-left">
+          <div class="rr-exam-icon" id="printToolIcon" >
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+          </div>
+          <div class="rr-exam-name">
+            <h1 id="printToolName">Calculadora</h1>
+            <p id="printToolCategory">Escala clínica</p>
+          </div>
+        </div>
+        <div class="rr-validation-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Validada clinicamente
+        </div>
+      </div>
+
+      <div class="rr-card">
+        <div class="rr-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          DADOS DO PACIENTE
+        </div>
+        <div class="rr-patient-grid">
+          <div class="rr-patient-field"><div class="rr-field-label">NOME</div><div class="rr-field-value" id="printPatientName">—</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">REGISTRO / PRONTUÁRIO</div><div class="rr-field-value" id="printPatientReg">—</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">IDADE</div><div class="rr-field-value" id="printPatientAge">—</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">LEITO / SETOR</div><div class="rr-field-value" id="printPatientBed">—</div></div>
+        </div>
+      </div>
+
+      <div class="rr-card">
+        <div class="rr-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+          PARÂMETROS INSERIDOS
+        </div>
+        <div class="rr-parameters-list" id="printParamsList"></div>
+      </div>
+
+      <div class="rr-result-card" id="printResultCard">
+        <div class="rr-score-display">
+          <div class="rr-score-number" id="printScore">—</div>
+          <div class="rr-score-text" id="printScoreMax">pontos</div>
+        </div>
+        <div class="rr-classification-display">
+          <div class="rr-classification-label">CLASSIFICAÇÃO</div>
+          <div class="rr-classification-badge" id="printClassification">—</div>
+        </div>
+      </div>
+
+      <div class="rr-card rr-card--transparent">
+        <div class="rr-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          INTERPRETAÇÃO CLÍNICA
+        </div>
+        <div class="rr-interpretation-text" id="printInterpretation"></div>
+      </div>
+
+      <div class="rr-card" id="printNandaSection" hidden>
+        <div class="rr-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          RACIOCÍNIO CLÍNICO (NANDA · NIC · NOC)
+        </div>
+        <p class="rr-nnn-line"><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+        <p class="rr-nnn-line"><strong>NIC:</strong> <span id="printNicText">—</span></p>
+        <p class="rr-nnn-line"><strong>NOC:</strong> <span id="printNocText">—</span></p>
+      </div>
+
+      <div class="rr-two-cols">
+        <div class="rr-card">
+          <div class="rr-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            METAS INTERNACIONAIS
+          </div>
+          <div id="printSafetyIpsg"></div>
+        </div>
+        <div class="rr-card" id="printSafetyMedsCol">
+          <div class="rr-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            9 CERTOS DA MEDICAÇÃO
+          </div>
+          <div class="rr-meds-grid" id="printSafetyMeds"></div>
+        </div>
+      </div>
+
+      <div class="rr-reference-box">
+        <div class="rr-reference-title">REFERÊNCIA</div>
+        <div id="printReference">Documento gerado automaticamente.</div>
+      </div>
+
+      <div class="rr-signature-section">
+        <div>
+          <div class="rr-signature-line"></div>
+          <div class="rr-signature-name">Enf. Responsável</div>
+          <div class="rr-signature-role">COREN: _______</div>
+        </div>
+        <div class="rr-qr-code" >
+          <div class="rr-qr-image">
+            <div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div><div class="rr-qr-dot"></div>
+            <div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div>
+            <div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div>
+            <div class="rr-qr-dot"></div><div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div>
+          </div>
+          <div class="rr-qr-text">Verificar online</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rr-footer">
+      <div>calculadorasdeenfermagem.com.br</div>
+      <div>Documento gerado automaticamente • não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById("printToolName").textContent = "MEEM — Mini Exame do Estado Mental";
+document.getElementById("printToolCategory").textContent = "Escala clínica • Avaliação cognitiva";
+document.getElementById("printDate").textContent = "05/07/2026 • 14:32";
+document.getElementById("printPatientName").textContent = "Maria S. Oliveira";
+document.getElementById("printPatientReg").textContent = "2026-004821";
+document.getElementById("printPatientAge").textContent = "72 anos";
+document.getElementById("printPatientBed").textContent = "Enf. B • Leito 14";
+document.getElementById("printParamsList").innerHTML = [
+  ["Orientação temporal","4 / 5"],["Orientação espacial","5 / 5"],["Memória de fixação","3 / 3"],
+  ["Atenção e cálculo","3 / 5"],["Evocação","2 / 3"],["Linguagem e praxia","7 / 9"]
+].map(function(p){return '<div class="rr-parameter-item"><div>'+p[0]+'</div><div class="rr-parameter-score">'+p[1]+'</div></div>';}).join('');
+document.getElementById("printScore").textContent = "24";
+document.getElementById("printScoreMax").textContent = "de 30 pontos";
+document.getElementById("printClassification").textContent = "Comprometimento leve";
+document.getElementById("printInterpretation").textContent = "Pontuação compatível com comprometimento cognitivo leve.";
+document.getElementById("printReference").textContent = 'Folstein MF et al. J Psychiatr Res. 1975;12(3):189-198.';
+</script>
+</body>
+</html>
