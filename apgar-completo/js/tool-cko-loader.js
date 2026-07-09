@@ -8,6 +8,9 @@
   var CKO_MAP = {
     apgar: "js/modules/data/apgar-cko.json"
   };
+  var CKO_SOURCE_V3 = {
+    apgar: "js/modules/data/cko/CKO-APGAR-001.json"
+  };
 
   function detectBasePath() {
     if (SCRIPT && SCRIPT.src) {
@@ -104,6 +107,7 @@
       ready: loadJson(ckoUrl)
         .then(function (cko) {
           window.ToolCKO.data = cko;
+          window.ToolCKO.sourceV3 = CKO_SOURCE_V3[key] || null;
           var baseConfig = parseToolConfig() || {};
           var merged = mergeCkoWithConfig(cko, baseConfig);
           window.ToolCKO.config = merged;
