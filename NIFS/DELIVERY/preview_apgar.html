@@ -104,7 +104,34 @@
       </div>
     </div>
 
-    <div id="patientContextMount"></div>
+    <section class="calc-card patient-context-card" id="patientContextPanel" data-report-section="patient-context" aria-labelledby="patientContextTitle">
+      <div class="calc-card-header">
+        <span class="bar" aria-hidden="true"></span>
+        <h2 id="patientContextTitle">Dados do paciente <span class="patient-context-badge">localStorage</span></h2>
+      </div>
+      <p class="patient-context-hint" id="patientContextStatus">Preencha e os dados ficam salvos neste navegador (Chrome).</p>
+      <div class="patient-context-grid">
+        <div class="field-row">
+          <label class="field-label" for="patientName">Nome</label>
+          <input type="text" id="patientName" class="field-input" placeholder="Ex.: Maria S. Oliveira" autocomplete="name" />
+        </div>
+        <div class="field-row">
+          <label class="field-label" for="patientReg">Registro / prontuário</label>
+          <input type="text" id="patientReg" class="field-input" placeholder="Ex.: 2026-004821" />
+        </div>
+        <div class="field-row">
+          <label class="field-label" for="patientAge">Idade</label>
+          <input type="text" id="patientAge" class="field-input" placeholder="Ex.: 0 dias" />
+        </div>
+        <div class="field-row">
+          <label class="field-label" for="patientBed">Leito / setor</label>
+          <input type="text" id="patientBed" class="field-input" placeholder="Ex.: Sala de parto • Berçário" />
+        </div>
+      </div>
+      <div class="patient-context-actions">
+        <button type="button" class="btn btn-outline-navy btn-sm" id="patientContextClear">Limpar dados salvos</button>
+      </div>
+    </section>
 
                 <div class="profile-tabs-bar">
       <div class="tabs-inner" data-tab-group="perfil" role="tablist" aria-label="Perfil de visualização">
@@ -261,8 +288,82 @@
             </section>
           </div>
         </form>
+<div class="flow-divider"><span>Trilha de Aprendizagem</span></div>
 
-        <div id="toolFooterMount"></div>
+        <div class="learning-track-wrap">
+          <div class="learning-track-grid">
+            <a class="learn-card" href="biblioteca-provas.html">
+              <div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div>
+              <h3>Quiz</h3>
+              <p>Teste seu conhecimento sobre o Índice de Apgar e vitalidade neonatal.</p>
+              <span class="learn-cta">Responder agora <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="learn-card" href="#">
+              <div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div>
+              <h3>Simulado</h3>
+              <p>Cenário prático de avaliação neonatal com decisões em tempo real.</p>
+              <span class="learn-cta">Simular caso <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="learn-card" href="#">
+              <div class="icon-wrap"><svg class="icon"><use href="#i-file"/></svg></div>
+              <h3>Casos Clínicos</h3>
+              <p>Situações reais de sala de parto e tomada de decisão clínica.</p>
+              <span class="learn-cta">Ver casos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="learn-card" href="#">
+              <div class="icon-wrap"><svg class="icon"><use href="#i-book"/></svg></div>
+              <h3>Artigos &amp; Evidência</h3>
+              <p>Literatura de referência e evidências sobre avaliação do recém-nascido.</p>
+              <span class="learn-cta">Ler evidências <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="learn-card" href="#">
+              <div class="icon-wrap"><svg class="icon"><use href="#i-monitor"/></svg></div>
+              <h3>Slides</h3>
+              <p>Material de estudo para aula ou treinamento em serviço.</p>
+              <span class="learn-cta">Baixar slides <svg class="icon icon-sm"><use href="#i-download"/></svg></span>
+            </a>
+          </div>
+        </div>
+        <div class="flow-divider"><span>Recursos Adicionais</span></div>
+
+        <div class="learning-track-wrap">
+          <div class="learning-track-grid">
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-book"/></svg></div><h3>Artigos</h3><p>Evidência científica e literatura de referência sobre o tema.</p><span class="learn-cta">Ler artigos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="protocolos.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div><h3>Protocolos</h3><p>Protocolos institucionais e fluxos operacionais de enfermagem.</p><span class="learn-cta">Ver protocolos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-file"/></svg></div><h3>Casos Clínicos</h3><p>Situações reais com tomada de decisão e raciocínio clínico.</p><span class="learn-cta">Ver casos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-clipcheck"/></svg></div><h3>Check-lists</h3><p>Listas de verificação para prática segura e auditoria.</p><span class="learn-cta">Baixar check-lists <svg class="icon icon-sm"><use href="#i-download"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><h3>Simulados</h3><p>Cenários práticos com decisões clínicas em tempo real.</p><span class="learn-cta">Simular agora <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-bulb"/></svg></div><h3>Flashcards</h3><p>Fichas de revisão rápida para fixação de conceitos-chave.</p><span class="learn-cta">Estudar flashcards <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-network"/></svg></div><h3>Infográficos</h3><p>Visualizações gráficas para ensino e treinamento em serviço.</p><span class="learn-cta">Ver infográficos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-flask"/></svg></div><h3>Guia de Bolso</h3><p>Resumo rápido para consulta à beira do leito.</p><span class="learn-cta">Consultar guia <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-monitor"/></svg></div><h3>Slides</h3><p>Material de apresentação para aulas e treinamentos.</p><span class="learn-cta">Baixar slides <svg class="icon icon-sm"><use href="#i-download"/></svg></span></a>
+            <a class="learn-card" href="#"><div class="icon-wrap"><svg class="icon"><use href="#i-play"/></svg></div><h3>Vídeos</h3><p>Tutoriais e demonstrações práticas em vídeo.</p><span class="learn-cta">Assistir vídeos <svg class="icon icon-sm"><use href="#i-arrow"/></svg></span></a>
+          </div>
+        </div>
+
+        <section class="tool-footer-zone">
+          <div class="tool-tags">
+            <a href="index.html#calculadoras" class="tool-tag">#Neonatologia</a>
+            <a href="index.html#calculadoras" class="tool-tag">#Apgar</a>
+            <a href="index.html#calculadoras" class="tool-tag">#AvaliaçãoNeonatal</a>
+            <a href="index.html#calculadoras" class="tool-tag">#ReanimaçãoNeonatal</a>
+            <a href="index.html#calculadoras" class="tool-tag">#RecémNascido</a>
+            <a href="diagnosticosnanda.html" class="tool-tag">#NANDA-I</a>
+            <a href="sae.html" class="tool-tag">#SAE</a>
+            <a href="protocolos.html" class="tool-tag">#Protocolos</a>
+            <a href="medicamentos.html" class="tool-tag">#Medicação</a>
+          </div>
+          <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+          <div class="related-tools-grid">
+            <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Estimativa da idade gestacional</p></div></a>
+            <a class="related-tool-card" href="capurro.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Capurro</h3><p>Maturidade somática do recém-nascido</p></div></a>
+            <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Perfil Biofísico</h3><p>Avaliação do bem-estar fetal</p></div></a>
+            <a class="related-tool-card" href="silverman-andersen.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Silverman-Andersen</h3><p>Desconforto respiratório neonatal</p></div></a>
+            <a class="related-tool-card" href="downes.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pulse"/></svg></div><div><h3>Downes</h3><p>Escore de desconforto respiratório infantil</p></div></a>
+            <a class="related-tool-card" href="bishop.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Bishop</h3><p>Avaliação do colo uterino</p></div></a>
+            <a class="related-tool-card" href="medicamentos.html"><div class="icon-wrap"><svg class="icon"><use href="#i-pills"/></svg></div><div><h3>Calculadora de Medicamentos</h3><p>Regra de três e dose por volume</p></div></a>
+          </div>
+        </section>
 </div>
 
 <div class="tab-panel" data-tab-panel="urgencia">
