@@ -44,16 +44,11 @@ PARTIALS = [
 
 SCRIPTS = [
     "build_apgar_cko.py",
-    "patch_apgar_cko.py",
-    "reorder_apgar_panels.py",
-    "integrate_clinical_engine.py",
-    "unify_clinical_engine.py",
-    "fix_estudante_icons.py",
-    "complete_preview_apgar.py",
-    "fix_apgar_profiles.py",
-    "package_apgar_zip.py",
-    "integrate_relatorio_fiel.py",
+    "sync_cko_apgar_v3.py",
     "sync_brand_assets.py",
+    "package_apgar_zip.py",
+    "publish_delivery.py",
+    "env_paths.py",
 ]
 
 API_FILES = [
@@ -99,7 +94,7 @@ def write_readme(target: Path) -> None:
     text = f"""# Apgar — pacote completo para edição externa
 
 Gerado em: {built}
-Branch de origem: cursor/cko-profiles-pdf-c848
+Origem: NIFS/DELIVERY/ (repositório canônico; ver docs/ESTRUTURA-REPOSITORIO.md)
 
 ## Visualizar localmente
 
@@ -184,10 +179,6 @@ def stage() -> None:
 
     for name in ("preview_apgar.html", "apgar.html"):
         copy_file(DELIVERY / name, STAGING / name)
-
-    root_preview = ROOT / "preview_apgar.html"
-    if root_preview.is_file():
-        copy_file(root_preview, STAGING / "preview_apgar_raiz.html")
 
     copy_file(DELIVERY / "html" / "apgar.html", STAGING / "html" / "apgar.html")
 

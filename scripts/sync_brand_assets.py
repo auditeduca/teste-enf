@@ -19,7 +19,6 @@ APGAR_FILES = [
     DELIVERY / "preview_apgar.html",
     DELIVERY / "apgar.html",
     HTML / "apgar.html",
-    ROOT / "preview_apgar.html",
     DELIVERY / "relatorio_fiel.html",
 ]
 
