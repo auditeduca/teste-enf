@@ -14,7 +14,10 @@ Scripts mantidos para operação contínua do repositório.
 | `package_apgar_zip.py` | ZIP portável em `artifacts/apgar-export` (não versionado) |
 | `publish_delivery.py` | Publicação do site estático |
 | `env_paths.py` | Caminhos de ambiente |
-| `ready.sh` | Gate Fase 1: validate + bundle + sync CKO |
+| `ready.sh` | Gate Fase 1–2: validate + `compiler.build_all` + verify |
+| `build_apgar_cko.py` | Wrapper → `python3 -m compiler.build_all` |
 | `calculator_agents/` | Agentes LLM para geração de páginas (offline) |
+
+Compiler unificado: `compiler/` (ver `compiler/README.md`).
 
 Scripts de migração one-shot estão em `_archive/scripts-iteracao-apgar/`.

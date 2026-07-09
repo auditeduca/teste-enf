@@ -19,7 +19,6 @@
   "knowledge": {
     "concept_code": "APGAR",
     "tool_code": "TOOL.APGAR",
-    "definition_code": "CALC.TOOL.APGAR",
     "domain": [
       "neonatology",
       "obstetrics",
@@ -72,6 +71,7 @@
         }
       ]
     },
+    "definition_code": "CALC.TOOL.APGAR",
     "score_min": 0,
     "score_max": 10
   },
@@ -111,9 +111,8 @@
     }
   },
   "evidence": {
-    "foundation": "Apgar V. (1953). A proposal for a new method of evaluation of the newborn infant. Current Researches in Anesthesia & Analgesia 32 260-267 doi:10.1213/00000539-195301000-00041",
-    "validation": "Validado por Nurse-PaLM Engine V9 (revisão 2026-07-08).",
     "limitations": "Não diagnosticar asfixia perinatal isoladamente; interpretar com gasometria de cordão.",
+    "evidence_level": "I",
     "references": [
       {
         "text": "Apgar V. (1953). A proposal for a new method of evaluation of the newborn infant. Current Researches in Anesthesia & Analgesia 32 260-267 doi:10.1213/00000539-195301000-00041"
@@ -125,7 +124,8 @@
         "text": "WHO (2022). WHO recommendations on newborn health. World Health Organization"
       }
     ],
-    "evidence_level": "I"
+    "foundation": "Apgar V. (1953). A proposal for a new method of evaluation of the newborn infant. Current Researches in Anesthesia & Analgesia 32 260-267 doi:10.1213/00000539-195301000-00041",
+    "validation": "Validado por Nurse-PaLM Engine V9 (revisão 2026-07-08)."
   },
   "ai": {
     "summary": "Ferramenta para avaliação da vitalidade neonatal nos primeiros minutos de vida. O escore de Apgar orienta decisões de reanimação e monitorização.",
@@ -151,9 +151,9 @@
       "Sala de parto"
     ],
     "reasoning": [
-      "Avaliar Apgar no 1º e 5º minutos de vida",
-      "Se Apgar < 7 no 5º minuto, continuar avaliação a cada 5 minutos até pontuação ≥ 7",
-      "Iniciar reanimação imediatamente se FC ausente ou < 60 bpm, independentemente do índice"
+      "0–3: Baixo / criticamente baixo. Reanimação neonatal; escalar equipe",
+      "4–6: Moderadamente anormal. Suporte ventilatório; monitorização intensiva",
+      "7–10: Tranquilizador / normal. Cuidados de rotina neonatal"
     ],
     "clinical_reasoning": {
       "observations": [
@@ -523,5 +523,16 @@
       }
     }
   },
-  "_source_cko_v3": "CKO-APGAR-001"
+  "_source_cko_v3": "CKO-APGAR-001",
+  "_generated": {
+    "by": "compiler/build_all.py",
+    "do_not_edit": true,
+    "at": "2026-07-09T04:54:45.933530Z",
+    "artifact": "js/modules/data/apgar-cko.json",
+    "sources": [
+      "NIFS/DELIVERY/js/modules/data/cko/CKO-APGAR-001.json",
+      "NIFS/DELIVERY/js/modules/data/cko/overlays/CKO-APGAR-ui.json",
+      "NIFS/reference-datasets/clinical/calculator_definitions.json"
+    ]
+  }
 }
