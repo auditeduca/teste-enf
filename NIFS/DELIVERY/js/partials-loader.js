@@ -107,13 +107,7 @@
   ];
 
   function needsCkoPipeline() {
-    var body = document.body;
-    if (!body) return false;
-    return !!(
-      body.getAttribute("data-tool-cko") ||
-      body.getAttribute("data-page") === "apgar" ||
-      body.getAttribute("data-page") === "glasgow"
-    );
+    return !!document.getElementById("tool-config");
   }
 
   function ckoScripts() {
@@ -129,6 +123,156 @@
   }
 
   var CALC_ENGINE = assetPath("js/calc-engine-v2.js");
+
+  function insertAfter(referenceEl, newEl) {
+    if (!referenceEl || !referenceEl.parentNode || !newEl) return;
+    if (referenceEl.nextSibling) {
+      referenceEl.parentNode.insertBefore(newEl, referenceEl.nextSibling);
+    } else {
+      referenceEl.parentNode.appendChild(newEl);
+    }
+  }
+
+  function ensureMount(id, parent, afterEl) {
+    if (document.getElementById(id) || !parent) return document.getElementById(id);
+    var el = document.createElement("div");
+    el.id = id;
+    if (afterEl) insertAfter(afterEl, el);
+    else parent.appendChild(el);
+    return el;
+  }
+
+  function buildFlowCard(id, title, icon, bodyHtml, attrs) {
+    return (
+      '<section class="calc-card flow-card' + (attrs && attrs.extraClass ? " " + attrs.extraClass : "") + '"' +
+      (attrs && attrs.dataAttr ? " " + attrs.dataAttr : "") +
+      ' aria-labelledby="' + id + '">' +
+      '<div class="calc-card-header"><span class="bar" aria-hidden="true"></span>' +
+      '<h2 id="' + id + '"><svg class="icon icon-sm"><use href="#' + icon + '"/></svg> ' + title + "</h2>" +
+      (attrs && attrs.badge ? '<span class="cognitive-badge">' + attrs.badge + "</span>" : "") +
+      "</div>" + bodyHtml + "</section>"
+    );
+  }
+
+  function ensureClinicalFlowSections(flow) {
+    if (!flow) return;
+    flow.setAttribute("data-profile-clinical-flow", "");
+
+    if (!document.getElementById("cognitivePanel")) {
+      flow.insertAdjacentHTML("beforeend", buildFlowCard(
+        "calcCogTitle",
+        "Análise Cognitiva — Nurse-PaLM",
+        "i-brain",
+        '<div id="cognitivePanel" class="cognitive-panel cognitive-panel--embedded cip-hidden" data-cognitive-mount>' +
+          '<div id="cognitivePanelContent" data-cognitive-panel-content></div>' +
+        "</div>",
+        { extraClass: "flow-card--cognitive cip-hidden", dataAttr: 'data-cog-section', badge: "Motor Clínico" }
+      ));
+    }
+
+    if (!document.getElementById("calcMedicationSection")) {
+      flow.insertAdjacentHTML("beforeend", buildFlowCard(
+        "calcMedTitle",
+        "Medicamentos — Base de Dados",
+        "i-file",
+        '<p class="med-link-band" id="calcMedBandLabel"></p>' +
+        '<p class="flow-text" id="calcMedSummary"></p>' +
+        '<div id="calcMedicationLinks" class="med-links-grid"></div>' +
+        '<p class="med-link-disclaimer">Referência da base NKOS. Prescrição e administração dependem de avaliação médica e protocolo institucional.</p>',
+        { dataAttr: 'id="calcMedicationSection" hidden' }
+      ));
+    }
+
+    if (!document.getElementById("cipContainer")) {
+      flow.insertAdjacentHTML("beforeend", buildFlowCard(
+        "calcCipTitle",
+        "Evidência & Pérolas Clínicas",
+        "i-book",
+        '<div id="cipContainer" class="cip-flow-inner cip-hidden" data-cip-mount></div>',
+        { extraClass: "flow-card--cip cip-hidden", dataAttr: 'data-cip-section' }
+      ));
+    }
+
+    if (!flow.querySelector("[data-kg-section]")) {
+      flow.insertAdjacentHTML("beforeend", buildFlowCard(
+        "calcKgTitle",
+        "Recursos Conectados",
+        "i-book",
+        '<div class="cip-kg-links-list">' +
+          '<a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>' +
+          '<a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>' +
+          '<a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>' +
+          '<a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>' +
+          '<a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>' +
+          '<a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>' +
+        "</div>",
+        { extraClass: "flow-card--kg cip-hidden", dataAttr: 'data-kg-section' }
+      ));
+    }
+  }
+
+  function normalizeToolShell() {
+    if (!document.getElementById("tool-config")) return;
+
+    var toolHeader = document.querySelector(".tool-header");
+    if (toolHeader && !document.getElementById("patientContextPanel")) {
+      ensureMount("patientContextMount", toolHeader.parentNode, toolHeader);
+    }
+
+    var profilePanels = document.querySelector('[data-tab-panels="perfil"]');
+    if (profilePanels) {
+      var order = ["padrao", "estudante", "urgencia", "gestor", "academico"];
+      order.forEach(function (panelId) {
+        var panel = document.querySelector('.tab-panel[data-tab-panel="' + panelId + '"]');
+        if (!panel) return;
+        if (panel.parentNode !== profilePanels) profilePanels.appendChild(panel);
+      });
+      order.forEach(function (panelId) {
+        var panel = profilePanels.querySelector(':scope > .tab-panel[data-tab-panel="' + panelId + '"]');
+        if (!panel) return;
+        if (panelId !== "padrao" && !panel.querySelector('[data-profile-shared="' + panelId + '"]')) {
+          var mount = document.createElement("div");
+          mount.setAttribute("data-profile-shared", panelId);
+          panel.appendChild(mount);
+        }
+        if (panelId === "academico") {
+          var saePanel = panel.querySelector('.aca-body [data-tab-panel="sae"]');
+          if (saePanel) saePanel.classList.add("cognitive-locked");
+        }
+      });
+
+      var padraoPanel = profilePanels.querySelector(':scope > .tab-panel[data-tab-panel="padrao"]');
+      if (padraoPanel && !document.getElementById("toolFooterMount")) {
+        ensureMount("toolFooterMount", padraoPanel, null);
+      }
+
+      var flow = document.getElementById("calcClinicalFlow");
+      var divider = document.getElementById("calcFlowDivider");
+      if (flow && padraoPanel && padraoPanel.contains(flow)) {
+        if (divider && padraoPanel.contains(divider)) {
+          insertAfter(profilePanels, divider);
+          insertAfter(divider, flow);
+        } else {
+          insertAfter(profilePanels, flow);
+        }
+      }
+      ensureClinicalFlowSections(flow);
+    }
+
+    if (!document.getElementById("printTemplate")) {
+      var siteFooter = document.getElementById("site-footer");
+      var printMount = document.getElementById("printTemplateMount");
+      if (!printMount) {
+        printMount = document.createElement("div");
+        printMount.id = "printTemplateMount";
+        if (siteFooter && siteFooter.parentNode) {
+          siteFooter.parentNode.insertBefore(printMount, siteFooter);
+        } else {
+          document.body.appendChild(printMount);
+        }
+      }
+    }
+  }
 
   function fetchPartial(item) {
     var target = document.getElementById(item.target);
@@ -261,6 +405,7 @@
   function init() {
     ensureChromeStyles();
     fixAssetLinks();
+    normalizeToolShell();
     Promise.all(PARTIALS.map(fetchPartial))
       .then(function () { return loadPatientContextPanel(); })
       .then(function () { return loadPrintTemplate(); })

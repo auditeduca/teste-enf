@@ -38,8 +38,103 @@
     }).join("") + "</ul>";
   }
 
+  function parseInlineConfig() {
+    var el = document.getElementById("tool-config");
+    if (!el) return null;
+    try {
+      return JSON.parse(el.textContent);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function firstLine(text) {
+    return String(text || "").split("\n").map(function (line) {
+      return line.replace(/^[•\-\s]+/, "").trim();
+    }).filter(Boolean)[0] || "";
+  }
+
+  function fallbackPresentation(config) {
+    config = config || {};
+    var overview = config.overview || {};
+    var evidence = config.evidence || {};
+    var learning = config.learning || {};
+    var interpretation = config.interpretation || {};
+    var ranges = interpretation.ranges || [];
+    var specialty = (overview.specialty || []).slice(0, 4);
+    var tags = specialty.map(function (label) {
+      return { href: "index.html#calculadoras", label: "#" + String(label).replace(/\s+/g, "") };
+    });
+    if (overview.acronym) {
+      tags.unshift({ href: "index.html#calculadoras", label: "#" + String(overview.acronym).replace(/\s+/g, "") });
+    }
+
+    return {
+      tags: tags,
+      kpis: [
+        overview.averageTime ? "Tempo médio de aplicação: " + overview.averageTime : "",
+        overview.complexity ? "Complexidade: " + overview.complexity : "",
+        overview.evidenceLevel ? "Nível de evidência: " + overview.evidenceLevel : "",
+        ranges.length ? "Faixas clínicas: " + ranges.map(function (r) { return r.label; }).join(" • ") : ""
+      ].filter(Boolean),
+      profileContent: {
+        urgencia: {
+          title: "Modo Urgência",
+          intro: (overview.objective || "Visão rápida para priorização clínica.") + " Use o resultado para estratificação inicial e escalonamento do cuidado.",
+          sections: ranges.length ? [{
+            heading: "Condutas por faixa",
+            items: ranges.slice(0, 4).map(function (r) {
+              return (r.label || "Faixa") + ": " + firstLine(r.recommendations || r.clinicalImplications || "");
+            }).filter(Boolean)
+          }] : []
+        },
+        gestor: {
+          title: "Visão Gestor",
+          intro: "Painel orientado a qualidade assistencial, padronização do registro e acompanhamento institucional.",
+          sections: [{
+            heading: "Indicadores de referência",
+            items: [
+              overview.averageTime ? "Tempo de aplicação estimado: " + overview.averageTime : "",
+              "Registro padronizado do resultado no prontuário",
+              "Monitoramento de distribuição por faixa de risco",
+              "Reavaliação conforme protocolo institucional"
+            ].filter(Boolean)
+          }]
+        },
+        estudante: {
+          title: "Visão Estudante",
+          intro: "Resumo de aprendizado com foco nos critérios de pontuação, interpretação e pegadinhas frequentes.",
+          sections: learning.tips && learning.tips.length ? [{
+            heading: "Dicas de estudo",
+            items: learning.tips.slice(0, 4)
+          }] : []
+        },
+        academico: {
+          title: "Visão Acadêmica",
+          intro: "Síntese acadêmica com fundamento teórico, validade clínica e limitações de uso.",
+          sections: [{
+            heading: "Pérolas de evidência",
+            items: [
+              firstLine(evidence.foundation),
+              firstLine(evidence.history),
+              firstLine(evidence.validation),
+              firstLine(evidence.limitations)
+            ].filter(Boolean)
+          }]
+        }
+      }
+    };
+  }
+
+  function getPresentation(cko) {
+    if (cko && cko.presentation) return cko.presentation;
+    var config = (window.ToolCKO && window.ToolCKO.config) || parseInlineConfig() || {};
+    return fallbackPresentation(config);
+  }
+
   function renderProfileIntro(profileId, cko) {
-    var pc = cko.presentation && cko.presentation.profileContent && cko.presentation.profileContent[profileId];
+    var pres = getPresentation(cko);
+    var pc = pres && pres.profileContent && pres.profileContent[profileId];
     if (!pc) return "";
     var html = '<p class="flow-text">' + esc(pc.intro || "") + "</p>";
     if (pc.sections) {
@@ -60,7 +155,7 @@
   }
 
   function renderRelated(cko) {
-    var tools = (cko.presentation && cko.presentation.related_tools) || [];
+    var tools = (getPresentation(cko).related_tools) || [];
     if (!tools.length) return "";
     var inner = '<div class="related-tools-grid profile-related-compact">';
     tools.forEach(function (t) {
@@ -75,7 +170,7 @@
   }
 
   function renderLearning(cko) {
-    var pres = cko.presentation || {};
+    var pres = getPresentation(cko) || {};
     var tracks = pres.learning_trail || pres.learning || [];
     if (!tracks.length) return "";
     var inner = '<div class="learning-track-grid profile-learning-compact">';
@@ -94,7 +189,7 @@
   }
 
   function renderTags(cko) {
-    var tags = (cko.presentation && cko.presentation.tags) || [];
+    var tags = (getPresentation(cko).tags) || [];
     if (!tags.length) return "";
     var inner = '<div class="tool-tags">';
     tags.forEach(function (t) {
@@ -105,7 +200,7 @@
   }
 
   function renderKpi(cko) {
-    var kpis = (cko.presentation && cko.presentation.kpis) || [];
+    var kpis = (getPresentation(cko).kpis) || [];
     if (!kpis.length) return "";
     return card("Indicadores (referência NKOS)", listItems(kpis));
   }
