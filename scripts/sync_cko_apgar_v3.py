@@ -52,25 +52,25 @@ def sync(v3: dict, v1: dict) -> dict:
             if m.get("vocabulary") == "LOINC"
         ],
         "related_diagnosis_codes": [f"NANDA.{n['code']}" for n in term.get("nanda", []) if n.get("code")],
-        "nanda": term.get("nanda", []),
-        "nic": term.get("nic", []),
-        "noc": term.get("noc", []),
+        "nanda": [{"code": n["code"]} for n in term.get("nanda", []) if n.get("code")],
+        "nic": [{"code": n["code"]} for n in term.get("nic", []) if n.get("code")],
+        "noc": [{"code": n["code"]} for n in term.get("noc", []) if n.get("code")],
     }
 
     np = v3.get("nursing_process", {})
+    diag_codes = np.get("diagnosis_codes") or [
+        n.get("code") for n in term.get("nanda", []) if n.get("code")
+    ]
+    nic_codes = np.get("intervention_codes") or [
+        n.get("code") for n in term.get("nic", []) if n.get("code")
+    ]
+    noc_codes = np.get("outcome_codes") or [
+        n.get("code") for n in term.get("noc", []) if n.get("code")
+    ]
     v1["reasoning"]["sae"] = {
-        "nanda": [
-            {"diagnosis": d.split(" (")[0], "definition": d}
-            for d in np.get("diagnosis", [])
-        ],
-        "nic": [
-            {"intervention": i.split(" (")[0], "activities": [i]}
-            for i in np.get("interventions", [])
-        ],
-        "noc": [
-            {"outcome": o.split(" (")[0], "indicators": [o]}
-            for o in np.get("outcomes", [])
-        ],
+        "nanda": [{"code": c} for c in diag_codes],
+        "nic": [{"code": c} for c in nic_codes],
+        "noc": [{"code": c} for c in noc_codes],
     }
 
     cr = v3.get("clinical_reasoning", {})

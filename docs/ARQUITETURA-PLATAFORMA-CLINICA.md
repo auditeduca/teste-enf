@@ -137,8 +137,8 @@ Evitar: 97 cópias de `nanda.json` embutidas em cada HTML traduzido.
 | HTML/PDF | Artefatos de apresentação gerados ou populados em runtime |
 | Particularizadores | Pequenos, versionados, por ferramenta (CKO) |
 | Globais primeiro | Terminologia e ontologia antes de escalar calculadoras |
-| i18n | Chaves e datasets, não páginas estáticas × 29 idiomas |
-| Runtime | Evoluir browser → API + grafo sem reescrever datasets |
+| i18n | Chaves + corpus pt-BR (Fase 5); tradução só Fase 6 autorizada |
+| Responsividade | Critério de saída em cada fase (Fases 1–4) |
 
 ## Referências no repositório
 

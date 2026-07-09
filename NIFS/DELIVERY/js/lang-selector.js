@@ -747,33 +747,23 @@
   }
 
   function applyLanguage(code, displayName, flagFile) {
-    // For embedded languages (en, es) use TRANSLATIONS directly.
-    // For all others, async-load the JSON dictionary then apply.
-    if (TRANSLATIONS[code] || code === "pt-BR") {
+    function runApply() {
       _doApplyLanguage(code, displayName, flagFile);
-    } else {
-      // Try i18n-loader, fall back to en
-      var loader = window.I18N_LOADER;
-      if (loader) {
-        loader.fetchDict(code).then(function(dict) {
-          if (dict) {
-            TRANSLATIONS[code] = dict;
-            _doApplyLanguage(code, displayName, flagFile);
-          } else if (code !== "en") {
-            _doApplyLanguage("en", displayName, flagFile);
-          }
-        });
-      } else {
-        // No loader — fetch directly
-        fetch("i18n/" + code + ".json")
-          .then(function(r) { return r.ok ? r.json() : null; })
-          .then(function(dict) {
-            if (dict) { TRANSLATIONS[code] = dict; _doApplyLanguage(code, displayName, flagFile); }
-            else { _doApplyLanguage("en", displayName, flagFile); }
-          })
-          .catch(function() { _doApplyLanguage("en", displayName, flagFile); });
-      }
     }
+    if (TRANSLATIONS[code] || code === "pt-BR") {
+      runApply();
+      return;
+    }
+    var loader = window.I18N_LOADER;
+    var loadDict = loader
+      ? loader.loadDictionaryWithFallback(code)
+      : fetch("i18n/global/" + code + ".json")
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .catch(function () { return null; });
+    loadDict.then(function (dict) {
+      if (dict) TRANSLATIONS[code] = dict;
+      runApply();
+    });
   }
 
   function _doApplyLanguage(code, displayName, flagFile) {
@@ -936,11 +926,21 @@
     });
   }
 
+  function prefetchGlobalDictionaries() {
+    if (!window.I18N_LOADER) return;
+    ["en", "es"].forEach(function (code) {
+      window.I18N_LOADER.fetchDict(code).then(function (dict) {
+        if (dict) TRANSLATIONS[code] = dict;
+      });
+    });
+  }
+
   var inited = false;
   function init() {
     if (inited) return;
     if (!document.getElementById("gh-region-list")) return;
     inited = true;
+    prefetchGlobalDictionaries();
     // Seletor de idiomas centralizado no cabeçalho (mega-menu Idiomas) — o
     // rodapé não possui mais seletor próprio.
 

@@ -110,6 +110,7 @@
     if (!body) return [];
     var list = [];
     if (body.getAttribute("data-tool-cko") || body.getAttribute("data-page") === "apgar") {
+      list.push(assetPath("js/clinical-terminology.js"));
       list.push(assetPath("js/patient-context-storage.js"));
       list.push(assetPath("js/tool-cko-loader.js"));
       list.push(assetPath("js/tool-profile-engine.js"));
@@ -188,7 +189,15 @@
   function loadCognitiveScriptsThenCalcEngine(idx) {
     idx = idx || 0;
     if (idx >= COGNITIVE_SCRIPTS.length) {
-      loadScriptSequentially(CALC_ENGINE).then(finishPartialsReady);
+      var ckoReady = window.ToolCKO && window.ToolCKO.ready
+        ? window.ToolCKO.ready
+        : Promise.resolve();
+      var termReady = window.ClinicalTerminology && window.ClinicalTerminology.ready
+        ? window.ClinicalTerminology.ready()
+        : Promise.resolve();
+      Promise.all([ckoReady, termReady]).then(function () {
+        loadScriptSequentially(CALC_ENGINE).then(finishPartialsReady);
+      });
       return;
     }
     loadScriptSequentially(COGNITIVE_SCRIPTS[idx]).then(function () {

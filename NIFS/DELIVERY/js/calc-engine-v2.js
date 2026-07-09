@@ -564,6 +564,27 @@
     };
   }
 
+  function refreshConfigFromDom() {
+    var el = document.getElementById("tool-config");
+    if (!el) return;
+    try {
+      CONFIG = JSON.parse(el.textContent);
+      sae = CONFIG.sae || sae;
+      evidence = CONFIG.evidence || evidence;
+      learning = CONFIG.learning || learning;
+      overview = CONFIG.overview || overview;
+    } catch (e) {
+      console.warn("calc-engine-v2: não foi possível reler tool-config", e);
+    }
+  }
+
+  function enrichSaeFromTerminology() {
+    if (window.ClinicalTerminology && window.ClinicalTerminology.enrichSae) {
+      var lang = document.documentElement.lang || "pt-BR";
+      sae = window.ClinicalTerminology.enrichSae(sae, lang);
+    }
+  }
+
   function pickNandaText(range) {
     if (lastCognitiveResult && lastCognitiveResult.diagnoses && lastCognitiveResult.diagnoses.length) {
       var dx = lastCognitiveResult.diagnoses[0];
@@ -571,7 +592,12 @@
       if (dx.probability) label += " (" + Math.round(dx.probability * 100) + "%)";
       return label;
     }
-    var nanda = (sae.nanda && sae.nanda[0]) ? sae.nanda[0].diagnosis || sae.nanda[0].name : "";
+    var nanda = (sae.nanda && sae.nanda[0])
+      ? sae.nanda[0].diagnosis || sae.nanda[0].name
+      : "";
+    if (!nanda && sae.nanda && sae.nanda[0] && sae.nanda[0].code && window.ClinicalTerminology) {
+      nanda = window.ClinicalTerminology.label("nanda", sae.nanda[0].code);
+    }
     return nanda || (range ? range.label : "—");
   }
 
@@ -580,11 +606,17 @@
       return lastCognitiveResult.plan.name;
     }
     var nic = (sae.nic && sae.nic[0]) ? sae.nic[0].intervention || sae.nic[0].name : "";
+    if (!nic && sae.nic && sae.nic[0] && sae.nic[0].code && window.ClinicalTerminology) {
+      nic = window.ClinicalTerminology.label("nic", sae.nic[0].code);
+    }
     return nic || "Intervenções conforme protocolo institucional.";
   }
 
   function pickNocText() {
     var noc = (sae.noc && sae.noc[0]) ? sae.noc[0].outcome || sae.noc[0].name : "";
+    if (!noc && sae.noc && sae.noc[0] && sae.noc[0].code && window.ClinicalTerminology) {
+      noc = window.ClinicalTerminology.label("noc", sae.noc[0].code);
+    }
     return noc || "Monitorar evolução clínica e registrar no prontuário.";
   }
 
@@ -1260,6 +1292,8 @@
     if (booted) return;
     if (document.getElementById("printTemplateMount") && !document.getElementById("printTemplate")) return;
     booted = true;
+    refreshConfigFromDom();
+    enrichSaeFromTerminology();
     initTabs();
     bindFields();
     bindExamples();
