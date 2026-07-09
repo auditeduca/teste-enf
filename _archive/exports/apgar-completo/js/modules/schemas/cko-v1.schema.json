@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/cko-v1.schema.json",
+  "title": "Clinical Knowledge Object (CKO) v1",
+  "description": "Objeto canônico de conhecimento clínico — fonte da verdade para calculadoras, API, FHIR e renderização web.",
+  "type": "object",
+  "required": ["metadata", "knowledge", "calculation", "presentation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["id", "code", "slug", "version", "status"],
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "slug": { "type": "string" },
+        "version": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "review", "published", "archived"] },
+        "seo": { "type": "object" },
+        "breadcrumb": { "type": "object" }
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "properties": {
+        "concept_code": { "type": "string" },
+        "tool_code": { "type": "string" },
+        "definition_code": { "type": "string" },
+        "domain": { "type": "array", "items": { "type": "string" } },
+        "terminology": { "type": "object" }
+      }
+    },
+    "calculation": {
+      "type": "object",
+      "description": "Espelha calculator + interpretation do tool-config"
+    },
+    "reasoning": {
+      "type": "object",
+      "properties": {
+        "sae": { "type": "object" },
+        "edges_file": { "type": "string" },
+        "inference_rules": { "type": "array" }
+      }
+    },
+    "evidence": { "type": "object" },
+    "ai": {
+      "type": "object",
+      "properties": {
+        "summary": { "type": "string" },
+        "clinicalPearls": { "type": "array", "items": { "type": "string" } },
+        "commonErrors": { "type": "array", "items": { "type": "string" } },
+        "contraindications": { "type": "array", "items": { "type": "string" } },
+        "explainLikeResident": { "type": "string" },
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "reasoning": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "interoperability": {
+      "type": "object",
+      "properties": {
+        "fhir": {
+          "type": "object",
+          "properties": {
+            "observation": { "type": "object" },
+            "riskAssessment": { "type": "object" },
+            "carePlan": { "type": "object" }
+          }
+        }
+      }
+    },
+    "presentation": {
+      "type": "object",
+      "required": ["profiles"],
+      "properties": {
+        "profiles": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["padrao", "urgencia", "gestor", "estudante", "academico"] }
+        },
+        "profileContent": { "type": "object" },
+        "kg_links": { "type": "array" },
+        "related_tools": { "type": "array" },
+        "learning": { "type": "object" }
+      }
+    }
+  }
+}
