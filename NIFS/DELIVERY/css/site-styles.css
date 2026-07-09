@@ -1902,7 +1902,7 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
 .field-input:hover, .field-select:hover{border-color:#93c5fd;}
 .field-input:focus, .field-select:focus{outline:none; border-color:var(--blue-500); box-shadow:0 0 0 4px rgba(37,99,235,.12);}
 .field-suffix{position:absolute; right:14px; top:50%; transform:translateY(-50%); font-size:12px; color:var(--muted); font-weight:600; pointer-events:none;}
-.field-select-wrap{position:relative;}
+.field-select-wrap{width:100%; max-width:100%;}
 .field-select-wrap .icon{position:absolute; right:12px; top:50%; transform:translateY(-50%) rotate(90deg); width:14px; height:14px; color:var(--muted); pointer-events:none;}
 .field-hint{font-size:11.5px; color:var(--muted); margin-top:6px; line-height:1.5;}
 
@@ -1939,7 +1939,7 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
 .status-banner p{font-size:11.5px; line-height:1.5; color:var(--muted);}
 
 .formula-strip{margin:20px 24px 0; padding:16px; border-radius:14px; background:var(--bg-soft); border:1px solid var(--line); overflow-x:auto;}
-.formula-row{display:flex; align-items:flex-end; justify-content:center; gap:8px; min-width:max-content; margin:0 auto; flex-wrap:wrap;}
+.formula-row{display:flex; align-items:flex-end; justify-content:center; gap:8px; flex-wrap:wrap; width:100%; margin:0 auto;}
 .formula-cell{display:flex; flex-direction:column; align-items:center; min-width:64px;}
 .formula-box{height:38px; padding:0 12px; border-radius:9px; background:#fff; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--navy-900); font-variant-numeric:tabular-nums;}
 .formula-box.highlight{background:var(--blue-500); border-color:var(--blue-500); color:#fff; box-shadow:0 4px 14px rgba(37,99,235,.3);}
@@ -2168,6 +2168,33 @@ html.rd-dark .newsletter-heading, html.rd-dark .newsletter-description { color: 
   .calc-grid > *{grid-column:auto;}
   .tool-header{flex-direction:column; align-items:flex-start;}
   .urg-grid{grid-template-columns:1fr;}
+  .calc-card{padding:16px;}
+  .result-value{font-size:48px;}
+  .formula-row{min-width:0; width:100%; justify-content:flex-start; gap:6px;}
+  .formula-cell{min-width:52px; flex:0 1 auto;}
+  .formula-cap{font-size:8.5px; max-width:76px; line-height:1.25; text-align:center; word-break:break-word;}
+  .formula-strip{margin-left:0; margin-right:0; padding:12px;}
+  .profile-tabs-bar .tab{min-width:0; flex:1 1 45%; padding:8px 10px; font-size:12px;}
+  .profile-tabs-bar .tabs-inner{gap:6px;}
+  .cognitive-profile-strip{font-size:11.5px; padding:12px 14px; overflow-wrap:anywhere;}
+  .step-content .field-select-wrap,
+  .field-select-wrap--step{min-width:0; width:100%; max-width:100%;}
+  .step-card{flex-direction:column; align-items:stretch;}
+  .form-actions{flex-direction:column; align-items:stretch;}
+  .form-actions .btn{width:100%; justify-content:center;}
+  .learning-track-grid{grid-template-columns:1fr;}
+  .related-tools-grid{grid-template-columns:1fr;}
+  .nnn-grid{grid-template-columns:1fr;}
+  .safety-grid{grid-template-columns:1fr;}
+  .field-top{flex-wrap:wrap; gap:4px;}
+  .history-item{flex-wrap:wrap;}
+  .status-banner{margin-left:16px; margin-right:16px;}
+  .result-body{padding-left:16px; padding-right:16px;}
+}
+@media (max-width:480px){
+  .profile-tabs-bar .tab{flex:1 1 100%;}
+  .tool-tag{font-size:11px; padding:4px 10px;}
+  .result-value{font-size:40px;}
 }
 @media (max-width:640px){
   .equipo-grid{grid-template-columns:1fr;}

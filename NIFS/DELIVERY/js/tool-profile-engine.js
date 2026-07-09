@@ -75,7 +75,8 @@
   }
 
   function renderLearning(cko) {
-    var tracks = (cko.presentation && cko.presentation.learning) || [];
+    var pres = cko.presentation || {};
+    var tracks = pres.learning_trail || pres.learning || [];
     if (!tracks.length) return "";
     var inner = '<div class="learning-track-grid profile-learning-compact">';
     tracks.forEach(function (item) {

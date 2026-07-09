@@ -123,6 +123,7 @@
       assetPath("js/patient-context-storage.js"),
       assetPath("js/tool-cko-loader.js"),
       assetPath("js/tool-profile-engine.js"),
+      assetPath("js/tool-footer-renderer.js"),
       assetPath("js/report-payload.js")
     ];
   }
