@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grafo de Conhecimento Clínico | Calculadoras de Enfermagem</title>
+<meta name="description" content="Explore o grafo de conhecimento de enfermagem: diagnósticos NANDA-I, intervenções NIC, resultados NOC e suas relações causais com evidência e peso clínico.">
+<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/grafo-clinico.html" />
+<link rel="alternate" hreflang="pt-BR" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html"/>
+<link rel="alternate" hreflang="x-default" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html"/>
+<link rel="alternate" hreflang="en" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=en"/>
+<link rel="alternate" hreflang="es" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=es"/>
+<link rel="alternate" hreflang="fr" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=fr"/>
+<link rel="alternate" hreflang="de" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=de"/>
+<link rel="alternate" hreflang="it" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=it"/>
+<link rel="alternate" hreflang="nl" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=nl"/>
+<link rel="alternate" hreflang="pl" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=pl"/>
+<link rel="alternate" hreflang="ru" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=ru"/>
+<link rel="alternate" hreflang="tr" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=tr"/>
+<link rel="alternate" hreflang="ar" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=ar"/>
+<link rel="alternate" hreflang="he" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=he"/>
+<link rel="alternate" hreflang="hi" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=hi"/>
+<link rel="alternate" hreflang="bn" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=bn"/>
+<link rel="alternate" hreflang="zh-CN" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=zh-CN"/>
+<link rel="alternate" hreflang="zh-TW" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=zh-TW"/>
+<link rel="alternate" hreflang="ja" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=ja"/>
+<link rel="alternate" hreflang="ko" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=ko"/>
+<link rel="alternate" hreflang="vi" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=vi"/>
+<link rel="alternate" hreflang="th" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=th"/>
+<link rel="alternate" hreflang="id" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=id"/>
+<link rel="alternate" hreflang="ms" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=ms"/>
+<link rel="alternate" hreflang="tl" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=tl"/>
+<link rel="alternate" hreflang="sw" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=sw"/>
+<link rel="alternate" hreflang="am" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=am"/>
+<link rel="alternate" hreflang="el" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=el"/>
+<link rel="alternate" hreflang="ro" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=ro"/>
+<link rel="alternate" hreflang="hu" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=hu"/>
+<link rel="alternate" hreflang="cs" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=cs"/>
+<link rel="alternate" hreflang="sv" href="https://calculadorasdeenfermagem.com.br/grafo-clinico.html?lang=sv"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="css/site-styles.css">
+<style>
+/* === Grafo Clínico — estilos específicos === */
+#graph-canvas{width:100%;height:560px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);position:relative;overflow:hidden;}
+.graph-controls{position:absolute;top:16px;right:16px;display:flex;flex-direction:column;gap:8px;z-index:10;}
+.graph-controls button{
+  width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
+  background:var(--white);color:var(--navy-800);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.graph-controls button:hover{background:var(--blue-600);color:#fff;border-color:var(--blue-600);}
+.graph-legend{position:absolute;bottom:16px;left:16px;display:flex;gap:14px;flex-wrap:wrap;background:rgba(255,255,255,.94);padding:10px 16px;border-radius:10px;border:1px solid var(--line);font-size:12px;z-index:10;}
+.graph-legend .leg{display:flex;align-items:center;gap:6px;color:var(--navy-800);font-weight:600;}
+.graph-legend .dot{width:12px;height:12px;border-radius:50%;}
+.graph-search{position:absolute;top:16px;left:16px;z-index:10;}
+.graph-search input{
+  padding:10px 16px;border:1px solid var(--line);border-radius:10px;
+  font-size:13px;width:280px;background:rgba(255,255,255,.94);
+  font-family:'Manrope',sans-serif;color:var(--ink);
+}
+.graph-search input:focus{outline:none;border-color:var(--blue-600);box-shadow:0 0 0 3px rgba(37,99,235,.12);}
+.graph-info-panel{
+  margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:20px;
+}
+.graph-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0;}
+.graph-stat{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center;}
+.graph-stat .num{font-family:'Sora',sans-serif;font-size:28px;font-weight:800;color:var(--blue-600);}
+.graph-stat .lbl{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.04em;}
+.graph-node-detail{
+  background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;
+}
+.graph-node-detail h3{font-size:16px;color:var(--navy-900);margin-bottom:8px;}
+.graph-node-detail .node-code{font-size:12px;color:var(--blue-600);font-weight:700;margin-bottom:12px;}
+.graph-node-detail .node-meta{display:flex;flex-direction:column;gap:8px;}
+.graph-node-detail .node-meta-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line);}
+.graph-node-detail .node-meta-row:last-child{border-bottom:none;}
+.graph-node-detail .node-meta-row .k{color:var(--muted);font-weight:600;}
+.graph-node-detail .node-meta-row .v{color:var(--navy-900);font-weight:600;}
+.graph-relations{margin-top:16px;}
+.graph-relations h4{font-size:13px;color:var(--navy-800);margin-bottom:10px;}
+.graph-relation-item{
+  display:flex;align-items:center;gap:8px;padding:8px 12px;
+  background:var(--bg-soft);border-radius:8px;margin-bottom:6px;font-size:13px;
+}
+.graph-relation-item .rel-arrow{color:var(--blue-600);font-weight:700;}
+.graph-relation-item .rel-type{font-size:11px;padding:2px 8px;background:var(--blue-100);color:var(--blue-600);border-radius:20px;font-weight:700;}
+.graph-relation-item .rel-weight{margin-left:auto;font-size:11px;color:var(--muted);}
+.graph-filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0;}
+.graph-filter-btn{
+  padding:8px 16px;border:1px solid var(--line);border-radius:20px;
+  background:var(--white);color:var(--navy-800);font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:'Manrope',sans-serif;
+}
+.graph-filter-btn:hover{border-color:var(--blue-600);color:var(--blue-600);}
+.graph-filter-btn.active{background:var(--blue-600);color:#fff;border-color:var(--blue-600);}
+@media(max-width:768px){
+  .graph-info-panel{grid-template-columns:1fr;}
+  .graph-stats{grid-template-columns:repeat(2,1fr);}
+  .graph-search input{width:200px;}
+}
+</style>
+</head>
+<body data-page="grafo-clinico">
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+<div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+<div id="site-header"></div>
+<div id="site-a11y"></div>
+
+<main id="main-content">
+  <div class="container">
+    <nav class="tpl-breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Início</a>
+      <svg class="sep"><use href="#i-arrow"/></svg>
+      <span class="current" aria-current="page">Grafo de Conhecimento Clínico</span>
+    </nav>
+
+    <div class="tool-header">
+      <div class="tool-header-main">
+        <div class="tool-icon-badge" aria-hidden="true">
+          <i class="fa-solid fa-diagram-project" style="font-size:22px;color:var(--blue-600);"></i>
+        </div>
+        <div>
+          <span class="tool-category-badge">Conhecimento</span>
+          <h1>Grafo de Conhecimento Clínico</h1>
+          <p class="tool-subtitle">Explore a rede de diagnósticos NANDA-I, intervenções NIC, resultados NOC e conceitos clínicos com suas relações causais, peso de evidência e grau de confiança.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="graph-stats">
+      <div class="graph-stat"><div class="num" id="stat-nodes">0</div><div class="lbl">Nós</div></div>
+      <div class="graph-stat"><div class="num" id="stat-edges">0</div><div class="lbl">Arestas</div></div>
+      <div class="graph-stat"><div class="num" id="stat-nanda">244</div><div class="lbl">NANDA-I</div></div>
+      <div class="graph-stat"><div class="num" id="stat-nic">575</div><div class="lbl">NIC</div></div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="graph-filter-bar" role="toolbar" aria-label="Filtros do grafo">
+      <button class="graph-filter-btn active" data-filter="all">Tudo</button>
+      <button class="graph-filter-btn" data-filter="nanda">NANDA-I</button>
+      <button class="graph-filter-btn" data-filter="nic">NIC</button>
+      <button class="graph-filter-btn" data-filter="noc">NOC</button>
+      <button class="graph-filter-btn" data-filter="concept">Conceitos</button>
+      <button class="graph-filter-btn" data-filter="drug">Medicamentos</button>
+    </div>
+
+    <!-- Canvas do grafo -->
+    <div id="graph-canvas" role="img" aria-label="Visualização do grafo de conhecimento clínico">
+      <div class="graph-search">
+        <input type="text" id="graph-search-input" placeholder="Buscar nó (ex: hipoglicemia, NIC 2500)..." autocomplete="off">
+      </div>
+      <div class="graph-controls">
+        <button id="btn-zoom-in" title="Aproximar" aria-label="Aproximar"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+        <button id="btn-zoom-out" title="Afastar" aria-label="Afastar"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+        <button id="btn-reset" title="Resetar vista" aria-label="Resetar vista"><i class="fa-solid fa-arrows-rotate"></i></button>
+        <button id="btn-fullscreen" title="Tela cheia" aria-label="Tela cheia"><i class="fa-solid fa-expand"></i></button>
+      </div>
+      <div class="graph-legend">
+        <div class="leg"><span class="dot" style="background:#2563eb;"></span> NANDA-I</div>
+        <div class="leg"><span class="dot" style="background:#1a3e74;"></span> NIC</div>
+        <div class="leg"><span class="dot" style="background:#3b82f6;"></span> NOC</div>
+        <div class="leg"><span class="dot" style="background:#5b6b7f;"></span> Conceito</div>
+        <div class="leg"><span class="dot" style="background:#081527;"></span> Medicamento</div>
+      </div>
+    </div>
+
+    <!-- Detalhe do nó selecionado + Relações -->
+    <div class="graph-info-panel">
+      <div class="graph-node-detail" id="node-detail">
+        <h3>Selecione um nó no grafo</h3>
+        <p style="font-size:13px;color:var(--muted);">Clique em qualquer nó para ver detalhes, relações e evidência associada.</p>
+      </div>
+      <div class="graph-node-detail" id="relations-panel" style="display:none;">
+        <h3>Relações</h3>
+        <div class="graph-relations" id="relations-list"></div>
+      </div>
+    </div>
+
+    <!-- Seção explicativa -->
+    <section style="margin:48px 0;">
+      <div class="container">
+        <h2 style="font-size:24px;color:var(--navy-900);margin-bottom:20px;">Como funciona o Grafo Clínico</h2>
+        <div class="module-grid-4">
+          <article class="module-card">
+            <span class="cat-badge">01</span>
+            <h3>Nós Clinicos</h3>
+            <p>244 diagnósticos NANDA-I, 575 intervenções NIC, 550 resultados NOC e 2000 conceitos clínicos mapeados com SNOMED CT e ICD-11.</p>
+          </article>
+          <article class="module-card">
+            <span class="cat-badge">02</span>
+            <h3>Arestas com Evidência</h3>
+            <p>Cada relação tem peso (0-1), grau de evidência (A-D GRADE) e tipo (causal, associativa, terapêutica, diagnóstica).</p>
+          </article>
+          <article class="module-card">
+            <span class="cat-badge">03</span>
+            <h3>Pathways Clínicos</h3>
+            <p>Trilhas NANDA→NIC→NOC com 1500 linkages validados e força de recomendação (strong, moderate, suggestive).</p>
+          </article>
+          <article class="module-card">
+            <span class="cat-badge">04</span>
+            <h3>Integração Nurse-PaLM</h3>
+            <p>O grafo alimenta o motor cognitivo para inferência bayesiana, raciocínio explicável e sugestão de intervenções.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="js/graph-clinical.js"></script>
+<script>
+  // Partial loader
+  (function(){
+    function loadPartial(id,url){
+      fetch(url).then(r=>r.text()).then(html=>{
+        const el=document.getElementById(id);
+        if(el){el.innerHTML=html;}
+      }).catch(()=>{});
+    }
+    loadPartial('site-header','partials/header.html');
+    loadPartial('site-footer','partials/footer.html');
+    loadPartial('site-a11y','partials/a11y-bar.html');
+  })();
+</script>
+<script src="js/partials-loader.js"></script>
+<script src="js/i18n-loader.js"></script>
+</body>
+</html>
