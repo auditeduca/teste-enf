@@ -108,13 +108,13 @@
   function ckoScripts() {
     var body = document.body;
     if (!body) return [];
+    var list = [];
     if (body.getAttribute("data-tool-cko") || body.getAttribute("data-page") === "apgar") {
-      return [
-        assetPath("js/tool-cko-loader.js"),
-        assetPath("js/tool-profile-engine.js")
-      ];
+      list.push(assetPath("js/patient-context-storage.js"));
+      list.push(assetPath("js/tool-cko-loader.js"));
+      list.push(assetPath("js/tool-profile-engine.js"));
     }
-    return [];
+    return list;
   }
 
   var CALC_ENGINE = assetPath("js/calc-engine-v2.js");

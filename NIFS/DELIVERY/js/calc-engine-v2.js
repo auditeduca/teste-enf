@@ -1027,10 +1027,55 @@
      5. Histórico (em memória — não usa localStorage, ver comentário no
         template original sobre consentimento de cookies)
   --------------------------------------------------------------------- */
-  var history = [];
+  function historyStorageKey() {
+    return "calc-history-" + (TOOL_SLUG || "tool");
+  }
+
+  function favoritesStorageKey() {
+    return "tool-favorites";
+  }
+
+  function loadHistoryFromStorage() {
+    try {
+      var raw = localStorage.getItem(historyStorageKey());
+      if (!raw) return [];
+      var list = JSON.parse(raw);
+      return Array.isArray(list) ? list : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveHistoryToStorage() {
+    try {
+      localStorage.setItem(historyStorageKey(), JSON.stringify(history));
+    } catch (e) { /* quota */ }
+  }
+
+  function isFavoriteTool() {
+    try {
+      var list = JSON.parse(localStorage.getItem(favoritesStorageKey()) || "[]");
+      return list.indexOf(TOOL_SLUG) !== -1;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function setFavoriteTool(active) {
+    try {
+      var list = JSON.parse(localStorage.getItem(favoritesStorageKey()) || "[]");
+      var idx = list.indexOf(TOOL_SLUG);
+      if (active && idx === -1) list.push(TOOL_SLUG);
+      if (!active && idx !== -1) list.splice(idx, 1);
+      localStorage.setItem(favoritesStorageKey(), JSON.stringify(list));
+    } catch (e) { /* ignore */ }
+  }
+
+  var history = loadHistoryFromStorage();
   function pushHistory(total, range) {
     history.unshift({ total: fmt(total), label: range ? range.label : "", time: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) });
     history = history.slice(0, 5);
+    saveHistoryToStorage();
     renderHistory();
   }
   function renderHistory() {
@@ -1154,10 +1199,15 @@
   function initActions() {
     var favBtn = document.getElementById("calcFavoriteBtn");
     if (favBtn) {
+      if (isFavoriteTool()) {
+        favBtn.classList.add("is-active");
+        favBtn.setAttribute("aria-pressed", "true");
+      }
       favBtn.addEventListener("click", function () {
         var active = favBtn.classList.toggle("is-active");
         favBtn.setAttribute("aria-pressed", active ? "true" : "false");
-        if (window.showToast) window.showToast(active ? "Adicionado aos favoritos" : "Removido dos favoritos");
+        setFavoriteTool(active);
+        if (window.showToast) window.showToast(active ? "Adicionado aos favoritos (salvo no navegador)" : "Removido dos favoritos");
       });
     }
     var shareBtn = document.getElementById("calcShareBtn");
@@ -1220,6 +1270,7 @@
     initForm();
     hideClinicalUntilCalculated();
     syncFieldsFromState();
+    renderHistory();
     renderAll();
   }
 
