@@ -101,6 +101,7 @@
   ];
 
   var COGNITIVE_SCRIPTS = [
+    assetPath("js/cir/inference.js"),
     assetPath("js/nurse-palm.js"),
     assetPath("js/cognitive-ui.js")
   ];

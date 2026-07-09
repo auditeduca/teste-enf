@@ -320,7 +320,8 @@
     var header = document.querySelector("#calcCogTitle");
     if (header && result.confidence != null) {
       var confPct = Math.round((result.confidence || 0) * 100);
-      header.innerHTML = '<svg class="icon icon-sm"><use href="#i-brain"/></svg> Nurse-PaLM — ' + (range ? range.label : "Resultado") + " · Confiança: " + confPct + "%";
+      var engineLabel = result.source === "cir-edges" ? "CIR" : "Nurse-PaLM";
+      header.innerHTML = '<svg class="icon icon-sm"><use href="#i-brain"/></svg> ' + engineLabel + " — " + (range ? range.label : "Resultado") + " · Confiança: " + confPct + "%";
     }
     window.CognitiveUI.render(panel, result);
   }
@@ -585,6 +586,39 @@
     }
   }
 
+  function runEdgeInference(total) {
+    var edges = window.ToolCKO && window.ToolCKO.edges;
+    if (!edges || !window.CIRInference) return null;
+    return window.CIRInference.infer(edges, total, {
+      label: function (kind, code) {
+        if (window.ClinicalTerminology && window.ClinicalTerminology.label) {
+          return window.ClinicalTerminology.label(kind, code);
+        }
+        return "";
+      },
+    });
+  }
+
+  function syncSaeFromCirResult(result) {
+    if (!result) return;
+    if (result.diagnoses && result.diagnoses.length) {
+      sae.nanda = result.diagnoses.map(function (d) {
+        return {
+          code: d.nanda_code || d.code,
+          diagnosis: d.name,
+          name: d.name,
+          definition: (d.evidence || []).join("; "),
+        };
+      });
+    }
+    if (result.interventions && result.interventions.length) {
+      sae.nic = result.interventions;
+    }
+    if (result.outcomes && result.outcomes.length) {
+      sae.noc = result.outcomes;
+    }
+  }
+
   function pickNandaText(range) {
     if (lastCognitiveResult && lastCognitiveResult.diagnoses && lastCognitiveResult.diagnoses.length) {
       var dx = lastCognitiveResult.diagnoses[0];
@@ -602,6 +636,10 @@
   }
 
   function pickNicText() {
+    if (lastCognitiveResult && lastCognitiveResult.interventions && lastCognitiveResult.interventions.length) {
+      var top = lastCognitiveResult.interventions[0];
+      return top.name || top.intervention || "";
+    }
     if (lastCognitiveResult && lastCognitiveResult.plan && lastCognitiveResult.plan.name) {
       return lastCognitiveResult.plan.name;
     }
@@ -613,6 +651,10 @@
   }
 
   function pickNocText() {
+    if (lastCognitiveResult && lastCognitiveResult.outcomes && lastCognitiveResult.outcomes.length) {
+      var top = lastCognitiveResult.outcomes[0];
+      return top.name || top.outcome || "";
+    }
     var noc = (sae.noc && sae.noc[0]) ? sae.noc[0].outcome || sae.noc[0].name : "";
     if (!noc && sae.noc && sae.noc[0] && sae.noc[0].code && window.ClinicalTerminology) {
       noc = window.ClinicalTerminology.label("noc", sae.noc[0].code);
@@ -711,11 +753,21 @@
       : (sae.nanda || []).map(function (n) {
           return "<h4>NANDA — " + (n.diagnosis || n.name || "") + "</h4><p>" + (n.definition || "") + "</p>";
         }).join("");
-    var nicList = (sae.nic || []).map(function (n) {
+    var nicList = (lastCognitiveResult && lastCognitiveResult.interventions && lastCognitiveResult.interventions.length)
+      ? lastCognitiveResult.interventions.slice(0, 3).map(function (n) {
+          var acts = (n.activities || []).slice(0, 4).map(function (a) { return "<li>" + a + "</li>"; }).join("");
+          return "<h4>NIC — " + (n.intervention || n.name || "") + "</h4><ul class=\"tips-list\">" + acts + "</ul>";
+        }).join("")
+      : (sae.nic || []).map(function (n) {
       var acts = (n.activities || []).slice(0, 4).map(function (a) { return "<li>" + a + "</li>"; }).join("");
       return "<h4>NIC — " + (n.intervention || n.name || pickNicText()) + "</h4><ul class=\"tips-list\">" + acts + "</ul>";
-    }).join("");
-    var nocList = (sae.noc || []).map(function (n) {
+        }).join("");
+    var nocList = (lastCognitiveResult && lastCognitiveResult.outcomes && lastCognitiveResult.outcomes.length)
+      ? lastCognitiveResult.outcomes.slice(0, 3).map(function (n) {
+          var ind = (n.indicators || []).slice(0, 4).map(function (a) { return "<li>" + a + "</li>"; }).join("");
+          return "<h4>NOC — " + (n.outcome || n.name || "") + "</h4><ul class=\"tips-list\">" + ind + "</ul>";
+        }).join("")
+      : (sae.noc || []).map(function (n) {
       var ind = (n.indicators || []).slice(0, 4).map(function (a) { return "<li>" + a + "</li>"; }).join("");
       return "<h4>NOC — " + (n.outcome || n.name || pickNocText()) + "</h4><ul class=\"tips-list\">" + ind + "</ul>";
     }).join("");
@@ -744,13 +796,29 @@
     renderCIP(total, range);
     if (cogTimer) clearTimeout(cogTimer);
     cogTimer = setTimeout(function () {
-      var ctx = buildCognitiveContext(total, range);
       var pipeline = function (result) {
         lastCognitiveResult = result;
+        if (result && result.source === "cir-edges") syncSaeFromCirResult(result);
         applyClinicalFlowTexts(range);
         renderCognitiveResult(result, range);
         showClinicalEngineSections();
       };
+
+      var edgeResult = runEdgeInference(total);
+      if (edgeResult && edgeResult.diagnoses && edgeResult.diagnoses.length) {
+        pipeline(edgeResult);
+        if (window.NursePaLM && window.NursePaLM.TemporalGraph) {
+          window.NursePaLM.TemporalGraph.record({
+            tool: TOOL_SLUG,
+            result: total,
+            range: range ? range.label : "",
+            state: { result: total / 100, cir: "edges" },
+          });
+        }
+        return;
+      }
+
+      var ctx = buildCognitiveContext(total, range);
 
       if (window.CognitiveUI && window.CognitiveUI.renderCognitivePanel) {
         showClinicalEngineSections();

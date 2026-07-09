@@ -7,6 +7,7 @@ Scripts mantidos para operação contínua do repositório.
 | `validate_datasets.py` | Valida JSON em `NIFS/reference-datasets/` (Fase 1.1) |
 | `build_clinical_bundle.py` | Gera `DELIVERY/js/bundles/clinical-terminology.pt-BR.json` |
 | `validate_cko.py` | Valida CKO v3 Apgar (referências por código) |
+| `test_cir_inference.mjs` | Testes unitários CIR (scores 3, 5, 10) |
 | `extract_i18n_global.py` | Extrai chrome en/es → `DELIVERY/i18n/global/` |
 | `build_apgar_cko.py` | Gera `apgar-edges.json` e dados CKO a partir de `NIFS/reference-datasets/` |
 | `sync_cko_apgar_v3.py` | Sincroniza `CKO-APGAR-001.json` (v3) → `apgar-cko.json` (UI) |
