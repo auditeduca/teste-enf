@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ data.report_info.title }} — {{ data.report_info.exam_name }}</title>
+  {% if css_href %}
+  <link rel="stylesheet" href="{{ css_href }}">
+  {% elif css_inline %}
+  <style>{{ css_inline }}</style>
+  {% endif %}
+  <style>
+    body.api-report-preview {
+      background: #e2e8f0;
+      margin: 0;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .print-area.rr-fiel { display: block !important; }
+    @media print {
+      body.api-report-preview { background: #fff; padding: 0; }
+    }
+  </style>
+</head>
+<body class="api-report-preview">
+<div class="print-area rr-fiel print-area--ref" id="printTemplate">
+
+  <div class="rr-page rr-page--1" data-print-page="1">
+    <div class="rr-header-banner">
+      <div class="rr-logo-placeholder">
+        {% if data.report_info.logo_url %}
+        <img src="{{ data.report_info.logo_url }}" alt="Calculadoras de Enfermagem" class="rr-logo-img" width="200" height="48" />
+        {% else %}
+        <img src="/assets/images/logotipo_footer.webp" alt="Calculadoras de Enfermagem" class="rr-logo-img" width="200" height="48" />
+        {% endif %}
+      </div>
+      <div class="rr-header-title">
+        <h2>{{ data.report_info.title }}</h2>
+        <div class="rr-date">{{ data.report_info.date }} • {{ data.report_info.time }}</div>
+      </div>
+    </div>
+
+    <div class="rr-content">
+      <div class="rr-exam-title-section">
+        <div class="rr-exam-title-left">
+          <div class="rr-exam-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+          </div>
+          <div class="rr-exam-name">
+            <h1>{{ data.report_info.exam_name }}</h1>
+            {% if data.report_info.exam_description %}
+            <p>{{ data.report_info.exam_description }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="rr-validation-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Validada clinicamente
+        </div>
+      </div>
+
+      <div class="rr-card">
+        <div class="rr-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          DADOS DO PACIENTE
+        </div>
+        <div class="rr-patient-grid">
+          <div class="rr-patient-field"><div class="rr-field-label">NOME</div><div class="rr-field-value">{{ data.patient.name }}</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">REGISTRO / PRONTUÁRIO</div><div class="rr-field-value">{{ data.patient.reg }}</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">IDADE</div><div class="rr-field-value">{{ data.patient.age }}</div></div>
+          <div class="rr-patient-field"><div class="rr-field-label">LEITO / SETOR</div><div class="rr-field-value">{{ data.patient.bed }}</div></div>
+        </div>
+      </div>
+
+      {% if data.parameters %}
+      <div class="rr-card">
+        <div class="rr-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+          PARÂMETROS INSERIDOS
+        </div>
+        <div class="rr-parameters-list">
+          {% for param in data.parameters %}
+          <div class="rr-parameter-item">
+            <div>{{ param.label }}</div>
+            <div class="rr-parameter-score">{{ param.score }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="rr-result-card {{ risk_class }}">
+        <div class="rr-score-display">
+          <div class="rr-score-number">{{ data.result.score }}</div>
+          <div class="rr-score-text">
+            {% if data.result.total %}de {{ data.result.total }} {% endif %}{{ data.result.unit }}
+          </div>
+        </div>
+        <div class="rr-classification-display">
+          <div class="rr-classification-label">CLASSIFICAÇÃO</div>
+          <div class="rr-classification-badge {{ risk_class }}">
+            {% if show_warning %}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            {% else %}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            {% endif %}
+            {{ data.result.classification }}
+          </div>
+        </div>
+      </div>
+
+      {% if data.clinical_interpretation %}
+      <div class="rr-card rr-card--transparent">
+        <div class="rr-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          INTERPRETAÇÃO CLÍNICA
+        </div>
+        <div class="rr-interpretation-text">{{ data.clinical_interpretation }}</div>
+      </div>
+      {% endif %}
+
+      {% if show_nnn %}
+      <div class="rr-card">
+        <div class="rr-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          RACIOCÍNIO CLÍNICO (NANDA · NIC · NOC)
+        </div>
+        {% if data.clinical_nnn.nanda %}<p class="rr-nnn-line"><strong>NANDA:</strong> {{ data.clinical_nnn.nanda }}</p>{% endif %}
+        {% if data.clinical_nnn.nic %}<p class="rr-nnn-line"><strong>NIC:</strong> {{ data.clinical_nnn.nic }}</p>{% endif %}
+        {% if data.clinical_nnn.noc %}<p class="rr-nnn-line"><strong>NOC:</strong> {{ data.clinical_nnn.noc }}</p>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+    <div class="rr-page-num">1/2</div>
+  </div>
+
+  <div class="rr-page rr-page--2" data-print-page="2">
+    <div class="rr-content rr-content--page2">
+      <div class="rr-two-cols">
+        <div class="rr-card">
+          <div class="rr-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            METAS INTERNACIONAIS
+          </div>
+          {% for item in ipsg_items %}
+          <div class="rr-list-item">
+            {% if item.tag %}<span class="rr-list-item-tag">{{ item.tag }}</span>{% endif %}
+            <span>{{ item.text }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% if show_meds %}
+        <div class="rr-card">
+          <div class="rr-card-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            9 CERTOS DA MEDICAÇÃO
+          </div>
+          <div class="rr-meds-grid">
+            {% set half = (med_items|length + 1) // 2 %}
+            <div>
+              {% for med in med_items[:half] %}
+              <div class="rr-list-item">
+                <svg class="rr-list-item-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <span>{{ med }}</span>
+              </div>
+              {% endfor %}
+            </div>
+            <div>
+              {% for med in med_items[half:] %}
+              <div class="rr-list-item">
+                <svg class="rr-list-item-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <span>{{ med }}</span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if data.reference %}
+      <div class="rr-reference-box">
+        <div class="rr-reference-title">REFERÊNCIA</div>
+        <div>{{ data.reference }}</div>
+      </div>
+      {% endif %}
+
+      <div class="rr-signature-section">
+        <div>
+          <div class="rr-signature-line"></div>
+          <div class="rr-signature-name">{{ data.responsible.name }}</div>
+          <div class="rr-signature-role">{{ data.responsible.id }}</div>
+        </div>
+        <div class="rr-qr-code" aria-hidden="true">
+          <div class="rr-qr-image">
+            <div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div><div class="rr-qr-dot"></div>
+            <div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div>
+            <div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div>
+            <div class="rr-qr-dot"></div><div class="rr-qr-dot"></div><div class="rr-qr-dot rr-qr-dot--empty"></div><div class="rr-qr-dot"></div>
+          </div>
+          <div class="rr-qr-text">Verificar online</div>
+        </div>
+      </div>
+    </div>
+    <div class="rr-footer">
+      <div>calculadorasdeenfermagem.com.br</div>
+      <div>Documento gerado automaticamente • não substitui avaliação profissional</div>
+    </div>
+    <div class="rr-page-num">2/2</div>
+  </div>
+</div>
+</body>
+</html>

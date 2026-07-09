@@ -19,12 +19,16 @@
 
   function fetchDict(lang) {
     if (cache[lang]) return Promise.resolve(cache[lang]);
-    if (lang === "pt") return Promise.resolve(null); // nativo, sem arquivo
-    return fetch("i18n/" + lang + ".json")
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
+    if (lang === "pt-BR") return Promise.resolve(null);
+    function tryUrl(url) {
+      return fetch(url)
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        });
+    }
+    return tryUrl("i18n/global/" + lang + ".json")
+      .catch(function () { return tryUrl("i18n/" + lang + ".json"); })
       .then(function (json) {
         cache[lang] = json;
         return json;
