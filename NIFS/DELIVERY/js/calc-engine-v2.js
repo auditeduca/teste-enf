@@ -1071,6 +1071,23 @@
 
   var printTitleBackup = null;
 
+  function openPrintOrApi() {
+    var r = renderAll();
+    populatePrintReport(r.total, r.range);
+    var apiBase = document.body && document.body.getAttribute("data-report-api");
+    if (apiBase && window.ReportPayload && window.ReportPayload.generateViaApi) {
+      return window.ReportPayload.generateViaApi(apiBase).catch(function (err) {
+        console.warn("[calc-engine] API de relatório indisponível, usando window.print", err);
+        printTitleBackup = document.title;
+        document.title = "relatorio";
+        window.print();
+      });
+    }
+    printTitleBackup = document.title;
+    document.title = "relatorio";
+    window.print();
+  }
+
   function initPrint() {
     var printBtn = document.getElementById("calcPrintBtn");
     if (printBtn) {
@@ -1085,11 +1102,7 @@
           if (window.showToast) window.showToast("Aguarde o carregamento do relatório", "info");
           return;
         }
-        var r = renderAll();
-        populatePrintReport(r.total, r.range);
-        printTitleBackup = document.title;
-        document.title = "relatorio";
-        window.print();
+        openPrintOrApi();
       });
     }
     document.querySelectorAll(".aca-print-btn").forEach(function (btn) {

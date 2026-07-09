@@ -47,7 +47,7 @@
 <link rel="stylesheet" href="css/site-styles.css">
 <link rel="stylesheet" href="css/print-template.css">
 </head>
-<body data-page="escala-de-glasgow">
+<body data-page="glasgow" data-tool-cko="glasgow">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
@@ -67,7 +67,7 @@
       <span class="current" aria-current="page">Escala de Glasgow Coma Scale (GCS)</span>
     </nav>
 
-    <div class="tool-header">
+    <div class="tool-header" data-report-section="tool-header">
       <div class="tool-header-main">
         <div class="tool-icon-badge" aria-hidden="true">
           <svg class="icon"><use href="#i-brain"/></svg>
@@ -89,11 +89,13 @@
         <button type="button" class="btn-icon" id="calcShareBtn">
           <svg class="icon"><use href="#i-share"/></svg> Compartilhar
         </button>
-        <button type="button" class="btn-icon" id="calcPrintBtn" onclick="window.print()">
+        <button type="button" class="btn-icon" id="calcPrintBtn">
           <svg class="icon"><use href="#i-printer"/></svg> Imprimir
         </button>
       </div>
     </div>
+
+    <div id="patientContextMount"></div>
 
     <div class="profile-tabs-bar">
       <div class="tabs-inner" data-tab-group="perfil" role="tablist" aria-label="Perfil de visualização">
@@ -562,73 +564,7 @@
 </defs></svg>
 
 
-<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
-  <div class="print-header">
-    <div class="print-header-left">
-      <h1 id="printToolName">Calculadora</h1>
-      <p class="subtitle" id="printToolCategory">Escala clínica</p>
-      <span class="badge-validated">✓ Validada clinicamente</span>
-    </div>
-    <div class="print-header-right">
-      <div class="report-date" id="printDate"></div>
-      <div>calculadorasdeenfermagem.com.br</div>
-    </div>
-  </div>
-  <div class="print-section">
-    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
-    <div class="print-patient-grid">
-      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
-      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
-      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
-      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
-    </div>
-  </div>
-  <div class="print-section">
-    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
-    <ul class="print-params-list" id="printParamsList"></ul>
-  </div>
-  <div class="print-section">
-    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
-    <div class="print-classification">
-      <div class="score" id="printScore">—</div>
-      <div class="label" id="printClassification">—</div>
-    </div>
-    <div class="print-interpretation" id="printInterpretation"></div>
-  </div>
-  <div class="print-section">
-    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
-    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
-    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
-    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
-  </div>
-  <div class="print-section">
-    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
-    <div class="print-safety-grid">
-      <div class="print-safety-col" id="printSafetyMedsCol">
-        <h4>9 Certos da Medicação</h4>
-        <ul id="printSafetyMeds"></ul>
-      </div>
-      <div class="print-safety-col">
-        <h4>Metas Internacionais (IPSG)</h4>
-        <ul id="printSafetyIpsg"></ul>
-      </div>
-    </div>
-  </div>
-  <div class="print-section">
-    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
-    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
-  </div>
-  <div class="print-signature">
-    <div class="print-signature-left">
-      <div>Enf. Responsável: _________________</div>
-      <div class="coren">COREN: _______</div>
-    </div>
-    <div class="print-signature-right">
-      <div class="url">calculadorasdeenfermagem.com.br</div>
-      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
-    </div>
-  </div>
-</div>
+<div id="printTemplateMount"></div>
 
 <div id="site-footer"></div>
 <div id="site-cookie"></div>

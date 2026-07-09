@@ -66,6 +66,21 @@ def sync_v3_to_v1(v3: dict, overlay: dict) -> dict:
     ai_v3 = v3.get("ai", {})
 
     meta_overlay = overlay.get("metadata", {})
+    runtime = overlay.get("runtime") or {}
+    concept = v3.get("assessment_model", {}).get("concept", "avaliação clínica")
+    concept_code = runtime.get("concept_code") or "APGAR"
+    tool_code = runtime.get("tool_code") or "TOOL.APGAR"
+    domains = runtime.get("domain") or ["neonatology", "obstetrics", "nursing"]
+    edges_file = runtime.get("edges_file") or "js/modules/data/apgar-edges.json"
+    clinical_purpose = runtime.get("clinical_purpose") or (
+        f"Avaliar {concept.lower()} no 1º e 5º minuto de vida"
+    )
+    seo_title = meta_overlay.get("seo", {}).get("title") or meta_v3.get("name", "Ferramenta")
+    default_limitations = (
+        "Não diagnosticar asfixia perinatal isoladamente; interpretar com gasometria de cordão."
+        if concept_code == "APGAR"
+        else "O GCS isolado não substitui exame neurológico completo nem neuroimagem."
+    )
     v1: dict[str, Any] = {
         "schema_version": "cko-v1",
         "metadata": {
@@ -75,7 +90,7 @@ def sync_v3_to_v1(v3: dict, overlay: dict) -> dict:
             "version": meta_v3.get("version", "1.0.0"),
             "status": "published",
             "seo": {
-                "title": f"{meta_v3.get('name', 'Ferramenta')} - Avaliação do Recém-Nascido",
+                "title": seo_title,
                 "description": meta_overlay.get("seo", {}).get("description", ""),
                 "canonical": meta_overlay.get("seo", {}).get("canonical", ""),
             },
@@ -85,14 +100,10 @@ def sync_v3_to_v1(v3: dict, overlay: dict) -> dict:
             },
         },
         "knowledge": {
-            "concept_code": "APGAR",
-            "tool_code": "TOOL.APGAR",
-            "domain": ["neonatology", "obstetrics", "nursing"],
-            "clinical_purpose": (
-                f"Avaliar {v3.get('assessment_model', {}).get('concept', 'vitalidade neonatal').lower()} "
-                "no 1º e 5º minuto de vida"
-            ),
-            "timing_minutes": [1, 5],
+            "concept_code": concept_code,
+            "tool_code": tool_code,
+            "domain": domains,
+            "clinical_purpose": clinical_purpose,
             "terminology": {
                 "snomed": [
                     m.get("code", "")
@@ -113,7 +124,7 @@ def sync_v3_to_v1(v3: dict, overlay: dict) -> dict:
             },
         },
         "reasoning": {
-            "edges_file": "js/modules/data/apgar-edges.json",
+            "edges_file": edges_file,
             "sae": {
                 "nanda": [{"code": c} for c in (np.get("diagnosis_codes") or [])],
                 "nic": [{"code": c} for c in (np.get("intervention_codes") or [])],
@@ -121,7 +132,7 @@ def sync_v3_to_v1(v3: dict, overlay: dict) -> dict:
             },
         },
         "evidence": {
-            "limitations": "Não diagnosticar asfixia perinatal isoladamente; interpretar com gasometria de cordão.",
+            "limitations": runtime.get("evidence_limitations") or default_limitations,
             "evidence_level": "I",
         },
         "ai": {
@@ -139,6 +150,9 @@ def sync_v3_to_v1(v3: dict, overlay: dict) -> dict:
         "presentation": overlay.get("presentation", {}),
         "_source_cko_v3": v3.get("cko_id"),
     }
+
+    if concept_code == "APGAR":
+        v1["knowledge"]["timing_minutes"] = [1, 5]
 
     if not v1["reasoning"]["sae"]["nanda"]:
         v1["reasoning"]["sae"]["nanda"] = [{"code": n["code"]} for n in term.get("nanda", []) if n.get("code")]

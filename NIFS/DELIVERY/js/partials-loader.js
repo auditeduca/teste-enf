@@ -106,17 +106,25 @@
     assetPath("js/cognitive-ui.js")
   ];
 
-  function ckoScripts() {
+  function needsCkoPipeline() {
     var body = document.body;
-    if (!body) return [];
-    var list = [];
-    if (body.getAttribute("data-tool-cko") || body.getAttribute("data-page") === "apgar") {
-      list.push(assetPath("js/clinical-terminology.js"));
-      list.push(assetPath("js/patient-context-storage.js"));
-      list.push(assetPath("js/tool-cko-loader.js"));
-      list.push(assetPath("js/tool-profile-engine.js"));
-    }
-    return list;
+    if (!body) return false;
+    return !!(
+      body.getAttribute("data-tool-cko") ||
+      body.getAttribute("data-page") === "apgar" ||
+      body.getAttribute("data-page") === "glasgow"
+    );
+  }
+
+  function ckoScripts() {
+    if (!needsCkoPipeline()) return [];
+    return [
+      assetPath("js/clinical-terminology.js"),
+      assetPath("js/patient-context-storage.js"),
+      assetPath("js/tool-cko-loader.js"),
+      assetPath("js/tool-profile-engine.js"),
+      assetPath("js/report-payload.js")
+    ];
   }
 
   var CALC_ENGINE = assetPath("js/calc-engine-v2.js");
@@ -231,10 +239,29 @@
       });
   }
 
+  function loadPatientContextPanel() {
+    if (document.getElementById("patientContextPanel")) return Promise.resolve();
+    var mount = document.getElementById("patientContextMount");
+    if (!mount) return Promise.resolve();
+    return fetch(assetPath("partials/patient-context-panel.html"), { credentials: "same-origin" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status + " ao buscar patient-context-panel");
+        return res.text();
+      })
+      .then(function (html) {
+        mount.innerHTML = rewritePartialPaths(html);
+        document.dispatchEvent(new Event("patient-context:ready"));
+      })
+      .catch(function (err) {
+        console.error("[partials-loader] Falha ao carregar patient-context-panel", err);
+      });
+  }
+
   function init() {
     ensureChromeStyles();
     fixAssetLinks();
     Promise.all(PARTIALS.map(fetchPartial))
+      .then(function () { return loadPatientContextPanel(); })
       .then(function () { return loadPrintTemplate(); })
       .then(function () {
         document.body.classList.add("has-site-chrome");

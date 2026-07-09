@@ -1,0 +1,357 @@
+{
+  "schema_version": "cko-v1",
+  "metadata": {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "code": "CKO-GCS-001",
+    "slug": "glasgow",
+    "version": "3.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Escala de Glasgow Coma Scale (GCS) - Nível de Consciência",
+      "description": "Avalie o nível de consciência com a Escala de Glasgow. Inclui interpretação clínica, SAE, segurança do paciente, evidências e casos clínicos.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/glasgow.html"
+    },
+    "breadcrumb": {
+      "category": "Avaliação neurológica",
+      "categoryHref": "index.html#calculadoras"
+    }
+  },
+  "knowledge": {
+    "concept_code": "GCS",
+    "tool_code": "TOOL.GCS",
+    "domain": [
+      "neurology",
+      "emergency",
+      "nursing"
+    ],
+    "clinical_purpose": "Avaliar o nível de consciência em pacientes com trauma cranioencefálico, lesão neurológica ou alteração do estado mental",
+    "terminology": {
+      "snomed": [
+        "248241002"
+      ],
+      "loinc": [
+        "9269-2"
+      ],
+      "related_diagnosis_codes": [
+        "NANDA.00226",
+        "NANDA.00155"
+      ],
+      "nanda": [
+        {
+          "code": "00226"
+        },
+        {
+          "code": "00155"
+        }
+      ],
+      "nic": [
+        {
+          "code": "1040"
+        },
+        {
+          "code": "1450"
+        },
+        {
+          "code": "2300"
+        },
+        {
+          "code": "1120"
+        }
+      ],
+      "noc": [
+        {
+          "code": "0400"
+        },
+        {
+          "code": "1602"
+        },
+        {
+          "code": "0405"
+        }
+      ]
+    },
+    "definition_code": "CALC.TOOL.GCS",
+    "score_min": 3,
+    "score_max": 15
+  },
+  "reasoning": {
+    "edges_file": "js/modules/data/glasgow-edges.json",
+    "sae": {
+      "nanda": [
+        {
+          "code": "00226"
+        },
+        {
+          "code": "00155"
+        }
+      ],
+      "nic": [
+        {
+          "code": "1040"
+        },
+        {
+          "code": "1450"
+        },
+        {
+          "code": "2300"
+        }
+      ],
+      "noc": [
+        {
+          "code": "0400"
+        },
+        {
+          "code": "1602"
+        },
+        {
+          "code": "0405"
+        }
+      ]
+    }
+  },
+  "evidence": {
+    "limitations": "O GCS isolado não substitui exame neurológico completo nem neuroimagem.",
+    "evidence_level": "I",
+    "references": [
+      {
+        "text": "Teasdale G., Jennett B. (1974). Assessment of coma and impaired consciousness: a practical scale. Lancet 2 81-84 doi:10.1016/S0140-6736(74)91639-0"
+      },
+      {
+        "text": "Brain Trauma Foundation (2016). Guidelines for the Management of Severe Traumatic Brain Injury. Brain Trauma Foundation"
+      }
+    ],
+    "foundation": "Teasdale G., Jennett B. (1974). Assessment of coma and impaired consciousness: a practical scale. Lancet 2 81-84 doi:10.1016/S0140-6736(74)91639-0",
+    "validation": "Validado por Nurse-PaLM Engine V9 (revisão 2026-07-09)."
+  },
+  "ai": {
+    "summary": "Ferramenta para avaliar o nível de consciência por meio da soma de abertura ocular, resposta verbal e resposta motora (3–15 pontos).",
+    "clinicalPearls": [
+      "Documente E, V e M separadamente — a soma isolada pode mascarar deterioração de um componente.",
+      "Sedação e bloqueio neuromuscular alteram a resposta verbal e motora; contextualize o escore.",
+      "Queda de 2 ou mais pontos exige reavaliação urgente."
+    ],
+    "commonErrors": [
+      "Somar componentes sem registrar valores individuais no prontuário.",
+      "Não reavaliar após analgesia, sedação ou crise convulsiva.",
+      "Confundir flexão anormal (decorticação) com retirada normal à dor."
+    ],
+    "contraindications": [],
+    "explainLikeResident": "Trauma cranioencefálico com lesão leve (GCS 13–15)",
+    "keywords": [
+      "Glasgow",
+      "GCS",
+      "Consciência",
+      "Neurologia",
+      "Trauma cranioencefálico",
+      "Coma"
+    ],
+    "reasoning": [
+      "13–15: Leve. Monitorar neurologico de rotina",
+      "9–12: Moderado. Aumentar frequencia de avaliacao",
+      "3–8: Grave. Acionar equipe medica; considerar via aerea avancada"
+    ],
+    "clinical_reasoning": {
+      "observations": [
+        "Resposta de abertura ocular espontânea ou a estímulos",
+        "Capacidade de comunicação verbal orientada ou confusa",
+        "Resposta motora a comandos ou estímulos dolorosos"
+      ],
+      "findings": [
+        "GCS 13–15 sugere comprometimento leve",
+        "GCS 9–12 indica comprometimento moderado",
+        "GCS 3–8 caracteriza comprometimento grave"
+      ],
+      "hypotheses": [
+        "Trauma cranioencefálico com lesão leve (GCS 13–15)",
+        "Comprometimento neurológico moderado (GCS 9–12)",
+        "Coma ou estado de consciência gravemente alterado (GCS ≤8)"
+      ],
+      "priorities": [
+        "Proteger via aérea em GCS ≤8",
+        "Reavaliar após qualquer intercorrência ou sedação",
+        "Documentar componentes separadamente (E, V, M)"
+      ],
+      "recommendations": [
+        "Registrar GCS na admissão e em intervalos definidos pelo protocolo",
+        "Acionar equipe médica imediatamente se GCS ≤8 ou queda ≥2 pontos",
+        "Considerar intubação se incapacidade de proteger via aérea"
+      ],
+      "justifications": [
+        "Escala validada internacionalmente para quantificar nível de consciência",
+        "Componentes separados permitem detectar deterioração focal"
+      ]
+    },
+    "machine_representation": {
+      "embedding_text": "Avaliação do nível de consciência pela Escala de Glasgow (GCS), somando abertura ocular, resposta verbal e resposta motora.",
+      "retrieval_chunks": [
+        "GCS varia de 3 a 15. Escore ≤8 indica comprometimento grave e risco de perda de via aérea.",
+        "Reavaliar GCS após qualquer evento agudo ou administração de sedativos."
+      ],
+      "machine_summary": "Escala padronizada para quantificar alteração do nível de consciência em contextos de trauma, AVC e outras condições neurológicas."
+    }
+  },
+  "interoperability": {
+    "fhir": {
+      "resource_types": [
+        "Observation (GCS total e componentes)",
+        "RiskAssessment (risco neurológico)",
+        "CarePlan (monitorização neurológica)"
+      ]
+    },
+    "OMOP": {
+      "mappings": [
+        {
+          "vocabulary": "SNOMED",
+          "code": "248241002",
+          "name": "Glasgow coma scale"
+        },
+        {
+          "vocabulary": "LOINC",
+          "code": "9269-2",
+          "name": "Glasgow coma score total"
+        }
+      ]
+    }
+  },
+  "presentation": {
+    "profiles": [
+      "padrao",
+      "estudante",
+      "urgencia",
+      "gestor",
+      "academico"
+    ],
+    "kg_links": [
+      {
+        "href": "biblioteca.html",
+        "icon": "fa-book",
+        "label": "Biblioteca de Recursos"
+      },
+      {
+        "href": "nurse-palm.html",
+        "icon": "fa-brain",
+        "label": "Dashboard Nurse-PaLM"
+      },
+      {
+        "href": "diagnosticosnanda.html",
+        "icon": "fa-clipboard-list",
+        "label": "NANDA-I"
+      },
+      {
+        "href": "sae.html",
+        "icon": "fa-file-medical",
+        "label": "SAE"
+      },
+      {
+        "href": "glasgow.html",
+        "icon": "fa-brain",
+        "label": "GCS"
+      }
+    ],
+    "related_tools": [
+      {
+        "href": "glasgow-pupilas.html",
+        "title": "GCS com Pupilas",
+        "desc": "Glasgow com reatividade pupilar",
+        "icon": "i-brain"
+      },
+      {
+        "href": "glasgow-pediatrico.html",
+        "title": "GCS Pediátrico",
+        "desc": "Adaptação para crianças",
+        "icon": "i-baby"
+      },
+      {
+        "href": "nihss.html",
+        "title": "NIHSS",
+        "desc": "Escala de AVC",
+        "icon": "i-brain"
+      },
+      {
+        "href": "morse.html",
+        "title": "Morse",
+        "desc": "Risco de queda",
+        "icon": "i-warning"
+      }
+    ],
+    "profileContent": {
+      "padrao": {
+        "title": "Visão Padrão",
+        "intro": "Fluxo completo: cálculo GCS, raciocínio clínico integrado e trilha de aprendizagem.",
+        "emphasis": [
+          "calculation",
+          "clinical_flow",
+          "learning",
+          "kg",
+          "related_tools"
+        ]
+      },
+      "urgencia": {
+        "title": "Modo Urgência",
+        "intro": "Cálculo rápido com resultado em destaque para decisão imediata em trauma ou AVC.",
+        "emphasis": [
+          "calculation",
+          "decision",
+          "cognitive",
+          "safety",
+          "kg"
+        ],
+        "sections": [
+          {
+            "heading": "Algoritmo de decisão",
+            "items": [
+              "GCS 13–15: monitorização de rotina",
+              "GCS 9–12: aumentar frequência de avaliação",
+              "GCS ≤8: proteger via aérea; acionar equipe médica"
+            ]
+          }
+        ]
+      },
+      "gestor": {
+        "title": "Visão Gestor",
+        "intro": "Indicadores de qualidade e auditoria do registro neurológico.",
+        "emphasis": [
+          "kpi",
+          "audit",
+          "evidence",
+          "cognitive",
+          "kg"
+        ]
+      },
+      "estudante": {
+        "title": "Visão Estudante",
+        "intro": "Aprendizado dos componentes E, V e M e interpretação das faixas.",
+        "emphasis": [
+          "steps",
+          "examples",
+          "quiz",
+          "glossary",
+          "ai_pearls",
+          "kg"
+        ]
+      },
+      "academico": {
+        "title": "Visão Acadêmica",
+        "intro": "Fundamentação, evidências e referências bibliográficas.",
+        "emphasis": [
+          "evidence",
+          "sae",
+          "references",
+          "kg"
+        ]
+      }
+    }
+  },
+  "_source_cko_v3": "CKO-GCS-001",
+  "_generated": {
+    "by": "compiler/build_all.py",
+    "do_not_edit": true,
+    "at": "2026-07-09T05:16:03.002710Z",
+    "artifact": "js/modules/data/glasgow-cko.json",
+    "sources": [
+      "NIFS/DELIVERY/js/modules/data/cko/CKO-GCS-001.json",
+      "NIFS/DELIVERY/js/modules/data/cko/overlays/CKO-GCS-ui.json",
+      "NIFS/reference-datasets/clinical/calculator_definitions.json"
+    ]
+  }
+}

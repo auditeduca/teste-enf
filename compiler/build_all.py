@@ -7,6 +7,7 @@ import sys
 from compiler.clinical import build_terminology_bundle, build_tools_catalog
 from compiler.manifest import write_manifest
 from compiler.tools.apgar import build_apgar
+from compiler.tools.glasgow import build_glasgow
 
 
 def main() -> int:
@@ -17,6 +18,8 @@ def main() -> int:
     artifacts.append(build_tools_catalog())
     print("==> Ferramenta: apgar")
     artifacts.extend(build_apgar())
+    print("==> Ferramenta: glasgow")
+    artifacts.extend(build_glasgow())
     print("==> Manifesto")
     artifacts.append(write_manifest(artifacts))
     print(f"\nOK: {len(artifacts)} artefatos em NIFS/DELIVERY/")

@@ -6,10 +6,12 @@
 
   var SCRIPT = document.currentScript;
   var CKO_MAP = {
-    apgar: "js/modules/data/apgar-cko.json"
+    apgar: "js/modules/data/apgar-cko.json",
+    glasgow: "js/modules/data/glasgow-cko.json"
   };
   var CKO_SOURCE_V3 = {
-    apgar: "js/modules/data/cko/CKO-APGAR-001.json"
+    apgar: "js/modules/data/cko/CKO-APGAR-001.json",
+    glasgow: "js/modules/data/cko/CKO-GCS-001.json"
   };
 
   function detectBasePath() {

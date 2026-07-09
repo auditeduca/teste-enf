@@ -12,6 +12,8 @@ REQUIRED_GENERATED = [
     DELIVERY / "js/bundles/tools-catalog.json",
     DELIVERY / "js/modules/data/apgar-cko.json",
     DELIVERY / "js/modules/data/apgar-edges.json",
+    DELIVERY / "js/modules/data/glasgow-cko.json",
+    DELIVERY / "js/modules/data/glasgow-edges.json",
     DELIVERY / "build-manifest.json",
 ]
 

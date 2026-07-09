@@ -1,0 +1,144 @@
+{
+  "cko_id": "CKO-GCS-001",
+  "metadata": {
+    "name": "Escala de Glasgow Coma Scale (GCS)",
+    "domain": "Avaliação neurológica",
+    "version": "3.0.0",
+    "last_review": "2026-07-09",
+    "validated_by": "Nurse-PaLM Engine V9",
+    "nifs_chapter": "Avaliação e Monitorização",
+    "nifs_principle": "Objetividade diagnóstica baseada em evidência"
+  },
+  "assessment_model": {
+    "concept": "Nível de Consciência",
+    "assessment_points": [
+      { "id": "eye", "label": "Abertura Ocular", "weight": 4 },
+      { "id": "verbal", "label": "Resposta Verbal", "weight": 5 },
+      { "id": "motor", "label": "Resposta Motora", "weight": 6 }
+    ]
+  },
+  "terminology": {
+    "nanda": [
+      { "code": "00226" },
+      { "code": "00155" }
+    ],
+    "nic": [
+      { "code": "1040" },
+      { "code": "1450" },
+      { "code": "2300" },
+      { "code": "1120" }
+    ],
+    "noc": [
+      { "code": "0400" },
+      { "code": "1602" },
+      { "code": "0405" }
+    ]
+  },
+  "knowledge_sources": {
+    "types": ["guideline", "original_research", "consensus", "textbook"],
+    "references": [
+      {
+        "type": "original_research",
+        "authors": ["Teasdale G.", "Jennett B."],
+        "year": 1974,
+        "title": "Assessment of coma and impaired consciousness: a practical scale",
+        "journal": "Lancet",
+        "volume": "2",
+        "pages": "81-84",
+        "doi": "10.1016/S0140-6736(74)91639-0"
+      },
+      {
+        "type": "guideline",
+        "authors": ["Brain Trauma Foundation"],
+        "year": 2016,
+        "title": "Guidelines for the Management of Severe Traumatic Brain Injury",
+        "publisher": "Brain Trauma Foundation"
+      }
+    ]
+  },
+  "clinical_reasoning": {
+    "observations": [
+      "Resposta de abertura ocular espontânea ou a estímulos",
+      "Capacidade de comunicação verbal orientada ou confusa",
+      "Resposta motora a comandos ou estímulos dolorosos"
+    ],
+    "findings": [
+      "GCS 13–15 sugere comprometimento leve",
+      "GCS 9–12 indica comprometimento moderado",
+      "GCS 3–8 caracteriza comprometimento grave"
+    ],
+    "hypotheses": [
+      "Trauma cranioencefálico com lesão leve (GCS 13–15)",
+      "Comprometimento neurológico moderado (GCS 9–12)",
+      "Coma ou estado de consciência gravemente alterado (GCS ≤8)"
+    ],
+    "priorities": [
+      "Proteger via aérea em GCS ≤8",
+      "Reavaliar após qualquer intercorrência ou sedação",
+      "Documentar componentes separadamente (E, V, M)"
+    ],
+    "recommendations": [
+      "Registrar GCS na admissão e em intervalos definidos pelo protocolo",
+      "Acionar equipe médica imediatamente se GCS ≤8 ou queda ≥2 pontos",
+      "Considerar intubação se incapacidade de proteger via aérea"
+    ],
+    "justifications": [
+      "Escala validada internacionalmente para quantificar nível de consciência",
+      "Componentes separados permitem detectar deterioração focal"
+    ]
+  },
+  "nursing_process": {
+    "diagnosis_codes": ["00226", "00155"],
+    "intervention_codes": ["1040", "1450", "2300"],
+    "outcome_codes": ["0400", "1602", "0405"]
+  },
+  "interoperability": {
+    "fhir": {
+      "resource_types": [
+        "Observation (GCS total e componentes)",
+        "RiskAssessment (risco neurológico)",
+        "CarePlan (monitorização neurológica)"
+      ]
+    },
+    "OMOP": {
+      "mappings": [
+        { "vocabulary": "SNOMED", "code": "248241002", "name": "Glasgow coma scale" },
+        { "vocabulary": "LOINC", "code": "9269-2", "name": "Glasgow coma score total" }
+      ]
+    }
+  },
+  "ai": {
+    "summary": "Ferramenta para avaliar o nível de consciência por meio da soma de abertura ocular, resposta verbal e resposta motora (3–15 pontos).",
+    "clinical_pearls": [
+      "Documente E, V e M separadamente — a soma isolada pode mascarar deterioração de um componente.",
+      "Sedação e bloqueio neuromuscular alteram a resposta verbal e motora; contextualize o escore.",
+      "Queda de 2 ou mais pontos exige reavaliação urgente."
+    ],
+    "common_errors": [
+      "Somar componentes sem registrar valores individuais no prontuário.",
+      "Não reavaliar após analgesia, sedação ou crise convulsiva.",
+      "Confundir flexão anormal (decorticação) com retirada normal à dor."
+    ],
+    "keywords": [
+      "Glasgow",
+      "GCS",
+      "Consciência",
+      "Neurologia",
+      "Trauma cranioencefálico",
+      "Coma"
+    ],
+    "machine_representation": {
+      "embedding_text": "Avaliação do nível de consciência pela Escala de Glasgow (GCS), somando abertura ocular, resposta verbal e resposta motora.",
+      "retrieval_chunks": [
+        "GCS varia de 3 a 15. Escore ≤8 indica comprometimento grave e risco de perda de via aérea.",
+        "Reavaliar GCS após qualquer evento agudo ou administração de sedativos."
+      ],
+      "machine_summary": "Escala padronizada para quantificar alteração do nível de consciência em contextos de trauma, AVC e outras condições neurológicas."
+    }
+  },
+  "presentation": {
+    "theme": "Calculadoras de Enfermagem Blue",
+    "primary_color": "#1a3e74",
+    "secondary_color": "#2563eb"
+  }
+}

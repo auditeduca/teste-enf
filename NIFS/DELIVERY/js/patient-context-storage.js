@@ -77,6 +77,7 @@
 
   global.PatientContextStorage = { read: read, write: write, clear: clearForm };
 
+  document.addEventListener("patient-context:ready", init);
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
