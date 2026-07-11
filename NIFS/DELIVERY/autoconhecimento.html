@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Autoconhecimento | Calculadoras de Enfermagem</title>
+<meta name="description" content="Testes de autoconhecimento — teste vocacional para enfermagem, perfil de especialização e assessment de skills.">
+<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/autoconhecimento.html" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site-styles.css">
+<style>
+  .ac-container{max-width:800px;margin:0 auto;padding:24px 16px 60px;}
+  .ac-hero{text-align:center;margin-bottom:32px;padding:40px 24px;background:linear-gradient(135deg,var(--navy-900),var(--blue-600));border-radius:24px;color:#fff;}
+  .ac-hero h1{font-size:28px;font-family:'Sora',sans-serif;margin-bottom:8px;}
+  .ac-hero p{font-size:14px;opacity:.9;max-width:500px;margin:0 auto;line-height:1.6;}
+
+  .ac-test-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-bottom:32px;}
+  .ac-test-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;cursor:pointer;transition:all .15s;}
+  .ac-test-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--blue-400);}
+  .ac-test-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:14px;}
+  .ac-test-card h3{font-size:16px;font-weight:700;color:var(--navy-900);margin-bottom:6px;}
+  .ac-test-card p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px;}
+  .ac-test-meta{font-size:11px;color:var(--muted);}
+  .ac-test-meta span{margin-right:12px;}
+
+  /* Quiz interface */
+  .ac-quiz{display:none;}
+  .ac-quiz.active{display:block;}
+  .ac-quiz-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+  .ac-quiz-back{padding:8px 16px;border-radius:8px;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Manrope',sans-serif;}
+  .ac-quiz-back:hover{border-color:var(--blue-400);color:var(--blue-600);}
+  .ac-quiz-title{font-size:18px;font-family:'Sora',sans-serif;color:var(--navy-900);flex:1;}
+  .ac-quiz-progress{margin-bottom:20px;}
+  .ac-quiz-progress-bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;}
+  .ac-quiz-progress-fill{height:100%;background:var(--blue-600);border-radius:99px;transition:width .3s;width:0%;}
+  .ac-quiz-progress-text{font-size:12px;color:var(--muted);font-weight:700;margin-top:6px;text-align:center;}
+
+  .ac-question{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:16px;}
+  .ac-question-num{font-size:11px;font-weight:800;color:var(--blue-600);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+  .ac-question-text{font-size:16px;font-weight:700;color:var(--navy-900);line-height:1.5;margin-bottom:20px;}
+  .ac-options{display:flex;flex-direction:column;gap:10px;}
+  .ac-option{padding:16px 20px;border:2px solid var(--line);border-radius:12px;cursor:pointer;font-size:14px;font-weight:600;color:var(--navy-800);background:#fff;transition:all .15s;font-family:'Manrope',sans-serif;text-align:left;}
+  .ac-option:hover{border-color:var(--blue-400);background:var(--bg-soft);}
+  .ac-option.selected{border-color:var(--blue-600);background:var(--blue-100);color:var(--blue-600);}
+
+  .ac-quiz-nav{display:flex;justify-content:space-between;gap:12px;margin-bottom:20px;}
+  .ac-quiz-btn{padding:12px 28px;border-radius:12px;border:none;background:var(--blue-600);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;transition:all .15s;}
+  .ac-quiz-btn:hover{background:var(--blue-500);}
+  .ac-quiz-btn:disabled{opacity:.3;cursor:default;}
+  .ac-quiz-btn.secondary{background:#fff;border:1px solid var(--line);color:var(--muted);}
+  .ac-quiz-btn.secondary:hover{border-color:var(--blue-400);color:var(--blue-600);}
+
+  /* Results */
+  .ac-result{display:none;}
+  .ac-result.active{display:block;}
+  .ac-result-hero{text-align:center;margin-bottom:28px;padding:32px;background:linear-gradient(135deg,var(--blue-100),var(--bg-soft));border-radius:20px;}
+  .ac-result-hero h2{font-size:24px;font-family:'Sora',sans-serif;color:var(--navy-900);margin-bottom:8px;}
+  .ac-result-hero p{font-size:14px;color:var(--muted);line-height:1.6;}
+  .ac-result-spec{font-size:20px;font-weight:800;color:var(--blue-600);margin-top:8px;}
+
+  .ac-result-scores{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:28px;}
+  .ac-score-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center;}
+  .ac-score-card .spec{font-size:12px;font-weight:700;color:var(--navy-900);margin-bottom:6px;}
+  .ac-score-card .pct{font-size:24px;font-weight:800;font-family:'Sora',sans-serif;color:var(--blue-600);}
+  .ac-score-card .bar{height:6px;background:var(--line);border-radius:99px;margin-top:8px;overflow:hidden;}
+  .ac-score-card .bar-fill{height:100%;background:var(--blue-600);border-radius:99px;}
+
+  .ac-recommendations{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:20px;}
+  .ac-recommendations h3{font-size:16px;font-family:'Sora',sans-serif;color:var(--navy-900);margin-bottom:14px;}
+  .ac-rec-item{padding:12px 16px;background:var(--bg-soft);border-radius:10px;margin-bottom:8px;font-size:13px;color:var(--navy-800);}
+  .ac-rec-item strong{color:var(--navy-900);}
+  .ac-result-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+
+  @media(max-width:640px){
+    .ac-hero{padding:24px 16px;}
+    .ac-hero h1{font-size:22px;}
+    .ac-question{padding:20px;}
+  }
+</style>
+</head>
+<body data-page="autoconhecimento">
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+<div id="site-header"></div>
+<div id="site-a11y"></div>
+
+<main id="main-content">
+  <div class="ac-container">
+
+    <!-- LISTA DE TESTES -->
+    <div id="acTestList">
+      <div class="ac-hero">
+        <h1>Testes de Autoconhecimento</h1>
+        <p>Descubra qual especialização de enfermagem combina com você. Teste vocacional, perfil profissional e assessment de skills.</p>
+      </div>
+
+      <div class="ac-test-grid">
+        <div class="ac-test-card" data-test="vocacional">
+          <div class="ac-test-icon" style="background:var(--blue-100)">🎯</div>
+          <h3>Teste Vocacional</h3>
+          <p>Descubra qual especialização de enfermagem tem mais a ver com seu perfil pessoal e profissional.</p>
+          <div class="ac-test-meta"><span>20 questões</span><span>~8 min</span></div>
+        </div>
+
+        <div class="ac-test-card" data-test="perfil">
+          <div class="ac-test-icon" style="background:#ede9fe">🧠</div>
+          <h3>Perfil de Personalidade</h3>
+          <p>Identifique seu estilo de trabalho e como ele se alinha com diferentes áreas da enfermagem.</p>
+          <div class="ac-test-meta"><span>15 questões</span><span>~6 min</span></div>
+        </div>
+
+        <div class="ac-test-card" data-test="skills">
+          <div class="ac-test-icon" style="background:#dcfce7">📊</div>
+          <h3>Assessment de Skills</h3>
+          <p>Avalie suas competências técnicas e soft skills atuais e descubra gaps para sua especialização alvo.</p>
+          <div class="ac-test-meta"><span>25 questões</span><span>~10 min</span></div>
+        </div>
+
+        <div class="ac-test-card" data-test="stress">
+          <div class="ac-test-icon" style="background:#fee2e2">❤️</div>
+          <h3>Teste de Resiliência</h3>
+          <p>Avalie sua capacidade de lidar com estresse — fundamental para áreas de alta pressão como UTI e emergência.</p>
+          <div class="ac-test-meta"><span>12 questões</span><span>~5 min</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ INTERFACE -->
+    <div class="ac-quiz" id="acQuiz">
+      <div class="ac-quiz-header">
+        <button class="ac-quiz-back" id="quizBack">← Voltar</button>
+        <div class="ac-quiz-title" id="quizTitle"></div>
+      </div>
+      <div class="ac-quiz-progress">
+        <div class="ac-quiz-progress-bar"><div class="ac-quiz-progress-fill" id="quizProgressFill"></div></div>
+        <div class="ac-quiz-progress-text"><span id="quizCurrent">1</span> de <span id="quizTotal">20</span></div>
+      </div>
+      <div class="ac-question" id="quizQuestion"></div>
+      <div class="ac-quiz-nav">
+        <button class="ac-quiz-btn secondary" id="quizPrev">← Anterior</button>
+        <button class="ac-quiz-btn" id="quizNext">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="ac-result" id="acResult">
+      <div class="ac-result-hero">
+        <h2 id="resultTitle"></h2>
+        <p id="resultDesc"></p>
+        <div class="ac-result-spec" id="resultSpec"></div>
+      </div>
+      <div class="ac-result-scores" id="resultScores"></div>
+      <div class="ac-recommendations" id="resultRecs"></div>
+      <div class="ac-result-actions">
+        <button class="ac-quiz-btn" id="resultRetry">🔄 Refazer Teste</button>
+        <a class="ac-quiz-btn secondary" href="carreiras.html" style="text-decoration:none;display:inline-flex;align-items:center;">Ver Carreiras →</a>
+        <a class="ac-quiz-btn secondary" href="carreiras.html" style="text-decoration:none;display:inline-flex;align-items:center;">Trilha de Conhecimento →</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<div id="site-cookie"></div>
+
+<script src="js/partials-loader.js"></script>
+<script src="js/i18n-loader.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════════
+// TESTES DE AUTOCONHECIMENTO
+// ════════════════════════════════════════════════════════════════════
+
+const SPECS = [
+  { id:'sp-geral', name:'Enfermagem Geral', color:'var(--blue-600)' },
+  { id:'sp-uti', name:'UTI / Terapia Intensiva', color:'#dc2626' },
+  { id:'sp-neonatal', name:'Neonatologia', color:'#0284c7' },
+  { id:'sp-ped', name:'Pediatria', color:'#16a34a' },
+  { id:'sp-obst', name:'Obstetrícia', color:'#ea580c' },
+  { id:'sp-psiq', name:'Psiquiatria / Saúde Mental', color:'#7c3aed' },
+  { id:'sp-geron', name:'Gerontologia', color:'#0891b2' },
+  { id:'sp-saudepub', name:'Saúde Pública', color:'#0d9488' },
+  { id:'sp-onco', name:'Oncologia', color:'#be185d' },
+  { id:'sp-emerg', name:'Emergência', color:'#b91c1c' },
+  { id:'sp-cirurg', name:'Centro Cirúrgico', color:'#1e40af' },
+  { id:'sp-gestao', name:'Gestão em Enfermagem', color:'#1e3a5f' },
+];
+
+const TESTS = {
+  vocacional: {
+    title: 'Teste Vocacional para Enfermagem',
+    questions: [
+      { q: 'Em um ambiente de trabalho, você prefere:', opts: [
+        { t:'Ambientes calmos e previsíveis', specs:{'sp-saudepub':3,'sp-geron':2,'sp-psiq':1} },
+        { t:'Ambientes dinâmicos e de alta pressão', specs:{'sp-uti':3,'sp-emerg':3,'sp-cirurg':1} },
+        { t:'Trabalhar com bebês e crianças', specs:{'sp-neonatal':3,'sp-ped':3} },
+        { t:'Trabalhar com planejamento e gestão', specs:{'sp-gestao':3,'sp-saudepub':1} },
+      ]},
+      { q: 'Qual tipo de paciente você se sente mais confortável atendendo?', opts: [
+        { t:'Recém-nascidos e prematuros', specs:{'sp-neonatal':3,'sp-ped':1} },
+        { t:'Pacientes críticos e instáveis', specs:{'sp-uti':3,'sp-emerg':2} },
+        { t:'Gestantes e parturientes', specs:{'sp-obst':3} },
+        { t:'Pacientes em tratamento prolongado', specs:{'sp-onco':3,'sp-geron':2} },
+      ]},
+      { q: 'Como você reage em situações de emergência?', opts: [
+        { t:'Manteno a calma e tomo decisões rápidas', specs:{'sp-emerg':3,'sp-uti':2} },
+        { t:'Prefiro ambientes mais controlados', specs:{'sp-saudepub':2,'sp-geron':2,'sp-psiq':1} },
+        { t:'Gosto de seguir protocolos bem definidos', specs:{'sp-cirurg':3,'sp-uti':1} },
+        { t:'Foco no suporte emocional do paciente', specs:{'sp-psiq':3,'sp-onco':2} },
+      ]},
+      { q: 'Qual atividade profissional te dá mais satisfação?', opts: [
+        { t:'Salvar vidas em momentos críticos', specs:{'sp-emerg':3,'sp-uti':2} },
+        { t:'Cuidar do desenvolvimento de bebês', specs:{'sp-neonatal':3,'sp-ped':1} },
+        { t:'Apoiar famílias em momentos especiais', specs:{'sp-obst':3,'sp-neonatal':1} },
+        { t:'Promover saúde na comunidade', specs:{'sp-saudepub':3,'sp-gestao':1} },
+      ]},
+      { q: 'Qual seu maior interesse acadêmico?', opts: [
+        { t:'Fisiologia e farmacologia avançada', specs:{'sp-uti':3,'sp-emerg':2} },
+        { t:'Desenvolvimento infantil', specs:{'sp-ped':3,'sp-neonatal':2} },
+        { t:'Saúde mental e terapias', specs:{'sp-psiq':3} },
+        { t:'Gestão e políticas de saúde', specs:{'sp-gestao':3,'sp-saudepub':2} },
+      ]},
+      { q: 'Como você lida com o sofrimento do paciente?', opts: [
+        { t:'Foco na técnica — a intervenção é meu consolo', specs:{'sp-uti':2,'sp-cirurg':3} },
+        { t:'Ofereço escuta e presença emocional', specs:{'sp-psiq':3,'sp-onco':2,'sp-geron':1} },
+        { t:'Transformo em energia para agir rápido', specs:{'sp-emerg':3} },
+        { t:'Prefiro trabalhar com prevenção', specs:{'sp-saudepub':3} },
+      ]},
+      { q: 'Qual escala de trabalho prefere?', opts: [
+        { t:'Plantões 12h (intensidade concentrada)', specs:{'sp-uti':3,'sp-emerg':2,'sp-cirurg':1} },
+        { t:'Turnos fixos (rotina estável)', specs:{'sp-saudepub':3,'sp-geron':2,'sp-psiq':1} },
+        { t:'Qualquer formato — o que importa é o paciente', specs:{'sp-neonatal':2,'sp-ped':2,'sp-obst':2} },
+        { t:'Horário comercial com gestão', specs:{'sp-gestao':3} },
+      ]},
+      { q: 'O que mais te motiva na enfermagem?', opts: [
+        { t:'A tecnologia e equipamentos de ponta', specs:{'sp-uti':3,'sp-cirurg':2} },
+        { t:'O vínculo com pacientes e famílias', specs:{'sp-ped':2,'sp-neonatal':2,'sp-obst':2,'sp-geron':2} },
+        { t:'O impacto na saúde coletiva', specs:{'sp-saudepub':3,'sp-gestao':1} },
+        { t:'Os desafios clínicos complexos', specs:{'sp-uti':2,'sp-emerg':3,'sp-onco':1} },
+      ]},
+      { q: 'Como você prefere trabalhar?', opts: [
+        { t:'Individualmente com alta autonomia', specs:{'sp-uti':2,'sp-emerg':2} },
+        { t:'Em equipe multidisciplinar', specs:{'sp-cirurg':2,'sp-onco':2,'sp-ped':2} },
+        { t:'Liderando e coordenando pessoas', specs:{'sp-gestao':3} },
+        { t:'Na comunidade e em campo', specs:{'sp-saudepub':3} },
+      ]},
+      { q: 'Qual área da enfermagem você acha mais desafiadora (em bom sentido)?', opts: [
+        { t:'Manter pacientes estáveis em UTI', specs:{'sp-uti':3} },
+        { t:'Reanimação neonatal', specs:{'sp-neonatal':3} },
+        { t:'Parto humanizado', specs:{'sp-obst':3} },
+        { t:'Gestão de crises em saúde mental', specs:{'sp-psiq':3} },
+      ]},
+      { q: 'Qual desses ambientes te atrai mais?', opts: [
+        { t:'Centro cirúrgico — assépsia e precisão', specs:{'sp-cirurg':3} },
+        { t:'UTI neonatal — incubadoras e tecnologia', specs:{'sp-neonatal':3} },
+        { t:'Pronto-socorro — adrenalina e triagem', specs:{'sp-emerg':3} },
+        { t:'Centro de quimioterapia — cuidado contínuo', specs:{'sp-onco':3} },
+      ]},
+      { q: 'Qual seu perfil emocional no trabalho?', opts: [
+        { t:'Frio sob pressão — decido com lógica', specs:{'sp-uti':3,'sp-emerg':2,'sp-cirurg':2} },
+        { t:'Empático e acolhedor', specs:{'sp-ped':2,'sp-geron':2,'sp-psiq':2,'sp-onco':2} },
+        { t:'Equilibrado — técnica + empatia', specs:{'sp-geral':3,'sp-obst':2} },
+        { t:'Estrategista — penso no todo', specs:{'sp-gestao':3,'sp-saudepub':2} },
+      ]},
+      { q: 'Se pudesse escolher uma população-alvo, seria:', opts: [
+        { t:'Críticos/instáveis', specs:{'sp-uti':3,'sp-emerg':2} },
+        { t:'Crianças e adolescentes', specs:{'sp-ped':3} },
+        { t:'Idosos', specs:{'sp-geron':3} },
+        { t:'Comunidade/população geral', specs:{'sp-saudepub':3,'sp-geral':2} },
+      ]},
+      { q: 'Qual competência você mais quer desenvolver?', opts: [
+        { t:'Ventilação mecânica e hemodinâmica', specs:{'sp-uti':3} },
+        { t:'Reanimação neonatal e kangaroo', specs:{'sp-neonatal':3} },
+        { t:'Aconselhamento e terapias', specs:{'sp-psiq':3} },
+        { t:'Dimensionamento e KPIs', specs:{'sp-gestao':3} },
+      ]},
+      { q: 'O que você valoriza mais numa carreira?', opts: [
+        { t:'Estabilidade e rotina', specs:{'sp-saudepub':2,'sp-geron':2} },
+        { t:'Adrenalina e variedade', specs:{'sp-emerg':3,'sp-uti':1} },
+        { t:'Impacto social amplo', specs:{'sp-saudepub':3,'sp-gestao':1} },
+        { t:'Especialização profunda', specs:{'sp-uti':2,'sp-neonatal':2,'sp-onco':2,'sp-cirurg':2} },
+      ]},
+      { q: 'Como você encara o risco no trabalho?', opts: [
+        { t:'Me sinto vivo sob pressão', specs:{'sp-emerg':3,'sp-uti':2} },
+        { t:'Prefiro ambientes controlados e seguros', specs:{'sp-cirurg':2,'sp-saudepub':2,'sp-geron':1} },
+        { t:'Gerencio bem com protocolos', specs:{'sp-uti':2,'sp-cirurg':2,'sp-gestao':1} },
+        { t:'O risco emocional é maior que o físico', specs:{'sp-psiq':2,'sp-onco':2} },
+      ]},
+      { q: 'Qual matéria da faculdade mais te interessou?', opts: [
+        { t:'Clínica médica / farmacologia', specs:{'sp-uti':2,'sp-geral':2} },
+        { t:'Saúde da mulher / obstetrícia', specs:{'sp-obst':3} },
+        { t:'Saúde mental / psiquiatria', specs:{'sp-psiq':3} },
+        { t:'Administração em enfermagem', specs:{'sp-gestao':3} },
+      ]},
+      { q: 'Qual seu maior medo profissional?', opts: [
+        { t:'Perder um paciente por erro', specs:{'sp-uti':1,'sp-emerg':1,'sp-cirurg':1} },
+        { t:'Não conseguir ajudar emocionalmente', specs:{'sp-psiq':2,'sp-onco':1} },
+        { t:'Rotina excessiva e monotonia', specs:{'sp-emerg':2,'sp-uti':1} },
+        { t:'Falta de autonomia na gestão', specs:{'sp-gestao':2} },
+      ]},
+      { q: 'Onde você se vê em 5 anos?', opts: [
+        { t:'Especialista clínico reconhecido', specs:{'sp-uti':2,'sp-neonatal':2,'sp-cirurg':2,'sp-onco':2} },
+        { t:'Coordenador / gestor de unidade', specs:{'sp-gestao':3} },
+        { t:'Enfermeiro de família / comunidade', specs:{'sp-saudepub':3} },
+        { t:'Atuando em emergência / resgate', specs:{'sp-emerg':3} },
+      ]},
+      { q: 'Final: qual dessas frases te representa mais?', opts: [
+        { t:'"Tecnologia salva vidas"', specs:{'sp-uti':3,'sp-cirurg':1,'sp-neonatal':1} },
+        { t:'"Cuidar é um ato de amor"', specs:{'sp-ped':2,'sp-geron':2,'sp-obst':2,'sp-onco':1} },
+        { t:'"Prevenir é melhor que curar"', specs:{'sp-saudepub':3} },
+        { t:'"Na crise, eu sou o referencial"', specs:{'sp-emerg':3,'sp-uti':1} },
+      ]},
+    ]
+  },
+
+  perfil: {
+    title: 'Perfil de Personalidade Profissional',
+    questions: [
+      { q: 'Em reuniões de equipe, você tende a:', opts: [
+        { t:'Falar pouco, observar e analisar', specs:{'sp-uti':2,'sp-cirurg':2,'sp-geron':1} },
+        { t:'Participar ativamente e propor ideias', specs:{'sp-gestao':3,'sp-saudepub':2} },
+        { t:'Mediar e buscar consenso', specs:{'sp-psiq':2,'sp-gestao':1} },
+        { t:'Agir — prefiro executar que discutir', specs:{'sp-emerg':3,'sp-uti':1} },
+      ]},
+      { q: 'Sob pressão, você:', opts: [
+        { t:'Foco e fico mais eficiente', specs:{'sp-emerg':3,'sp-uti':2,'sp-cirurg':1} },
+        { t:'Fico ansioso mas supero', specs:{'sp-geral':2,'sp-saudepub':1} },
+        { t:'Busco apoio da equipe', specs:{'sp-ped':1,'sp-obst':1,'sp-psiq':1} },
+        { t:'Reorganizo prioridades', specs:{'sp-gestao':2,'sp-saudepub':1} },
+      ]},
+      { q: 'Seu estilo de comunicação é:', opts: [
+        { t:'Direto e objetivo', specs:{'sp-uti':2,'sp-emerg':2,'sp-cirurg':1} },
+        { t:'Acolhedor e empático', specs:{'sp-ped':2,'sp-geron':2,'sp-psiq':2,'sp-obst':1} },
+        { t:'Estruturado e organizado', specs:{'sp-gestao':2,'sp-saudepub':1,'sp-cirurg':1} },
+        { t:'Inspirador e motivador', specs:{'sp-gestao':2,'sp-saudepub':1} },
+      ]},
+      { q: 'Como toma decisões?', opts: [
+        { t:'Rápido, com base na experiência', specs:{'sp-emerg':3,'sp-uti':2} },
+        { t:'Analítico, pesando prós e contras', specs:{'sp-uti':2,'sp-gestao':2,'sp-cirurg':1} },
+        { t:'Consultando a equipe', specs:{'sp-gestao':2,'sp-saudepub':1} },
+        { t:'Considerando o impacto humano', specs:{'sp-psiq':2,'sp-geron':2,'sp-onco':1} },
+      ]},
+      { q: 'Qual seu maior ponto forte?', opts: [
+        { t:'Resiliência sob pressão', specs:{'sp-emerg':3,'sp-uti':2} },
+        { t:'Empatia e escuta', specs:{'sp-psiq':2,'sp-ped':2,'sp-geron':2,'sp-obst':1} },
+        { t:'Organização e planejamento', specs:{'sp-gestao':3,'sp-cirurg':1,'sp-saudepub':1} },
+        { t:'Adaptabilidade', specs:{'sp-geral':2,'sp-emerg':1,'sp-saudepub':1} },
+      ]},
+      { q: 'Como lida com conflitos?', opts: [
+        { t:'Encaro de frente e resolvo rápido', specs:{'sp-emerg':2,'sp-uti':1} },
+        { t:'Busco entender antes de reagir', specs:{'sp-psiq':3,'sp-geron':1} },
+        { t:'Mediação e negociação', specs:{'sp-gestao':2,'sp-saudepub':1} },
+        { t:'Evito e foco no trabalho', specs:{'sp-cirurg':1,'sp-uti':1} },
+      ]},
+      { q: 'O que te recarrega depois do trabalho?', opts: [
+        { t:'Esporte e atividade física', specs:{'sp-emerg':1,'sp-uti':1,'sp-geral':1} },
+        { t:'Família e amigos', specs:{'sp-ped':1,'sp-obst':1,'sp-geron':1} },
+        { t:'Estudo e desenvolvimento', specs:{'sp-gestao':1,'sp-uti':1,'sp-onco':1,'sp-psiq':1} },
+        { t:'Silêncio e introspecção', specs:{'sp-psiq':2,'sp-geron':1} },
+      ]},
+      { q: 'Qual ambiente de trabalho te energiza?', opts: [
+        { t:'Rápido e intenso', specs:{'sp-emerg':3,'sp-uti':1} },
+        { t:'Organizado e silencioso', specs:{'sp-cirurg':2,'sp-geron':1,'sp-psiq':1} },
+        { t:'Social e colaborativo', specs:{'sp-saudepub':2,'sp-gestao':1,'sp-ped':1} },
+        { t:'Intelectualmente estimulante', specs:{'sp-uti':1,'sp-onco':1,'sp-gestao':1} },
+      ]},
+      { q: 'Como você aprende melhor?', opts: [
+        { t:'Praticando — mão na massa', specs:{'sp-emerg':2,'sp-cirurg':2,'sp-uti':1} },
+        { t:'Observando casos reais', specs:{'sp-geral':2,'sp-neonatal':1,'sp-ped':1} },
+        { t:'Estudando teoria e protocolos', specs:{'sp-gestao':1,'sp-uti':1,'sp-saudepub':1} },
+        { t:'Discutindo com colegas', specs:{'sp-psiq':1,'sp-gestao':1} },
+      ]},
+      { q: 'Qual seu maior desafio pessoal?', opts: [
+        { t:'Difícil desligar do trabalho', specs:{'sp-uti':1,'sp-emerg':1,'sp-onco':1} },
+        { t:'Demasia empático, absorvo dor', specs:{'sp-psiq':1,'sp-ped':1,'sp-onco':1,'sp-geron':1} },
+        { t:'Impaciência com lentidão', specs:{'sp-emerg':1,'sp-uti':1} },
+        { t:'Difícil delegar', specs:{'sp-gestao':1} },
+      ]},
+      { q: 'O que mais valoriza num líder?', opts: [
+        { t:'Decisão rápida e clareza', specs:{'sp-emerg':1,'sp-uti':1} },
+        { t:'Empatia e cuidado com a equipe', specs:{'sp-psiq':1,'sp-ped':1,'sp-geron':1} },
+        { t:'Visão estratégica', specs:{'sp-gestao':2,'sp-saudepub':1} },
+        { t:'Competência técnica', specs:{'sp-cirurg':1,'sp-uti':1} },
+      ]},
+      { q: 'Em crise institucional, você:', opts: [
+        { t:'Assume comando', specs:{'sp-emerg':2,'sp-gestao':2} },
+        { t:'Apoia colegas emocionalmente', specs:{'sp-psiq':2,'sp-geron':1} },
+        { t:'Foca nos pacientes', specs:{'sp-uti':1,'sp-ped':1,'sp-obst':1} },
+        { t:'Propõe soluções sistêmicas', specs:{'sp-gestao':2,'sp-saudepub':1} },
+      ]},
+      { q: 'Qual estilo de liderança você prefere?', opts: [
+        { t:'Comando direto', specs:{'sp-emerg':1,'sp-uti':1,'sp-cirurg':1} },
+        { t:'Participativo', specs:{'sp-gestao':2,'sp-saudepub':1} },
+        { t:'Coach / mentor', specs:{'sp-psiq':1,'sp-gestao':1} },
+        { t:'Servo-líder', specs:{'sp-geron':1,'sp-ped':1,'sp-saudepub':1} },
+      ]},
+      { q: 'Como você reage a mudanças?', opts: [
+        { t:'Adapto-me rápido', specs:{'sp-emerg':2,'sp-geral':1,'sp-saudepub':1} },
+        { t:'Preciso entender o porquê', specs:{'sp-uti':1,'sp-gestao':1,'sp-psiq':1} },
+        { t:'Prefiro estabilidade', specs:{'sp-geron':1,'sp-cirurg':1} },
+        { t:'Sou agente de mudança', specs:{'sp-gestao':2,'sp-saudepub':1} },
+      ]},
+      { q: 'Final: descreva-se em uma palavra:', opts: [
+        { t:'Resiliente', specs:{'sp-emerg':2,'sp-uti':1} },
+        { t:'Acolhedor', specs:{'sp-ped':1,'sp-geron':1,'sp-psiq':1,'sp-obst':1} },
+        { t:'Estrategista', specs:{'sp-gestao':2,'sp-saudepub':1} },
+        { t:'Preciso', specs:{'sp-cirurg':2,'sp-uti':1} },
+      ]},
+    ]
+  },
+
+  skills: {
+    title: 'Assessment de Competências',
+    questions: [
+      { q: 'Domínio de ventilação mecânica:', opts: [
+        { t:'Avançado — configure modos e parâmetros', specs:{'sp-uti':3,'sp-emerg':1} },
+        { t:'Intermediário — ajustes básicos', specs:{'sp-uti':1,'sp-emerg':1} },
+        { t:'Básico — conceitos gerais', specs:{} },
+        { t:'Não tenho experiência', specs:{} },
+      ]},
+      { q: 'Experiência com diagnósticos NANDA-I:', opts: [
+        { t:'Uso diariamente na SAE', specs:{'sp-geral':2,'sp-uti':1,'sp-saudepub':1} },
+        { t:'Uso ocasionalmente', specs:{} },
+        { t:'Conheço mas não aplico', specs:{} },
+        { t:'Não conheço', specs:{} },
+      ]},
+      { q: 'Habilidade com acesso venoso periférico:', opts: [
+        { t:'Excelente — inclui PICC em neonatos', specs:{'sp-neonatal':3,'sp-uti':1,'sp-ped':1} },
+        { t:'Boa — adultos e pediatria', specs:{'sp-geral':2,'sp-emerg':1} },
+        { t:'Básica', specs:{} },
+        { t:'Limitada', specs:{} },
+      ]},
+      { q: 'Conhecimento em farmacologia:', opts: [
+        { t:'Avançado — drogas vasoativas, sedação, antibióticos', specs:{'sp-uti':3,'sp-emerg':2} },
+        { t:'Intermediário — medicações comuns', specs:{'sp-geral':1,'sp-saudepub':1} },
+        { t:'Básico', specs:{} },
+        { t:'Limitado', specs:{} },
+      ]},
+      { q: 'Experiência em liderança de equipe:', opts: [
+        { t:'Coordeno equipes há anos', specs:{'sp-gestao':3} },
+        { t:'Lidero plantões ocasionalmente', specs:{'sp-geral':1,'sp-uti':1} },
+        { t:'Ainda não liderei', specs:{} },
+        { t:'Não tenho interesse', specs:{} },
+      ]},
+      { q: 'Habilidade de comunicação com famílias:', opts: [
+        { t:'Excelente — including breaking bad news', specs:{'sp-psiq':2,'sp-onco':2,'sp-geron':1,'sp-uti':1} },
+        { t:'Boa', specs:{'sp-ped':1,'sp-obst':1} },
+        { t:'Em desenvolvimento', specs:{} },
+        { t:'Sinto dificuldade', specs:{} },
+      ]},
+      { q: 'Domínio de protocolos de reanimação:', opts: [
+        { t:'ACLS + NRP + PALS', specs:{'sp-emerg':3,'sp-uti':2,'sp-neonatal':2,'sp-ped':1} },
+        { t:'ACLS apenas', specs:{'sp-emerg':2,'sp-uti':1} },
+        { t:'BLS', specs:{} },
+        { t:'Não certificado', specs:{} },
+      ]},
+      { q: 'Experiência com dimensionamento de pessoal:', opts: [
+        { t:'Aplico Resolução 543/2017', specs:{'sp-gestao':3} },
+        { t:'Conheço mas não aplico', specs:{} },
+        { t:'Ouvi falar', specs:{} },
+        { t:'Não conheço', specs:{} },
+      ]},
+      { q: 'Habilidade em educação em saúde:', opts: [
+        { t:'Desenvolvo materiais e capacito', specs:{'sp-saudepub':3,'sp-gestao':1} },
+        { t:'Oriento pacientes individualmente', specs:{'sp-geral':1,'sp-geron':1} },
+        { t:'Básica', specs:{} },
+        { t:'Não é meu foco', specs:{} },
+      ]},
+      { q: 'Conhecimento em controle de infecção:', opts: [
+        { t:'Especializado — CCIH', specs:{'sp-saudepub':2,'sp-uti':1,'sp-cirurg':1} },
+        { t:'Bom — protocolos básicos', specs:{'sp-geral':1} },
+        { t:'Básico', specs:{} },
+        { t:'Limitado', specs:{} },
+      ]},
+    ]
+  },
+
+  stress: {
+    title: 'Teste de Resiliência Profissional',
+    questions: [
+      { q: 'Quando enfrento uma perda de paciente:', opts: [
+        { t:'Processo rapidamente e sigo', specs:{'sp-emerg':3,'sp-uti':2} },
+        { t:'Preciso de tempo, mas supero', specs:{'sp-geral':2,'sp-saudepub':1} },
+        { t:'Afeta-me profundamente', specs:{'sp-ped':1,'sp-geron':1,'sp-psiq':1} },
+        { t:'Busco apoio profissional', specs:{'sp-psiq':2} },
+      ]},
+      { q: 'Em plantões de alta demanda:', opts: [
+        { t:'Mantenho performance até o fim', specs:{'sp-uti':3,'sp-emerg':2} },
+        { t:'Sinto cansaço mas aguento', specs:{'sp-geral':2} },
+        { t:'Preciso de pausas frequentes', specs:{'sp-geron':1,'sp-psiq':1} },
+        { t:'Evito plantões longos', specs:{'sp-saudepub':2} },
+      ]},
+      { q: 'Diante de conflitos com médicos:', opts: [
+        { t:'Argumento com dados e protocolos', specs:{'sp-uti':2,'sp-emerg':1,'sp-gestao':1} },
+        { t:'Busco consenso', specs:{'sp-gestao':2,'sp-saudepub':1} },
+        { t:'Delego ao coordenador', specs:{'sp-geral':1} },
+        { t:'Evito confronto', specs:{'sp-geron':1,'sp-psiq':1} },
+      ]},
+      { q: 'Como você avalia seu sono?', opts: [
+        { t:'Durmo bem mesmo após plantão', specs:{'sp-emerg':2,'sp-uti':1} },
+        { t:'Levo 1-2 dias para recuperar', specs:{'sp-geral':1,'sp-saudepub':1} },
+        { t:'Tenho insônia frequente', specs:{'sp-psiq':1} },
+        { t:'Uso medicação para dormir', specs:{'sp-geron':1} },
+      ]},
+    ]
+  },
+};
+
+// ── State ──
+let currentTest = null;
+let currentQ = 0;
+let answers = [];
+
+// ── Test selection ──
+document.querySelectorAll('[data-test]').forEach(card => {
+  card.addEventListener('click', function() {
+    const testId = this.dataset.test;
+    startTest(testId);
+  });
+});
+
+function startTest(testId) {
+  currentTest = TESTS[testId];
+  currentQ = 0;
+  answers = new Array(currentTest.questions.length).fill(null);
+
+  document.getElementById('acTestList').style.display = 'none';
+  document.getElementById('acResult').classList.remove('active');
+  document.getElementById('acQuiz').classList.add('active');
+  document.getElementById('quizTitle').textContent = currentTest.title;
+  document.getElementById('quizTotal').textContent = currentTest.questions.length;
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = currentTest.questions[currentQ];
+  document.getElementById('quizCurrent').textContent = currentQ + 1;
+  document.getElementById('quizProgressFill').style.width = ((currentQ + 1) / currentTest.questions.length * 100) + '%';
+
+  let html = '<div class="ac-question-num">Questão ' + (currentQ + 1) + '</div>';
+  html += '<div class="ac-question-text">' + q.q + '</div>';
+  html += '<div class="ac-options">';
+  q.opts.forEach((opt, i) => {
+    const sel = answers[currentQ] === i ? ' selected' : '';
+    html += '<button class="ac-option' + sel + '" data-opt="' + i + '">' + opt.t + '</button>';
+  });
+  html += '</div>';
+  document.getElementById('quizQuestion').innerHTML = html;
+
+  document.querySelectorAll('.ac-option').forEach(btn => {
+    btn.addEventListener('click', function() {
+      answers[currentQ] = parseInt(this.dataset.opt);
+      document.querySelectorAll('.ac-option').forEach(o => o.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+
+  document.getElementById('quizPrev').disabled = currentQ === 0;
+  document.getElementById('quizNext').textContent = currentQ === currentTest.questions.length - 1 ? 'Ver Resultado →' : 'Próximo →';
+}
+
+document.getElementById('quizPrev').addEventListener('click', () => { if (currentQ > 0) { currentQ--; renderQuestion(); } });
+document.getElementById('quizNext').addEventListener('click', () => {
+  if (answers[currentQ] === null) return; // Must answer
+  if (currentQ < currentTest.questions.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+});
+
+document.getElementById('quizBack').addEventListener('click', () => {
+  document.getElementById('acQuiz').classList.remove('active');
+  document.getElementById('acTestList').style.display = 'block';
+});
+
+// ── Results ──
+function showResults() {
+  const scores = {};
+  SPECS.forEach(s => scores[s.id] = 0);
+
+  answers.forEach((ansIdx, qi) => {
+    const q = currentTest.questions[qi];
+    const opt = q.opts[ansIdx];
+    if (opt && opt.specs) {
+      Object.entries(opt.specs).forEach(([specId, points]) => {
+        scores[specId] = (scores[specId] || 0) + points;
+      });
+    }
+  });
+
+  // Normalize to percentages
+  const maxScore = Math.max(...Object.values(scores), 1);
+  const ranked = SPECS.map(s => ({
+    ...s,
+    score: scores[s.id] || 0,
+    pct: Math.round(((scores[s.id] || 0) / maxScore) * 100)
+  })).sort((a, b) => b.score - a.score);
+
+  const top = ranked[0];
+  const top2 = ranked[1];
+  const top3 = ranked[2];
+
+  document.getElementById('resultTitle').textContent = 'Sua Especialização Ideal';
+  document.getElementById('resultSpec').textContent = top.name;
+  document.getElementById('resultDesc').textContent = `Com base nas suas respostas, ${top.name} é a área que mais se alinha com seu perfil. ${top2.name} e ${top3.name} também são boas opções para explorar.`;
+
+  // Scores
+  document.getElementById('resultScores').innerHTML = ranked.slice(0, 6).map(s =>
+    '<div class="ac-score-card"><div class="spec">' + s.name + '</div><div class="pct">' + s.pct + '%</div><div class="bar"><div class="bar-fill" style="width:' + s.pct + '%"></div></div></div>'
+  ).join('');
+
+  // Recommendations
+  const specDetail = window.CAREER_DATA?.specializations?.find(sp => sp.id === top.id);
+  let recs = '<h3>📋 Recomendações Personalizadas</h3>';
+  if (specDetail) {
+    recs += '<div class="ac-rec-item"><strong>Demanda de mercado:</strong> ' + specDetail.marketDemand + '</div>';
+    recs += '<div class="ac-rec-item"><strong>Salário médio:</strong> ' + specDetail.avgSalary + '</div>';
+    recs += '<div class="ac-rec-item"><strong>Soft skills a desenvolver:</strong> ' + specDetail.softSkills.slice(0,3).join(', ') + '</div>';
+    recs += '<div class="ac-rec-item"><strong>Skills técnicas prioritárias:</strong> ' + specDetail.techSkills.slice(0,3).join(', ') + '</div>';
+    recs += '<div class="ac-rec-item"><strong>Trilha de carreira:</strong> ' + specDetail.careerPath.join(' → ') + '</div>';
+  }
+  recs += '<div class="ac-rec-item"><strong>Próximos passos:</strong> Acesse a <a href="carreiras.html" style="color:var(--blue-600);font-weight:700;">página de Carreiras</a> para ver vagas, cursos gratuitos e a trilha de conhecimento completa para ' + top.name + '.</div>';
+  document.getElementById('resultRecs').innerHTML = recs;
+
+  // Save result
+  localStorage.setItem('ac_result_' + (currentTest === TESTS.vocacional ? 'vocacional' : currentTest === TESTS.perfil ? 'perfil' : currentTest === TESTS.skills ? 'skills' : 'stress'), JSON.stringify({ top: top.id, scores: ranked.slice(0,6) }));
+
+  document.getElementById('acQuiz').classList.remove('active');
+  document.getElementById('acResult').classList.add('active');
+}
+
+document.getElementById('resultRetry').addEventListener('click', () => {
+  document.getElementById('acResult').classList.remove('active');
+  document.getElementById('acTestList').style.display = 'block';
+});
+</script>
+</body>
+</html>

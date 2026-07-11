@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sala de Descompressão | Calculadoras de Enfermagem</title>
+<meta name="description" content="Espaço de bem-estar e saúde mental para profissionais de enfermagem. Artigos, áudios guiados, exercícios de respiração e recursos de apoio.">
+<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/sala-descompressao.html" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  /* ═══ Zen Layout ═══ */
+  .zen-body{background:linear-gradient(180deg,#f6f8fa 0%,#eef2f7 100%);min-height:calc(100vh - 72px);}
+
+  /* Hero */
+  .zen-hero{background:linear-gradient(135deg,var(--navy-950) 0%,var(--navy-800) 100%);color:#fff;padding:60px 0 48px;position:relative;overflow:hidden;}
+  .zen-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 30% 50%,rgba(37,99,235,.15) 0%,transparent 60%);pointer-events:none;}
+  .zen-hero-inner{max-width:900px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+  .zen-hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(255,255,255,.1);border-radius:100px;font-size:12px;font-weight:600;margin-bottom:20px;}
+  .zen-hero h1{font-family:'Sora',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:800;line-height:1.1;margin-bottom:16px;}
+  .zen-hero p{font-size:16px;line-height:1.6;opacity:.8;max-width:600px;margin-bottom:28px;}
+
+  /* Affirmation card */
+  .zen-affirm{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px 24px;display:flex;align-items:center;gap:16px;}
+  .zen-affirm i{font-size:24px;color:var(--blue-400);flex-shrink:0;}
+  .zen-affirm p{font-size:15px;font-style:italic;margin:0;opacity:.9;}
+
+  /* Tabs */
+  .zen-tabs{display:flex;gap:4px;padding:0 24px;max-width:1100px;margin:-24px auto 0;background:var(--white);border-radius:12px 12px 0 0;box-shadow:var(--shadow-md);overflow:hidden;position:relative;z-index:2;}
+  .zen-tab{padding:16px 20px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'Manrope',sans-serif;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
+  .zen-tab:hover{color:var(--navy-800);}
+  .zen-tab.active{color:var(--blue-600);border-bottom-color:var(--blue-600);}
+  .zen-tab i{margin-right:8px;}
+
+  /* Main content */
+  .zen-main{max-width:1100px;margin:0 auto;padding:32px 24px 60px;}
+  .zen-view{display:none;}
+  .zen-view.active{display:block;}
+
+  /* Article grid */
+  .zen-article-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;}
+  .zen-card{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;}
+  .zen-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);border-color:var(--blue-400);}
+  .zen-card-header{padding:20px 20px 0;}
+  .zen-card-cat{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+  .zen-card-cat.identificacao{background:#fef3c7;color:#92400e;}
+  .zen-card-cat.tecnicas{background:#dbeafe;color:#1e40af;}
+  .zen-card-cat.sono{background:#e0e7ff;color:#3730a3;}
+  .zen-card-cat.ansiedade{background:#fee2e2;color:#991b1b;}
+  .zen-card-cat.fisico{background:#dcfce7;color:#166534;}
+  .zen-card-cat.emocional{background:#f3e8ff;color:#6b21a8;}
+  .zen-card-cat.resiliencia{background:#dbeafe;color:#1e40af;}
+  .zen-card h3{font-size:16px;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:8px;}
+  .zen-card-excerpt{font-size:13px;color:var(--muted);line-height:1.5;flex-grow:1;}
+  .zen-card-footer{display:flex;align-items:center;gap:12px;padding:14px 20px;border-top:1px solid var(--line);margin-top:16px;font-size:12px;color:var(--muted);}
+  .zen-card-footer span{display:flex;align-items:center;gap:4px;}
+  .zen-card-footer .ev{margin-left:auto;font-weight:600;color:var(--blue-600);}
+
+  /* Article modal */
+  .zen-modal-overlay{position:fixed;inset:0;background:rgba(8,21,39,.7);backdrop-filter:blur(4px);z-index:9999;display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
+  .zen-modal-overlay.open{display:flex;}
+  .zen-modal{background:var(--white);border-radius:18px;max-width:720px;width:100%;padding:40px;position:relative;box-shadow:var(--shadow-lg);}
+  .zen-modal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--muted);transition:all .15s;}
+  .zen-modal-close:hover{background:var(--bg-soft);color:var(--ink);}
+  .zen-modal-cat{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:16px;}
+  .zen-modal h2{font-family:'Sora',sans-serif;font-size:24px;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:12px;}
+  .zen-modal-meta{display:flex;gap:16px;font-size:13px;color:var(--muted);margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line);}
+  .zen-modal-body h2{font-size:18px;margin:24px 0 12px;color:var(--navy-800);}
+  .zen-modal-body p{font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:16px;}
+  .zen-modal-body ul{margin:12px 0 20px 20px;}
+  .zen-modal-body li{font-size:14px;line-height:1.7;color:var(--ink);margin-bottom:6px;}
+  .zen-modal-body blockquote{border-left:4px solid var(--blue-600);padding:16px 20px;background:var(--bg-soft);border-radius:0 12px 12px 0;font-size:15px;font-style:italic;color:var(--navy-800);margin:20px 0;}
+  .zen-modal-refs{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);}
+  .zen-modal-refs h4{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px;}
+  .zen-modal-refs li{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px;}
+
+  /* Audio cards */
+  .zen-audio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .zen-audio-card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;align-items:center;gap:16px;transition:all .2s;}
+  .zen-audio-card:hover{border-color:var(--blue-400);box-shadow:var(--shadow-sm);}
+  .zen-audio-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--navy-800),var(--blue-600));display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex-shrink:0;}
+  .zen-audio-info{flex-grow:1;}
+  .zen-audio-info h4{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+  .zen-audio-info p{font-size:12px;color:var(--muted);line-height:1.4;}
+  .zen-audio-play{width:40px;height:40px;border-radius:50%;border:none;background:var(--blue-600);color:#fff;cursor:pointer;font-size:14px;flex-shrink:0;transition:all .15s;}
+  .zen-audio-play:hover{background:var(--navy-800);transform:scale(1.05);}
+  .zen-audio-play.playing{background:var(--navy-800);}
+
+  /* Breathing exercise */
+  .zen-breath-container{max-width:600px;margin:0 auto;}
+  .zen-breath-canvas{width:100%;aspect-ratio:1;max-width:380px;margin:40px auto;position:relative;}
+  .zen-breath-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,var(--blue-400) 0%,var(--blue-600) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;transition:all 4s ease-in-out;box-shadow:0 0 60px rgba(37,99,235,.3);}
+  .zen-breath-circle.expanded{width:320px;height:320px;transition:all 4s ease-in-out;}
+  .zen-breath-phase{font-size:18px;font-weight:700;font-family:'Sora',sans-serif;}
+  .zen-breath-count{font-size:36px;font-weight:800;font-family:'Sora',sans-serif;margin-top:4px;}
+  .zen-breath-label{text-align:center;font-size:14px;color:var(--muted);margin-bottom:20px;}
+  .zen-breath-controls{display:flex;justify-content:center;gap:12px;margin-top:24px;}
+  .zen-breath-btn{padding:12px 28px;border-radius:10px;border:none;font-size:14px;font-weight:600;cursor:pointer;font-family:'Manrope',sans-serif;transition:all .15s;}
+  .zen-breath-btn.start{background:var(--blue-600);color:#fff;}
+  .zen-breath-btn.start:hover{background:var(--navy-800);}
+  .zen-breath-btn.stop{background:var(--bg-soft);color:var(--ink);border:1px solid var(--line);}
+  .zen-breath-info{background:var(--bg-soft);border-radius:12px;padding:20px;margin-top:32px;}
+  .zen-breath-info h4{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--navy-800);}
+  .zen-breath-info p{font-size:13px;color:var(--muted);line-height:1.6;}
+
+  /* PMR exercise */
+  .zen-pmr-container{max-width:500px;margin:0 auto;}
+  .zen-pmr-progress{display:flex;gap:4px;margin-bottom:24px;}
+  .zen-pmr-step-bar{flex:1;height:6px;border-radius:3px;background:var(--line);transition:background .3s;}
+  .zen-pmr-step-bar.active{background:var(--blue-600);}
+  .zen-pmr-step-bar.done{background:var(--navy-800);}
+  .zen-pmr-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:40px;text-align:center;}
+  .zen-pmr-phase{font-size:24px;font-weight:800;font-family:'Sora',sans-serif;color:var(--navy-800);margin-bottom:8px;}
+  .zen-pmr-desc{font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+  .zen-pmr-timer{font-size:48px;font-weight:800;font-family:'Sora',sans-serif;color:var(--blue-600);margin-bottom:24px;}
+  .zen-pmr-instruction{padding:16px;background:var(--bg-soft);border-radius:12px;font-size:13px;color:var(--ink);margin-bottom:24px;}
+
+  /* Resources */
+  .zen-resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .zen-resource-card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;align-items:flex-start;gap:16px;transition:all .2s;}
+  .zen-resource-card:hover{border-color:var(--blue-400);box-shadow:var(--shadow-sm);}
+  .zen-resource-card.urgent{border-color:#fca5a5;background:#fef2f2;}
+  .zen-resource-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .zen-resource-card.urgent .zen-resource-icon{background:#fee2e2;color:#991b1b;}
+  .zen-resource-card:not(.urgent) .zen-resource-icon{background:#dbeafe;color:#1e40af;}
+  .zen-resource-info h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+  .zen-resource-info p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px;}
+  .zen-resource-phone{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--blue-600);}
+  .zen-resource-link{font-size:12px;color:var(--blue-600);text-decoration:none;font-weight:600;}
+  .zen-resource-link:hover{text-decoration:underline;}
+
+  /* Emergency banner */
+  .zen-emergency{background:linear-gradient(135deg,#991b1b 0%,#7f1d1d 100%);color:#fff;border-radius:16px;padding:24px;margin-bottom:32px;display:flex;align-items:center;gap:20px;}
+  .zen-emergency i{font-size:32px;flex-shrink:0;}
+  .zen-emergency h3{font-size:16px;font-weight:700;margin-bottom:4px;}
+  .zen-emergency p{font-size:13px;opacity:.9;line-height:1.5;}
+  .zen-emergency-btn{margin-left:auto;padding:12px 24px;background:#fff;color:#991b1b;border-radius:10px;font-weight:700;font-size:14px;text-decoration:none;flex-shrink:0;}
+
+  /* Filter chips */
+  .zen-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+  .zen-filter-chip{padding:8px 16px;border-radius:100px;border:1px solid var(--line);background:var(--white);font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;font-family:'Manrope',sans-serif;}
+  .zen-filter-chip:hover{border-color:var(--blue-400);}
+  .zen-filter-chip.active{background:var(--blue-600);color:#fff;border-color:var(--blue-600);}
+
+  /* Section titles */
+  .zen-section-title{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .zen-section-sub{font-size:14px;color:var(--muted);margin-bottom:24px;}
+
+  @media(max-width:768px){
+    .zen-tabs{flex-wrap:wrap;border-radius:12px;}
+    .zen-tab{flex:1;text-align:center;padding:12px 8px;font-size:12px;}
+    .zen-tab i{margin-right:4px;}
+    .zen-modal{padding:24px 20px;margin:0;}
+    .zen-emergency{flex-direction:column;text-align:center;gap:12px;}
+    .zen-emergency-btn{margin:0;}
+    .zen-breath-circle.expanded{width:260px;height:260px;}
+  }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+<div id="header-portal"></div>
+
+<main id="main-content" class="zen-body">
+
+  <!-- ═══ HERO ═══ -->
+  <section class="zen-hero">
+    <div class="zen-hero-inner">
+      <div class="zen-hero-badge">
+        <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+        Saúde Mental & Bem-estar do Enfermeiro
+      </div>
+      <h1>Sala de Descompressão</h1>
+      <p>Um espaço para cuidar de quem cuida. Artigos baseados em evidência, áudios guiados, exercícios de respiração e recursos de apoio — tudo gratuito, tudo para você.</p>
+      <div class="zen-affirm">
+        <i class="fa-solid fa-quote-left" aria-hidden="true"></i>
+        <p id="zen-affirm-text">Carregando mensagem...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TABS ═══ -->
+  <div class="zen-tabs">
+    <button class="zen-tab active" data-zen-tab="artigos"><i class="fa-solid fa-book-open"></i>Artigos</button>
+    <button class="zen-tab" data-zen-tab="audios"><i class="fa-solid fa-headphones"></i>Áudios</button>
+    <button class="zen-tab" data-zen-tab="exercicios"><i class="fa-solid fa-wind"></i>Exercícios</button>
+    <button class="zen-tab" data-zen-tab="apoio"><i class="fa-solid fa-life-ring"></i>Apoio</button>
+  </div>
+
+  <div class="zen-main">
+
+    <!-- ═══ VIEW: ARTIGOS ═══ -->
+    <div class="zen-view active" data-zen-view="artigos">
+      <h2 class="zen-section-title">10 Artigos para o seu bem-estar</h2>
+      <p class="zen-section-sub">Conteúdo baseado em evidência científica, escrito para a realidade do enfermeiro brasileiro.</p>
+
+      <div class="zen-filters" id="zen-article-filters">
+        <button class="zen-filter-chip active" data-cat="all">Todos</button>
+        <button class="zen-filter-chip" data-cat="identificacao">Identificação</button>
+        <button class="zen-filter-chip" data-cat="tecnicas">Técnicas</button>
+        <button class="zen-filter-chip" data-cat="sono">Sono</button>
+        <button class="zen-filter-chip" data-cat="ansiedade">Ansiedade</button>
+        <button class="zen-filter-chip" data-cat="fisico">Físico</button>
+        <button class="zen-filter-chip" data-cat="emocional">Emocional</button>
+        <button class="zen-filter-chip" data-cat="resiliencia">Resiliência</button>
+      </div>
+
+      <div class="zen-article-grid" id="zen-article-grid"></div>
+    </div>
+
+    <!-- ═══ VIEW: ÁUDIOS ═══ -->
+    <div class="zen-view" data-zen-view="audios">
+      <h2 class="zen-section-title">Áudios Guiados</h2>
+      <p class="zen-section-sub">Pare, coloque fones de ouvido e respire. Durações curtas para caber na rotina do plantão.</p>
+      <div class="zen-audio-grid" id="zen-audio-grid"></div>
+    </div>
+
+    <!-- ═══ VIEW: EXERCÍCIOS ═══ -->
+    <div class="zen-view" data-zen-view="exercicios">
+      <h2 class="zen-section-title">Exercícios Interativos</h2>
+      <p class="zen-section-sub">Práticas guiadas em tempo real. Clique e siga as instruções.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-bottom:32px;">
+        <!-- Box Breathing -->
+        <div class="zen-breath-container" style="max-width:none;">
+          <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px;">Box Breathing 4-4-4-4</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0;">Técnica usada por forças especiais para controle de estresse em combate.</p>
+          <div class="zen-breath-canvas">
+            <div class="zen-breath-circle" id="zen-breath-circle">
+              <div class="zen-breath-phase" id="zen-breath-phase">Pronto</div>
+              <div class="zen-breath-count" id="zen-breath-count">4</div>
+            </div>
+          </div>
+          <div class="zen-breath-controls">
+            <button class="zen-breath-btn start" id="zen-breath-start">Iniciar</button>
+            <button class="zen-breath-btn stop" id="zen-breath-stop" style="display:none;">Parar</button>
+          </div>
+          <div class="zen-breath-info">
+            <h4>Como funciona</h4>
+            <p>Inspira 4s · Segura 4s · Expira 4s · Pausa 4s. A proporção igual acalma o sistema nervoso autônomo. Faça 4 ciclos completos (2 minutos).</p>
+          </div>
+        </div>
+
+        <!-- PMR -->
+        <div class="zen-pmr-container" style="max-width:none;">
+          <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px;">Relaxamento Muscular Progressivo</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0;">Tense e relaxe cada grupo muscular. Alivia dores do plantão.</p>
+          <div class="zen-pmr-progress" id="zen-pmr-progress"></div>
+          <div class="zen-pmr-card" id="zen-pmr-card">
+            <div class="zen-pmr-phase" id="zen-pmr-phase">Pronto para começar</div>
+            <div class="zen-pmr-desc" id="zen-pmr-desc">Clique em iniciar para começar o relaxamento muscular progressivo.</div>
+            <div class="zen-pmr-timer" id="zen-pmr-timer">--</div>
+            <div class="zen-pmr-instruction" id="zen-pmr-instruction">8 grupos musculares · 10s cada · ~8 minutos total</div>
+            <div class="zen-breath-controls">
+              <button class="zen-breath-btn start" id="zen-pmr-start">Iniciar</button>
+              <button class="zen-breath-btn stop" id="zen-pmr-stop" style="display:none;">Parar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VIEW: APOIO ═══ -->
+    <div class="zen-view" data-zen-view="apoio">
+      <h2 class="zen-section-title">Recursos de Apoio</h2>
+      <p class="zen-section-sub">Se você precisa de ajuda agora, estes canais estão disponíveis 24h.</p>
+
+      <div class="zen-emergency">
+        <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+        <div>
+          <h3>Precisa de ajuda urgente?</h3>
+          <p>Ligue agora para o CVV: 188 (gratuito, 24h, anônimo) ou Samaritanos: 0800 045 5555.</p>
+        </div>
+        <a href="tel:188" class="zen-emergency-btn"><i class="fa-solid fa-phone"></i> Ligar 188</a>
+      </div>
+
+      <div class="zen-resource-grid" id="zen-resource-grid"></div>
+    </div>
+
+  </div>
+</main>
+
+<div id="footer-portal"></div>
+
+<!-- Article Modal -->
+<div class="zen-modal-overlay" id="zen-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="zen-modal-title">
+  <div class="zen-modal">
+    <button class="zen-modal-close" id="zen-modal-close" aria-label="Fechar artigo">
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <div id="zen-modal-content"></div>
+  </div>
+</div>
+
+<script src="js/partials-loader.js"></script>
+<script src="js/i18n-loader.js"></script>
+<script src="js/zen-data.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  // ═══ Affirmation rotation ═══
+  function rotateAffirmation(){
+    const affirms = (window.ZEN_DATA && ZEN_DATA.affirmations) || ['Cuidar de quem cuida é um ato de coragem.'];
+    const el = document.getElementById('zen-affirm-text');
+    if(el) el.textContent = affirms[Math.floor(Math.random()*affirms.length)];
+  }
+  rotateAffirmation();
+
+  // ═══ Tab switching ═══
+  document.querySelectorAll('.zen-tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.zen-tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.zen-view').forEach(v=>v.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector('[data-zen-view="'+tab.dataset.zenTab+'"]').classList.add('active');
+    });
+  });
+
+  // ═══ Article rendering ═══
+  function renderArticles(cat){
+    var articles = (window.ZEN_DATA && ZEN_DATA.articles) || [];
+    var filtered = cat==='all' ? articles : articles.filter(function(a){return a.category===cat;});
+    var grid = document.getElementById('zen-article-grid');
+    if(!grid) return;
+    grid.innerHTML = filtered.map(function(a){
+      return '<article class="zen-card" data-id="'+a.id+'">'
+        + '<div class="zen-card-header">'
+        + '<span class="zen-card-cat '+a.category+'">'+a.category+'</span>'
+        + '<h3>'+a.title+'</h3>'
+        + '<p class="zen-card-excerpt">'+a.excerpt+'</p>'
+        + '</div>'
+        + '<div class="zen-card-footer">'
+        + '<span><i class="fa-regular fa-clock"></i> '+a.readTime+'</span>'
+        + '<span class="ev">'+a.evidence+'</span>'
+        + '</div>'
+        + '</article>';
+    }).join('');
+    grid.querySelectorAll('.zen-card').forEach(card=>{
+      card.addEventListener('click',function(){openArticle(card.dataset.id);});
+    });
+  }
+  renderArticles('all');
+
+  // Filter chips
+  document.querySelectorAll('#zen-article-filters .zen-filter-chip').forEach(chip=>{
+    chip.addEventListener('click',function(){
+      document.querySelectorAll('#zen-article-filters .zen-filter-chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      renderArticles(chip.dataset.cat);
+    });
+  });
+
+  // ═══ Article modal ═══
+  function openArticle(id){
+    var articles = (window.ZEN_DATA && ZEN_DATA.articles) || [];
+    var a = articles.find(function(x){return x.id===id;});
+    if(!a) return;
+    var bodyHtml = '';
+    (a.body||[]).forEach(function(b){
+      if(b.type==='p') bodyHtml += '<p>'+b.text+'</p>';
+      else if(b.type==='h2') bodyHtml += '<h2>'+b.text+'</h2>';
+      else if(b.type==='list') bodyHtml += '<ul>'+b.items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>';
+      else if(b.type==='quote') bodyHtml += '<blockquote>'+b.text+'</blockquote>';
+    });
+    var refsHtml = '';
+    if(a.references && a.references.length){
+      refsHtml = '<div class="zen-modal-refs"><h4>Referências</h4><ul>'
+        + a.references.map(function(r){return '<li>'+r+'</li>';}).join('')
+        + '</ul></div>';
+    }
+    var content = document.getElementById('zen-modal-content');
+    if(content) content.innerHTML =
+      '<span class="zen-modal-cat zen-card-cat '+a.category+'">'+a.category+'</span>'
+      + '<h2 id="zen-modal-title">'+a.title+'</h2>'
+      + '<div class="zen-modal-meta">'
+      + '<span><i class="fa-regular fa-clock"></i> '+a.readTime+'</span>'
+      + '<span><i class="fa-solid fa-flask"></i> '+a.evidence+'</span>'
+      + '</div>'
+      + '<div class="zen-modal-body">'+bodyHtml+'</div>'
+      + refsHtml;
+    var overlay = document.getElementById('zen-modal-overlay');
+    if(overlay) overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeArticle(){
+    var overlay = document.getElementById('zen-modal-overlay');
+    if(overlay) overlay.classList.remove('open');
+    document.body.style.overflow='';
+  }
+  document.getElementById('zen-modal-close').addEventListener('click',closeArticle);
+  document.getElementById('zen-modal-overlay').addEventListener('click',function(e){
+    if(e.target===this) closeArticle();
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') closeArticle();
+  });
+
+  // ═══ Audio rendering ═══
+  function renderAudios(){
+    var audios = (window.ZEN_DATA && ZEN_DATA.audios) || [];
+    var grid = document.getElementById('zen-audio-grid');
+    if(!grid) return;
+    grid.innerHTML = audios.map(function(a){
+      return '<div class="zen-audio-card">'
+        + '<div class="zen-audio-icon"><i class="fa-solid '+a.icon+'" aria-hidden="true"></i></div>'
+        + '<div class="zen-audio-info"><h4>'+a.title+'</h4><p>'+a.desc+' · '+a.duration+'</p></div>'
+        + '<button class="zen-audio-play" data-id="'+a.id+'" aria-label="Tocar áudio"><i class="fa-solid fa-play"></i></button>'
+        + '</div>';
+    }).join('');
+    grid.querySelectorAll('.zen-audio-play').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        var icon = btn.querySelector('i');
+        if(btn.classList.contains('playing')){
+          btn.classList.remove('playing');
+          icon.className='fa-solid fa-play';
+        }else{
+          grid.querySelectorAll('.zen-audio-play').forEach(b=>{
+            b.classList.remove('playing');
+            b.querySelector('i').className='fa-solid fa-play';
+          });
+          btn.classList.add('playing');
+          icon.className='fa-solid fa-pause';
+        }
+      });
+    });
+  }
+  renderAudios();
+
+  // ═══ Resources rendering ═══
+  function renderResources(){
+    var resources = (window.ZEN_DATA && ZEN_DATA.resources) || [];
+    var grid = document.getElementById('zen-resource-grid');
+    if(!grid) return;
+    grid.innerHTML = resources.map(function(r){
+      var cls = r.urgent ? 'urgent' : '';
+      var phone = r.phone ? '<span class="zen-resource-phone"><i class="fa-solid fa-phone"></i> '+r.phone+'</span>' : '';
+      var link = r.url ? '<a href="https://'+r.url+'" target="_blank" rel="noopener" class="zen-resource-link">'+r.url+' <i class="fa-solid fa-external-link"></i></a>' : '';
+      return '<div class="zen-resource-card '+cls+'">'
+        + '<div class="zen-resource-icon"><i class="fa-solid '+r.icon+'" aria-hidden="true"></i></div>'
+        + '<div class="zen-resource-info"><h4>'+r.name+'</h4><p>'+r.desc+'</p>'+phone+' '+link+'</div>'
+        + '</div>';
+    }).join('');
+  }
+  renderResources();
+
+  // ═══ Box Breathing ═══
+  var breathState = {running:false, phase:0, count:4, cycles:0};
+  var breathPhases = [
+    {name:'Inspira', seconds:4},
+    {name:'Segura', seconds:4},
+    {name:'Expira', seconds:4},
+    {name:'Pausa', seconds:4}
+  ];
+  var breathTimer = null;
+
+  function updateBreath(){
+    if(!breathState.running) return;
+    var phase = breathPhases[breathState.phase];
+    var circle = document.getElementById('zen-breath-circle');
+    var phaseEl = document.getElementById('zen-breath-phase');
+    var countEl = document.getElementById('zen-breath-count');
+    if(!circle||!phaseEl||!countEl) return;
+
+    phaseEl.textContent = phase.name;
+    countEl.textContent = breathState.count;
+
+    if(breathState.phase===0) circle.classList.add('expanded');
+    else if(breathState.phase===2) circle.classList.remove('expanded');
+
+    breathState.count--;
+    if(breathState.count<=0){
+      breathState.phase = (breathState.phase+1)%4;
+      breathState.count = breathPhases[breathState.phase].seconds;
+      if(breathState.phase===0){
+        breathState.cycles++;
+        if(breathState.cycles>=4){
+          stopBreath();
+          phaseEl.textContent='Concluído!';
+          countEl.textContent='✓';
+          circle.classList.remove('expanded');
+          return;
+        }
+      }
+    }
+  }
+
+  function startBreath(){
+    breathState={running:true,phase:0,count:4,cycles:0};
+    document.getElementById('zen-breath-start').style.display='none';
+    document.getElementById('zen-breath-stop').style.display='inline-block';
+    updateBreath();
+    breathTimer = setInterval(updateBreath,1000);
+  }
+  function stopBreath(){
+    breathState.running=false;
+    if(breathTimer){clearInterval(breathTimer);breathTimer=null;}
+    var circle = document.getElementById('zen-breath-circle');
+    if(circle) circle.classList.remove('expanded');
+    var startBtn=document.getElementById('zen-breath-start');
+    var stopBtn=document.getElementById('zen-breath-stop');
+    if(startBtn) startBtn.style.display='inline-block';
+    if(stopBtn) stopBtn.style.display='none';
+    var phaseEl=document.getElementById('zen-breath-phase');
+    var countEl=document.getElementById('zen-breath-count');
+    if(phaseEl) phaseEl.textContent='Pronto';
+    if(countEl) countEl.textContent='4';
+  }
+  var bs=document.getElementById('zen-breath-start');
+  var bstop=document.getElementById('zen-breath-stop');
+  if(bs) bs.addEventListener('click',startBreath);
+  if(bstop) bstop.addEventListener('click',stopBreath);
+
+  // ═══ PMR ═══
+  var pmrState = {running:false, step:0, count:10};
+  var pmrSteps = [
+    {phase:'Mãos', desc:'Cerre os punhos com força.', instruction:'Sinta a tensão nos punhos. Solte e relaxe.'},
+    {phase:'Braços', desc:'Flexione os bíceps.', instruction:'Sinta a tensão nos braços. Solte e relaxe.'},
+    {phase:'Ombros', desc:'Eleve os ombros às orelhas.', instruction:'Sinta a tensão nos ombros. Solte e relaxe.'},
+    {phase:'Rosto', desc:'Aperte olhos e boca.', instruction:'Sinta a tensão no rosto. Solte e relaxe.'},
+    {phase:'Peito', desc:'Inspire fundo e segure.', instruction:'Sinta a expansão do peito. Solte e relaxe.'},
+    {phase:'Abdômen', desc:'Contraia o abdômen.', instruction:'Sinta a tensão no abdômen. Solte e relaxe.'},
+    {phase:'Pernas', desc:'Estique as pernas.', instruction:'Sinta a tensão nas pernas. Solte e relaxe.'},
+    {phase:'Pés', desc:'Flexe os pés para cima.', instruction:'Sinta a tensão nos pés. Solte e relaxe.'}
+  ];
+  var pmrTimer = null;
+
+  function renderPmrProgress(){
+    var prog = document.getElementById('zen-pmr-progress');
+    if(!prog) return;
+    prog.innerHTML = pmrSteps.map(function(_,i){
+      var cls = i<pmrState.step ? 'done' : (i===pmrState.step ? 'active' : '');
+      return '<div class="zen-pmr-step-bar '+cls+'"></div>';
+    }).join('');
+  }
+
+  function updatePmr(){
+    if(!pmrState.running) return;
+    var step = pmrSteps[pmrState.step];
+    if(!step) return;
+    document.getElementById('zen-pmr-phase').textContent = step.phase;
+    document.getElementById('zen-pmr-desc').textContent = step.desc;
+    document.getElementById('zen-pmr-timer').textContent = pmrState.count;
+    document.getElementById('zen-pmr-instruction').textContent = step.instruction;
+    renderPmrProgress();
+
+    pmrState.count--;
+    if(pmrState.count<=0){
+      pmrState.step++;
+      pmrState.count=10;
+      if(pmrState.step>=pmrSteps.length){
+        stopPmr();
+        document.getElementById('zen-pmr-phase').textContent='Concluído!';
+        document.getElementById('zen-pmr-desc').textContent='Seu corpo está relaxado. Respire fundo.';
+        document.getElementById('zen-pmr-timer').textContent='✓';
+        document.getElementById('zen-pmr-instruction').textContent='Pratique diariamente para melhorar a consciência corporal.';
+        return;
+      }
+    }
+  }
+
+  function startPmr(){
+    pmrState={running:true,step:0,count:10};
+    document.getElementById('zen-pmr-start').style.display='none';
+    document.getElementById('zen-pmr-stop').style.display='inline-block';
+    updatePmr();
+    pmrTimer = setInterval(updatePmr,1000);
+  }
+  function stopPmr(){
+    pmrState.running=false;
+    if(pmrTimer){clearInterval(pmrTimer);pmrTimer=null;}
+    var startBtn=document.getElementById('zen-pmr-start');
+    var stopBtn=document.getElementById('zen-pmr-stop');
+    if(startBtn) startBtn.style.display='inline-block';
+    if(stopBtn) stopBtn.style.display='none';
+    document.getElementById('zen-pmr-phase').textContent='Pronto para começar';
+    document.getElementById('zen-pmr-desc').textContent='Clique em iniciar para começar o relaxamento muscular progressivo.';
+    document.getElementById('zen-pmr-timer').textContent='--';
+    document.getElementById('zen-pmr-instruction').textContent='8 grupos musculares · 10s cada · ~8 minutos total';
+    renderPmrProgress();
+  }
+  var ps=document.getElementById('zen-pmr-start');
+  var pstop=document.getElementById('zen-pmr-stop');
+  if(ps) ps.addEventListener('click',startPmr);
+  if(pstop) pstop.addEventListener('click',stopPmr);
+  renderPmrProgress();
+
+})();
+</script>
+</body>
+</html>
