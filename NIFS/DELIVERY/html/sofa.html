@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="sofa">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -225,8 +235,7 @@
                     <span class="formula-cap">SOFA Score</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -255,10 +264,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -425,12 +502,13 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;respiratorio&quot;: 1, &quot;coagulacao&quot;: 0, &quot;hepatico&quot;: 0, &quot;cardiovascular&quot;: 1, &quot;neurologico&quot;: 1, &quot;renal&quot;: 0}'>Disfunção leve <span class="p-sub">SOFA 3</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;respiratorio&quot;: 2, &quot;coagulacao&quot;: 1, &quot;hepatico&quot;: 1, &quot;cardiovascular&quot;: 2, &quot;neurologico&quot;: 1, &quot;renal&quot;: 1}'>Disfunção moderada <span class="p-sub">SOFA 8</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;respiratorio&quot;: 4, &quot;coagulacao&quot;: 3, &quot;hepatico&quot;: 3, &quot;cardiovascular&quot;: 3, &quot;neurologico&quot;: 3, &quot;renal&quot;: 2}'>Falência de múltiplos órgãos <span class="p-sub">SOFA 18</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Sistema Respiratório (PaO2/FiO2)</label>
-              <select class="field-select" data-calc-input="respiratorio" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>≥ 400</option><option value="1">300 a 399</option><option value="2">200 a 299</option><option value="3">100 a 199 (com Suporte Respiratório)</option><option value="4">Menor que 100 (com Suporte Respiratório)</option></select></div><div class="urg-field"><label>Coagulação (Plaquetas x10³/µL)</label>
-              <select class="field-select" data-calc-input="coagulacao" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>≥ 150</option><option value="1">100 a 149</option><option value="2">50 a 99</option><option value="3">20 a 49</option><option value="4">Menor que 20</option></select></div><div class="urg-field"><label>Sistema Hepático (Bilirrubina mg/dL)</label>
-              <select class="field-select" data-calc-input="hepatico" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Menor que 1,2</option><option value="1">1,2 a 1,9</option><option value="2">2,0 a 5,9</option><option value="3">6,0 a 11,9</option><option value="4">Maior que 12,0</option></select></div><div class="urg-field"><label>Sistema Cardiovascular</label>
-              <select class="field-select" data-calc-input="cardiovascular" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>PAM ≥ 70 mmHg</option><option value="1">PAM &lt; 70 mmHg, Sem Vasopressor</option><option value="2">Dopamina ≤ 5 ou Dobutamina (Qualquer Dose)</option><option value="3">Dopamina &gt; 5, ou Epinefrina/Norepinefrina ≤ 0,1 mcg/kg/min</option><option value="4">Dopamina &gt; 15, ou Epinefrina/Norepinefrina &gt; 0,1 mcg/kg/min</option></select></div><div class="urg-field"><label>Sistema Neurológico (Escala de Glasgow)</label>
-              <select class="field-select" data-calc-input="neurologico" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>15</option><option value="1">13 a 14</option><option value="2">10 a 12</option><option value="3">6 a 9</option><option value="4">Menor que 6</option></select></div><div class="urg-field"><label>Sistema Renal (Creatinina mg/dL ou Débito Urinário)</label>
-              <select class="field-select" data-calc-input="renal" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Creatinina &lt; 1,2</option><option value="1">Creatinina 1,2 a 1,9</option><option value="2">Creatinina 2,0 a 3,4</option><option value="3">Creatinina 3,5 a 4,9 ou Débito Urinário &lt; 500 mL/dia</option><option value="4">Creatinina &gt; 5,0 ou Débito Urinário &lt; 200 mL/dia</option></select></div></div>
+              <select class="field-select" data-calc-input="respiratorio"><option value="0" selected>≥ 400</option><option value="1">300 a 399</option><option value="2">200 a 299</option><option value="3">100 a 199 (com Suporte Respiratório)</option><option value="4">Menor que 100 (com Suporte Respiratório)</option></select></div><div class="urg-field"><label>Coagulação (Plaquetas x10³/µL)</label>
+              <select class="field-select" data-calc-input="coagulacao"><option value="0" selected>≥ 150</option><option value="1">100 a 149</option><option value="2">50 a 99</option><option value="3">20 a 49</option><option value="4">Menor que 20</option></select></div><div class="urg-field"><label>Sistema Hepático (Bilirrubina mg/dL)</label>
+              <select class="field-select" data-calc-input="hepatico"><option value="0" selected>Menor que 1,2</option><option value="1">1,2 a 1,9</option><option value="2">2,0 a 5,9</option><option value="3">6,0 a 11,9</option><option value="4">Maior que 12,0</option></select></div><div class="urg-field"><label>Sistema Cardiovascular</label>
+              <select class="field-select" data-calc-input="cardiovascular"><option value="0" selected>PAM ≥ 70 mmHg</option><option value="1">PAM &lt; 70 mmHg, Sem Vasopressor</option><option value="2">Dopamina ≤ 5 ou Dobutamina (Qualquer Dose)</option><option value="3">Dopamina &gt; 5, ou Epinefrina/Norepinefrina ≤ 0,1 mcg/kg/min</option><option value="4">Dopamina &gt; 15, ou Epinefrina/Norepinefrina &gt; 0,1 mcg/kg/min</option></select></div><div class="urg-field"><label>Sistema Neurológico (Escala de Glasgow)</label>
+              <select class="field-select" data-calc-input="neurologico"><option value="0" selected>15</option><option value="1">13 a 14</option><option value="2">10 a 12</option><option value="3">6 a 9</option><option value="4">Menor que 6</option></select></div><div class="urg-field"><label>Sistema Renal (Creatinina mg/dL ou Débito Urinário)</label>
+              <select class="field-select" data-calc-input="renal"><option value="0" selected>Creatinina &lt; 1,2</option><option value="1">Creatinina 1,2 a 1,9</option><option value="2">Creatinina 2,0 a 3,4</option><option value="3">Creatinina 3,5 a 4,9 ou Débito Urinário &lt; 500 mL/dia</option><option value="4">Creatinina &gt; 5,0 ou Débito Urinário &lt; 200 mL/dia</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Disfunção Orgânica Leve</span>
@@ -471,14 +549,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -487,45 +565,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Disfunção Orgânica Leve</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:40%; background:#ca8a04"></div></div>
-              <span class="dist-pct">40%</span></div><div class="dist-row"><span class="dist-label">Disfunção Orgânica Moderada</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:30%; background:#ca8a04"></div></div>
-              <span class="dist-pct">30%</span></div><div class="dist-row"><span class="dist-label">Disfunção Orgânica Grave</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#dc2626"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Disfunção Orgânica Muito Grave</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#7f1d1d"></div></div>
-              <span class="dist-pct">10%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>SOFA Score</td><td>0 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>SOFA Score</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>SOFA Score</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o SOFA Score</h2>
           <p>O SOFA Score soma pontos de 6 sistemas orgânicos — respiratório, coagulação, hepático, cardiovascular, neurológico e renal —, cada um pontuado de 0 a 4, totalizando de 0 a 24 pontos. É recalculado diariamente para acompanhar a evolução da disfunção orgânica do paciente crítico.</p><p><strong>Guia rápido:</strong> 0-6 = Leve | 7-9 = Moderada | 10-12 = Grave | ≥13 = Muito grave (falência de múltiplos órgãos).</p>
@@ -537,45 +610,22 @@
               <p>O cálculo completo requer os 6 parâmetros. Na ausência de algum exame, alguns serviços utilizam o último valor disponível ou consideram o item como normal (0 pontos), mas isso pode subestimar a gravidade real — o ideal é sempre buscar os exames completos.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -633,14 +683,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "95061728-3940-5162-8395-061728394051", "code": "SCALE-SOFA-001", "slug": "sofa", "version": "1.0.0", "status": "published", "seo": {"title": "SOFA Score - Avaliação de Disfunção Orgânica Sequencial", "description": "Calcule o SOFA Score (Sequential Organ Failure Assessment) para avaliar a gravidade da disfunção orgânica em pacientes críticos. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/sofa.html"}, "breadcrumb": {"category": "Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "SOFA Score", "acronym": "SOFA", "categoryBadge": "Terapia intensiva", "icon": "i-pulse", "objective": "Avaliar objetivamente o grau de disfunção orgânica em pacientes críticos, a partir de 6 sistemas orgânicos, acompanhando a evolução da gravidade ao longo do tempo em unidade de terapia intensiva.", "indication": "Indicada para pacientes internados em UTI, especialmente com suspeita ou confirmação de sepse, permitindo acompanhamento seriado da disfunção orgânica.", "targetPopulation": "Pacientes adultos criticamente enfermos, internados em terapia intensiva.", "specialty": ["Terapia Intensiva", "Enfermagem", "Emergência"], "averageTime": "3-5 minutos", "evidenceLevel": "I", "originalAuthors": ["Jean-Louis Vincent", "colaboradores"], "organizations": ["European Society of Intensive Care Medicine (ESICM)"], "complexity": "advanced", "rating": 4.6, "ratingCount": 210}, "calculator": {"inputs": [{"id": "respiratorio", "type": "select", "label": "Sistema Respiratório (PaO2/FiO2)", "description": "Relação entre pressão parcial de oxigênio arterial e fração inspirada de oxigênio.", "defaultValue": 0, "options": [{"value": 0, "label": "≥ 400", "score": 0}, {"value": 1, "label": "300 a 399", "score": 1}, {"value": 2, "label": "200 a 299", "score": 2}, {"value": 3, "label": "100 a 199 (com Suporte Respiratório)", "score": 3}, {"value": 4, "label": "Menor que 100 (com Suporte Respiratório)", "score": 4}]}, {"id": "coagulacao", "type": "select", "label": "Coagulação (Plaquetas x10³/µL)", "description": "Contagem de plaquetas.", "defaultValue": 0, "options": [{"value": 0, "label": "≥ 150", "score": 0}, {"value": 1, "label": "100 a 149", "score": 1}, {"value": 2, "label": "50 a 99", "score": 2}, {"value": 3, "label": "20 a 49", "score": 3}, {"value": 4, "label": "Menor que 20", "score": 4}]}, {"id": "hepatico", "type": "select", "label": "Sistema Hepático (Bilirrubina mg/dL)", "description": "Valor da bilirrubina total sérica.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor que 1,2", "score": 0}, {"value": 1, "label": "1,2 a 1,9", "score": 1}, {"value": 2, "label": "2,0 a 5,9", "score": 2}, {"value": 3, "label": "6,0 a 11,9", "score": 3}, {"value": 4, "label": "Maior que 12,0", "score": 4}]}, {"id": "cardiovascular", "type": "select", "label": "Sistema Cardiovascular", "description": "Pressão arterial média (PAM) e necessidade de vasopressores.", "defaultValue": 0, "options": [{"value": 0, "label": "PAM ≥ 70 mmHg", "score": 0}, {"value": 1, "label": "PAM < 70 mmHg, Sem Vasopressor", "score": 1}, {"value": 2, "label": "Dopamina ≤ 5 ou Dobutamina (Qualquer Dose)", "score": 2}, {"value": 3, "label": "Dopamina > 5, ou Epinefrina/Norepinefrina ≤ 0,1 mcg/kg/min", "score": 3}, {"value": 4, "label": "Dopamina > 15, ou Epinefrina/Norepinefrina > 0,1 mcg/kg/min", "score": 4}]}, {"id": "neurologico", "type": "select", "label": "Sistema Neurológico (Escala de Glasgow)", "description": "Pontuação na Escala de Coma de Glasgow.", "defaultValue": 0, "options": [{"value": 0, "label": "15", "score": 0}, {"value": 1, "label": "13 a 14", "score": 1}, {"value": 2, "label": "10 a 12", "score": 2}, {"value": 3, "label": "6 a 9", "score": 3}, {"value": 4, "label": "Menor que 6", "score": 4}]}, {"id": "renal", "type": "select", "label": "Sistema Renal (Creatinina mg/dL ou Débito Urinário)", "description": "Valor da creatinina sérica ou débito urinário nas últimas 24h.", "defaultValue": 0, "options": [{"value": 0, "label": "Creatinina < 1,2", "score": 0}, {"value": 1, "label": "Creatinina 1,2 a 1,9", "score": 1}, {"value": 2, "label": "Creatinina 2,0 a 3,4", "score": 2}, {"value": 3, "label": "Creatinina 3,5 a 4,9 ou Débito Urinário < 500 mL/dia", "score": 3}, {"value": 4, "label": "Creatinina > 5,0 ou Débito Urinário < 200 mL/dia", "score": 4}]}], "formula": {"type": "sum", "resultLabel": "SOFA Score", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 6, "label": "Disfunção Orgânica Leve", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Disfunção orgânica leve, associada a menor risco de mortalidade em relação a escores mais elevados.", "recommendations": "• Manter monitorização contínua em UTI\n• Reavaliar o escore diariamente para acompanhar tendência"}, {"min": 7, "max": 9, "label": "Disfunção Orgânica Moderada", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Disfunção orgânica moderada, com risco intermediário de mortalidade.", "recommendations": "• Intensificar monitorização e suporte de órgãos conforme necessário\n• Reavaliar diariamente a tendência do escore\n• Investigar e tratar causas de base"}, {"min": 10, "max": 12, "label": "Disfunção Orgânica Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Disfunção orgânica grave, com risco elevado de mortalidade.", "recommendations": "• Suporte intensivo de múltiplos órgãos\n• Reavaliação frequente e discussão multiprofissional\n• Otimizar tratamento da causa de base"}, {"min": 13, "max": 24, "label": "Disfunção Orgânica Muito Grave", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Disfunção orgânica muito grave (falência de múltiplos órgãos), associada a risco muito elevado de mortalidade.", "recommendations": "• Suporte intensivo máximo de múltiplos órgãos\n• Discussão multiprofissional sobre prognóstico e objetivos de cuidado\n• Reavaliação contínua da tendência do escore ao longo do tempo"}]}, "sae": {"nanda": [{"diagnosis": "Débito cardíaco diminuído", "definition": "Quantidade inadequada de sangue bombeada pelo coração para atender às demandas metabólicas do corpo."}, {"diagnosis": "Troca de gases prejudicada", "definition": "Excesso ou déficit na oxigenação e/ou eliminação de dióxido de carbono na membrana alvéolo-capilar."}, {"diagnosis": "Risco de função hepática prejudicada", "definition": "Risco de diminuição da função hepática, que pode comprometer a saúde."}, {"diagnosis": "Risco de perfusão renal ineficaz", "definition": "Risco de diminuição da circulação sanguínea renal, que pode comprometer a saúde."}], "noc": [{"outcome": "Gravidade da disfunção de múltiplos órgãos", "indicators": ["Estabilidade hemodinâmica", "Função renal preservada ou em recuperação", "Oxigenação adequada", "Nível de consciência adequado ao quadro clínico"]}], "nic": [{"intervention": "Monitorização multissistêmica", "activities": ["Calcular o SOFA Score diariamente para acompanhar a tendência da disfunção orgânica", "Monitorar parâmetros hemodinâmicos, respiratórios, renais e neurológicos continuamente", "Comunicar piora do escore imediatamente à equipe médica", "Colaborar no suporte de múltiplos órgãos conforme prescrição (ventilação mecânica, vasopressores, terapia renal substitutiva)"]}]}, "evidence": {"foundation": "O SOFA Score foi desenvolvido por Vincent e colaboradores em 1996, sob patrocínio da European Society of Intensive Care Medicine, avaliando 6 sistemas orgânicos (respiratório, coagulação, hepático, cardiovascular, neurológico e renal), cada um pontuado de 0 a 4, para quantificar objetivamente o grau de disfunção orgânica em pacientes críticos.", "history": "Amplamente utilizado em unidades de terapia intensiva para acompanhamento seriado da gravidade do paciente crítico, sendo também um componente central na definição atual de sepse (Sepsis-3, 2016), que define sepse como disfunção orgânica com aumento de 2 ou mais pontos no SOFA associado a infecção.", "validation": "Validado extensivamente na literatura de terapia intensiva, com boa correlação entre o escore (e sua variação ao longo do tempo) e a mortalidade hospitalar.", "limitations": "A tendência do escore ao longo do tempo (aumento ou diminuição) é tão ou mais importante clinicamente do que o valor isolado em um único momento. O cálculo requer disponibilidade de diversos exames laboratoriais.", "references": [{"text": "VINCENT, J. L. et al. The SOFA (Sepsis-related Organ Failure Assessment) score to describe organ dysfunction/failure. Intensive Care Medicine, v. 22, n. 7, p. 707-710, 1996."}, {"text": "SINGER, M. et al. The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). JAMA, v. 315, n. 8, p. 801-810, 2016."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Reavalie o SOFA Score diariamente para acompanhar a tendência da disfunção orgânica, não apenas o valor isolado.", "Um aumento de 2 pontos ou mais no SOFA, associado a infecção suspeita ou confirmada, é um dos critérios da definição atual de sepse (Sepsis-3).", "O SOFA requer exames laboratoriais (plaquetas, bilirrubina, creatinina) além de parâmetros clínicos — planeje a coleta de exames para permitir o cálculo completo.", "Combine sempre com o julgamento clínico e a avaliação da causa de base do quadro crítico."], "examples": [{"label": "Disfunção leve", "sublabel": "SOFA 3", "emoji": "✅", "values": {"respiratorio": 1, "coagulacao": 0, "hepatico": 0, "cardiovascular": 1, "neurologico": 1, "renal": 0}}, {"label": "Disfunção moderada", "sublabel": "SOFA 8", "emoji": "⚠️", "values": {"respiratorio": 2, "coagulacao": 1, "hepatico": 1, "cardiovascular": 2, "neurologico": 1, "renal": 1}}, {"label": "Falência de múltiplos órgãos", "sublabel": "SOFA 18", "emoji": "🚨", "values": {"respiratorio": 4, "coagulacao": 3, "hepatico": 3, "cardiovascular": 3, "neurologico": 3, "renal": 2}}], "quiz": [{"q": "Quantos sistemas orgânicos compõem o SOFA Score?", "opts": ["4", "5", "6", "7"], "correct": 2, "expl": "O SOFA avalia 6 sistemas: respiratório, coagulação, hepático, cardiovascular, neurológico e renal."}, {"q": "Qual a importância da variação do SOFA Score ao longo do tempo?", "opts": ["Não tem importância clínica", "É tão ou mais importante que o valor isolado, indicando piora ou melhora da disfunção orgânica", "Só importa nas primeiras 24 horas", "É usado apenas para fins administrativos"], "correct": 1, "expl": "A tendência do SOFA Score (aumento ou diminuição ao longo dos dias) reflete a evolução da disfunção orgânica e tem forte relação com o prognóstico do paciente."}, {"q": "O SOFA Score está relacionado à definição atual de sepse?", "opts": ["Não, são conceitos independentes", "Sim, um aumento de 2 pontos ou mais associado a infecção é critério da definição Sepsis-3", "Sim, mas apenas em pacientes pediátricos", "Não, a sepse é definida apenas por hemocultura positiva"], "correct": 1, "expl": "Segundo a definição Sepsis-3 (2016), sepse é definida como disfunção orgânica com aumento de 2 pontos ou mais no SOFA Score associado a infecção suspeita ou confirmada."}]}, "faq": [{"q": "O SOFA Score substitui o APACHE II?", "a": "Não. São ferramentas complementares. O APACHE II é calculado geralmente uma vez, nas primeiras 24h de UTI, para estimar risco de mortalidade, enquanto o SOFA é recalculado diariamente para acompanhar a evolução da disfunção orgânica ao longo da internação."}, {"q": "É possível calcular o SOFA sem todos os exames laboratoriais disponíveis?", "a": "O cálculo completo requer os 6 parâmetros. Na ausência de algum exame, alguns serviços utilizam o último valor disponível ou consideram o item como normal (0 pontos), mas isso pode subestimar a gravidade real — o ideal é sempre buscar os exames completos."}], "about": {"title": "Como funciona o SOFA Score", "html": "<p>O SOFA Score soma pontos de 6 sistemas orgânicos — respiratório, coagulação, hepático, cardiovascular, neurológico e renal —, cada um pontuado de 0 a 4, totalizando de 0 a 24 pontos. É recalculado diariamente para acompanhar a evolução da disfunção orgânica do paciente crítico.</p><p><strong>Guia rápido:</strong> 0-6 = Leve | 7-9 = Moderada | 10-12 = Grave | ≥13 = Muito grave (falência de múltiplos órgãos).</p>"}}</script>
+</body></html>

@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="waterlow">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -251,8 +261,7 @@
                     <span class="formula-cap">Escore de Waterlow</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -281,10 +290,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -485,14 +562,15 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;constituicao&quot;: 0, &quot;continencia&quot;: 0, &quot;tipo_pele&quot;: 0, &quot;mobilidade&quot;: 0, &quot;sexo&quot;: 1, &quot;faixa_etaria&quot;: 1, &quot;apetite&quot;: 0, &quot;fatores_especiais&quot;: 0}'>Paciente sem fatores de risco <span class="p-sub">Waterlow 3</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;constituicao&quot;: 3, &quot;continencia&quot;: 2, &quot;tipo_pele&quot;: 1, &quot;mobilidade&quot;: 3, &quot;sexo&quot;: 2, &quot;faixa_etaria&quot;: 4, &quot;apetite&quot;: 1, &quot;fatores_especiais&quot;: 0}'>Idoso com múltiplos fatores <span class="p-sub">Waterlow 16</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;constituicao&quot;: 3, &quot;continencia&quot;: 3, &quot;tipo_pele&quot;: 2, &quot;mobilidade&quot;: 4, &quot;sexo&quot;: 2, &quot;faixa_etaria&quot;: 3, &quot;apetite&quot;: 2, &quot;fatores_especiais&quot;: 5}'>Risco muito alto, pós-cirúrgico <span class="p-sub">Waterlow 24</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Constituição Corporal / IMC</label>
-              <select class="field-select" data-calc-input="constituicao" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Média (IMC 20-24,9)</option><option value="1">Acima da Média (IMC 25-29,9)</option><option value="2">Obeso (IMC ≥ 30)</option><option value="3">Abaixo da Média (IMC &lt; 20)</option></select></div><div class="urg-field"><label>Continência</label>
-              <select class="field-select" data-calc-input="continencia" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Completa / Cateterizado</option><option value="1">Incontinência Urinária Ocasional</option><option value="2">Cateter / Incontinência Fecal</option><option value="3">Incontinência Urinária e Fecal (Dupla)</option></select></div><div class="urg-field"><label>Tipo de Pele / Áreas de Risco Visual</label>
-              <select class="field-select" data-calc-input="tipo_pele" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Saudável</option><option value="1">Fina / Ressecada / Edemaciada / Úmida (Febril)</option><option value="2">Descolorida (Estágio 1)</option><option value="3">Lesão Aberta / Fissura (Estágio 2 a 4)</option></select></div><div class="urg-field"><label>Mobilidade</label>
-              <select class="field-select" data-calc-input="mobilidade" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Completa</option><option value="1">Inquieto / Agitado</option><option value="2">Apático</option><option value="3">Restrito</option><option value="4">Em Tração / Leito-Cadeira / Imóvel</option></select></div><div class="urg-field"><label>Sexo</label>
-              <select class="field-select" data-calc-input="sexo" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Masculino</option><option value="2">Feminino</option></select></div><div class="urg-field"><label>Faixa Etária</label>
-              <select class="field-select" data-calc-input="faixa_etaria" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>14 a 49 Anos</option><option value="2">50 a 64 Anos</option><option value="3">65 a 74 Anos</option><option value="4">75 a 80 Anos</option><option value="5">81 Anos ou Mais</option></select></div><div class="urg-field"><label>Apetite</label>
-              <select class="field-select" data-calc-input="apetite" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Médio (Bom)</option><option value="1">Pobre</option><option value="2">Alimentação por Sonda / Apenas Líquidos</option><option value="3">Anorexia / Jejum</option></select></div><div class="urg-field"><label>Fatores de Risco Especiais</label>
-              <select class="field-select" data-calc-input="fatores_especiais" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Nenhum Fator Especial</option><option value="2">Tabagismo / Anemia</option><option value="5">Doença Vascular Periférica / Cirurgia ou Trauma de Grande Porte</option><option value="6">Déficit Neurológico (AVC, Diabetes, Paraplegia)</option><option value="8">Falência de Múltiplos Órgãos / Caquexia Terminal</option></select></div></div>
+              <select class="field-select" data-calc-input="constituicao"><option value="0" selected>Média (IMC 20-24,9)</option><option value="1">Acima da Média (IMC 25-29,9)</option><option value="2">Obeso (IMC ≥ 30)</option><option value="3">Abaixo da Média (IMC &lt; 20)</option></select></div><div class="urg-field"><label>Continência</label>
+              <select class="field-select" data-calc-input="continencia"><option value="0" selected>Completa / Cateterizado</option><option value="1">Incontinência Urinária Ocasional</option><option value="2">Cateter / Incontinência Fecal</option><option value="3">Incontinência Urinária e Fecal (Dupla)</option></select></div><div class="urg-field"><label>Tipo de Pele / Áreas de Risco Visual</label>
+              <select class="field-select" data-calc-input="tipo_pele"><option value="0" selected>Saudável</option><option value="1">Fina / Ressecada / Edemaciada / Úmida (Febril)</option><option value="2">Descolorida (Estágio 1)</option><option value="3">Lesão Aberta / Fissura (Estágio 2 a 4)</option></select></div><div class="urg-field"><label>Mobilidade</label>
+              <select class="field-select" data-calc-input="mobilidade"><option value="0" selected>Completa</option><option value="1">Inquieto / Agitado</option><option value="2">Apático</option><option value="3">Restrito</option><option value="4">Em Tração / Leito-Cadeira / Imóvel</option></select></div><div class="urg-field"><label>Sexo</label>
+              <select class="field-select" data-calc-input="sexo"><option value="1" selected>Masculino</option><option value="2">Feminino</option></select></div><div class="urg-field"><label>Faixa Etária</label>
+              <select class="field-select" data-calc-input="faixa_etaria"><option value="1" selected>14 a 49 Anos</option><option value="2">50 a 64 Anos</option><option value="3">65 a 74 Anos</option><option value="4">75 a 80 Anos</option><option value="5">81 Anos ou Mais</option></select></div><div class="urg-field"><label>Apetite</label>
+              <select class="field-select" data-calc-input="apetite"><option value="0" selected>Médio (Bom)</option><option value="1">Pobre</option><option value="2">Alimentação por Sonda / Apenas Líquidos</option><option value="3">Anorexia / Jejum</option></select></div><div class="urg-field"><label>Fatores de Risco Especiais</label>
+              <select class="field-select" data-calc-input="fatores_especiais"><option value="0" selected>Nenhum Fator Especial</option><option value="2">Tabagismo / Anemia</option><option value="5">Doença Vascular Periférica / Cirurgia ou Trauma de Grande Porte</option><option value="6">Déficit Neurológico (AVC, Diabetes, Paraplegia)</option><option value="8">Falência de Múltiplos Órgãos / Caquexia Terminal</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">2</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Risco</span>
@@ -533,14 +611,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -549,45 +627,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Sem Risco</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:40%; background:#2563eb"></div></div>
-              <span class="dist-pct">40%</span></div><div class="dist-row"><span class="dist-label">Risco</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:30%; background:#ca8a04"></div></div>
-              <span class="dist-pct">30%</span></div><div class="dist-row"><span class="dist-label">Alto Risco</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#dc2626"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Risco Muito Alto</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#7f1d1d"></div></div>
-              <span class="dist-pct">10%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escala de Waterlow</td><td>2 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escala de Waterlow</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escala de Waterlow</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a Escala de Waterlow</h2>
           <p>A Escala de Waterlow soma pontos de múltiplos domínios — constituição corporal, continência, tipo de pele, mobilidade, sexo, idade, apetite e fatores de risco especiais — para estimar o risco de desenvolvimento de lesão por pressão.</p><p><strong>Guia rápido:</strong> 0-9 = Sem risco | 10-14 = Risco | 15-19 = Alto risco | ≥20 = Risco muito alto.</p>
@@ -599,45 +672,22 @@
               <p>Recomenda-se reavaliação na admissão, a cada mudança significativa do estado clínico e conforme a frequência definida pelo protocolo institucional (geralmente diária em pacientes de risco).</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -695,14 +745,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "d7e8f950-7182-4940-6273-8f9507182940", "code": "SCALE-WATERLOW-001", "slug": "waterlow", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Waterlow - Risco de Lesão por Pressão", "description": "Calcule a Escala de Waterlow para avaliação do risco de lesão por pressão, considerando constituição corporal, continência, pele, mobilidade e fatores especiais.", "canonical": "https://www.calculadorasdeenfermagem.com.br/waterlow.html"}, "breadcrumb": {"category": "Cuidados com a Pele", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Waterlow", "acronym": "Waterlow", "categoryBadge": "Cuidados com a pele", "icon": "i-leaf", "objective": "Avaliar o risco de desenvolvimento de lesão por pressão, considerando constituição corporal, continência, tipo de pele, mobilidade, sexo, idade, apetite e fatores de risco especiais.", "indication": "Indicada na admissão hospitalar e periodicamente conforme protocolo institucional, como alternativa ou complemento à Escala de Braden.", "targetPopulation": "Pacientes adultos hospitalizados, especialmente em unidades cirúrgicas, ortopédicas e de terapia intensiva.", "specialty": ["Enfermagem", "Estomaterapia", "Cuidados com a Pele"], "averageTime": "3-5 minutos", "evidenceLevel": "II", "originalAuthors": ["Judy Waterlow"], "complexity": "advanced", "rating": 4.4, "ratingCount": 220}, "calculator": {"inputs": [{"id": "constituicao", "type": "select", "label": "Constituição Corporal / IMC", "description": "Relação peso/altura (IMC) do paciente.", "defaultValue": 0, "options": [{"value": 0, "label": "Média (IMC 20-24,9)", "score": 0}, {"value": 1, "label": "Acima da Média (IMC 25-29,9)", "score": 1}, {"value": 2, "label": "Obeso (IMC ≥ 30)", "score": 2}, {"value": 3, "label": "Abaixo da Média (IMC < 20)", "score": 3}]}, {"id": "continencia", "type": "select", "label": "Continência", "description": "Controle esfincteriano urinário e fecal.", "defaultValue": 0, "options": [{"value": 0, "label": "Completa / Cateterizado", "score": 0}, {"value": 1, "label": "Incontinência Urinária Ocasional", "score": 1}, {"value": 2, "label": "Cateter / Incontinência Fecal", "score": 2}, {"value": 3, "label": "Incontinência Urinária e Fecal (Dupla)", "score": 3}]}, {"id": "tipo_pele", "type": "select", "label": "Tipo de Pele / Áreas de Risco Visual", "description": "Aspecto da pele e presença de sinais visíveis de dano tecidual.", "defaultValue": 0, "options": [{"value": 0, "label": "Saudável", "score": 0}, {"value": 1, "label": "Fina / Ressecada / Edemaciada / Úmida (Febril)", "score": 1}, {"value": 2, "label": "Descolorida (Estágio 1)", "score": 2}, {"value": 3, "label": "Lesão Aberta / Fissura (Estágio 2 a 4)", "score": 3}]}, {"id": "mobilidade", "type": "select", "label": "Mobilidade", "description": "Capacidade de se movimentar de forma independente.", "defaultValue": 0, "options": [{"value": 0, "label": "Completa", "score": 0}, {"value": 1, "label": "Inquieto / Agitado", "score": 1}, {"value": 2, "label": "Apático", "score": 2}, {"value": 3, "label": "Restrito", "score": 3}, {"value": 4, "label": "Em Tração / Leito-Cadeira / Imóvel", "score": 4}]}, {"id": "sexo", "type": "select", "label": "Sexo", "description": "Sexo biológico do paciente.", "defaultValue": 1, "options": [{"value": 1, "label": "Masculino", "score": 1}, {"value": 2, "label": "Feminino", "score": 2}]}, {"id": "faixa_etaria", "type": "select", "label": "Faixa Etária", "description": "Idade do paciente em anos completos.", "defaultValue": 1, "options": [{"value": 1, "label": "14 a 49 Anos", "score": 1}, {"value": 2, "label": "50 a 64 Anos", "score": 2}, {"value": 3, "label": "65 a 74 Anos", "score": 3}, {"value": 4, "label": "75 a 80 Anos", "score": 4}, {"value": 5, "label": "81 Anos ou Mais", "score": 5}]}, {"id": "apetite", "type": "select", "label": "Apetite", "description": "Padrão alimentar e ingesta atual do paciente.", "defaultValue": 0, "options": [{"value": 0, "label": "Médio (Bom)", "score": 0}, {"value": 1, "label": "Pobre", "score": 1}, {"value": 2, "label": "Alimentação por Sonda / Apenas Líquidos", "score": 2}, {"value": 3, "label": "Anorexia / Jejum", "score": 3}]}, {"id": "fatores_especiais", "type": "select", "label": "Fatores de Risco Especiais", "description": "Selecione o fator de risco especial mais relevante presente (desnutrição tecidual, déficit neurológico, cirurgia/trauma de grande porte ou medicação de risco).", "defaultValue": 0, "options": [{"value": 0, "label": "Nenhum Fator Especial", "score": 0}, {"value": 2, "label": "Tabagismo / Anemia", "score": 2}, {"value": 5, "label": "Doença Vascular Periférica / Cirurgia ou Trauma de Grande Porte", "score": 5}, {"value": 6, "label": "Déficit Neurológico (AVC, Diabetes, Paraplegia)", "score": 6}, {"value": 8, "label": "Falência de Múltiplos Órgãos / Caquexia Terminal", "score": 8}]}], "formula": {"type": "sum", "resultLabel": "Escore de Waterlow", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 9, "label": "Sem Risco", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Baixo risco de desenvolvimento de lesão por pressão segundo os critérios avaliados.", "recommendations": "• Manter cuidados de rotina com a pele\n• Reavaliar conforme protocolo institucional"}, {"min": 10, "max": 14, "label": "Risco", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Presença de risco para desenvolvimento de lesão por pressão.", "recommendations": "• Iniciar medidas preventivas básicas\n• Reposicionamento regular\n• Reavaliação frequente da pele"}, {"min": 15, "max": 19, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alto risco de desenvolvimento de lesão por pressão.", "recommendations": "• Implementar protocolo intensivo de prevenção\n• Considerar superfície de suporte especial\n• Reposicionamento frequente e sistemático\n• Reavaliação diária da pele"}, {"min": 20, "max": 99, "label": "Risco Muito Alto", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Risco muito alto de desenvolvimento de lesão por pressão, exigindo medidas preventivas máximas.", "recommendations": "• Superfície de suporte especializada (colchão de alta especificação)\n• Reposicionamento rigoroso e frequente\n• Avaliação multiprofissional (nutrição, estomaterapia)\n• Reavaliação a cada turno"}]}, "sae": {"nanda": [{"diagnosis": "Risco de integridade da pele prejudicada", "definition": "Suscetibilidade a alteração na epiderme e/ou derme, que pode comprometer a saúde."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."}, {"diagnosis": "Nutrição desequilibrada: menos do que as necessidades corporais", "definition": "Ingestão de nutrientes insuficiente para atender às necessidades metabólicas."}], "noc": [{"outcome": "Integridade tissular: pele e mucosas", "indicators": ["Ausência de lesão por pressão", "Perfusão tissular adequada", "Hidratação da pele adequada"]}], "nic": [{"intervention": "Prevenção de lesão por pressão", "activities": ["Aplicar escala validada de risco (Waterlow)", "Reposicionar o paciente conforme risco identificado", "Utilizar superfícies de suporte especializadas quando indicado", "Manter a pele limpa e hidratada", "Avaliar e otimizar o estado nutricional"]}]}, "evidence": {"foundation": "A Escala de Waterlow foi desenvolvida por Judy Waterlow no Reino Unido, avaliando múltiplos domínios de risco para lesão por pressão: constituição corporal, continência, tipo de pele, mobilidade, sexo, idade, apetite e fatores de risco especiais (desnutrição tecidual, déficit neurológico, cirurgia/trauma de grande porte e medicações de risco).", "history": "Amplamente utilizada em serviços de saúde no Reino Unido e em outros países como alternativa ou complemento à Escala de Braden, sendo considerada mais abrangente por incluir fatores de risco especiais frequentemente não contemplados em outras escalas.", "validation": "Estudos de validação mostram boa sensibilidade, embora com especificidade variável conforme a população estudada, sendo uma ferramenta amplamente utilizada na prática clínica europeia.", "limitations": "Por ser mais complexa que a Escala de Braden, com múltiplos subdomínios (incluindo fatores especiais combinados nesta calculadora em uma única seleção simplificada), pode apresentar maior variabilidade na aplicação entre diferentes avaliadores sem treinamento adequado.", "references": [{"text": "WATERLOW, J. Pressure sores: a risk assessment card. Nursing Times, v. 81, n. 48, p. 49-55, 1985."}, {"text": "WATERLOW, J. Waterlow Pressure Ulcer Prevention/Treatment Policy. Revised 2005."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["A Escala de Waterlow inclui fatores de risco especiais (desnutrição tecidual, déficit neurológico, cirurgia de grande porte) não contemplados diretamente pela Escala de Braden.", "Reavalie a pele do paciente a cada mudança de decúbito, independentemente do escore calculado.", "Combine a avaliação de risco com o exame físico completo da pele, especialmente em proeminências ósseas.", "A escolha entre Waterlow e Braden costuma depender do protocolo institucional vigente."], "examples": [{"label": "Paciente sem fatores de risco", "sublabel": "Waterlow 3", "emoji": "✅", "values": {"constituicao": 0, "continencia": 0, "tipo_pele": 0, "mobilidade": 0, "sexo": 1, "faixa_etaria": 1, "apetite": 0, "fatores_especiais": 0}}, {"label": "Idoso com múltiplos fatores", "sublabel": "Waterlow 16", "emoji": "⚠️", "values": {"constituicao": 3, "continencia": 2, "tipo_pele": 1, "mobilidade": 3, "sexo": 2, "faixa_etaria": 4, "apetite": 1, "fatores_especiais": 0}}, {"label": "Risco muito alto, pós-cirúrgico", "sublabel": "Waterlow 24", "emoji": "🚨", "values": {"constituicao": 3, "continencia": 3, "tipo_pele": 2, "mobilidade": 4, "sexo": 2, "faixa_etaria": 3, "apetite": 2, "fatores_especiais": 5}}], "quiz": [{"q": "Quais fatores de risco especiais são exclusivos da Escala de Waterlow em relação à Braden?", "opts": ["Mobilidade e nutrição", "Desnutrição tecidual, déficit neurológico, cirurgia/trauma de grande porte e medicações de risco", "Idade e sexo apenas", "Não há diferença entre as escalas"], "correct": 1, "expl": "A Waterlow inclui uma seção específica de fatores de risco especiais (desnutrição tecidual, déficit neurológico, cirurgia/trauma de grande porte, medicações de risco) que não são contemplados diretamente pela Escala de Braden."}, {"q": "A partir de qual pontuação o Waterlow indica risco muito alto?", "opts": ["10 pontos", "15 pontos", "20 pontos ou mais", "5 pontos"], "correct": 2, "expl": "Escores de 20 pontos ou mais classificam o paciente como risco muito alto na Escala de Waterlow."}, {"q": "A Escala de Waterlow foi desenvolvida em qual país?", "opts": ["Estados Unidos", "Brasil", "Reino Unido", "Alemanha"], "correct": 2, "expl": "A Escala de Waterlow foi desenvolvida por Judy Waterlow no Reino Unido, sendo amplamente utilizada em serviços de saúde europeus."}]}, "faq": [{"q": "Devo usar Waterlow ou Braden?", "a": "Ambas são escalas validadas para avaliação de risco de lesão por pressão. A escolha geralmente segue o protocolo institucional vigente. A Waterlow tende a ser mais sensível (identifica mais pacientes em risco), enquanto a Braden é mais amplamente estudada e utilizada internacionalmente."}, {"q": "Com que frequência a Escala de Waterlow deve ser reaplicada?", "a": "Recomenda-se reavaliação na admissão, a cada mudança significativa do estado clínico e conforme a frequência definida pelo protocolo institucional (geralmente diária em pacientes de risco)."}], "about": {"title": "Como funciona a Escala de Waterlow", "html": "<p>A Escala de Waterlow soma pontos de múltiplos domínios — constituição corporal, continência, tipo de pele, mobilidade, sexo, idade, apetite e fatores de risco especiais — para estimar o risco de desenvolvimento de lesão por pressão.</p><p><strong>Guia rápido:</strong> 0-9 = Sem risco | 10-14 = Risco | 15-19 = Alto risco | ≥20 = Risco muito alto.</p>"}}</script>
+</body></html>

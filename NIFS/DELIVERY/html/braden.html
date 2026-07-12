@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="escala-de-braden">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -225,8 +235,7 @@
                     <span class="formula-cap">Score de Braden</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -256,10 +265,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -430,12 +507,13 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;perception&quot;: 1, &quot;moisture&quot;: 1, &quot;activity&quot;: 1, &quot;mobility&quot;: 1, &quot;nutrition&quot;: 2, &quot;friction&quot;: 1}'>Paciente crítico UTI <span class="p-sub">Sedado, imóvel</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;perception&quot;: 3, &quot;moisture&quot;: 3, &quot;activity&quot;: 2, &quot;mobility&quot;: 2, &quot;nutrition&quot;: 3, &quot;friction&quot;: 2}'>Pós-operatório <span class="p-sub">Mobilidade reduzida</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;perception&quot;: 2, &quot;moisture&quot;: 2, &quot;activity&quot;: 1, &quot;mobility&quot;: 2, &quot;nutrition&quot;: 2, &quot;friction&quot;: 2}'>Idoso acamado <span class="p-sub">Nutrição comprometida</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;perception&quot;: 4, &quot;moisture&quot;: 4, &quot;activity&quot;: 4, &quot;mobility&quot;: 4, &quot;nutrition&quot;: 4, &quot;friction&quot;: 3}'>Paciente estável <span class="p-sub">Deambulando</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Percepção Sensorial</label>
-              <select class="field-select" data-calc-input="perception" style="background:rgba(255,255,255,.07);border-"><option value="1">Completamente Limitada</option><option value="2">Muito Limitada</option><option value="3" selected>Levemente Limitada</option><option value="4">Nenhuma Limitação</option></select></div><div class="urg-field"><label>Umidade</label>
-              <select class="field-select" data-calc-input="moisture" style="background:rgba(255,255,255,.07);border-"><option value="1">Constantemente Úmida</option><option value="2">Muito Úmida</option><option value="3" selected>Ocasionalmente Úmida</option><option value="4">Raramente Úmida</option></select></div><div class="urg-field"><label>Atividade</label>
-              <select class="field-select" data-calc-input="activity" style="background:rgba(255,255,255,.07);border-"><option value="1">Acamado</option><option value="2">Confinado à Cadeira</option><option value="3" selected>Anda Ocasionalmente</option><option value="4">Anda Frequentemente</option></select></div><div class="urg-field"><label>Mobilidade</label>
-              <select class="field-select" data-calc-input="mobility" style="background:rgba(255,255,255,.07);border-"><option value="1">Completamente Imóvel</option><option value="2">Muito Limitada</option><option value="3" selected>Levemente Limitada</option><option value="4">Nenhuma Limitação</option></select></div><div class="urg-field"><label>Nutrição</label>
-              <select class="field-select" data-calc-input="nutrition" style="background:rgba(255,255,255,.07);border-"><option value="1">Muito Pobre</option><option value="2">Provavelmente Inadequada</option><option value="3" selected>Adequada</option><option value="4">Excelente</option></select></div><div class="urg-field"><label>Fricção e Cisalhamento</label>
-              <select class="field-select" data-calc-input="friction" style="background:rgba(255,255,255,.07);border-"><option value="1">Problema</option><option value="2">Problema Potencial</option><option value="3" selected>Nenhum Problema Aparente</option></select></div></div>
+              <select class="field-select" data-calc-input="perception"><option value="1">Completamente Limitada</option><option value="2">Muito Limitada</option><option value="3" selected>Levemente Limitada</option><option value="4">Nenhuma Limitação</option></select></div><div class="urg-field"><label>Umidade</label>
+              <select class="field-select" data-calc-input="moisture"><option value="1">Constantemente Úmida</option><option value="2">Muito Úmida</option><option value="3" selected>Ocasionalmente Úmida</option><option value="4">Raramente Úmida</option></select></div><div class="urg-field"><label>Atividade</label>
+              <select class="field-select" data-calc-input="activity"><option value="1">Acamado</option><option value="2">Confinado à Cadeira</option><option value="3" selected>Anda Ocasionalmente</option><option value="4">Anda Frequentemente</option></select></div><div class="urg-field"><label>Mobilidade</label>
+              <select class="field-select" data-calc-input="mobility"><option value="1">Completamente Imóvel</option><option value="2">Muito Limitada</option><option value="3" selected>Levemente Limitada</option><option value="4">Nenhuma Limitação</option></select></div><div class="urg-field"><label>Nutrição</label>
+              <select class="field-select" data-calc-input="nutrition"><option value="1">Muito Pobre</option><option value="2">Provavelmente Inadequada</option><option value="3" selected>Adequada</option><option value="4">Excelente</option></select></div><div class="urg-field"><label>Fricção e Cisalhamento</label>
+              <select class="field-select" data-calc-input="friction"><option value="1">Problema</option><option value="2">Problema Potencial</option><option value="3" selected>Nenhum Problema Aparente</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">18</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Risco Leve</span>
@@ -476,14 +554,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -492,47 +570,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Risco Muito Alto</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#dc2626"></div></div>
-              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Risco Alto</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:27%; background:#ea580c"></div></div>
-              <span class="dist-pct">27%</span></div><div class="dist-row"><span class="dist-label">Risco Moderado</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#ca8a04"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Risco Leve</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:13%; background:#ca8a04"></div></div>
-              <span class="dist-pct">13%</span></div><div class="dist-row"><span class="dist-label">Sem Risco</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:7%; background:#2563eb"></div></div>
-              <span class="dist-pct">7%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escala de Braden</td><td>18 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escala de Braden</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escala de Braden</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a Escala de Braden</h2>
           <p>A Escala de Braden avalia 6 domínios: percepção sensorial, umidade, atividade, mobilidade, nutrição, e fricção/cisalhamento. Score ≤12 = alto risco. Score ≤9 = muito alto risco. Quanto menor o score, maior o risco.</p><p><strong>Guia rápido:</strong> Score ≤9: Muito Alto Risco | 10-12: Alto Risco | 13-14: Moderado | 15-18: Leve | 19-23: Sem Risco. Realignment a cada 2h para risco alto.</p>
@@ -544,45 +615,22 @@
               <p>Risco muito alto: a cada 24h. Alto: a cada 24-48h. Moderado: a cada 48h. Leve: a cada 72h.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="berg.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Escala de Equilíbrio de Berg</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cam.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Método de Avaliação de Confusão</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cornell.html"><div class="icon-wrap"><svg class="icon"><use href="#i-notes-medical"/></svg></div><div><h3>Escala de Cornell para Depressão em Demência</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="downton.html"><div class="icon-wrap"><svg class="icon"><use href="#i-access"/></svg></div><div><h3>Índice de Downton</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ecog.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipboard"/></svg></div><div><h3>ECOG Performance Status</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -615,14 +663,79 @@
   <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><line x1="8" y1="15" x2="16" y2="15"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "550e8400-e29b-41d4-a716-446655440001", "code": "SCALE-BRADEN-001", "slug": "escala-de-braden", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Braden - Risco de Úlcera por Pressão", "description": "Calcule o risco de úlcera por pressão com a Escala de Braden. Inclui interpretação, SAE NANDA/NIC/NOC, segurança do paciente e evidências científicas.", "canonical": "https://www.calculadorasdeenfermagem.com.br/braden.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Braden", "acronym": "Braden", "categoryBadge": "Segurança do paciente", "icon": "i-shieldcheck", "objective": "Avaliar o risco de desenvolvimento de úlcera por pressão em pacientes adultos hospitalizados.", "indication": "Indicada para todos os pacientes hospitalizados, especialmente idosos, imobilizados, com incontinência, desnutridos ou com alterações de sensibilidade.", "targetPopulation": "Pacientes adultos em ambiente hospitalar, clínica e domiciliar.", "specialty": ["Enfermagem Médico-Cirúrgica", "UTI", "Geriatria", "Cuidados Paliativos"], "averageTime": "5-10 minutos", "evidenceLevel": "I", "originalAuthors": ["Barbara Braden", "Nancy Bergstrom"], "organizations": ["National Pressure Ulcer Advisory Panel (NPUAP)", "European Pressure Ulcer Advisory Panel (EPUAP)"], "complexity": "basic", "rating": 4.9, "ratingCount": 860}, "calculator": {"inputs": [{"id": "perception", "type": "select", "label": "Percepção Sensorial", "description": "Capacidade de responder significativamente a pressão relacionada ao desconforto.", "options": [{"value": 1, "label": "Completamente Limitada", "score": 1, "description": "Não responde a estímulos dolorosos. Devido à diminuição do nível de consciência ou sedação."}, {"value": 2, "label": "Muito Limitada", "score": 2, "description": "Responde apenas a estímulos dolorosos. Não pode comunicar desconforto exceto por gemidos ou inquietação."}, {"value": 3, "label": "Levemente Limitada", "score": 3, "description": "Responde a comandos verbais, mas não pode sempre comunicar desconforto ou necessidade de mudança de posição."}, {"value": 4, "label": "Nenhuma Limitação", "score": 4, "description": "Responde a comandos verbais. Tem sensibilidade tática e dolorosa intacta."}], "defaultValue": 3}, {"id": "moisture", "type": "select", "label": "Umidade", "description": "Nível de exposição da pele à umidade.", "options": [{"value": 1, "label": "Constantemente Úmida", "score": 1, "description": "A pele é mantida úmida quase constantemente por suor, urina, etc. A umidade é detectada cada vez que o paciente é movido."}, {"value": 2, "label": "Muito Úmida", "score": 2, "description": "A pele está úmida, mas não constantemente. Pelo menos uma troca de lençol é necessária por turno."}, {"value": 3, "label": "Ocasionalmente Úmida", "score": 3, "description": "A pele está ocasionalmente úmida, exigindo troca de lençol extra aproximadamente uma vez por dia."}, {"value": 4, "label": "Raramente Úmida", "score": 4, "description": "A pele geralmente está seca. Lençóis são trocados apenas de acordo com a rotina."}], "defaultValue": 3}, {"id": "activity", "type": "select", "label": "Atividade", "description": "Grau de mobilidade física.", "options": [{"value": 1, "label": "Acamado", "score": 1, "description": "Confinado à cama."}, {"value": 2, "label": "Confinado à Cadeira", "score": 2, "description": "Capacidade de ambular severamente limitada ou inexistente. Não pode suportar o próprio peso e/ou deve ser assistido para transferência para cadeira."}, {"value": 3, "label": "Anda Ocasionalmente", "score": 3, "description": "Anda ocasionalmente durante o dia, mas por distâncias muito curtas, com ou sem assistência."}, {"value": 4, "label": "Anda Frequentemente", "score": 4, "description": "Anda fora do quarto pelo menos duas vezes por dia e dentro do quarto pelo menos a cada 2 horas durante o período de vigília."}], "defaultValue": 3}, {"id": "mobility", "type": "select", "label": "Mobilidade", "description": "Capacidade de mudar e controlar a posição do corpo.", "options": [{"value": 1, "label": "Completamente Imóvel", "score": 1, "description": "Não realiza mudanças de posição mesmo com assistência."}, {"value": 2, "label": "Muito Limitada", "score": 2, "description": "Realiza mudanças ocasionais de posição, mas incapaz de fazer mudanças frequentes ou significativas."}, {"value": 3, "label": "Levemente Limitada", "score": 3, "description": "Realiza mudanças frequentes, embora pequenas, de posição."}, {"value": 4, "label": "Nenhuma Limitação", "score": 4, "description": "Realiza mudanças grandes e frequentes de posição."}], "defaultValue": 3}, {"id": "nutrition", "type": "select", "label": "Nutrição", "description": "Padrão alimentar habitual.", "options": [{"value": 1, "label": "Muito Pobre", "score": 1, "description": "Nunca come uma refeição completa. Raramente come mais de 1/3 de qualquer alimento oferecido."}, {"value": 2, "label": "Provavelmente Inadequada", "score": 2, "description": "Raramente come uma refeição completa e geralmente come cerca de 1/2 das refeições oferecidas."}, {"value": 3, "label": "Adequada", "score": 3, "description": "Come mais da metade da maioria das refeições. Come um total de 4 porções de proteína por dia."}, {"value": 4, "label": "Excelente", "score": 4, "description": "Come a maioria das refeições. Nunca recusa uma refeição."}], "defaultValue": 3}, {"id": "friction", "type": "select", "label": "Fricção e Cisalhamento", "description": "Problemas de movimentação.", "options": [{"value": 1, "label": "Problema", "score": 1, "description": "Requer assistência moderada a máxima para movimentação. Levantar sem deslizar é impossível."}, {"value": 2, "label": "Problema Potencial", "score": 2, "description": "Movimenta-se com dificuldade ou necessita de mínima assistência. Durante os movimentos, a pele provavelmente desliza contra os lençóis."}, {"value": 3, "label": "Nenhum Problema Aparente", "score": 3, "description": "Movimenta-se no leito e na cadeira de forma independente, com boa força muscular."}], "defaultValue": 3}], "formula": {"type": "sum", "resultLabel": "Score de Braden", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 6, "max": 9, "label": "Risco Muito Alto", "riskLevel": "critical", "color": "#dc2626", "clinicalImplications": "Paciente com alto risco de desenvolver úlcera por pressão. Necessita de protocolo de prevenção intensiva, incluindo realinhamento a cada 2 horas, uso de superfícies de apoio de pressão reduzida, avaliação nutricional e hidratação.", "recommendations": "• Protocolo de prevenção de UP intensivo\n• Realignment a cada 2h\n• Superfície de apoio de pressão alternada\n• Avaliação nutricional diária\n• Hidratação rigorosa\n• Inspeção de pele a cada turno"}, {"min": 10, "max": 12, "label": "Risco Alto", "riskLevel": "high", "color": "#ea580c", "clinicalImplications": "Paciente com alto risco. Implementar protocolo de prevenção com realinhamento a cada 2-3 horas, educação da família e cuidados com a pele.", "recommendations": "• Realignment a cada 2-3h\n• Superfície de apoio de pressão\n• Cuidados com a pele\n• Educação da família"}, {"min": 13, "max": 14, "label": "Risco Moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Risco moderado. Reavaliação diária e cuidados preventivos padrão.", "recommendations": "• Reavaliação diária\n• Cuidados de pele padrão\n• Mobilização precoce"}, {"min": 15, "max": 18, "label": "Risco Leve", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Risco leve. Manter cuidados de pele e reavaliação periódica.", "recommendations": "• Cuidados de pele padrão\n• Reavaliação a cada 48-72h"}, {"min": 19, "max": 23, "label": "Sem Risco", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Paciente sem risco aparente de úlcera por pressão. Manter cuidados de pele de rotina.", "recommendations": "• Cuidados de pele de rotina\n• Reavaliação semanal"}]}, "sae": {"nanda": [{"diagnosis": "Risco de lesão cutânea", "definition": "Vulnerável à alteração da integridade epidérmica e/ou dérmica, que pode comprometer a saúde."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."}], "noc": [{"outcome": "Integridade tecidual: pele e mucosas", "indicators": ["Pele intacta", "Turgor adequado", "Coloração normal", "Sem lesões", "Hidratação adequada"]}, {"outcome": "Mobilidade", "indicators": ["Muda de posição", "Deambula", "Realiza ADMs", "Força muscular preservada"]}], "nic": [{"intervention": "Cuidados com a pele", "activities": ["Inspecionar pele a cada turno", "Manter pele limpa e seca", "Aplicar hidratante", "Utilizar superfície de apoio"]}, {"intervention": "Prevenção de lesão por pressão", "activities": ["Realignment a cada 2h", "Elevar calcanhares", "Evitar fricção", "Avaliar nutrição"]}]}, "evidence": {"foundation": "A Escala de Braden foi desenvolvida em 1987 por Barbara Braden e Nancy Bergstrom. É a escala mais utilizada mundialmente para predição de risco de úlcera por pressão.", "history": "Validada em múltiplas populações e contextos clínicos. Revisada pela NPUAP/EPUAP em diretrizes internacionais.", "validation": "Sensibilidade de 83-100% e especificidade de 64-77% em diversos estudos. Validada para adultos hospitalizados.", "sensitivity": 0.91, "specificity": 0.7, "limitations": "Não validada para pediatria. Pode subestimar risco em pacientes com pele escura. Não considera fatores como idade avançada isoladamente.", "references": [{"text": "BRADEN, B.; BERGSTROM, N. A conceptual schema for the study of the etiology of pressure sores. Rehabilitation Nursing, v. 12, n. 1, p. 8-12, 1987."}, {"text": "EUROPEAN PRESSURE ULCER ADVISORY PANEL; NATIONAL PRESSURE INJURY ADVISORY PANEL; PAN PACIFIC PRESSURE INJURY ALLIANCE. Prevention and Treatment of Pressure Ulcers/Injuries: Clinical Practice Guideline. 3ª ed. EPUAP/NPIAP/PPPIA, 2019."}, {"text": "TEASDALE, G.; JENNETT, B. Assessment of coma and impaired consciousness: a practical scale. The Lancet, v. 304, n. 7872, p. 81-84, 1974."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}, {"text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."}]}, "learning": {"tips": ["Sempre documentar o componente individual de cada domínio, não apenas o score total.", "Em pacientes com incontinência, a umidade geralmente é 1 ou 2.", "Pacientes acamados com boa nutrição podem ter score de 14-16, mas ainda precisam de cuidados."], "examples": [{"label": "Paciente crítico UTI", "sublabel": "Sedado, imóvel", "emoji": "🚨", "values": {"perception": 1, "moisture": 1, "activity": 1, "mobility": 1, "nutrition": 2, "friction": 1}}, {"label": "Pós-operatório", "sublabel": "Mobilidade reduzida", "emoji": "🩹", "values": {"perception": 3, "moisture": 3, "activity": 2, "mobility": 2, "nutrition": 3, "friction": 2}}, {"label": "Idoso acamado", "sublabel": "Nutrição comprometida", "emoji": "🛏️", "values": {"perception": 2, "moisture": 2, "activity": 1, "mobility": 2, "nutrition": 2, "friction": 2}}, {"label": "Paciente estável", "sublabel": "Deambulando", "emoji": "✅", "values": {"perception": 4, "moisture": 4, "activity": 4, "mobility": 4, "nutrition": 4, "friction": 3}}], "quiz": [{"q": "Qual a pontuação mínima possível na Escala de Braden?", "opts": ["4 pontos", "6 pontos", "10 pontos", "0 pontos"], "correct": 1, "expl": "O score mínimo é 6 (1 ponto em cada um dos 6 domínios), indicando risco muito alto."}, {"q": "Um paciente com score 11 na Escala de Braden está em qual faixa de risco?", "opts": ["Sem risco", "Risco leve", "Risco alto", "Risco moderado"], "correct": 2, "expl": "Score entre 10 e 12 corresponde a Risco Alto, exigindo reposicionamento a cada 2-3h."}, {"q": "Para pacientes pediátricos, qual escala deve ser usada em vez da Braden?", "opts": ["Escala de Braden Q", "Escala de Glasgow", "Escala de Morse", "Escala de Norton"], "correct": 0, "expl": "A Escala de Braden não é validada para crianças; usa-se a versão adaptada Braden Q."}]}, "faq": [{"q": "Posso usar a Escala de Braden em pediatria?", "a": "Não. Para pediatria, utilize a Escala de Braden Q, adaptada para crianças."}, {"q": "Com que frequência devo reavaliar?", "a": "Risco muito alto: a cada 24h. Alto: a cada 24-48h. Moderado: a cada 48h. Leve: a cada 72h."}], "about": {"title": "Como funciona a Escala de Braden", "html": "<p>A Escala de Braden avalia 6 domínios: percepção sensorial, umidade, atividade, mobilidade, nutrição, e fricção/cisalhamento. Score ≤12 = alto risco. Score ≤9 = muito alto risco. Quanto menor o score, maior o risco.</p><p><strong>Guia rápido:</strong> Score ≤9: Muito Alto Risco | 10-12: Alto Risco | 13-14: Moderado | 15-18: Leve | 19-23: Sem Risco. Realignment a cada 2h para risco alto.</p>"}}</script>
+</body></html>

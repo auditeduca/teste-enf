@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="child-pugh">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -212,8 +222,7 @@
                     <span class="formula-cap">Escore de Child-Pugh</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -241,10 +250,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -394,11 +471,12 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;bilirrubina&quot;: 1, &quot;albumina&quot;: 1, &quot;inr&quot;: 1, &quot;ascite&quot;: 1, &quot;encefalopatia&quot;: 1}'>Cirrose compensada <span class="p-sub">Classe A (5 pontos)</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;bilirrubina&quot;: 2, &quot;albumina&quot;: 2, &quot;inr&quot;: 1, &quot;ascite&quot;: 2, &quot;encefalopatia&quot;: 1}'>Comprometimento significativo <span class="p-sub">Classe B (8 pontos)</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;bilirrubina&quot;: 3, &quot;albumina&quot;: 3, &quot;inr&quot;: 3, &quot;ascite&quot;: 2, &quot;encefalopatia&quot;: 2}'>Doença descompensada grave <span class="p-sub">Classe C (13 pontos)</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Bilirrubina Total</label>
-              <select class="field-select" data-calc-input="bilirrubina" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>&lt; 2 mg/dL</option><option value="2">2 a 3 mg/dL</option><option value="3">&gt; 3 mg/dL</option></select></div><div class="urg-field"><label>Albumina Sérica</label>
-              <select class="field-select" data-calc-input="albumina" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>&gt; 3,5 g/dL</option><option value="2">2,8 a 3,5 g/dL</option><option value="3">&lt; 2,8 g/dL</option></select></div><div class="urg-field"><label>INR (Tempo de Protrombina)</label>
-              <select class="field-select" data-calc-input="inr" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>&lt; 1,7</option><option value="2">1,7 a 2,3</option><option value="3">&gt; 2,3</option></select></div><div class="urg-field"><label>Ascite</label>
-              <select class="field-select" data-calc-input="ascite" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Ausente</option><option value="2">Leve / Controlada com Medicação</option><option value="3">Moderada a Grave / Refratária ao Tratamento</option></select></div><div class="urg-field"><label>Encefalopatia Hepática</label>
-              <select class="field-select" data-calc-input="encefalopatia" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Ausente</option><option value="2">Grau I-II (Leve a Moderada)</option><option value="3">Grau III-IV (Grave / Coma)</option></select></div></div>
+              <select class="field-select" data-calc-input="bilirrubina"><option value="1" selected>&lt; 2 mg/dL</option><option value="2">2 a 3 mg/dL</option><option value="3">&gt; 3 mg/dL</option></select></div><div class="urg-field"><label>Albumina Sérica</label>
+              <select class="field-select" data-calc-input="albumina"><option value="1" selected>&gt; 3,5 g/dL</option><option value="2">2,8 a 3,5 g/dL</option><option value="3">&lt; 2,8 g/dL</option></select></div><div class="urg-field"><label>INR (Tempo de Protrombina)</label>
+              <select class="field-select" data-calc-input="inr"><option value="1" selected>&lt; 1,7</option><option value="2">1,7 a 2,3</option><option value="3">&gt; 2,3</option></select></div><div class="urg-field"><label>Ascite</label>
+              <select class="field-select" data-calc-input="ascite"><option value="1" selected>Ausente</option><option value="2">Leve / Controlada com Medicação</option><option value="3">Moderada a Grave / Refratária ao Tratamento</option></select></div><div class="urg-field"><label>Encefalopatia Hepática</label>
+              <select class="field-select" data-calc-input="encefalopatia"><option value="1" selected>Ausente</option><option value="2">Grau I-II (Leve a Moderada)</option><option value="3">Grau III-IV (Grave / Coma)</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">5</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Classe A - Doença Compensada</span>
@@ -439,14 +517,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -455,43 +533,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Classe A - Doença Compensada</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:50%; background:#2563eb"></div></div>
-              <span class="dist-pct">50%</span></div><div class="dist-row"><span class="dist-label">Classe B - Comprometimento Funcional Significativo</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#ca8a04"></div></div>
-              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Classe C - Doença Descompensada Grave</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:17%; background:#dc2626"></div></div>
-              <span class="dist-pct">17%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escore de Child-Pugh</td><td>5 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escore de Child-Pugh</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escore de Child-Pugh</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o Escore de Child-Pugh</h2>
           <p>O Escore de Child-Pugh soma a pontuação (1 a 3) de 5 parâmetros: bilirrubina, albumina, INR, ascite e encefalopatia hepática, totalizando de 5 a 15 pontos.</p><p><strong>Guia rápido:</strong> 5-6 = Classe A (compensada) | 7-9 = Classe B (comprometimento significativo) | 10-15 = Classe C (descompensada grave).</p>
@@ -503,45 +578,22 @@
               <p>Não completamente. Diferente da bilirrubina, albumina e INR (medidas laboratoriais objetivas), a classificação de ascite e encefalopatia depende do exame clínico, podendo apresentar alguma variabilidade entre diferentes avaliadores.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -599,14 +651,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "72839405-1628-3940-5162-728394051628", "code": "SCALE-CHILDPUGH-001", "slug": "child-pugh", "version": "1.0.0", "status": "published", "seo": {"title": "Escore de Child-Pugh - Gravidade da Cirrose Hepática", "description": "Calcule o Escore de Child-Pugh para classificar a gravidade da doença hepática crônica (cirrose). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/child-pugh.html"}, "breadcrumb": {"category": "Gastroenterologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escore de Child-Pugh", "acronym": "Child-Pugh", "categoryBadge": "Gastroenterologia", "icon": "i-liver", "objective": "Classificar a gravidade da doença hepática crônica (cirrose) e estimar o prognóstico e o risco cirúrgico, a partir de 5 parâmetros clínicos e laboratoriais.", "indication": "Indicada em pacientes com cirrose hepática, para estratificação de gravidade, prognóstico e avaliação de risco cirúrgico ou necessidade de transplante hepático.", "targetPopulation": "Pacientes adultos com diagnóstico de cirrose hepática ou doença hepática crônica avançada.", "specialty": ["Gastroenterologia", "Hepatologia", "Enfermagem"], "averageTime": "2 minutos", "evidenceLevel": "II", "originalAuthors": ["Charles Child", "Jeremiah Turcotte", "Roger Pugh"], "complexity": "intermediate", "rating": 4.4, "ratingCount": 195}, "calculator": {"inputs": [{"id": "bilirrubina", "type": "select", "label": "Bilirrubina Total", "defaultValue": 1, "description": "Nível sérico de bilirrubina total.", "options": [{"value": 1, "label": "< 2 mg/dL", "score": 1}, {"value": 2, "label": "2 a 3 mg/dL", "score": 2}, {"value": 3, "label": "> 3 mg/dL", "score": 3}]}, {"id": "albumina", "type": "select", "label": "Albumina Sérica", "defaultValue": 1, "description": "Nível sérico de albumina.", "options": [{"value": 1, "label": "> 3,5 g/dL", "score": 1}, {"value": 2, "label": "2,8 a 3,5 g/dL", "score": 2}, {"value": 3, "label": "< 2,8 g/dL", "score": 3}]}, {"id": "inr", "type": "select", "label": "INR (Tempo de Protrombina)", "defaultValue": 1, "description": "Razão Normalizada Internacional (INR) do tempo de protrombina.", "options": [{"value": 1, "label": "< 1,7", "score": 1}, {"value": 2, "label": "1,7 a 2,3", "score": 2}, {"value": 3, "label": "> 2,3", "score": 3}]}, {"id": "ascite", "type": "select", "label": "Ascite", "defaultValue": 1, "description": "Presença e controle de ascite.", "options": [{"value": 1, "label": "Ausente", "score": 1}, {"value": 2, "label": "Leve / Controlada com Medicação", "score": 2}, {"value": 3, "label": "Moderada a Grave / Refratária ao Tratamento", "score": 3}]}, {"id": "encefalopatia", "type": "select", "label": "Encefalopatia Hepática", "defaultValue": 1, "description": "Presença e grau de encefalopatia hepática.", "options": [{"value": 1, "label": "Ausente", "score": 1}, {"value": 2, "label": "Grau I-II (Leve a Moderada)", "score": 2}, {"value": 3, "label": "Grau III-IV (Grave / Coma)", "score": 3}]}], "formula": {"type": "sum", "resultLabel": "Escore de Child-Pugh", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 5, "max": 6, "label": "Classe A - Doença Compensada", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Cirrose compensada (Classe A), associada a melhor prognóstico e menor risco cirúrgico, com sobrevida estimada em 1 ano de aproximadamente 100%.", "recommendations": "• Acompanhamento ambulatorial regular\n• Rastreamento de varizes esofágicas e carcinoma hepatocelular conforme protocolo\n• Orientar sobre abstinência alcoólica e evitar hepatotóxicos"}, {"min": 7, "max": 9, "label": "Classe B - Comprometimento Funcional Significativo", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Comprometimento funcional hepático significativo (Classe B), com sobrevida estimada em 1 ano de aproximadamente 80%.", "recommendations": "• Avaliação por hepatologia especializada\n• Considerar avaliação para transplante hepático conforme critérios\n• Monitorização de complicações (ascite, encefalopatia, varizes)"}, {"min": 10, "max": 15, "label": "Classe C - Doença Descompensada Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Doença hepática descompensada grave (Classe C), com sobrevida estimada em 1 ano de aproximadamente 45%, e alto risco cirúrgico.", "recommendations": "• Avaliação prioritária para transplante hepático\n• Manejo intensivo de complicações (ascite refratária, encefalopatia, sangramento varicoso)\n• Evitar procedimentos cirúrgicos eletivos, dado o alto risco associado"}]}, "sae": {"nanda": [{"diagnosis": "Volume de líquidos excessivo", "definition": "Retenção aumentada de líquidos isotônicos, relacionada à ascite e hipoalbuminemia da cirrose."}, {"diagnosis": "Confusão aguda", "definition": "Início abrupto de perturbações reversíveis da consciência, atenção, cognição e percepção, relacionado à encefalopatia hepática."}, {"diagnosis": "Risco de sangramento", "definition": "Risco de diminuição do volume de sangue, que pode comprometer a saúde, relacionado à coagulopatia e à hipertensão portal (varizes esofágicas)."}, {"diagnosis": "Nutrição desequilibrada: menos do que as necessidades corporais", "definition": "Ingestão de nutrientes insuficiente para suprir as necessidades metabólicas, comum em pacientes cirróticos."}], "noc": [{"outcome": "Função hepática", "indicators": ["Classe de Child-Pugh monitorada ao longo do tempo", "Ausência ou controle de complicações (ascite, encefalopatia, sangramento)", "Adesão ao acompanhamento especializado"]}], "nic": [{"intervention": "Cuidados na doença hepática", "activities": ["Calcular e reavaliar periodicamente o Escore de Child-Pugh", "Monitorar sinais de encefalopatia hepática (nível de consciência, asterixis)", "Monitorar sinais de ascite e orientar restrição hídrica/sódica conforme prescrição", "Avaliar sinais de sangramento (varizes esofágicas) e coagulopatia", "Encaminhar para avaliação de transplante hepático conforme classe e critérios institucionais"]}]}, "evidence": {"foundation": "O Escore de Child-Pugh avalia 5 parâmetros — bilirrubina, albumina, INR (tempo de protrombina), ascite e encefalopatia hepática — cada um pontuado de 1 a 3, somando de 5 a 15 pontos, para classificar a gravidade da cirrose em três classes (A, B ou C).", "history": "Originalmente descrito por Child e Turcotte em 1964 para avaliação de risco cirúrgico em cirurgia de derivação portossistêmica, foi modificado por Pugh em 1973, substituindo o estado nutricional pelo INR/tempo de protrombina, dando origem à versão atual amplamente utilizada.", "validation": "Extensivamente validado e utilizado há décadas na prática clínica para prognóstico, estratificação de risco cirúrgico e priorização para transplante hepático, embora o escore MELD seja atualmente o critério principal para alocação de órgãos em muitos países.", "limitations": "Os parâmetros ascite e encefalopatia envolvem certo grau de subjetividade na avaliação clínica. O escore MELD é considerado mais objetivo e é o critério primário utilizado atualmente para priorização em listas de transplante hepático na maioria dos países.", "references": [{"text": "CHILD, C. G.; TURCOTTE, J. G. Surgery and portal hypertension. In: The liver and portal hypertension. Philadelphia: Saunders, 1964. p. 50-64."}, {"text": "PUGH, R. N. et al. Transection of the oesophagus for bleeding oesophageal varices. British Journal of Surgery, v. 60, n. 8, p. 646-649, 1973."}, {"text": "EUROPEAN ASSOCIATION FOR THE STUDY OF THE LIVER. EASL Clinical Practice Guidelines for the management of patients with decompensated cirrhosis. Journal of Hepatology, v. 69, n. 2, p. 406-460, 2018."}]}, "learning": {"tips": ["O Escore de Child-Pugh varia de 5 a 15 pontos, distribuídos em três classes: A (5-6), B (7-9) e C (10-15).", "A avaliação de ascite e encefalopatia depende do exame clínico, podendo ter variabilidade entre avaliadores.", "O escore MELD é atualmente o principal critério para priorização em listas de transplante hepático, complementando (mas não substituindo) o Child-Pugh na prática clínica.", "Reavalie o escore periodicamente, pois a classificação pode mudar com a evolução clínica e o tratamento das complicações."], "examples": [{"label": "Cirrose compensada", "sublabel": "Classe A (5 pontos)", "emoji": "✅", "values": {"bilirrubina": 1, "albumina": 1, "inr": 1, "ascite": 1, "encefalopatia": 1}}, {"label": "Comprometimento significativo", "sublabel": "Classe B (8 pontos)", "emoji": "⚠️", "values": {"bilirrubina": 2, "albumina": 2, "inr": 1, "ascite": 2, "encefalopatia": 1}}, {"label": "Doença descompensada grave", "sublabel": "Classe C (13 pontos)", "emoji": "🚨", "values": {"bilirrubina": 3, "albumina": 3, "inr": 3, "ascite": 2, "encefalopatia": 2}}], "quiz": [{"q": "Quantos parâmetros compõem o Escore de Child-Pugh?", "opts": ["3", "4", "5", "7"], "correct": 2, "expl": "O escore avalia 5 parâmetros: bilirrubina, albumina, INR, ascite e encefalopatia hepática."}, {"q": "Qual a faixa de pontuação da Classe C (mais grave)?", "opts": ["5-6", "7-9", "10-15", "15-20"], "correct": 2, "expl": "A Classe C, que representa doença descompensada grave, corresponde a uma pontuação de 10 a 15."}, {"q": "Qual parâmetro substituiu o estado nutricional na modificação de Pugh em 1973?", "opts": ["Creatinina", "INR/Tempo de protrombina", "Sódio sérico", "Plaquetas"], "correct": 1, "expl": "Pugh substituiu o estado nutricional (usado por Child e Turcotte) pelo tempo de protrombina/INR, dando origem à versão do escore utilizada atualmente."}]}, "faq": [{"q": "O Child-Pugh substitui o escore MELD?", "a": "Não. Ambos são utilizados na avaliação de cirrose, mas o MELD é atualmente o critério primário para priorização em listas de transplante hepático na maioria dos países, por ser considerado mais objetivo. O Child-Pugh continua amplamente utilizado para prognóstico geral e avaliação de risco cirúrgico."}, {"q": "A avaliação de ascite e encefalopatia é totalmente objetiva?", "a": "Não completamente. Diferente da bilirrubina, albumina e INR (medidas laboratoriais objetivas), a classificação de ascite e encefalopatia depende do exame clínico, podendo apresentar alguma variabilidade entre diferentes avaliadores."}], "about": {"title": "Como funciona o Escore de Child-Pugh", "html": "<p>O Escore de Child-Pugh soma a pontuação (1 a 3) de 5 parâmetros: bilirrubina, albumina, INR, ascite e encefalopatia hepática, totalizando de 5 a 15 pontos.</p><p><strong>Guia rápido:</strong> 5-6 = Classe A (compensada) | 7-9 = Classe B (comprometimento significativo) | 10-15 = Classe C (descompensada grave).</p>"}}</script>
+</body></html>

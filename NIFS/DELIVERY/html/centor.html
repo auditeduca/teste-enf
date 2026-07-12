@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="centor">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -212,8 +222,7 @@
                     <span class="formula-cap">Escore de Centor/McIsaac</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -242,10 +251,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -395,11 +472,12 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;febre&quot;: 0, &quot;tosse_ausente&quot;: 0, &quot;linfadenopatia&quot;: 0, &quot;exsudato&quot;: 0, &quot;faixa_etaria&quot;: 0}'>Provável etiologia viral <span class="p-sub">Centor/McIsaac 0</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;febre&quot;: 1, &quot;tosse_ausente&quot;: 1, &quot;linfadenopatia&quot;: 0, &quot;exsudato&quot;: 0, &quot;faixa_etaria&quot;: 1}'>Risco intermediário <span class="p-sub">Centor/McIsaac 3</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;febre&quot;: 1, &quot;tosse_ausente&quot;: 1, &quot;linfadenopatia&quot;: 1, &quot;exsudato&quot;: 1, &quot;faixa_etaria&quot;: 1}'>Alto risco de faringite estreptocócica <span class="p-sub">Centor/McIsaac 5</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Febre (Histórico ou Temperatura &gt;38°C)</label>
-              <select class="field-select" data-calc-input="febre" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Ausência de Tosse</label>
-              <select class="field-select" data-calc-input="tosse_ausente" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não (Tosse Presente)</option><option value="1">Sim (Sem Tosse)</option></select></div><div class="urg-field"><label>Linfadenopatia Cervical Anterior Dolorosa</label>
-              <select class="field-select" data-calc-input="linfadenopatia" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Exsudato ou Hipertrofia Amigdaliana</label>
-              <select class="field-select" data-calc-input="exsudato" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Faixa Etária</label>
-              <select class="field-select" data-calc-input="faixa_etaria" style="background:rgba(255,255,255,.07);border-"><option value="1">3 a 14 Anos</option><option value="0" selected>15 a 44 Anos</option><option value="-1">45 Anos ou Mais</option></select></div></div>
+              <select class="field-select" data-calc-input="febre"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Ausência de Tosse</label>
+              <select class="field-select" data-calc-input="tosse_ausente"><option value="0" selected>Não (Tosse Presente)</option><option value="1">Sim (Sem Tosse)</option></select></div><div class="urg-field"><label>Linfadenopatia Cervical Anterior Dolorosa</label>
+              <select class="field-select" data-calc-input="linfadenopatia"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Exsudato ou Hipertrofia Amigdaliana</label>
+              <select class="field-select" data-calc-input="exsudato"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Faixa Etária</label>
+              <select class="field-select" data-calc-input="faixa_etaria"><option value="1">3 a 14 Anos</option><option value="0" selected>15 a 44 Anos</option><option value="-1">45 Anos ou Mais</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Risco Muito Baixo</span>
@@ -440,14 +518,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -456,45 +534,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Risco Muito Baixo</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:40%; background:#2563eb"></div></div>
-              <span class="dist-pct">40%</span></div><div class="dist-row"><span class="dist-label">Risco Baixo</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:30%; background:#ca8a04"></div></div>
-              <span class="dist-pct">30%</span></div><div class="dist-row"><span class="dist-label">Risco Intermediário</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#ca8a04"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Risco Alto</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#dc2626"></div></div>
-              <span class="dist-pct">10%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escore de Centor/McIsaac</td><td>0 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escore de Centor/McIsaac</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escore de Centor/McIsaac</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o Escore de Centor/McIsaac</h2>
           <p>O Escore de Centor/McIsaac soma pontos de 4 critérios clínicos (febre, ausência de tosse, linfadenopatia cervical anterior dolorosa e exsudato amigdaliano) e ajusta o resultado conforme a faixa etária do paciente, totalizando de -1 a 5 pontos.</p><p><strong>Guia rápido:</strong> ≤0 = Risco muito baixo | 1 = Risco baixo | 2-3 = Risco intermediário | 4-5 = Risco alto.</p>
@@ -506,45 +579,22 @@
               <p>A maioria das faringites agudas tem causa viral, para as quais antibióticos não têm efeito e contribuem para resistência bacteriana. O Escore de Centor/McIsaac ajuda a identificar os casos com maior probabilidade de benefício real do tratamento antibiótico.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -602,14 +652,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "28394051-6273-4405-1628-394051627384", "code": "SCALE-CENTOR-001", "slug": "centor", "version": "1.0.0", "status": "published", "seo": {"title": "Escore de Centor/McIsaac - Probabilidade de Faringite Estreptocócica", "description": "Calcule o Escore de Centor modificado por McIsaac para estimar a probabilidade de faringite estreptocócica e orientar a necessidade de teste ou tratamento.", "canonical": "https://www.calculadorasdeenfermagem.com.br/centor.html"}, "breadcrumb": {"category": "Atenção Primária", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escore de Centor/McIsaac", "acronym": "Centor/McIsaac", "categoryBadge": "Atenção primária", "icon": "i-stetho", "objective": "Estimar a probabilidade de faringite estreptocócica (por Streptococcus pyogenes do grupo A) em pacientes com dor de garganta, orientando a necessidade de teste rápido/cultura ou tratamento antibiótico empírico.", "indication": "Indicada para pacientes com queixa de dor de garganta aguda, na atenção primária ou pronto atendimento.", "targetPopulation": "Pacientes a partir de 3 anos de idade com quadro de faringite aguda.", "specialty": ["Atenção Primária", "Enfermagem", "Pediatria"], "averageTime": "1-2 minutos", "evidenceLevel": "II", "originalAuthors": ["Robert Centor", "Warren McIsaac"], "complexity": "basic", "rating": 4.5, "ratingCount": 220}, "calculator": {"inputs": [{"id": "febre", "type": "select", "label": "Febre (Histórico ou Temperatura >38°C)", "description": "Relato de febre ou temperatura medida acima de 38°C.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "tosse_ausente", "type": "select", "label": "Ausência de Tosse", "description": "O paciente não apresenta tosse associada ao quadro.", "defaultValue": 0, "options": [{"value": 0, "label": "Não (Tosse Presente)", "score": 0}, {"value": 1, "label": "Sim (Sem Tosse)", "score": 1}]}, {"id": "linfadenopatia", "type": "select", "label": "Linfadenopatia Cervical Anterior Dolorosa", "description": "Presença de linfonodos cervicais anteriores aumentados e dolorosos à palpação.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "exsudato", "type": "select", "label": "Exsudato ou Hipertrofia Amigdaliana", "description": "Presença de exsudato purulento ou hipertrofia das amígdalas ao exame da orofaringe.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "faixa_etaria", "type": "select", "label": "Faixa Etária", "description": "Ajuste de pontuação conforme a idade do paciente (modificação de McIsaac).", "defaultValue": 0, "options": [{"value": 1, "label": "3 a 14 Anos", "score": 1}, {"value": 0, "label": "15 a 44 Anos", "score": 0}, {"value": -1, "label": "45 Anos ou Mais", "score": -1}]}], "formula": {"type": "sum", "resultLabel": "Escore de Centor/McIsaac", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": -1, "max": 0, "label": "Risco Muito Baixo", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Probabilidade muito baixa (aproximadamente 1-2,5%) de faringite estreptocócica.", "recommendations": "• Teste rápido/cultura geralmente não indicado\n• Tratamento sintomático\n• Considerar diagnósticos diferenciais (viral, entre outros)"}, {"min": 1, "max": 1, "label": "Risco Baixo", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Probabilidade baixa (aproximadamente 5-10%) de faringite estreptocócica.", "recommendations": "• Considerar teste rápido para estreptococo, se disponível\n• Tratamento sintomático se teste negativo ou indisponível"}, {"min": 2, "max": 3, "label": "Risco Intermediário", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Probabilidade intermediária a moderada (aproximadamente 11-35%) de faringite estreptocócica.", "recommendations": "• Realizar teste rápido/cultura para confirmação\n• Considerar tratamento antibiótico empírico se teste indisponível e alta suspeita clínica"}, {"min": 4, "max": 5, "label": "Risco Alto", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alta probabilidade (aproximadamente 51-53%) de faringite estreptocócica.", "recommendations": "• Considerar tratamento antibiótico empírico, conforme avaliação médica\n• Realizar teste de confirmação quando possível"}]}, "sae": {"nanda": [{"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial, relacionada à inflamação da orofaringe."}, {"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos."}, {"diagnosis": "Deglutição prejudicada", "definition": "Funcionamento anormal do mecanismo de deglutição associado a dor e inflamação orofaríngea."}], "noc": [{"outcome": "Controle de sintomas", "indicators": ["Redução da dor de garganta", "Ausência de febre", "Deglutição adequada"]}], "nic": [{"intervention": "Manejo de sintomas respiratórios/orofaríngeos", "activities": ["Aplicar o Escore de Centor/McIsaac na triagem inicial", "Auxiliar na coleta de teste rápido/cultura conforme indicação médica", "Orientar sobre sinais de alarme para retorno (dificuldade respiratória, sialorreia intensa)", "Orientar sobre uso correto do antibiótico prescrito, quando indicado"]}]}, "evidence": {"foundation": "O Escore de Centor foi desenvolvido originalmente por Robert Centor em 1981, combinando 4 critérios clínicos (febre, ausência de tosse, linfadenopatia cervical anterior dolorosa e exsudato amigdaliano) para estimar a probabilidade de faringite estreptocócica em adultos. Warren McIsaac posteriormente adicionou um ajuste por faixa etária, ampliando a aplicabilidade do escore para crianças e melhorando sua precisão.", "history": "Amplamente utilizado na atenção primária para orientar a decisão sobre teste rápido/cultura e prescrição racional de antibióticos, contribuindo para o uso mais criterioso desses medicamentos em faringites virais (a maioria dos casos).", "validation": "Validado extensivamente na literatura, com boa correlação entre o escore e a probabilidade real de cultura positiva para estreptococo do grupo A.", "limitations": "Não deve ser o único critério de decisão terapêutica — o teste rápido ou cultura, quando disponíveis, são os métodos de confirmação diagnóstica preferenciais. A maioria das faringites agudas tem etiologia viral, mesmo com escore elevado.", "references": [{"text": "CENTOR, R. M. et al. The diagnosis of strep throat in adults in the emergency room. Medical Decision Making, v. 1, n. 3, p. 239-246, 1981."}, {"text": "MCISAAC, W. J. et al. A clinical score to reduce unnecessary antibiotic use in patients with sore throat. CMAJ, v. 158, n. 1, p. 75-83, 1998."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["O ajuste de idade de McIsaac melhora a aplicabilidade do escore para crianças, reduzindo o uso desnecessário de antibióticos em adultos.", "A maioria das faringites agudas tem etiologia viral, mesmo com escore de Centor elevado — o teste rápido/cultura continua sendo o padrão de confirmação diagnóstica.", "Sinais de alarme (dificuldade respiratória, sialorreia intensa, trismo) exigem avaliação médica imediata, independentemente do escore.", "Evite o uso empírico de antibióticos em escores baixos, contribuindo para o uso racional desses medicamentos."], "examples": [{"label": "Provável etiologia viral", "sublabel": "Centor/McIsaac 0", "emoji": "✅", "values": {"febre": 0, "tosse_ausente": 0, "linfadenopatia": 0, "exsudato": 0, "faixa_etaria": 0}}, {"label": "Risco intermediário", "sublabel": "Centor/McIsaac 3", "emoji": "🔎", "values": {"febre": 1, "tosse_ausente": 1, "linfadenopatia": 0, "exsudato": 0, "faixa_etaria": 1}}, {"label": "Alto risco de faringite estreptocócica", "sublabel": "Centor/McIsaac 5", "emoji": "⚠️", "values": {"febre": 1, "tosse_ausente": 1, "linfadenopatia": 1, "exsudato": 1, "faixa_etaria": 1}}], "quiz": [{"q": "Quais 4 critérios compõem o Escore de Centor original?", "opts": ["Tosse, coriza, espirro e febre", "Febre, ausência de tosse, linfadenopatia cervical anterior dolorosa e exsudato amigdaliano", "Dor de cabeça, febre, mialgia e fadiga", "Rouquidão, tosse, febre e coriza"], "correct": 1, "expl": "O Escore de Centor combina febre, ausência de tosse, linfadenopatia cervical anterior dolorosa e exsudato/hipertrofia amigdaliana."}, {"q": "O que a modificação de McIsaac adicionou ao Escore de Centor?", "opts": ["Um quinto sintoma clínico", "Ajuste por faixa etária", "Exame de imagem obrigatório", "Um exame laboratorial adicional"], "correct": 1, "expl": "McIsaac adicionou um ajuste de pontuação conforme a faixa etária, ampliando a validade do escore para crianças a partir de 3 anos."}, {"q": "Um escore de Centor/McIsaac de 4-5 pontos indica qual conduta geral?", "opts": ["Nenhum tratamento necessário", "Considerar tratamento antibiótico empírico", "Internação hospitalar obrigatória", "Repetir avaliação em 1 mês"], "correct": 1, "expl": "Escores de 4 a 5 pontos indicam alta probabilidade de faringite estreptocócica, podendo justificar tratamento antibiótico empírico conforme avaliação médica."}]}, "faq": [{"q": "O Escore de Centor substitui o teste rápido para estreptococo?", "a": "Não. É uma ferramenta de estimativa de probabilidade pré-teste. O teste rápido ou cultura, quando disponíveis, continuam sendo os métodos preferenciais de confirmação diagnóstica, especialmente em escores intermediários."}, {"q": "Por que é importante não tratar toda dor de garganta com antibiótico?", "a": "A maioria das faringites agudas tem causa viral, para as quais antibióticos não têm efeito e contribuem para resistência bacteriana. O Escore de Centor/McIsaac ajuda a identificar os casos com maior probabilidade de benefício real do tratamento antibiótico."}], "about": {"title": "Como funciona o Escore de Centor/McIsaac", "html": "<p>O Escore de Centor/McIsaac soma pontos de 4 critérios clínicos (febre, ausência de tosse, linfadenopatia cervical anterior dolorosa e exsudato amigdaliano) e ajusta o resultado conforme a faixa etária do paciente, totalizando de -1 a 5 pontos.</p><p><strong>Guia rápido:</strong> ≤0 = Risco muito baixo | 1 = Risco baixo | 2-3 = Risco intermediário | 4-5 = Risco alto.</p>"}}</script>
+</body></html>

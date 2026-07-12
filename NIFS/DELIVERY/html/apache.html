@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="apache">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -412,8 +422,7 @@
                     <span class="formula-cap">Total APACHE II</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -442,10 +451,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
 
@@ -780,18 +857,19 @@
               <input aria-label="Number" type="number" data-calc-input="map" value="80"></div><div class="urg-field"><label>FC</label>
               <input aria-label="Number" type="number" data-calc-input="heartRate" value="80"></div><div class="urg-field"><label>FR</label>
               <input aria-label="Number" type="number" data-calc-input="respiratoryRate" value="16"></div><div class="urg-field"><label>Oxigenação</label>
-              <select class="field-select" data-calc-input="oxygenation" style="background:rgba(255,255,255,.07);border-"><option value="pao2fio2" selected>PaO₂/FiO₂</option><option value="aagrade">A-a</option></select></div><div class="urg-field"><label>PaO₂/FiO₂</label>
+              <select class="field-select" data-calc-input="oxygenation"><option value="pao2fio2" selected>PaO₂/FiO₂</option><option value="aagrade">A-a</option></select></div><div class="urg-field"><label>PaO₂/FiO₂</label>
               <input aria-label="Number" type="number" data-calc-input="pao2fio2" value="300"></div><div class="urg-field"><label>pH</label>
               <input aria-label="Number" type="number" data-calc-input="ph" value="7.40"></div><div class="urg-field"><label>Sódio</label>
               <input aria-label="Number" type="number" data-calc-input="sodium" value="140"></div><div class="urg-field"><label>Potássio</label>
               <input aria-label="Number" type="number" data-calc-input="potassium" value="4.0"></div><div class="urg-field"><label>Creatinina</label>
               <input aria-label="Number" type="number" data-calc-input="creatinine" value="1.0"></div><div class="urg-field"><label>IRA</label>
-              <select class="field-select" data-calc-input="acuteRenalFailure" style="background:rgba(255,255,255,.07);border-"><option value="no" selected>Não</option><option value="yes">Sim</option></select></div><div class="urg-field"><label>Hematócrito</label>
+              <select class="field-select" data-calc-input="acuteRenalFailure"><option value="no" selected>Não</option><option value="yes">Sim</option></select></div><div class="urg-field"><label>Hematócrito</label>
               <input aria-label="Number" type="number" data-calc-input="hematocrit" value="40"></div><div class="urg-field"><label>Leucócitos</label>
               <input aria-label="Number" type="number" data-calc-input="wbc" value="10"></div><div class="urg-field"><label>GCS</label>
               <input aria-label="Number" type="number" data-calc-input="gcs" value="15"></div><div class="urg-field"><label>Idade</label>
-              <select class="field-select" data-calc-input="age" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>≤ 44</option><option value="2">45-54</option><option value="3">55-64</option><option value="5">65-74</option><option value="6">≥ 75</option></select></div><div class="urg-field"><label>Crônicas</label>
-              <select class="field-select" data-calc-input="chronicHealth" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Nenhuma</option><option value="2">Não-op / Eletiva</option><option value="5">Severa / Emergência</option></select></div></div>
+              <select class="field-select" data-calc-input="age"><option value="0" selected>≤ 44</option><option value="2">45-54</option><option value="3">55-64</option><option value="5">65-74</option><option value="6">≥ 75</option></select></div><div class="urg-field"><label>Crônicas</label>
+              <select class="field-select" data-calc-input="chronicHealth"><option value="0" selected>Nenhuma</option><option value="2">Não-op / Eletiva</option><option value="5">Severa / Emergência</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo risco</span>
@@ -832,61 +910,56 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">156</div><div class="kpi-sub">▲ 18% vs. semana anterior</div></div>
-          <div class="kpi-card"><div class="kpi-label">Baixo risco</div><div class="kpi-value">89</div><div class="kpi-sub">57% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Risco muito elevado</div><div class="kpi-value">12</div><div class="kpi-sub" >8% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">3</div><div class="kpi-sub">UTI Adulto, UTI Cardio, UTI Neuro</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Avaliações por dia (últimos 7 dias)</h2></div>
             <div class="bar-chart">
-              <div class="bar-col"><span class="bar-val">18</span><div class="bar" style="height:45%"></div><span class="bar-day">Seg</span></div>
-              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:55%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">25</span><div class="bar" style="height:63%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">20</span><div class="bar" style="height:50%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">28</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">15</span><div class="bar" style="height:38%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">28</span><div class="bar" style="height:70%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
+              <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Baixo risco</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:57%; background:#2563eb"></div></div>
-              <span class="dist-pct">57%</span></div><div class="dist-row"><span class="dist-label">Risco moderado</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:25%; background:#ca8a04"></div></div>
-              <span class="dist-pct">25%</span></div><div class="dist-row"><span class="dist-label">Risco elevado</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#ea580c"></div></div>
-              <span class="dist-pct">10%</span></div><div class="dist-row"><span class="dist-label">Risco muito elevado</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:8%; background:#dc2626"></div></div>
-              <span class="dist-pct">8%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-5021</td><td>02/07 09:14</td><td>Calculadora de APACHE II</td><td>8 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-5020</td><td>02/07 08:40</td><td>Calculadora de APACHE II</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-5019</td><td>01/07 22:05</td><td>Calculadora de APACHE II</td><td>35 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a escala APACHE II</h2>
           <p>A escala APACHE II (Acute Physiology and Chronic Health Evaluation II) avalia a gravidade de pacientes adultos em UTI através da soma de 12 variáveis fisiológicas agudas, idade e condições crônicas de saúde pré-existentes.</p><p><strong>Componentes:</strong></p><ul><li>12 variáveis fisiológicas (0-4 pontos cada, exceto GCS: 15-GCS)</li><li>Idade (0-6 pontos)</li><li>Condições crônicas (0-5 pontos)</li></ul><p><strong>Interpretação:</strong></p><ul><li>0-10: Baixo risco (mortalidade < 10%)</li><li>11-20: Risco moderado (mortalidade 10-25%)</li><li>21-30: Risco elevado (mortalidade 25-50%)</li><li>31-71: Risco muito elevado (mortalidade > 50%)</li></ul><p>A pontuação deve ser calculada nas primeiras 24 horas de internação em UTI, utilizando os piores valores fisiológicos observados.</p>
@@ -904,45 +977,22 @@
               <p>A GCS deve ser avaliada sem sedação farmacológica, se possível. Se a sedação for necessária, documente a pontuação GCS antes da sedação ou utilize a melhor resposta motora observada.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem ou medicina qualificado, de acordo com a avaliação do paciente e os protocolos da instituição. A APACHE II não substitui o julgamento clínico individual.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="bps.html"><div class="icon-wrap"><svg class="icon"><use href="#i-gauge"/></svg></div><div><h3>Behavioral Pain Scale</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cam.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Método de Avaliação de Confusão</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cpc.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Categoria de Performance Cerebral</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="four.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Escala de Coma FOUR</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="glasgow-pupilas.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Escala de Glasgow com Pupilas</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -976,14 +1026,79 @@
   <symbol id="i-activity" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "8f3c4d5e-6f70-5f81-1b3c-4d5e6f7f8093", "code": "CALC-APACHE-001", "slug": "apache", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de APACHE II", "description": "Calcule a pontuação APACHE II (Acute Physiology and Chronic Health Evaluation) para avaliação de gravidade em UTI. Ferramenta gratuita para enfermagem e medicina.", "canonical": "https://www.calculadorasdeenfermagem.com.br/apache.html"}, "breadcrumb": {"category": "Avaliação de Gravidade", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de APACHE II", "acronym": "APACHE II", "categoryBadge": "Avaliação de gravidade", "icon": "i-activity", "objective": "Calcule a pontuação APACHE II para avaliação prognóstica e de gravidade de pacientes internados em Unidade de Terapia Intensiva.", "indication": "Indicada para pacientes adultos internados em UTI, preferencialmente nas primeiras 24 horas de internação.", "targetPopulation": "Pacientes adultos em UTI, para estratificação de risco e avaliação prognóstica.", "specialty": ["Terapia Intensiva", "Enfermagem em UTI", "Medicina Intensiva"], "averageTime": "3-5 minutos", "evidenceLevel": "I", "complexity": "advanced", "rating": 4.7, "ratingCount": 980}, "calculator": {"inputs": [{"id": "temperature", "type": "number", "label": "Temperatura retal", "unit": "°C", "defaultValue": 37.0, "min": 20, "max": 45, "step": 0.1, "description": "Temperatura corporal mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 30.9, "score": 4}, {"min": 31.0, "max": 32.9, "score": 3}, {"min": 33.0, "max": 33.9, "score": 2}, {"min": 34.0, "max": 35.9, "score": 1}, {"min": 36.0, "max": 38.4, "score": 0}, {"min": 38.5, "max": 38.9, "score": 1}, {"min": 39.0, "max": 40.9, "score": 3}, {"min": 41.0, "score": 4}]}, {"id": "map", "type": "number", "label": "Pressão arterial média (PAM)", "unit": "mmHg", "defaultValue": 80, "min": 0, "max": 200, "step": 1, "description": "Pressão arterial média mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 49, "score": 4}, {"min": 50, "max": 69, "score": 2}, {"min": 70, "max": 109, "score": 0}, {"min": 110, "max": 129, "score": 2}, {"min": 130, "max": 159, "score": 3}, {"min": 160, "score": 4}]}, {"id": "heartRate", "type": "number", "label": "Frequência cardíaca", "unit": "bpm", "defaultValue": 80, "min": 0, "max": 200, "step": 1, "description": "Frequência cardíaca mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 39, "score": 4}, {"min": 40, "max": 54, "score": 3}, {"min": 55, "max": 69, "score": 2}, {"min": 70, "max": 109, "score": 0}, {"min": 110, "max": 139, "score": 2}, {"min": 140, "max": 179, "score": 3}, {"min": 180, "score": 4}]}, {"id": "respiratoryRate", "type": "number", "label": "Frequência respiratória", "unit": "irpm", "defaultValue": 16, "min": 0, "max": 60, "step": 1, "description": "Frequência respiratória mais desfavorável nas primeiras 24h (ventilado ou não).", "scoreMap": [{"max": 5, "score": 4}, {"min": 6, "max": 11, "score": 2}, {"min": 12, "max": 24, "score": 0}, {"min": 25, "max": 34, "score": 1}, {"min": 35, "max": 49, "score": 3}, {"min": 50, "score": 4}]}, {"id": "oxygenation", "type": "select", "label": "Oxigenação", "defaultValue": "pao2fio2", "description": "Escolha o método de avaliação da oxigenação.", "options": [{"value": "pao2fio2", "label": "PaO₂/FiO₂ (sem ventilação mecânica)", "score": 0}, {"value": "aagrade", "label": "Gradiente A-a (com ventilação mecânica)", "score": 0}]}, {"id": "pao2fio2", "type": "number", "label": "PaO₂/FiO₂", "unit": "mmHg", "defaultValue": 300, "min": 0, "max": 500, "step": 1, "description": "Relação PaO₂/FiO₂ (para pacientes sem ventilação mecânica).", "conditional": {"field": "oxygenation", "value": "pao2fio2"}, "scoreMap": [{"max": 199, "score": 4}, {"min": 200, "max": 349, "score": 3}, {"min": 350, "max": 499, "score": 2}, {"min": 500, "score": 0}]}, {"id": "aagrade", "type": "number", "label": "Gradiente A-a", "unit": "mmHg", "defaultValue": 100, "min": 0, "max": 500, "step": 1, "description": "Gradiente alvéolo-arterial de O₂ (para pacientes com ventilação mecânica).", "conditional": {"field": "oxygenation", "value": "aagrade"}, "scoreMap": [{"max": 199, "score": 0}, {"min": 200, "max": 349, "score": 2}, {"min": 350, "max": 499, "score": 3}, {"min": 500, "score": 4}]}, {"id": "ph", "type": "number", "label": "pH arterial", "unit": "", "defaultValue": 7.40, "min": 6.0, "max": 8.0, "step": 0.01, "description": "pH arterial mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 7.14, "score": 4}, {"min": 7.15, "max": 7.24, "score": 3}, {"min": 7.25, "max": 7.32, "score": 2}, {"min": 7.33, "max": 7.49, "score": 0}, {"min": 7.50, "max": 7.59, "score": 1}, {"min": 7.60, "max": 7.69, "score": 3}, {"min": 7.70, "score": 4}]}, {"id": "sodium", "type": "number", "label": "Sódio sérico", "unit": "mEq/L", "defaultValue": 140, "min": 100, "max": 180, "step": 1, "description": "Sódio sérico mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 119, "score": 4}, {"min": 120, "max": 129, "score": 3}, {"min": 130, "max": 149, "score": 2}, {"min": 150, "max": 154, "score": 0}, {"min": 155, "max": 159, "score": 1}, {"min": 160, "max": 179, "score": 2}, {"min": 180, "score": 4}]}, {"id": "potassium", "type": "number", "label": "Potássio sérico", "unit": "mEq/L", "defaultValue": 4.0, "min": 1.0, "max": 10.0, "step": 0.1, "description": "Potássio sérico mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 2.4, "score": 4}, {"min": 2.5, "max": 2.9, "score": 3}, {"min": 3.0, "max": 3.4, "score": 2}, {"min": 3.5, "max": 5.4, "score": 0}, {"min": 5.5, "max": 5.9, "score": 1}, {"min": 6.0, "max": 6.9, "score": 3}, {"min": 7.0, "score": 4}]}, {"id": "creatinine", "type": "number", "label": "Creatinina", "unit": "mg/dL", "defaultValue": 1.0, "min": 0.1, "max": 20.0, "step": 0.1, "description": "Creatinina mais desfavorável nas primeiras 24h. Dobre os pontos se IRA aguda.", "scoreMap": [{"max": 0.5, "score": 2}, {"min": 0.6, "max": 1.4, "score": 0}, {"min": 1.5, "max": 1.9, "score": 2}, {"min": 2.0, "max": 3.4, "score": 3}, {"min": 3.5, "score": 4}]}, {"id": "acuteRenalFailure", "type": "select", "label": "Insuficiência renal aguda", "defaultValue": "no", "description": "Dobre a pontuação da creatinina se houver insuficiência renal aguda.", "options": [{"value": "no", "label": "Não", "score": 0}, {"value": "yes", "label": "Sim", "score": 0}]}, {"id": "hematocrit", "type": "number", "label": "Hematócrito", "unit": "%", "defaultValue": 40, "min": 10, "max": 70, "step": 1, "description": "Hematócrito mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 39, "score": 2}, {"min": 40, "max": 49, "score": 0}, {"min": 50, "max": 59, "score": 2}, {"min": 60, "score": 4}]}, {"id": "wbc", "type": "number", "label": "Leucócitos", "unit": "×10³/µL", "defaultValue": 10, "min": 0, "max": 50, "step": 0.1, "description": "Contagem de leucócitos mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 0.9, "score": 4}, {"min": 1.0, "max": 2.9, "score": 2}, {"min": 3.0, "max": 14.9, "score": 0}, {"min": 15.0, "max": 19.9, "score": 1}, {"min": 20.0, "max": 39.9, "score": 2}, {"min": 40.0, "score": 4}]}, {"id": "gcs", "type": "number", "label": "Escala de Coma de Glasgow (GCS)", "unit": "pontos", "defaultValue": 15, "min": 3, "max": 15, "step": 1, "description": "Escala de Coma de Glasgow mais desfavorável nas primeiras 24h.", "scoreMap": [{"max": 15, "score": 0, "formula": "15 - gcs"}]}, {"id": "age", "type": "select", "label": "Idade", "defaultValue": 0, "description": "Faixa etária do paciente.", "options": [{"value": 0, "label": "≤ 44 anos", "score": 0}, {"value": 2, "label": "45 – 54 anos", "score": 2}, {"value": 3, "label": "55 – 64 anos", "score": 3}, {"value": 5, "label": "65 – 74 anos", "score": 5}, {"value": 6, "label": "≥ 75 anos", "score": 6}]}, {"id": "chronicHealth", "type": "select", "label": "Condições crônicas de saúde pré-existentes", "defaultValue": 0, "description": "Condições crônicas de saúde pré-existentes e estado operativo.", "options": [{"value": 0, "label": "Nenhuma doença crônica conhecida", "score": 0}, {"value": 2, "label": "Doença crônica não-operativa / Cirurgia eletiva", "score": 2}, {"value": 5, "label": "Doença crônica severa não-operativa / Cirurgia de emergência", "score": 5}]}], "formula": {"type": "sum", "resultLabel": "Pontuação APACHE II", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 10, "label": "Baixo risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Mortalidade estimada < 10%. Prognóstico favorável. Monitoramento padrão de UTI.", "mortality": "< 10%"}, {"min": 11, "max": 20, "label": "Risco moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Mortalidade estimada 10-25%. Atenção clínica reforçada. Avaliação contínua.", "mortality": "10-25%"}, {"min": 21, "max": 30, "label": "Risco elevado", "riskLevel": "high", "color": "#ea580c", "clinicalImplications": "Mortalidade estimada 25-50%. Monitoramento intensivo. Considere discussão com familiares.", "mortality": "25-50%"}, {"min": 31, "max": 71, "label": "Risco muito elevado", "riskLevel": "critical", "color": "#dc2626", "clinicalImplications": "Mortalidade estimada > 50%. Prognóstico reservado. Cuidados paliativos e diálogo com familiares devem ser considerados.", "mortality": "> 50%"}]}, "evidence": {"foundation": "A escala APACHE II (Acute Physiology and Chronic Health Evaluation II) foi desenvolvida por Knaus et al. em 1985 como sistema de classificação de gravidade para pacientes adultos em UTI. A pontuação é obtida pela soma de 12 variáveis fisiológicas agudas (cada uma com escore de 0 a 4, exceto GCS que utiliza 15-GCS), mais pontos pela idade (0 a 6) e condições crônicas de saúde pré-existentes (0 a 5).", "history": "A APACHE I foi publicada em 1981. A APACHE II, publicada em 1985, simplificou a versão original de 34 para 12 variáveis fisiológicas. A APACHE III (1991) e APACHE IV (2006) introduziram ajustes por diagnóstico e localização geográfica, mas a APACHE II permanece a mais utilizada mundialmente por sua simplicidade e validação extensiva.", "validation": "A APACHE II foi validada em diversas populações e contextos clínicos. Estudos demonstram correlação entre a pontuação e a mortalidade hospitalar. A calibração pode variar entre instituições e países, sendo recomendada a reavaliação periódica do modelo na população local. A pontuação deve ser realizada nas primeiras 24 horas de internação em UTI.", "limitations": "A APACHE II não deve ser usada para decisões individuais de limitação de terapia. A pontuação reflete gravidade fisiológica, mas não considera fatores como qualidade da assistência, recursos disponíveis ou preferências do paciente. A creatinina deve ter pontuação dobrada em caso de insuficiência renal aguda. A escala foi desenvolvida para pacientes adultos e não é validada para pediatria.", "references": [{"text": "KNAUS, W. A. et al. APACHE II: a severity of disease classification system. Critical Care Medicine, v. 13, n. 10, p. 818-829, 1985."}, {"text": "KNAUS, W. A. et al. The APACHE III prognostic system: risk prediction of hospital mortality for critically ill hospitalized adults. Chest, v. 100, n. 6, p. 1619-1636, 1991."}, {"text": "ZIMMERMAN, J. E. et al. Acute Physiology and Chronic Health Evaluation (APACHE) IV: hospital mortality assessment for today's critically ill patients. Critical Care Medicine, v. 34, n. 5, p. 1297-1310, 2006."}, {"text": "BRASIL. Ministério da Saúde. Protocolos Clínicos e Diretrizes Terapêuticas em UTI. Brasília: MS, 2022."}, {"text": "SOCIEDADE BRASILEIRA DE TERAPIA INTENSIVA. Diretrizes brasileiras de avaliação de gravidade em UTI. Revista Brasileira de Terapia Intensiva, v. 34, n. 2, p. 165-178, 2022."}, {"text": "MARIK, P. E.; VARON, J. The APACHE score: a critical appraisal. Critical Care Medicine, v. 29, n. 8, p. 1639-1642, 2001."}]}, "learning": {"tips": ["Utilize os piores valores fisiológicos nas primeiras 24 horas de internação em UTI.", "A GCS deve ser avaliada sem sedação farmacológica, se possível.", "Dobre a pontuação da creatinina em caso de insuficiência renal aguda.", "A APACHE II não substitui o julgamento clínico individual.", "Reavalie a pontuação diariamente para acompanhar a evolução."], "examples": [{"label": "Paciente estável", "sublabel": "PAM 90, FC 80, GCS 15, sem comorbidades", "emoji": "🟢", "values": {"temperature": 37, "map": 90, "heartRate": 80, "respiratoryRate": 16, "oxygenation": "pao2fio2", "pao2fio2": 350, "ph": 7.40, "sodium": 140, "potassium": 4.0, "creatinine": 1.0, "acuteRenalFailure": "no", "hematocrit": 42, "wbc": 10, "gcs": 15, "age": 0, "chronicHealth": 0}}, {"label": "Paciente grave", "sublabel": "PAM 60, FC 130, GCS 8, idoso com DM", "emoji": "🔴", "values": {"temperature": 38.5, "map": 60, "heartRate": 130, "respiratoryRate": 30, "oxygenation": "aagrade", "aagrade": 300, "ph": 7.25, "sodium": 155, "potassium": 5.8, "creatinine": 2.5, "acuteRenalFailure": "yes", "hematocrit": 35, "wbc": 25, "gcs": 8, "age": 5, "chronicHealth": 5}}, {"label": "Pós-operatório", "sublabel": "Cirurgia eletiva, paciente jovem", "emoji": "🟡", "values": {"temperature": 36.5, "map": 85, "heartRate": 90, "respiratoryRate": 18, "oxygenation": "pao2fio2", "pao2fio2": 280, "ph": 7.38, "sodium": 138, "potassium": 4.2, "creatinine": 1.2, "acuteRenalFailure": "no", "hematocrit": 38, "wbc": 12, "gcs": 14, "age": 2, "chronicHealth": 2}}], "quiz": [{"q": "Quantas variáveis fisiológicas compõem a pontuação APACHE II?", "opts": ["8 variáveis", "10 variáveis", "12 variáveis", "15 variáveis"], "correct": 2, "expl": "A APACHE II utiliza 12 variáveis fisiológicas agudas, mais idade e condições crônicas de saúde."}, {"q": "Qual é a pontuação máxima da idade na APACHE II?", "opts": ["3 pontos", "4 pontos", "5 pontos", "6 pontos"], "correct": 3, "expl": "A idade ≥ 75 anos recebe 6 pontos na APACHE II."}, {"q": "Quando a pontuação da creatinina deve ser dobrada?", "opts": ["Nunca", "Em insuficiência renal aguda", "Em pacientes idosos", "Em pacientes com diabetes"], "correct": 1, "expl": "A pontuação da creatinina deve ser dobrada quando há insuficiência renal aguda documentada."}]}, "faq": [{"q": "Quando a APACHE II deve ser calculada?", "a": "Preferencialmente nas primeiras 24 horas de internação em UTI, utilizando os piores valores fisiológicos observados nesse período."}, {"q": "A APACHE II pode ser usada para decisão de limitação terapêutica?", "a": "Não. A APACHE II é uma ferramenta de estratificação de risco populacional e não deve ser usada isoladamente para decisões individuais de limitação de terapia. O julgamento clínico e as preferências do paciente/família são fundamentais."}, {"q": "A APACHE II é válida para pediatria?", "a": "Não. A APACHE II foi desenvolvida e validada para adultos. Para pacientes pediátricos, utilize a escala PRISM (Pediatric Risk of Mortality)."}, {"q": "O que fazer se o paciente estiver sedado?", "a": "A GCS deve ser avaliada sem sedação farmacológica, se possível. Se a sedação for necessária, documente a pontuação GCS antes da sedação ou utilize a melhor resposta motora observada."}], "about": {"title": "Como funciona a escala APACHE II", "html": "<p>A escala APACHE II (Acute Physiology and Chronic Health Evaluation II) avalia a gravidade de pacientes adultos em UTI através da soma de 12 variáveis fisiológicas agudas, idade e condições crônicas de saúde pré-existentes.</p><p><strong>Componentes:</strong></p><ul><li>12 variáveis fisiológicas (0-4 pontos cada, exceto GCS: 15-GCS)</li><li>Idade (0-6 pontos)</li><li>Condições crônicas (0-5 pontos)</li></ul><p><strong>Interpretação:</strong></p><ul><li>0-10: Baixo risco (mortalidade < 10%)</li><li>11-20: Risco moderado (mortalidade 10-25%)</li><li>21-30: Risco elevado (mortalidade 25-50%)</li><li>31-71: Risco muito elevado (mortalidade > 50%)</li></ul><p>A pontuação deve ser calculada nas primeiras 24 horas de internação em UTI, utilizando os piores valores fisiológicos observados.</p>"}}</script>
+</body></html>
