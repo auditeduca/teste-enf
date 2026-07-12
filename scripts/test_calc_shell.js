@@ -4,7 +4,7 @@ const path = require("path");
 const { JSDOM } = require(path.join(__dirname, "..", "NIFS", "DELIVERY", "node_modules", "jsdom"));
 
 const ROOT = path.join(__dirname, "..", "NIFS", "DELIVERY");
-const PAGES = ["wells-tvp.html", "imc.html", "nihss.html", "apgar.html", "glasgow.html"];
+const PAGES = ["wells-tvp.html", "imc.html", "nihss.html", "apgar.html", "glasgow.html", "heparina.html", "gasometria.html"];
 
 function runPage(file) {
   const filePath = path.join(ROOT, file);

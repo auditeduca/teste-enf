@@ -83,7 +83,11 @@
   --------------------------------------------------------------------- */
   var state = {};
   inputsCfg.forEach(function (inp) {
-    state[inp.id] = inp.defaultValue !== undefined ? inp.defaultValue : (inp.options && inp.options[0] ? inp.options[0].value : 0);
+    if (inp.optional && inp.defaultValue === undefined) {
+      state[inp.id] = null;
+    } else {
+      state[inp.id] = inp.defaultValue !== undefined ? inp.defaultValue : (inp.options && inp.options[0] ? inp.options[0].value : 0);
+    }
   });
 
   function allFieldsFor(id) {
@@ -92,7 +96,7 @@
 
   function setIfDifferent(el, value) {
     if (document.activeElement === el) return;
-    var strVal = String(value);
+    var strVal = value === null || value === undefined ? "" : String(value);
     if (String(el.value) !== strVal) el.value = strVal;
   }
 
@@ -104,18 +108,21 @@
     });
   }
 
+  function parseFieldValue(inp, raw) {
+    if (inp.optional && raw === "") return null;
+    return inp.type === "select" ? parseFloat(raw) : parseFloat(raw) || 0;
+  }
+
   function bindFields() {
     inputsCfg.forEach(function (inp) {
       allFieldsFor(inp.id).forEach(function (el) {
         el.addEventListener("input", function () {
-          var raw = el.value;
-          state[inp.id] = inp.type === "select" ? parseFloat(raw) : parseFloat(raw) || 0;
+          state[inp.id] = parseFieldValue(inp, el.value);
           syncFieldsFromState();
           renderAll();
         });
         el.addEventListener("change", function () {
-          var raw = el.value;
-          state[inp.id] = inp.type === "select" ? parseFloat(raw) : parseFloat(raw) || 0;
+          state[inp.id] = parseFieldValue(inp, el.value);
           syncFieldsFromState();
           renderAll();
         });
@@ -150,6 +157,120 @@
     }
   }
 
+  function readVal(id) {
+    var inp = inputsCfg.filter(function (i) { return i.id === id; })[0];
+    var raw = state[id];
+    if (inp && inp.optional && (raw === null || raw === "" || raw === undefined)) return NaN;
+    var n = Number(raw);
+    return isNaN(n) ? NaN : n;
+  }
+
+  var lastGasometriaResult = null;
+
+  function interpretGasometria() {
+    var ph = readVal("ph");
+    var paco2 = readVal("paco2");
+    var hco3 = readVal("hco3");
+    if (isNaN(ph) || isNaN(paco2) || isNaN(hco3)) {
+      return { valid: false, severity: -1, diagnostico: "—", compensacao: "", resumo: "Informe pH, PaCO₂ e HCO₃⁻." };
+    }
+    var pao2 = readVal("pao2");
+    var na = readVal("na");
+    var cl = readVal("cl");
+    var lactato = readVal("lactato");
+    var hb = readVal("hb");
+    var cohb = readVal("cohb");
+    var diagnostico = "";
+    var compensacao = "";
+    var descPh = ph.toFixed(2);
+    var descResp = "";
+    var descMetab = "";
+    var severity = 0;
+
+    if (ph < 7.35) {
+      diagnostico = "ACIDOSE";
+      descPh += " (Acidemia)";
+    } else if (ph > 7.45) {
+      diagnostico = "ALCALOSE";
+      descPh += " (Alcalemia)";
+    } else {
+      diagnostico = "NORMAL / COMPENSADA";
+      descPh += " (Normal)";
+    }
+
+    if (diagnostico !== "NORMAL / COMPENSADA") {
+      var isResp = (ph < 7.35 && paco2 > 45) || (ph > 7.45 && paco2 < 35);
+      var isMetab = (ph < 7.35 && hco3 < 22) || (ph > 7.45 && hco3 > 26);
+      if (isResp && !isMetab) {
+        diagnostico += " RESPIRATÓRIA";
+        descResp = paco2 + " mmHg (Primário)";
+        if ((ph < 7.35 && hco3 > 26) || (ph > 7.45 && hco3 < 22)) {
+          compensacao = "PARCIALMENTE COMPENSADA";
+          severity = 20;
+        } else {
+          compensacao = "SEM COMPENSAÇÃO";
+          severity = 30;
+        }
+      } else if (isMetab && !isResp) {
+        diagnostico += " METABÓLICA";
+        descMetab = hco3 + " mEq/L (Primário)";
+        if ((ph < 7.35 && paco2 < 35) || (ph > 7.45 && paco2 > 45)) {
+          compensacao = "PARCIALMENTE COMPENSADA";
+          severity = 20;
+        } else {
+          compensacao = "SEM COMPENSAÇÃO";
+          severity = 30;
+        }
+      } else if (isResp && isMetab) {
+        diagnostico += " MISTA";
+        compensacao = "GRAVE";
+        severity = 40;
+      } else {
+        severity = 30;
+      }
+    } else if (paco2 !== 40 && hco3 !== 24) {
+      if (ph < 7.40) diagnostico = "ACIDOSE COMPENSADA";
+      else diagnostico = "ALCALOSE COMPENSADA";
+      compensacao = "TOTALMENTE COMPENSADA";
+      severity = 10;
+    }
+
+    var anionGapStr = "—";
+    if (!isNaN(na) && !isNaN(cl)) {
+      var ag = na - (cl + hco3);
+      anionGapStr = ag.toFixed(1) + (ag > 12 ? " (Elevado)" : " (Normal)");
+    }
+    var oxigStr = "—";
+    if (!isNaN(pao2)) {
+      if (pao2 < 60) oxigStr = "Hipoxemia Grave";
+      else if (pao2 < 80) oxigStr = "Hipoxemia Leve";
+      else oxigStr = "Normoxemia";
+    }
+    var hbStr = "—";
+    if (!isNaN(hb)) {
+      hbStr = hb + " g/dL" + (hb < 12 ? " (Anemia)" : "");
+    }
+    var resumo = "Interpretação: O paciente apresenta " + diagnostico.toLowerCase() + ". ";
+    if (!isNaN(lactato) && lactato > 2) resumo += "Observa-se hiperlactatemia (possível hipoperfusão). ";
+    if (!isNaN(cohb) && cohb > 2) resumo += "Atenção: COHb elevada. ";
+    if (!isNaN(pao2) && pao2 < 60) resumo += "Hipoxemia grave identificada. ";
+
+    return {
+      valid: true,
+      severity: severity,
+      diagnostico: diagnostico,
+      compensacao: compensacao || "EQUILÍBRIO ESTÁVEL",
+      descPh: descPh,
+      descResp: descResp || (paco2 + " mmHg"),
+      descMetab: descMetab || (hco3 + " mEq/L"),
+      anionGapStr: anionGapStr,
+      oxigStr: oxigStr,
+      hbStr: hbStr,
+      lactatoStr: isNaN(lactato) ? "—" : (lactato + " mmol/L"),
+      resumo: resumo
+    };
+  }
+
   function computeTotal() {
     if (formulaCfg.type === "sum") {
       var total = 0;
@@ -164,6 +285,10 @@
       });
       var result = safeEval(expr);
       return isNaN(result) ? 0 : result;
+    }
+    if (formulaCfg.type === "gasometria") {
+      lastGasometriaResult = interpretGasometria();
+      return lastGasometriaResult.valid ? lastGasometriaResult.severity : -1;
     }
     return 0;
   }
@@ -357,7 +482,7 @@
   var cogTimer = null;
   var hasCalculated = false;
 
-  var MEDICATION_TOOL_SLUGS = /gotejamento|insulina|medicamentos|dose|hora-extra|ferias|rescisao|adicional/i;
+  var MEDICATION_TOOL_SLUGS = /gotejamento|insulina|heparina|medicamentos|dose|hora-extra|ferias|rescisao|adicional/i;
   var IPSG_BY_SEVERITY = {
     critical: ["Identificação correta do paciente", "Comunicação efetiva na transferência de cuidado", "Segurança em procedimentos de alta vigilância", "Notificar equipe e escalar cuidado"],
     moderate: ["Identificação correta do paciente", "Monitoramento contínuo conforme protocolo", "Comunicação SBAR em alterações"],
@@ -616,12 +741,31 @@
     var total = computeTotal();
     var range = findRange(total);
     var totalStr = fmt(total);
+    var displayText = totalStr;
+    var displayUnit = formulaCfg.resultUnit || "";
+    var statusTitle = range ? range.label : "";
+    var statusText = range ? (range.clinicalImplications || "") : "";
+
+    if (formulaCfg.type === "gasometria" && lastGasometriaResult) {
+      if (lastGasometriaResult.valid) {
+        displayText = lastGasometriaResult.diagnostico;
+        displayUnit = "";
+        statusTitle = lastGasometriaResult.compensacao;
+        statusText = lastGasometriaResult.resumo;
+      } else {
+        displayText = "—";
+        displayUnit = "";
+        statusTitle = "Dados incompletos";
+        statusText = lastGasometriaResult.resumo;
+        range = null;
+      }
+    }
 
     // Padrão — resultado + banner
     var resVal = document.getElementById("calcResultValue");
-    if (resVal) resVal.textContent = totalStr;
+    if (resVal) resVal.textContent = displayText;
     var resUnit = document.getElementById("calcResultUnit");
-    if (resUnit && formulaCfg.resultUnit) resUnit.textContent = formulaCfg.resultUnit;
+    if (resUnit) resUnit.textContent = displayUnit;
 
     var banner = document.getElementById("calcStatusBanner");
     if (banner && range) {
@@ -631,9 +775,9 @@
       var icon = document.getElementById("calcStatusIcon");
       if (icon) icon.innerHTML = '<use href="#' + (warn ? "i-warning" : "i-check") + '"/>';
       var title = document.getElementById("calcStatusTitle");
-      if (title) title.textContent = range.label;
+      if (title) title.textContent = statusTitle || (range ? range.label : "");
       var text = document.getElementById("calcStatusText");
-      if (text) text.textContent = range.clinicalImplications || "";
+      if (text) text.textContent = statusText || (range ? range.clinicalImplications || "" : "");
     }
 
     // Padrão — tira de fórmula
@@ -642,7 +786,7 @@
       if (box) box.textContent = formulaCfg.type === "sum" ? scoreOf(inp.id) : state[inp.id];
     });
     var resultBox = document.querySelector('[data-formula-box="__result__"]');
-    if (resultBox) resultBox.textContent = totalStr;
+    if (resultBox) resultBox.textContent = formulaCfg.type === "gasometria" ? displayText : totalStr;
 
     // Acadêmico > Cálculo
     inputsCfg.forEach(function (inp) {
@@ -656,7 +800,7 @@
       }
     });
     var acaResult = document.querySelector('[data-aca-value="__result__"]');
-    if (acaResult) acaResult.textContent = totalStr + (formulaCfg.resultUnit ? " " + formulaCfg.resultUnit : "");
+    if (acaResult) acaResult.textContent = (formulaCfg.type === "gasometria" ? displayText : totalStr) + (displayUnit ? " " + displayUnit : "");
     var acaRange = document.querySelector('[data-aca-value="__range__"]');
     if (acaRange && range) acaRange.textContent = range.label;
 
@@ -666,7 +810,7 @@
       if (step) step.textContent = formulaCfg.type === "sum" ? scoreOf(inp.id) : state[inp.id];
     });
     var fdResult = document.querySelector('[data-fd-step="__result__"]');
-    if (fdResult) fdResult.textContent = totalStr;
+    if (fdResult) fdResult.textContent = formulaCfg.type === "gasometria" ? displayText : totalStr;
     var fdBadge = document.getElementById("estFdBadge");
     if (fdBadge && range) {
       var warnBadge = riskIsWarning(range.riskLevel);
@@ -677,13 +821,13 @@
     // Modo Urgência
     var urgNum = document.getElementById("urgResultNum");
     if (urgNum) {
-      urgNum.textContent = totalStr;
+      urgNum.textContent = formulaCfg.type === "gasometria" ? displayText : totalStr;
       var warnUrg = range ? riskIsWarning(range.riskLevel) : false;
       urgNum.classList.toggle("alarm", warnUrg);
       urgNum.classList.toggle("safe", !warnUrg);
     }
     var urgUnit = document.getElementById("urgResultUnit");
-    if (urgUnit && formulaCfg.resultUnit) urgUnit.textContent = formulaCfg.resultUnit;
+    if (urgUnit) urgUnit.textContent = displayUnit;
     var urgBadge = document.getElementById("urgAlarmBadge");
     if (urgBadge && range) {
       var warnUrgBadge = riskIsWarning(range.riskLevel);
@@ -960,7 +1104,11 @@
       hideClinicalUntilCalculated();
       setTimeout(function () {
         inputsCfg.forEach(function (inp) {
-          state[inp.id] = inp.defaultValue !== undefined ? inp.defaultValue : (inp.options && inp.options[0] ? inp.options[0].value : 0);
+          if (inp.optional && inp.defaultValue === undefined) {
+            state[inp.id] = null;
+          } else {
+            state[inp.id] = inp.defaultValue !== undefined ? inp.defaultValue : (inp.options && inp.options[0] ? inp.options[0].value : 0);
+          }
         });
         syncFieldsFromState();
         renderAll();

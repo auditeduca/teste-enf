@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-echo "==> 1/8 Compilar CKO e bundles (97 calculadoras)"
+echo "==> 1/8 Compilar CKO e bundles (99 calculadoras)"
 python3 -m compiler.build_all
 
 echo "==> 2/8 Validar datasets e CKO"
