@@ -5,10 +5,10 @@
   "use strict";
 
   var SCRIPT = document.currentScript;
-  var CKO_MAP = {
-    apgar: "js/modules/data/apgar-cko.json",
-    glasgow: "js/modules/data/glasgow-cko.json",
-    "escala-de-glasgow": "js/modules/data/glasgow-cko.json"
+  var SLUG_ALIASES = {
+    "escala-de-glasgow": "glasgow",
+    "escala-de-braden": "braden",
+    "escala-de-morse": "morse"
   };
   var CKO_SOURCE_V3 = {
     apgar: "js/modules/data/cko/CKO-APGAR-001.json",
@@ -34,13 +34,27 @@
     return BASE + path.replace(/^\.\//, "");
   }
 
+  function canonicalSlug(page) {
+    return SLUG_ALIASES[page] || page;
+  }
+
+  function resolveCkoPath(page, index) {
+    index = index || {};
+    if (index[page]) return index[page];
+    var canonical = canonicalSlug(page);
+    if (index[canonical]) return index[canonical];
+    return "js/modules/data/" + canonical + "-cko.json";
+  }
+
   function getToolKey() {
     var body = document.body;
     if (!body) return null;
     var key = body.getAttribute("data-tool-cko");
     if (key) return key;
     var page = body.getAttribute("data-page");
-    if (page && CKO_MAP[page]) return page;
+    if (!page) return null;
+    if (document.getElementById("tool-config")) return page;
+    if (page === "apgar" || page === "glasgow" || page === "escala-de-glasgow") return page;
     return null;
   }
 
@@ -80,9 +94,9 @@
       if (cko.metadata.seo) merged.seo = deepMerge(merged.seo || {}, cko.metadata.seo);
       if (cko.metadata.breadcrumb) merged.breadcrumb = cko.metadata.breadcrumb;
     }
-    if (cko.reasoning && cko.reasoning.sae) merged.sae = cko.reasoning.sae;
+    if (cko.reasoning && cko.reasoning.sae) merged.sae = deepMerge(merged.sae || {}, cko.reasoning.sae);
     if (cko.evidence) merged.evidence = deepMerge(merged.evidence || {}, cko.evidence);
-    if (cko.presentation && cko.presentation.learning) merged.learning = cko.presentation.learning;
+    if (cko.presentation) merged._presentation = cko.presentation;
     merged._cko = cko;
     return merged;
   }
@@ -94,38 +108,49 @@
     });
   }
 
+  function loadCkoForKey(key, index) {
+    var configEl = document.getElementById("tool-config");
+    var ckoUrl = assetPath(resolveCkoPath(key, index));
+    var v3Key = canonicalSlug(key);
+
+    return loadJson(ckoUrl)
+      .then(function (cko) {
+        window.ToolCKO.data = cko;
+        window.ToolCKO.sourceV3 = CKO_SOURCE_V3[key] || CKO_SOURCE_V3[v3Key] || null;
+        var baseConfig = parseToolConfig() || {};
+        var merged = mergeCkoWithConfig(cko, baseConfig);
+        window.ToolCKO.config = merged;
+        if (configEl) configEl.textContent = JSON.stringify(merged);
+        var edgesFile = cko.reasoning && cko.reasoning.edges_file;
+        if (!edgesFile) return cko;
+        return loadJson(assetPath(edgesFile))
+          .then(function (edges) {
+            window.ToolCKO.edges = edges;
+            return cko;
+          })
+          .catch(function () {
+            return cko;
+          });
+      });
+  }
+
   function init() {
     var key = getToolKey();
-    if (!key || !CKO_MAP[key]) {
+    if (!key) {
       window.ToolCKO = { ready: Promise.resolve(null), data: null, config: parseToolConfig() };
       return;
     }
-
-    var configEl = document.getElementById("tool-config");
-    var ckoUrl = assetPath(CKO_MAP[key]);
 
     window.ToolCKO = {
       data: null,
       config: null,
       edges: null,
-      ready: loadJson(ckoUrl)
-        .then(function (cko) {
-          window.ToolCKO.data = cko;
-          window.ToolCKO.sourceV3 = CKO_SOURCE_V3[key] || null;
-          var baseConfig = parseToolConfig() || {};
-          var merged = mergeCkoWithConfig(cko, baseConfig);
-          window.ToolCKO.config = merged;
-          if (configEl) configEl.textContent = JSON.stringify(merged);
-          var edgesFile = cko.reasoning && cko.reasoning.edges_file;
-          if (!edgesFile) return cko;
-          return loadJson(assetPath(edgesFile))
-            .then(function (edges) {
-              window.ToolCKO.edges = edges;
-              return cko;
-            })
-            .catch(function () {
-              return cko;
-            });
+      ready: loadJson(assetPath("js/bundles/cko-index.json"))
+        .then(function (idx) {
+          return loadCkoForKey(key, (idx && idx.index) || {});
+        })
+        .catch(function (err) {
+          return loadCkoForKey(key, {});
         })
         .catch(function (err) {
           console.warn("[tool-cko-loader] CKO não carregado, usando tool-config:", err);

@@ -240,9 +240,15 @@
     });
   }
 
+  function shouldMountProfiles() {
+    if (document.getElementById("tool-config")) return true;
+    var page = document.body && document.body.getAttribute("data-page");
+    return page === "apgar" || page === "glasgow" || page === "escala-de-glasgow";
+  }
+
   function init() {
     whenReady(function (cko) {
-      if (!document.getElementById("tool-config")) return;
+      if (!shouldMountProfiles()) return;
       mountAll(cko);
       document.dispatchEvent(new CustomEvent("tool-profile:ready", { detail: { cko: cko } }));
     });
