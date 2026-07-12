@@ -1,0 +1,319 @@
+{
+  "id": "9a1b2c3d-4e5f-6789-0abc-def123456789",
+  "code": "CALC-HEPARINA-001",
+  "slug": "heparina",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Calculadora de Aspiração de Heparina",
+    "description": "Calcule o volume (mL) de heparina a aspirar na seringa a partir da dose prescrita em unidades (UI) e da concentração da ampola ou frasco. Ferramenta gratuita para enfermagem.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/heparina.html"
+  },
+  "breadcrumb": {
+    "category": "Cálculo de Medicação",
+    "categoryHref": "index.html#calculadoras"
+  },
+  "overview": {
+    "name": "Calculadora de Aspiração de Heparina",
+    "acronym": "Aspiração Heparina",
+    "categoryBadge": "Cálculo de medicação",
+    "icon": "i-flask",
+    "objective": "Calcule com precisão o volume (mL) de heparina a aspirar na seringa a partir da dose prescrita em unidades internacionais (UI) e da concentração da solução.",
+    "indication": "Indicada sempre que houver prescrição de heparina em unidades e a necessidade de converter para volume em mL para aspiração ou preparo de bolus.",
+    "targetPopulation": "Pacientes que necessitem de anticoagulação com heparina não fracionada ou de baixo peso molecular por via intravenosa ou subcutânea, conforme prescrição médica.",
+    "specialty": [
+      "Enfermagem Médico-Cirúrgica",
+      "Terapia Intensiva",
+      "Cardiologia",
+      "Hemodinâmica"
+    ],
+    "averageTime": "1-2 minutos",
+    "evidenceLevel": "III",
+    "complexity": "basic",
+    "rating": 4.8,
+    "ratingCount": 980
+  },
+  "calculator": {
+    "involvesMedication": true,
+    "inputs": [
+      {
+        "id": "dose",
+        "type": "number",
+        "label": "Dose prescrita",
+        "unit": "UI",
+        "defaultValue": 5000,
+        "min": 100,
+        "step": 100,
+        "description": "Dose de heparina prescrita pelo médico, em unidades internacionais (UI)."
+      },
+      {
+        "id": "concentration",
+        "type": "select",
+        "label": "Concentração da heparina",
+        "defaultValue": 1000,
+        "description": "Concentração da ampola ou frasco de heparina (UI por mL).",
+        "options": [
+          {
+            "value": 1000,
+            "label": "1.000 UI/mL",
+            "score": 1000
+          },
+          {
+            "value": 5000,
+            "label": "5.000 UI/mL",
+            "score": 5000
+          },
+          {
+            "value": 10000,
+            "label": "10.000 UI/mL",
+            "score": 10000
+          },
+          {
+            "value": 25000,
+            "label": "25.000 UI/mL",
+            "score": 25000
+          }
+        ]
+      },
+      {
+        "id": "seringa",
+        "type": "select",
+        "label": "Seringa disponível",
+        "defaultValue": 5,
+        "description": "Tipo de seringa disponível para aspiração.",
+        "options": [
+          {
+            "value": 1,
+            "label": "Seringa de 1 mL",
+            "score": 1
+          },
+          {
+            "value": 3,
+            "label": "Seringa de 3 mL",
+            "score": 3
+          },
+          {
+            "value": 5,
+            "label": "Seringa de 5 mL",
+            "score": 5
+          },
+          {
+            "value": 10,
+            "label": "Seringa de 10 mL",
+            "score": 10
+          },
+          {
+            "value": 20,
+            "label": "Seringa de 20 mL",
+            "score": 20
+          }
+        ]
+      }
+    ],
+    "formula": {
+      "type": "expression",
+      "expression": "dose/concentration",
+      "resultLabel": "Volume a aspirar",
+      "resultUnit": "mL",
+      "decimals": 2
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {
+        "min": 0,
+        "max": 0.49,
+        "label": "Volume muito baixo",
+        "riskLevel": "moderate",
+        "color": "#ca8a04",
+        "clinicalImplications": "Volume muito pequeno para aspiração precisa. Verifique a dose e a concentração. Utilize seringa de 1 mL para maior precisão em volumes baixos."
+      },
+      {
+        "min": 0.5,
+        "max": 5.0,
+        "label": "Dentro da faixa usual",
+        "riskLevel": "none",
+        "color": "#2563eb",
+        "clinicalImplications": "Volume compatível com seringas de 1 a 5 mL. Confirme a leitura da escala e realize dupla checagem antes da administração."
+      },
+      {
+        "min": 5.01,
+        "max": 10.0,
+        "label": "Volume elevado",
+        "riskLevel": "low",
+        "color": "#2563eb",
+        "clinicalImplications": "Volume acima de 5 mL. Utilize seringa de 10 mL ou maior. Confirme dose prescrita e concentração do frasco."
+      },
+      {
+        "min": 10.01,
+        "max": 999999,
+        "label": "Volume muito elevado",
+        "riskLevel": "high",
+        "color": "#dc2626",
+        "clinicalImplications": "Volume muito alto. Revise a dose prescrita, a concentração e a via de administração. Considere diluição conforme protocolo institucional e notifique o prescritor se necessário."
+      }
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {
+        "diagnosis": "Risco de sangramento",
+        "definition": "Vulnerabilidade a uma diminuição do volume sanguíneo que pode comprometer a saúde, relacionada ao uso de anticoagulantes."
+      },
+      {
+        "diagnosis": "Risco de trombose",
+        "definition": "Vulnerabilidade ao desenvolvimento de trombos que podem comprometer a saúde, relacionada à necessidade de anticoagulação."
+      }
+    ],
+    "noc": [
+      {
+        "outcome": "Coagulação",
+        "indicators": [
+          "TTPa dentro da faixa terapêutica",
+          "Ausência de sangramento ativo",
+          "Hemograma estável"
+        ]
+      },
+      {
+        "outcome": "Segurança do paciente",
+        "indicators": [
+          "Dupla checagem realizada",
+          "Dose e via corretas documentadas",
+          "Monitorização de sinais de sangramento"
+        ]
+      }
+    ],
+    "nic": [
+      {
+        "intervention": "Administração de medicamento",
+        "activities": [
+          "Verificar prescrição e concentração do frasco",
+          "Calcular volume com dupla checagem",
+          "Monitorar TTPa conforme protocolo",
+          "Observar sinais de sangramento"
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "O cálculo de aspiração de heparina fundamenta-se na relação entre a dose prescrita em unidades internacionais (UI) e a concentração da solução (UI/mL). A fórmula padrão — Volume (mL) = Dose (UI) ÷ Concentração (UI/mL) — deriva da definição farmacêutica da concentração. A heparina é classificada como medicamento de alto alerta pela OMS e ISMP.",
+    "history": "A heparina foi descoberta em 1916 e permanece como anticoagulante parenteral amplamente utilizado. As concentrações comerciais mais comuns no Brasil são 1.000 UI/mL e 5.000 UI/mL em frascos-ampola.",
+    "validation": "Protocolos institucionais e diretrizes de segurança do paciente recomendam dupla checagem do cálculo de medicação antes da administração de anticoagulantes. O monitoramento do TTPa é o exame de referência para heparina não fracionada.",
+    "limitations": "Esta calculadora realiza apenas a conversão de unidades para mL. Não substitui a avaliação clínica da indicação, o ajuste de dose pelo TTPa, a verificação da via nem o monitoramento de sangramento. Sempre confira a prescrição e os protocolos da instituição.",
+    "references": [
+      {
+        "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+      },
+      {
+        "text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."
+      },
+      {
+        "text": "BRASIL. Ministério da Saúde. Protocolo de segurança na prescrição, uso e administração de medicamentos. Brasília: MS, 2013."
+      },
+      {
+        "text": "INSTITUTE FOR SAFE MEDICATION PRACTICES (ISMP). High-Alert Medications: Anticoagulants. 2023."
+      },
+      {
+        "text": "AMERICAN HEART ASSOCIATION. Antithrombotic Therapy Guidelines. Circulation, 2024."
+      }
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Heparina é medicamento de alto alerta — sempre realize dupla checagem.",
+      "Confira a concentração do frasco (1.000, 5.000 ou 10.000 UI/mL) antes do cálculo.",
+      "Monitore TTPa conforme protocolo institucional.",
+      "Observe sinais de sangramento: hematomas, melena, hematuria.",
+      "Registre dose, volume, via, horário e profissional que checou."
+    ],
+    "examples": [
+      {
+        "label": "Bolus comum",
+        "sublabel": "5.000 UI de heparina 1.000 UI/mL",
+        "emoji": "💉",
+        "values": {
+          "dose": 5000,
+          "concentration": 1000,
+          "seringa": 5
+        }
+      },
+      {
+        "label": "Dose moderada",
+        "sublabel": "2.500 UI de heparina 5.000 UI/mL",
+        "emoji": "📏",
+        "values": {
+          "dose": 2500,
+          "concentration": 5000,
+          "seringa": 3
+        }
+      },
+      {
+        "label": "Alta concentração",
+        "sublabel": "10.000 UI de heparina 10.000 UI/mL",
+        "emoji": "⚠️",
+        "values": {
+          "dose": 10000,
+          "concentration": 10000,
+          "seringa": 5
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Qual exame laboratorial monitora o efeito da heparina não fracionada?",
+        "opts": [
+          "Hemoglobina",
+          "TTPa (Tempo de Tromboplastina Parcial Ativada)",
+          "Glicemia",
+          "Creatinina"
+        ],
+        "correct": 1,
+        "expl": "O TTPa é o exame de referência para monitorar a anticoagulação com heparina não fracionada, com meta terapêutica geralmente entre 1,5 e 2,5 vezes o valor basal."
+      },
+      {
+        "q": "Qual é a fórmula para calcular o volume de heparina a aspirar?",
+        "opts": [
+          "Dose (UI) ÷ Concentração (UI/mL)",
+          "Dose × Concentração",
+          "Concentração ÷ Dose",
+          "Dose + Concentração"
+        ],
+        "correct": 0,
+        "expl": "Volume (mL) = Dose (UI) ÷ Concentração (UI/mL). Por exemplo: 5.000 UI ÷ 1.000 UI/mL = 5 mL."
+      },
+      {
+        "q": "A heparina é classificada como:",
+        "opts": [
+          "Medicamento de baixo risco",
+          "Medicamento de alto alerta",
+          "Suplemento alimentar",
+          "Medicamento isento de checagem"
+        ],
+        "correct": 1,
+        "expl": "A heparina é um anticoagulante classificado como medicamento de alto alerta pela OMS e ISMP, exigindo dupla checagem e monitorização rigorosa."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Qual a diferença entre heparina 1.000 UI/mL e 5.000 UI/mL?",
+      "a": "Ambas contêm heparina, mas em concentrações diferentes. Um frasco de 1.000 UI/mL tem menos unidades por mL que um de 5.000 UI/mL. Sempre confira a concentração antes do cálculo para evitar erros de dosagem."
+    },
+    {
+      "q": "Posso usar esta calculadora para heparina de baixo peso molecular (HBPM)?",
+      "a": "Esta ferramenta calcula o volume a partir de UI e concentração em UI/mL. Para HBPM prescrita em miligramos (mg), utilize a calculadora de medicamentos ou o protocolo específico da instituição."
+    },
+    {
+      "q": "Esta calculadora substitui a checagem clínica?",
+      "a": "Não. A ferramenta é um apoio ao cálculo e não substitui a avaliação clínica, a prescrição médica, o monitoramento do TTPa nem os protocolos da instituição."
+    },
+    {
+      "q": "O que fazer se o volume calculado for maior que a seringa disponível?",
+      "a": "Utilize seringa de maior capacidade ou divida a aspiração conforme protocolo. Em caso de dúvida, confirme com o prescritor ou farmácia clínica antes de administrar."
+    }
+  ],
+  "about": {
+    "title": "Como funciona o cálculo de aspiração de heparina",
+    "html": "<p>A aspiração de heparina é calculada dividindo a dose prescrita (em unidades internacionais, UI) pela concentração da solução (em UI/mL). O resultado indica o volume em mL que deve ser aspirado na seringa para administração da dose correta.</p><p>Fórmula: <strong>Volume (mL) = Dose (UI) ÷ Concentração (UI/mL)</strong>.</p><p>Por exemplo, para uma dose de 5.000 UI de heparina 1.000 UI/mL: 5.000 ÷ 1.000 = 5 mL.</p>"
+  }
+}

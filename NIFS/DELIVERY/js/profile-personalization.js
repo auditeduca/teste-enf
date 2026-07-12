@@ -49,8 +49,8 @@
       ],
       tools: [
         {name:'Gotejamento',desc:'Cálculo de infusão',url:'gotejamento.html'},
-        {name:'Dosagem',desc:'Cálculo de medicação',url:'dosagem.html'},
-        {name:'Bisectriz',desc:'Divisão de comprimidos',url:'bisectriz.html'},
+        {name:'Dosagem',desc:'Cálculo de medicação',url:'medicamentos.html'},
+        {name:'Gotejamento',desc:'Velocidade de infusão IV',url:'gotejamento.html'},
         {name:'SAE Wizard',desc:'Plano de cuidados NANDA/NIC/NOC',url:'sae-wizard.html'},
         {name:'SBAR',desc:'Comunicação clínica',url:'sbar.html'},
         {name:'Balanço Hídrico',desc:'Controle de fluidos',url:'balancohidrico.html'},

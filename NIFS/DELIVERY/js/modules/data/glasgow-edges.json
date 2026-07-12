@@ -1,0 +1,141 @@
+{
+  "schema_version": "2026.2.2-draft",
+  "status": "review",
+  "concept_code": "GCS",
+  "description": "Edge layer GCS → NANDA → NIC → NOC. Tipos de relation_dictionary.json.",
+  "evidence_note": "NANDA/NIC/NOC alinhados a nnn_linkages.json (NANDA.00226, NANDA.00155). Labels educacionais — Grau C até revisão.",
+  "edges": [
+    {
+      "from": "GCS_SCL_001",
+      "to": "NANDA_00226",
+      "relation_type": "supports_diagnosis",
+      "weight": 0.85,
+      "evidence_grade": "MODERATE",
+      "status": "review",
+      "notes": "Escore baixo → risco de deterioração neurológica"
+    },
+    {
+      "from": "GCS_SCL_001",
+      "to": "NANDA_00155",
+      "relation_type": "supports_diagnosis",
+      "weight": 0.78,
+      "evidence_grade": "MODERATE",
+      "status": "review",
+      "notes": "Alteração do nível de consciência"
+    },
+    {
+      "from": "GCS_RULE_001",
+      "to": "NANDA_00226",
+      "relation_type": "triggers",
+      "weight": 0.9,
+      "evidence_grade": "MODERATE",
+      "status": "review",
+      "notes": "Regra threshold GCS ≤8 dispara NANDA principal"
+    },
+    {
+      "from": "GCS_FLA_001",
+      "to": "GCS_SCL_001",
+      "relation_type": "derived_from",
+      "weight": 1,
+      "status": "review"
+    },
+    {
+      "from": "NANDA_00226",
+      "to": "NIC_1040",
+      "relation_type": "treated_by",
+      "weight": 0.9,
+      "evidence_grade": "MODERATE",
+      "status": "draft",
+      "notes": "NNN.NANDA.00226.NIC.1040 — monitorização neurológica"
+    },
+    {
+      "from": "NANDA_00226",
+      "to": "NIC_1450",
+      "relation_type": "maps_to",
+      "weight": 0.82,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    },
+    {
+      "from": "NANDA_00155",
+      "to": "NIC_2300",
+      "relation_type": "treated_by",
+      "weight": 0.88,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    },
+    {
+      "from": "NANDA_00155",
+      "to": "NIC_1120",
+      "relation_type": "maps_to",
+      "weight": 0.75,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    },
+    {
+      "from": "NIC_1040",
+      "to": "NOC_0400",
+      "relation_type": "impacts",
+      "weight": 0.86,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    },
+    {
+      "from": "NIC_1450",
+      "to": "NOC_1602",
+      "relation_type": "impacts",
+      "weight": 0.8,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    },
+    {
+      "from": "NIC_2300",
+      "to": "NOC_0405",
+      "relation_type": "impacts",
+      "weight": 0.78,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    }
+  ],
+  "inference_rules": [
+    {
+      "rule_id": "GCS_RULE_001",
+      "logic_type": "threshold_mapping",
+      "rules": [
+        {
+          "condition": "score <= 8",
+          "label": "severe",
+          "nanda_boost": {
+            "NANDA_00226": 0.88,
+            "NANDA_00155": 0.72
+          }
+        },
+        {
+          "condition": "score >= 9 && score <= 12",
+          "label": "moderate",
+          "nanda_boost": {
+            "NANDA_00226": 0.62,
+            "NANDA_00155": 0.58
+          }
+        },
+        {
+          "condition": "score >= 13",
+          "label": "mild",
+          "nanda_boost": {
+            "NANDA_00226": 0.18,
+            "NANDA_00155": 0.12
+          }
+        }
+      ]
+    }
+  ],
+  "_generated": {
+    "by": "compiler/build_all.py",
+    "do_not_edit": true,
+    "at": "2026-07-09T05:37:52.194217Z",
+    "artifact": "js/modules/data/glasgow-edges.json",
+    "sources": [
+      "NIFS/reference-datasets/ontology/gcs_edges.json"
+    ]
+  }
+}
