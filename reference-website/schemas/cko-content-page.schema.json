@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.calculadorasdeenfermagem.com.br/schemas/cko-content-page.schema.json",
+  "title": "CKO Content Page Manifest",
+  "type": "object",
+  "required": ["pageId", "toc", "faq", "related", "references", "media"],
+  "properties": {
+    "pageId": { "type": "string" },
+    "toc": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" }
+        }
+      }
+    },
+    "faq": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["q", "a"],
+        "properties": {
+          "q": { "type": "string" },
+          "a": { "type": "string" }
+        }
+      }
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "href"],
+        "properties": {
+          "label": { "type": "string" },
+          "href": { "type": "string" },
+          "primary": { "type": "boolean" }
+        }
+      }
+    },
+    "related": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["title", "href", "kind"],
+        "properties": {
+          "title": { "type": "string" },
+          "href": { "type": "string" },
+          "kind": {
+            "type": "string",
+            "enum": ["protocolo", "guia", "calculadora", "artigo", "simulado", "biblioteca"]
+          },
+          "blurb": { "type": "string" }
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["label"],
+        "properties": {
+          "label": { "type": "string" },
+          "href": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["legislacao", "cientifica", "bibliografica", "institucional", "programa"]
+          }
+        }
+      }
+    },
+    "media": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "role", "alt", "source"],
+        "properties": {
+          "file": { "type": "string" },
+          "mobile": { "type": "string" },
+          "role": {
+            "type": "string",
+            "enum": ["protocol-figure", "illustrative", "ui-screenshot", "banner"]
+          },
+          "alt": { "type": "string" },
+          "caption": { "type": "string" },
+          "source": { "type": "string" },
+          "license": { "type": "string" }
+        }
+      }
+    }
+  }
+}

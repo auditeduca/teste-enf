@@ -1,0 +1,423 @@
+﻿<!-- Global Body Elements (Chinese) -->
+<!-- 此文件包含 PWA/移动端无障碍工具栏和 Cookie 模态框等元素。 -->
+
+<!-- 无障碍切换按钮 (Mobile) -->
+<button id="accessibilityToggleButton" aria-label="打开无障碍菜单">
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- 侧边无障碍面板 (Mobile) -->
+<div id="pwaAcessibilidadeBar">
+  <div class="pwa-acessibilidade-header">
+    <h3>无障碍功能</h3>
+    <button
+      id="pwaAcessibilidadeCloseBtn"
+      class="pwa-acessibilidade-close-btn"
+      aria-label="关闭无障碍菜单"
+    >
+      &times;
+    </button>
+  </div>
+  <button id="btnAlternarTamanhoFontePWA" aria-label="更改字体大小">
+    <i class="fas fa-text-height"></i><span id="fontSizeTextPWA">字体大小</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinhaPWA" aria-label="更改行间距">
+    <i class="fas fa-align-justify"></i
+    ><span id="lineHeightTextPWA">行间距</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetraPWA" aria-label="更改字间距">
+    <i class="fas fa-text-width"></i
+    ><span id="letterSpacingTextPWA">字间距</span>
+  </button>
+  <button id="btnAlternarContrastePWA" aria-label="切换高对比度">
+    <i class="fas fa-contrast"></i><span>高对比度</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="切换深色模式">
+    <i class="fas fa-moon"></i><span>深色模式</span>
+  </button>
+  <button id="btnAlternarFonteDislexiaPWA" aria-label="切换阅读障碍字体">
+    <i class="fas fa-font"></i><span>阅读障碍字体</span>
+  </button>
+  <div class="color-options-pwa" role="radiogroup" aria-label="无障碍焦点颜色">
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="黄色焦点颜色"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="柠檬绿焦点颜色"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="青色焦点颜色"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="洋红色焦点颜色"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="键盘快捷键">
+    <i class="fas fa-keyboard"></i><span>快捷键</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="重置设置">
+    <i class="fas fa-undo"></i><span>全部重置</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- 菜单覆盖层 (Overlay) --><!-- 桌面端无障碍工具栏 -->
+<div id="barraAcessibilidade">
+  <button id="btnAlternarTamanhoFonte" aria-label="更改字体大小">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span id="fontSizeText">正常</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinha" aria-label="更改行间距">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-align-justify"
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+    <span id="lineHeightText">中等</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetra" aria-label="更改字间距">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-text-spacing"
+    >
+      <path d="M10 12H3" />
+      <path d="M21 12h-7" />
+      <path d="M12 20V4" />
+    </svg>
+    <span id="letterSpacingText">正常</span>
+  </button>
+  <button id="btnAlternarVelocidadeLeitura" aria-label="更改阅读速度">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-gauge"
+    >
+      <path d="M12 14v4" />
+      <path
+        d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"
+      />
+    </svg>
+    <span id="readingSpeedText">正常</span>
+  </button>
+  <button id="btnToggleLeitura" aria-label="播放/暂停阅读主要内容">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-play"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">播放阅读</span>
+  </button>
+  <button id="btnReiniciarLeitura" aria-label="重新开始阅读主要内容">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-rotate-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">重新开始阅读</span>
+  </button>
+  <button id="btnReadFocused" aria-label="阅读焦点元素">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-volume-2"
+    >
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path
+        d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"
+      />
+    </svg>
+    <span class="sr-only">阅读焦点</span>
+  </button>
+  <button
+    id="btnAlternarContraste"
+    aria-label="切换高对比度"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-contrast"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 18a6 6 0 0 0 0-12v12z" />
+    </svg>
+    <span class="sr-only">对比度</span>
+  </button>
+  <button
+    id="btnAlternarModoEscuro"
+    aria-label="切换深色模式"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-moon"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+    <span class="sr-only">深色模式</span>
+  </button>
+  <button id="btnAlternarFonteDislexia" aria-label="切换阅读障碍字体">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span class="sr-only">阅读障碍字体</span>
+  </button>
+  <div class="flex space-x-1" role="radiogroup" aria-label="无障碍焦点颜色">
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="黄色焦点颜色"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="柠檬绿焦点颜色"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="青色焦点颜色"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="洋红色焦点颜色"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="键盘快捷键">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">键盘快捷键</span>
+  </button>
+  <button id="btnResetarAcessibilidade" aria-label="重置无障碍设置">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-refresh-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">重置</span>
+  </button>
+</div>
+
+
+
+<!-- Cookie 同意横幅 -->
+<div id="cookieConsentBanner">
+  <p>
+    我们使用 cookies 来改善您在我们网站上的体验。继续浏览即表示您同意我们的
+    <a href="politica.html" class="underline text-blue-200 hover:text-blue-100"
+      >Cookie 政策</a
+    >。
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">接受所有 cookies</button>
+    <button id="manageCookiesBtn" class="secondary">管理 cookies</button>
+    <button id="refuseAllCookiesBtn" class="secondary">拒绝所有 cookies</button>
+  </div>
+</div>
+
+<!-- 详细 Cookie 模态框 -->
+<div
+  id="granularCookieModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="granularModalTitle"
+  class="hidden"
+>
+  <div class="granular-modal-content">
+    <button
+      id="granularModalCloseButton"
+      class="modal-close-btn"
+      aria-label="关闭 cookie 设置"
+    >
+      ×
+    </button>
+    <h3 id="granularModalTitle">隐私设置</h3>
+    <p>
+      我们使用 cookies
+      来确保网站的运行和个性化内容。您可以在下方调整您的偏好设置：
+    </p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"
+        ><input type="checkbox" id="cookieEssential" checked disabled />
+        基本</label
+      >
+      <span class="description">网站基本运行所必需。无法禁用。</span>
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"
+        ><input type="checkbox" id="cookieAnalytics" /> 分析</label
+      >
+      <span class="description"
+        >收集您如何使用网站的信息，以帮助我们改进。</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"
+        ><input type="checkbox" id="cookieMarketing" /> 营销</label
+      >
+      <span class="description">用于根据您的兴趣展示相关广告。</span>
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">
+        保存偏好设置
+      </button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 键盘快捷键模态框 -->
+<div
+  id="keyboardShortcutsModal"
+  class="hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="keyboardModalTitle"
+>
+  <div class="keyboard-modal-content">
+    <button
+      id="keyboardModalCloseButton"
+      class="modal-close-btn"
+      aria-label="关闭键盘快捷键"
+    >
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">键盘快捷键和导航</h3>
+    <h4 class="font-bold mb-2">无障碍快捷键 (Accesskey)</h4>
+    <p class="mb-4">使用以下组合键可快速访问无障碍功能：</p>
+    <ul>
+      <li><strong>Alt + Shift + I:</strong> 转到首页 (Home)</li>
+      <li><strong>Alt + Shift + C:</strong> 转到主要内容</li>
+      <li><strong>Alt + Shift + A:</strong> 转到无障碍工具栏</li>
+      <li><strong>Alt + Shift + T:</strong> 返回页面顶部</li>
+    </ul>
+  </div>
+</div>
+<!-- OffCanvas 菜单 (Mobile) --><!-- 返回顶部按钮 -->
+<button id="backToTopBtn" aria-label="返回页面顶部" accesskey="T">
+  返回顶部
+</button>
+

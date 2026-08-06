@@ -1,0 +1,209 @@
+/* Valorização profissional — gerador de banner CKO */
+.cko-vp {
+  --vp-navy: var(--cart-navy, #1A3E74);
+  --vp-navy-mid: var(--cart-navy-mid, #1E4D8C);
+  --vp-navy-dark: var(--cart-navy-dark, #163269);
+  --vp-line: var(--cart-slate-200, #e2e8f0);
+  --vp-muted: var(--cart-slate-500, #64748b);
+  --vp-ink: var(--cart-slate-800, #1e293b);
+  --vp-tint: var(--cart-slate-50, #f8fafc);
+  --vp-radius: var(--cart-radius, 14px);
+  --vp-accent: #3B82F6;
+  font-family: var(--font-body, Inter, system-ui, sans-serif);
+  color: var(--vp-ink);
+}
+
+.cko-vp__workspace {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: 1.1rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .cko-vp__workspace { grid-template-columns: 1fr; }
+}
+
+.cko-vp__panel,
+.cko-vp__preview {
+  background: #fff;
+  border: 1px solid var(--vp-line);
+  border-radius: var(--vp-radius);
+  box-shadow: 0 10px 28px rgba(26, 62, 116, 0.07);
+}
+
+.cko-vp__panel {
+  padding: 1.25rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.cko-vp__panel h2 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display, "Nunito Sans", Inter, sans-serif);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--vp-navy);
+  letter-spacing: -0.02em;
+}
+
+.cko-vp__panel > p {
+  margin: 0 0 1.1rem;
+  font-size: 0.88rem;
+  color: var(--vp-muted);
+  line-height: 1.45;
+}
+
+.cko-vp__field {
+  margin-bottom: 1rem;
+}
+
+.cko-vp__field label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--vp-navy);
+  margin-bottom: 0.4rem;
+}
+
+.cko-vp__field input,
+.cko-vp__field select,
+.cko-vp__field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--vp-line);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--vp-ink);
+  background: var(--vp-tint);
+}
+
+.cko-vp__field input:focus,
+.cko-vp__field select:focus,
+.cko-vp__field textarea:focus {
+  outline: 2px solid rgba(26, 62, 116, 0.22);
+  border-color: var(--vp-navy);
+  background: #fff;
+}
+
+.cko-vp__field textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.cko-vp__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 0.35rem;
+}
+
+.cko-vp__btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.cko-vp__btn--primary {
+  background: linear-gradient(135deg, var(--vp-navy), var(--vp-navy-mid));
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(26, 62, 116, 0.25);
+}
+
+.cko-vp__btn--primary:hover { filter: brightness(1.05); }
+
+.cko-vp__btn--accent {
+  background: #fff;
+  color: var(--vp-navy);
+  border-color: var(--vp-line);
+}
+
+.cko-vp__btn--accent:hover { background: var(--vp-tint); }
+
+.cko-vp__btn[hidden] { display: none !important; }
+
+.cko-vp__preview {
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.cko-vp__preview h2 {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-display, "Nunito Sans", Inter, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--vp-navy);
+  text-align: left;
+}
+
+.cko-vp__frame {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--vp-line);
+  background: var(--vp-tint);
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.cko-vp__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cko-vp__placeholder {
+  padding: 2.5rem 1.5rem;
+  color: var(--vp-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+  max-width: 18rem;
+}
+
+.cko-vp__note {
+  margin: 1rem 0 0;
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--vp-muted);
+  line-height: 1.45;
+}
+
+.cko-vp__toast {
+  position: fixed;
+  top: 5.5rem;
+  right: 1rem;
+  z-index: 70;
+  background: #fff;
+  border: 1px solid var(--vp-line);
+  border-left: 4px solid var(--vp-navy);
+  border-radius: 12px;
+  padding: 0.85rem 1.1rem;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+  font-weight: 800;
+  font-size: 0.9rem;
+  transform: translateX(120%);
+  transition: transform 0.3s ease;
+  max-width: min(90vw, 22rem);
+}
+
+.cko-vp__toast.is-show { transform: translateX(0); }

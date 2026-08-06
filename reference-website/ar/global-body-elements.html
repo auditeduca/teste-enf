@@ -1,0 +1,453 @@
+﻿<!-- شريط إمكانية الوصول (نمط الهيبارين القياسي) -->
+<!-- زر إمكانية الوصول العائم (للجوال) -->
+<button id="accessibilityToggleButton" aria-label="فتح قائمة إمكانية الوصول">
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- لوحة إمكانية الوصول الجانبية (للجوال) -->
+<div id="pwaAcessibilidadeBar" dir="rtl">
+  <div class="pwa-acessibilidade-header">
+    <h3>إمكانية الوصول</h3>
+    <button
+      id="pwaAcessibilidadeCloseBtn"
+      class="pwa-acessibilidade-close-btn"
+      aria-label="إغلاق قائمة إمكانية الوصول"
+    >
+      &times;
+    </button>
+  </div>
+  <button id="btnAlternarTamanhoFontePWA" aria-label="تغيير حجم الخط">
+    <i class="fas fa-text-height"></i><span id="fontSizeTextPWA">حجم الخط</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinhaPWA" aria-label="تغيير تباعد الأسطر">
+    <i class="fas fa-align-justify"></i
+    ><span id="lineHeightTextPWA">تباعد الأسطر</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetraPWA" aria-label="تغيير تباعد الأحرف">
+    <i class="fas fa-text-width"></i
+    ><span id="letterSpacingTextPWA">تباعد الأحرف</span>
+  </button>
+  <button id="btnAlternarContrastePWA" aria-label="تبديل التباين العالي">
+    <i class="fas fa-contrast"></i><span>تباين عالي</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="تبديل الوضع الداكن">
+    <i class="fas fa-moon"></i><span>الوضع الداكن</span>
+  </button>
+  <button id="btnAlternarFonteDislexiaPWA" aria-label="تبديل خط عسر القراءة">
+    <i class="fas fa-font"></i><span>خط عسر القراءة</span>
+  </button>
+  <div
+    class="color-options-pwa"
+    role="radiogroup"
+    aria-label="لون تركيز إمكانية الوصول"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="لون تركيز أصفر"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="لون تركيز أخضر ليموني"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="لون تركيز سماوي"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="لون تركيز أرجواني"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="اختصارات لوحة المفاتيح">
+    <i class="fas fa-keyboard"></i><span>الاختصارات</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="إعادة ضبط الإعدادات">
+    <i class="fas fa-undo"></i><span>إعادة ضبط الكل</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- تراكب للقوائم الجانبية --><div id="barraAcessibilidade" dir="rtl">
+  <button id="btnAlternarTamanhoFonte" aria-label="تغيير حجم الخط">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span id="fontSizeText">عادي</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinha" aria-label="تغيير تباعد الأسطر">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-align-justify"
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+    <span id="lineHeightText">متوسط</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetra" aria-label="تغيير تباعد الأحرف">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-text-spacing"
+    >
+      <path d="M10 12H3" />
+      <path d="M21 12h-7" />
+      <path d="M12 20V4" />
+    </svg>
+    <span id="letterSpacingText">عادي</span>
+  </button>
+  <button id="btnAlternarVelocidadeLeitura" aria-label="تغيير سرعة القراءة">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-gauge"
+    >
+      <path d="M12 14v4" />
+      <path
+        d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"
+      />
+    </svg>
+    <span id="readingSpeedText">عادي</span>
+  </button>
+  <button
+    id="btnToggleLeitura"
+    aria-label="تشغيل/إيقاف مؤقت لقراءة المحتوى الرئيسي"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-play"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">تشغيل القراءة</span>
+  </button>
+  <button
+    id="btnReiniciarLeitura"
+    aria-label="إعادة تشغيل قراءة المحتوى الرئيسي"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-rotate-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">إعادة تشغيل القراءة</span>
+  </button>
+  <button id="btnReadFocused" aria-label="قراءة العنصر المحدد">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-volume-2"
+    >
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path
+        d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"
+      />
+    </svg>
+    <span class="sr-only">قراءة المحدد</span>
+  </button>
+  <button
+    id="btnAlternarContraste"
+    aria-label="تبديل التباين العالي"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-contrast"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 18a6 6 0 0 0 0-12v12z" />
+    </svg>
+    <span class="sr-only">التباين</span>
+  </button>
+  <button
+    id="btnAlternarModoEscuro"
+    aria-label="تبديل الوضع الداكن"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-moon"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+    <span class="sr-only">الوضع الداكن</span>
+  </button>
+  <button id="btnAlternarFonteDislexia" aria-label="تبديل خط عسر القراءة">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span class="sr-only">خط عسر القراءة</span>
+  </button>
+  <div
+    class="flex space-x-1"
+    role="radiogroup"
+    aria-label="لون تركيز إمكانية الوصول"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="لون تركيز أصفر"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="لون تركيز أخضر ليموني"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="لون تركيز سماوي"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="لون تركيز أرجواني"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="اختصارات لوحة المفاتيح">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">اختصارات لوحة المفاتيح</span>
+  </button>
+  <button
+    id="btnResetarAcessibilidade"
+    aria-label="إعادة ضبط إعدادات إمكانية الوصول"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-refresh-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">إعادة الضبط</span>
+  </button>
+</div><!-- لافتة الموافقة على ملفات تعريف الارتباط -->
+<div id="cookieConsentBanner" dir="rtl">
+  <p>
+    نحن نستخدم ملفات تعريف الارتباط لتحسين تجربتك على موقعنا. من خلال الاستمرار
+    في التصفح، فإنك توافق على
+    <a href="politica.html" class="underline text-blue-200 hover:text-blue-100"
+      >سياسة ملفات تعريف الارتباط</a
+    >
+    الخاصة بنا.
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">قبول جميع ملفات تعريف الارتباط</button>
+    <button id="manageCookiesBtn" class="secondary">
+      إدارة ملفات تعريف الارتباط
+    </button>
+    <button id="refuseAllCookiesBtn" class="secondary">
+      رفض جميع ملفات تعريف الارتباط
+    </button>
+  </div>
+</div>
+
+<!-- نافذة إدارة ملفات تعريف الارتباط التفصيلية -->
+<div
+  id="granularCookieModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="granularModalTitle"
+  class="hidden"
+  dir="rtl"
+>
+  <div class="granular-modal-content">
+    <button
+      id="granularModalCloseButton"
+      class="modal-close-btn"
+      aria-label="إغلاق إعدادات ملفات تعريف الارتباط"
+    >
+      ×
+    </button>
+    <h3 id="granularModalTitle">إعدادات الخصوصية</h3>
+    <p>
+      نحن نستخدم ملفات تعريف الارتباط لضمان عمل موقعنا ولتخصيص المحتوى. يمكنك
+      ضبط تفضيلاتك أدناه:
+    </p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"
+        ><input type="checkbox" id="cookieEssential" checked disabled />
+        الأساسية</label
+      >
+      <span class="description"
+        >ضرورية للتشغيل الأساسي للموقع. لا يمكن تعطيلها.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"
+        ><input type="checkbox" id="cookieAnalytics" /> التحليلية</label
+      >
+      <span class="description"
+        >تجمع معلومات حول كيفية استخدامك للموقع لمساعدتنا على التحسين.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"
+        ><input type="checkbox" id="cookieMarketing" /> التسويقية</label
+      >
+      <span class="description"
+        >تُستخدم لعرض إعلانات ذات صلة بناءً على اهتماماتك.</span
+      >
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">
+        حفظ التفضيلات
+      </button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">
+        إلغاء
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- نافذة اختصارات لوحة المفاتيح -->
+<div
+  id="keyboardShortcutsModal"
+  class="hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="keyboardModalTitle"
+  dir="rtl"
+>
+  <div class="keyboard-modal-content">
+    <button
+      id="keyboardModalCloseButton"
+      class="modal-close-btn"
+      aria-label="إغلاق اختصارات لوحة المفاتيح"
+    >
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">اختصارات لوحة المفاتيح والتنقل</h3>
+    <h4 class="font-bold mb-2">اختصارات إمكانية الوصول (Accesskey)</h4>
+    <p class="mb-4">
+      استخدم مجموعات المفاتيح التالية للوصول بسرعة إلى ميزات إمكانية الوصول:
+    </p>
+    <ul>
+      <li>
+        <strong>Alt + Shift + I:</strong> الانتقال إلى الصفحة الرئيسية (Home)
+      </li>
+      <li><strong>Alt + Shift + C:</strong> الانتقال إلى المحتوى الرئيسي</li>
+      <li>
+        <strong>Alt + Shift + A:</strong> الانتقال إلى شريط إمكانية الوصول
+      </li>
+      <li><strong>Alt + Shift + T:</strong> العودة إلى أعلى الصفحة</li>
+    </ul>
+  </div>
+</div>
+<!-- قائمة OffCanvas (للجوال) --><!-- زر العودة إلى الأعلى -->
+<button id="backToTopBtn" aria-label="العودة إلى أعلى الصفحة" accesskey="T">
+  العودة إلى الأعلى
+</button>
+

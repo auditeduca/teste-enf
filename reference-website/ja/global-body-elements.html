@@ -1,0 +1,462 @@
+﻿<!-- Barra de Acessibilidade (Padrão Heparina) -->
+<!-- Botão Flutuante de Acessibilidade (Mobile) -->
+<button
+  id="accessibilityToggleButton"
+  aria-label="アクセシビリティメニューを開く"
+>
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- Painel Lateral de Acessibilidade (Mobile) -->
+<div id="pwaAcessibilidadeBar" lang="ja">
+  <div class="pwa-acessibilidade-header">
+    <h3>アクセシビリティ</h3>
+    <button
+      id="pwaAcessibilidadeCloseBtn"
+      class="pwa-acessibilidade-close-btn"
+      aria-label="アクセシビリティメニューを閉じる"
+    >
+      &times;
+    </button>
+  </div>
+  <button id="btnAlternarTamanhoFontePWA" aria-label="文字サイズを変更">
+    <i class="fas fa-text-height"></i
+    ><span id="fontSizeTextPWA">文字サイズ</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinhaPWA" aria-label="行間を変更">
+    <i class="fas fa-align-justify"></i><span id="lineHeightTextPWA">行間</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetraPWA" aria-label="字間を変更">
+    <i class="fas fa-text-width"></i><span id="letterSpacingTextPWA">字間</span>
+  </button>
+  <button id="btnAlternarContrastePWA" aria-label="ハイコントラスト切り替え">
+    <i class="fas fa-contrast"></i><span>ハイコントラスト</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="ダークモード切り替え">
+    <i class="fas fa-moon"></i><span>ダークモード</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexiaPWA"
+    aria-label="ディスレクシア用フォント切り替え"
+  >
+    <i class="fas fa-font"></i><span>ディスレクシア用フォント</span>
+  </button>
+  <div
+    class="color-options-pwa"
+    role="radiogroup"
+    aria-label="アクセシビリティフォーカス色"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="フォーカス色 黄色"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="フォーカス色 ライムグリーン"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="フォーカス色 シアン"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="フォーカス色 マゼンタ"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="キーボードショートカット">
+    <i class="fas fa-keyboard"></i><span>ショートカット</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="設定をリセット">
+    <i class="fas fa-undo"></i><span>すべてリセット</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- Overlay para Menus Laterais --><div id="barraAcessibilidade" lang="ja">
+  <button id="btnAlternarTamanhoFonte" aria-label="文字サイズを変更">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span id="fontSizeText">標準</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinha" aria-label="行間を変更">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-align-justify"
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+    <span id="lineHeightText">中</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetra" aria-label="字間を変更">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-text-spacing"
+    >
+      <path d="M10 12H3" />
+      <path d="M21 12h-7" />
+      <path d="M12 20V4" />
+    </svg>
+    <span id="letterSpacingText">標準</span>
+  </button>
+  <button id="btnAlternarVelocidadeLeitura" aria-label="読み上げ速度を変更">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-gauge"
+    >
+      <path d="M12 14v4" />
+      <path
+        d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"
+      />
+    </svg>
+    <span id="readingSpeedText">標準</span>
+  </button>
+  <button
+    id="btnToggleLeitura"
+    aria-label="メインコンテンツの読み上げ 再生/一時停止"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-play"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">読み上げ再生</span>
+  </button>
+  <button
+    id="btnReiniciarLeitura"
+    aria-label="メインコンテンツの読み上げを再開"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-rotate-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">読み上げ再開</span>
+  </button>
+  <button id="btnReadFocused" aria-label="フォーカスした要素を読み上げ">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-volume-2"
+    >
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path
+        d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"
+      />
+    </svg>
+    <span class="sr-only">フォーカス読み上げ</span>
+  </button>
+  <button
+    id="btnAlternarContraste"
+    aria-label="ハイコントラスト切り替え"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-contrast"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 18a6 6 0 0 0 0-12v12z" />
+    </svg>
+    <span class="sr-only">コントラスト</span>
+  </button>
+  <button
+    id="btnAlternarModoEscuro"
+    aria-label="ダークモード切り替え"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-moon"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+    <span class="sr-only">ダークモード</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexia"
+    aria-label="ディスレクシア用フォント切り替え"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span class="sr-only">ディスレクシア用フォント</span>
+  </button>
+  <div
+    class="flex space-x-1"
+    role="radiogroup"
+    aria-label="アクセシビリティフォーカス色"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="フォーカス色 黄色"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="フォーカス色 ライムグリーン"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="フォーカス色 シアン"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="フォーカス色 マゼンタ"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="キーボードショートカット">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">キーボードショートカット</span>
+  </button>
+  <button
+    id="btnResetarAcessibilidade"
+    aria-label="アクセシビリティ設定をリセット"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-refresh-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">リセット</span>
+  </button>
+</div>
+
+
+
+<!-- Banner de Consentimento de Cookies -->
+<div id="cookieConsentBanner" lang="ja">
+  <p>
+    当サイトは、お客様の体験を向上させるためにクッキーを使用しています。閲覧を続けることにより、当サイトの
+    <a href="politica.html" class="underline text-blue-200 hover:text-blue-100"
+      >クッキーポリシー</a
+    >
+    に同意したものとみなされます。
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">すべてのクッキーを承諾</button>
+    <button id="manageCookiesBtn" class="secondary">クッキーの管理</button>
+    <button id="refuseAllCookiesBtn" class="secondary">
+      すべてのクッキーを拒否
+    </button>
+  </div>
+</div>
+
+<!-- Modal Granular de Cookies -->
+<div
+  id="granularCookieModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="granularModalTitle"
+  class="hidden"
+  lang="ja"
+>
+  <div class="granular-modal-content">
+    <button
+      id="granularModalCloseButton"
+      class="modal-close-btn"
+      aria-label="クッキー設定を閉じる"
+    >
+      ×
+    </button>
+    <h3 id="granularModalTitle">プライバシー設定</h3>
+    <p>
+      当サイトは、サイトの基本的な機能を保証し、コンテンツをパーソナライズするためにクッキーを使用しています。以下で設定を調整できます：
+    </p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"
+        ><input type="checkbox" id="cookieEssential" checked disabled />
+        必須</label
+      >
+      <span class="description"
+        >サイトの基本機能に必要です。無効にできません。</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"
+        ><input type="checkbox" id="cookieAnalytics" /> 分析</label
+      >
+      <span class="description"
+        >サイトの利用状況に関する情報を収集し、改善に役立てます。</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"
+        ><input type="checkbox" id="cookieMarketing" /> マーケティング</label
+      >
+      <span class="description"
+        >お客様の興味に基づき、関連性の高い広告を表示するために使用されます。</span
+      >
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">
+        設定を保存
+      </button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">
+        キャンセル
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Atalhos de Teclado -->
+<div
+  id="keyboardShortcutsModal"
+  class="hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="keyboardModalTitle"
+  lang="ja"
+>
+  <div class="keyboard-modal-content">
+    <button
+      id="keyboardModalCloseButton"
+      class="modal-close-btn"
+      aria-label="キーボードショートカットを閉じる"
+    >
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">キーボードショートカットとナビゲーション</h3>
+    <h4 class="font-bold mb-2">アクセシビリティショートカット (Accesskey)</h4>
+    <p class="mb-4">
+      以下のキーの組み合わせで、アクセシビリティ機能に素早くアクセスできます：
+    </p>
+    <ul>
+      <li><strong>Alt + Shift + I:</strong> ホームへ移動</li>
+      <li><strong>Alt + Shift + C:</strong> メインコンテンツへ移動</li>
+      <li><strong>Alt + Shift + A:</strong> アクセシビリティバーへ移動</li>
+      <li><strong>Alt + Shift + T:</strong> ページトップへ戻る</li>
+    </ul>
+  </div>
+</div>
+<!-- Menu OffCanvas (Mobile) --><!-- Botão Voltar ao Topo -->
+<button
+  id="backToTopBtn"
+  aria-label="ページトップへ戻る"
+  accesskey="T"
+  lang="ja"
+>
+  ページトップへ
+</button>
+

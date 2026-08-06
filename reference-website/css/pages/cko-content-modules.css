@@ -1,0 +1,198 @@
+/* CKO content modules — identidade editorial (módulos A–F) */
+:root {
+  --cko-mod-border: #cbd5e1;
+  --cko-mod-bg: #ffffff;
+  --cko-mod-muted: #64748b;
+  --cko-mod-ink: #1e293b;
+}
+
+.cko-mod {
+  margin: 1.75rem 0 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.cko-mod__title {
+  margin: 0 0 0.85rem;
+  font-family: "Nunito Sans", "Inter", system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--cko-navy, #1a3e74);
+  letter-spacing: -0.01em;
+}
+
+.cko-mod__lead {
+  margin: 0 0 1rem;
+  color: var(--cko-mod-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* C — Ferramentas */
+.cko-mod-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* D — FAQ */
+.cko-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cko-faq details {
+  background: var(--cko-mod-bg);
+  border: 1px solid var(--cko-mod-border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+
+.cko-faq summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--cko-mod-ink);
+  font-family: "Nunito Sans", "Inter", system-ui, sans-serif;
+  list-style-position: outside;
+}
+
+.cko-faq summary:focus-visible {
+  outline: 2px solid var(--cko-navy, #1a3e74);
+  outline-offset: 2px;
+}
+
+.cko-faq__a {
+  margin: 0.65rem 0 0.15rem;
+  color: var(--cko-mod-ink);
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+/* E — Relacionados */
+.cko-related {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+@media (min-width: 640px) {
+  .cko-related {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cko-related__item {
+  display: block;
+  background: var(--cko-mod-bg);
+  border: 1px solid var(--cko-mod-border);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cko-related__item:hover {
+  border-color: var(--cko-navy, #1a3e74);
+  box-shadow: 0 2px 10px rgba(26, 62, 116, 0.08);
+}
+
+.cko-related__kind {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cko-navy, #1a3e74);
+  margin-bottom: 0.25rem;
+}
+
+.cko-related__title {
+  display: block;
+  font-weight: 700;
+  color: var(--cko-mod-ink);
+  font-family: "Nunito Sans", "Inter", system-ui, sans-serif;
+}
+
+.cko-related__blurb {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--cko-mod-muted);
+  line-height: 1.4;
+}
+
+/* F — Referências + midia */
+.cko-refs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.cko-refs__item {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--cko-mod-ink);
+  padding-left: 0.85rem;
+  border-left: 3px solid #cbd5e1;
+}
+
+.cko-refs__type {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cko-mod-muted);
+  margin-right: 0.35rem;
+}
+
+.cko-refs a {
+  color: var(--cko-navy, #1a3e74);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cko-refs a:hover {
+  text-decoration: underline;
+}
+
+.cko-media-credits {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.cko-media-credits__item {
+  font-size: 0.8rem;
+  color: var(--cko-mod-muted);
+  line-height: 1.4;
+}
+
+.cko-media-credits__role {
+  font-weight: 700;
+  color: var(--cko-mod-ink);
+}
+
+.cko-content-error {
+  color: #b91c1c;
+  font-size: 0.9rem;
+  padding: 0.75rem;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fef2f2;
+}
+
+/* Marcador de identidade — páginas no padrão */
+[data-cko-content][data-cko-ready="1"] {
+  --cko-content-identity: active;
+}

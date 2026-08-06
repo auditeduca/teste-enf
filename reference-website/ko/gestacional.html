@@ -1,183 +1,99 @@
-﻿<!DOCTYPE html>
-
+﻿<!doctype html>
 <html lang="ko-KR">
 <head>
+
 <!-- 1. Charset e Viewport -->
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
 <!-- 2. DNS e Preconnects -->
 <link href="//googleads.g.doubleclick.net" rel="dns-prefetch"/>
 <link href="//pagead2.googlesyndication.com" rel="dns-prefetch"/>
-<link href="https://www.googletagmanager.com" rel="preconnect"/>
+
 <!-- 3. Title e Metatags (SEO e Redes Sociais) -->
-<title>Calculadora de Idade Gestacional (IG) e DPP | Enfermagem</title>
-<meta content="Calcule a Idade Gestacional (IG) e a Data Provável do Parto (DPP) a partir da DUM. Ferramenta com detalhamento da Regra de Naegele, ideal para pré-natal na enfermagem." name="description"/>
-<meta content="calculadora gestacional, idade gestacional, calcular dpp, data provável do parto, regra de naegele, enfermagem obstétrica, pré-natal, cálculo dum" name="keywords"/>
+<title>임신 주수(IG) 및 예상 출산일(DPP) 계산기 | 간호학</title>
+<meta content="마지막 월경일(LMP)로부터 임신 주수(GA)와 예정일(EDD)을 계산합니다. Naegele 규칙을 상세히 설명하는 도구로, 간호 산전 관리에 이상적입니다." name="description"/>
+<meta content="임신 주수 계산기, 임신 주수, 예정일 계산, 예정일, 네겔레 규칙, 산과 간호, 산전 관리, LMP 계산" name="keywords"/>
 <meta content="Calculadoras de Enfermagem" name="author"/>
-<meta content="Calculadora de Idade Gestacional (IG) e DPP | Enfermagem" property="og:title"/>
-<meta content="Calcule a Idade Gestacional (IG) e a Data Provável do Parto (DPP) a partir da DUM. Ferramenta com detalhamento da Regra de Naegele." property="og:description"/>
+<meta content="임신 주수(GA) 및 예정일(EDD) 계산기 | 간호" property="og:title"/>
+<meta content="마지막 월경일(LMP)로부터 임신 주수(GA)와 예정일(EDD)을 계산합니다. Naegele 규칙을 상세히 설명하는 도구입니다." property="og:description"/>
 <meta content="https://www.calculadorasdeenfermagem.com.br/gestacional.html" property="og:url"/>
 <meta content="https://www.calculadorasdeenfermagem.com.br/iconpages-calculadoras-de-enfermagem.webp" property="og:image"/>
 <meta content="website" property="og:type"/>
 <meta content="Calculadoras de Enfermagem" property="og:site_name"/>
 <meta content="pt_BR" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<!-- 5. Preloads de Módulos HTML -->
-<!-- 6. CSS Adicional (Ícones e Fontes Extras) -->
 
-<link as="style" href="/css/site-styles.css" rel="stylesheet"/>
+<!-- 5. Preloads de Módulos HTML -->
+
+<!-- 6. CSS Adicional (Ícones e Fontes Extras) -->
+<style id="critical-fonts">@font-face{font-family:"Korean";src:url("/fonts/korean/korean-regular.woff2") format("woff2");font-weight:400;font-display:swap}@font-face{font-family:"Korean";src:url("/fonts/korean/korean-700.woff2") format("woff2");font-weight:700;font-display:swap}</style>
+<link href="/public/output.css" rel="stylesheet">
+<link href="/global-styles.css" rel="stylesheet">
 
 <!-- 7. Fontes Locais -->
-<link as="font" crossorigin="" href="/fonts/inter/inter-regular.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/inter/inter-600.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/inter/inter-700.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/nunito/nunito-regular.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/nunito/nunito-700.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/nunito/nunito-900.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/korean/korean-regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/korean/korean-700.woff2" rel="preload" type="font/woff2"/>
+
 <!-- 8. SEO Internacional (Canonical e Hreflang) -->
 <link href="https://www.calculadorasdeenfermagem.com.br/ko/gestacional.html" rel="canonical"/>
-<link rel="alternate" hreflang="pt-BR" href="https://www.calculadorasdeenfermagem.com.br/gestacional.html" />
-<link rel="alternate" hreflang="ar" href="https://www.calculadorasdeenfermagem.com.br/ar/gestacional.html" />
-<link rel="alternate" hreflang="bg-BG" href="https://www.calculadorasdeenfermagem.com.br/bg/gestacional.html" />
-<link rel="alternate" hreflang="cs-CZ" href="https://www.calculadorasdeenfermagem.com.br/cs/gestacional.html" />
-<link rel="alternate" hreflang="da-DK" href="https://www.calculadorasdeenfermagem.com.br/da/gestacional.html" />
-<link rel="alternate" hreflang="de" href="https://www.calculadorasdeenfermagem.com.br/de/gestacional.html" />
-<link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/en/gestacional.html" />
-<link rel="alternate" hreflang="es-419" href="https://www.calculadorasdeenfermagem.com.br/es/gestacional.html" />
-<link rel="alternate" hreflang="fi-FI" href="https://www.calculadorasdeenfermagem.com.br/fi/gestacional.html" />
-<link rel="alternate" hreflang="fr" href="https://www.calculadorasdeenfermagem.com.br/fr/gestacional.html" />
-<link rel="alternate" hreflang="hi-IN" href="https://www.calculadorasdeenfermagem.com.br/hi/gestacional.html" />
-<link rel="alternate" hreflang="hr-HR" href="https://www.calculadorasdeenfermagem.com.br/hr/gestacional.html" />
-<link rel="alternate" hreflang="hu-HU" href="https://www.calculadorasdeenfermagem.com.br/hu/gestacional.html" />
-<link rel="alternate" hreflang="id-ID" href="https://www.calculadorasdeenfermagem.com.br/id/gestacional.html" />
-<link rel="alternate" hreflang="it" href="https://www.calculadorasdeenfermagem.com.br/it/gestacional.html" />
-<link rel="alternate" hreflang="ja" href="https://www.calculadorasdeenfermagem.com.br/ja/gestacional.html" />
-<link rel="alternate" hreflang="ko-KR" href="https://www.calculadorasdeenfermagem.com.br/ko/gestacional.html" />
-<link rel="alternate" hreflang="nl-NL" href="https://www.calculadorasdeenfermagem.com.br/nl/gestacional.html" />
-<link rel="alternate" hreflang="no-NO" href="https://www.calculadorasdeenfermagem.com.br/no/gestacional.html" />
-<link rel="alternate" hreflang="pl-PL" href="https://www.calculadorasdeenfermagem.com.br/pl/gestacional.html" />
-<link rel="alternate" hreflang="ro-RO" href="https://www.calculadorasdeenfermagem.com.br/ro/gestacional.html" />
-<link rel="alternate" hreflang="ru-RU" href="https://www.calculadorasdeenfermagem.com.br/ru/gestacional.html" />
-<link rel="alternate" hreflang="sl-SI" href="https://www.calculadorasdeenfermagem.com.br/sl/gestacional.html" />
-<link rel="alternate" hreflang="sr-RS" href="https://www.calculadorasdeenfermagem.com.br/sr/gestacional.html" />
-<link rel="alternate" hreflang="sv-SE" href="https://www.calculadorasdeenfermagem.com.br/sv/gestacional.html" />
-<link rel="alternate" hreflang="th-TH" href="https://www.calculadorasdeenfermagem.com.br/th/gestacional.html" />
-<link rel="alternate" hreflang="tr-TR" href="https://www.calculadorasdeenfermagem.com.br/tr/gestacional.html" />
-<link rel="alternate" hreflang="uk-UA" href="https://www.calculadorasdeenfermagem.com.br/uk/gestacional.html" />
-<link rel="alternate" hreflang="vi-VN" href="https://www.calculadorasdeenfermagem.com.br/vi/gestacional.html" />
-<link rel="alternate" hreflang="zh-CN" href="https://www.calculadorasdeenfermagem.com.br/zh/gestacional.html" />
-<link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/gestacional.html" />
+<link href="https://www.calculadorasdeenfermagem.com.br/ko/gestacional.html" hreflang="ko" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/gestacional.html" hreflang="pt-br" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/en/gestacional.html" hreflang="en" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/es/gestacional.html" hreflang="es" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/de/gestacional.html" hreflang="de" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/it/gestacional.html" hreflang="it" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/fr/gestacional.html" hreflang="fr" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/hi/gestacional.html" hreflang="hi" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/zh/gestacional.html" hreflang="zh" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ar/gestacional.html" hreflang="ar" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ja/gestacional.html" hreflang="ja" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ru/gestacional.html" hreflang="ru" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/tr/gestacional.html" hreflang="tr" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/nl/gestacional.html" hreflang="nl" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/pl/gestacional.html" hreflang="pl" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/sv/gestacional.html" hreflang="sv" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/id/gestacional.html" hreflang="id" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/vi/gestacional.html" hreflang="vi" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/uk/gestacional.html" hreflang="uk" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/gestacional.html" hreflang="x-default" rel="alternate"/>
+
 <!-- 10. Schema Markup -->
 <script type="application/ld+json">
 {
 "@context": "https://schema.org",
 "@type": "SoftwareApplication",
-"name": "Calculadora de Idade Gestacional e DPP",
-"applicationCategory": "SoftwareApplication",
+"name": "임신 주수 및 예정일 계산기",
+"applicationCategory": "MedicalApplication",
 "operatingSystem": "Web",
 "offers": {
 "@type": "Offer",
 "price": "0",
 "priceCurrency": "BRL"
 },
-"description": "Calculadora online gratuita para Enfermagem determinar a Idade Gestacional (IG) e a Data Provável do Parto (DPP) com base na DUM.",
+"description": "간호사를 위한 무료 온라인 계산기로, LMP를 기준으로 임신 주수(IG)와 예정일(DPP)을 결정합니다.",
 "author": {
 "@type": "Organization",
-"name": "Calculadoras de Enfermagem",
+"name": "간호 계산기",
 "url": "https://www.calculadorasdeenfermagem.com.br/"
 }
 }
 </script>
+
 <!-- 11. Outros Scripts/Tags -->
-<style id="critical-fonts">
-@font-face {
-font-family: "Inter";
-src: url("/fonts/inter/inter-regular.woff2") format("woff2");
-font-weight: 400;
-font-display: optional;
-}
-@font-face {
-font-family: "Inter";
-src: url("/fonts/inter/inter-600.woff2") format("woff2");
-font-weight: 600;
-font-display: optional;
-}
-@font-face {
-font-family: "Inter";
-src: url("/fonts/inter/inter-700.woff2") format("woff2");
-font-weight: 700;
-font-display: optional;
-}
-@font-face {
-font-family: "Nunito Sans";
-src: url("/fonts/nunito/nunito-regular.woff2") format("woff2");
-font-weight: 400;
-font-display: optional;
-}
-@font-face {
-font-family: "Nunito Sans";
-src: url("/fonts/nunito/nunito-700.woff2") format("woff2");
-font-weight: 700;
-font-display: optional;
-}
-@font-face {
-font-family: "Nunito Sans";
-src: url("/fonts/nunito/nunito-900.woff2") format("woff2");
-font-weight: 900;
-font-display: optional;
-}
-@font-face {
-font-family: "Font Awesome 6 Brands";
-src: url("/fonts/fa-brands/fa-brands-400.woff2") format("woff2");
-font-weight: 400;
-font-display: swap;
-}
-@font-face {
-font-family: "Font Awesome 6 Free";
-src: url("/fonts/fa-solid/fa-solid-900.woff2") format("woff2");
-font-weight: 900;
-font-display: swap;
-}
 
-  /* ===== Print Template ===== */
-  @media print {
-    body { background: #fff !important; color: #000 !important; font-size: 11pt; }
-    .rd-header, .rd-footer, .rd-topbar, .gh-hamburger, .gh-mobile-menu,
-    .skip-link, .tool-tags, .related-tools, .profile-tabs-bar,
-    .learning-track-grid, #newsletter-section, .newsletter-section,
-    .rd-header-actions, .adsbygoogle,
-    #language-selector-placeholder, .accessibility-toolbar, .btn-primary,
-    .calc-actions, .ad-slot, .ad-banner { display: none !important; }
-    main { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-    .calc-card { page-break-inside: avoid; border: 1px solid #ccc !important; box-shadow: none !important; }
-    .calc-card-header h2, .calc-card-header h3 { page-break-after: avoid; color: #1a3e74 !important; }
-    #resultado { display: block !important; }
-    .hidden { display: block !important; }
-    a { color: #000 !important; text-decoration: none !important; }
-    body::before { content: "Calculadoras de Enfermagem\A www.calculadorasdeenfermagem.com.br"; white-space: pre; display: block; text-align: center; font-size: 9pt; color: #1a3e74; border-bottom: 2px solid #1a3e74; padding-bottom: 6px; margin-bottom: 12px; font-weight: 700; }
-  }
-  .btn-print { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 13px; font-weight: 600; color: #2563eb; cursor: pointer; transition: all .15s; }
-  .btn-print:hover { background: #dbeafe; border-color: #60a5fa; }
-
-  /* ===== Responsive tags + related tools ===== */
-  @media(max-width:1024px){ .related-tools-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));} }
-  @media(max-width:768px){ .related-tools-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px;} .tool-tags{gap:6px;} .tool-tag{padding:4px 10px; font-size:11px;} }
-  @media(max-width:640px){ .related-tools-grid{grid-template-columns:repeat(2,1fr) !important; gap:8px;} .related-tool-card{padding:10px; gap:8px;} .tool-tags{gap:5px;} .tool-tag{padding:3px 8px; font-size:10px;} }
-  @media(max-width:480px){ .related-tools-grid{grid-template-columns:1fr !important;} }
-
-</style>
 <style>
 body {
 font-display: swap;
 -webkit-font-smoothing: antialiased;
 }
 
-/* Estilo dos Cards Glassmorphism com Bordas e Sombras Fortes (Conforme Pedido) */
+/*! Estilo dos Cards Glassmorphism com Bordas e Sombras Fortes (Conforme Pedido) */
 .glass-card {
 background: rgba(255, 255, 255, 0.95);
 backdrop-filter: blur(12px);
 -webkit-backdrop-filter: blur(12px);
-/* Borda escura e sombra forte solicitadas */
+/*! Borda escura e sombra forte solicitadas */
 border: 2px solid rgba(26, 62, 116, 0.4);
 box-shadow:
 0 12px 32px 0 rgba(26, 62, 116, 0.25),
@@ -194,7 +110,7 @@ box-shadow:
 0 4px 10px 0 rgba(26, 62, 116, 0.2);
 }
 
-/* Inputs estilizados com borda escura */
+/*! Inputs estilizados com borda escura */
 input[type="date"] {
 border: 2px solid rgba(26, 62, 116, 0.4);
 border-radius: 0.75rem;
@@ -222,7 +138,7 @@ display: block;
 font-size: 1rem;
 }
 
-/* Tooltip CSS */
+/*! Tooltip CSS */
 .tooltip-container {
 display: inline-block;
 position: relative;
@@ -261,7 +177,7 @@ visibility: visible;
 opacity: 1;
 }
 
-/* Animação Fade In Up */
+/*! Animação Fade In Up */
 @keyframes fadeInUp {
 from {
 opacity: 0;
@@ -276,265 +192,272 @@ transform: translate3d(0, 0, 0);
 animation: fadeInUp 0.5s ease-out forwards;
 }
 </style>
-<script defer="True" src="/js/i18n-loader.js"></script><!-- Google Analytics + AdSense — Consent-based lazy load (from live site) -->
-<script>
-if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.location.search).get('admin')==='1'){console.log('<i class="fa fa"></i> Modo Admin: Bloqueado.');if(new URLSearchParams(window.location.search).get('admin')==='1'){localStorage.setItem('admin_mode','true');}}else{var savedConsent=localStorage.getItem("cookieConsent");var isRefused=(savedConsent==="refused");var isManaged=(savedConsent==="managed");var adsBlocked=isRefused||(isManaged&&localStorage.getItem("ad_storage")==="denied");window.__metricsLoaded=false;window.__adsenseLoaded=false;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;function loadAnalytics(){if(window.__metricsLoaded)return;window.__metricsLoaded=true;var aState=isRefused?"denied":(localStorage.getItem("analytics_storage")||"granted");var adState=adsBlocked?"denied":"granted";var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-PFM06B7TS5";document.head.appendChild(s);gtag("consent","default",{analytics_storage:aState,ad_storage:adState,ad_user_data:adState,ad_personalization:adState,wait_for_update:500});gtag("js",new Date());gtag("config","G-PFM06B7TS5");gtag("config","G-MJDKPDPJ26");gtag("config","G-M7DHHF38EJ");gtag("config","G-8FLJ59XXDK");gtag("config","G-VVDP5JGEX8");gtag("config","G-EX8");gtag("config","AW-952633102");gtag("config","AW-9277197961");console.log("<i class="fa fa"></i> Analytics carregado.");}function loadAdSenseOnce(){if(window.__adsenseLoaded||adsBlocked)return;window.__adsenseLoaded=true;var ad=document.createElement("script");ad.async=true;ad.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847";ad.crossOrigin="anonymous";document.head.appendChild(ad);console.log("<i class="fa fa"></i> AdSense carregado.");}function onUserInteraction(){loadAnalytics();loadAdSenseOnce();window.removeEventListener("scroll",onUserInteraction);window.removeEventListener("mousemove",onUserInteraction);window.removeEventListener("touchstart",onUserInteraction);window.removeEventListener("keydown",onUserInteraction);}if(!adsBlocked){window.addEventListener("scroll",onUserInteraction,{passive:true});window.addEventListener("mousemove",onUserInteraction,{passive:true});window.addEventListener("touchstart",onUserInteraction,{passive:true});window.addEventListener("keydown",onUserInteraction,{passive:true});setTimeout(onUserInteraction,4000);}function applyConsent(consent){gtag("consent","update",consent);if(consent.ad_storage==="granted"){adsBlocked=false;onUserInteraction();}else{adsBlocked=true;document.querySelectorAll("ins.adsbygoogle, .google-auto-placed").forEach(function(ad){ad.style.display="none";ad.innerHTML="";});}localStorage.setItem("analytics_storage",consent.analytics_storage);localStorage.setItem("ad_storage",consent.ad_storage);}window.acceptAllCookies=function(){localStorage.setItem("cookieConsent","accepted");applyConsent({analytics_storage:"granted",ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted"});};window.rejectAllCookies=function(){localStorage.setItem("cookieConsent","refused");applyConsent({analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"});};}
+<link rel="preload" href="/img/icontopbar1-calculadoras-de-enfermagem.webp" as="image" type="image/webp" fetchpriority="high">
+<style id="anti-cls-placeholders">#global-header-container{display:block;width:100%;min-height:96px;background-color:transparent}@media(max-width:768px){#global-header-container{min-height:60px}}#language-selector-placeholder{display:block;width:100%;min-height:46px;background-color:transparent}#footer-placeholder{display:block;min-height:520px;background-color:transparent}@media(min-width:768px){#footer-placeholder{min-height:277px}}</style>
+<script src="/global-scripts.js" defer></script>
+<script src="/lang-selector.js" defer></script>
+<script id="anti-cls-acessibilidade">
+(function(){try{var f=localStorage.getItem("fontSize");if(f&&f!=="1"){var s=["1em","1.15em","1.3em","1.5em","2em"];var i=Math.min(Math.max(parseInt(f,10),1),s.length);document.documentElement.style.fontSize=s[i-1];}if(localStorage.getItem("darkMode")==="true"){document.documentElement.classList.add("dark-mode");}}catch(e){}})();
 </script>
-<meta name="description" content="Calculadora de Idade Gestacional (IG) e DPP | Enfermagem - Calculadoras de Enfermagem">
-<link rel="stylesheet" href="/css/print-template.css">
 </head>
-<body>
 
-<a class="skip-link sr-only" data-i18n="skipToContent" href="#main-content">Pular para o conteúdo principal</a>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+<!-- Skip Links -->
+<nav aria-label="Atalhos de Acessibilidade" class="sr-only focus-within:not-sr-only focus-within:absolute focus-within:top-0 focus-within:left-0 focus-within:z-50 focus-within:bg-white focus-within:text-[#1A3E74] focus-within:p-4 focus-within:underline">
+<a href="#main-content" class="block mb-2">주요 내용으로 건너뛰기</a>
+</nav>
 
 <!-- Header & Language -->
+
 <!-- Conteúdo Principal -->
 
-<div id="site-header"></div>
-<div id="site-a11y"></div>
-    <nav class="tpl-breadcrumb" aria-label="Breadcrumb">
-      <a href="../index.html">Início</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <a href="../index.html#calculadoras">Ferramentas</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <span class="current" aria-current="page">Calculadora de Idade Gestacional (IG) e DPP | Enfermagem</span>
-    </nav>
-    <div class="tool-header">
-      <div class="tool-header-main">
-        <div class="tool-icon-badge" aria-hidden="true">
-          <svg class="icon"><use href="#i-calculator"/></svg>
-        </div>
-        <div>
-          <span class="tool-category-badge">Ferramentas</span>
-          <h1>Calculadora de Idade Gestacional (IG) e DPP | Enfermagem</h1>
-        </div>
-      </div>
-      <div class="tool-actions">
-        <button type="button" class="btn-icon" id="calcFavoriteBtn" aria-pressed="false">
-          <svg class="icon"><use href="#i-bookmark"/></svg> Favoritar
-        </button>
-        <button type="button" class="btn-icon" id="calcShareBtn">
-          <svg class="icon"><use href="#i-share"/></svg> Compartilhar
-        </button>
-        <button type="button" class="btn-icon" onclick="window.print()">
-          <svg class="icon"><use href="#i-printer"/></svg> Imprimir
-        </button>
-      </div>
-    </div>
-<main  id="main-content">
+<div id="global-header-container"></div>
+<div id="language-selector-placeholder"></div>
+<main id="main-content" class="flex-grow p-4 sm:p-8">
 <!-- Breadcrumbs -->
+<nav class="text-sm mb-6 flex items-center gap-2 text-gray-500 overflow-x-auto whitespace-nowrap" aria-label="Breadcrumb">
+<a href="index.html" class="hover:text-[#1A3E74] transition-colors">
+<i class="fas fa-home"></i>
+홈
+</a>
+
+<span class="text-gray-300">/</span>
+
+<span class="font-bold text-[#1A3E74]">임신 주수 및 예상 분만일</span>
+</nav>
 
 <!-- Descrição Inicial (Hero Card 1) -->
-<div>
-<section aria-labelledby="gestacional-title" class="md:">
-<div class="/95 /20 -[0_16px_34px_rgba(26,62,116,0.45)]">
-<div>
-<div>
-<h1 id="gestacional-title">Calculadora de Idade Gestacional e Data Provável do Parto (DPP)</h1>
-<p >Acompanhamento pré-natal preciso com base na Data da Última Menstruação (DUM).</p>
+<div class="mb-8">
+<section class="my-5 md:my-7" aria-labelledby="gestacional-title">
+<div class="bg-[#1A3E74]/95 backdrop-blur-md border-2 border-blue-400/20 rounded-2xl shadow-[0_16px_34px_rgba(26,62,116,0.45)] overflow-hidden relative">
+<div class="flex flex-col md:flex-row items-center justify-between px-6 md:px-10 py-6 md:py-8 relative z-10">
+<div class="w-full md:w-2/3 text-center md:text-left">
+<h1 id="gestacional-title" class="text-3xl md:text-5xl font-black leading-tight mb-3 text-white">임신 주수 및 예상 분만일(DPP) 계산기</h1>
+<p class="text-blue-100 text-base font-medium">최종 월경일(DUM)을 기반으로 한 정확한 산전 관리.</p>
 </div>
-<div class="md:">
-<div class="md: md: /10">
-<i class="fa fa drop--[0_10px_20px_rgba(0,0,0,0.5)] -"></i>
+
+<div class="w-full md:w-1/3 flex justify-center mt-6 md:mt-0">
+<div class="w-24 h-24 md:w-36 md:h-36 flex items-center justify-center bg-white/10 rounded-full backdrop-blur-sm border-2 border-white/20 shadow-xl">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="text-5xl md:text-7xl text-white drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-300" fill="currentColor" aria-hidden="true" width="1em" height="1em"><path d="M152 88a72 72 0 1 1 144 0A72 72 0 1 1 152 88zM39.7 144.5c13-17.9 38-21.8 55.9-8.8L131.8 162c26.8 19.5 59.1 30 92.2 30s65.4-10.5 92.2-30l36.2-26.4c17.9-13 42.9-9 55.9 8.8s9 42.9-8.8 55.9l-36.2 26.4c-13.6 9.9-28.1 18.2-43.3 25l0 36.3-192 0 0-36.3c-15.2-6.7-29.7-15.1-43.3-25L48.5 200.3c-17.9-13-21.8-38-8.8-55.9zm89.8 184.8l60.6 53-26 37.2 24.3 24.3c15.6 15.6 15.6 40.9 0 56.6s-40.9 15.6-56.6 0l-48-48C70 438.6 68.1 417 79.2 401.1l50.2-71.8zm128.5 53l60.6-53 50.2 71.8c11.1 15.9 9.2 37.5-4.5 51.2l-48 48c-15.6 15.6-40.9 15.6-56.6 0s-15.6-40.9 0-56.6L284 419.4l-26-37.2z"/></svg>
 </div>
 </div>
 </div>
+
 <!-- Elementos decorativos -->
-<div class="pointer"></div>
-<div class="pointer"></div>
+<div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-48 h-48 bg-[#4A90E2] opacity-20 rounded-full blur-2xl -ml-10 -mb-10 pointer-events-none"></div>
 </div>
 </section>
+
 <!-- Card Explicativo -->
-<div class="-[0_12px_24px_rgba(26,62,116,0.15)]-[#1A3E74]">
-<p >Enfermeiro, incentive a gestante a realizar o pré-natal, essencial para a redução da mortalidade materno-infantil. Ele oferece orientações sobre nutrição, cuidados, planejamento familiar, vacinação e promove o empoderamento materno. A data provável do parto (DPP) deve ser estimada com base na ultrassonografia e na data da última menstruação, considerando 40 semanas de gestação.</p>
+<div class="bg-white rounded-2xl px-6 py-5 shadow-[0_12px_24px_rgba(26,62,116,0.15)] border-l-4 border-l-[#1A3E74] border-t border-r border-b border-gray-100 mb-8">
+<p class="text-gray-700 leading-relaxed font-medium text-sm md:text-base text-left">간호사 여러분, 산모와 신생아 사망률을 낮추는 데 필수적인 산전 관리를 임산부가 받도록 독려해 주십시오. 산전 관리는 영양, 관리, 가족 계획, 예방 접종에 대한 지침을 제공하고 산모의 자립을 돕습니다. 예상 분만일(DPP)은 초음파 검사 결과와 마지막 월경일을 바탕으로, 임신 기간 40주를 기준으로 추정해야 합니다.</p>
 </div>
+
 <!-- Layout Grid: Calculadora + Sidebar -->
-<div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
 <!-- Coluna Principal (Ocupa 2 colunas no desktop) -->
-<div class="lg:col">
+<div class="lg:col-span-2 space-y-8">
 <!-- Hero Card 2: Título da Calculadora -->
 <section aria-labelledby="calc-ig-title">
-<div class="/90 -[0_12px_24px_rgba(26,62,116,0.4)]">
-<div>
-<h2  id="calc-ig-title">Calculadora de IG e DPP</h2>
+<div class="bg-[#1A3E74]/90 backdrop-blur-md border-2 border-white/15 rounded-2xl shadow-[0_12px_24px_rgba(26,62,116,0.4)] overflow-hidden">
+<div class="px-6 py-4 md:px-8 md:py-6 text-center md:text-left">
+<h2 id="calc-ig-title" class="text-xl md:text-3xl font-black text-white tracking-tight">임신 주수(IG) 및 예상 분만일(DPP) 계산기</h2>
 </div>
 </div>
 </section>
+
 <!-- Grid Interno: Input DUM (Esq) e Como Calcular (Dir) -->
-<form class="items" id="gestacionalForm">
+<form id="gestacionalForm" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
 <!-- Coluna 1 do Grid Interno: Input -->
-<div class="glass md:">
-<div class="/10 pointer"></div>
-<div>
-<label class="font" for="dum">
-Data da Última Menstruação
-<span class="tooltip-">
-<button aria-label="Informações sobre a DUM" class="tooltip" type="button">
-<i class="fas fa"></i>
+<div class="glass-card p-6 md:p-8 rounded-2xl flex flex-col justify-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-[#4A90E2]/10 rounded-bl-full -mr-10 -mt-10 pointer-events-none"></div>
+
+<div class="z-10 w-full">
+<label for="dum" class="font-extrabold text-[#1A3E74] text-lg mb-4">
+마지막 생리일
+<span class="tooltip-container">
+<button type="button" class="tooltip-icon-button" aria-label="Informações sobre a DUM">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
 </button>
-<span class="tooltip">Primeiro dia do último ciclo menstrual. Base principal para o cálculo gestacional.</span>
+<span class="tooltip-text">: 마지막 생리 주기의 첫날. 임신 기간 계산의 주요 기준입니다.</span>
 </span>
 </label>
-<input aria-required="true"  id="dum" name="dum" required="" type="date"/>
-<span aria-live="assertive"  id="dum-error"></span>
+
+<input type="date" id="dum" name="dum" required class="w-full" aria-required="true" />
+<span id="dum-error" class="text-red-600 font-bold text-sm mt-2 hidden block" aria-live="assertive"></span>
 </div>
 </div>
+
 <!-- Coluna 2 do Grid Interno: Explicação Compacta -->
-<div class="glass /80">
-<h3 class="/20">
-<i class="fa fa"></i>
-Como realizar os cálculos:
+<div class="glass-card p-6 rounded-2xl bg-white/80">
+<h3 class="font-bold text-[#1A3E74] text-lg mb-3 border-b border-[#1A3E74]/20 pb-2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="mr-2" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-384c0-35.3-28.7-64-64-64L64 0zM96 64l192 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32L96 160c-17.7 0-32-14.3-32-32l0-32c0-17.7 14.3-32 32-32zm32 160a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zM96 352a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM64 416c0-17.7 14.3-32 32-32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-96 0c-17.7 0-32-14.3-32-32zM192 256a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm32 64a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zm64-64a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm32 64a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zM288 448a32 32 0 1 1 0-64 32 32 0 1 1 0 64z"/></svg>
+계산 방법:
 </h3>
-<div class="text-[13px] overflow max] custom">
+
+<div class="text-[13px] leading-snug text-gray-700 space-y-3 overflow-y-auto max-h-[250px] pr-2 custom-scrollbar">
 <div>
-<strong >1. Data Provável do Parto (Regra de Naegele)</strong>
-<p >Adicione 7 dias ao 1º dia da DUM. Ajuste o mês:</p>
-<ul class="list">
+<strong class="text-[#1A3E74]">1. 예상 분만일 (나에겔의 법칙)</strong>
+<p class="mt-1">마지막 생리 시작일(DUM)의 첫날에 7일을 더합니다. 월을 조정합니다:</p>
+<ul class="list-disc pl-4 mt-1 space-y-1">
 <li>
-<span >Jan a Mar:</span>
-Some 9 meses.
+<span class="font-semibold">1월~3월:</span>
+9개월을 더합니다.
 </li>
 <li>
-<span >Abr a Dez:</span>
-Subtraia 3 meses.
+<span class="font-semibold">4월~10월:</span>
+3개월을 뺍니다.
 </li>
 </ul>
-<div>
-<span >Ex: DUM em 10 de Fev:</span>
-<br/>
-10 + 7 = 17 (dia) | Fev + 9 meses = Nov. DPP: 17/Nov.
+<div class="bg-[#F8FBFF] p-2 rounded mt-2 border border-blue-100">
+<span class="font-semibold text-xs text-[#1A3E74]">예: 생리 시작일(DUM)이 2월 10일인 경우:</span>
+<br />
+10 + 7 = 17(일) | 2월 + 9개월 = 11월. 예상 분만일(DPP): 11월 17일
 </div>
 </div>
+
 <div>
-<strong >2. Idade Gestacional (em semanas)</strong>
-<p >Conte os dias exatos desde a DUM até hoje. Divida por 7. O inteiro é a semana; o resto são os dias.</p>
-<div>
-<span >Ex: 69 dias passados:</span>
-<br/>
-69 ÷ 7 = 9 (sobra 6). IG: 9 semanas e 6 dias.
+<strong class="text-[#1A3E74]">2. 임신 주수 (주 단위)</strong>
+<p class="mt-1">DUM부터 오늘까지의 정확한 일수를 세세요. 7로 나누세요. 정수는 주 수이고, 나머지는 일 수입니다.</p>
+<div class="bg-[#F8FBFF] p-2 rounded mt-2 border border-blue-100">
+<span class="font-semibold text-xs text-[#1A3E74]">예: 69일이 지났을 경우:</span>
+<br />
+69 ÷ 7 = 9 (나머지 6). 임신 주수: 9주 6일.
 </div>
 </div>
 </div>
 </div>
 </form>
+
 <!-- Botões de Ação (Alinhados à Esquerda) -->
-<div class="sm:">
-<button class="hover: hover: sm:" id="btnCalcular" type="button">
-<i class="fa fa"></i>
-Calcular
+<div class="flex flex-col sm:flex-row gap-4 mt-6 justify-start">
+<button type="button" id="btnCalcular" class="bg-[#1A3E74] hover:bg-[#153260] text-white text-lg font-bold py-4 px-10 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 border-2 border-[#0F2F5F] flex items-center justify-center gap-3 w-full sm:w-auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M142.4 21.9c5.6 16.8-3.5 34.9-20.2 40.5L96 71.1 96 192c0 53 43 96 96 96s96-43 96-96l0-120.9-26.1-8.7c-16.8-5.6-25.8-23.7-20.2-40.5s23.7-25.8 40.5-20.2l26.1 8.7C334.4 19.1 352 43.5 352 71.1L352 192c0 77.2-54.6 141.6-127.3 156.7C231 404.6 278.4 448 336 448c61.9 0 112-50.1 112-112l0-70.7c-28.3-12.3-48-40.5-48-73.3c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3l0 70.7c0 97.2-78.8 176-176 176c-92.9 0-168.9-71.9-175.5-163.1C87.2 334.2 32 269.6 32 192L32 71.1c0-27.5 17.6-52 43.8-60.7l26.1-8.7c16.8-5.6 34.9 3.5 40.5 20.2zM480 224a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg>
+계산하기
 </button>
-<button class="/40 sm:" id="btnLimpar" type="button">
-<i class="fa fa"></i>
-Limpar
+
+<button type="button" id="btnLimpar" class="bg-white hover:bg-gray-50 text-[#1A3E74] font-bold py-4 px-8 rounded-xl border-2 border-[#1A3E74]/40 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7L288 480l9.4 0L512 480c17.7 0 32-14.3 32-32s-14.3-32-32-32l-124.1 0L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416l-9.4 0-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/></svg>
+지우기
 </button>
 </div>
+
 <!-- SEÇÃO DE RESULTADO -->
-<div class="animate" id="resultadoSection">
+<div id="resultadoSection" class="hidden animate-fade-in-up space-y-8 mt-10">
 <!-- Hero Card de Resultado -->
-<div class="-[0_20px_40px_rgba(26,62,116,0.5)] bg from-[#1A3E74] to-[#0F2F5F] md:">
-<div class="]] pointer"></div>
-<div class="]] pointer"></div>
-<div>
+<div class="relative w-full rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(26,62,116,0.5)] border-2 border-white/20 bg-gradient-to-br from-[#1A3E74] to-[#0F2F5F] text-center p-8 md:p-12 z-0">
+<div class="absolute top-[-30px] right-[-30px] w-32 h-32 bg-white opacity-5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute bottom-[-40px] left-[-40px] w-48 h-48 bg-[#4A90E2] opacity-15 rounded-full blur-3xl pointer-events-none"></div>
+
+<div class="relative z-10 flex flex-col md:flex-row justify-around items-center gap-6">
 <!-- Bloco IG -->
-<div>
-<p >Idade Gestacional (IG)</p>
-<h3  id="res-ig">--</h3>
+<div class="flex-1">
+<p class="text-sm md:text-base font-bold uppercase tracking-widest text-blue-200 mb-2">임신 주수 (IG)</p>
+<h3 id="res-ig" class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">--</h3>
 </div>
+
 <!-- Divisor visual em telas grandes -->
-<div class="md: w /20"></div>
-<div class="md: h /20"></div>
+<div class="hidden md:block w-px h-24 bg-white/20"></div>
+<div class="md:hidden w-full h-px bg-white/20 my-2"></div>
+
 <!-- Bloco DPP -->
-<div>
-<p >Data Provável (DPP)</p>
-<h3 class="drop-" id="res-dpp">--/--/----</h3>
+<div class="flex-1">
+<p class="text-sm md:text-base font-bold uppercase tracking-widest text-blue-200 mb-2">예상 출산일 (DPP)</p>
+<h3 id="res-dpp" class="text-3xl md:text-5xl font-black text-[#4ADE80] tracking-tight leading-tight drop-shadow-md">--/--/----</h3>
 </div>
 </div>
 </div>
+
 <!-- Detalhamento Matemático (Card) -->
-<div class="glass md:">
-<h3>
-<i class="fa fa"></i>
-Detalhamento do Cálculo
+<div class="glass-card p-6 md:p-8 rounded-2xl">
+<h3 class="text-xl font-bold text-[#1A3E74] mb-4 border-b-2 border-gray-100 pb-3">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="mr-2" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32l288 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+계산 내역
 </h3>
-<div  id="detalhamento-calculo">
+<div id="detalhamento-calculo" class="text-gray-700 leading-relaxed text-sm md:text-base space-y-4">
 <!-- Preenchido via JS -->
 </div>
 </div>
+
 <!-- Referência Bibliográfica ABNT -->
-<div>
-<p >Referência Bibliográfica:</p>
+<div class="bg-gray-100 rounded-xl p-5 border-l-4 border-[#1A3E74] text-xs text-gray-700 text-left shadow-sm">
+<p class="font-bold mb-2 uppercase text-[#1A3E74]">참고 문헌:</p>
 <p>
-BRASIL. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Atenção Básica.
-<em>Atenção ao pré-natal de baixo risco</em>
-. Brasília: Ministério da Saúde, 2012. (Cadernos de Atenção Básica, n. 32). Disponível em:
-<a class="hover:underline break" href="https://bvsms.saude.gov.br/bvs/publicacoes/cadernos_atencao_basica_32_prenatal.pdf" rel="noopener noreferrer" target="_blank">https://bvsms.saude.gov.br/bvs/publicacoes/cadernos_atencao_basica_32_prenatal.pdf</a>
+브라질. 보건부. 보건 서비스 사무국. 1차 의료과.
+<em>저위험 산전 관리</em>
+. 브라질리아: 보건부, 2012. (일차의료 보고서, 제32호). 출처:
+<a href="https://bvsms.saude.gov.br/bvs/publicacoes/cadernos_atencao_basica_32_prenatal.pdf" target="_blank" rel="noopener noreferrer" class="text-[#4A90E2] font-bold hover:underline break-all">https://bvsms.saude.gov.br/bvs/publicacoes/cadernos_atencao_basica_32_prenatal.pdf</a>
 .
 </p>
 </div>
 </div>
 </div>
+
 <!-- Coluna Lateral (Sidebar) -->
-<aside >
+<aside class="space-y-6 hidden lg:block">
 <!-- Widget Recirculação -->
-<div class="/20">
-<h4>
-<i class="fa fa"></i>
-Dúvidas Frequentes
+<div class="bg-[#F8FBFF] rounded-xl p-6 border-2 border-[#1A3E74]/20 shadow-lg">
+<h4 class="font-bold text-[#1A3E74] mb-2 text-sm uppercase">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="mr-2" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M208 352c114.9 0 208-78.8 208-176S322.9 0 208 0S0 78.8 0 176c0 38.6 14.7 74.3 39.6 103.4c-3.5 9.4-8.7 17.7-14.2 24.7c-4.8 6.2-9.7 11-13.3 14.3c-1.8 1.6-3.3 2.9-4.3 3.7c-.5 .4-.9 .7-1.1 .8l-.2 .2s0 0 0 0s0 0 0 0C1 327.2-1.4 334.4 .8 340.9S9.1 352 16 352c21.8 0 43.8-5.6 62.1-12.5c9.2-3.5 17.8-7.4 25.2-11.4C134.1 343.3 169.8 352 208 352zM448 176c0 112.3-99.1 196.9-216.5 207C255.8 457.4 336.4 512 432 512c38.2 0 73.9-8.7 104.7-23.9c7.5 4 16 7.9 25.2 11.4c18.3 6.9 40.3 12.5 62.1 12.5c6.9 0 13.1-4.5 15.2-11.1c2.1-6.6-.2-13.8-5.8-17.9c0 0 0 0 0 0s0 0 0 0l-.2-.2c-.2-.2-.6-.4-1.1-.8c-1-.8-2.5-2-4.3-3.7c-3.6-3.3-8.5-8.1-13.3-14.3c-5.5-7-10.7-15.4-14.2-24.7c24.9-29 39.6-64.7 39.6-103.4c0-92.8-84.9-168.9-192.6-175.5c.4 5.1 .6 10.3 .6 15.5z"/></svg>
+자주 묻는 질문
 </h4>
-<p >Acompanhe mais informações de enfermagem no nosso Fórum de enfermagem.</p>
-<a class="hover:" href="https://www.calculadorasdeenfermagem.com.br/forum-enfermagem.html">
-TIRE SUAS DÚVIDAS
-<i class="fa fa"></i>
+<p class="text-xs text-gray-700 mb-4 font-medium">간호 관련 더 많은 정보는 저희 간호 포럼에서 확인하세요.</p>
+<a href="https://www.calculadorasdeenfermagem.com.br/forum-enfermagem.html" class="text-xs font-black text-[#1A3E74] hover:text-[#4A90E2] uppercase flex items-center gap-2 transition-colors underline w-fit">
+궁금한 점 해결하기
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
 </a>
 </div>
+
 <!-- Widget Veja Também -->
-<section >
-<div class="-[0_12px_24px_rgba(26,62,116,0.15)] /20 /90 lg: lg:">
-<h3>Escalas Relacionadas</h3>
-<ul >
+<section class="py-2">
+<div class="p-6 rounded-2xl shadow-[0_12px_24px_rgba(26,62,116,0.15)] border-2 border-[#1A3E74]/20 bg-white/90 backdrop-blur-xl lg:sticky lg:top-6">
+<h3 class="text-lg font-black text-[#1A3E74] mb-5 border-b-2 border-gray-100 pb-2">관련 스케줄</h3>
+<ul class="space-y-4">
 <li>
-<a class="glass /20" href="../apgar.html">
-<div class="- -">
-<i class="fa fa"></i>
+<a href="apgar.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white border-[#1A3E74]/20 cursor-pointer">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M228.3 469.1L47.6 300.4c-4.2-3.9-8.2-8.1-11.9-12.4l87 0c22.6 0 43-13.6 51.7-34.5l10.5-25.2 49.3 109.5c3.8 8.5 12.1 14 21.4 14.1s17.8-5 22-13.3L320 253.7l1.7 3.4c9.5 19 28.9 31 50.1 31l104.5 0c-3.7 4.3-7.7 8.5-11.9 12.4L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9zM503.7 240l-132 0c-3 0-5.8-1.7-7.2-4.4l-23.2-46.3c-4.1-8.1-12.4-13.3-21.5-13.3s-17.4 5.1-21.5 13.3l-41.4 82.8L205.9 158.2c-3.9-8.7-12.7-14.3-22.2-14.1s-18.1 5.9-21.8 14.8l-31.8 76.3c-1.2 3-4.2 4.9-7.4 4.9L16 240c-2.6 0-5 .4-7.3 1.1C3 225.2 0 208.2 0 190.9l0-5.8c0-69.9 50.5-129.5 119.4-141C165 36.5 211.4 51.4 244 84l12 12 12-12c32.6-32.6 79-47.5 124.6-39.9C461.5 55.6 512 115.2 512 185.1l0 5.8c0 16.9-2.8 33.5-8.3 49.1z"/></svg>
 </div>
-<h4>Índice de Apgar</h4>
-<p class="text-[10px]">Avaliação da vitalidade do recém-nascido.</p>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">아프가 지수</h4>
+<p class="text-[10px] text-gray-600 font-medium">신생아의 생체 징후 평가.</p>
 </a>
 </li>
 <li>
-<a class="glass /20" href="../capurro.html">
-<div class="- -">
-<i class="fa fa"></i>
+<a href="capurro.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white border-[#1A3E74]/20 cursor-pointer">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M152 88a72 72 0 1 1 144 0A72 72 0 1 1 152 88zM39.7 144.5c13-17.9 38-21.8 55.9-8.8L131.8 162c26.8 19.5 59.1 30 92.2 30s65.4-10.5 92.2-30l36.2-26.4c17.9-13 42.9-9 55.9 8.8s9 42.9-8.8 55.9l-36.2 26.4c-13.6 9.9-28.1 18.2-43.3 25l0 36.3-192 0 0-36.3c-15.2-6.7-29.7-15.1-43.3-25L48.5 200.3c-17.9-13-21.8-38-8.8-55.9zm89.8 184.8l60.6 53-26 37.2 24.3 24.3c15.6 15.6 15.6 40.9 0 56.6s-40.9 15.6-56.6 0l-48-48C70 438.6 68.1 417 79.2 401.1l50.2-71.8zm128.5 53l60.6-53 50.2 71.8c11.1 15.9 9.2 37.5-4.5 51.2l-48 48c-15.6 15.6-40.9 15.6-56.6 0s-15.6-40.9 0-56.6L284 419.4l-26-37.2z"/></svg>
 </div>
-<h4>Método de Capurro</h4>
-<p class="text-[10px]">Idade gestacional do recém-nascido.</p>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">카푸로 방법</h4>
+<p class="text-[10px] text-gray-600 font-medium">신생아의 재태 연령.</p>
 </a>
 </li>
 <li>
-<a class="glass /20" href="../calculadoravacina.html">
-<div class="- -">
-<i class="fa fa"></i>
+<a href="calculadoravacina.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white border-[#1A3E74]/20 cursor-pointer">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M441 7l32 32 32 32c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-15-15L417.9 128l55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-72-72L295 73c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l55 55L422.1 56 407 41c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0zM210.3 155.7l61.1-61.1c.3 .3 .6 .7 1 1l16 16 56 56 56 56 16 16c.3 .3 .6 .6 1 1l-191 191c-10.5 10.5-24.7 16.4-39.6 16.4l-88.8 0L41 505c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l57-57 0-88.8c0-14.9 5.9-29.1 16.4-39.6l43.3-43.3 57 57c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-57-57 41.4-41.4 57 57c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-57-57z"/></svg>
 </div>
-<h4>Calculadora de Vacinas</h4>
-<p class="text-[10px]">Agendamento do calendário vacinal.</p>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">예방접종 계산기</h4>
+<p class="text-[10px] text-gray-600 font-medium">예방접종 일정 예약.</p>
 </a>
 </li>
 <li>
-<a class="glass /20" href="../diagnosticosnanda.html">
-<div class="- -">
-<i class="fa fa"></i>
+<a href="diagnosticosnanda.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white border-[#1A3E74]/20 cursor-pointer">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M0 96C0 43 43 0 96 0L384 0l32 0c17.7 0 32 14.3 32 32l0 320c0 17.7-14.3 32-32 32l0 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32 0L96 512c-53 0-96-43-96-96L0 96zM64 416c0 17.7 14.3 32 32 32l256 0 0-64L96 384c-17.7 0-32 14.3-32 32zM208 112l0 48-48 0c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l48 0 0 48c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-48 48 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-48 0 0-48c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z"/></svg>
 </div>
-<h4>Diagnósticos NANDA</h4>
-<p class="text-[10px]">Consulta rápida de diagnósticos.</p>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">NANDA 진단</h4>
+<p class="text-[10px] text-gray-600 font-medium">진단 신속 조회.</p>
 </a>
 </li>
 <li>
-<a class="glass /20" href="../medicamentos.html">
-<div class="- -">
-<i class="fa fa"></i>
+<a href="medicamentos.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white border-[#1A3E74]/20 cursor-pointer">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M112 96c-26.5 0-48 21.5-48 48l0 112 96 0 0-112c0-26.5-21.5-48-48-48zM0 144C0 82.1 50.1 32 112 32s112 50.1 112 112l0 224c0 61.9-50.1 112-112 112S0 429.9 0 368L0 144zM554.9 399.4c-7.1 12.3-23.7 13.1-33.8 3.1L333.5 214.9c-10-10-9.3-26.7 3.1-33.8C360 167.7 387.1 160 416 160c88.4 0 160 71.6 160 160c0 28.9-7.7 56-21.1 79.4zm-59.5 59.5C472 472.3 444.9 480 416 480c-88.4 0-160-71.6-160-160c0-28.9 7.7-56 21.1-79.4c7.1-12.3 23.7-13.1 33.8-3.1L498.5 425.1c10 10 9.3 26.7-3.1 33.8z"/></svg>
 </div>
-<h4>Cálculo de Medicamentos</h4>
-<p class="text-[10px]">Dosagens precisas para enfermagem.</p>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">약물 계산</h4>
+<p class="text-[10px] text-gray-600 font-medium">간호 업무를 위한 정확한 투여량 계산.</p>
 </a>
 </li>
 </ul>
@@ -543,78 +466,9 @@ TIRE SUAS DÚVIDAS
 </aside>
 </div>
 </div>
-    <section class="tool-footer-zone">
-      <div class="tool-tags">
-        <a href="../index.html#calculadoras" class="tool-tag">#IdadeGestacionalE</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#Enfermagem</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#CalculadoraClinica</a>
-        <a href="../diagnosticosnanda.html" class="tool-tag">#NANDA-I</a>
-        <a href="../sae.html" class="tool-tag">#SAE</a>
-        <a href="../protocolos.html" class="tool-tag">#Protocolos</a>
-        <a href="../medicamentos.html" class="tool-tag">#Medicacao</a>
-        <a href="../simulados.html" class="tool-tag">#Simulados</a>
-        <a href="../flashcards.html" class="tool-tag">#Flashcards</a>
-      </div>
-
-      <div class="related-tools">
-        <h2 class="related-tools">관련 도구</h2>
-        <div class="related-">
-          <a class="related-tools" href="../sae.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-clipboard"/></svg></div>
-            <div>
-              <h3>SAE</h3>
-              <p>Sistematização</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../sbar.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-comments"/></svg></div>
-            <div>
-              <h3>SBAR</h3>
-              <p>Comunicação</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../diagnosticosnanda.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-clipboard-list"/></svg></div>
-            <div>
-              <h3>NANDA-I</h3>
-              <p>Diagnósticos</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../protocolos.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-shield"/></svg></div>
-            <div>
-              <h3>프로토콜</h3>
-              <p>프로토콜</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../simulados.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-clipboard"/></svg></div>
-            <div>
-              <h3>시뮬레이션</h3>
-              <p>Simulação</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../biblioteca.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-book"/></svg></div>
-            <div>
-              <h3>라이브러리</h3>
-              <p>Recursos</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div id="cipContainer" class="cip-hidden"></div>
-
-    <div id="cognitivePanel" class="cognitive cip-hidden">
-      <div id="cognitivePanelContent"></div>
-    </div>
-
 </main>
-
-<script defer="" src="/js/lang-selector.js"></script>
 <!-- Scripts Globais -->
+
 <!-- Script da Calculadora Gestacional -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -634,7 +488,7 @@ return data.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year
 
 // Obter nome do mes
 const getNomeMes = (mesIndex) => {
-const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+const meses = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
 return meses[mesIndex];
 };
 
@@ -646,7 +500,7 @@ dumError.classList.add("hidden");
 dumInput.classList.remove("border-red-500", "focus:ring-red-500");
 
 if (!dumValue) {
-dumError.textContent = "Por favor, insira a Data da Última Menstruação (DUM).";
+dumError.textContent = "마지막 월경일(LMP)을 입력해주세요.";
 dumError.classList.remove("hidden");
 dumInput.classList.add("border-red-500", "focus:ring-red-500");
 resultadoSection.classList.add("hidden");
@@ -659,7 +513,7 @@ hoje.setHours(0, 0, 0, 0);
 dumDate.setHours(0, 0, 0, 0);
 
 if (dumDate > hoje) {
-dumError.textContent = "A DUM não pode ser uma data no futuro.";
+dumError.textContent = "LMP는 미래 날짜일 수 없습니다.";
 dumError.classList.remove("hidden");
 dumInput.classList.add("border-red-500", "focus:ring-red-500");
 resultadoSection.classList.add("hidden");
@@ -687,39 +541,39 @@ let mNaegele, aNaegele, explicacaoMes;
 if (mDum >= 1 && mDum <= 3) {
 mNaegele = mDum + 9;
 aNaegele = aDum;
-explicacaoMes = `Como o mês da DUM é <strong>${getNomeMes(mDum - 1)}</strong> (entre Janeiro e Março), <strong>somamos 9</strong> aos meses: ${mDum} + 9 = <strong>${mNaegele}</strong>.`;
+explicacaoMes = `LMP의 월이 <strong>${getNomeMes(mDum - 1)}</strong>(1월~3월)이므로, 월에 <strong>9를 더합니다</strong>: ${mDum} + 9 = <strong>${mNaegele}</strong>.`;
 } else {
 mNaegele = mDum - 3;
 aNaegele = aDum + 1;
-explicacaoMes = `Como o mês da DUM é <strong>${getNomeMes(mDum - 1)}</strong> (entre Abril e Dezembro), <strong>subtraímos 3</strong> dos meses (${mDum} - 3 = <strong>${mNaegele}</strong>) e <strong>somamos 1</strong> ao ano (${aDum} + 1 = <strong>${aNaegele}</strong>).`;
+explicacaoMes = `LMP의 월이 <strong>${getNomeMes(mDum - 1)}</strong>(4월~12월)이므로, 월에서 <strong>3을 뺍니다</strong>(${mDum} - 3 = <strong>${mNaegele}</strong>) 그리고 연도에 <strong>1을 더합니다</strong>(${aDum} + 1 = <strong>${aNaegele}</strong>).`;
 }
 
 // Atualizar o Hero Card de Resultado
-resIg.innerHTML = `${semanas} <span class="text md:text font opacity block md:inline">semanas</span><br class="md:hidden"/> ${dias} <span class="text md:text font opacity block md:inline">dias</span>`;
+resIg.innerHTML = `${semanas} <span class="text-xl md:text-2xl font-semibold opacity-80 block md:inline">주</span><br class="md:hidden"/> ${dias} <span class="text-xl md:text-2xl font-semibold opacity-80 block md:inline">일</span>`;
 resDpp.textContent = formatarDataBR(dppDate);
 
 // Atualizar Detalhamento Matemático
 detalhamentoCalculo.innerHTML = `
-<div class="bg p rounded border border mb">
-<h4 class="font text-[#1A3E74] text mb">1. Regra de Naegele (Cálculo da DPP)</h4>
-<p class="mb">A DUM inserida foi <strong>${formatarDataBR(dumDate)}</strong>.</p>
-<ul class="list space mt">
-<li class="bg p rounded border border shadow"><strong class="text-[#4A90E2]">Passo A (Dias):</strong> Somamos 7 dias ao primeiro dia da menstruação. <br> ${dDum} + 7 = <strong>${dNaegele}</strong>.</li>
-<li class="bg p rounded border border shadow"><strong class="text-[#4A90E2]">Passo B (Meses e Anos):</strong> ${explicacaoMes}</li>
-<li class="bg-[#1A3E74] text p rounded shadow mt"><strong>Resultado DPP:</strong> Considerando os ajustes do calendário, a Data Provável do Parto será <strong>${formatarDataBR(dppDate)}</strong>.</li>
+<div class="bg-blue-50/60 p-5 rounded-xl border-2 border-blue-100 mb-4">
+<h4 class="font-black text-[#1A3E74] text-lg mb-3">1. Naegele 규칙 (DPP 계산)</h4>
+<p class="mb-2">입력된 LMP는 <strong>${formatarDataBR(dumDate)}</strong>입니다.</p>
+<ul class="list-none space-y-3 mt-3">
+<li class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm"><strong class="text-[#4A90E2]">단계 A (일):</strong> 월경 첫날에 7일을 더합니다. <br> ${dDum} + 7 = <strong>${dNaegele}</strong>.</li>
+<li class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm"><strong class="text-[#4A90E2]">단계 B (월 및 연도):</strong> ${explicacaoMes}</li>
+<li class="bg-[#1A3E74] text-white p-3 rounded-lg shadow-md mt-2"><strong>DPP 결과:</strong> 달력 조정을 고려한 예정일은 <strong>${formatarDataBR(dppDate)}</strong>입니다.</li>
 </ul>
 </div>
 
-<div class="bg p rounded border border">
-<h4 class="font text-[#1A3E74] text mb">2. Idade Gestacional Atual</h4>
-<p class="mb">Calculamos os dias corridos desde a DUM (${formatarDataBR(dumDate)}) até a data de hoje (${formatarDataBR(hoje)}).</p>
-<div class="font text md:text bg p rounded border border shadow overflow">
-Total de dias passados = <strong>${diffDias} dias</strong>.<br><br>
-Dividindo por 7 (dias da semana):<br>
-${diffDias} ÷ 7 = <strong>${semanas} semanas inteiras</strong>.<br>
-O resto da divisão é <strong>${dias} dias</strong>.<br>
+<div class="bg-gray-50 p-5 rounded-xl border-2 border-gray-200">
+<h4 class="font-black text-[#1A3E74] text-lg mb-3">2. 현재 임신 주수</h4>
+<p class="mb-2">LMP(${formatarDataBR(dumDate)})부터 오늘(${formatarDataBR(hoje)})까지의 경과 일수를 계산합니다.</p>
+<div class="font-mono text-sm md:text-base bg-white p-4 rounded-lg border border-gray-300 shadow-inner overflow-x-auto">
+총 경과 일수 = <strong>${diffDias}일</strong>.<br><br>
+7(주당 일수)로 나누기:<br>
+${diffDias} ÷ 7 = <strong>${semanas}주</strong>.<br>
+나머지는 <strong>${dias}일</strong>입니다.<br>
 </div>
-<p class="mt font text-[#1A3E74]">Totalizando: ${semanas} semanas e ${dias} dias.</p>
+<p class="mt-3 font-bold text-[#1A3E74]">합계: ${semanas}주 ${dias}일.</p>
 </div>
 `;
 
@@ -740,240 +594,49 @@ btnCalcular.addEventListener("click", calcularGestacional);
 btnLimpar.addEventListener("click", limparCampos);
 });
 </script>
-<div id="site-footer"></div>
-<div id="site-cookie"></div>
+
+<!-- MULTIPLEX_AD_RESERVED_START -->
+<style>
+  .multiplex-ad-reserved {
+    box-sizing: border-box;
+    display: block;
+    width: calc(100% - 32px);
+    max-width: 1200px;
+    min-height: 260px;
+    margin: 32px auto;
+    overflow: visible;
+  }
+  @media (max-width: 600px) {
+    .multiplex-ad-reserved {
+      width: calc(100% - 24px);
+      min-height: 220px;
+      margin: 24px auto;
+    }
+  }
+</style>
+<aside id="multiplex-ad-reserved" class="multiplex-ad-reserved" aria-label="Publicidade">
+  <ins class="adsbygoogle"
+       style="display:block;width:100%"
+       data-ad-format="autorelaxed"
+       data-ad-client="ca-pub-6472730056006847"
+       data-ad-slot="3341197364"
+       data-matched-content-rows-num="1,1"
+       data-matched-content-columns-num="1,4"
+       data-matched-content-ui-type="image_card_sidebyside,image_card_sidebyside"></ins>
+</aside>
+<!-- MULTIPLEX_AD_RESERVED_END -->
+
+<div id="footer-placeholder"></div>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 setTimeout(() => {
-fetch("/footer.html")
+fetch("footer.html")
 .then((response) => response.text())
 .then((data) => {
-document.if (typeof carregarTraducoes === "function") {
-carregarTraducoes("pt", "footer.json");
-carregarTraducoes("pt", "cookies.json");
-}
+document.getElementById("footer-placeholder").innerHTML = data;
 });
 }, 150);
 });
 </script>
-<script defer="True" src="/js/partials-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-  <script src="js/calc-engine-v2.js"></script>
-
-<!-- ═══ Print Template (Relatório de Resultado) ═══ -->
-<div class="print" style="display:none;" id="printTemplate">
-  <div class="print">
-    <div class="print">
-      <h1 id="printToolName">Calculadora</h1>
-      <p class="subtitle" id="printToolCategory">Escala clínica</p>
-      <span class="badge">✓ Validada clinicamente</span>
-    </div>
-    <div class="print">
-      <div class="report" id="printDate"></div>
-      <div>calculadorasdeenfermagem.com.br</div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">2</span> Dados do Paciente</div>
-    <div class="print-">
-      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
-      <div><div class="label">Registro / Prontuário</div><div class="value" id="printPatientReg">—</div></div>
-      <div><div class="label">나이</div><div class="value" id="printPatientAge">—</div></div>
-      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">3</span> Parâmetros Inseridos</div>
-    <ul class="print" id="printParamsList"></ul>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">4</span> Classificação e Interpretação</div>
-    <div class="print">
-      <div class="score" id="printScore">—</div>
-      <div class="label" id="printClassification">—</div>
-    </div>
-    <div class="print" id="printInterpretation"></div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">5</span> Metas Internacionais de Segurança</div>
-    <div class="print-">
-      <div class="print">
-        <h4>Metas de Segurança do Paciente</h4>
-        <ul>
-          <li>M1 Identificar o paciente corretamente</li>
-          <li>M2 Melhorar a comunicação efetiva</li>
-          <li>M3 Segurança na prescrição e administração</li>
-          <li>M5 Higiene das mãos</li>
-          <li>M6 Reduzir o risco de quedas</li>
-        </ul>
-      </div>
-      <div class="print">
-        <h4>9 Certos da Medicação</h4>
-        <ul>
-          <li>Paciente certo</li><li>Medicamento certo</li>
-          <li>Via certa</li><li>Hora certa</li>
-          <li>Dose certa</li><li>Registro certo</li>
-          <li>Ação certa</li><li>Forma certa</li>
-          <li>Resposta certa</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">6</span> Referência</div>
-    <div class="print" id="printReference">Documento gerado automaticamente.</div>
-  </div>
-
-  <div class="print">
-    <div class="print">
-      <div>Enf. Responsável: _________________</div>
-      <div class="coren">COREN: _______</div>
-    </div>
-    <div class="print">
-      <div class="url">calculadorasdeenfermagem.com.br</div>
-      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
-    </div>
-  </div>
-</div>
-
-<script>
-// Populate print template from page data
-function populatePrintTemplate() {
-  if (toolName) document.getElementById('printToolName').textContent = toolName.textContent.trim();
-  
-  var toolCat = document.querySelector('.tool-header .subtitle, .tool-category');
-  if (toolCat) document.getElementById('printToolCategory').textContent = toolCat.textContent.trim();
-  
-  // Date
-  var now = new Date();
-  var dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
-  var dateEl = document.getElementById('printDate');
-  if (dateEl) dateEl.textContent = dateStr;
-  
-  // Patient data from localStorage
-  try {
-    var ctx = JSON.parse(localStorage.getItem('patientContext') || '{}');
-    if (ctx.name) document.getElementById('printPatientName').textContent = ctx.name;
-    if (ctx.reg) document.getElementById('printPatientReg').textContent = ctx.reg;
-    if (ctx.age) document.getElementById('printPatientAge').textContent = ctx.age;
-    if (ctx.bed) document.getElementById('printPatientBed').textContent = ctx.bed;
-  } catch(e) {}
-  
-  // Parameters from calc inputs
-  var paramsList = document.getElementById('printParamsList');
-  if (paramsList) {
-    var inputs = document.querySelectorAll('.calc-card input, .calc-card select, .calc-grid input, .calc-grid select');
-    inputs.forEach(function(inp) {
-      if (inp.value && inp.value !== '') {
-        var label = inp.getAttribute('aria-label') || inp.getAttribute('placeholder') || inp.name || 'Parâmetro';
-        var li = document.createElement('li');
-        li.innerHTML = '<span class="param">' + label + '</span><span class="param">' + inp.value + '</span>';
-        paramsList.appendChild(li);
-      }
-    });
-  }
-  
-  // Score/classification from result
-  var scoreEl = document.querySelector('.result-box .score, .result-value, .calc-result .score');
-  if (scoreEl) document.getElementById('printScore').textContent = scoreEl.textContent.trim();
-  
-  var classEl = document.querySelector('.result-box .classification, .result-label, .calc-result .label');
-  if (classEl) document.getElementById('printClassification').textContent = classEl.textContent.trim();
-  
-  var interpEl = document.querySelector('.result-box .interpretation, .result-text, .calc-result .interpretation');
-  if (interpEl) document.getElementById('printInterpretation').textContent = interpEl.textContent.trim();
-  
-  // Reference
-  var refEl = document.querySelector('.evidence-section .reference, .reference-text, .citation');
-  if (refEl) document.getElementById('printReference').textContent = refEl.textContent.trim();
-}
-
-// Show print area when printing
-window.addEventListener('beforeprint', function() {
-  var pt = document.getElementById('printTemplate');
-  if (pt) {
-    pt.style.display = 'block';
-    populatePrintTemplate();
-  }
-});
-
-window.addEventListener('afterprint', function() {
-  var pt = document.getElementById('printTemplate');
-  if (pt) pt.style.display = 'none';
-});
-</script>
-
-<svg style="display:none" aria-hidden="true"><defs>
-  <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></symbol>
-  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
-  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13.9A8.5 8.5 0 1 1 10.1 3.5a7 7 0 0 0 10.4 10.4z"/></symbol>
-  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M15 3v4h4"/><line x1="8.5" y1="12" x2="15.5" y2="12"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/><line x1="8.5" y1="8.5" x2="11" y2="8.5"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.8 5.5-5.8s5.5 2.5 5.5 5.8"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.7 14.5c2.4.3 4.3 2.4 4.3 5"/></symbol>
-  <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="3 17 9.5 10.5 13.5 14.5 21 6.5"/><polyline points="15 6.5 21 6.5 21 12.5"/></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.2c-2-1.6-5-2.1-8-1.6v13.6c3-.5 6 0 8 1.6 2-1.6 5-2.1 8-1.6V4.6c-3-.5-6 0-8 1.6z"/><line x1="12" y1="6.2" x2="12" y2="19.8"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 10.8 15.3 16 9.3"/></symbol>
-  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18.5h5M10.3 21h3.4M12 3.2a6.2 6.2 0 0 0-3.2 11.5c1 .8 1.2 1.6 1.2 2.3h4c0-.7.2-1.5 1.2-2.3A6.2 6.2 0 0 0 12 3.2z"/></symbol>
-  <symbol id="i-clipcheck" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><polyline points="9 13 11 15 15 10.5"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
-  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.2 4.8 13.5h5.8l-1 8.3 8.4-11.3h-5.8l1-8.3z"/></symbol>
-  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><line x1="8" y1="11" x2="16" y2="7"/><line x1="8" y1="13" x2="16" y2="17"/></symbol>
-  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4z"/></symbol>
-  <symbol id="i-printer" viewBox="0 0 24 24"><rect x="6" y="9" width="12" height="7" rx="1.5"/><path d="M7 9V4.5h10V9"/><path d="M7 16v3.5h10V16"/><circle cx="16" cy="12" r="0.6" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6-4.4-4.2 6-.8z"/></symbol>
-  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3.5l10 17.5H2z"/><line x1="12" y1="10" x2="12" y2="15"/><circle cx="12" cy="17.7" r="0.7" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M10 8.3l6 3.7-6 3.7z" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 4.5 2 9l10 4.5L22 9z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><line x1="22" y1="9" x2="22" y2="15"/></symbol>
-  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></symbol>
-  <symbol id="i-calculator" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="2"/><line x1="8" y1="8.5" x2="16" y2="8.5"/><line x1="8" y1="12" x2="8.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="16" y1="12" x2="16.01" y2="12"/><line x1="8" y1="15.5" x2="8.01" y2="15.5"/><line x1="12" y1="15.5" x2="12.01" y2="15.5"/><line x1="16" y1="15.5" x2="16.01" y2="15.5"/></symbol>
-  <symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/><polyline points="9 12 11 14 15.5 9"/></symbol>
-  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><line x1="8" y1="15" x2="16" y2="15"/></symbol>
-  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 21c0-9.5 6.5-16 16-16 0 9.5-6.5 16-16 16z"/><path d="M5 21c3.2-3.2 6.3-6.5 9-11"/></symbol>
-  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 2.5c3 2 5 6 5 10.3 0 2-.9 3.9-2 5.2l-3 3-3-3c-1.1-1.3-2-3.2-2-5.2 0-4.3 2-8.3 5-10.3z"/><circle cx="12" cy="11" r="1.8"/><path d="M8 17l-2.5 4.5M16 17l2.5 4.5"/></symbol>
-  <symbol id="i-brain" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="2.5"/><circle cx="9.2" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><line x1="12" y1="4" x2="12" y2="8"/><circle cx="12" cy="3.4" r="1.2" fill="currentColor" stroke="none"/><line x1="2" y1="12.5" x2="5" y2="12.5"/><line x1="19" y1="12.5" x2="22" y2="12.5"/></symbol>
-  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M6.5 18.5h11a4 4 0 0 0 0-8 6.2 6.2 0 0 0-11.8 1.6A3.6 3.6 0 0 0 6.5 18.5z"/></symbol>
-  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16.5" x2="12" y2="20"/></symbol>
-  <symbol id="i-gauge" viewBox="0 0 24 24"><circle cx="12" cy="12.5" r="8.5"/><line x1="12" y1="12.5" x2="15.5" y2="9"/><circle cx="12" cy="12.5" r="1" fill="currentColor" stroke="none"/><line x1="12" y1="4.3" x2="12" y2="5.8"/></symbol>
-  <symbol id="i-sliders" viewBox="0 0 24 24"><line x1="6" y1="4" x2="6" y2="20"/><circle cx="6" cy="9.5" r="2" fill="#fff"/><line x1="12" y1="4" x2="12" y2="20"/><circle cx="12" cy="15.5" r="2" fill="#fff"/><line x1="18" y1="4" x2="18" y2="20"/><circle cx="18" cy="7.5" r="2" fill="#fff"/></symbol>
-  <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4.3" r="1.8" fill="currentColor" stroke="none"/><path d="M4.5 9h15M12 9v5.5l-4.2 7.2M12 13.8l4.2 6.9"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/></symbol>
-  <symbol id="i-cookie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="9.5" cy="15" r="1" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><line x1="8.5" y1="11.5" x2="15.5" y2="11.5"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/></symbol>
-  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12.5M7 11.5l5 5 5-5"/><line x1="5" y1="20.5" x2="19" y2="20.5"/></symbol>
-  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21.5 4v6h-6"/><path d="M2.5 20v-6h6"/><path d="M4 10a8 8 0 0 1 13.4-3.6L21.5 10"/><path d="M20 14a8 8 0 0 1-13.4 3.6L2.5 14"/></symbol>
-  <symbol id="i-pulse" viewBox="0 0 24 24"><polyline points="2.5 13 7.5 13 9.5 6 13.5 19 16 13 21.5 13"/></symbol>
-  <symbol id="i-headphone" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></symbol>
-  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0v4"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M20 18a3 3 0 0 1-3 3h-2"/></symbol>
-  <symbol id="i-handshake" viewBox="0 0 24 24"><path d="M2 12l4-3 3 2 3-2 3 2 3-2 4 3"/><path d="M7 11l3 6M14 11l-3 6"/></symbol>
-  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="10" height="18" rx="1"/><rect x="14" y="9" width="6" height="12" rx="1"/><line x1="7" y1="7" x2="7.01" y2="7"/><line x1="11" y1="7" x2="11.01" y2="7"/><line x1="7" y1="11" x2="7.01" y2="11"/><line x1="11" y1="11" x2="11.01" y2="11"/><line x1="7" y1="15" x2="7.01" y2="15"/><line x1="11" y1="15" x2="11.01" y2="15"/></symbol>
-  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/></symbol>
-  <symbol id="i-stetho" viewBox="0 0 24 24"><path d="M5 3v5a3 3 0 0 0 6 0V3"/><path d="M8 11v2.5a6 6 0 0 0 12 0v-1.5"/><circle cx="20" cy="10.5" r="2.2"/></symbol>
-  <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2v5M10.5 13.5 6.5 16M13.5 13.5l4 2.5"/></symbol>
-  <symbol id="i-sitemap" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="5" rx="1"/><rect x="2" y="12.5" width="6" height="5" rx="1"/><rect x="16" y="12.5" width="6" height="5" rx="1"/><line x1="12" y1="7.5" x2="12" y2="10"/><line x1="5" y1="12.5" x2="5" y2="10"/><line x1="19" y1="12.5" x2="19" y2="10"/><path d="M5 10h14"/></symbol>
-  <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
-
-<symbol id="i-clipboard-list" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></symbol>
-  <symbol id="i-comments" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
-  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
-  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-2-2-4-2-4s2 4 2 6a6 6 0 0 1-12 0c0-4 4-6 4-10z"/></symbol>
-  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></symbol>
-  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/></symbol>
-  <symbol id="i-pills" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(45 12 12)"/><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/></symbol>
-  <symbol id="i-syringe" viewBox="0 0 24 24"><path d="M18 2l4 4-2 2-4-4z"/><path d="M14 6l4 4-8 8H6v-4z"/><path d="M6 18l-2 2"/><path d="M10 10l4 4"/></symbol>
-  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></symbol>
-  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></symbol>
-  <symbol id="i-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></symbol>
-</defs></svg>
-
 </body>
 </html>

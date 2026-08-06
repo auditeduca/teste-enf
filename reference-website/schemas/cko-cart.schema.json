@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.calculadorasdeenfermagem.com.br/schemas/cko-cart.schema.json",
+  "title": "CKO Cart Manifest (CKO-CART)",
+  "version": "1.0.0",
+  "description": "Extensão do page-manifest CKO para o recurso Carrinho de Emergência: zonas/hotspots, regras de conferência, dicas/erros, formulários exportáveis, instituições homologadas e integridade de assets.",
+  "type": "object",
+  "required": [
+    "manifestVersion",
+    "identity",
+    "document",
+    "seo",
+    "assets",
+    "runtime",
+    "shell",
+    "governance",
+    "cartZones",
+    "conferenceRules",
+    "tipsAndErrors",
+    "downloadableForms",
+    "homologInstitutions",
+    "relatedContent",
+    "references"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "url": { "type": "string", "format": "uri" },
+    "absPath": { "type": "string", "pattern": "^/" },
+    "sri": {
+      "type": "string",
+      "pattern": "^sha(256|384|512)-[A-Za-z0-9+/=]+$"
+    },
+    "sha256hex": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "hotspot": {
+      "type": "object",
+      "required": ["xPercent", "yPercent", "widthPercent", "heightPercent"],
+      "additionalProperties": false,
+      "properties": {
+        "xPercent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "yPercent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "widthPercent": { "type": "number", "minimum": 1, "maximum": 100 },
+        "heightPercent": { "type": "number", "minimum": 1, "maximum": 100 }
+      }
+    },
+    "cartItem": {
+      "type": "object",
+      "required": ["id", "name", "qtySuggested", "highAlert"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "qtySuggested": { "type": "number", "minimum": 0 },
+        "highAlert": { "type": "boolean" },
+        "notes": { "type": "string" },
+        "tracksExpiry": { "type": "boolean", "default": true },
+        "tracksSeal": { "type": "boolean", "default": false }
+      }
+    },
+    "cartZone": {
+      "type": "object",
+      "required": ["id", "title", "shortLabel", "hotspot", "summary", "items", "deepLink"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "shortLabel": { "type": "string" },
+        "hotspot": { "$ref": "#/$defs/hotspot" },
+        "summary": { "type": "string" },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/cartItem" }
+        },
+        "mavAlerts": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "deepLink": { "type": "string", "pattern": "^[a-z0-9-]+$" }
+      }
+    },
+    "localAsset": {
+      "type": "object",
+      "required": ["id", "path", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "path": { "$ref": "#/$defs/absPath" },
+        "sha256": { "$ref": "#/$defs/sha256hex" },
+        "role": { "type": "string" },
+        "alt": { "type": "string" },
+        "width": { "type": "integer" },
+        "height": { "type": "integer" }
+      }
+    },
+    "externalLib": {
+      "type": "object",
+      "required": ["id", "url", "integrity", "crossorigin", "fallback"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "url": { "$ref": "#/$defs/url" },
+        "integrity": { "$ref": "#/$defs/sri" },
+        "crossorigin": { "enum": ["anonymous", "use-credentials"] },
+        "referrerpolicy": { "type": "string" },
+        "fallback": { "type": "string" },
+        "loadTrigger": { "enum": ["eager", "defer", "async", "on-demand"] }
+      }
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "manifestVersion": { "const": "1.0.0" },
+    "identity": {
+      "type": "object",
+      "required": ["ckoId", "slug", "type", "version", "category"],
+      "properties": {
+        "ckoId": { "const": "CKO-CART-001" },
+        "slug": { "type": "string" },
+        "type": { "enum": ["biblioteca", "protocolo", "calculadora"] },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "category": { "type": "string" },
+        "authoringFormat": { "type": "string" }
+      }
+    },
+    "document": { "type": "object" },
+    "seo": { "type": "object" },
+    "i18n": { "type": "object" },
+    "structuredData": { "type": "object" },
+    "assets": {
+      "type": "object",
+      "required": ["local", "externalLibraries"],
+      "properties": {
+        "css": { "type": "object" },
+        "fonts": { "type": "object" },
+        "images": { "type": "object" },
+        "local": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/localAsset" }
+        },
+        "externalLibraries": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/externalLib" }
+        }
+      }
+    },
+    "runtime": { "type": "object" },
+    "shell": { "type": "object" },
+    "accessibility": { "type": "object" },
+    "privacy": { "type": "object" },
+    "governance": {
+      "type": "object",
+      "required": ["clinicalReview", "evidence", "limitations"],
+      "properties": {
+        "clinicalReview": {
+          "type": "object",
+          "required": ["status", "reviewer", "lastReview", "nextReview"]
+        },
+        "evidence": { "type": "object" },
+        "limitations": { "type": "array", "minItems": 1 },
+        "regulatory": { "type": "object" },
+        "changeLog": { "type": "array" },
+        "evidenceLevel": { "type": "string" }
+      }
+    },
+    "cartZones": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": { "$ref": "#/$defs/cartZone" }
+    },
+    "conferenceRules": {
+      "type": "object",
+      "required": ["expiryAlertDays", "expiryWarningDays", "sealRequired", "rules"],
+      "properties": {
+        "checkFrequency": { "type": "object" },
+        "expiryAlertDays": { "type": "integer", "minimum": 1 },
+        "expiryWarningDays": { "type": "integer", "minimum": 1 },
+        "sealRequired": { "type": "boolean" },
+        "statuses": { "type": "object" },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "when", "status", "message"],
+            "properties": {
+              "id": { "type": "string" },
+              "when": { "type": "string" },
+              "status": {
+                "enum": ["conforme", "alerta", "fora_do_padrao", "critico"]
+              },
+              "message": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "tipsAndErrors": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["type", "id", "title", "body", "evidenceSource"],
+        "properties": {
+          "type": { "enum": ["tip", "error"] },
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "body": { "type": "string" },
+          "evidenceSource": { "type": "string" },
+          "evidenceUrl": { "type": "string" }
+        }
+      }
+    },
+    "downloadableForms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "formats"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "formats": {
+            "type": "array",
+            "items": { "enum": ["pdf", "excel", "word"] }
+          },
+          "brandColor": { "type": "string" },
+          "footerNote": { "type": "string" }
+        }
+      }
+    },
+    "homologInstitutions": {
+      "type": "object",
+      "required": ["publicSeals", "internalDbPath"],
+      "properties": {
+        "publicSeals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["institutionId", "seal", "label"],
+            "properties": {
+              "institutionId": { "type": "string" },
+              "seal": { "enum": ["fonte_homologada", "leitura_complementar"] },
+              "label": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        },
+        "internalDbPath": { "type": "string" },
+        "validateOnBuild": { "type": "boolean" }
+      }
+    },
+    "relatedContent": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "href"],
+        "properties": {
+          "title": { "type": "string" },
+          "href": { "type": "string" },
+          "kind": { "enum": ["guia", "artigo", "infografico", "simulado", "escala", "protocolo"] },
+          "blurb": { "type": "string" }
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "citation", "url"],
+        "properties": {
+          "id": { "type": "string" },
+          "citation": { "type": "string" },
+          "url": { "type": "string" },
+          "institutionId": { "type": "string" },
+          "seal": { "enum": ["fonte_homologada", "leitura_complementar"] }
+        }
+      }
+    },
+    "guidesArticles": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "contentCopyright": {
+      "type": "object",
+      "properties": {
+        "owner": { "type": "string" },
+        "notice": { "type": "string" },
+        "classification": { "type": "string" },
+        "usage": { "type": "string" }
+      }
+    },
+    "educationalArticle": {
+      "type": "object",
+      "required": ["id", "title", "sections"],
+      "properties": {
+        "id": { "type": "string" },
+        "slug": { "type": "string" },
+        "href": { "type": "string" },
+        "title": { "type": "string" },
+        "eyebrow": { "type": "string" },
+        "lead": { "type": "string" },
+        "kicker": { "type": "string" },
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["heading", "paragraphs"],
+            "properties": {
+              "heading": { "type": "string" },
+              "paragraphs": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "legalReferencesNote": { "type": "string" },
+        "copyrightNotice": { "type": "string" }
+      }
+    }
+  }
+}

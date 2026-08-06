@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "title": "Quiz Interativo de Enfermagem",
+  "icon": "/iconpages-calculadoras-de-enfermagem.webp",
+  "categories": {
+    "gotejamento": {
+      "label": "Gotejamento e infusão",
+      "concept": "O gotejamento converte volume e tempo em gotas ou microgotas por minuto. Macrogotas usam fator 20 gotas/mL; microgotas, 60 microgotas/mL.",
+      "normative": "Boas práticas de administração de medicamentos e segurança do paciente (ANVISA). Confira sempre o tipo de equipo prescrito no POP da instituição."
+    },
+    "penicilina": {
+      "label": "Penicilina",
+      "concept": "Na reconstituição, o pó ocupa volume próprio. A dose prescrita em UI é proporcional ao volume final após diluição.",
+      "normative": "Siga bula, diluente e via recomendados. Resolução COFEN sobre administração de medicamentos e protocolos institucionais."
+    },
+    "insulina": {
+      "label": "Insulina",
+      "concept": "Frascos U-100 contêm 100 UI/mL. Com seringa de insulina U-100, a marcação em UI corresponde à dose prescrita.",
+      "normative": "Dupla checagem, via subcutânea correta e educação em diabetes. Protocolos institucionais de insulina."
+    },
+    "soro": {
+      "label": "Soros",
+      "concept": "Percentual indica gramas do soluto em 100 mL. Ex.: SG 5% = 5 g de glicose/100 mL; SF 0,9% = 0,9 g de NaCl/100 mL.",
+      "normative": "Identificação correta da solução e da via. Práticas de segurança do paciente (ANVISA)."
+    },
+    "regra3": {
+      "label": "Regra de três",
+      "concept": "Proporcionalidade entre dose disponível e dose prescrita: (prescrito × volume) ÷ concentração disponível.",
+      "normative": "Cálculo seguro de doses — validar unidade (mg/g/UI) antes de aspirar. Protocolos de farmácia/enfermagem."
+    },
+    "conversao": {
+      "label": "Conversão de unidades",
+      "concept": "1 g = 1.000 mg; 1 mg = 1.000 mcg. Erros de conversão estão entre as falhas mais comuns na administração.",
+      "normative": "Sistema métrico e checagem de unidades na prescrição (segurança do paciente)."
+    }
+  },
+  "difficulties": {
+    "facil": "Fácil",
+    "medio": "Médio",
+    "dificil": "Difícil"
+  },
+  "questions": [
+    {"id":1,"cat":"gotejamento","diff":"medio","q":"500 ml de soro em 8 horas. Quantas GOTAS por minuto?","opts":["20 gotas/min","21 gotas/min","17 gotas/min","24 gotas/min"],"ans":1,"interpretation":"(500 × 20) ÷ (8×60) = 10000 ÷ 480 = 20,83 → 21 gotas/min."},
+    {"id":2,"cat":"gotejamento","diff":"facil","q":"500 ml em 24 horas. Quantas MICROGOTAS por minuto?","opts":["20 microgotas/min","21 microgotas/min","24 microgotas/min","17 microgotas/min"],"ans":1,"interpretation":"500 ÷ 24 = 20,83 → 21 microgotas/min."},
+    {"id":3,"cat":"gotejamento","diff":"medio","q":"100 ml em 30 minutos. Quantas GOTAS por minuto?","opts":["60","67","70","55"],"ans":1,"interpretation":"(100×20)÷30 = 66,6 → 67 gotas/min."},
+    {"id":4,"cat":"penicilina","diff":"medio","q":"Frasco 5.000.000 UI: volume do pó?","opts":["1 ml","2 ml","3 ml","4 ml"],"ans":1,"interpretation":"Penicilina 5.000.000 UI → pó ocupa 2 ml."},
+    {"id":5,"cat":"penicilina","diff":"medio","q":"Frasco 10.000.000 UI: volume do pó?","opts":["2 ml","3 ml","4 ml","5 ml"],"ans":2,"interpretation":"Penicilina 10.000.000 UI → pó ocupa 4 ml."},
+    {"id":6,"cat":"insulina","diff":"facil","q":"Prescrição: 20 UI. Frasco 100 UI/ml. Quantos ml?","opts":["0,1","0,2","0,25","0,5"],"ans":1,"interpretation":"20 ÷ 100 = 0,2 ml."},
+    {"id":7,"cat":"insulina","diff":"facil","q":"Prescrição: 8 UI. Frasco 100 UI/ml. Quantos ml?","opts":["0,06","0,08","0,1","0,12"],"ans":1,"interpretation":"8 ÷ 100 = 0,08 ml."},
+    {"id":8,"cat":"soro","diff":"facil","q":"SG 5% 500ml: quantos gramas de glicose?","opts":["15g","20g","25g","30g"],"ans":2,"interpretation":"5g a cada 100ml → 5×5 = 25g."},
+    {"id":9,"cat":"soro","diff":"facil","q":"SF 0,9% 500ml: quantos gramas de NaCl?","opts":["3,5g","4,0g","4,5g","5,0g"],"ans":2,"interpretation":"0,9×5 = 4,5g."},
+    {"id":10,"cat":"regra3","diff":"medio","q":"Amicacina 150mg. Ampola 500mg/2ml. Quantos ml?","opts":["0,4","0,5","0,6","0,8"],"ans":2,"interpretation":"(150×2)÷500 = 0,6ml."},
+    {"id":11,"cat":"regra3","diff":"medio","q":"Prescrição: 45mg Furosemida. Ampola 20mg/2ml. Quantos ml?","opts":["3,5","4,0","4,5","5,0"],"ans":2,"interpretation":"(45×2)÷20 = 4,5ml."},
+    {"id":12,"cat":"conversao","diff":"facil","q":"0,5g equivale a quantos mg?","opts":["50mg","100mg","500mg","1000mg"],"ans":2,"interpretation":"1g = 1000mg → 0,5g = 500mg."},
+    {"id":13,"cat":"gotejamento","diff":"medio","q":"Infusão de 500 mL SF em 5 h (microgotas 60/mL). Gotejamento?","opts":["80 microgotas/min","100 microgotas/min","120 microgotas/min","150 microgotas/min"],"ans":1,"interpretation":"500 ÷ 5 = 100 microgotas/min."},
+    {"id":14,"cat":"gotejamento","diff":"medio","q":"1.200 mL em 10 h por microgotas. Velocidade?","opts":["100 microgotas/min","110 microgotas/min","120 microgotas/min","130 microgotas/min"],"ans":2,"interpretation":"1.200 ÷ 10 = 120 microgotas/min."},
+    {"id":15,"cat":"gotejamento","diff":"dificil","q":"1.000 mL SG 5% em 8 h (macrogotas 20/mL). Velocidade?","opts":["38 gotas/min","40 gotas/min","42 gotas/min","45 gotas/min"],"ans":2,"interpretation":"(1000 × 20) ÷ (8 × 60) = 41,6 → 42 gotas/min."},
+    {"id":16,"cat":"gotejamento","diff":"dificil","q":"500 mL em 6 h (macrogotas). Gotejamento?","opts":["26 gotas/min","28 gotas/min","30 gotas/min","32 gotas/min"],"ans":1,"interpretation":"(500 × 20) ÷ (6 × 60) = 27,7 → 28 gotas/min."},
+    {"id":17,"cat":"penicilina","diff":"dificil","q":"Benzatina 1.200.000 UI em 4 mL. Volume para 600.000 UI?","opts":["1 mL","2 mL","3 mL","4 mL"],"ans":1,"interpretation":"(600.000 × 4) ÷ 1.200.000 = 2 mL."},
+    {"id":18,"cat":"penicilina","diff":"dificil","q":"5.000.000 UI em 10 mL. Volume para 2.500.000 UI?","opts":["2 mL","4 mL","5 mL","6 mL"],"ans":2,"interpretation":"(2.500.000 × 10) ÷ 5.000.000 = 5 mL."},
+    {"id":19,"cat":"regra3","diff":"medio","q":"Ampicilina 500 mg/5 mL. Prescrição 250 mg. Volume?","opts":["1,5 mL","2,0 mL","2,5 mL","3,0 mL"],"ans":2,"interpretation":"(250 × 5) ÷ 500 = 2,5 mL."},
+    {"id":20,"cat":"regra3","diff":"facil","q":"Dipirona 1 g/2 mL. Prescrição 500 mg. Volume?","opts":["0,5 mL","1,0 mL","1,5 mL","2,0 mL"],"ans":1,"interpretation":"1000 mg = 2 mL; 500 mg = 1 mL."},
+    {"id":21,"cat":"conversao","diff":"facil","q":"Quantos miligramas existem em 2 gramas?","opts":["20 mg","200 mg","2.000 mg","20.000 mg"],"ans":2,"interpretation":"2 g = 2.000 mg."},
+    {"id":22,"cat":"conversao","diff":"facil","q":"Ampola com 0,5 g corresponde a:","opts":["5 mg","50 mg","500 mg","5.000 mg"],"ans":2,"interpretation":"0,5 g = 500 mg."},
+    {"id":23,"cat":"insulina","diff":"medio","q":"Insulina Regular 12 UI (U-100). O que aspirar?","opts":["10 UI","11 UI","12 UI","20 UI"],"ans":2,"interpretation":"Seringa U-100: marcação = dose = 12 UI."},
+    {"id":24,"cat":"insulina","diff":"medio","q":"Insulina NPH 35 UI em seringa U-100. Aspirar até:","opts":["25 UI","30 UI","35 UI","40 UI"],"ans":2,"interpretation":"Marcação correspondente: 35 UI."}
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "name": "CKO Content Visual Identity",
+  "description": "Contrato de identidade visual e estrutural para páginas de conteúdo PT-BR.",
+  "tokens": {
+    "navy": "#1A3E74",
+    "navyMid": "#1E4D8C",
+    "pageTint": "#f8fafc",
+    "slate500": "#64748b",
+    "slate800": "#1e293b",
+    "fontBody": "Inter",
+    "fontDisplay": "Nunito Sans",
+    "layoutMax": "max-w-7xl",
+    "sidebarWidthPx": 280,
+    "sidebarBreakpoint": "1024px"
+  },
+  "requiredAssets": {
+    "css": [
+      "/css/pages/cart-emergencia.css",
+      "/css/pages/cko-page-shell.css",
+      "/css/pages/cko-content-modules.css"
+    ],
+    "js": [
+      "/js/cko-page-shell.js",
+      "/js/cko-content-engine.js"
+    ],
+    "shellCatalog": "/data/cko-shell-pages.json",
+    "contentManifestDir": "/data/content/"
+  },
+  "requiredBodyClass": "cko-cart-page",
+  "requiredSlots": ["chrome", "hero", "sidebar"],
+  "optionalSlots": ["aside"],
+  "requiredLayout": {
+    "wrapper": "cko-layout",
+    "main": "cko-layout__main",
+    "side": "cko-layout__side"
+  },
+  "requiredModules": ["faq", "related", "references"],
+  "optionalModules": ["toc", "tools", "media"],
+  "forbiddenPatterns": [
+    {
+      "id": "legacy-breadcrumb",
+      "pattern": "class=\"breadcrumb\"",
+      "severity": "error",
+      "message": "Breadcrumb legado — use slot chrome do shell"
+    },
+    {
+      "id": "legacy-title-bar",
+      "pattern": "class=\"title-bar",
+      "severity": "error",
+      "message": "Hero title-bar legado — use slot hero do shell"
+    },
+    {
+      "id": "broken-main-close",
+      "pattern": "</div>in>",
+      "severity": "error",
+      "message": "Fechamento </main> corrompido (</div>in>)"
+    },
+    {
+      "id": "hero-navy-local",
+      "pattern": "hero-card-navy|meem-card-navy",
+      "severity": "warn",
+      "message": "Hero local divergente — preferir shell hero"
+    }
+  ],
+  "acceptance": {
+    "shell": "Cluster chrome+hero+cko-layout+sidebar+aside via catálogo",
+    "modules": "FAQ≥4, relacionados≥3, referências≥1 no manifesto ou DOM padronizado",
+    "identity": "Mesmos tokens navy/Inter/Nunito e grid main+sidebar"
+  }
+}

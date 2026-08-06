@@ -1,0 +1,192 @@
+/* Header faixa 1: pesquisa + idiomas */
+.cko-header-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.75rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 99995;
+}
+
+#ckoGlobalSearchBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#ckoGlobalSearchBtn:hover {
+  border-color: #1a3e74;
+  color: #1a3e74;
+}
+
+#ckoGlobalSearchBtn:focus-visible {
+  outline: 2px solid #1a3e74;
+  outline-offset: 2px;
+}
+
+#ckoGlobalSearchBtn .cko-header-tools__kbd {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  margin-left: 0.15rem;
+}
+
+@media (max-width: 640px) {
+  #ckoGlobalSearchBtn .cko-header-tools__label,
+  #ckoGlobalSearchBtn .cko-header-tools__kbd {
+    display: none;
+  }
+  #ckoGlobalSearchBtn {
+    padding: 0.4rem;
+  }
+}
+
+/* Lang compacto na faixa 1 */
+#header-lang-slot #language-dropdown-wrapper {
+  display: block;
+  width: auto;
+  padding: 0;
+  pointer-events: none;
+}
+#header-lang-slot #language-dropdown-wrapper > div {
+  pointer-events: auto;
+}
+#header-lang-slot #langButton {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+@media (max-width: 640px) {
+  #header-lang-slot #langText {
+    display: none;
+  }
+}
+
+/* Esconde faixa 2 legada do idioma */
+body.cko-lang-in-header #language-selector-placeholder {
+  display: none !important;
+  min-height: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+
+/* Modal pesquisa */
+.cko-gsearch[hidden] {
+  display: none !important;
+}
+.cko-gsearch {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 1rem 1rem;
+}
+.cko-gsearch__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+}
+.cko-gsearch__panel {
+  position: relative;
+  width: min(560px, 100%);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+.cko-gsearch__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+.cko-gsearch__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #1a3e74;
+  flex-shrink: 0;
+}
+.cko-gsearch__input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  font-size: 1rem;
+  color: #1e293b;
+  background: transparent;
+}
+.cko-gsearch__close {
+  border: 0;
+  background: #f1f5f9;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #475569;
+}
+.cko-gsearch__hint {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+.cko-gsearch__results {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0.5rem;
+  max-height: min(50vh, 360px);
+  overflow: auto;
+}
+.cko-gsearch__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.65rem 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+.cko-gsearch__item:hover,
+.cko-gsearch__item:focus {
+  background: #f1f5f9;
+  outline: none;
+}
+.cko-gsearch__title {
+  font-weight: 700;
+  color: #1a3e74;
+  font-size: 0.95rem;
+}
+.cko-gsearch__href {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+.cko-gsearch__empty {
+  padding: 1rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+body.cko-gsearch-open {
+  overflow: hidden;
+}

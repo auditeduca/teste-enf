@@ -1,0 +1,452 @@
+﻿<!-- Barra de Acessibilidade (Padrão Heparina) -->
+<!-- Botão Flutuante de Acessibilidade (Mobile) -->
+<button id="accessibilityToggleButton" aria-label="Buka menu aksesibilitas">
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- Painel Lateral de Acessibilidade (Mobile) -->
+<div id="pwaAcessibilidadeBar">
+  <div class="pwa-acessibilidade-header">
+    <h3>Aksesibilitas</h3>
+    <button
+      id="pwaAcessibilidadeCloseBtn"
+      class="pwa-acessibilidade-close-btn"
+      aria-label="Tutup menu aksesibilitas"
+    >
+      &times;
+    </button>
+  </div>
+  <button id="btnAlternarTamanhoFontePWA" aria-label="Ubah ukuran font">
+    <i class="fas fa-text-height"></i
+    ><span id="fontSizeTextPWA">Ukuran Font</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinhaPWA" aria-label="Ubah spasi baris">
+    <i class="fas fa-align-justify"></i
+    ><span id="lineHeightTextPWA">Spasi Baris</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetraPWA" aria-label="Ubah spasi huruf">
+    <i class="fas fa-text-width"></i
+    ><span id="letterSpacingTextPWA">Spasi Huruf</span>
+  </button>
+  <button id="btnAlternarContrastePWA" aria-label="Ganti kontras tinggi">
+    <i class="fas fa-contrast"></i><span>Kontras Tinggi</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="Ganti mode gelap">
+    <i class="fas fa-moon"></i><span>Mode Gelap</span>
+  </button>
+  <button id="btnAlternarFonteDislexiaPWA" aria-label="Ganti font disleksia">
+    <i class="fas fa-font"></i><span>Font Disleksia</span>
+  </button>
+  <div
+    class="color-options-pwa"
+    role="radiogroup"
+    aria-label="Warna fokus aksesibilitas"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="Warna fokus kuning"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="Warna fokus hijau limau"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="Warna fokus cyan"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="Warna fokus magenta"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="Pintasan Keyboard">
+    <i class="fas fa-keyboard"></i><span>Pintasan</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="Setel ulang pengaturan">
+    <i class="fas fa-undo"></i><span>Setel Ulang Semua</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- Overlay para Menus Laterais --><div id="barraAcessibilidade">
+  <button id="btnAlternarTamanhoFonte" aria-label="Ubah ukuran font">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span id="fontSizeText">Normal</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinha" aria-label="Ubah spasi baris">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-align-justify"
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+    <span id="lineHeightText">Sedang</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetra" aria-label="Ubah spasi huruf">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-text-spacing"
+    >
+      <path d="M10 12H3" />
+      <path d="M21 12h-7" />
+      <path d="M12 20V4" />
+    </svg>
+    <span id="letterSpacingText">Normal</span>
+  </button>
+  <button id="btnAlternarVelocidadeLeitura" aria-label="Ubah kecepatan membaca">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-gauge"
+    >
+      <path d="M12 14v4" />
+      <path
+        d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"
+      />
+    </svg>
+    <span id="readingSpeedText">Normal</span>
+  </button>
+  <button id="btnToggleLeitura" aria-label="Putar/Jeda membaca konten utama">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-play"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">Putar Bacaan</span>
+  </button>
+  <button
+    id="btnReiniciarLeitura"
+    aria-label="Mulai ulang membaca konten utama"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-rotate-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">Mulai Ulang Bacaan</span>
+  </button>
+  <button id="btnReadFocused" aria-label="Baca elemen terfokus">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-volume-2"
+    >
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path
+        d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"
+      />
+    </svg>
+    <span class="sr-only">Baca Fokus</span>
+  </button>
+  <button
+    id="btnAlternarContraste"
+    aria-label="Ganti kontras tinggi"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-contrast"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 18a6 6 0 0 0 0-12v12z" />
+    </svg>
+    <span class="sr-only">Kontras</span>
+  </button>
+  <button
+    id="btnAlternarModoEscuro"
+    aria-label="Ganti mode gelap"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-moon"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+    <span class="sr-only">Mode Gelap</span>
+  </button>
+  <button id="btnAlternarFonteDislexia" aria-label="Ganti font disleksia">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span class="sr-only">Font Disleksia</span>
+  </button>
+  <div
+    class="flex space-x-1"
+    role="radiogroup"
+    aria-label="Warna fokus aksesibilitas"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="Warna fokus kuning"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="Warna fokus hijau limau"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="Warna fokus cyan"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="Warna fokus magenta"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="Pintasan Keyboard">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">Pintasan Keyboard</span>
+  </button>
+  <button
+    id="btnResetarAcessibilidade"
+    aria-label="Setel ulang pengaturan aksesibilitas"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-refresh-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">Setel Ulang</span>
+  </button>
+</div>
+
+
+
+<!-- Banner de Consentimento de Cookies -->
+<div id="cookieConsentBanner">
+  <p>
+    Kami menggunakan cookie untuk meningkatkan pengalaman Anda di situs kami.
+    Dengan melanjutkan penjelajahan, Anda menyetujui
+    <a href="politica.html" class="underline text-blue-200 hover:text-blue-100"
+      >Kebijakan Cookie</a
+    >
+    kami.
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">Terima semua cookie</button>
+    <button id="manageCookiesBtn" class="secondary">Kelola cookie</button>
+    <button id="refuseAllCookiesBtn" class="secondary">
+      Tolak semua cookie
+    </button>
+  </div>
+</div>
+
+<!-- Modal Granular de Cookies -->
+<div
+  id="granularCookieModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="granularModalTitle"
+  class="hidden"
+>
+  <div class="granular-modal-content">
+    <button
+      id="granularModalCloseButton"
+      class="modal-close-btn"
+      aria-label="Tutup pengaturan cookie"
+    >
+      ×
+    </button>
+    <h3 id="granularModalTitle">Pengaturan Privasi</h3>
+    <p>
+      Kami menggunakan cookie untuk memastikan fungsionalitas situs kami dan
+      untuk mempersonalisasi konten. Anda dapat menyesuaikan preferensi Anda di
+      bawah ini:
+    </p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"
+        ><input type="checkbox" id="cookieEssential" checked disabled />
+        Penting</label
+      >
+      <span class="description"
+        >Diperlukan untuk fungsionalitas dasar situs. Tidak dapat
+        dinonaktifkan.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"
+        ><input type="checkbox" id="cookieAnalytics" /> Analitik</label
+      >
+      <span class="description"
+        >Mengumpulkan informasi tentang bagaimana Anda menggunakan situs untuk
+        membantu kami meningkatkannya.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"
+        ><input type="checkbox" id="cookieMarketing" /> Pemasaran</label
+      >
+      <span class="description"
+        >Digunakan untuk menampilkan iklan yang relevan berdasarkan minat
+        Anda.</span
+      >
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">
+        Simpan Preferensi
+      </button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">
+        Batal
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Atalhos de Teclado -->
+<div
+  id="keyboardShortcutsModal"
+  class="hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="keyboardModalTitle"
+>
+  <div class="keyboard-modal-content">
+    <button
+      id="keyboardModalCloseButton"
+      class="modal-close-btn"
+      aria-label="Tutup pintasan keyboard"
+    >
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">Pintasan Keyboard dan Navigasi</h3>
+    <h4 class="font-bold mb-2">Pintasan Aksesibilitas (Accesskey)</h4>
+    <p class="mb-4">
+      Gunakan kombinasi tombol berikut untuk mengakses fitur aksesibilitas
+      dengan cepat:
+    </p>
+    <ul>
+      <li><strong>Alt + Shift + I:</strong> Pergi ke Beranda (Home)</li>
+      <li><strong>Alt + Shift + C:</strong> Pergi ke Konten Utama</li>
+      <li><strong>Alt + Shift + A:</strong> Pergi ke Bilah Aksesibilitas</li>
+      <li><strong>Alt + Shift + T:</strong> Kembali ke Atas Halaman</li>
+    </ul>
+  </div>
+</div>
+<!-- Menu OffCanvas (Mobile) --><!-- Botão Voltar ao Topo -->
+<button id="backToTopBtn" aria-label="Kembali ke atas halaman" accesskey="T">
+  Kembali ke Atas
+</button>
+

@@ -1,0 +1,466 @@
+﻿<!-- hi/global-body-elements.html --><!-- पहुंच योग्यता बार (Heparina पैटर्न) -->
+<!-- पहुंच योग्यता फ़्लोटिंग बटन (मोबाइल) -->
+<button id="accessibilityToggleButton" aria-label="पहुंच योग्यता मेनू खोलें">
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- पहुंच योग्यता साइड पैनल (मोबाइल) -->
+<div id="pwaAcessibilidadeBar">
+  <div class="pwa-acessibilidade-header">
+    <h3>पहुंच योग्यता</h3>
+    <button
+      id="pwaAcessibilidadeCloseBtn"
+      class="pwa-acessibilidade-close-btn"
+      aria-label="पहुंच योग्यता मेनू बंद करें"
+    >
+      &times;
+    </button>
+  </div>
+  <button id="btnAlternarTamanhoFontePWA" aria-label="फ़ॉन्ट आकार बदलें">
+    <i class="fas fa-text-height"></i
+    ><span id="fontSizeTextPWA">फ़ॉन्ट आकार</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinhaPWA" aria-label="लाइन रिक्ति बदलें">
+    <i class="fas fa-align-justify"></i
+    ><span id="lineHeightTextPWA">लाइन रिक्ति</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetraPWA" aria-label="अक्षर रिक्ति बदलें">
+    <i class="fas fa-text-width"></i
+    ><span id="letterSpacingTextPWA">अक्षर रिक्ति</span>
+  </button>
+  <button id="btnAlternarContrastePWA" aria-label="उच्च कंट्रास्ट टॉगल करें">
+    <i class="fas fa-contrast"></i><span>उच्च कंट्रास्ट</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="डार्क मोड टॉगल करें">
+    <i class="fas fa-moon"></i><span>डार्क मोड</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexiaPWA"
+    aria-label="डिस्लेक्सिया के लिए फ़ॉन्ट टॉगल करें"
+  >
+    <i class="fas fa-font"></i><span>डिस्लेक्सिया फ़ॉन्ट</span>
+  </button>
+  <div
+    class="color-options-pwa"
+    role="radiogroup"
+    aria-label="पहुंच योग्यता फोकस रंग"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="पीला फोकस रंग"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="लाइम ग्रीन फोकस रंग"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="सियान फोकस रंग"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="मैजेंटा फोकस रंग"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="कीबोर्ड शॉर्टकट">
+    <i class="fas fa-keyboard"></i><span>शॉर्टकट</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="सेटिंग्स रीसेट करें">
+    <i class="fas fa-undo"></i><span>सभी रीसेट करें</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- ओवरले मेनू के लिए --><!-- डेस्कटॉप एक्सेसिबिलिटी बार -->
+<div id="barraAcessibilidade">
+  <button id="btnAlternarTamanhoFonte" aria-label="फ़ॉन्ट आकार बदलें">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span id="fontSizeText">सामान्य</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinha" aria-label="लाइन रिक्ति बदलें">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-align-justify"
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+    <span id="lineHeightText">मध्यम</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetra" aria-label="अक्षर रिक्ति बदलें">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-text-spacing"
+    >
+      <path d="M10 12H3" />
+      <path d="M21 12h-7" />
+      <path d="M12 20V4" />
+    </svg>
+    <span id="letterSpacingText">सामान्य</span>
+  </button>
+  <button id="btnAlternarVelocidadeLeitura" aria-label="पठन गति बदलें">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-gauge"
+    >
+      <path d="M12 14v4" />
+      <path
+        d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"
+      />
+    </svg>
+    <span id="readingSpeedText">सामान्य</span>
+  </button>
+  <button id="btnToggleLeitura" aria-label="मुख्य सामग्री का पठन चलाएं/रोकें">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-play"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">पठन चलाएं</span>
+  </button>
+  <button
+    id="btnReiniciarLeitura"
+    aria-label="मुख्य सामग्री का पठन पुनः आरंभ करें"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-rotate-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">पुनः आरंभ करें</span>
+  </button>
+  <button id="btnReadFocused" aria-label="फोकस किए गए तत्व को पढ़ें">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-volume-2"
+    >
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path
+        d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"
+      />
+    </svg>
+    <span class="sr-only">फोकस पढ़ें</span>
+  </button>
+  <button
+    id="btnAlternarContraste"
+    aria-label="उच्च कंट्रास्ट टॉगल करें"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-contrast"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 18a6 6 0 0 0 0-12v12z" />
+    </svg>
+    <span class="sr-only">कंट्रास्ट</span>
+  </button>
+  <button
+    id="btnAlternarModoEscuro"
+    aria-label="डार्क मोड टॉगल करें"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-moon"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+    <span class="sr-only">डार्क मोड</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexia"
+    aria-label="डिस्लेक्सिया के लिए फ़ॉन्ट टॉगल करें"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span class="sr-only">डिस्लेक्सिया फ़ॉन्ट</span>
+  </button>
+  <div
+    class="flex space-x-1"
+    role="radiogroup"
+    aria-label="पहुंच योग्यता फोकस रंग"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="पीला फोकस रंग"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="लाइम ग्रीन फोकस रंग"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="सियान फोकस रंग"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="मैजेंटा फोकस रंग"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="कीबोर्ड शॉर्टकट">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">कीबोर्ड शॉर्टकट</span>
+  </button>
+  <button
+    id="btnResetarAcessibilidade"
+    aria-label="पहुंच योग्यता सेटिंग्स रीसेट करें"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-refresh-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">रीसेट करें</span>
+  </button>
+</div>
+
+
+
+<!-- कुकी सहमति बैनर -->
+<div id="cookieConsentBanner">
+  <p>
+    हम आपकी साइट पर आपके अनुभव को बेहतर बनाने के लिए कुकीज़ का उपयोग करते हैं।
+    ब्राउज़ करना जारी रखकर, आप हमारी
+    <a href="politica.html" class="underline text-blue-200 hover:text-blue-100"
+      >कुकी नीति</a
+    >
+    से सहमत होते हैं।
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">सभी कुकीज़ स्वीकार करें</button>
+    <button id="manageCookiesBtn" class="secondary">
+      कुकीज़ प्रबंधित करें
+    </button>
+    <button id="refuseAllCookiesBtn" class="secondary">
+      सभी कुकीज़ अस्वीकार करें
+    </button>
+  </div>
+</div>
+
+<!-- ग्रैनुलर कुकी मोडाल -->
+<div
+  id="granularCookieModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="granularModalTitle"
+  class="hidden"
+>
+  <div class="granular-modal-content">
+    <button
+      id="granularModalCloseButton"
+      class="modal-close-btn"
+      aria-label="कुकी सेटिंग्स बंद करें"
+    >
+      ×
+    </button>
+    <h3 id="granularModalTitle">गोपनीयता सेटिंग्स</h3>
+    <p>
+      हम अपनी साइट के संचालन को सुनिश्चित करने और सामग्री को वैयक्तिकृत करने के
+      लिए कुकीज़ का उपयोग करते हैं। आप अपनी प्राथमिकताएं नीचे समायोजित कर सकते
+      हैं:
+    </p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"
+        ><input type="checkbox" id="cookieEssential" checked disabled /> आवश्यक
+        (Essential)</label
+      >
+      <span class="description"
+        >साइट के मूल कार्य के लिए आवश्यक हैं। इन्हें निष्क्रिय नहीं किया जा
+        सकता।</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"
+        ><input type="checkbox" id="cookieAnalytics" /> विश्लेषणात्मक
+        (Analytical)</label
+      >
+      <span class="description"
+        >यह जानकारी एकत्र करते हैं कि आप साइट का उपयोग कैसे करते हैं ताकि हमें
+        सुधार करने में मदद मिल सके।</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"
+        ><input type="checkbox" id="cookieMarketing" /> विपणन (Marketing)</label
+      >
+      <span class="description"
+        >आपकी रुचियों के आधार पर प्रासंगिक विज्ञापन प्रदर्शित करने के लिए उपयोग
+        किए जाते हैं।</span
+      >
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">
+        प्राथमिकताएं सहेजें
+      </button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">
+        रद्द करें
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- कीबोर्ड शॉर्टकट मोडाल -->
+<div
+  id="keyboardShortcutsModal"
+  class="hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="keyboardModalTitle"
+>
+  <div class="keyboard-modal-content">
+    <button
+      id="keyboardModalCloseButton"
+      class="modal-close-btn"
+      aria-label="कीबोर्ड शॉर्टकट बंद करें"
+    >
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">कीबोर्ड शॉर्टकट और नेविगेशन</h3>
+    <h4 class="font-bold mb-2">पहुंच योग्यता शॉर्टकट (Accesskey)</h4>
+    <p class="mb-4">
+      पहुंच योग्यता सुविधाओं तक तुरंत पहुंचने के लिए निम्नलिखित कुंजी संयोजनों
+      का उपयोग करें:
+    </p>
+    <ul>
+      <li><strong>Alt + Shift + I:</strong> होम पर जाएं</li>
+      <li><strong>Alt + Shift + C:</strong> मुख्य सामग्री पर जाएं</li>
+      <li><strong>Alt + Shift + A:</strong> पहुंच योग्यता बार पर जाएं</li>
+      <li><strong>Alt + Shift + T:</strong> पृष्ठ के शीर्ष पर वापस जाएं</li>
+    </ul>
+  </div>
+</div>
+<!-- ऑफ-कैनवास मेनू (मोबाइल) - यह सामग्री 'menu-global.html' से डुप्लिकेट हो सकती है, लेकिन इसे बनाए रखा गया है। --><!-- शीर्ष पर वापस बटन -->
+<button
+  id="backToTopBtn"
+  aria-label="पृष्ठ के शीर्ष पर वापस जाएं"
+  accesskey="T"
+>
+  शीर्ष पर वापस जाएं
+</button>
+

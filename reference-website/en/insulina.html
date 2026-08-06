@@ -1,791 +1,704 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!doctype html>
+<html lang="en-US">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Insulin Aspiration Calculator | Nursing Calculators</title>
-<meta name="description" content="Calculate the volume (mL) of insulin to draw into the syringe from the prescribed dose in units and the vial concentration. Free nursing tool.">
-<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/en/insulina.html" /><link rel="alternate" hreflang="pt-BR" href="https://www.calculadorasdeenfermagem.com.br/insulina.html" />
-<link rel="alternate" hreflang="ar" href="https://www.calculadorasdeenfermagem.com.br/ar/insulina.html" />
-<link rel="alternate" hreflang="bg-BG" href="https://www.calculadorasdeenfermagem.com.br/bg/insulina.html" />
-<link rel="alternate" hreflang="cs-CZ" href="https://www.calculadorasdeenfermagem.com.br/cs/insulina.html" />
-<link rel="alternate" hreflang="da-DK" href="https://www.calculadorasdeenfermagem.com.br/da/insulina.html" />
-<link rel="alternate" hreflang="de" href="https://www.calculadorasdeenfermagem.com.br/de/insulina.html" />
-<link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/en/insulina.html" />
-<link rel="alternate" hreflang="es-419" href="https://www.calculadorasdeenfermagem.com.br/es/insulina.html" />
-<link rel="alternate" hreflang="fi-FI" href="https://www.calculadorasdeenfermagem.com.br/fi/insulina.html" />
-<link rel="alternate" hreflang="fr" href="https://www.calculadorasdeenfermagem.com.br/fr/insulina.html" />
-<link rel="alternate" hreflang="hi-IN" href="https://www.calculadorasdeenfermagem.com.br/hi/insulina.html" />
-<link rel="alternate" hreflang="hr-HR" href="https://www.calculadorasdeenfermagem.com.br/hr/insulina.html" />
-<link rel="alternate" hreflang="hu-HU" href="https://www.calculadorasdeenfermagem.com.br/hu/insulina.html" />
-<link rel="alternate" hreflang="id-ID" href="https://www.calculadorasdeenfermagem.com.br/id/insulina.html" />
-<link rel="alternate" hreflang="it" href="https://www.calculadorasdeenfermagem.com.br/it/insulina.html" />
-<link rel="alternate" hreflang="ja" href="https://www.calculadorasdeenfermagem.com.br/ja/insulina.html" />
-<link rel="alternate" hreflang="ko-KR" href="https://www.calculadorasdeenfermagem.com.br/ko/insulina.html" />
-<link rel="alternate" hreflang="nl-NL" href="https://www.calculadorasdeenfermagem.com.br/nl/insulina.html" />
-<link rel="alternate" hreflang="no-NO" href="https://www.calculadorasdeenfermagem.com.br/no/insulina.html" />
-<link rel="alternate" hreflang="pl-PL" href="https://www.calculadorasdeenfermagem.com.br/pl/insulina.html" />
-<link rel="alternate" hreflang="ro-RO" href="https://www.calculadorasdeenfermagem.com.br/ro/insulina.html" />
-<link rel="alternate" hreflang="ru-RU" href="https://www.calculadorasdeenfermagem.com.br/ru/insulina.html" />
-<link rel="alternate" hreflang="sl-SI" href="https://www.calculadorasdeenfermagem.com.br/sl/insulina.html" />
-<link rel="alternate" hreflang="sr-RS" href="https://www.calculadorasdeenfermagem.com.br/sr/insulina.html" />
-<link rel="alternate" hreflang="sv-SE" href="https://www.calculadorasdeenfermagem.com.br/sv/insulina.html" />
-<link rel="alternate" hreflang="th-TH" href="https://www.calculadorasdeenfermagem.com.br/th/insulina.html" />
-<link rel="alternate" hreflang="tr-TR" href="https://www.calculadorasdeenfermagem.com.br/tr/insulina.html" />
-<link rel="alternate" hreflang="uk-UA" href="https://www.calculadorasdeenfermagem.com.br/uk/insulina.html" />
-<link rel="alternate" hreflang="vi-VN" href="https://www.calculadorasdeenfermagem.com.br/vi/insulina.html" />
-<link rel="alternate" hreflang="zh-CN" href="https://www.calculadorasdeenfermagem.com.br/zh/insulina.html" />
-<link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/insulina.html" />
-<link rel="stylesheet" href="/css/site-styles.css">
-<meta property="og:title" content="Insulin Aspiration Calculator | Nursing Calculators"/>
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="Nursing Calculators"/>
-<!-- Google Analytics + AdSense — Consent-based lazy load (from live site) -->
-<script>
-if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.location.search).get('admin')==='1'){console.log('<i class="fa fa"></i> Modo Admin: Bloqueado.');if(new URLSearchParams(window.location.search).get('admin')==='1'){localStorage.setItem('admin_mode','true');}}else{var savedConsent=localStorage.getItem("cookieConsent");var isRefused=(savedConsent==="refused");var isManaged=(savedConsent==="managed");var adsBlocked=isRefused||(isManaged&&localStorage.getItem("ad_storage")==="denied");window.__metricsLoaded=false;window.__adsenseLoaded=false;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;function loadAnalytics(){if(window.__metricsLoaded)return;window.__metricsLoaded=true;var aState=isRefused?"denied":(localStorage.getItem("analytics_storage")||"granted");var adState=adsBlocked?"denied":"granted";var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-PFM06B7TS5";document.head.appendChild(s);gtag("consent","default",{analytics_storage:aState,ad_storage:adState,ad_user_data:adState,ad_personalization:adState,wait_for_update:500});gtag("js",new Date());gtag("config","G-PFM06B7TS5");gtag("config","G-MJDKPDPJ26");gtag("config","G-M7DHHF38EJ");gtag("config","G-8FLJ59XXDK");gtag("config","G-VVDP5JGEX8");gtag("config","G-EX8");gtag("config","AW-952633102");gtag("config","AW-9277197961");console.log("<i class="fa fa"></i> Analytics carregado.");}function loadAdSenseOnce(){if(window.__adsenseLoaded||adsBlocked)return;window.__adsenseLoaded=true;var ad=document.createElement("script");ad.async=true;ad.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847";ad.crossOrigin="anonymous";document.head.appendChild(ad);console.log("<i class="fa fa"></i> AdSense carregado.");}function onUserInteraction(){loadAnalytics();loadAdSenseOnce();window.removeEventListener("scroll",onUserInteraction);window.removeEventListener("mousemove",onUserInteraction);window.removeEventListener("touchstart",onUserInteraction);window.removeEventListener("keydown",onUserInteraction);}if(!adsBlocked){window.addEventListener("scroll",onUserInteraction,{passive:true});window.addEventListener("mousemove",onUserInteraction,{passive:true});window.addEventListener("touchstart",onUserInteraction,{passive:true});window.addEventListener("keydown",onUserInteraction,{passive:true});setTimeout(onUserInteraction,4000);}function applyConsent(consent){gtag("consent","update",consent);if(consent.ad_storage==="granted"){adsBlocked=false;onUserInteraction();}else{adsBlocked=true;document.querySelectorAll("ins.adsbygoogle, .google-auto-placed").forEach(function(ad){ad.style.display="none";ad.innerHTML="";});}localStorage.setItem("analytics_storage",consent.analytics_storage);localStorage.setItem("ad_storage",consent.ad_storage);}window.acceptAllCookies=function(){localStorage.setItem("cookieConsent","accepted");applyConsent({analytics_storage:"granted",ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted"});};window.rejectAllCookies=function(){localStorage.setItem("cookieConsent","refused");applyConsent({analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"});};}
-</script>
+<!-- 1. Charset e Viewport -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
-<style>
-@media print {
-  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
-  .rd-header, .rd-footer, .rd-topbar, .gh-hamburger, .gh-mobile-menu,
-  .skip-link, .tool-tags, .related-tools, .profile-tabs-bar,
-  .learning-track-grid, #newsletter-section, .newsletter-section,
-  .rd-header-actions, .adsbygoogle,
-  #language-selector-placeholder, .accessibility-toolbar, .btn-primary,
-  .calc-actions, .ad-slot, .ad-banner, .newsletter-form-container { display: none !important; }
-  main { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-  #resultado, #result { display: block !important; }
-  .hidden { display: block !important; }
-  a { color: #000 !important; text-decoration: none !important; }
-  body::before { content: "Nursing Calculators\A www.calculadorasdeenfermagem.com.br"; white-space: pre; display: block; text-align: center; font-size: 9pt; color: #1a3e74; border-bottom: 2px solid #1a3e74; padding-bottom: 6px; margin-bottom: 12px; font-weight: 700; }
-}
-.btn-print { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 13px; font-weight: 600; color: #2563eb; cursor: pointer; transition: all .15s; }
-.btn-print:hover { background: #dbeafe; border-color: #60a5fa; }
-@media(max-width:768px){ .related-tools-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px;} .tool-tags{gap:6px;} }
-@media(max-width:640px){ .related-tools-grid{grid-template-columns:1fr !important;} .tool-tag{padding:3px 8px; font-size:10px;} }
-@media(max-width:480px){ .related-tools-grid{grid-template-columns:1fr !important;} }
-</style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalWebPage", "name": "Insulin", "url": "https://www.calculadorasdeenfermagem.com.br/insulina.html", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Nursing Calculators", "url": "https://www.calculadorasdeenfermagem.com.br"}, "about": {"@type": "MedicalCondition", "name": "Nursing"}}</script>
-<link rel="stylesheet" href="/css/print-template.css">
+<!-- 2. DNS e Preconnects -->
+<link href="//googleads.g.doubleclick.net" rel="dns-prefetch"/>
+<link href="//pagead2.googlesyndication.com" rel="dns-prefetch"/>
+
+<!-- 3. Title e Metatags (SEO e Redes Sociais) -->
+<title>Insulin Calculation - Nursing</title>
+<meta content="Perform insulin calculation using the rule of three quickly and safely. This calculator provides detailed explanation and rounding, ideal for nursing and ensuring patient safety in medication administration." name="description"/>
+<meta content="Insulin Calculation - Nursing" property="og:title"/>
+<meta content="Perform insulin calculation using the rule of three quickly and safely. This calculator provides detailed explanation and rounding, ideal for nursing and ensuring patient safety in medication administration." property="og:description"/>
+<meta content="https://www.calculadorasdeenfermagem.com.br/insulina.html" property="og:url"/>
+<meta content="https://www.calculadorasdeenfermagem.com.br/iconpages-calculadoras-de-enfermagem.webp" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Cálculo de Insulina - Enfermagem" name="twitter:title"/>
+<meta content="Realize o cálculo de insulina com regra de três de forma rápida e segura. Esta calculadora oferece explicação detalhada e arredondamento, ideal para enfermagem e para garantir a segurança do paciente na administração de medicamentos." name="twitter:description"/>
+<meta content="https://www.calculadorasdeenfermagem.com.br/assets/imagem-compartilhamento.jpg" name="twitter:image"/>
+
+<!-- 5. Preloads de Módulos HTML -->
+
+<!-- 6. CSS Adicional (Ícones e Fontes Extras) -->
+<style id="critical-fonts">@font-face{font-family:"Inter";src:url("/fonts/inter/inter-regular.woff2") format("woff2");font-weight:400;font-display:swap;size-adjust:98%}@font-face{font-family:"Inter";src:url("/fonts/inter/inter-600.woff2") format("woff2");font-weight:600;font-display:swap;size-adjust:98%}@font-face{font-family:"Inter";src:url("/fonts/inter/inter-700.woff2") format("woff2");font-weight:700;font-display:swap;size-adjust:98%}@font-face{font-family:'Inter';src:url('/fonts/inter/inter-900.woff2') format('woff2');font-weight:900;font-display:swap;size-adjust:98%;}@font-face{font-family:"Nunito Sans";src:url("/fonts/nunito/nunito-regular.woff2") format("woff2");font-weight:400;font-display:swap;size-adjust:102%}@font-face{font-family:"Nunito Sans";src:url("/fonts/nunito/nunito-700.woff2") format("woff2");font-weight:700;font-display:swap;size-adjust:102%}@font-face{font-family:"Nunito Sans";src:url("/fonts/nunito/nunito-900.woff2") format("woff2");font-weight:900;font-display:swap;size-adjust:102%}</style>
+<link href="/public/output.css" rel="stylesheet">
+<link href="/global-styles.css" rel="stylesheet">
+
+<!-- 7. Fontes Locais -->
 <link as="font" crossorigin="" href="/fonts/inter/inter-regular.woff2" rel="preload" type="font/woff2"/>
 <link as="font" crossorigin="" href="/fonts/inter/inter-600.woff2" rel="preload" type="font/woff2"/>
 <link as="font" crossorigin="" href="/fonts/inter/inter-700.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/inter/inter-900.woff2" rel="preload" type="font/woff2"/>
 <link as="font" crossorigin="" href="/fonts/nunito/nunito-regular.woff2" rel="preload" type="font/woff2"/>
 <link as="font" crossorigin="" href="/fonts/nunito/nunito-700.woff2" rel="preload" type="font/woff2"/>
 <link as="font" crossorigin="" href="/fonts/nunito/nunito-900.woff2" rel="preload" type="font/woff2"/>
-<style id="critical-fonts">
-  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-regular.woff2') format('woff2'); font-weight: 400; font-display: optional; }
-  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-600.woff2') format('woff2'); font-weight: 600; font-display: optional; }
-  @font-face { font-family: 'Inter'; src: url('/fonts/inter/inter-700.woff2') format('woff2'); font-weight: 700; font-display: optional; }
-  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-regular.woff2') format('woff2'); font-weight: 400; font-display: optional; }
-  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-700.woff2') format('woff2'); font-weight: 700; font-display: optional; }
-  @font-face { font-family: 'Nunito Sans'; src: url('/fonts/nunito/nunito-900.woff2') format('woff2'); font-weight: 900; font-display: optional; }
-  @font-face{font-family:"Font Awesome 6 Brands";src:url("/fonts/fa-brands/fa-brands-400.woff2") format("woff2");font-weight:400;font-display: swap}
-  @font-face{font-family:"Font Awesome 6 Free";src:url("/fonts/fa-solid/fa-solid-900.woff2") format("woff2");font-weight:900;font-display: swap}
+
+<!-- 8. SEO Internacional (Canonical e Hreflang) -->
+<link href="https://www.calculadorasdeenfermagem.com.br/en/insulina.html" rel="canonical"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/en/insulina.html" hreflang="en" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/insulina.html" hreflang="pt-br" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/es/insulina.html" hreflang="es" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/de/insulina.html" hreflang="de" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/it/insulina.html" hreflang="it" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/fr/insulina.html" hreflang="fr" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/hi/insulina.html" hreflang="hi" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/zh/insulina.html" hreflang="zh" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ar/insulina.html" hreflang="ar" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ja/insulina.html" hreflang="ja" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ru/insulina.html" hreflang="ru" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ko/insulina.html" hreflang="ko" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/tr/insulina.html" hreflang="tr" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/nl/insulina.html" hreflang="nl" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/pl/insulina.html" hreflang="pl" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/sv/insulina.html" hreflang="sv" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/id/insulina.html" hreflang="id" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/vi/insulina.html" hreflang="vi" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/uk/insulina.html" hreflang="uk" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/insulina.html" hreflang="x-default" rel="alternate"/>
+
+<!-- 9. Favicon -->
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+
+<!-- 10. Schema Markup -->
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "Organization",
+"@id": "https://www.calculadorasdeenfermagem.com.br/#organization",
+"name": "Nursing Calculators",
+"url": "https://www.calculadorasdeenfermagem.com.br",
+"logo": {
+"@type": "ImageObject",
+"url": "https://www.calculadorasdeenfermagem.com.br/assets/logo.png"
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://www.calculadorasdeenfermagem.com.br/#website",
+"url": "https://www.calculadorasdeenfermagem.com.br",
+"name": "Nursing Calculators",
+"inLanguage": "en"
+},
+{
+"@type": "SoftwareApplication",
+"@id": "https://www.calculadorasdeenfermagem.com.br/insulina.html/#app",
+"name": "Insulin Calculation - Nursing",
+"operatingSystem": "Web",
+"applicationCategory": "HealthApplication",
+"isAccessibleForFree": true,
+"inLanguage": "en",
+"offers": {
+"@type": "Offer",
+"price": 0,
+"priceCurrency": "BRL",
+"url": "https://www.calculadorasdeenfermagem.com.br/insulina.html"
+},
+"publisher": {
+"@id": "https://www.calculadorasdeenfermagem.com.br/#organization"
+}
+},
+{
+"@type": "MedicalWebPage",
+"@id": "https://www.calculadorasdeenfermagem.com.br/insulina.html/#webpage",
+"url": "https://www.calculadorasdeenfermagem.com.br/insulina.html",
+"name": "Insulin Calculation - Nursing",
+"description": "Perform insulin calculation using rule of three quickly and safely.",
+"inLanguage": "en",
+"isPartOf": {
+"@id": "https://www.calculadorasdeenfermagem.com.br/#website"
+}
+}
+]
+}
+</script>
+
+<!-- 11. Outros Scripts/Tags -->
+
+<style>
+/*! Estilos Personalizados - Glass Card */
+.glass-card {
+background: rgba(255, 255, 255, 0.9);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+border: 1px solid rgba(26, 62, 116, 0.15);
+box-shadow:
+0 8px 32px 0 rgba(26, 62, 116, 0.15),
+0 1px 2px 0 rgba(26, 62, 116, 0.1);
+transition:
+transform 0.2s ease,
+box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+border-color: rgba(26, 62, 116, 0.3);
+box-shadow:
+0 12px 40px 0 rgba(26, 62, 116, 0.2),
+0 2px 4px 0 rgba(26, 62, 116, 0.1);
+}
+
+/*! Inputs e Selects estilizados */
+input[type="number"],
+select {
+border: 1px solid #e2e8f0;
+border-radius: 0.75rem;
+padding: 0.75rem 1rem;
+width: 100%;
+transition: all 0.2s;
+outline: none;
+color: #1a3e74;
+font-weight: 500;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+input[type="number"]:focus,
+select:focus {
+border-color: #1a3e74;
+box-shadow: 0 0 0 3px rgba(26, 62, 116, 0.1);
+}
+
+label {
+font-weight: 600;
+color: #1a3e74;
+margin-bottom: 0.5rem;
+display: block;
+font-size: 0.95rem;
+}
+
+/*! Animação Fade In Up */
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translate3d(0, 20px, 0);
+}
+to {
+opacity: 1;
+transform: translate3d(0, 0, 0);
+}
+}
+.animate-fade-in-up {
+animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/*! Estilo Base Imagem CWV */
+img,
+video {
+max-width: 100%;
+height: auto;
+}
+
+.lightbox-img-transition {
+transition: transform 0.1s ease-out;
+will-change: transform;
+}
 </style>
+<link rel="preload" href="/img/icontopbar1-calculadoras-de-enfermagem.webp" as="image" type="image/webp" fetchpriority="high">
+<style id="anti-cls-placeholders">#global-header-container{display:block;width:100%;min-height:96px;background-color:transparent}@media(max-width:768px){#global-header-container{min-height:60px}}#language-selector-placeholder{display:block;width:100%;min-height:46px;background-color:transparent}#footer-placeholder{display:block;min-height:520px;background-color:transparent}@media(min-width:768px){#footer-placeholder{min-height:277px}}</style>
+<script src="/global-scripts.js" defer></script>
+<script src="/lang-selector.js" defer></script>
+<script id="anti-cls-acessibilidade">
+(function(){try{var f=localStorage.getItem("fontSize");if(f&&f!=="1"){var s=["1em","1.15em","1.3em","1.5em","2em"];var i=Math.min(Math.max(parseInt(f,10),1),s.length);document.documentElement.style.fontSize=s[i-1];}if(localStorage.getItem("darkMode")==="true"){document.documentElement.classList.add("dark-mode");}}catch(e){}})();
+</script>
 </head>
-<body data-page="insulina">
-<a href="#main-content" class="skip-link sr-only">Skip to main content</a>
-<div id="statusMessage" class="sr" aria-live="polite" aria-atomic="true"></div>
 
-<div id="site-header"></div>
-<div id="site-a11y"></div>
+<body class="bg-gray-50 text-gray-800 font-inter">
+<nav aria-label="Atalhos de Acessibilidade" class="sr-only focus-within:not-sr-only focus-within:absolute focus-within:top-0 focus-within:left-0 focus-within:z-50 focus-within:bg-white focus-within:text-blue-700 focus-within:p-4 focus-within:underline">
+<a href="/" accesskey="I" class="block mb-2">Go to Home [Alt + Shift + I]</a>
 
-<main id="main-content">
-  <div>
+<a href="#main-content" accesskey="C" class="block mb-2">Skip to main content [Alt + Shift + C]</a>
 
-    <nav class="tpl-breadcrumb" aria-label="Breadcrumb">
-      <a href="../index.html">Home</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <a href="../index.html#calculadoras">Tools</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <a href="../index.html#calculadoras">Medication Calculation</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <span class="current" aria-current="page">Insulin Aspiration Calculator</span>
-    </nav>
+<a href="#barraAcessibilidade" accesskey="A" class="block mb-2">Turn on accessibility bar [Alt + Shift + A]</a>
+</nav>
 
-    <div class="tool-header">
-      <div class="tool-header-main">
-        <div class="tool-icon-badge" aria-hidden="true">
-          <svg class="icon"><use href="#i-flask"/></svg>
-        </div>
-        <div>
-          <span class="tool-category-badge">Medication calculation</span>
-          <h1>Insulin Aspiration Calculator</h1>
-          <p class="tool-subtitle">Accurately calculate the volume (mL) of insulin to draw into the syringe from the prescribed dose in units and the vial concentration.</p>
-          <div class="tool" aria-label="Rating of this calculator">
-            <div class="stars" role="img" aria-label="4.9 out of 5 stars"><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button></div>
-            <span>4.9 · 2150 reviews</span>
-          </div>
-        </div>
-      </div>
-      <div class="tool-actions">
-        <button type="button" class="btn-icon" id="calcFavoriteBtn" aria-pressed="false">
-          <svg class="icon"><use href="#i-bookmark"/></svg> Favorite
-        </button>
-        <button type="button" class="btn-icon" id="calcShareBtn">
-          <svg class="icon"><use href="#i-share"/></svg> Share
-        </button>
-        <button type="button" class="btn-icon" id="calcPrintBtn" onclick="window.print()">
-          <svg class="icon"><use href="#i-printer"/></svg> Print
-        </button>
-      </div>
-    </div>
+<div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
-    <div class="profile-tabs-bar">
-      <div class="tabs" data-tab-group="perfil" role="tablist" aria-label="Viewing Profile">
-        <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon"><use href="#i-person"/></svg> Standard</button>
-        <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon"><use href="#i-cap"/></svg> Student</button>
-        <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon"><use href="#i-bolt"/></svg> Emergency Mode</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon"><use href="#i-book"/></svg> Academic</button>
-        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon"><use href="#i-trend"/></svg> Manager</button>
-      </div>
-    </div>
+<div id="global-header-container"></div>
+<div id="language-selector-placeholder"></div>
+<main id="main-content" class="flex-grow p-4 sm:p-8">
 
-    <div data-tab-panels="perfil">
+<!-- Breadcrumbs -->
+<nav class="text-sm mb-6 flex items-center gap-2 text-gray-500 overflow-x-auto whitespace-nowrap" aria-label="Breadcrumb">
+<a href="index.html" class="hover:text-[#1A3E74] transition-colors">
+<i class="fas fa-home"></i>
+Home
+</a>
 
-      <!-- ================= PERFIL: PADRÃO ================= -->
-      <div class="tab active" data-tab-panel="padrao">
-        <form class="calc-" id="calcForm" novalidate>
-          <section class="calc-card" aria-labelledby="calcParamsTitle">
-            <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 id="calcParamsTitle">Parameters</h2></div>
+<span class="text-gray-300">/</span>
 
-            <div class="field">
-              <div class="field">
-                <label class="field" for="calc-dose">Prescribed dose</label>
-                <span class="field">units</span>
-              </div>
-              <div class="field">
-                <input aria-label="Dose Calc" type="number" inputmode="decimal" id="calc-dose" class="field"
-                       data-calc-input="dose" value="10"
-                       min="0.5" max="" step="0.5">
-                <span class="field">UI</span>
-              </div>
-              <p class="field">Insulin dose prescribed by the physician, in units (IU).</p>
-            </div>
-            <div class="field">
-              <div class="field">
-                <label class="field" for="calc-concentration">Insulin concentration</label>
-              </div>
-              <div class="field">
-                <select id="calc-concentration" class="field" data-calc-input="concentration">
-                  <option value="40">U-40 (40 IU/mL)</option>
-                  <option value="100" selected>U-100 (100 IU/mL)</option>
-                  <option value="200">U-200 (200 IU/mL)</option>
-                  <option value="300">U-300 (300 IU/mL)</option>
-                  <option value="500">U-500 (500 IU/mL)</option>
-                </select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div>
-              <p class="field">Insulin vial concentration (units per mL).</p>
-            </div>
-            <div class="field">
-              <div class="field">
-                <label class="field" for="calc-seringa">Available syringe</label>
-              </div>
-              <div class="field">
-                <select id="calc-seringa" class="field" data-calc-input="seringa">
-                  <option value="1" selected>Insulin syringe (1 mL)</option>
-                  <option value="3">3 mL syringe</option>
-                  <option value="5">5 mL syringe</option>
-                  <option value="10">10 mL syringe</option>
-                </select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div>
-              <p class="field">Type of syringe available for administration.</p>
-            </div>
-            <div class="tip">
-              <div class="icon"><svg class="icon"><use href="#i-bulb"/></svg></div>
-              <div><strong>Remember</strong><p>This tool is a clinical calculation aid and does not replace the assessment and judgment of the nursing professional. Insulin is a high-alert medication.</p></div>
-            </div>
-            <div class="form">
-              <button type="reset" class="btn btn" id="calcClearBtn">Clear</button>
-              <button type="submit" class="btn btn" id="calcSubmitBtn"><svg class="icon icon"><use href="#i-calculator"/></svg> Calculate</button>
-            </div>
-          </section>
+<span class="font-bold text-[#1A3E74]">Insulin Calculation</span>
+</nav>
 
-          <div>
-            <section class="calc result" aria-live="polite">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2>Result</h2></div>
-              <div class="result-card">
-                <p class="result-card">Volume to aspirate</p>
-                <div class="result-card">
-                  <span class="result-card" id="calcResultValue">0.10</span>
-                  <span class="result-card" id="calcResultUnit">mL</span>
-                </div>
-              </div>
-              <div class="status success" id="calcStatusBanner">
-                <div class="icon"><svg class="icon" id="calcStatusIcon"><use href="#i-check"/></svg></div>
-                <div>
-                  <strong id="calcStatusTitle">Within usual range</strong>
-                  <p id="calcStatusText">Volume compatible with standard insulin syringe (1 mL). Verify correct reading of the syringe scale.</p>
-                </div>
-              </div>
-              <div class="formula">
-                <div class="formula" id="calcFormulaRow">
-                  <div class="formula">
-              <div class="formula" data-formula-box="dose">10</div>
-              <span class="formula">Prescribed dose</span>
-            </div> <span class="formula">÷</span> <div class="formula">
-              <div class="formula" data-formula-box="concentration">100</div>
-              <span class="formula">Concentration</span>
-            </div> <span class="formula">=</span>
-                  <div class="formula">
-                    <div class="formula highlight" data-formula-box="__result__">0.10</div>
-                    <span class="formula">Volume to aspirate</span>
-                  </div>
-                </div>
-              </div>
-            </section>
+<!-- NOVO HERO CARD: Alinhado com o estilo gotejamento e braden -->
+<section class="my-5 md:my-7" aria-labelledby="insulina-title">
+<div class="bg-[#1A3E74]/85 backdrop-blur-md border border-white/15 rounded-2xl shadow-[0_16px_34px_rgba(0,0,0,0.45)] overflow-hidden">
+<div class="flex flex-col md:flex-row items-center justify-between py-8 md:py-10 px-4 sm:px-8 relative">
+<div class="w-full md:w-2/3 z-10 text-center md:text-left">
+<h1 id="insulina-title" class="text-3xl md:text-5xl font-black leading-tight mb-3 text-white">Insulin Calculation</h1>
+<p class="text-blue-100 text-base font-medium">Quick and reliable calculator for International Units (IU).</p>
+</div>
 
-            <section class="calc history" aria-labelledby="calcHistoryTitle">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Recent calculations</h2></div>
-              <ul class="history" id="calcHistoryList">
-                <li class="history" id="calcHistoryEmpty">Your last calculations will appear here in this section.</li>
-              </ul>
-            </section>
-          </div>
+<div class="w-full md:w-1/3 flex justify-center mt-3 md:mt-0 z-10">
+<div class="w-24 h-24 md:w-36 md:h-36 flex items-center justify-center bg-white/10 rounded-full backdrop-blur-sm border border-white/20 shadow-lg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-5xl md:text-7xl text-white drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-300" fill="currentColor" aria-hidden="true" width="1em" height="1em"><path d="M441 7l32 32 32 32c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-15-15L417.9 128l55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-72-72L295 73c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l55 55L422.1 56 407 41c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0zM210.3 155.7l61.1-61.1c.3 .3 .6 .7 1 1l16 16 56 56 56 56 16 16c.3 .3 .6 .6 1 1l-191 191c-10.5 10.5-24.7 16.4-39.6 16.4l-88.8 0L41 505c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l57-57 0-88.8c0-14.9 5.9-29.1 16.4-39.6l43.3-43.3 57 57c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-57-57 41.4-41.4 57 57c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-57-57z"/></svg>
+</div>
+</div>
 
-          <div class="info">
-            <section class="calc info">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2>About this tool</h2></div>
-              <p>Accurately calculate the volume (mL) of insulin to draw into the syringe from the prescribed dose in units and the vial concentration. Indicated whenever there is a prescription of insulin in units and the need to convert to volume in mL for correct aspiration.</p>
-            </section>
-            <section class="calc info">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2>Interpretation ranges</h2></div>
-              <ul class="glossary"><li><span class="glossary" style="background:var(--blue-100)"></span>
-          <div><div class="glossary">0–0.09 mL: Very low volume</div></div></li><li><span class="glossary" style="background:#2563eb"></span>
-          <div><div class="glossary">0.1–1.0 mL: Within usual range</div></div></li><li><span class="glossary" style="background:#2563eb"></span>
-          <div><div class="glossary">1.01–3.0 mL: High volume</div></div></li><li><span class="glossary" style="background:var(--blue-600)"></span>
-          <div><div class="glossary">3.01+ mL: Very high volume</div></div></li></ul>
-            </section>
-            <section class="calc info">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2>Important tips</h2></div>
-              <ul class="tips"><li><svg class="icon"><use href="#i-clipcheck"/></svg> Always check the insulin vial concentration before calculation.</li><li><svg class="icon"><use href="#i-clipcheck"/></svg> Use an insulin syringe (1 mL) for doses up to 100 units in U-100.</li><li><svg class="icon"><use href="#i-clipcheck"/></svg> Never mix insulins without verifying compatibility.</li><li><svg class="icon"><use href="#i-clipcheck"/></svg> Record the time, dose, and route of administration.</li><li><svg class="icon"><use href="#i-clipcheck"/></svg> Monitor blood glucose after administration.</li></ul>
-            </section>
-          </div>
-        </form>
-      </div>
+<!-- Elementos decorativos -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+<div class="absolute bottom-0 left-0 w-48 h-48 bg-[#4A90E2] opacity-20 rounded-full blur-2xl -ml-10 -mb-10"></div>
+</div>
+</div>
+</section>
 
-      <!-- ================= PERFIL: ESTUDANTE ================= -->
-      <div class="tab" data-tab-panel="estudante">
-        <div class="est-">
-          <div class="side">
+<!-- Layout Principal em Grid (2 colunas para o conteúdo, 1 coluna para a sidebar) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start mb-8">
+<!-- Colunas Principais (Calculadora, Informações e Resultados) -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Top Cards (Calculadora e Informações) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+<!-- COLUNA 1: CALCULADORA -->
+<div class="glass-card p-6 rounded-2xl flex flex-col">
+<!-- Hero Card Interno (Subtítulo da Calculadora) -->
+<div class="bg-[#1A3E74] text-white rounded-xl p-4 mb-5 shadow-inner text-center relative overflow-hidden">
+<div class="absolute top-[-15px] right-[-15px] w-16 h-16 bg-white opacity-5 rounded-full blur-md"></div>
+<h3 class="text-lg md:text-xl font-black tracking-tight relative z-10">Insulin Calculator</h3>
+</div>
 
-            <section class="calc-card">
-              <div class="step">
-                <div class="step">1</div>
-                <div class="step">
-                  <h3>Prescribed dose</h3>
-                  <p class="step">Insulin dose prescribed by the physician, in units (IU).</p>
-                  <div class="step"><div class="big">
-                <input aria-label="Number" type="number" class="big" data-calc-input="dose" value="10">
-                <span class="big">UI</span>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step">
-                <div class="step">2</div>
-                <div class="step">
-                  <h3>Insulin concentration</h3>
-                  <p class="step">Insulin vial concentration (units per mL).</p>
-                  <div class="step"><div class="field" style="flex:1;min-width:220px">
-                <select class="field" data-calc-input="concentration">
-                  <option value="40">U-40 (40 IU/mL)</option>
-                  <option value="100" selected>U-100 (100 IU/mL)</option>
-                  <option value="200">U-200 (200 IU/mL)</option>
-                  <option value="300">U-300 (300 IU/mL)</option>
-                  <option value="500">U-500 (500 IU/mL)</option>
-                </select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step">
-                <div class="step">3</div>
-                <div class="step">
-                  <h3>Available syringe</h3>
-                  <p class="step">Type of syringe available for administration.</p>
-                  <div class="step"><div class="field" style="flex:1;min-width:220px">
-                <select class="field" data-calc-input="seringa">
-                  <option value="1" selected>Insulin syringe (1 mL)</option>
-                  <option value="3">3 mL syringe</option>
-                  <option value="5">5 mL syringe</option>
-                  <option value="10">10 mL syringe</option>
-                </select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <div class="formula">
-              <div class="fd"><svg class="icon icon"><use href="#i-bolt"/></svg> How We Got Here</div>
-              <h3>Building the calculation, step by step</h3>
-              <div class="fd">
-                <div class="fd">
-              <div class="fd">1</div>
-              <div class="fd"><div class="l1">Prescribed dose</div></div>
-              <div class="fd" data-fd-step="dose">10</div>
-            </div><div class="fd">
-              <div class="fd">2</div>
-              <div class="fd"><div class="l1">Concentration</div></div>
-              <div class="fd" data-fd-step="concentration">100</div>
-            </div>
-                <div class="fd"><div class="line"></div><div class="op">=</div><div class="line"></div></div>
-                <div class="fd">
-                  <div>
-                    <div style="font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;opacity:.85;font-weight:800;margin-bottom:4px">Volume to aspirate</div>
-                    <span class="fd" data-fd-step="__result__">0.10</span><span class="fd">mL</span>
-                  </div>
-                  <span class="fd" id="estFdBadge"><svg class="icon icon"><use href="#i-check"/></svg> Within usual range</span>
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="space-y-5">
+<div>
+<label for="seringaSelect">Syringe size:</label>
+<select id="seringaSelect" name="seringaSelect" aria-label="Selecione o tamanho da seringa">
+<option value="1">1 mL (100 IU)</option>
+<option value="3">3 mL syringe</option>
+</select>
+</div>
 
-          <div class="side">
-            <section class="calc-card">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Ready examples</h2></div>
-              <div class="example-"><button type="button" class="example" data-example data-values='{&quot;dose&quot;: 10, &quot;concentration&quot;: 100, &quot;seringa&quot;: 1}'>
-              <div class="ex"><i class="fa fa"></i></div>
-              <div class="ex">Common dose</div>
-              <div class="ex">10 IU regular insulin U-100</div>
-            </button><button type="button" class="example" data-example data-values='{&quot;dose&quot;: 50, &quot;concentration&quot;: 100, &quot;seringa&quot;: 1}'>
-              <div class="ex"><i class="fa fa"></i></div>
-              <div class="ex">High dose</div>
-              <div class="ex">50 IU NPH insulin U-100</div>
-            </button><button type="button" class="example" data-example data-values='{&quot;dose&quot;: 100, &quot;concentration&quot;: 500, &quot;seringa&quot;: 1}'>
-              <div class="ex"><i class="fa fa"></i>️</div>
-              <div class="ex">U-500</div>
-              <div class="ex">100 IU insulin U-500</div>
-            </button></div>
-            </section>
-            <section class="calc-card">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Quick glossary</h2></div>
-              <ul class="glossary"><li><span class="glossary"></span><div><div class="glossary">Prescribed dose</div><div class="glossary">Insulin dose prescribed by the physician, in units (IU).</div></div></li><li><span class="glossary"></span><div><div class="glossary">Concentration</div><div class="glossary">Insulin vial concentration (IU/mL). U-100 = 100 IU/mL.</div></div></li><li><span class="glossary"></span><div><div class="glossary">Syringe</div><div class="glossary">Insulin syringe (1 mL) is graduated in units for U-100.</div></div></li></ul>
-            </section>
-            <section class="calc quiz" id="estQuizCard">
-              <div class="calc-card" style="justify-content:space-between">
-                <div style="display:flex; align-items:center; gap:10px"><span class="bar" style="background:var(--blue-600)" aria-hidden="true"></span><h2 style="font-size:15px">Quick quiz</h2></div>
-                <span class="quiz" id="estQuizProgress">1/1</span>
-              </div>
-              <p class="quiz" id="estQuizQuestion"></p>
-              <ul class="quiz" id="estQuizOpts"></ul>
-              <div class="quiz" id="estQuizExpl"></div>
-              <button type="button" class="quiz" id="estQuizNext" style="display:none">Next Question →</button>
-            </section>
-          </div>
-        </div>
-      </div>
+<div>
+<label for="prescricao">
+Prescription (
+<abbr lang="en" title="Unidade Internacional">IU</abbr>
+):
+</label>
+<input type="number" id="prescricao" placeholder="Ex: 25" min="0" step="any" onwheel="return false;" />
+<span id="prescricao-error" class="text-red-600 text-sm mt-1 hidden" aria-live="assertive">Please enter a valid value.</span>
+</div>
+</div>
 
-      <!-- ================= PERFIL: MODO URGÊNCIA ================= -->
-      <div class="tab" data-tab-panel="urgencia">
-        <div class="urg">
-          <div class="urg">
-            <div class="urg">
-              <div><span class="urg"><span class="dot"></span> Urgency Mode Active</span><h3>Quick calculation — Insulin Aspiration Calculator</h3></div>
-              <div class="urg"><button type="button" class="urg" data-example data-values='{&quot;dose&quot;: 10, &quot;concentration&quot;: 100, &quot;seringa&quot;: 1}'>Common dose <span class="p">10 IU U-100</span></button><button type="button" class="urg" data-example data-values='{&quot;dose&quot;: 50, &quot;concentration&quot;: 100, &quot;seringa&quot;: 1}'>High dose <span class="p">50 IU U-100</span></button><button type="button" class="urg" data-example data-values='{&quot;dose&quot;: 100, &quot;concentration&quot;: 500, &quot;seringa&quot;: 1}'>U-500 <span class="p">100 IU U-500</span></button></div>
-            </div>
-            <div class="urg-"><div class="urg"><label>Prescribed dose</label>
-              <input aria-label="Number" type="number" data-calc-input="dose" value="10"></div><div class="urg"><label>Concentration</label>
-              <select class="field" data-calc-input="concentration" style="background:rgba(255,255,255,.07);border-"><option value="40">U-40</option><option value="100" selected>U-100</option><option value="200">U-200</option><option value="300">U-300</option><option value="500">U-500</option></select></div><div class="urg"><label>Syringe</label>
-              <select class="field" data-calc-input="seringa" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 mL</option><option value="3">3 mL</option><option value="5">5 mL</option><option value="10">10 mL</option></select></div></div>
-            <div class="urg">
-              <div><span class="urg safe" id="urgResultNum">0.10</span><span class="urg" id="urgResultUnit">mL</span></div>
-              <span class="urg safe" id="urgAlarmBadge"><svg class="icon icon"><use href="#i-check"/></svg> Within usual range</span>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- Botões subidos para eliminar o espaço em branco -->
+<div class="flex flex-col xl:flex-row gap-3 mt-5">
+<button type="button" id="btnCalcularInterno" class="bg-[#1A3E74] hover:bg-[#153260] text-white font-bold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 flex-1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-384c0-35.3-28.7-64-64-64L64 0zM96 64l192 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32L96 160c-17.7 0-32-14.3-32-32l0-32c0-17.7 14.3-32 32-32zm32 160a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zM96 352a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM64 416c0-17.7 14.3-32 32-32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-96 0c-17.7 0-32-14.3-32-32zM192 256a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm32 64a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zm64-64a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm32 64a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zM288 448a32 32 0 1 1 0-64 32 32 0 1 1 0 64z"/></svg>
+Calculate
+</button>
+<button type="button" id="btnLimpar" class="bg-white hover:bg-gray-50 text-gray-600 font-bold py-3 px-4 rounded-xl border border-gray-200 shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 flex-1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7L288 480l9.4 0L512 480c17.7 0 32-14.3 32-32s-14.3-32-32-32l-124.1 0L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416l-9.4 0-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/></svg>
+Clear
+</button>
+</div>
+</div>
 
-      <!-- ================= PERFIL: ACADÊMICO ================= -->
-      <div class="tab" data-tab-panel="academico">
-        <div class="aca">
-          <div class="aca">
-            <div class="aca"><svg class="icon icon"><use href="#i-book"/></svg> Academic View</div>
-            <h3>Insulin Aspiration Calculator: calculation, rationale, and evidence</h3>
-            <p>Structured content for study and reference, with theoretical foundation, literature evidence, and bibliographic references in ABNT standard.</p>
-          </div>
-          <div class="aca">
-            <div class="tabs" data-tab-group="academico-conteudo" role="tablist">
-              <button class="tab active" data-tab="calculo" type="button">Calculation</button>
-              <button class="tab" data-tab="fundamentacao" type="button">Foundation</button>
+<!-- COLUNA 2: INFORMAÇÕES E PROPORÇÕES -->
+<div class="glass-card p-6 rounded-2xl flex flex-col">
+<h3 class="text-lg font-bold text-[#1A3E74] mb-3 border-b pb-2">Basic Measurements and Ratios</h3>
 
-              <button class="tab" data-tab="evidencias" type="button">Evidence</button>
-              <button class="tab" data-tab="referencias" type="button">References</button>
-            </div>
-          </div>
-          <div class="aca" data-tab-panels="academico-conteudo">
-            <div class="tab active" data-tab-panel="calculo">
-              <h4>Entered Date</h4>
-              <p>Prescribed dose: <strong data-aca-value="dose">10</strong> IU · Concentration: <strong data-aca-value="concentration">100</strong> IU/mL · Syringe: <strong data-aca-value="seringa">1</strong> mL</p>
-              <h4>Result</h4>
-              <p>Volume to aspirate: <strong data-aca-value="__result__">0.10 mL</strong> — <span data-aca-value="__range__">Within usual range</span></p>
-              <button type="button" class="btn btn aca" onclick="window.print()"><svg class="icon icon"><use href="#i-printer"/></svg> Export / Print</button>
-            </div>
-            <div class="tab" data-tab-panel="fundamentacao"><h4>Foundation</h4><p>The insulin aspiration calculation is based on the relationship between the prescribed dose in international units (IU) and the concentration of the insulin solution (IU/mL). The standard formula — Volume (mL) = Dose (IU) ÷ Concentration (IU/mL) — derives from the pharmaceutical definition of concentration: each mL of solution contains a fixed number of insulin units, defined by the manufacturer (U-100 = 100 IU/mL, U-40 = 40 IU/mL, U-500 = 500 IU/mL).</p><h4>History</h4><p>U-100 insulin has been the worldwide standard concentration since the 1990s, replacing U-40. U-500 insulin is used in cases of severe insulin resistance. 1 mL insulin syringes are graduated in units to facilitate direct reading in U-100.</p></div>
+<div class="text-sm text-gray-700 leading-relaxed">
+<p class="mb-2">
+<strong>Examples Using a 1 mL Syringe (100 IU):</strong>
+</p>
+<ul class="list-disc pl-5 space-y-1 mb-3 bg-gray-50 p-3 rounded-lg border border-gray-100">
+<li>100 IU is equivalent to 1.0 mL</li>
+<li>50 IU equals 0.5 mL</li>
+<li>30 IU equals 0.3 mL</li>
+<li>10 IU equals 0.1 mL</li>
+</ul>
+<p class="mb-3">
+<em>Safety Tip:</em>
+Preferably use insulin syringes (already graduated in IU) to minimize the risk of errors.
+</p>
+</div>
 
-            <div class="tab" data-tab-panel="evidencias"><h4>Scientific Validation</h4><p>Institutional protocols and patient safety guidelines recommend double-checking medication calculations before administration, especially for insulin, given the high risk of hypoglycemia or hyperglycemia associated with dosing errors. The World Health Organization classifies insulin as a high-alert medication.</p><h4>Limitations</h4><p>This calculator only performs the conversion from units to mL. It does not replace clinical assessment of insulin indication, verification of administration route, timing of application, or glycemic monitoring. Always check the medical prescription and institutional protocols.</p></div>
-            <div class="tab" data-tab-panel="referencias"><ol class="ref"><li><span class="ref">1</span>BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020.</li><li><span class="ref">2</span>HINKLE, J. L.; CHEEVER, K. H. Brunner & Suddarth: tratado de enfermagem médico-cirúrgica. 13ª ed. Rio de Janeiro: Guanabara Koogan, 2016.</li><li><span class="ref">3</span>POTTER, P. A.; PERRY, A. G. Fundamentals of nursing. 9th ed. Rio de Janeiro: Elsevier, 2018.</li><li><span class="ref">4</span>BRASIL. Ministério da Saúde. Protocolo de segurança na prescrição, uso e administração de medicamentos. Brasília: MS, 2013.</li><li><span class="ref">5</span>COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017.</li><li><span class="ref">6</span>AMERICAN DIABETES ASSOCIATION. Standards of Medical Care in Diabetes—2024. Diabetes Care, v. 47, Suppl. 1, 2024.</li><li><span class="ref">7</span>INSTITUTE FOR SAFE MEDICATION PRACTICES (ISMP). High-Alert Medications: Insulin. 2023.</li></ol></div>
-          </div>
-        </div>
-      </div>
+<!-- IMAGEM OTIMIZADA e subida próxima ao texto para remover o espaço em branco -->
+<figure class="w-full mt-2 relative group overflow-hidden rounded-lg shadow-sm border border-gray-100 bg-white p-2">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none z-10">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-white text-3xl" fill="currentColor" aria-hidden="true" width="1em" height="1em"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM184 296c0 13.3 10.7 24 24 24s24-10.7 24-24l0-64 64 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-64 0 0-64c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 64-64 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l64 0 0 64z"/></svg>
+</div>
+<img id="img-seringa" src="seringainsulina-calculadoras-de-enfermagem.webp" alt="Seringa de insulina graduada em UI" width="800" height="400" loading="lazy" decoding="async" fetchpriority="low" class="block w-full h-auto max-h-[220px] object-contain cursor-zoom-in transition-transform duration-300 group-hover:scale-105 mx-auto" />
+</figure>
+</div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
-      <div class="tab" data-tab-panel="gestor">
-        <div class="gestor"><svg class="icon"><use href="#i-warning"/></svg> Demonstration Panel — the data below are fictitious (mock), intended as a layout reference. For actual use, connect this view to a data source/backend from your institution.</div>
-        <div class="kpi-">
-          <div class="kpi"><div class="kpi">Assessments (7 days)</div><div class="kpi">312</div><div class="kpi">▲ 12% vs. previous week</div></div>
-          <div class="kpi"><div class="kpi">Within expected range</div><div class="kpi">298</div><div class="kpi">95% of total</div></div>
-          <div class="kpi"><div class="kpi">High-risk cases</div><div class="kpi">8</div><div class="kpi" >3% of total</div></div>
-          <div class="kpi"><div class="kpi">Active units</div><div class="kpi">5</div><div class="kpi">ICU, Endocrinology, Ward, Pediatrics, Emergency</div></div>
-        </div>
-        <div class="gestor-">
-          <section class="calc-card">
-            <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Assessments per day (last 7 days)</h2></div>
-            <div class="bar">
-              <div class="bar"><span class="bar">42</span><div class="bar" style="height:55%"></div><span class="bar">Seg</span></div>
-              <div class="bar"><span class="bar">38</span><div class="bar" style="height:50%"></div><span class="bar">Ter</span></div>
-              <div class="bar"><span class="bar">55</span><div class="bar" style="height:72%"></div><span class="bar">Qua</span></div>
-              <div class="bar"><span class="bar">48</span><div class="bar" style="height:63%"></div><span class="bar">Qui</span></div>
-              <div class="bar"><span class="bar">62</span><div class="bar" style="height:82%"></div><span class="bar">Sex</span></div>
-              <div class="bar"><span class="bar">35</span><div class="bar" style="height:46%"></div><span class="bar">Sáb</span></div>
-              <div class="bar"><span class="bar">32</span><div class="bar" style="height:42%"></div><span class="bar">Dom</span></div>
-            </div>
-          </section>
-          <section class="calc-card">
-            <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribution by risk range</h2></div>
-            <div class="equipo"><div class="dist"><span class="dist">Very low volume</span>
-              <div class="dist"><div class="dist" style="width:8%; background:var(--blue-100)"></div></div>
-              <span class="dist">8%</span></div><div class="dist"><span class="dist">Within usual range</span>
-              <div class="dist"><div class="dist" style="width:85%; background:#2563eb"></div></div>
-              <span class="dist">85%</span></div><div class="dist"><span class="dist">High volume</span>
-              <div class="dist"><div class="dist" style="width:5%; background:#2563eb"></div></div>
-              <span class="dist">5%</span></div><div class="dist"><span class="dist">Very high volume</span>
-              <div class="dist"><div class="dist" style="width:2%; background:var(--blue-600)"></div></div>
-              <span class="dist">2%</span></div></div>
-          </section>
-        </div>
-        <section class="calc-card">
-          <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Audit trail (sample)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit">
-              <thead><tr><th>ID</th><th>Date</th><th>Assessment</th><th>Result</th><th>Status</th><th>Professional</th></tr></thead>
-              <tbody>
-                <tr><td>A-4021</td><td>02/07 09:14</td><td>Insulin Aspiration Calculator</td><td>0.20 mL</td><td><span class="audit ok">OK</span></td><td>Nurse Carla</td></tr>
-                <tr><td>A-4020</td><td>02/07 08:40</td><td>Insulin Aspiration Calculator</td><td>—</td><td><span class="audit alarm">Alarm</span></td><td>Nurse Pedro</td></tr>
-                <tr><td>A-4019</td><td>01/07 22:05</td><td>Insulin Aspiration Calculator</td><td>0.50 mL</td><td><span class="audit ok">OK</span></td><td>Nurse Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
+<!-- SEÇÃO DE RESULTADO (Abaixo dos cards, ocupando apenas as colunas 1 e 2) -->
+<div id="resultadoSection" class="hidden animate-fade-in-up space-y-8">
+<!-- 1. Hero Card de Resultado -->
+<div class="relative w-full rounded-xl overflow-hidden shadow-inner bg-[#1A3E74] text-center p-8 z-0">
+<div class="absolute top-[-20px] right-[-20px] w-24 h-24 bg-white opacity-5 rounded-full blur-xl pointer-events-none"></div>
+<div class="absolute bottom-[-40px] left-[-40px] w-32 h-32 bg-[#4A90E2] opacity-10 rounded-full blur-xl pointer-events-none"></div>
 
-    </div>
+<div class="relative z-10">
+<p class="text-sm font-medium uppercase tracking-wider text-blue-100 mb-2">Volume to Draw</p>
+<h2 id="classificacaoTitulo" class="text-4xl md:text-5xl font-black text-white tracking-tight mb-2 leading-tight">
+<!-- Injetado via JS -->
+</h2>
+<div class="text-xs text-blue-200 opacity-80 mt-1">Exact amount as indicated in milliliters (mL).</div>
+</div>
+</div>
 
-    <section class="about">
-      <div class="about-">
-        <div class="about">
-          <h2>How does the insulin aspiration calculation work?</h2>
-          <p>Insulin aspiration is calculated by dividing the prescribed dose (in international units, IU) by the concentration of the insulin solution (in IU/mL). The result indicates the volume in mL to be drawn into the syringe for correct dose administration.</p><p>Formula: <strong>Volume (mL) = Dose (IU) ÷ Concentration (IU/mL)</strong>.</p><p>For example, for a dose of 20 IU of U-100 insulin: 20 ÷ 100 = 0.2 mL.</p>
-          <div class="faq"><details>
-              <summary>What is the difference between U-100 and U-40 insulin? <svg class="icon"><use href="#i-arrow"/></svg></summary>
-              <p>U-100 contains 100 units of insulin per mL, while U-40 contains 40 units per mL. U-100 is the current worldwide standard. Always use the syringe corresponding to the insulin concentration to avoid dosing errors.</p>
-            </details></div><div class="faq"><details>
-              <summary>Can I use a regular syringe (3 mL) for insulin? <svg class="icon"><use href="#i-arrow"/></svg></summary>
-              <p>Yes, as long as the conversion calculation to mL is done correctly. However, the insulin syringe (1 mL) offers greater precision for small doses, as it is graduated in units for U-100.</p>
-            </details></div><div class="faq"><details>
-              <summary>Does this calculator replace clinical assessment? <svg class="icon"><use href="#i-arrow"/></svg></summary>
-              <p>No. The tool is a calculation aid and does not replace clinical assessment, medical prescription, or institutional protocols. Always verify data before administering any medication.</p>
-            </details></div><div class="faq"><details>
-              <summary>What to do if the calculated volume is greater than 1 mL? <svg class="icon"><use href="#i-arrow"/></svg></summary>
-              <p>Use a 3 mL or larger syringe. Check if the prescribed dose is correct and if the vial concentration was reported correctly. For very high doses, confirm with the prescriber.</p>
-            </details></div>
-        </div>
-        <div class="disclaimer">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Important Notice</h3>
-          <p>This tool is for educational and clinical decision support purposes. Results should always be verified and validated by a qualified nursing professional, according to patient assessment and institutional protocols. Insulin is classified as a high-alert medication.</p>
-        </div>
-      </div>
-    </section>
+<!-- 2. Detalhamento (Único card sem sub-cards internos) e Botões Integrados -->
+<div class="glass-card p-6 md:p-8 rounded-2xl shadow-md border-gray-200">
+<h3 class="text-xl font-bold text-[#1A3E74] mb-4 border-b border-gray-200 pb-2">Actual Test and Breakdown</h3>
 
-  </div>
+<div id="resultado" class="text-gray-700 leading-relaxed" aria-live="polite">
+<!-- Conteúdo passo a passo injetado via JS -->
+</div>
 
-    <div id="cipContainer" class="cip-hidden"></div>
+<!-- Botões de Links Sugeridos integrados AQUI DENTRO DO CARD -->
+<div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-8 justify-center w-full pt-6 border-t border-gray-100">
+<a href="https://www.calculadorasdeenfermagem.com.br/checagem.html" class="bg-white border border-[#1A3E74]/20 p-4 text-center text-[14px] font-bold text-[#1A3E74] hover:bg-[#1A3E74] hover:text-white transition-all rounded-xl flex-1 min-w-[180px] shadow-sm flex items-center justify-center gap-2 group">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="text-lg group-hover:scale-110 transition-transform" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z"/></svg>
+Double-Checking
+</a>
+<a href="https://www.calculadorasdeenfermagem.com.br/vigilancia.html" class="bg-white border border-[#1A3E74]/20 p-4 text-center text-[14px] font-bold text-[#1A3E74] hover:bg-[#1A3E74] hover:text-white transition-all rounded-xl flex-1 min-w-[180px] shadow-sm flex items-center justify-center gap-2 group">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="text-lg group-hover:scale-110 transition-transform" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>
+</a>
+<a href="https://www.calculadorasdeenfermagem.com.br/checagem.html" class="bg-white border border-[#1A3E74]/20 p-4 text-center text-[14px] font-bold text-[#1A3E74] hover:bg-[#1A3E74] hover:text-white transition-all rounded-xl flex-1 min-w-[180px] shadow-sm flex items-center justify-center gap-2 group">
+,
+</a>
 
-    <div id="cognitivePanel" class="cognitive cip-hidden">
-      <div id="cognitivePanelContent"></div>
-    </div>
-    <section class="tool-footer-zone">
-      <div class="tool-tags">
-        <a href="../index.html#calculadoras" class="tool-tag">#Insulin</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#Diabetes</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#BloodGlucose</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#Medication</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#Endocrinology</a>
-        <a href="../diagnosticosnanda.html" class="tool-tag">#NANDA-I</a>
-        <a href="../sae.html" class="tool-tag">#SAE</a>
-        <a href="../protocolos.html" class="tool-tag">#Protocols</a>
-        <a href="../medicamentos.html" class="tool-tag">#Medication</a>
-        <a href="../simulados.html" class="tool-tag">#SimulatedExams</a>
-        <a href="../flashcards.html" class="tool-tag">#Flashcards</a>
-      </div>
+<a href="https://www.calculadorasdeenfermagem.com.br/vigilancia.html" class="bg-white border border-[#1A3E74]/20 p-4 text-center text-[14px] font-bold text-[#1A3E74] hover:bg-[#1A3E74] hover:text-white transition-all rounded-xl flex-1 min-w-[180px] shadow-sm flex items-center justify-center gap-2 group">
+High Vigilance
+</a>
+<a href="https://www.calculadorasdeenfermagem.com.br/metasinternacionais.html" class="bg-white border border-[#1A3E74]/20 p-4 text-center text-[14px] font-bold text-[#1A3E74] hover:bg-[#1A3E74] hover:text-white transition-all rounded-xl flex-1 min-w-[180px] shadow-sm flex items-center justify-center gap-2 group">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-lg group-hover:scale-110 transition-transform" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M352 256c0 22.2-1.2 43.6-3.3 64l-185.3 0c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64l185.3 0c2.2 20.4 3.3 41.8 3.3 64zm28.8-64l123.1 0c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64l-123.1 0c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32l-116.7 0c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0l-176.6 0c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0L18.6 160C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192l123.1 0c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64L8.1 320C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6l176.6 0c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352l116.7 0zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6l116.7 0z"/></svg>
+</a>
+<a href="https://www.calculadorasdeenfermagem.com.br/vigilancia.html" class="bg-white border border-[#1A3E74]/20 p-4 text-center text-[14px] font-bold text-[#1A3E74] hover:bg-[#1A3E74] hover:text-white transition-all rounded-xl flex-1 min-w-[180px] shadow-sm flex items-center justify-center gap-2 group">
+,
+</a>
 
-      <div class="related-tools">
-        <h2 class="related-tools">Related tools</h2>
-        <div class="related-">
-          <a class="related-tools" href="../gotejamento.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-droplet"/></svg></div>
-            <div>
-              <h3>Drip Rate</h3>
-              <p>Infusion calculation</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../parkland.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-fire"/></svg></div>
-            <div>
-              <h3>Parkland</h3>
-              <p>Burn resuscitation</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../medicamentos.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-pills"/></svg></div>
-            <div>
-              <h3>Medications</h3>
-              <p>Pharmacological guide</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../regrasmedicacoes.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-shield"/></svg></div>
-            <div>
-              <h3>9 Rights</h3>
-              <p>Medication Rights</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../simulados.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-clipboard"/></svg></div>
-            <div>
-              <h3>Simulations</h3>
-              <p>Clinical Simulation</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../biblioteca.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-book"/></svg></div>
-            <div>
-              <h3>Library</h3>
-              <p>Educational resources</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-</main>
+<a href="https://www.calculadorasdeenfermagem.com.br/metasinternacionais.html" class="bg-white border border-[#1A3E74]/20 p-4 text-center text-[14px] font-bold text-[#1A3E74] hover:bg-[#1A3E74] hover:text-white transition-all rounded-xl flex-1 min-w-[180px] shadow-sm flex items-center justify-center gap-2 group">
+International Targets
+</a>
+</div>
+</div>
+</div>
+</div>
 
-<script type="application/json" id="tool-config">{"id": "7f2b3c4d-5e6f-4f70-0a2b-3c4d5e6f7082", "code": "CALC-INSULINA-001", "slug": "insulina", "version": "1.0.0", "status": "published", "seo": {"title": "Insulin Aspiration Calculator", "description": "Calculate the volume (mL) of insulin to draw into the syringe from the prescribed dose in units and the vial concentration. Free nursing tool.", "canonical": "https://www.calculadorasdeenfermagem.com.br/insulina.html"}, "breadcrumb": {"category": "Medication Calculation", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Insulin Aspiration Calculator", "acronym": "Insulin Aspiration", "categoryBadge": "Medication calculation", "icon": "i-flask", "objective": "Accurately calculate the volume (mL) of insulin to draw into the syringe from the prescribed dose in units and the vial concentration.", "indication": "Indicated whenever there is a prescription of insulin in units and the need to convert to volume in mL for correct aspiration.", "targetPopulation": "Diabetic patients of any age group who require subcutaneous, intramuscular, or intravenous insulin administration.", "specialty": ["Medical-Surgical Nursing", "Endocrinology", "Intensive Care"], "averageTime": "1-2 minutes", "evidenceLevel": "III", "complexity": "basic", "rating": 4.9, "ratingCount": 2150}, "calculator": {"inputs": [{"id": "dose", "type": "number", "label": "Prescribed dose", "unit": "units", "defaultValue": 10, "min": 0.5, "step": 0.5, "description": "Insulin dose prescribed by the physician, in units (IU)."}, {"id": "concentration", "type": "select", "label": "Insulin concentration", "defaultValue": 100, "description": "Insulin vial concentration (units per mL).", "options": [{"value": 40, "label": "U-40 (40 IU/mL)", "score": 40}, {"value": 100, "label": "U-100 (100 IU/mL)", "score": 100}, {"value": 200, "label": "U-200 (200 IU/mL)", "score": 200}, {"value": 300, "label": "U-300 (300 IU/mL)", "score": 300}, {"value": 500, "label": "U-500 (500 IU/mL)", "score": 500}]}, {"id": "seringa", "type": "select", "label": "Available syringe", "defaultValue": 1, "description": "Type of syringe available for administration.", "options": [{"value": 1, "label": "Insulin syringe (1 mL)", "score": 1}, {"value": 3, "label": "3 mL syringe", "score": 3}, {"value": 5, "label": "5 mL syringe", "score": 5}, {"value": 10, "label": "10 mL syringe", "score": 10}]}], "formula": {"type": "expression", "expression": "dose/concentration", "resultLabel": "Volume to aspirate", "resultUnit": "mL", "decimals": 2}}, "interpretation": {"ranges": [{"min": 0, "max": 0.09, "label": "Very low volume", "riskLevel": "moderate", "color": "var(--navy-900,#1a3e74)", "clinicalImplications": "Volume too small for accurate aspiration. Check if the dose is correct and if the insulin syringe (1 mL) is the most appropriate."}, {"min": 0.1, "max": 1.0, "label": "Within usual range", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Volume compatible with standard insulin syringe (1 mL). Verify correct reading of the syringe scale."}, {"min": 1.01, "max": 3.0, "label": "High volume", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Volume above 1 mL. Use a 3 mL or larger syringe. Confirm the prescribed dose and vial concentration."}, {"min": 3.01, "max": 999999, "label": "Very high volume", "riskLevel": "high", "color": "var(--blue-600,#2563eb)", "clinicalImplications": "Volume too high. Review the prescribed dose, vial concentration, and route of administration. Consider if the prescription is correct."}]}, "evidence": {"foundation": "The insulin aspiration calculation is based on the relationship between the prescribed dose in international units (IU) and the concentration of the insulin solution (IU/mL). The standard formula — Volume (mL) = Dose (IU) ÷ Concentration (IU/mL) — derives from the pharmaceutical definition of concentration: each mL of solution contains a fixed number of insulin units, defined by the manufacturer (U-100 = 100 IU/mL, U-40 = 40 IU/mL, U-500 = 500 IU/mL).", "history": "U-100 insulin has been the worldwide standard concentration since the 1990s, replacing U-40. U-500 insulin is used in cases of severe insulin resistance. 1 mL insulin syringes are graduated in units to facilitate direct reading in U-100.", "validation": "Institutional protocols and patient safety guidelines recommend double-checking medication calculations before administration, especially for insulin, given the high risk of hypoglycemia or hyperglycemia associated with dosing errors. The World Health Organization classifies insulin as a high-alert medication.", "limitations": "This calculator only performs the conversion from units to mL. It does not replace clinical assessment of insulin indication, verification of administration route, timing of application, or glycemic monitoring. Always check the medical prescription and institutional protocols.", "references": [{"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "HINKLE, J. L.; CHEEVER, K. H. Brunner & Suddarth: tratado de enfermagem médico-cirúrgica. 13ª ed. Rio de Janeiro: Guanabara Koogan, 2016."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentals of nursing. 9th ed. Rio de Janeiro: Elsevier, 2018."}, {"text": "BRASIL. Ministério da Saúde. Protocolo de segurança na prescrição, uso e administração de medicamentos. Brasília: MS, 2013."}, {"text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."}, {"text": "AMERICAN DIABETES ASSOCIATION. Standards of Medical Care in Diabetes—2024. Diabetes Care, v. 47, Suppl. 1, 2024."}, {"text": "INSTITUTE FOR SAFE MEDICATION PRACTICES (ISMP). High-Alert Medications: Insulin. 2023."}]}, "learning": {"tips": ["Always check the insulin vial concentration before calculation.", "Use an insulin syringe (1 mL) for doses up to 100 units in U-100.", "Never mix insulins without verifying compatibility.", "Record the time, dose, and route of administration.", "Monitor blood glucose after administration."], "examples": [{"label": "Common dose", "sublabel": "10 IU regular insulin U-100", "emoji": "<i class=\"fa fa\"><\/i>", "values": {"dose": 10, "concentration": 100, "seringa": 1}}, {"label": "High dose", "sublabel": "50 IU NPH insulin U-100", "emoji": "<i class=\"fa fa\"><\/i>", "values": {"dose": 50, "concentration": 100, "seringa": 1}}, {"label": "U-500", "sublabel": "100 IU insulin U-500", "emoji": "<i class=\"fa fa\"><\/i>️", "values": {"dose": 100, "concentration": 500, "seringa": 1}}], "quiz": [{"q": "How many units of insulin are in 1 mL of a U-100 vial?", "opts": ["40 units", "100 units", "200 units", "500 units"], "correct": 1, "expl": "U-100 means 100 international units (IU) of insulin per mL of solution."}, {"q": "What is the formula to calculate the volume of insulin to aspirate?", "opts": ["Dose (IU) ÷ Concentration (IU/mL)", "Dose × Concentration", "Concentration ÷ Dose", "Dose + Concentration"], "correct": 0, "expl": "Volume (mL) = Dose (IU) ÷ Concentration (IU/mL). For example: 20 IU ÷ 100 IU/mL = 0.2 mL."}, {"q": "A standard insulin syringe (1 mL) is graduated in how many units for U-100?", "opts": ["40 units", "100 units", "200 units", "500 units"], "correct": 1, "expl": "The 1 mL insulin syringe is graduated from 0 to 100 units when used with U-100 insulin."}]}, "faq": [{"q": "What is the difference between U-100 and U-40 insulin?", "a": "U-100 contains 100 units of insulin per mL, while U-40 contains 40 units per mL. U-100 is the current worldwide standard. Always use the syringe corresponding to the insulin concentration to avoid dosing errors."}, {"q": "Can I use a regular syringe (3 mL) for insulin?", "a": "Yes, as long as the conversion calculation to mL is done correctly. However, the insulin syringe (1 mL) offers greater precision for small doses, as it is graduated in units for U-100."}, {"q": "Does this calculator replace clinical assessment?", "a": "No. The tool is a calculation aid and does not replace clinical assessment, medical prescription, or institutional protocols. Always verify data before administering any medication."}, {"q": "What to do if the calculated volume is greater than 1 mL?", "a": "Use a 3 mL or larger syringe. Check if the prescribed dose is correct and if the vial concentration was reported correctly. For very high doses, confirm with the prescriber."}], "about": {"title": "How does the insulin aspiration calculation work?", "html": "<p>Insulin aspiration is calculated by dividing the prescribed dose (in international units, IU) by the concentration of the insulin solution (in IU/mL). The result indicates the volume in mL to be drawn into the syringe for correct dose administration.<\/p><p>Formula: <strong>Volume (mL) = Dose (IU) ÷ Concentration (IU/mL)<\/strong>.<\/p><p>For example, for a dose of 20 IU of U-100 insulin: 20 ÷ 100 = 0.2 mL.<\/p>"}}</script>
+<!-- COLUNA 3: SIDEBAR -->
+<aside class="space-y-6 hidden lg:block">
+<!-- Widget Recirculação -->
+<div class="bg-[#F8FBFF] rounded-xl p-6 border border-[#E2E8F0] shadow-sm">
+<h4 class="font-bold text-[#1A3E74] mb-2 text-sm uppercase">Frequently Asked Questions</h4>
+<p class="text-xs text-gray-700 mb-4">Find more nursing information on our Nursing Forum.</p>
+<a href="https://www.calculadorasdeenfermagem.com.br/forum-enfermagem.html" class="text-xs font-bold text-[#1A3E74] underline hover:text-[#153260] uppercase flex items-center gap-1 w-fit">
+GET YOUR QUESTIONS ANSWERED
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+</a>
+</div>
 
-<svg style="display:none" aria-hidden="true"><defs>
-  <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></symbol>
-  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
-  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13.9A8.5 8.5 0 1 1 10.1 3.5a7 7 0 0 0 10.4 10.4z"/></symbol>
-  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M15 3v4h4"/><line x1="8.5" y1="12" x2="15.5" y2="12"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/><line x1="8.5" y1="8.5" x2="11" y2="8.5"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.8 5.5-5.8s5.5 2.5 5.5 5.8"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.7 14.5c2.4.3 4.3 2.4 4.3 5"/></symbol>
-  <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="3 17 9.5 10.5 13.5 14.5 21 6.5"/><polyline points="15 6.5 21 6.5 21 12.5"/></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.2c-2-1.6-5-2.1-8-1.6v13.6c3-.5 6 0 8 1.6 2-1.6 5-2.1 8-1.6V4.6c-3-.5-6 0-8 1.6z"/><line x1="12" y1="6.2" x2="12" y2="19.8"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 10.8 15.3 16 9.3"/></symbol>
-  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18.5h5M10.3 21h3.4M12 3.2a6.2 6.2 0 0 0-3.2 11.5c1 .8 1.2 1.6 1.2 2.3h4c0-.7.2-1.5 1.2-2.3A6.2 6.2 0 0 0 12 3.2z"/></symbol>
-  <symbol id="i-clipcheck" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><polyline points="9 13 11 15 15 10.5"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
-  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.2 4.8 13.5h5.8l-1 8.3 8.4-11.3h-5.8l1-8.3z"/></symbol>
-  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><line x1="8" y1="11" x2="16" y2="7"/><line x1="8" y1="13" x2="16" y2="17"/></symbol>
-  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4z"/></symbol>
-  <symbol id="i-printer" viewBox="0 0 24 24"><rect x="6" y="9" width="12" height="7" rx="1.5"/><path d="M7 9V4.5h10V9"/><path d="M7 16v3.5h10V16"/><circle cx="16" cy="12" r="0.6" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6-4.4-4.2 6-.8z"/></symbol>
-  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3.5l10 17.5H2z"/><line x1="12" y1="10" x2="12" y2="15"/><circle cx="12" cy="17.7" r="0.7" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M10 8.3l6 3.7-6 3.7z" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 4.5 2 9l10 4.5L22 9z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><line x1="22" y1="9" x2="22" y2="15"/></symbol>
-  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></symbol>
-  <symbol id="i-calculator" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="2"/><line x1="8" y1="8.5" x2="16" y2="8.5"/><line x1="8" y1="12" x2="8.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="16" y1="12" x2="16.01" y2="12"/><line x1="8" y1="15.5" x2="8.01" y2="15.5"/><line x1="12" y1="15.5" x2="12.01" y2="15.5"/><line x1="16" y1="15.5" x2="16.01" y2="15.5"/></symbol>
-  <symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/><polyline points="9 12 11 14 15.5 9"/></symbol>
-  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><line x1="8" y1="15" x2="16" y2="15"/></symbol>
+<!-- Widget Veja Também -->
+<section class="py-2 h-full">
+<div class="p-6 rounded-2xl shadow-[0_16px_34px_rgba(0,0,0,0.15)] border border-white/40 bg-white/70 backdrop-blur-xl lg:sticky lg:top-6">
+<h3 class="text-xl font-bold text-[#1A3E74] mb-6 border-b pb-2">See other calculators</h3>
+<ul class="space-y-4">
+<li>
+<a href="waterlow.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white transition-colors border border-gray-100">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M128 176a128 128 0 1 1 256 0 128 128 0 1 1 -256 0zM391.8 64C359.5 24.9 310.7 0 256 0S152.5 24.9 120.2 64L64 64C28.7 64 0 92.7 0 128L0 448c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64l-56.2 0zM296 224c0-10.6-4.1-20.2-10.9-27.4l33.6-78.3c3.5-8.1-.3-17.5-8.4-21s-17.5 .3-21 8.4L255.7 184c-22 .1-39.7 18-39.7 40c0 22.1 17.9 40 40 40s40-17.9 40-40z"/></svg>
+</div>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">Waterlow Scale</h4>
+<p class="text-[10px] text-gray-700">Risk of Pressure Injury.</p>
+</a>
+</li>
+<li>
+<a href="silverman.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white transition-colors border border-gray-100">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M96 352L96 96c0-35.3 28.7-64 64-64l256 0c35.3 0 64 28.7 64 64l0 197.5c0 17-6.7 33.3-18.7 45.3l-58.5 58.5c-12 12-28.3 18.7-45.3 18.7L160 416c-35.3 0-64-28.7-64-64zM272 128c-8.8 0-16 7.2-16 16l0 48-48 0c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l48 0 0 48c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-48 48 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-48 0 0-48c0-8.8-7.2-16-16-16l-32 0zm24 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-160 0C60.9 512 0 451.1 0 376L0 152c0-13.3 10.7-24 24-24s24 10.7 24 24l0 224c0 48.6 39.4 88 88 88l160 0z"/></svg>
+</div>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">Silverman and Anderson Report</h4>
+<p class="text-[10px] text-gray-700">Respiratory distress in newborns.</p>
+</a>
+</li>
+<li>
+<a href="qsofa.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white transition-colors border border-gray-100">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M320 0c17.7 0 32 14.3 32 32l0 132.1c0 16.4 8.4 31.7 22.2 40.5l9.8 6.2 0-45.5C384 127 415 96 453.3 96c21.7 0 42.8 10.2 55.8 28.8c15.4 22.1 44.3 65.4 71 116.9c26.5 50.9 52.4 112.5 59.6 170.3c.2 1.3 .2 2.6 .2 4l0 7c0 49.1-39.8 89-89 89c-7.3 0-14.5-.9-21.6-2.7l-72.7-18.2C414 480.5 384 442.1 384 398l0-73 90.5 57.6c7.5 4.7 17.3 2.5 22.1-4.9s2.5-17.3-4.9-22.1L384 287.1l0-.4-44.1-28.1c-7.3-4.6-13.9-10.1-19.9-16.1c-5.9 6-12.6 11.5-19.9 16.1L256 286.7 161.2 347l-13.5 8.6c0 0 0 0-.1 0c-7.4 4.8-9.6 14.6-4.8 22.1c4.7 7.5 14.6 9.7 22.1 4.9l91.1-58 0 73.4c0 44.1-30 82.5-72.7 93.1l-72.7 18.2c-7.1 1.8-14.3 2.7-21.6 2.7c-49.1 0-89-39.8-89-89l0-7c0-1.3 .1-2.7 .2-4c7.2-57.9 33.1-119.4 59.6-170.3c26.8-51.5 55.6-94.8 71-116.9c13-18.6 34-28.8 55.8-28.8C225 96 256 127 256 165.3l0 45.5 9.8-6.2c13.8-8.8 22.2-24.1 22.2-40.5L288 32c0-17.7 14.3-32 32-32z"/></svg>
+</div>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">qSOFA Scale</h4>
+<p class="text-[10px] text-gray-700">Rapid screening for sepsis.</p>
+</a>
+</li>
+<li>
+<a href="pews.html" class="glass-card p-4 rounded-xl flex flex-col items-center text-center group hover:bg-white transition-colors border border-gray-100">
+<div class="text-3xl text-[#1A3E74] mb-2 group-hover:scale-110 transition-transform">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M96 352L96 96c0-35.3 28.7-64 64-64l256 0c35.3 0 64 28.7 64 64l0 197.5c0 17-6.7 33.3-18.7 45.3l-58.5 58.5c-12 12-28.3 18.7-45.3 18.7L160 416c-35.3 0-64-28.7-64-64zM272 128c-8.8 0-16 7.2-16 16l0 48-48 0c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l48 0 0 48c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-48 48 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-48 0 0-48c0-8.8-7.2-16-16-16l-32 0zm24 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-160 0C60.9 512 0 451.1 0 376L0 152c0-13.3 10.7-24 24-24s24 10.7 24 24l0 224c0 48.6 39.4 88 88 88l160 0z"/></svg>
+</div>
+<h4 class="text-sm font-bold text-gray-800 mb-1 leading-tight">PEWS Scale</h4>
+<p class="text-[10px] text-gray-700">Pediatric Early Clinical Alert.</p>
+</a>
+</li>
+</ul>
+</div>
+</section>
+</aside>
+</div>
 
-<symbol id="i-clipboard-list" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></symbol>
-  <symbol id="i-comments" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
-  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
-  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-2-2-4-2-4s2 4 2 6a6 6 0 0 1-12 0c0-4 4-6 4-10z"/></symbol>
-  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></symbol>
-  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/></symbol>
-  <symbol id="i-pills" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(45 12 12)"/><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/></symbol>
-  <symbol id="i-syringe" viewBox="0 0 24 24"><path d="M18 2l4 4-2 2-4-4z"/><path d="M14 6l4 4-8 8H6v-4z"/><path d="M6 18l-2 2"/><path d="M10 10l4 4"/></symbol>
-  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></symbol>
-  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></symbol>
-  <symbol id="i-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></symbol>
-</defs></svg>
-
-<div id="site-footer"></div>
-<div id="site-cookie"></div>
-
-<script src="js/calc-engine-v2.js"></script>
-<script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-
-<!-- ═══ Print Template (Relatório de Result) ═══ -->
-<div class="print" style="display:none;" id="printTemplate">
-  <div class="print">
-    <div class="print">
-      <h1 id="printToolName">Calculator</h1>
-      <p class="subtitle" id="printToolCategory">Clinical scale</p>
-      <span class="badge">✓ Clinically validated</span>
-    </div>
-    <div class="print">
-      <div class="report" id="printDate"></div>
-      <div>calculadorasdeenfermagem.com.br</div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">2</span> Patient Date</div>
-    <div class="print-">
-      <div><div class="label">Name</div><div class="value" id="printPatientName">—</div></div>
-      <div><div class="label">Record / Chart</div><div class="value" id="printPatientReg">—</div></div>
-      <div><div class="label">Age</div><div class="value" id="printPatientAge">—</div></div>
-      <div><div class="label">Bed / Unit</div><div class="value" id="printPatientBed">—</div></div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">3</span> Entered Parameters</div>
-    <ul class="print" id="printParamsList"></ul>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">4</span> Classification and Interpretation</div>
-    <div class="print">
-      <div class="score" id="printScore">—</div>
-      <div class="label" id="printClassification">—</div>
-    </div>
-    <div class="print" id="printInterpretation"></div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">5</span> International Safety Goals</div>
-    <div class="print-">
-      <div class="print">
-        <h4>Patient Safety Goals</h4>
-        <ul>
-          <li>M1 Identify patient correctly</li>
-          <li>M2 Improve effective communication</li>
-          <li>M3 Safety in prescribing and administering</li>
-          <li>M5 Hand hygiene</li>
-          <li>M6 Reduce risk of falls</li>
-        </ul>
-      </div>
-      <div class="print">
-        <h4>9 Rights of Medication</h4>
-        <ul>
-          <li>Right patient</li><li>Right medication</li>
-          <li>Right route</li><li>Right time</li>
-          <li>Right dose</li><li>Right documentation</li>
-          <li>Right action</li><li>Right form</li>
-          <li>Right response</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">6</span> Reference</div>
-    <div class="print" id="printReference">Automatically generated document.</div>
-  </div>
-
-  <div class="print">
-    <div class="print">
-      <div>Responsible Nurse: _________________</div>
-      <div class="coren">Nursing License: _______</div>
-    </div>
-    <div class="print">
-      <div class="url">calculadorasdeenfermagem.com.br</div>
-      <div class="disclaimer">Automatically generated document — does not replace professional assessment</div>
-    </div>
-  </div>
+<!-- Referências Bibliográficas (ABNT) -->
+<section class="mt-16 pt-8 border-t border-gray-200">
+<h2 class="text-lg font-bold text-gray-800 mb-4">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="mr-2 text-[#1A3E74]" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M0 96C0 43 43 0 96 0L384 0l32 0c17.7 0 32 14.3 32 32l0 320c0 17.7-14.3 32-32 32l0 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32 0L96 512c-53 0-96-43-96-96L0 96zM64 416c0 17.7 14.3 32 32 32l256 0 0-64L96 384c-17.7 0-32 14.3-32 32zM208 112l0 48-48 0c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l48 0 0 48c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-48 48 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-48 0 0-48c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16z"/></svg>
+Bibliographic References
+</h2>
+<ul class="text-sm text-gray-600 space-y-4 list-none">
+<li class="pl-4 border-l-4 border-[#1A3E74]">
+INSTITUTE FOR SAFE MEDICATION PRACTICES (ISMP Brazil).
+<em>High-Alert Medications: Recommendations for Error Prevention</em>
+. Belo Horizonte: ISMP Brazil, 2019. Available at:
+<a href="https://www.ismp-brasil.org" target="_blank" rel="noopener noreferrer" class="text-[#1A3E74] hover:underline break-all">https://www.ismp-brasil.org</a>
+. Accessed on: June 13, 2026.
+</li>
+<li class="pl-4 border-l-4 border-[#1A3E74]">
+BRAZILIAN DIABETES SOCIETY (SBD).
+<em>Guidelines of the Brazilian Diabetes Society</em>
+. São Paulo: AC Farmacêutica, 2023. Available at:
+<a href="https://diretriz.diabetes.org.br" target="_blank" rel="noopener noreferrer" class="text-[#1A3E74] hover:underline break-all">https://diretriz.diabetes.org.br</a>
+. Accessed on: June 13, 2026.
+</li>
+</ul>
+</section>
+</div>in>
+<!-- Estrutura do Lightbox para visualização de imagem focada com rolagem de zoom -->
+<div id="imageLightbox" class="fixed inset-0 z-[9999] hidden bg-black/95 flex items-center justify-center transition-opacity duration-300 opacity-0 backdrop-blur-sm">
+<button id="closeLightbox" class="absolute top-4 right-4 md:top-8 md:right-8 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full w-12 h-12 flex items-center justify-center z-50 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="text-2xl" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+</button>
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/50 text-white/80 px-4 py-2 rounded-full text-sm font-medium z-50 pointer-events-none backdrop-blur-md">Use your mouse wheel to zoom in</div>
+<div class="relative w-full h-full flex items-center justify-center overflow-hidden" id="lightboxContainer">
+<img id="lightboxImg" src="" alt="Ampliação Seringa de Insulina" class="lightbox-img-transition max-w-[95%] max-h-[95%] object-contain cursor-grab select-none" />
+</div>
 </div>
 
 <script>
-// Populate print template from page data
-function populatePrintTemplate() {
-  if (toolName) document.getElementById('printToolName').textContent = toolName.textContent.trim();
-  
-  var toolCat = document.querySelector('.tool-header .subtitle, .tool-category');
-  if (toolCat) document.getElementById('printToolCategory').textContent = toolCat.textContent.trim();
-  
-  // Date
-  var now = new Date();
-  var dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
-  var dateEl = document.getElementById('printDate');
-  if (dateEl) dateEl.textContent = dateStr;
-  
-  // Patient data from localStorage
-  try {
-    var ctx = JSON.parse(localStorage.getItem('patientContext') || '{}');
-    if (ctx.name) document.getElementById('printPatientName').textContent = ctx.name;
-    if (ctx.reg) document.getElementById('printPatientReg').textContent = ctx.reg;
-    if (ctx.age) document.getElementById('printPatientAge').textContent = ctx.age;
-    if (ctx.bed) document.getElementById('printPatientBed').textContent = ctx.bed;
-  } catch(e) {}
-  
-  // Parameters from calc inputs
-  var paramsList = document.getElementById('printParamsList');
-  if (paramsList) {
-    var inputs = document.querySelectorAll('.calc-card input, .calc-card select, .calc-grid input, .calc-grid select');
-    inputs.forEach(function(inp) {
-      if (inp.value && inp.value !== '') {
-        var label = inp.getAttribute('aria-label') || inp.getAttribute('placeholder') || inp.name || 'Parâmetro';
-        var li = document.createElement('li');
-        li.innerHTML = '<span class="param">' + label + '</span><span class="param">' + inp.value + '</span>';
-        paramsList.appendChild(li);
-      }
-    });
-  }
-  
-  // Score/classification from result
-  var scoreEl = document.querySelector('.result-box .score, .result-value, .calc-result .score');
-  if (scoreEl) document.getElementById('printScore').textContent = scoreEl.textContent.trim();
-  
-  var classEl = document.querySelector('.result-box .classification, .result-label, .calc-result .label');
-  if (classEl) document.getElementById('printClassification').textContent = classEl.textContent.trim();
-  
-  var interpEl = document.querySelector('.result-box .interpretation, .result-text, .calc-result .interpretation');
-  if (interpEl) document.getElementById('printInterpretation').textContent = interpEl.textContent.trim();
-  
-  // Reference
-  var refEl = document.querySelector('.evidence-section .reference, .reference-text, .citation');
-  if (refEl) document.getElementById('printReference').textContent = refEl.textContent.trim();
+document.addEventListener("DOMContentLoaded", function () {
+const btnCalcularInterno = document.getElementById("btnCalcularInterno");
+const resultadoSection = document.getElementById("resultadoSection");
+const classificacaoTitulo = document.getElementById("classificacaoTitulo");
+const resultadoDiv = document.getElementById("resultado");
+const btnLimpar = document.getElementById("btnLimpar");
+
+function calcularInsulina() {
+const prescricaoInput = document.getElementById("prescricao");
+const errorSpan = document.getElementById("prescricao-error");
+const prescricaoUI = parseFloat(prescricaoInput.value);
+
+errorSpan.classList.add("hidden");
+
+if (isNaN(prescricaoUI) || prescricaoUI <= 0) {
+errorSpan.textContent = "Please enter a valid prescription in IU.";
+errorSpan.classList.remove("hidden");
+resultadoSection.classList.add("hidden");
+return;
 }
 
-// Show print area when printing
-window.addEventListener('beforeprint', function() {
-  var pt = document.getElementById('printTemplate');
-  if (pt) {
-    pt.style.display = 'block';
-    populatePrintTemplate();
-  }
+// FÓRMULA GRAVADA: Volume (mL) = Dose Prescrita (UI) / 100
+const volumeML = prescricaoUI / 100;
+
+const prescricaoFormat = prescricaoUI.toString().replace(".", ",");
+const volumeFormat = volumeML.toString().replace(".", ",");
+
+// Atualiza Hero Card de Resultado
+classificacaoTitulo.innerHTML = `${volumeFormat} <span class="text-3xl opacity-80">mL</span>`;
+
+// Monta Detalhamento Matemático (Prova Real Limpa) e Alerta MAV
+const detalhamentoHTML = `
+<div class="mb-4">
+<h4 class="font-bold text-[#1A3E74] mb-2 text-lg">Calculation Memory (Rule of Three)</h4>
+<p class="mb-4 text-sm text-gray-700">The standard concentration of the insulin vial is <strong>100 IU per mL</strong> (U-100).</p>
+
+<div class="font-mono text-[16px] text-gray-800 mb-2 font-medium tracking-wide">
+100 IU &nbsp;&nbsp;&nbsp; --- &nbsp;&nbsp;&nbsp; 1 mL <br>
+${prescricaoFormat} IU &nbsp;&nbsp;&nbsp; --- &nbsp;&nbsp;&nbsp; X mL
+</div>
+
+<div class="font-mono text-[16px] text-[#1A3E74] mb-4 font-bold tracking-wide">
+X = ${prescricaoFormat} ÷ 100 <br>
+X = ${volumeFormat} mL
+</div>
+
+<p class="text-[15px] text-gray-700 mt-2"><strong>Conclusion:</strong> You must strictly aspirate <strong>${volumeFormat} mL</strong> into the syringe. 1 mL aspirated from a standard vial equals 100 IU, regardless of the total volume (10mL or 3mL) of the vial.</p>
+</div>
+
+<!-- Alerta MAV destacado -->
+<div class="p-4 border-l-4 border-red-600 bg-red-50 rounded-r-lg flex items-start gap-4 shadow-sm mt-4">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-red-600 text-2xl mt-1" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480L40 480c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>
+<div>
+<p class="text-base text-red-800 mb-1"><strong>WARNING: High-Alert Medication (HAM)</strong></p>
+<p class="text-sm text-red-700 leading-relaxed">
+Insulin is a medication that requires extreme caution. Dosage errors can lead to severe hypoglycemia, neurological damage, and death. Independent double-checking by two qualified nursing professionals is mandatory before any administration.
+</p>
+</div>
+</div>
+`;
+
+resultadoDiv.innerHTML = detalhamentoHTML;
+
+// Exibe com animação
+resultadoSection.classList.remove("hidden");
+resultadoSection.scrollIntoView({ behavior: "auto",
+block: "start",
+});
+}
+
+function limparCampos() {
+document.getElementById("prescricao").value = "";
+document.getElementById("seringaSelect").value = "1";
+document.getElementById("prescricao-error").classList.add("hidden");
+resultadoSection.classList.add("hidden");
+resultadoDiv.innerHTML = "";
+window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+btnCalcularInterno?.addEventListener("click", calcularInsulina);
+btnLimpar?.addEventListener("click", limparCampos);
+
+// --- SCRIPT DO LIGHTBOX / ZOOM --- //
+const lightboxModal = document.getElementById("imageLightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const closeBtn = document.getElementById("closeLightbox");
+const triggerImg = document.getElementById("img-seringa");
+const lightboxContainer = document.getElementById("lightboxContainer");
+
+let currentScale = 1;
+let isDragging = false;
+let startX,
+startY,
+translateX = 0,
+translateY = 0;
+
+if (triggerImg) {
+triggerImg.addEventListener("click", () => {
+lightboxImg.src = triggerImg.src;
+lightboxModal.classList.remove("hidden");
+requestAnimationFrame(() => {
+lightboxModal.classList.remove("opacity-0");
+});
+document.body.style.overflow = "hidden"; // Bloqueia scroll
+
+currentScale = 1;
+translateX = 0;
+translateY = 0;
+updateTransform();
+});
+}
+
+function fecharLightbox() {
+lightboxModal.classList.add("opacity-0");
+setTimeout(() => {
+lightboxModal.classList.add("hidden");
+document.body.style.overflow = ""; // Libera scroll
+}, 300);
+}
+
+closeBtn?.addEventListener("click", fecharLightbox);
+
+lightboxContainer?.addEventListener("click", (e) => {
+if (e.target === lightboxContainer) fecharLightbox();
 });
 
-window.addEventListener('afterprint', function() {
-  var pt = document.getElementById('printTemplate');
-  if (pt) pt.style.display = 'none';
+lightboxContainer?.addEventListener(
+"wheel",
+(e) => {
+e.preventDefault();
+const zoomSpeed = 0.15;
+if (e.deltaY < 0) {
+currentScale += zoomSpeed;
+} else {
+currentScale -= zoomSpeed;
+}
+currentScale = Math.min(Math.max(0.5, currentScale), 4);
+updateTransform();
+},
+{ passive: false },
+);
+
+lightboxImg?.addEventListener("mousedown", (e) => {
+if (currentScale > 1) {
+isDragging = true;
+startX = e.clientX - translateX;
+startY = e.clientY - translateY;
+lightboxImg.style.cursor = "grabbing";
+e.preventDefault();
+}
+});
+
+window.addEventListener("mouseup", () => {
+isDragging = false;
+if (lightboxImg) lightboxImg.style.cursor = currentScale > 1 ? "grab" : "zoom-in";
+});
+
+window.addEventListener("mousemove", (e) => {
+if (!isDragging) return;
+e.preventDefault();
+translateX = e.clientX - startX;
+translateY = e.clientY - startY;
+updateTransform();
+});
+
+function updateTransform() {
+if (lightboxImg) {
+lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+lightboxImg.style.cursor = currentScale > 1 ? (isDragging ? "grabbing" : "grab") : "zoom-in";
+}
+}
 });
 </script>
 
+<!-- MULTIPLEX_AD_RESERVED_START -->
+<style>
+  .multiplex-ad-reserved {
+    box-sizing: border-box;
+    display: block;
+    width: calc(100% - 32px);
+    max-width: 1200px;
+    min-height: 260px;
+    margin: 32px auto;
+    overflow: visible;
+  }
+  @media (max-width: 600px) {
+    .multiplex-ad-reserved {
+      width: calc(100% - 24px);
+      min-height: 220px;
+      margin: 24px auto;
+    }
+  }
+</style>
+<aside id="multiplex-ad-reserved" class="multiplex-ad-reserved" aria-label="Publicidade">
+  <ins class="adsbygoogle"
+       style="display:block;width:100%"
+       data-ad-format="autorelaxed"
+       data-ad-client="ca-pub-6472730056006847"
+       data-ad-slot="3341197364"
+       data-matched-content-rows-num="1,1"
+       data-matched-content-columns-num="1,4"
+       data-matched-content-ui-type="image_card_sidebyside,image_card_sidebyside"></ins>
+</aside>
+<!-- MULTIPLEX_AD_RESERVED_END -->
+
+<div id="footer-placeholder"></div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+setTimeout(() => {
+fetch("footer.html")
+.then((response) => response.text())
+.then((data) => {
+document.getElementById("footer-placeholder").innerHTML = data;
+});
+}, 150);
+});
+</script>
 </body>
 </html>

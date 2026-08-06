@@ -1,0 +1,465 @@
+﻿<!-- Erişilebilirlik Çubuğu (Heparin Standardı) -->
+<!-- Erişilebilirlik Kayan Düğmesi (Mobil) -->
+<button id="accessibilityToggleButton" aria-label="Erişilebilirlik menüsünü aç">
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- Erişilebilirlik Yan Paneli (Mobil) -->
+<div id="pwaAcessibilidadeBar">
+  <div class="pwa-acessibilidade-header">
+    <h3>Erişilebilirlik</h3>
+    <button
+      id="pwaAcessibilidadeCloseBtn"
+      class="pwa-acessibilidade-close-btn"
+      aria-label="Erişilebilirlik menüsünü kapat"
+    >
+      &times;
+    </button>
+  </div>
+  <button
+    id="btnAlternarTamanhoFontePWA"
+    aria-label="Yazı tipi boyutunu değiştir"
+  >
+    <i class="fas fa-text-height"></i
+    ><span id="fontSizeTextPWA">Yazı Tipi Boyutu</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLinhaPWA"
+    aria-label="Satır aralığını değiştir"
+  >
+    <i class="fas fa-align-justify"></i
+    ><span id="lineHeightTextPWA">Satır Aralığı</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLetraPWA"
+    aria-label="Harf aralığını değiştir"
+  >
+    <i class="fas fa-text-width"></i
+    ><span id="letterSpacingTextPWA">Harf Aralığı</span>
+  </button>
+  <button id="btnAlternarContrastePWA" aria-label="Yüksek kontrastı aç/kapat">
+    <i class="fas fa-contrast"></i><span>Yüksek Kontrast</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="Karanlık modu aç/kapat">
+    <i class="fas fa-moon"></i><span>Karanlık Mod</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexiaPWA"
+    aria-label="Disleksi yazı tipini aç/kapat"
+  >
+    <i class="fas fa-font"></i><span>Disleksi Yazı Tipi</span>
+  </button>
+  <div
+    class="color-options-pwa"
+    role="radiogroup"
+    aria-label="Erişilebilirlik odak rengi"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="Sarı odak rengi"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="Limon yeşili odak rengi"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="Camgöbeği odak rengi"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="Macenta odak rengi"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="Klavye Kısayolları">
+    <i class="fas fa-keyboard"></i><span>Kısayollar</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="Ayarları sıfırla">
+    <i class="fas fa-undo"></i><span>Tümünü Sıfırla</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- Yan Menüler için Kaplama --><div id="barraAcessibilidade">
+  <button id="btnAlternarTamanhoFonte" aria-label="Yazı tipi boyutunu değiştir">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span id="fontSizeText">Normal</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLinha"
+    aria-label="Satır aralığını değiştir"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-align-justify"
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+    <span id="lineHeightText">Orta</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetra" aria-label="Harf aralığını değiştir">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-text-spacing"
+    >
+      <path d="M10 12H3" />
+      <path d="M21 12h-7" />
+      <path d="M12 20V4" />
+    </svg>
+    <span id="letterSpacingText">Normal</span>
+  </button>
+  <button id="btnAlternarVelocidadeLeitura" aria-label="Okuma hızını değiştir">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-gauge"
+    >
+      <path d="M12 14v4" />
+      <path
+        d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"
+      />
+    </svg>
+    <span id="readingSpeedText">Normal</span>
+  </button>
+  <button id="btnToggleLeitura" aria-label="Ana içeriği okumayı Oynat/Duraklat">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-play"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">Okumayı Oynat</span>
+  </button>
+  <button
+    id="btnReiniciarLeitura"
+    aria-label="Ana içeriği okumayı yeniden başlat"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-rotate-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">Okumayı Yeniden Başlat</span>
+  </button>
+  <button id="btnReadFocused" aria-label="Odaklanmış öğeyi oku">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-volume-2"
+    >
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path
+        d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"
+      />
+    </svg>
+    <span class="sr-only">Odağı Oku</span>
+  </button>
+  <button
+    id="btnAlternarContraste"
+    aria-label="Yüksek kontrastı aç/kapat"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-contrast"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 18a6 6 0 0 0 0-12v12z" />
+    </svg>
+    <span class="sr-only">Kontrast</span>
+  </button>
+  <button
+    id="btnAlternarModoEscuro"
+    aria-label="Karanlık modu aç/kapat"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-moon"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+    <span class="sr-only">Karanlık Mod</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexia"
+    aria-label="Disleksi yazı tipini aç/kapat"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span class="sr-only">Disleksi Yazı Tipi</span>
+  </button>
+  <div
+    class="flex space-x-1"
+    role="radiogroup"
+    aria-label="Erişilebilirlik odak rengi"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="Sarı odak rengi"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="Limon yeşili odak rengi"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="Camgöbeği odak rengi"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="Macenta odak rengi"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="Klavye Kısayolları">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">Klavye Kısayolları</span>
+  </button>
+  <button
+    id="btnResetarAcessibilidade"
+    aria-label="Erişilebilirlik ayarlarını sıfırla"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-refresh-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">Sıfırla</span>
+  </button>
+</div><!-- Çerez Onay Başlığı -->
+<div id="cookieConsentBanner">
+  <p>
+    Sitemizdeki deneyiminizi geliştirmek için çerezleri kullanıyoruz. Gezinmeye
+    devam ederek
+    <a href="politica.html" class="underline text-blue-200 hover:text-blue-100"
+      >Çerez Politikamızı</a
+    >
+    kabul etmiş olursunuz.
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">Tüm çerezleri kabul et</button>
+    <button id="manageCookiesBtn" class="secondary">Çerezleri yönet</button>
+    <button id="refuseAllCookiesBtn" class="secondary">
+      Tüm çerezleri reddet
+    </button>
+  </div>
+</div>
+
+<!-- Ayrıntılı Çerez Modalı -->
+<div
+  id="granularCookieModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="granularModalTitle"
+  class="hidden"
+>
+  <div class="granular-modal-content">
+    <button
+      id="granularModalCloseButton"
+      class="modal-close-btn"
+      aria-label="Çerez ayarlarını kapat"
+    >
+      ×
+    </button>
+    <h3 id="granularModalTitle">Gizlilik Ayarları</h3>
+    <p>
+      Sitemizin çalışmasını sağlamak ve içeriği kişiselleştirmek için çerezleri
+      kullanıyoruz. Tercihlerinizi aşağıdan ayarlayabilirsiniz:
+    </p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"
+        ><input type="checkbox" id="cookieEssential" checked disabled />
+        Gerekli</label
+      >
+      <span class="description"
+        >Sitenin temel işlevleri için gereklidir. Devre dışı
+        bırakılamazlar.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"
+        ><input type="checkbox" id="cookieAnalytics" /> Analitik</label
+      >
+      <span class="description"
+        >Geliştirmemize yardımcı olmak için siteyi nasıl kullandığınız hakkında
+        bilgi toplar.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"
+        ><input type="checkbox" id="cookieMarketing" /> Pazarlama</label
+      >
+      <span class="description"
+        >İlgi alanlarınıza göre ilgili reklamları göstermek için
+        kullanılır.</span
+      >
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">
+        Tercihleri Kaydet
+      </button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">
+        İptal
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Klavye Kısayolları Modalı -->
+<div
+  id="keyboardShortcutsModal"
+  class="hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="keyboardModalTitle"
+>
+  <div class="keyboard-modal-content">
+    <button
+      id="keyboardModalCloseButton"
+      class="modal-close-btn"
+      aria-label="Klavye kısayollarını kapat"
+    >
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">Klavye Kısayolları ve Gezinme</h3>
+    <h4 class="font-bold mb-2">Erişilebilirlik Kısayolları (Accesskey)</h4>
+    <p class="mb-4">
+      Erişilebilirlik özelliklerine hızlıca erişmek için aşağıdaki tuş
+      kombinasyonlarını kullanın:
+    </p>
+    <ul>
+      <li><strong>Alt + Shift + I:</strong> Anasayfa'ya Git</li>
+      <li><strong>Alt + Shift + C:</strong> Ana İçeriğe Git</li>
+      <li><strong>Alt + Shift + A:</strong> Erişilebilirlik Çubuğuna Git</li>
+      <li><strong>Alt + Shift + T:</strong> Sayfanın Başına Dön</li>
+    </ul>
+  </div>
+</div>
+<!-- OffCanvas Menü (Mobil) --><!-- Başa Dön Düğmesi -->
+<button id="backToTopBtn" aria-label="Sayfanın başına dön" accesskey="T">
+  Başa Dön
+</button>
+

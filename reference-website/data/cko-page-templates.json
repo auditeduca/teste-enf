@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "name": "CKO Page Templates",
+  "description": "Contratos estruturais por tipo de página do site.",
+  "shared": {
+    "tokens": {
+      "navy": "#1A3E74",
+      "fontBody": "Inter",
+      "fontDisplay": "Nunito Sans",
+      "maxWidth": "max-w-7xl"
+    },
+    "requiredAssets": {
+      "css": [
+        "/css/pages/cart-emergencia.css",
+        "/css/pages/cko-page-shell.css",
+        "/css/pages/cko-page-templates.css"
+      ],
+      "js": [
+        "/js/cko-page-shell.js",
+        "/js/cko-page-templates.js"
+      ]
+    },
+    "bodyClass": "cko-cart-page",
+    "header": ["#global-header-container"],
+    "mainId": "main-content"
+  },
+  "templates": {
+    "home": {
+      "label": "Página inicial",
+      "bodyClass": "cko-tpl-home",
+      "shell": false,
+      "layout": "home-grid",
+      "requiredRegions": ["hero", "highlights", "quick-access"],
+      "description": "Hero de marca + atalhos + seções de descoberta. Sem sidebar editorial.",
+      "pilot": "index.html"
+    },
+    "institutional": {
+      "label": "Institucional",
+      "bodyClass": "cko-tpl-institutional",
+      "shell": true,
+      "slots": ["chrome", "hero", "sidebar"],
+      "layout": "cko-layout",
+      "description": "Missão, objetivo, políticas, termos, mapa — cluster shell + prosa.",
+      "pilots": ["missao.html", "objetivo.html", "politica.html", "termos.html"]
+    },
+    "calculator": {
+      "label": "Calculadora / Escala",
+      "bodyClass": "cko-tpl-calculator",
+      "shell": true,
+      "slots": ["chrome", "hero", "sidebar"],
+      "layout": "cko-layout",
+      "workspace": "cko-calc-workspace",
+      "requiredRegions": ["form", "result"],
+      "description": "Formulário clínico + resultado + sidebar de recursos/disclaimer.",
+      "pilot": "news.html"
+    },
+    "tool": {
+      "label": "Ferramenta / utilitário",
+      "bodyClass": "cko-tpl-tool",
+      "shell": true,
+      "slots": ["chrome", "hero", "sidebar"],
+      "layout": "cko-layout",
+      "description": "Downloads, manuais interativos, geradores — cluster shell sem score clínico.",
+      "pilot": "downloads.html"
+    },
+    "content": {
+      "label": "Conteúdo educativo",
+      "bodyClass": "cko-tpl-content",
+      "shell": true,
+      "engine": true,
+      "slots": ["chrome", "hero", "sidebar"],
+      "layout": "cko-layout",
+      "description": "Protocolos/guias — ver CKO-CONTENT-ENGINE.md",
+      "pilot": "time-de-resposta-rapida.html"
+    }
+  }
+}

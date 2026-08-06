@@ -1,0 +1,485 @@
+﻿<!-- Панель доступности (Стандарт Гепарин) -->
+<!-- Плавающая кнопка доступности (Мобильная) -->
+<button id="accessibilityToggleButton" aria-label="Открыть меню доступности">
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- Боковая панель доступности (Мобильная) -->
+<div id="pwaAcessibilidadeBar">
+  <div class="pwa-acessibilidade-header">
+    <h3>Доступность</h3>
+    <button
+      id="pwaAcessibilidadeCloseBtn"
+      class="pwa-acessibilidade-close-btn"
+      aria-label="Закрыть меню доступности"
+    >
+      &times;
+    </button>
+  </div>
+  <button id="btnAlternarTamanhoFontePWA" aria-label="Изменить размер шрифта">
+    <i class="fas fa-text-height"></i
+    ><span id="fontSizeTextPWA">Размер шрифта</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLinhaPWA"
+    aria-label="Изменить межстрочный интервал"
+  >
+    <i class="fas fa-align-justify"></i
+    ><span id="lineHeightTextPWA">Межстрочный интервал</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLetraPWA"
+    aria-label="Изменить интервал между буквами"
+  >
+    <i class="fas fa-text-width"></i
+    ><span id="letterSpacingTextPWA">Интервал букв</span>
+  </button>
+  <button
+    id="btnAlternarContrastePWA"
+    aria-label="Переключить высокий контраст"
+  >
+    <i class="fas fa-contrast"></i><span>Высокий контраст</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="Переключить темный режим">
+    <i class="fas fa-moon"></i><span>Темный режим</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexiaPWA"
+    aria-label="Переключить шрифт для дислексии"
+  >
+    <i class="fas fa-font"></i><span>Шрифт дислексии</span>
+  </button>
+  <div
+    class="color-options-pwa"
+    role="radiogroup"
+    aria-label="Цвет фокуса доступности"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="Желтый цвет фокуса"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="Лаймово-зеленый цвет фокуса"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="Голубой цвет фокуса"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="Пурпурный цвет фокуса"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="Горячие клавиши">
+    <i class="fas fa-keyboard"></i><span>Горячие клавиши</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="Сбросить настройки">
+    <i class="fas fa-undo"></i><span>Сбросить все</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- Оверлей для боковых меню -->
+
+
+<div id="barraAcessibilidade">
+  <button id="btnAlternarTamanhoFonte" aria-label="Изменить размер шрифта">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span id="fontSizeText">Обычный</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLinha"
+    aria-label="Изменить межстрочный интервал"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-align-justify"
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+    <span id="lineHeightText">Средний</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLetra"
+    aria-label="Изменить интервал между буквами"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-text-spacing"
+    >
+      <path d="M10 12H3" />
+      <path d="M21 12h-7" />
+      <path d="M12 20V4" />
+    </svg>
+    <span id="letterSpacingText">Обычный</span>
+  </button>
+  <button
+    id="btnAlternarVelocidadeLeitura"
+    aria-label="Изменить скорость чтения"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-gauge"
+    >
+      <path d="M12 14v4" />
+      <path
+        d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"
+      />
+    </svg>
+    <span id="readingSpeedText">Обычный</span>
+  </button>
+  <button
+    id="btnToggleLeitura"
+    aria-label="Воспроизвести/Приостановить чтение основного содержимого"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-play"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">Воспроизвести чтение</span>
+  </button>
+  <button
+    id="btnReiniciarLeitura"
+    aria-label="Перезапустить чтение основного содержимого"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-rotate-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">Перезапустить чтение</span>
+  </button>
+  <button id="btnReadFocused" aria-label="Читать фокусируемый элемент">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-volume-2"
+    >
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path
+        d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"
+      />
+    </svg>
+    <span class="sr-only">Читать фокус</span>
+  </button>
+  <button
+    id="btnAlternarContraste"
+    aria-label="Переключить высокий контраст"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-contrast"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 18a6 6 0 0 0 0-12v12z" />
+    </svg>
+    <span class="sr-only">Контраст</span>
+  </button>
+  <button
+    id="btnAlternarModoEscuro"
+    aria-label="Переключить темный режим"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-moon"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+    <span class="sr-only">Темный режим</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexia"
+    aria-label="Переключить шрифт для дислексии"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span class="sr-only">Шрифт дислексии</span>
+  </button>
+  <div
+    class="flex space-x-1"
+    role="radiogroup"
+    aria-label="Цвет фокуса доступности"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="Желтый цвет фокуса"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="Лаймово-зеленый цвет фокуса"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="Голубой цвет фокуса"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="Пурпурный цвет фокуса"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="Горячие клавиши">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">Горячие клавиши</span>
+  </button>
+  <button
+    id="btnResetarAcessibilidade"
+    aria-label="Сбросить настройки доступности"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-refresh-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">Сбросить</span>
+  </button>
+</div><!-- Баннер согласия на файлы cookie -->
+<div id="cookieConsentBanner">
+  <p>
+    Мы используем файлы cookie для улучшения вашего опыта на нашем сайте.
+    Продолжая просмотр, вы соглашаетесь с нашей
+    <a href="politica.html" class="underline text-blue-200 hover:text-blue-100"
+      >Политикой файлов cookie</a
+    >.
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">Принять все файлы cookie</button>
+    <button id="manageCookiesBtn" class="secondary">
+      Управлять файлами cookie
+    </button>
+    <button id="refuseAllCookiesBtn" class="secondary">
+      Отклонить все файлы cookie
+    </button>
+  </div>
+</div>
+
+<!-- Гранулярный модальный диалог файлов cookie -->
+<div
+  id="granularCookieModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="granularModalTitle"
+  class="hidden"
+>
+  <div class="granular-modal-content">
+    <button
+      id="granularModalCloseButton"
+      class="modal-close-btn"
+      aria-label="Закрыть настройки файлов cookie"
+    >
+      ×
+    </button>
+    <h3 id="granularModalTitle">Настройки конфиденциальности</h3>
+    <p>
+      Мы используем файлы cookie для обеспечения работы нашего сайта и
+      персонализации контента. Вы можете настроить свои предпочтения ниже:
+    </p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"
+        ><input type="checkbox" id="cookieEssential" checked disabled />
+        Основные</label
+      >
+      <span class="description"
+        >Необходимы для базовой работы сайта. Не могут быть отключены.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"
+        ><input type="checkbox" id="cookieAnalytics" /> Аналитические</label
+      >
+      <span class="description"
+        >Собирают информацию о том, как вы используете сайт, чтобы помочь нам
+        улучшить его.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"
+        ><input type="checkbox" id="cookieMarketing" /> Маркетинговые</label
+      >
+      <span class="description"
+        >Используются для показа релевантной рекламы на основе ваших
+        интересов.</span
+      >
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">
+        Сохранить предпочтения
+      </button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">
+        Отмена
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Модальный диалог горячих клавиш -->
+<div
+  id="keyboardShortcutsModal"
+  class="hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="keyboardModalTitle"
+>
+  <div class="keyboard-modal-content">
+    <button
+      id="keyboardModalCloseButton"
+      class="modal-close-btn"
+      aria-label="Закрыть горячие клавиши"
+    >
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">Горячие клавиши и навигация</h3>
+    <h4 class="font-bold mb-2">Горячие клавиши доступности (Accesskey)</h4>
+    <p class="mb-4">
+      Используйте следующие комбинации клавиш для быстрого доступа к функциям
+      доступности:
+    </p>
+    <ul>
+      <li>
+        <strong>Alt + Shift + I:</strong> Перейти на главную страницу (Home)
+      </li>
+      <li><strong>Alt + Shift + C:</strong> Перейти к основному содержимому</li>
+      <li><strong>Alt + Shift + A:</strong> Перейти к панели доступности</li>
+      <li><strong>Alt + Shift + T:</strong> Вернуться к началу страницы</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Кнопка "Вернуться к началу" -->
+<button
+  id="backToTopBtn"
+  aria-label="Вернуться к началу страницы"
+  accesskey="T"
+>
+  Вернуться к началу
+</button>
+

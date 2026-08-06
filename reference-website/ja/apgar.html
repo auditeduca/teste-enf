@@ -1,1149 +1,1021 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+﻿<!DOCTYPE html><html lang="ja-JP"><head>
 
-<title>Índice de Apgar - Avaliação do Recém-Nascido | Calculadoras de Enfermagem</title>
-<meta name="description" content="Calcule o Índice de Apgar para avaliação da vitalidade do recém-nascido ao nascer. Inclui interpretação, SAE, segurança do paciente e evidências.">
-<link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/ja/apgar.html" /><link rel="alternate" hreflang="pt-BR" href="https://www.calculadorasdeenfermagem.com.br/apgar.html" />
-<link rel="alternate" hreflang="ar" href="https://www.calculadorasdeenfermagem.com.br/ar/apgar.html" />
-<link rel="alternate" hreflang="bg-BG" href="https://www.calculadorasdeenfermagem.com.br/bg/apgar.html" />
-<link rel="alternate" hreflang="cs-CZ" href="https://www.calculadorasdeenfermagem.com.br/cs/apgar.html" />
-<link rel="alternate" hreflang="da-DK" href="https://www.calculadorasdeenfermagem.com.br/da/apgar.html" />
-<link rel="alternate" hreflang="de" href="https://www.calculadorasdeenfermagem.com.br/de/apgar.html" />
-<link rel="alternate" hreflang="en" href="https://www.calculadorasdeenfermagem.com.br/en/apgar.html" />
-<link rel="alternate" hreflang="es-419" href="https://www.calculadorasdeenfermagem.com.br/es/apgar.html" />
-<link rel="alternate" hreflang="fi-FI" href="https://www.calculadorasdeenfermagem.com.br/fi/apgar.html" />
-<link rel="alternate" hreflang="fr" href="https://www.calculadorasdeenfermagem.com.br/fr/apgar.html" />
-<link rel="alternate" hreflang="hi-IN" href="https://www.calculadorasdeenfermagem.com.br/hi/apgar.html" />
-<link rel="alternate" hreflang="hr-HR" href="https://www.calculadorasdeenfermagem.com.br/hr/apgar.html" />
-<link rel="alternate" hreflang="hu-HU" href="https://www.calculadorasdeenfermagem.com.br/hu/apgar.html" />
-<link rel="alternate" hreflang="id-ID" href="https://www.calculadorasdeenfermagem.com.br/id/apgar.html" />
-<link rel="alternate" hreflang="it" href="https://www.calculadorasdeenfermagem.com.br/it/apgar.html" />
-<link rel="alternate" hreflang="ja" href="https://www.calculadorasdeenfermagem.com.br/ja/apgar.html" />
-<link rel="alternate" hreflang="ko-KR" href="https://www.calculadorasdeenfermagem.com.br/ko/apgar.html" />
-<link rel="alternate" hreflang="nl-NL" href="https://www.calculadorasdeenfermagem.com.br/nl/apgar.html" />
-<link rel="alternate" hreflang="no-NO" href="https://www.calculadorasdeenfermagem.com.br/no/apgar.html" />
-<link rel="alternate" hreflang="pl-PL" href="https://www.calculadorasdeenfermagem.com.br/pl/apgar.html" />
-<link rel="alternate" hreflang="ro-RO" href="https://www.calculadorasdeenfermagem.com.br/ro/apgar.html" />
-<link rel="alternate" hreflang="ru-RU" href="https://www.calculadorasdeenfermagem.com.br/ru/apgar.html" />
-<link rel="alternate" hreflang="sl-SI" href="https://www.calculadorasdeenfermagem.com.br/sl/apgar.html" />
-<link rel="alternate" hreflang="sr-RS" href="https://www.calculadorasdeenfermagem.com.br/sr/apgar.html" />
-<link rel="alternate" hreflang="sv-SE" href="https://www.calculadorasdeenfermagem.com.br/sv/apgar.html" />
-<link rel="alternate" hreflang="th-TH" href="https://www.calculadorasdeenfermagem.com.br/th/apgar.html" />
-<link rel="alternate" hreflang="tr-TR" href="https://www.calculadorasdeenfermagem.com.br/tr/apgar.html" />
-<link rel="alternate" hreflang="uk-UA" href="https://www.calculadorasdeenfermagem.com.br/uk/apgar.html" />
-<link rel="alternate" hreflang="vi-VN" href="https://www.calculadorasdeenfermagem.com.br/vi/apgar.html" />
-<link rel="alternate" hreflang="zh-CN" href="https://www.calculadorasdeenfermagem.com.br/zh/apgar.html" />
-<link rel="alternate" hreflang="x-default" href="https://www.calculadorasdeenfermagem.com.br/apgar.html" />
-<link rel="stylesheet" href="/css/site-styles.css">
-<style>
-  .flow-divider{text-align:center; margin:28px 0 20px; position:relative;}
-  .flow-divider::before{content:''; position:absolute; left:0; right:0; top:50%; height:1px; background:var(--line);}
-  .flow-divider span{background:var(--bg-soft); padding:0 14px; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--blue-600); position:relative; z-index:1;}
-  .clinical-flow-wrap{display:none; grid-column:1 / -1;}
-  .clinical-flow-wrap.is-visible{display:block;}
-  .flow-card{margin-bottom:16px;}
-  .flow-card:last-child{margin-bottom:0;}
-  .flow-card .calc-card-header h2{display:flex; align-items:center; gap:8px;}
-  .flow-card .calc-card-header h2 .icon{width:16px; height:16px; color:var(--blue-600); flex-shrink:0;}
-  .nnn-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:18px;}
-  .nnn-label{display:block; font-size:10.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;}
-  .nnn-value{font-size:13px; color:var(--navy-900); font-weight:700; line-height:1.5;}
-  .flow-text{font-size:13px; color:var(--navy-800); line-height:1.6;}
-  .safety-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:24px;}
-  .safety-col .nnn-label{margin-bottom:10px;}
-  .learning-track-wrap{grid-column:1 / -1; margin-top:8px;}
-  .learning-track-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px;}
-  .learn-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px; box-shadow:var(--shadow-sm); text-decoration:none; display:flex; flex-direction:column; gap:10px; transition:box-shadow .2s, transform .2s;}
-  .learn-card:hover{box-shadow:var(--shadow-md); transform:translateY(-2px);}
-  .learn-card .icon-wrap{width:40px; height:40px; border-radius:12px; background:var(--blue-100); display:flex; align-items:center; justify-content:center;}
-  .learn-card .icon-wrap .icon{width:20px; height:20px; color:var(--blue-600);}
-  .learn-card h3{font-size:13.5px; font-weight:800; color:var(--navy-900);}
-  .learn-card p{font-size:11.5px; color:var(--muted); line-height:1.5;}
-  .learn-card .learn-cta{font-size:11.5px; font-weight:700; color:var(--blue-600); display:flex; align-items:center; gap:4px; margin-top:auto;}
+<!-- 1. Charset e Viewport -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
-  /* ===== Hashtags + Related Tools ===== */
-  .tool-footer-zone{margin-top:32px; padding-top:24px; border-top:1px solid var(--line);}
-  .tool-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;}
-  .tool-tag{padding:5px 14px; border-radius:99px; font-size:12px; font-weight:600; color:var(--blue-600); background:var(--blue-100); text-decoration:none; transition:all .15s;}
-  .tool-tag:hover{background:var(--blue-200); transform:translateY(-1px);}
-  .related-tools-title{font-size:16px; font-weight:800; color:var(--navy-900); font-family: 'Nunito Sans',sans-serif; margin-bottom:14px;}
-  .related-tools-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px;}
-  .related-tool-card{display:flex; align-items:center; gap:14px; padding:16px; background:#fff; border:1px solid var(--line); border-radius:12px; text-decoration:none; transition:all .15s; box-shadow:var(--shadow-sm);}
-  .related-tool-card:hover{border-color:var(--blue-400); box-shadow:var(--shadow-md); transform:translateY(-2px);}
-  .related-icon-wrap{width:36px; height:36px; border-radius:10px; background:var(--blue-100); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
-  .related-icon-wrap .icon{width:18px; height:18px; color:var(--blue-600);}
-  .related-tool-card h3{font-size:13px; font-weight:700; color:var(--navy-900); margin-bottom:2px;}
-  .related-tool-card p{font-size:11px; color:var(--muted); line-height:1.4;}
-  /* ===== Responsividade adicional ===== */
-  @media(max-width:1024px){
-    .related-tools-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
-    .learning-track-grid{grid-template-columns:repeat(3,1fr) !important;}
-  }
-  @media(max-width:768px){
-    .related-tools-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px;}
-    .related-tool-card{padding:12px; gap:10px;}
-    .related-icon-wrap{width:32px; height:32px;}
-    .learning-track-grid{grid-template-columns:repeat(2,1fr) !important;}
-    .tool-tags{gap:6px;}
-    .tool-tag{padding:4px 10px; font-size:11px;}
-  }
-  @media(max-width:640px){
-    .calc-grid{grid-template-columns:1fr !important;}
-    .info-stack{grid-template-columns:1fr !important;}
-    .nnn-grid{grid-template-columns:1fr !important;}
-    .safety-grid{grid-template-columns:1fr !important;}
-    .learning-track-grid{grid-template-columns:1fr !important;}
-    .related-tools-grid{grid-template-columns:repeat(2,1fr) !important; gap:8px;}
-    .related-tool-card{padding:10px; gap:8px; flex-direction:column; text-align:center; align-items:center;}
-    .related-icon-wrap{width:28px; height:28px;}
-    .related-icon-wrap .icon{width:14px; height:14px;}
-    .related-tool-card h3{font-size:12px;}
-    .related-tool-card p{font-size:10px; display:none;}
-    .tool-tags{gap:5px; margin-bottom:20px;}
-    .tool-tag{padding:3px 8px; font-size:10px;}
-    .profile-tabs-bar .tabs-inner{overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch;}
-    .profile-tabs-bar .tab{white-space:nowrap; flex-shrink:0;}
-  }
-  @media(max-width:480px){
-    .related-tools-grid{grid-template-columns:1fr !important;}
-    .related-tool-card{flex-direction:row; text-align:left;}
-    .related-tool-card p{display:block;}
-  }
-    .formula-row{flex-wrap:wrap; gap:6px;}
-    .formula-cell{min-width:60px;}
-    .kpi-grid{grid-template-columns:repeat(2,1fr) !important;}
-    .gestor-grid{grid-template-columns:1fr !important;}
-    .est-grid{grid-template-columns:1fr !important;}
-    .about-grid{grid-template-columns:1fr !important;}
-    .sim-params{grid-template-columns:repeat(2,1fr) !important;}
-  }
+<!-- 2. DNS e Preconnects -->
+<link href="//googleads.g.doubleclick.net" rel="dns-prefetch"/>
+<link href="//pagead2.googlesyndication.com" rel="dns-prefetch"/>
 
-  /* ===== Print Template (baseado no PDF de referência) ===== */
-  @media print {
-    body { background: #fff !important; color: #000 !important; font-size: 11pt; }
-    .rd-header, .rd-footer, .rd-topbar, .gh-hamburger, .gh-mobile-menu,
-    .skip-link, .tool-tags, .related-tools, .profile-tabs-bar,
-    .learning-track-grid, #newsletter-section, .newsletter-section,
-    .rd-header-actions, .social-section, .adsbygoogle, #language-selector-placeholder,
-    .accessibility-toolbar, .pwa-acessibilidade-bar,
-    .btn-primary, .calc-actions, .ad-slot, .ad-banner { display: none !important; }
-    
-    main { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-    .calc-tool-page { box-shadow: none !important; border: none !important; }
-    
-    .calc-card-header h2, .calc-card-header h3 {
-      page-break-after: avoid;
-      color: #1a3e74 !important;
-    }
-    .calc-card { page-break-inside: avoid; border: 1px solid #ccc !important; box-shadow: none !important; }
-    
-    .tool-footer-zone { border: none !important; padding-top: 8px !important; }
-    
-    /* Print header */
-    body::before {
-      content: "Calculadoras de Enfermagem\A www.calculadorasdeenfermagem.com.br";
-      white-space: pre;
-      display: block;
-      text-align: center;
-      font-size: 9pt;
-      color: #1a3e74;
-      border-bottom: 2px solid #1a3e74;
-      padding-bottom: 6px;
-      margin-bottom: 12px;
-      font-weight: 700;
-    }
-    
-    /* Print footer with date */
-    body::after {
-      content: "Documento gerado em " attr(data-print-date) " — calculadorasdeenfermagem.com.br";
-      display: block;
-      text-align: center;
-      font-size: 8pt;
-      color: #666;
-      border-top: 1px solid #ccc;
-      padding-top: 6px;
-      margin-top: 16px;
-    }
-    
-    a { color: #000 !important; text-decoration: none !important; }
-    a[href]::after { content: ""; }
-    
-    .calc-grid, .info-stack, .nnn-grid, .safety-grid {
-      grid-template-columns: 1fr !important;
-    }
-    
-    /* Ensure results section is visible when printing */
-    #resultado { display: block !important; }
-    .hidden { display: block !important; }
-    
-    /* QR code area for verification */
-    .print-qr-area {
-      display: block !important;
-      text-align: center;
-      margin-top: 12px;
-      padding: 8px;
-      border: 1px dashed #ccc;
-    }
-  }
-  .print-qr-area { display: none; }
-  .btn-print { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--blue-50); border: 1px solid var(--blue-200); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--blue-600); cursor: pointer; transition: all .15s; }
-  .btn-print:hover { background: var(--blue-100); border-color: var(--blue-400); }
+<!-- 3. Title e Metatags (SEO e Redes Sociais) -->
+<title>アプガースコア - 新生児評価 - 看護</title>
+<meta content="ca-pub-6472730056006847" name="google-adsense-account"/>
+<meta content="新生児の身体的状態を迅速かつ正確に評価するためのアプガースコアを計算します。新生児看護に欠かせないツールです。" name="description"/>
+<meta content="看護計算ツール" name="author"/>
+<meta content="アプガースコア - 看護計算ツール" property="og:title"/>
+<meta content="新生児の身体的状態を迅速かつ正確に評価するためのアプガースコアを計算します。" property="og:description"/>
+<meta content="https://www.calculadorasdeenfermagem.com.br/ja/apgar.html" property="og:url"/>
+<meta content="https://www.calculadorasdeenfermagem.com.br/iconpages-calculadoras-de-enfermagem.webp" property="og:image"/>
+<meta content="ja_JP" property="og:locale"/>
+<meta content="website" property="og:type"/>
+<meta content="看護計算ツール" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="アプガースコア - 新生児評価 - 看護" name="twitter:title"/>
+<meta content="新生児の身体的状態を迅速かつ正確に評価するためのアプガースコアを計算します。新生児看護に欠かせないツールです。" name="twitter:description"/>
+<meta content="https://www.calculadorasdeenfermagem.com.br/bandeira-japao.webp" name="twitter:image"/>
+
+<!-- 5. Preloads de Módulos HTML -->
+
+<!-- 6. CSS Adicional (Ícones e Fontes Extras) -->
+<style id="critical-fonts">@font-face { font-family: 'Japanese'; src: url('/fonts/japanese/japanese-regular.woff2') format('woff2'); font-weight: 400; font-display: optional; }
+@font-face { font-family: 'Japanese'; src: url('/fonts/japanese/japanese-700.woff2') format('woff2'); font-weight: 700; font-display: optional; }
 </style>
-<meta property="og:title" content="Índice de Apgar - Avaliação do Recém-Nascido | Calculadoras de Enfermagem"/>
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="Calculadoras de Enfermagem"/>
-<!-- Google Analytics + AdSense — Consent-based lazy load (from live site) -->
-<script>
-if(localStorage.getItem('admin_mode')==='true'||new URLSearchParams(window.location.search).get('admin')==='1'){console.log('<i class="fa fa"></i> Modo Admin: Bloqueado.');if(new URLSearchParams(window.location.search).get('admin')==='1'){localStorage.setItem('admin_mode','true');}}else{var savedConsent=localStorage.getItem("cookieConsent");var isRefused=(savedConsent==="refused");var isManaged=(savedConsent==="managed");var adsBlocked=isRefused||(isManaged&&localStorage.getItem("ad_storage")==="denied");window.__metricsLoaded=false;window.__adsenseLoaded=false;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;function loadAnalytics(){if(window.__metricsLoaded)return;window.__metricsLoaded=true;var aState=isRefused?"denied":(localStorage.getItem("analytics_storage")||"granted");var adState=adsBlocked?"denied":"granted";var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-PFM06B7TS5";document.head.appendChild(s);gtag("consent","default",{analytics_storage:aState,ad_storage:adState,ad_user_data:adState,ad_personalization:adState,wait_for_update:500});gtag("js",new Date());gtag("config","G-PFM06B7TS5");gtag("config","G-MJDKPDPJ26");gtag("config","G-M7DHHF38EJ");gtag("config","G-8FLJ59XXDK");gtag("config","G-VVDP5JGEX8");gtag("config","G-EX8");gtag("config","AW-952633102");gtag("config","AW-9277197961");console.log("<i class="fa fa"></i> Analytics carregado.");}function loadAdSenseOnce(){if(window.__adsenseLoaded||adsBlocked)return;window.__adsenseLoaded=true;var ad=document.createElement("script");ad.async=true;ad.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6472730056006847";ad.crossOrigin="anonymous";document.head.appendChild(ad);console.log("<i class="fa fa"></i> AdSense carregado.");}function onUserInteraction(){loadAnalytics();loadAdSenseOnce();window.removeEventListener("scroll",onUserInteraction);window.removeEventListener("mousemove",onUserInteraction);window.removeEventListener("touchstart",onUserInteraction);window.removeEventListener("keydown",onUserInteraction);}if(!adsBlocked){window.addEventListener("scroll",onUserInteraction,{passive:true});window.addEventListener("mousemove",onUserInteraction,{passive:true});window.addEventListener("touchstart",onUserInteraction,{passive:true});window.addEventListener("keydown",onUserInteraction,{passive:true});setTimeout(onUserInteraction,4000);}function applyConsent(consent){gtag("consent","update",consent);if(consent.ad_storage==="granted"){adsBlocked=false;onUserInteraction();}else{adsBlocked=true;document.querySelectorAll("ins.adsbygoogle, .google-auto-placed").forEach(function(ad){ad.style.display="none";ad.innerHTML="";});}localStorage.setItem("analytics_storage",consent.analytics_storage);localStorage.setItem("ad_storage",consent.ad_storage);}window.acceptAllCookies=function(){localStorage.setItem("cookieConsent","accepted");applyConsent({analytics_storage:"granted",ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted"});};window.rejectAllCookies=function(){localStorage.setItem("cookieConsent","refused");applyConsent({analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"});};}
-</script>
+<link href="/public/output.css" rel="stylesheet">
+<link href="/global-styles.css" rel="stylesheet">
 
+<!-- 7. Fontes Locais -->
+<link rel="preload" href="/fonts/japanese/japanese-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/japanese/japanese-700.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- 8. SEO Internacional (Canonical e Hreflang) -->
+<link href="https://www.calculadorasdeenfermagem.com.br/ja/apgar.html" rel="canonical"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ja/apgar.html" hreflang="ja" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/en/apgar.html" hreflang="en" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/es/apgar.html" hreflang="es" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/de/apgar.html" hreflang="de" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/it/apgar.html" hreflang="it" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/fr/apgar.html" hreflang="fr" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/hi/apgar.html" hreflang="hi" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/zh/apgar.html" hreflang="zh" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ar/apgar.html" hreflang="ar" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/apgar.html" hreflang="pt-br" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ru/apgar.html" hreflang="ru" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/ko/apgar.html" hreflang="ko" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/tr/apgar.html" hreflang="tr" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/nl/apgar.html" hreflang="nl" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/pl/apgar.html" hreflang="pl" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/sv/apgar.html" hreflang="sv" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/id/apgar.html" hreflang="id" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/vi/apgar.html" hreflang="vi" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/uk/apgar.html" hreflang="uk" rel="alternate"/>
+<link href="https://www.calculadorasdeenfermagem.com.br/apgar.html" hreflang="x-default" rel="alternate"/>
+
+<!-- 9. Favicon -->
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+
+<!-- 10. Schema Markup -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"MedicalWebPage","name":"Apgar","url":"https://www.calculadorasdeenfermagem.com.br/apgar.html","inLanguage":"pt-BR","isPartOf":{"@type":"WebSite","name":"Calculadoras de Enfermagem","url":"https://www.calculadorasdeenfermagem.com.br"},"about":{"@type":"MedicalCondition","name":"Enfermagem"}}
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "Organization",
+"@id": "https://www.calculadorasdeenfermagem.com.br/#organization",
+"name": "看護計算機",
+"url": "https://www.calculadorasdeenfermagem.com.br",
+"logo": {
+"@type": "ImageObject",
+"url": "https://www.calculadorasdeenfermagem.com.br/assets/logo.png"
+}
+},
+{
+"@type": "WebSite",
+"@id": "https://www.calculadorasdeenfermagem.com.br/#website",
+"url": "https://www.calculadorasdeenfermagem.com.br",
+"name": "看護計算機",
+"inLanguage": "pt-BR"
+},
+{
+"@type": "SoftwareApplication",
+"@id": "https://www.calculadorasdeenfermagem.com.br/apgar.html/#app",
+"name": "アプガースコア - 新生児評価 - 看護",
+"operatingSystem": "Web",
+"applicationCategory": "HealthApplication",
+"isAccessibleForFree": true,
+"inLanguage": "pt-BR",
+"offers": {
+"@type": "Offer",
+"price": 0,
+"priceCurrency": "BRL",
+"url": "https://www.calculadorasdeenfermagem.com.br/apgar.html"
+},
+"publisher": {
+"@id": "https://www.calculadorasdeenfermagem.com.br/#organization"
+}
+},
+{
+"@type": "MedicalWebPage",
+"@id": "https://www.calculadorasdeenfermagem.com.br/apgar.html/#webpage",
+"url": "https://www.calculadorasdeenfermagem.com.br/apgar.html",
+"name": "アプガースコア - 新生児評価 - 看護",
+"description": "アプガースコアを計算して、新生児の身体的状態を迅速かつ正確に評価します。新生児看護に必須のツールです。",
+"inLanguage": "pt-BR",
+"isPartOf": {
+"@id": "https://www.calculadorasdeenfermagem.com.br/#website"
+},
+"primaryImageOfPage": {
+"@id": "https://www.calculadorasdeenfermagem.com.br/apgar.html/#primaryimage"
+},
+"datePublished": "2025-12-19T07:59:47.102Z",
+"dateModified": "2025-12-19T10:29:04.441Z",
+"author": {
+"@id": "https://www.calculadorasdeenfermagem.com.br/#organization"
+},
+"audience": {
+"@type": "MedicalAudience",
+"audienceType": "Clinician"
+},
+"specialty": {
+"@type": "MedicalSpecialty",
+"name": "Nursing"
+}
+},
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Início",
+"item": "https://www.calculadorasdeenfermagem.com.br/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Calculadoras",
+"item": "https://www.calculadorasdeenfermagem.com.br/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "アプガースコア",
+"item": "https://www.calculadorasdeenfermagem.com.br/apgar.html"
+}
+]
+}
+]
+}
 </script>
-<link rel="stylesheet" href="/css/print-template.css">
 
-<link as="font" crossorigin="" href="/fonts/inter/inter-regular.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/inter/inter-600.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/inter/inter-700.woff2" rel="preload" type="font/woff2"/>
+<!-- 11. Estilos, Fontes e Módulos (Reestruturados) -->
 
-<link as="font" crossorigin="" href="/fonts/nunito/nunito-regular.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/nunito/nunito-700.woff2" rel="preload" type="font/woff2"/>
-<link as="font" crossorigin="" href="/fonts/nunito/nunito-900.woff2" rel="preload" type="font/woff2"/>
-</head>
-<body data-page="apgar">
-<a href="#main-content" class="skip-link sr-only">Pular para o conteúdo principal</a>
-<div id="statusMessage" class="sr" aria-live="polite" aria-atomic="true"></div>
+<style>
+:root {
+--navy: #1a3e74;
+--navy-light: #1e4d8c;
+--navy-dark: #163269;
+--slate-800: #1e293b;
+--slate-600: #475569;
+--slate-500: #64748b;
+--slate-200: #e2e8f0;
+--slate-100: #f1f5f9;
+--slate-50: #f8fafc;
+--green: #16a34a;
+--yellow: #eab308;
+--orange: #f97316;
+--red: #e11d48;
+}
+* { box-sizing: border-box; }
 
-<div id="site-header"></div>
-<div id="site-a11y"></div>
-
-<main id="main-content">
-  <div>
-
-    <nav class="tpl-breadcrumb" aria-label="Breadcrumb">
-      <a href="../index.html">Início</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <a href="../index.html#calculadoras">Ferramentas</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <a href="../index.html#calculadoras">Neonatologia</a>
-      <svg class="sep"><use href="#i-arrow"/></svg>
-      <span class="current" aria-current="page">Índice de Apgar</span>
-    </nav>
-
-    <div class="tool-header">
-      <div class="tool-header-main">
-        <div class="tool-icon-badge" aria-hidden="true">
-          <svg class="icon"><use href="#i-users"/></svg>
-        </div>
-        <div>
-          <span class="tool-category-badge">Neonatologia</span>
-          <h1>Índice de Apgar</h1>
-          <p class="tool-subtitle">Avaliar rapidamente a vitalidade do recém-nascido no 1º e no 5º minuto de vida, orientando a necessidade de manobras de reanimação.</p>
-          <div class="tool" aria-label="Avaliação desta calculadora">
-            <div class="stars" role="img" aria-label="4.9 de 5 estrelas"><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button><button type="button" class="on" tabindex="-1" aria-hidden="true" aria-label="On"><svg class="icon icon"><use href="#i-star"/></svg></button></div>
-            <span>4.9 · 1580 avaliações</span>
-          </div>
-        </div>
-      </div>
-      <div class="tool-actions">
-        <button type="button" class="btn-icon" id="calcFavoriteBtn" aria-pressed="false">
-          <svg class="icon"><use href="#i-bookmark"/></svg> Favoritar
-        </button>
-        <button type="button" class="btn-icon" id="calcShareBtn">
-          <svg class="icon"><use href="#i-share"/></svg> Compartilhar
-        </button>
-        <button type="button" class="btn-icon" id="calcPrintBtn" onclick="window.print()">
-          <svg class="icon"><use href="#i-printer"/></svg> Imprimir
-        </button>
-      </div>
-    </div>
-
-    <div class="profile-tabs-bar">
-      <div class="tabs" data-tab-group="perfil" role="tablist" aria-label="Perfil de visualização">
-        <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon"><use href="#i-person"/></svg> Padrão</button>
-        <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon"><use href="#i-trend"/></svg> Gestor</button>
-        <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon"><use href="#i-cap"/></svg> Estudante</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon"><use href="#i-book"/></svg> Acadêmico</button>
-      </div>
-    </div>
-
-    <div data-tab-panels="perfil">
-
-      <!-- ================= PERFIL: PADRÃO ================= -->
-      <div class="tab active" data-tab-panel="padrao">
-        <form class="calc-" id="calcForm" novalidate>
-          <section class="calc-card" aria-labelledby="calcParamsTitle">
-            <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 id="calcParamsTitle">パラメータ</h2></div>
-            
-            <div class="field">
-              <div class="field">
-                <label class="field" for="calc-fc">Frequência Cardíaca</label>
-              </div>
-              <div class="field">
-                <select id="calc-fc" class="field" data-calc-input="fc"><option value="0">0 — Ausente</option><option value="1">1 — Menor que 100 bpm</option><option value="2" selected>2 — Maior ou igual a 100 bpm</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div>
-              <p class="field">Frequência cardíaca do recém-nascido, avaliada por ausculta ou palpação do cordão.</p>
-            </div>
-            <div class="field">
-              <div class="field">
-                <label class="field" for="calc-respiracao">Esforço Respiratório</label>
-              </div>
-              <div class="field">
-                <select id="calc-respiracao" class="field" data-calc-input="respiracao"><option value="0">0 — Ausente</option><option value="1">1 — Fraco / Irregular</option><option value="2" selected>2 — Bom / Choro Forte</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div>
-              <p class="field">Padrão respiratório observado.</p>
-            </div>
-            <div class="field">
-              <div class="field">
-                <label class="field" for="calc-tono">Tônus Muscular</label>
-              </div>
-              <div class="field">
-                <select id="calc-tono" class="field" data-calc-input="tono"><option value="0">0 — Flácido</option><option value="1">1 — Alguma Flexão</option><option value="2" selected>2 — Movimento Ativo</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div>
-              <p class="field">Grau de flexão e movimento espontâneo dos membros.</p>
-            </div>
-            <div class="field">
-              <div class="field">
-                <label class="field" for="calc-irritabilidade">Irritabilidade Reflexa</label>
-              </div>
-              <div class="field">
-                <select id="calc-irritabilidade" class="field" data-calc-input="irritabilidade"><option value="0">0 — Sem Resposta</option><option value="1">1 — Careta</option><option value="2" selected>2 — Choro / Tosse / Espirro</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div>
-              <p class="field">Resposta a estímulo (ex: aspiração de vias aéreas ou estímulo tátil).</p>
-            </div>
-            <div class="field">
-              <div class="field">
-                <label class="field" for="calc-cor">Cor da Pele</label>
-              </div>
-              <div class="field">
-                <select id="calc-cor" class="field" data-calc-input="cor"><option value="0">0 — Cianótico / Pálido</option><option value="1">1 — Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>2 — Completamente Rosado</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div>
-              <p class="field">Coloração da pele do recém-nascido.</p>
-            </div>
-            <div class="tip">
-              <div class="icon"><svg class="icon"><use href="#i-bulb"/></svg></div>
-              <div><strong>Lembre-se</strong><p>Esta ferramenta é um apoio ao cálculo clínico e não substitui a avaliação e o julgamento do profissional de enfermagem.</p></div>
-            </div>
-            <div class="form">
-              <button type="reset" class="btn btn" id="calcClearBtn">Limpar</button>
-              <button type="submit" class="btn btn" id="calcSubmitBtn"><svg class="icon icon"><use href="#i-calculator"/></svg> Calcular</button>
-            </div>
-          </section>
-
-          <div>
-            <section class="calc result" aria-live="polite">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2>結果</h2></div>
-              <div class="result-card">
-                <p class="result-card">Índice de Apgar</p>
-                <div class="result-card">
-                  <span class="result-card" id="calcResultValue">10</span>
-                  <span class="result-card" id="calcResultUnit">pontos</span>
-                </div>
-              </div>
-              <div class="status success" id="calcStatusBanner">
-                <div class="icon"><svg class="icon" id="calcStatusIcon"><use href="#i-check"/></svg></div>
-                <div>
-                  <strong id="calcStatusTitle">Normal / Boa Vitalidade</strong>
-                  <p id="calcStatusText">Recém-nascido com boa vitalidade ao nascer. Manter cuidados de rotina e contato pele a pele quando indicado.</p>
-                </div>
-              </div>
-              <div class="formula">
-                <div class="formula" id="calcFormulaRow">
-                  <div class="formula">
-              <div class="formula" data-formula-box="fc">2</div>
-              <span class="formula">Frequência Cardíaca</span>
-            </div> <span class="formula">+</span> <div class="formula">
-              <div class="formula" data-formula-box="respiracao">2</div>
-              <span class="formula">Esforço Respiratório</span>
-            </div> <span class="formula">+</span> <div class="formula">
-              <div class="formula" data-formula-box="tono">2</div>
-              <span class="formula">Tônus Muscular</span>
-            </div> <span class="formula">+</span> <div class="formula">
-              <div class="formula" data-formula-box="irritabilidade">2</div>
-              <span class="formula">Irritabilidade Reflexa</span>
-            </div> <span class="formula">+</span> <div class="formula">
-              <div class="formula" data-formula-box="cor">2</div>
-              <span class="formula">Cor da Pele</span>
-            </div>
-                  <span class="formula">=</span>
-                  <div class="formula">
-                    <div class="formula highlight" data-formula-box="__result__">10</div>
-                    <span class="formula">Índice de Apgar</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section class="calc history" aria-labelledby="calcHistoryTitle">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">最近の計算</h2></div>
-              <ul class="history" id="calcHistoryList">
-                <li class="history" id="calcHistoryEmpty">Seus últimos cálculos aparecerão aqui nesta sessão.</li>
-              </ul>
-            </section>
-          </div>
-
-          <div class="info">
-            <section class="calc info">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2>このツールについて</h2></div>
-              <p>Avaliar rapidamente a vitalidade do recém-nascido no 1º e no 5º minuto de vida, orientando a necessidade de manobras de reanimação. Aplicado sistematicamente a todo recém-nascido no 1º e no 5º minuto após o nascimento; repetido a cada 5 minutos se o escore permanecer abaixo de 7.</p>
-            </section>
-            <section class="calc info">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2>判定範囲</h2></div>
-              <ul class="glossary"><li><span class="glossary" style="background:var(--blue-600,#2563eb)"></span>
-          <div><div class="glossary">0–3: Gravemente Deprimido</div></div></li><li><span class="glossary" style="background:#ea580c"></span>
-          <div><div class="glossary">4–6: Moderadamente Deprimido</div></div></li><li><span class="glossary" style="background:#2563eb"></span>
-          <div><div class="glossary">7–10: Normal / Boa Vitalidade</div></div></li></ul>
-            </section>
-            <section class="calc info">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2>重要なヒント</h2></div>
-              <ul class="tips"><li><svg class="icon"><use href="#i-clipcheck"/></svg> Avalie sempre no 1º e no 5º minuto de vida; repita a cada 5 minutos se o escore for menor que 7.</li><li><svg class="icon"><use href="#i-clipcheck"/></svg> Não atrase manobras de reanimação para calcular o escore — a reanimação tem prioridade.</li><li><svg class="icon"><use href="#i-clipcheck"/></svg> Documente separadamente os escores do 1º e do 5º minuto.</li><li><svg class="icon"><use href="#i-clipcheck"/></svg> Lembre-se do mnemônico A-P-G-A-R: Aparência (cor), Pulso (FC), Gesticulação (irritabilidade), Atividade (tônus), Respiração.</li></ul>
-            </section>
-          </div>
-        </form>
-      </div>
-        <!-- Raciocinio Clinico Integrado (steps 3-6) — oculto ate calcular -->
-        <div class="flow" id="calcFlowDivider" style="display:none;">
-          <span>Raciocínio Clínico Integrado</span>
-        </div>
-
-        <div id="calcClinicalFlow" class="clinical">
-          <section class="calc flow" aria-labelledby="calcNandaTitle">
-            <div class="calc-card">
-              <span class="bar" aria-hidden="true"></span>
-              <h2 id="calcNandaTitle"><svg class="icon icon"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
-            </div>
-            <div class="nnn-">
-              <div>
-                <span class="nnn">Diagnóstico (NANDA-I)</span>
-                <p class="nnn" id="calcNandaText">—</p>
-              </div>
-              <div>
-                <span class="nnn">Intervenção (NIC)</span>
-                <p class="nnn" id="calcNicText">—</p>
-              </div>
-              <div>
-                <span class="nnn">Resultado esperado (NOC)</span>
-                <p class="nnn" id="calcNocText">—</p>
-              </div>
-            </div>
-          </section>
-
-          <section class="calc flow" aria-labelledby="calcPlanTitle">
-            <div class="calc-card">
-              <span class="bar" aria-hidden="true"></span>
-              <h2 id="calcPlanTitle"><svg class="icon icon"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
-            </div>
-            <ul class="tips">
-              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Avaliar FC, respiração, tônus, irritabilidade e cor.</li>
-              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore do 1º e 5º minuto separadamente.</li>
-              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Iniciar reanimação se Apgar &lt; 7 — não aguardar o cálculo.</li>
-              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Repetir a cada 5 minutos se escore permanecer &lt; 7.</li>
-            </ul>
-          </section>
-
-          <section class="calc flow" aria-labelledby="calcEvalTitle">
-            <div class="calc-card">
-              <span class="bar" aria-hidden="true"></span>
-              <h2 id="calcEvalTitle"><svg class="icon icon"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
-            </div>
-            <p class="flow">Monitorar vitalidade do recém-nascido: frequência cardíaca, esforço respiratório, tônus muscular, irritabilidade reflexa e coloração da pele. Reavaliar conforme protocolo institucional.</p>
-          </section>
-
-          <section class="calc flow" aria-labelledby="calcSafetyTitle">
-            <div class="calc-card">
-              <span class="bar" aria-hidden="true"></span>
-              <h2 id="calcSafetyTitle"><svg class="icon icon"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
-            </div>
-            <div class="safety-">
-              <div class="safety">
-                <span class="nnn">9 Certos da Medicação</span>
-                <ul class="tips">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Paciente certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Medicamento certo</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Via certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Dose certa</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Hora certa</li>
-                </ul>
-              </div>
-              <div class="safety">
-                <span class="nnn">Metas Internacionais (IPSG)</span>
-                <ul class="tips">
-                  <li><svg class="icon"><use href="#i-check"/></svg> Identificação correta do recém-nascido</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Segurança na reanimação neonatal</li>
-                  <li><svg class="icon"><use href="#i-check"/></svg> Redução do risco de infecção</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <!-- Recursos Adicionais — 10 cards, sempre visivel -->
-        <div class="flow"><span>Recursos Adicionais</span></div>
-
-        <div class="learning">
-          <div class="learning-">
-            <a class="learn" href="../biblioteca.html?tipo=artigo&origem=apgar">
-              <div class="icon"><svg class="icon"><use href="#i-book"/></svg></div>
-              <h3>記事</h3>
-              <p>Evidência científica e literatura de referência sobre o tema.</p>
-              <span class="learn">Ler artigos <svg class="icon icon"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn" href="../biblioteca.html?origem=apgar">
-              <div class="icon"><svg class="icon"><use href="#i-clipboard"/></svg></div>
-              <h3>プロトコル</h3>
-              <p>Protocolos institucionais e fluxos operacionais de enfermagem.</p>
-              <span class="learn">Ver protocolos <svg class="icon icon"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn" href="../biblioteca.html?tipo=caso-clinico&origem=apgar">
-              <div class="icon"><svg class="icon"><use href="#i-file"/></svg></div>
-              <h3>Casos Clínicos</h3>
-              <p>Situações reais com tomada de decisão e raciocínio clínico.</p>
-              <span class="learn">Ver casos <svg class="icon icon"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn" href="../biblioteca.html?tipo=checklist&origem=apgar">
-              <div class="icon"><svg class="icon"><use href="#i-clipcheck"/></svg></div>
-              <h3>Check-lists</h3>
-              <p>Listas de verificação para prática segura e auditoria.</p>
-              <span class="learn">Baixar check-lists <svg class="icon icon"><use href="#i-download"/></svg></span>
-            </a>
-            <a class="learn" href="../simulados.html">
-              <div class="icon"><svg class="icon"><use href="#i-pulse"/></svg></div>
-              <h3>シミュレーション</h3>
-              <p>Cenários práticos com decisões clínicas em tempo real.</p>
-              <span class="learn">Simular agora <svg class="icon icon"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn" href="../flashcards.html">
-              <div class="icon"><svg class="icon"><use href="#i-bulb"/></svg></div>
-              <h3>フラッシュカード</h3>
-              <p>Fichas de revisão rápida para fixação de conceitos-chave.</p>
-              <span class="learn">Estudar flashcards <svg class="icon icon"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn" href="../biblioteca.html?tipo=infografico&origem=apgar">
-              <div class="icon"><svg class="icon"><use href="#i-network"/></svg></div>
-              <h3>Infográficos</h3>
-              <p>Visualizações gráficas para ensino e treinamento em serviço.</p>
-              <span class="learn">Ver infográficos <svg class="icon icon"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn" href="../biblioteca.html?tipo=guia-bolso&origem=apgar">
-              <div class="icon"><svg class="icon"><use href="#i-flask"/></svg></div>
-              <h3>Guia de Bolso</h3>
-              <p>Resumo rápido para consulta à beira do leito.</p>
-              <span class="learn">Consultar guia <svg class="icon icon"><use href="#i-arrow"/></svg></span>
-            </a>
-            <a class="learn" href="../biblioteca.html?tipo=slides&origem=apgar">
-              <div class="icon"><svg class="icon"><use href="#i-monitor"/></svg></div>
-              <h3>Slides</h3>
-              <p>Material de apresentação para aulas e treinamentos.</p>
-              <span class="learn">Baixar slides <svg class="icon icon"><use href="#i-download"/></svg></span>
-            </a>
-            <a class="learn" href="../biblioteca.html?tipo=videos&origem=apgar">
-              <div class="icon"><svg class="icon"><use href="#i-play"/></svg></div>
-              <h3>Vídeos</h3>
-              <p>Tutoriais e demonstrações práticas em vídeo.</p>
-              <span class="learn">Assistir vídeos <svg class="icon icon"><use href="#i-arrow"/></svg></span>
-            </a>
-          </div>
-        </div>
-
-      <!-- ================= PERFIL: MODO URGÊNCIA ================= -->
-      <div class="tab" data-tab-panel="urgencia">
-        <div class="urg">
-          <div class="urg">
-            <div class="urg">
-              <div><span class="urg"><span class="dot"></span> Modo urgência ativo</span><h3>Cálculo rápido — Índice de Apgar</h3></div>
-              <div class="urg"><button type="button" class="urg" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 2, &quot;tono&quot;: 2, &quot;irritabilidade&quot;: 2, &quot;cor&quot;: 2}'>Recém-nascido vigoroso <span class="p">Apgar 10</span></button><button type="button" class="urg" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 1, &quot;tono&quot;: 1, &quot;irritabilidade&quot;: 1, &quot;cor&quot;: 0}'>Depressão moderada <span class="p">Apgar 5</span></button><button type="button" class="urg" data-example data-values='{&quot;fc&quot;: 1, &quot;respiracao&quot;: 0, &quot;tono&quot;: 0, &quot;irritabilidade&quot;: 0, &quot;cor&quot;: 1}'>Depressão grave <span class="p">Apgar 2</span></button></div>
-            </div>
-            <div class="urg-"><div class="urg"><label>Frequência Cardíaca</label>
-              <select class="field" data-calc-input="fc" style="background:rgba(255,255,255,.07);border-"><option value="0">Ausente</option><option value="1">Menor que 100 bpm</option><option value="2" selected>Maior ou igual a 100 bpm</option></select></div><div class="urg"><label>Esforço Respiratório</label>
-              <select class="field" data-calc-input="respiracao" style="background:rgba(255,255,255,.07);border-"><option value="0">Ausente</option><option value="1">Fraco / Irregular</option><option value="2" selected>Bom / Choro Forte</option></select></div><div class="urg"><label>Tônus Muscular</label>
-              <select class="field" data-calc-input="tono" style="background:rgba(255,255,255,.07);border-"><option value="0">Flácido</option><option value="1">Alguma Flexão</option><option value="2" selected>Movimento Ativo</option></select></div><div class="urg"><label>Irritabilidade Reflexa</label>
-              <select class="field" data-calc-input="irritabilidade" style="background:rgba(255,255,255,.07);border-"><option value="0">Sem Resposta</option><option value="1">Careta</option><option value="2" selected>Choro / Tosse / Espirro</option></select></div><div class="urg"><label>Cor da Pele</label>
-              <select class="field" data-calc-input="cor" style="background:rgba(255,255,255,.07);border-"><option value="0">Cianótico / Pálido</option><option value="1">Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>Completamente Rosado</option></select></div></div>
-            <div class="urg">
-              <div><span class="urg safe" id="urgResultNum">10</span><span class="urg" id="urgResultUnit">pontos</span></div>
-              <span class="urg safe" id="urgAlarmBadge"><svg class="icon icon"><use href="#i-check"/></svg> Normal / Boa Vitalidade</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
-      <div class="tab" data-tab-panel="gestor">
-        <div class="gestor"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
-        <div class="kpi-">
-          <div class="kpi"><div class="kpi">Avaliações (7 dias)</div><div class="kpi">284</div><div class="kpi">▲ 9% vs. semana anterior</div></div>
-          <div class="kpi"><div class="kpi">Dentro da faixa esperada</div><div class="kpi">231</div><div class="kpi">81% do total</div></div>
-          <div class="kpi"><div class="kpi">Casos de alto risco</div><div class="kpi">37</div><div class="kpi" >13% do total</div></div>
-          <div class="kpi"><div class="kpi">Unidades ativas</div><div class="kpi">4</div><div class="kpi">UTI, Enfermaria, Pediatria, Emergência</div></div>
-        </div>
-        <div class="gestor-">
-          <section class="calc-card">
-            <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">1日あたりの評価数（過去7日間）</h2></div>
-            <div class="bar">
-              <div class="bar"><span class="bar">38</span><div class="bar" style="height:60%"></div><span class="bar">Seg</span></div>
-              <div class="bar"><span class="bar">33</span><div class="bar" style="height:52%"></div><span class="bar">Ter</span></div>
-              <div class="bar"><span class="bar">47</span><div class="bar" style="height:75%"></div><span class="bar">Qua</span></div>
-              <div class="bar"><span class="bar">41</span><div class="bar" style="height:65%"></div><span class="bar">Qui</span></div>
-              <div class="bar"><span class="bar">58</span><div class="bar" style="height:92%"></div><span class="bar">Sex</span></div>
-              <div class="bar"><span class="bar">27</span><div class="bar" style="height:43%"></div><span class="bar">Sáb</span></div>
-              <div class="bar"><span class="bar">40</span><div class="bar" style="height:63%"></div><span class="bar">Dom</span></div>
-            </div>
-          </section>
-          <section class="calc-card">
-            <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">リスク区分別分布</h2></div>
-            <div class="equipo"><div class="dist"><span class="dist">Gravemente Deprimido</span>
-              <div class="dist"><div class="dist" style="width:50%; background:var(--blue-600,#2563eb)"></div></div>
-              <span class="dist">50%</span></div><div class="dist"><span class="dist">Moderadamente Deprimido</span>
-              <div class="dist"><div class="dist" style="width:33%; background:#ea580c"></div></div>
-              <span class="dist">33%</span></div><div class="dist"><span class="dist">Normal / Boa Vitalidade</span>
-              <div class="dist"><div class="dist" style="width:17%; background:#2563eb"></div></div>
-              <span class="dist">17%</span></div></div>
-          </section>
-        </div>
-        <section class="calc-card">
-          <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">監査証跡（サンプル）</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>結果</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Índice de Apgar</td><td>10 pontos</td><td><span class="audit ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Índice de Apgar</td><td>—</td><td><span class="audit alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Índice de Apgar</td><td>—</td><td><span class="audit ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-      <!-- ================= PERFIL: ESTUDANTE ================= -->
-      <div class="tab" data-tab-panel="estudante">
-        <div class="est-">
-          <div class="side">
-            
-            <section class="calc-card">
-              <div class="step">
-                <div class="step">1</div>
-                <div class="step">
-                  <h3>Frequência Cardíaca</h3>
-                  <p class="step">Frequência cardíaca do recém-nascido, avaliada por ausculta ou palpação do cordão.</p>
-                  <div class="step"><div class="field" style="flex:1;min-width:220px">
-                <select class="field" data-calc-input="fc"><option value="0">0 — Ausente</option><option value="1">1 — Menor que 100 bpm</option><option value="2" selected>2 — Maior ou igual a 100 bpm</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step">
-                <div class="step">2</div>
-                <div class="step">
-                  <h3>Esforço Respiratório</h3>
-                  <p class="step">Padrão respiratório observado.</p>
-                  <div class="step"><div class="field" style="flex:1;min-width:220px">
-                <select class="field" data-calc-input="respiracao"><option value="0">0 — Ausente</option><option value="1">1 — Fraco / Irregular</option><option value="2" selected>2 — Bom / Choro Forte</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step">
-                <div class="step">3</div>
-                <div class="step">
-                  <h3>Tônus Muscular</h3>
-                  <p class="step">Grau de flexão e movimento espontâneo dos membros.</p>
-                  <div class="step"><div class="field" style="flex:1;min-width:220px">
-                <select class="field" data-calc-input="tono"><option value="0">0 — Flácido</option><option value="1">1 — Alguma Flexão</option><option value="2" selected>2 — Movimento Ativo</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step">
-                <div class="step">4</div>
-                <div class="step">
-                  <h3>Irritabilidade Reflexa</h3>
-                  <p class="step">Resposta a estímulo (ex: aspiração de vias aéreas ou estímulo tátil).</p>
-                  <div class="step"><div class="field" style="flex:1;min-width:220px">
-                <select class="field" data-calc-input="irritabilidade"><option value="0">0 — Sem Resposta</option><option value="1">1 — Careta</option><option value="2" selected>2 — Choro / Tosse / Espirro</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <section class="calc-card">
-              <div class="step">
-                <div class="step">5</div>
-                <div class="step">
-                  <h3>Cor da Pele</h3>
-                  <p class="step">Coloração da pele do recém-nascido.</p>
-                  <div class="step"><div class="field" style="flex:1;min-width:220px">
-                <select class="field" data-calc-input="cor"><option value="0">0 — Cianótico / Pálido</option><option value="1">1 — Corpo Rosado, Extremidades Cianóticas</option><option value="2" selected>2 — Completamente Rosado</option></select>
-                <svg class="icon"><use href="#i-arrow"/></svg>
-              </div></div>
-                </div>
-              </div>
-            </section>
-            <div class="formula">
-              <div class="fd"><svg class="icon icon"><use href="#i-bolt"/></svg> Como chegamos aqui</div>
-              <h3>計算の組み立て方（ステップごと）</h3>
-              <div class="fd">
-                <div class="fd">
-              <div class="fd">1</div>
-              <div class="fd"><div class="l1">Frequência Cardíaca</div></div>
-              <div class="fd" data-fd-step="fc">2</div>
-            </div><div class="fd">
-              <div class="fd">2</div>
-              <div class="fd"><div class="l1">Esforço Respiratório</div></div>
-              <div class="fd" data-fd-step="respiracao">2</div>
-            </div><div class="fd">
-              <div class="fd">3</div>
-              <div class="fd"><div class="l1">Tônus Muscular</div></div>
-              <div class="fd" data-fd-step="tono">2</div>
-            </div><div class="fd">
-              <div class="fd">4</div>
-              <div class="fd"><div class="l1">Irritabilidade Reflexa</div></div>
-              <div class="fd" data-fd-step="irritabilidade">2</div>
-            </div><div class="fd">
-              <div class="fd">5</div>
-              <div class="fd"><div class="l1">Cor da Pele</div></div>
-              <div class="fd" data-fd-step="cor">2</div>
-            </div>
-                <div class="fd"><div class="line"></div><div class="op">=</div><div class="line"></div></div>
-                <div class="fd">
-                  <div>
-                    <div style="font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;opacity:.85;font-weight:800;margin-bottom:4px">Índice de Apgar</div>
-                    <span class="fd" data-fd-step="__result__">10</span><span class="fd">pontos</span>
-                  </div>
-                  <span class="fd" id="estFdBadge"><svg class="icon icon"><use href="#i-check"/></svg> Normal / Boa Vitalidade</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="side">
-            <section class="calc-card">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">サンプル例</h2></div>
-              <div class="example-"><button type="button" class="example" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 2, &quot;tono&quot;: 2, &quot;irritabilidade&quot;: 2, &quot;cor&quot;: 2}'>
-              <div class="ex"><i class="fa fa"></i></div>
-              <div class="ex">Recém-nascido vigoroso</div>
-              <div class="ex">Apgar 10</div>
-            </button><button type="button" class="example" data-example data-values='{&quot;fc&quot;: 2, &quot;respiracao&quot;: 1, &quot;tono&quot;: 1, &quot;irritabilidade&quot;: 1, &quot;cor&quot;: 0}'>
-              <div class="ex"><i class="fa fa"></i></div>
-              <div class="ex">Depressão moderada</div>
-              <div class="ex">Apgar 5</div>
-            </button><button type="button" class="example" data-example data-values='{&quot;fc&quot;: 1, &quot;respiracao&quot;: 0, &quot;tono&quot;: 0, &quot;irritabilidade&quot;: 0, &quot;cor&quot;: 1}'>
-              <div class="ex"><i class="fa fa"></i></div>
-              <div class="ex">Depressão grave</div>
-              <div class="ex">Apgar 2</div>
-            </button></div>
-            </section>
-            <section class="calc-card">
-              <div class="calc-card"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">クイック用語集</h2></div>
-              <ul class="glossary"><li><span class="glossary"></span><div><div class="glossary">Frequência Cardíaca</div><div class="glossary">Frequência cardíaca do recém-nascido, avaliada por ausculta ou palpação do cordão.</div></div></li><li><span class="glossary"></span><div><div class="glossary">Esforço Respiratório</div><div class="glossary">Padrão respiratório observado.</div></div></li><li><span class="glossary"></span><div><div class="glossary">Tônus Muscular</div><div class="glossary">Grau de flexão e movimento espontâneo dos membros.</div></div></li><li><span class="glossary"></span><div><div class="glossary">Irritabilidade Reflexa</div><div class="glossary">Resposta a estímulo (ex: aspiração de vias aéreas ou estímulo tátil).</div></div></li><li><span class="glossary"></span><div><div class="glossary">Cor da Pele</div><div class="glossary">Coloração da pele do recém-nascido.</div></div></li></ul>
-            </section>
-            <section class="calc quiz" id="estQuizCard">
-              <div class="calc-card" style="justify-content:space-between">
-                <div style="display:flex; align-items:center; gap:10px"><span class="bar" style="background:var(--blue-600,#2563eb)" aria-hidden="true"></span><h2 style="font-size:15px">クイッククイズ</h2></div>
-                <span class="quiz" id="estQuizProgress">1/1</span>
-              </div>
-              <p class="quiz" id="estQuizQuestion"></p>
-              <ul class="quiz" id="estQuizOpts"></ul>
-              <div class="quiz" id="estQuizExpl"></div>
-              <button type="button" class="quiz" id="estQuizNext" style="display:none">Próxima pergunta →</button>
-            </section>
-          </div>
-        </div>
-      </div>
-      <!-- ================= PERFIL: ACADÊMICO ================= -->
-      <div class="tab" data-tab-panel="academico">
-        <div class="aca">
-          <div class="aca">
-            <div class="aca"><svg class="icon icon"><use href="#i-book"/></svg> Visão acadêmica</div>
-            <h3>Índice de Apgar: cálculo, fundamentação e evidências</h3>
-            <p>Conteúdo estruturado para estudo e referência, com fundamentação teórica, evidências da literatura e referências bibliográficas no padrão ABNT.</p>
-          </div>
-          <div class="aca">
-            <div class="tabs" data-tab-group="academico-conteudo" role="tablist">
-              <button class="tab active" data-tab="calculo" type="button">Cálculo</button>
-              <button class="tab" data-tab="fundamentacao" type="button">Fundamentação</button>
-              <button class="tab" data-tab="sae" type="button">SAE</button>
-              <button class="tab" data-tab="evidencias" type="button">Evidências</button>
-              <button class="tab" data-tab="referencias" type="button">Referências</button>
-            </div>
-          </div>
-          <div class="aca" data-tab-panels="academico-conteudo">
-            <div class="tab active" data-tab-panel="calculo">
-              <h4>Dados informados</h4>
-              <p>Frequência Cardíaca: <strong data-aca-value="fc">2</strong> · Esforço Respiratório: <strong data-aca-value="respiracao">2</strong> · Tônus Muscular: <strong data-aca-value="tono">2</strong> · Irritabilidade Reflexa: <strong data-aca-value="irritabilidade">2</strong> · Cor da Pele: <strong data-aca-value="cor">2</strong></p>
-              <h4>結果</h4>
-              <p>Índice de Apgar: <strong data-aca-value="__result__">10 pontos</strong> — <span data-aca-value="__range__">Normal / Boa Vitalidade</span></p>
-              <button type="button" class="btn btn aca" onclick="window.print()"><svg class="icon icon"><use href="#i-printer"/></svg> Exportar / Imprimir</button>
-            </div>
-            <div class="tab" data-tab-panel="fundamentacao"><h4>Fundamentação</h4><p>O Índice de Apgar foi desenvolvido pela anestesiologista Virginia Apgar em 1952 como um método rápido e padronizado para avaliar a condição clínica do recém-nascido logo após o parto, permitindo identificar precocemente a necessidade de reanimação.</p><h4>Histórico</h4><p>Adotado mundialmente como padrão de avaliação neonatal imediata, sendo recomendado pela Academia Americana de Pediatria (AAP) e pelo Colégio Americano de Obstetras e Ginecologistas (ACOG) como parte da rotina de nascimento.</p></div>
-            <div class="tab" data-tab-panel="sae"><h4>NANDA — Padrão respiratório ineficaz</h4><p>Inspiração e/ou expiração que não proporciona ventilação adequada.</p><h4>NANDA — Risco de nível de glicemia instável</h4><p>Vulnerabilidade a variação nos níveis de glicose/açúcar no sangue, o que pode comprometer a saúde do recém-nascido.</p><h4>NOC — Status respiratório do recém-nascido</h4><ul class="tips"><li>Frequência respiratória adequada</li><li>Ausência de cianose</li><li>Choro vigoroso</li></ul><h4>NOC — Adaptação do recém-nascido à vida extrauterina</h4><ul class="tips"><li>Estabilidade térmica</li><li>Estabilidade cardiorrespiratória</li><li>Reflexos presentes</li></ul><h4>NIC — Cuidados ao recém-nascido: imediatos</h4><ul class="tips"><li>Secar e aquecer o recém-nascido</li><li>Avaliar Apgar no 1º e 5º minuto</li><li>Aspirar vias aéreas se necessário</li><li>Realizar contato pele a pele</li></ul></div>
-            <div class="tab" data-tab-panel="evidencias"><h4>Validação científica</h4><p>Amplamente validado na literatura como indicador de vitalidade neonatal, embora não deva ser usado isoladamente para prever prognóstico neurológico a longo prazo.</p><h4>Limitações</h4><p>O escore de Apgar isolado não deve ser utilizado para diagnosticar asfixia perinatal nem para prever desfechos neurológicos a longo prazo — deve ser interpretado em conjunto com gasometria de cordão e exame clínico completo.</p></div>
-            <div class="tab" data-tab-panel="referencias"><ol class="ref"><li><span class="ref">1</span>APGAR, V. A proposal for a new method of evaluation of the newborn infant. Current Researches in Anesthesia and Analgesia, v. 32, n. 4, p. 260-267, 1953.</li><li><span class="ref">2</span>AMERICAN ACADEMY OF PEDIATRICS; AMERICAN COLLEGE OF OBSTETRICIANS AND GYNECOLOGISTS. The Apgar Score. Committee Opinion, 2015 (reafirmado).</li><li><span class="ref">3</span>BRASIL. Ministério da Saúde. Atenção à Saúde do Recém-Nascido: Guia para os Profissionais de Saúde. Brasília: MS, 2014.</li><li><span class="ref">4</span>BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020.</li><li><span class="ref">5</span>COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017.</li></ol></div>
-          </div>
-        </div>
-      </div>
-      </div>
-
-    <section class="about">
-      <div class="about-">
-        <div class="about">
-          <h2>Como funciona o Índice de Apgar</h2>
-          <p>O Índice de Apgar avalia 5 sinais do recém-nascido — frequência cardíaca, esforço respiratório, tônus muscular, irritabilidade reflexa e cor da pele — cada um pontuado de 0 a 2. A soma varia de 0 a 10 e é medida no 1º e no 5º minuto de vida.</p><p><strong>Guia rápido:</strong> 7-10 = Normal | 4-6 = Moderadamente deprimido | 0-3 = Gravemente deprimido (reanimação imediata).</p>
-          <div class="faq"><details>
-              <summary>O que fazer se o Apgar de 5 minutos ainda for baixo? <svg class="icon"><use href="#i-arrow"/></svg></summary>
-              <p>Continuar reavaliando a cada 5 minutos até 20 minutos de vida, mantendo as manobras de reanimação indicadas e documentando cada escore.</p>
-            </details></div><div class="faq"><details>
-              <summary>O Apgar substitui a gasometria de cordão umbilical? <svg class="icon"><use href="#i-arrow"/></svg></summary>
-              <p>Não. São avaliações complementares. A gasometria de cordão fornece informação objetiva sobre o equilíbrio ácido-base, enquanto o Apgar é uma avaliação clínica rápida da vitalidade.</p>
-            </details></div>
-        </div>
-        <div class="disclaimer">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
-      </div>
-    </section>
-
-  </div>
-
-    <!-- ═══ Hashtags + Ferramentas Relacionadas ═══ -->
-    <section class="tool-footer-zone">
-      <div class="tool-tags">
-        <a href="../index.html#calculadoras" class="tool-tag">#Neonatologia</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#Apgar</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#AvaliaçãoNeonatal</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#ReanimaçãoNeonatal</a>
-        <a href="../index.html#calculadoras" class="tool-tag">#RecémNascido</a>
-        <a href="../diagnosticosnanda.html" class="tool-tag">#NANDA-I</a>
-        <a href="../sae.html" class="tool-tag">#SAE</a>
-        <a href="../protocolos.html" class="tool-tag">#Protocolos</a>
-        <a href="../medicamentos.html" class="tool-tag">#Medicação</a>
-        <a href="../simulados.html" class="tool-tag">#Simulados</a>
-        <a href="../flashcards.html" class="tool-tag">#Flashcards</a>
-      </div>
-
-      <div class="related-tools">
-        <h2 class="related-tools">関連ツール</h2>
-        <div class="related-">
-          <a class="related-tools" href="../ballard.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-users"/></svg></div>
-            <div>
-              <h3>Ballard</h3>
-              <p>Estimativa da idade gestacional</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../capurro.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-users"/></svg></div>
-            <div>
-              <h3>Capurro</h3>
-              <p>Maturidade somática do recém-nascido</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../bps.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-pulse"/></svg></div>
-            <div>
-              <h3>Perfil Biofísico</h3>
-              <p>Avaliação do bem-estar fetal</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../silverman-andersen.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-pulse"/></svg></div>
-            <div>
-              <h3>Silverman-Andersen</h3>
-              <p>Avaliação da desconforto respiratório</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../downes.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-pulse"/></svg></div>
-            <div>
-              <h3>Downes</h3>
-              <p>Escore de desconforto respiratório infantil</p>
-            </div>
-          </a>
-          <a class="related-tools" href="../bishop.html">
-            <div class="related-tools"><svg class="icon"><use href="#i-gauge"/></svg></div>
-            <div>
-              <h3>Bishop</h3>
-              <p>Avaliação do colo uterino</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div id="cipContainer" class="cip-hidden"></div>
-
-    <div id="cognitivePanel" class="cognitive cip-hidden">
-      <div id="cognitivePanelContent"></div>
-    </div>
-
-</main>
-
-<script type="application/json" id="tool-config">{"id": "8b3c4d5e-6f70-4819-ab2c-3d4e5f607283", "code": "SCALE-APGAR-001", "slug": "apgar", "version": "1.0.0", "status": "published", "seo": {"title": "Índice de Apgar - Avaliação do Recém-Nascido", "description": "Calcule o Índice de Apgar para avaliação da vitalidade do recém-nascido ao nascer. Inclui interpretação, SAE, segurança do paciente e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/apgar.html"}, "breadcrumb": {"category": "Neonatologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Índice de Apgar", "acronym": "Apgar", "categoryBadge": "Neonatologia", "icon": "i-users", "objective": "Avaliar rapidamente a vitalidade do recém-nascido no 1º e no 5º minuto de vida, orientando a necessidade de manobras de reanimação.", "indication": "Aplicado sistematicamente a todo recém-nascido no 1º e no 5º minuto após o nascimento; repetido a cada 5 minutos se o escore permanecer abaixo de 7.", "targetPopulation": "Recém-nascidos, independentemente da idade gestacional.", "specialty": ["Neonatologia", "Obstetrícia", "Enfermagem"], "averageTime": "1 minuto", "evidenceLevel": "I", "originalAuthors": ["Virginia Apgar"], "organizations": ["American Academy of Pediatrics", "American College of Obstetricians and Gynecologists"], "complexity": "basic", "rating": 4.9, "ratingCount": 1580}, "calculator": {"inputs": [{"id": "fc", "type": "select", "label": "Frequência Cardíaca", "description": "Frequência cardíaca do recém-nascido, avaliada por ausculta ou palpação do cordão.", "defaultValue": 2, "options": [{"value": 0, "label": "Ausente", "score": 0, "description": "Sem batimentos cardíacos detectáveis."}, {"value": 1, "label": "Menor que 100 bpm", "score": 1, "description": "Frequência cardíaca lenta, abaixo de 100 batimentos por minuto."}, {"value": 2, "label": "Maior ou igual a 100 bpm", "score": 2, "description": "Frequência cardíaca igual ou superior a 100 batimentos por minuto."}]}, {"id": "respiracao", "type": "select", "label": "Esforço Respiratório", "description": "Padrão respiratório observado.", "defaultValue": 2, "options": [{"value": 0, "label": "Ausente", "score": 0, "description": "Sem esforço respiratório, apneia."}, {"value": 1, "label": "Fraco / Irregular", "score": 1, "description": "Respiração lenta, irregular, choro fraco."}, {"value": 2, "label": "Bom / Choro Forte", "score": 2, "description": "Respiração regular, choro forte e vigoroso."}]}, {"id": "tono", "type": "select", "label": "Tônus Muscular", "description": "Grau de flexão e movimento espontâneo dos membros.", "defaultValue": 2, "options": [{"value": 0, "label": "Flácido", "score": 0, "description": "Ausência de tônus muscular, membros flácidos."}, {"value": 1, "label": "Alguma Flexão", "score": 1, "description": "Flexão discreta dos membros."}, {"value": 2, "label": "Movimento Ativo", "score": 2, "description": "Movimentação espontânea e ativa dos membros."}]}, {"id": "irritabilidade", "type": "select", "label": "Irritabilidade Reflexa", "description": "Resposta a estímulo (ex: aspiração de vias aéreas ou estímulo tátil).", "defaultValue": 2, "options": [{"value": 0, "label": "Sem Resposta", "score": 0, "description": "Nenhuma resposta ao estímulo."}, {"value": 1, "label": "Careta", "score": 1, "description": "Careta ou leve movimento facial em resposta ao estímulo."}, {"value": 2, "label": "Choro / Tosse / Espirro", "score": 2, "description": "Choro vigoroso, tosse ou espirro em resposta ao estímulo."}]}, {"id": "cor", "type": "select", "label": "Cor da Pele", "description": "Coloração da pele do recém-nascido.", "defaultValue": 2, "options": [{"value": 0, "label": "Cianótico / Pálido", "score": 0, "description": "Cianose ou palidez generalizada."}, {"value": 1, "label": "Corpo Rosado, Extremidades Cianóticas", "score": 1, "description": "Acrocianose — corpo rosado com extremidades azuladas."}, {"value": 2, "label": "Completamente Rosado", "score": 2, "description": "Coloração rosada em todo o corpo."}]}], "formula": {"type": "sum", "resultLabel": "Índice de Apgar", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 3, "label": "Gravemente Deprimido", "riskLevel": "critical", "color": "var(--blue-600,#2563eb)", "clinicalImplications": "Recém-nascido gravemente deprimido. Requer manobras de reanimação neonatal imediatas conforme protocolo institucional.", "recommendations": "• Reanimação neonatal imediata\n• Ventilação com pressão positiva\n• Considerar intubação\n• Equipe de reanimação presente"}, {"min": 4, "max": 6, "label": "Moderadamente Deprimido", "riskLevel": "high", "color": "#ea580c", "clinicalImplications": "Recém-nascido moderadamente deprimido. Pode necessitar de estimulação, oxigênio suplementar ou ventilação assistida.", "recommendations": "• Estimulação tátil\n• Oxigênio suplementar se indicado\n• Monitorização contínua\n• Reavaliar no 5º minuto"}, {"min": 7, "max": 10, "label": "Normal / Boa Vitalidade", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Recém-nascido com boa vitalidade ao nascer. Manter cuidados de rotina e contato pele a pele quando indicado.", "recommendations": "• Cuidados de rotina\n• Contato pele a pele\n• Clampeamento oportuno do cordão\n• Monitorização de rotina"}]}, "sae": {"nanda": [{"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."}, {"diagnosis": "Risco de nível de glicemia instável", "definition": "Vulnerabilidade a variação nos níveis de glicose/açúcar no sangue, o que pode comprometer a saúde do recém-nascido."}], "noc": [{"outcome": "Status respiratório do recém-nascido", "indicators": ["Frequência respiratória adequada", "Ausência de cianose", "Choro vigoroso"]}, {"outcome": "Adaptação do recém-nascido à vida extrauterina", "indicators": ["Estabilidade térmica", "Estabilidade cardiorrespiratória", "Reflexos presentes"]}], "nic": [{"intervention": "Cuidados ao recém-nascido: imediatos", "activities": ["Secar e aquecer o recém-nascido", "Avaliar Apgar no 1º e 5º minuto", "Aspirar vias aéreas se necessário", "Realizar contato pele a pele"]}]}, "evidence": {"foundation": "O Índice de Apgar foi desenvolvido pela anestesiologista Virginia Apgar em 1952 como um método rápido e padronizado para avaliar a condição clínica do recém-nascido logo após o parto, permitindo identificar precocemente a necessidade de reanimação.", "history": "Adotado mundialmente como padrão de avaliação neonatal imediata, sendo recomendado pela Academia Americana de Pediatria (AAP) e pelo Colégio Americano de Obstetras e Ginecologistas (ACOG) como parte da rotina de nascimento.", "validation": "Amplamente validado na literatura como indicador de vitalidade neonatal, embora não deva ser usado isoladamente para prever prognóstico neurológico a longo prazo.", "limitations": "O escore de Apgar isolado não deve ser utilizado para diagnosticar asfixia perinatal nem para prever desfechos neurológicos a longo prazo — deve ser interpretado em conjunto com gasometria de cordão e exame clínico completo.", "references": [{"text": "APGAR, V. A proposal for a new method of evaluation of the newborn infant. Current Researches in Anesthesia and Analgesia, v. 32, n. 4, p. 260-267, 1953."}, {"text": "AMERICAN ACADEMY OF PEDIATRICS; AMERICAN COLLEGE OF OBSTETRICIANS AND GYNECOLOGISTS. The Apgar Score. Committee Opinion, 2015 (reafirmado)."}, {"text": "BRASIL. Ministério da Saúde. Atenção à Saúde do Recém-Nascido: Guia para os Profissionais de Saúde. Brasília: MS, 2014."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."}]}, "learning": {"tips": ["Avalie sempre no 1º e no 5º minuto de vida; repita a cada 5 minutos se o escore for menor que 7.", "Não atrase manobras de reanimação para calcular o escore — a reanimação tem prioridade.", "Documente separadamente os escores do 1º e do 5º minuto.", "Lembre-se do mnemônico A-P-G-A-R: Aparência (cor), Pulso (FC), Gesticulação (irritabilidade), Atividade (tônus), Respiração."], "examples": [{"label": "Recém-nascido vigoroso", "sublabel": "Apgar 10", "emoji": "<i class="fa fa"></i>", "values": {"fc": 2, "respiracao": 2, "tono": 2, "irritabilidade": 2, "cor": 2}}, {"label": "Depressão moderada", "sublabel": "Apgar 5", "emoji": "<i class="fa fa"></i>", "values": {"fc": 2, "respiracao": 1, "tono": 1, "irritabilidade": 1, "cor": 0}}, {"label": "Depressão grave", "sublabel": "Apgar 2", "emoji": "<i class="fa fa"></i>", "values": {"fc": 1, "respiracao": 0, "tono": 0, "irritabilidade": 0, "cor": 1}}], "quiz": [{"q": "Em quais momentos o Índice de Apgar é avaliado rotineiramente?", "opts": ["Apenas no nascimento", "1º e 5º minuto de vida", "A cada hora no 1º dia", "Somente se houver intercorrência"], "correct": 1, "expl": "O Apgar é avaliado rotineiramente no 1º e no 5º minuto de vida, podendo ser repetido a cada 5 minutos se persistir abaixo de 7."}, {"q": "Um recém-nascido com Apgar 3 no 1º minuto deve receber qual conduta prioritária?", "opts": ["Aguardar reavaliação no 5º minuto", "Reanimação neonatal imediata", "Apenas aquecimento", "Alta da sala de parto"], "correct": 1, "expl": "Escore entre 0-3 indica depressão grave e exige reanimação neonatal imediata, sem esperar pela reavaliação."}, {"q": "O Índice de Apgar deve ser usado isoladamente para prever prognóstico neurológico a longo prazo?", "opts": ["Sim, é o padrão-ouro isolado", "Não, deve ser interpretado junto com outros dados clínicos", "Apenas no 5º minuto", "Apenas em prematuros"], "correct": 1, "expl": "O Apgar isolado não deve ser usado para prever prognóstico neurológico — precisa ser combinado com gasometria de cordão e exame clínico."}]}, "faq": [{"q": "O que fazer se o Apgar de 5 minutos ainda for baixo?", "a": "Continuar reavaliando a cada 5 minutos até 20 minutos de vida, mantendo as manobras de reanimação indicadas e documentando cada escore."}, {"q": "O Apgar substitui a gasometria de cordão umbilical?", "a": "Não. São avaliações complementares. A gasometria de cordão fornece informação objetiva sobre o equilíbrio ácido-base, enquanto o Apgar é uma avaliação clínica rápida da vitalidade."}], "about": {"title": "Como funciona o Índice de Apgar", "html": "<p>O Índice de Apgar avalia 5 sinais do recém-nascido — frequência cardíaca, esforço respiratório, tônus muscular, irritabilidade reflexa e cor da pele — cada um pontuado de 0 a 2. A soma varia de 0 a 10 e é medida no 1º e no 5º minuto de vida.</p><p><strong>Guia rápido:</strong> 7-10 = Normal | 4-6 = Moderadamente deprimido | 0-3 = Gravemente deprimido (reanimação imediata).</p>"}}</script>
-
-<svg style="display:none" aria-hidden="true"><defs>
-  <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v9M7.5 12h9"/></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></symbol>
-  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
-  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13.9A8.5 8.5 0 1 1 10.1 3.5a7 7 0 0 0 10.4 10.4z"/></symbol>
-  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M15 3v4h4"/><line x1="8.5" y1="12" x2="15.5" y2="12"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/><line x1="8.5" y1="8.5" x2="11" y2="8.5"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.8 5.5-5.8s5.5 2.5 5.5 5.8"/><circle cx="17.5" cy="9" r="2.4"/><path d="M15.7 14.5c2.4.3 4.3 2.4 4.3 5"/></symbol>
-  <symbol id="i-trend" viewBox="0 0 24 24"><polyline points="3 17 9.5 10.5 13.5 14.5 21 6.5"/><polyline points="15 6.5 21 6.5 21 12.5"/></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.2c-2-1.6-5-2.1-8-1.6v13.6c3-.5 6 0 8 1.6 2-1.6 5-2.1 8-1.6V4.6c-3-.5-6 0-8 1.6z"/><line x1="12" y1="6.2" x2="12" y2="19.8"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 10.8 15.3 16 9.3"/></symbol>
-  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.5 18.5h5M10.3 21h3.4M12 3.2a6.2 6.2 0 0 0-3.2 11.5c1 .8 1.2 1.6 1.2 2.3h4c0-.7.2-1.5 1.2-2.3A6.2 6.2 0 0 0 12 3.2z"/></symbol>
-  <symbol id="i-clipcheck" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><polyline points="9 13 11 15 15 10.5"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
-  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2.2 4.8 13.5h5.8l-1 8.3 8.4-11.3h-5.8l1-8.3z"/></symbol>
-  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><line x1="8" y1="11" x2="16" y2="7"/><line x1="8" y1="13" x2="16" y2="17"/></symbol>
-  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4z"/></symbol>
-  <symbol id="i-printer" viewBox="0 0 24 24"><rect x="6" y="9" width="12" height="7" rx="1.5"/><path d="M7 9V4.5h10V9"/><path d="M7 16v3.5h10V16"/><circle cx="16" cy="12" r="0.6" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6-4.4-4.2 6-.8z"/></symbol>
-  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3.5l10 17.5H2z"/><line x1="12" y1="10" x2="12" y2="15"/><circle cx="12" cy="17.7" r="0.7" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M10 8.3l6 3.7-6 3.7z" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 4.5 2 9l10 4.5L22 9z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><line x1="22" y1="9" x2="22" y2="15"/></symbol>
-  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></symbol>
-  <symbol id="i-calculator" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="2"/><line x1="8" y1="8.5" x2="16" y2="8.5"/><line x1="8" y1="12" x2="8.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="16" y1="12" x2="16.01" y2="12"/><line x1="8" y1="15.5" x2="8.01" y2="15.5"/><line x1="12" y1="15.5" x2="12.01" y2="15.5"/><line x1="16" y1="15.5" x2="16.01" y2="15.5"/></symbol>
-  <symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/><polyline points="9 12 11 14 15.5 9"/></symbol>
-  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-3L14 9V3"/><line x1="8" y1="15" x2="16" y2="15"/></symbol>
-  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 21c0-9.5 6.5-16 16-16 0 9.5-6.5 16-16 16z"/><path d="M5 21c3.2-3.2 6.3-6.5 9-11"/></symbol>
-  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 2.5c3 2 5 6 5 10.3 0 2-.9 3.9-2 5.2l-3 3-3-3c-1.1-1.3-2-3.2-2-5.2 0-4.3 2-8.3 5-10.3z"/><circle cx="12" cy="11" r="1.8"/><path d="M8 17l-2.5 4.5M16 17l2.5 4.5"/></symbol>
-  <symbol id="i-brain" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="2.5"/><circle cx="9.2" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.8" cy="13.2" r="1.1" fill="currentColor" stroke="none"/><line x1="12" y1="4" x2="12" y2="8"/><circle cx="12" cy="3.4" r="1.2" fill="currentColor" stroke="none"/><line x1="2" y1="12.5" x2="5" y2="12.5"/><line x1="19" y1="12.5" x2="22" y2="12.5"/></symbol>
-  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M6.5 18.5h11a4 4 0 0 0 0-8 6.2 6.2 0 0 0-11.8 1.6A3.6 3.6 0 0 0 6.5 18.5z"/></symbol>
-  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16.5" x2="12" y2="20"/></symbol>
-  <symbol id="i-gauge" viewBox="0 0 24 24"><circle cx="12" cy="12.5" r="8.5"/><line x1="12" y1="12.5" x2="15.5" y2="9"/><circle cx="12" cy="12.5" r="1" fill="currentColor" stroke="none"/><line x1="12" y1="4.3" x2="12" y2="5.8"/></symbol>
-  <symbol id="i-sliders" viewBox="0 0 24 24"><line x1="6" y1="4" x2="6" y2="20"/><circle cx="6" cy="9.5" r="2" fill="#fff"/><line x1="12" y1="4" x2="12" y2="20"/><circle cx="12" cy="15.5" r="2" fill="#fff"/><line x1="18" y1="4" x2="18" y2="20"/><circle cx="18" cy="7.5" r="2" fill="#fff"/></symbol>
-  <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4.3" r="1.8" fill="currentColor" stroke="none"/><path d="M4.5 9h15M12 9v5.5l-4.2 7.2M12 13.8l4.2 6.9"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8.2-7 9.2-4-1-7-4.2-7-9.2V6l7-3z"/></symbol>
-  <symbol id="i-cookie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="8.5" r="1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="9.5" cy="15" r="1" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="13" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><line x1="8.5" y1="11.5" x2="15.5" y2="11.5"/><line x1="8.5" y1="15.5" x2="15.5" y2="15.5"/></symbol>
-  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12.5M7 11.5l5 5 5-5"/><line x1="5" y1="20.5" x2="19" y2="20.5"/></symbol>
-  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21.5 4v6h-6"/><path d="M2.5 20v-6h6"/><path d="M4 10a8 8 0 0 1 13.4-3.6L21.5 10"/><path d="M20 14a8 8 0 0 1-13.4 3.6L2.5 14"/></symbol>
-  <symbol id="i-pulse" viewBox="0 0 24 24"><polyline points="2.5 13 7.5 13 9.5 6 13.5 19 16 13 21.5 13"/></symbol>
-  <symbol id="i-headphone" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></symbol>
-  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14a8 8 0 0 1 16 0v4"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M20 18a3 3 0 0 1-3 3h-2"/></symbol>
-  <symbol id="i-handshake" viewBox="0 0 24 24"><path d="M2 12l4-3 3 2 3-2 3 2 3-2 4 3"/><path d="M7 11l3 6M14 11l-3 6"/></symbol>
-  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="10" height="18" rx="1"/><rect x="14" y="9" width="6" height="12" rx="1"/><line x1="7" y1="7" x2="7.01" y2="7"/><line x1="11" y1="7" x2="11.01" y2="7"/><line x1="7" y1="11" x2="7.01" y2="11"/><line x1="11" y1="11" x2="11.01" y2="11"/><line x1="7" y1="15" x2="7.01" y2="15"/><line x1="11" y1="15" x2="11.01" y2="15"/></symbol>
-  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/></symbol>
-  <symbol id="i-stetho" viewBox="0 0 24 24"><path d="M5 3v5a3 3 0 0 0 6 0V3"/><path d="M8 11v2.5a6 6 0 0 0 12 0v-1.5"/><circle cx="20" cy="10.5" r="2.2"/></symbol>
-  <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2v5M10.5 13.5 6.5 16M13.5 13.5l4 2.5"/></symbol>
-  <symbol id="i-sitemap" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="5" rx="1"/><rect x="2" y="12.5" width="6" height="5" rx="1"/><rect x="16" y="12.5" width="6" height="5" rx="1"/><line x1="12" y1="7.5" x2="12" y2="10"/><line x1="5" y1="12.5" x2="5" y2="10"/><line x1="19" y1="12.5" x2="19" y2="10"/><path d="M5 10h14"/></symbol>
-  <symbol id="i-tags" viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M12.5 2.5l-8 8a2 2 0 0 0 0 2.8l6.2 6.2a2 2 0 0 0 2.8 0l8-8a2 2 0 0 0 .6-1.4V4.5a2 2 0 0 0-2-2z"/><path d="M4.5 10.5l-2 2a2 2 0 0 0 0 2.8l6.2 6.2"/></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
-
-<symbol id="i-clipboard-list" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></symbol>
-  <symbol id="i-comments" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
-  <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></symbol>
-  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-2-2-4-2-4s2 4 2 6a6 6 0 0 1-12 0c0-4 4-6 4-10z"/></symbol>
-  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></symbol>
-  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 12l9 5 9-5"/></symbol>
-  <symbol id="i-pills" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(45 12 12)"/><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/></symbol>
-  <symbol id="i-syringe" viewBox="0 0 24 24"><path d="M18 2l4 4-2 2-4-4z"/><path d="M14 6l4 4-8 8H6v-4z"/><path d="M6 18l-2 2"/><path d="M10 10l4 4"/></symbol>
-  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></symbol>
-  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></symbol>
-  <symbol id="i-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></symbol>
-</defs></svg>
-
-<div id="site-footer"></div>
-<div id="site-cookie"></div>
-
-<script src="js/calc-engine-v2.js"></script>
-<script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-      <script>
-  // Revelar Raciocinio Clinico (steps 3-6) apos calcular
-  (function() {
-    var form = document.getElementById("calcForm");
-    if (!form) return;
-    var flowDivider = document.getElementById("calcFlowDivider");
-    var clinicalFlow = document.getElementById("calcClinicalFlow");
-    var nandaText = document.getElementById("calcNandaText");
-    var nicText = document.getElementById("calcNicText");
-    var nocText = document.getElementById("calcNocText");
-    form.addEventListener("submit", function() {
-      if (!clinicalFlow) return;
-      // Ler resultado do APGAR
-      var resultEl = document.getElementById("calcResultValue");
-      var score = resultEl ? parseInt(resultEl.textContent, 10) : 10;
-      if (nandaText) nandaText.textContent = score >= 7
-        ? "Padrão respiratório ineficaz (00032) — risco baixo. Manter observação."
-        : "Padrão respiratório ineficaz (00032) — risco de comprometimento da ventilação.";
-      if (nicText) nicText.textContent = "Cuidados ao recém-nascido: imediatos (NIC 3250) e reanimação neonatal (NIC 3254).";
-      if (nocText) nocText.textContent = "Status respiratório do recém-nascido (NOC 0413) e adaptação à vida extrauterina (NOC 0415).";
-      if (flowDivider) flowDivider.style.display = "block";
-      clinicalFlow.classList.add("is-visible");
-      window.requestAnimationFrame(function() {
-        clinicalFlow.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-  })();
-</script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-
-<!-- ═══ Print Template (Relatório de Resultado) ═══ -->
-<div class="print" style="display:none;" id="printTemplate">
-  <div class="print">
-    <div class="print">
-      <h1 id="printToolName">Calculadora</h1>
-      <p class="subtitle" id="printToolCategory">Escala clínica</p>
-      <span class="badge">✓ Validada clinicamente</span>
-    </div>
-    <div class="print">
-      <div class="report" id="printDate"></div>
-      <div>calculadorasdeenfermagem.com.br</div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">2</span> Dados do Paciente</div>
-    <div class="print-">
-      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
-      <div><div class="label">Registro / Prontuário</div><div class="value" id="printPatientReg">—</div></div>
-      <div><div class="label">年齢</div><div class="value" id="printPatientAge">—</div></div>
-      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">3</span> Parâmetros Inseridos</div>
-    <ul class="print" id="printParamsList"></ul>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">4</span> Classificação e Interpretação</div>
-    <div class="print">
-      <div class="score" id="printScore">—</div>
-      <div class="label" id="printClassification">—</div>
-    </div>
-    <div class="print" id="printInterpretation"></div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">5</span> Metas Internacionais de Segurança</div>
-    <div class="print-">
-      <div class="print">
-        <h4>Metas de Segurança do Paciente</h4>
-        <ul>
-          <li>M1 Identificar o paciente corretamente</li>
-          <li>M2 Melhorar a comunicação efetiva</li>
-          <li>M3 Segurança na prescrição e administração</li>
-          <li>M5 Higiene das mãos</li>
-          <li>M6 Reduzir o risco de quedas</li>
-        </ul>
-      </div>
-      <div class="print">
-        <h4>9 Certos da Medicação</h4>
-        <ul>
-          <li>Paciente certo</li><li>Medicamento certo</li>
-          <li>Via certa</li><li>Hora certa</li>
-          <li>Dose certa</li><li>Registro certo</li>
-          <li>Ação certa</li><li>Forma certa</li>
-          <li>Resposta certa</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="print">
-    <div class="print"><span class="section-head">6</span> Referência</div>
-    <div class="print" id="printReference">Documento gerado automaticamente.</div>
-  </div>
-
-  <div class="print">
-    <div class="print">
-      <div>Enf. Responsável: _________________</div>
-      <div class="coren">COREN: _______</div>
-    </div>
-    <div class="print">
-      <div class="url">calculadorasdeenfermagem.com.br</div>
-      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
-    </div>
-  </div>
-</div>
-
-<script>
-// Populate print template from page data
-function populatePrintTemplate() {
-  if (toolName) document.getElementById('printToolName').textContent = toolName.textContent.trim();
-  
-  var toolCat = document.querySelector('.tool-header .subtitle, .tool-category');
-  if (toolCat) document.getElementById('printToolCategory').textContent = toolCat.textContent.trim();
-  
-  // Date
-  var now = new Date();
-  var dateStr = now.toLocaleDateString('pt-BR') + ' - ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
-  var dateEl = document.getElementById('printDate');
-  if (dateEl) dateEl.textContent = dateStr;
-  
-  // Patient data from localStorage
-  try {
-    var ctx = JSON.parse(localStorage.getItem('patientContext') || '{}');
-    if (ctx.name) document.getElementById('printPatientName').textContent = ctx.name;
-    if (ctx.reg) document.getElementById('printPatientReg').textContent = ctx.reg;
-    if (ctx.age) document.getElementById('printPatientAge').textContent = ctx.age;
-    if (ctx.bed) document.getElementById('printPatientBed').textContent = ctx.bed;
-  } catch(e) {}
-  
-  // Parameters from calc inputs
-  var paramsList = document.getElementById('printParamsList');
-  if (paramsList) {
-    var inputs = document.querySelectorAll('.calc-card input, .calc-card select, .calc-grid input, .calc-grid select');
-    inputs.forEach(function(inp) {
-      if (inp.value && inp.value !== '') {
-        var label = inp.getAttribute('aria-label') || inp.getAttribute('placeholder') || inp.name || 'Parâmetro';
-        var li = document.createElement('li');
-        li.innerHTML = '<span class="param">' + label + '</span><span class="param">' + inp.value + '</span>';
-        paramsList.appendChild(li);
-      }
-    });
-  }
-  
-  // Score/classification from result
-  var scoreEl = document.querySelector('.result-box .score, .result-value, .calc-result .score');
-  if (scoreEl) document.getElementById('printScore').textContent = scoreEl.textContent.trim();
-  
-  var classEl = document.querySelector('.result-box .classification, .result-label, .calc-result .label');
-  if (classEl) document.getElementById('printClassification').textContent = classEl.textContent.trim();
-  
-  var interpEl = document.querySelector('.result-box .interpretation, .result-text, .calc-result .interpretation');
-  if (interpEl) document.getElementById('printInterpretation').textContent = interpEl.textContent.trim();
-  
-  // Reference
-  var refEl = document.querySelector('.evidence-section .reference, .reference-text, .citation');
-  if (refEl) document.getElementById('printReference').textContent = refEl.textContent.trim();
+/*! BARRA DE PROGRESSO FLUTUANTE */
+#progress-container {
+position: fixed; top: 0; left: 0; width: 100%; height: 6px; background-color: var(--slate-200); z-index: 9999;
+}
+#progress-bar-global {
+height: 100%; background: linear-gradient(90deg, #3B82F6, #1a3e74); width: 0%; transition: width 0.4s ease;
 }
 
-// Show print area when printing
-window.addEventListener('beforeprint', function() {
-  var pt = document.getElementById('printTemplate');
-  if (pt) {
-    pt.style.display = 'block';
-    populatePrintTemplate();
-  }
+/*! CARDS E HEROS */
+.apgar-card { background: white; border-radius: 16px; border: 1px solid var(--slate-200); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); }
+.apgar-card-navy {
+background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, var(--navy-dark) 100%);
+border-radius: 16px; box-shadow: 0 12px 32px rgba(26, 62, 116, 0.4); overflow: hidden; position: relative;
+}
+.apgar-card-navy::before {
+content: ""; position: absolute; top: 0; right: 0; width: 180px; height: 180px; background: white; opacity: 0.05; border-radius: 50%; filter: blur(20px); transform: translate(30%, -30%);
+}
+.apgar-card-navy::after {
+content: ""; position: absolute; bottom: 0; left: 0; width: 140px; height: 140px; background: #4a90e2; opacity: 0.2; border-radius: 50%; filter: blur(15px); transform: translate(-20%, 30%);
+}
+
+/*! INPUTS E SELECTS FORTES */
+.item-card {
+background: white; border-radius: 12px; border: 2px solid var(--slate-200); padding: 18px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); transition: border-color 0.2s, box-shadow 0.2s;
+}
+.item-card:focus-within, .item-card:hover {
+border-color: var(--navy-light); box-shadow: 0 8px 24px rgba(26, 62, 116, 0.15);
+}
+.item-badge {
+font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; background: var(--slate-50); color: var(--navy); border: 1px solid var(--slate-200); white-space: nowrap; transition: all 0.3s;
+}
+.item-select, .input-strong {
+width: 100%; padding: 12px 14px; border-radius: 8px; border: 2px solid var(--slate-200); color: var(--slate-800); background: white; font-size: 13px; font-weight: 600; outline: none; transition: border-color 0.2s, box-shadow 0.2s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+.item-select {
+appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center;
+}
+.item-select:focus, .input-strong:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26, 62, 116, 0.2); }
+
+/*! BARRAS MENORES */
+.mini-bar-wrap { height: 6px; background: var(--slate-200); border-radius: 4px; overflow: hidden; margin-top: 12px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); }
+.mini-bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease, background-color 0.4s ease; background-color: transparent; }
+
+/*! BOTÕES PROFISSIONAIS */
+.btn-primary {
+background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); color: white; border: none; padding: 14px 36px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 6px 18px rgba(26, 62, 116, 0.35); transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(26, 62, 116, 0.4); }
+.btn-secondary {
+background: white; color: var(--slate-600); border: 2px solid var(--slate-200); padding: 14px 28px; border-radius: 12px; font-size: 14px; font-weight: 800; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: background 0.15s, border-color 0.15s;
+}
+.btn-secondary:hover { background: var(--slate-50); border-color: var(--slate-300); }
+.btn-danger {
+background: var(--red); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35); transition: transform 0.15s;
+}
+.btn-danger:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(225, 29, 72, 0.45); }
+
+/*! SEÇÃO DE DADOS */
+.dados-body { display: none; padding: 0 24px 20px; }
+.dados-body.open { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+/*! RESULTADOS E TABELAS */
+.score-big { font-size: 64px; font-weight: 900; line-height: 1; color: white; font-variant-numeric: tabular-nums; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); }
+.status-pill { display: inline-block; padding: 8px 32px; border-radius: 30px; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: white; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+
+.dom-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.dom-table th {
+background: var(--slate-50); color: var(--navy); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 12px 16px; text-align: left; border-bottom: 2px solid var(--slate-200); border-top: 1px solid var(--slate-200);
+}
+.dom-table th:first-child { border-top-left-radius: 8px; border-left: 1px solid var(--slate-200); }
+.dom-table th:last-child { border-top-right-radius: 8px; border-right: 1px solid var(--slate-200); }
+.dom-table td { padding: 12px 16px; border-bottom: 1px solid var(--slate-100); font-size: 13px; font-weight: 500; color: var(--slate-800); }
+.dom-table td:first-child { border-left: 1px solid var(--slate-100); }
+.dom-table td:last-child { border-right: 1px solid var(--slate-100); }
+
+/*! NANDA */
+.nanda-item { background: white; border: 2px solid var(--slate-100); border-radius: 10px; padding: 12px; margin-bottom: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03); transition: border-color 0.2s; }
+.nanda-item:hover { border-color: var(--blue-200); }
+
+#resultado-section { opacity: 0; transition: opacity 0.5s ease; display: none; }
+#resultado-section.visible { opacity: 1; display: block; }
+.grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+@media (max-width: 768px) {
+.grid-2col { grid-template-columns: 1fr; }
+.btn-primary, .btn-secondary, .btn-danger { width: 100%; text-align: center; }
+.score-big { font-size: 48px; }
+}
+
+@media print { 
+.no-print { display: none !important; } 
+}
+</style>
+<style id="otimizador-master-responsive">
+img, video { max-width: 100%; height: auto; }
+iframe { max-width: 100%; }
+.table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+</style>
+<link rel="preload" href="/img/icontopbar1-calculadoras-de-enfermagem.webp" as="image" type="image/webp" fetchpriority="high">
+<style id="anti-cls-placeholders">#global-header-container{display:block;width:100%;min-height:96px;background-color:transparent}@media(max-width:768px){#global-header-container{min-height:60px}}#language-selector-placeholder{display:block;width:100%;min-height:48px;background-color:transparent}#footer-placeholder{display:block;min-height:520px;background-color:transparent}@media(min-width:768px){#footer-placeholder{min-height:277px}}</style>
+<script src="/global-scripts.js" defer></script>
+<script src="/lang-selector.js" defer></script>
+<script id="anti-cls-acessibilidade">
+(function(){try{var f=localStorage.getItem("fontSize");if(f&&f!=="1"){var s=["1em","1.15em","1.3em","1.5em","2em"];var i=Math.min(Math.max(parseInt(f,10),1),s.length);document.documentElement.style.fontSize=s[i-1];}if(localStorage.getItem("darkMode")==="true"){document.documentElement.classList.add("dark-mode");}}catch(e){}})();
+</script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-inter">
+
+<div id="progress-container"><div id="progress-bar-global"></div></div>
+<div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+<div id="global-header-container"></div>
+<div id="language-selector-placeholder"></div>
+
+<main id="main-content" class="flex-grow p-4 sm:p-8">
+
+<nav class="flex text-sm mb-6 no-print" aria-label="Breadcrumb" style="color: #64748b">
+<ol class="flex items-center gap-2">
+<li><a href="/" style="color: #1a3e74; font-weight: 600" class="hover:underline"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="mr-1" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg> 開始</a></li>
+<li style="color: #94a3b8">›</li>
+<li style="color: #1e293b; font-weight: 600">アプガー指数</li>
+</ol>
+</nav>
+
+<section class="mb-6 apgar-card-navy no-print">
+<div class="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-6 md:py-8" style="position: relative; z-index: 1">
+<div class="w-full md:w-2/3 text-center md:text-left">
+<p style="color: #93c5fd; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 6px">新生児評価と活力</p>
+<h1 class="text-3xl md:text-5xl font-black leading-tight mb-3 text-white">アプガー指数</h1>
+<p style="color: #bfdbfe; font-size: 15px; font-weight: 500">生後1分と5分における新生児の身体的状態と活力を迅速に評価します。</p>
+</div>
+
+</div>
+</section>
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+<div class="lg:col-span-8 space-y-6">
+
+<div class="apgar-card mb-2 no-print" style="overflow: hidden; border: 2px solid #cbd5e1;">
+<button id="btnToggleDados" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: white; border: none; cursor: pointer; transition: background 0.15s" onmouseover="this.style.background='#EFF6FF'" onmouseout="this.style.background=document.getElementById('dadosBody').classList.contains('open')?'#EFF6FF':'white'">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 38px; height: 38px; border-radius: 8px; background: var(--navy); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 8px rgba(26,62,116,0.3);">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="color: white; font-size: 16px" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l293.1 0c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1l-91.4 0zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"/></svg>
+</div>
+<div style="text-align: left">
+<p style="font-size: 15px; font-weight: 800; color: var(--navy); margin: 0">新生児データ</p>
+<p id="dadosSubtitle" style="font-size: 12px; font-weight: 500; color: #64748b; margin: 0">カルテ/PDFレポートに入力</p>
+</div>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="dadosChevron" style="color: var(--navy); transition: transform 0.2s" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
+</button>
+<div id="dadosBody" class="dados-body">
+<div class="grid-2col" style="margin-top: 8px">
+<div>
+<label style="display: block; font-size: 12px; font-weight: 800; color: var(--slate-600); margin-bottom: 6px; text-transform: uppercase;">新生児名（または母親名）</label>
+<input type="text" id="pacNome" placeholder="Nome completo" class="input-strong" />
+</div>
+<div>
+<label style="display: block; font-size: 12px; font-weight: 800; color: var(--slate-600); margin-bottom: 6px; text-transform: uppercase;">評価時間</label>
+<select id="pacMinuto" class="item-select">
+<option value="1º Minuto">1分</option>
+<option value="5º Minuto" selected>5分</option>
+<option value="10º Minuto">10分（必要な場合）</option>
+</select>
+</div>
+<div>
+<label style="display: block; font-size: 12px; font-weight: 800; color: var(--slate-600); margin-bottom: 6px; text-transform: uppercase;">分娩日時</label>
+<input type="datetime-local" id="pacData" class="input-strong" />
+</div>
+<div>
+<label style="display: block; font-size: 12px; font-weight: 800; color: var(--slate-600); margin-bottom: 6px; text-transform: uppercase;">評価者 / COREN</label>
+<input type="text" id="pacProfissional" placeholder="Nome e registro" class="input-strong" />
+</div>
+</div>
+</div>
+</div>
+
+<div class="p-6 bg-white rounded-2xl shadow-xl border-2 border-gray-200 no-print">
+<div class="mb-6 pb-4 border-b-2 border-slate-200 flex justify-between items-center">
+<h2 class="text-lg md:text-xl font-black text-navy m-0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="mr-2" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32l288 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg> 評価基準</h2>
+<div class="bg-blue-50 px-3 py-1.5 rounded-lg border-2 border-blue-200 text-xs font-bold text-navy shadow-sm">
+入力済み: <span id="contadorPreenchidos" class="text-blue-600">0</span>/5
+</div>
+</div>
+
+<form id="apgarForm" class="grid grid-cols-1 md:grid-cols-2 gap-5" onsubmit="return false;">
+<!-- CARDS JS INJETADOS AQUI -->
+</form>
+
+<div class="mt-8 pt-6 border-t-2 border-slate-200 flex flex-col sm:flex-row gap-4 justify-center">
+<button type="button" id="btnCalcular" class="btn-primary flex-1 max-w-sm flex justify-center items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-384c0-35.3-28.7-64-64-64L64 0zM96 64l192 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32L96 160c-17.7 0-32-14.3-32-32l0-32c0-17.7 14.3-32 32-32zm32 160a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zM96 352a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM64 416c0-17.7 14.3-32 32-32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-96 0c-17.7 0-32-14.3-32-32zM192 256a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm32 64a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zm64-64a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm32 64a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zM288 448a32 32 0 1 1 0-64 32 32 0 1 1 0 64z"/></svg> アプガー計算
+</button>
+<button type="button" id="btnLimpar" class="btn-secondary flex items-center justify-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7L288 480l9.4 0L512 480c17.7 0 32-14.3 32-32s-14.3-32-32-32l-124.1 0L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416l-9.4 0-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/></svg> クリア
+</button>
+</div>
+</div>
+
+<div id="resultado-section">
+
+<div class="apgar-card-navy p-8 md:p-10 mb-6 text-center">
+<div style="position: relative; z-index: 1">
+<p class="text-blue-200 text-xs font-bold uppercase tracking-widest mb-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M192 0c-41.8 0-77.4 26.7-90.5 64L64 64C28.7 64 0 92.7 0 128L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64l-37.5 0C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM305 273L177 401c-9.4 9.4-24.6 9.4-33.9 0L79 337c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L271 239c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg> アプガースコア最終結果</p>
+
+<div class="flex items-end justify-center gap-3 mb-2">
+<span id="scoreValor" class="score-big">0</span>
+<span class="text-2xl font-bold text-blue-200 mb-3">/ 10</span>
+</div>
+
+<div id="statusPill" class="status-pill mb-6">良好な活力</div>
+
+<div class="bg-white/10 border border-white/20 rounded-xl p-5 text-left max-w-2xl mx-auto backdrop-blur-sm shadow-lg">
+<p id="resultadoMensagem" class="text-white text-[15px] font-medium leading-relaxed m-0 text-center"></p>
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-1 gap-6 mb-6">
+
+<div class="apgar-card overflow-hidden border-2 border-slate-300 shadow-md">
+<div class="p-4 md:p-5 border-b-2 border-slate-300 bg-slate-50 flex items-center gap-3">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-navy text-lg" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm64 0l0 64 64 0 0-64L64 96zm384 0L192 96l0 64 256 0 0-64zM64 224l0 64 64 0 0-64-64 0zm384 0l-256 0 0 64 256 0 0-64zM64 352l0 64 64 0 0-64-64 0zm384 0l-256 0 0 64 256 0 0-64z"/></svg>
+<h4 class="text-sm md:text-base font-bold text-navy m-0 uppercase tracking-wide">評価メモリ</h4>
+</div>
+<div class="overflow-x-auto">
+<table class="dom-table">
+<thead>
+<tr>
+<th style="width: 40%">基準（サイン）</th>
+<th class="text-center" style="width: 15%">得点</th>
+<th class="text-center" style="width: 15%">最大</th>
+<th style="width: 30%">基準の重症度</th>
+</tr>
+</thead>
+<tbody id="tabelaDominios"></tbody>
+<tfoot>
+<tr>
+<td>合計スコア</td>
+<td id="somaObtida" class="text-center text-lg font-black">0</td>
+<td class="text-center text-slate-500">10</td>
+<td class="text-right"></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+
+<div class="apgar-card overflow-hidden border-2 border-slate-300 shadow-md">
+<div class="p-4 md:p-5 border-b-2 border-blue-200 bg-blue-50/80 flex items-center gap-3">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="text-navy text-lg" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M142.4 21.9c5.6 16.8-3.5 34.9-20.2 40.5L96 71.1 96 192c0 53 43 96 96 96s96-43 96-96l0-120.9-26.1-8.7c-16.8-5.6-25.8-23.7-20.2-40.5s23.7-25.8 40.5-20.2l26.1 8.7C334.4 19.1 352 43.5 352 71.1L352 192c0 77.2-54.6 141.6-127.3 156.7C231 404.6 278.4 448 336 448c61.9 0 112-50.1 112-112l0-70.7c-28.3-12.3-48-40.5-48-73.3c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3l0 70.7c0 97.2-78.8 176-176 176c-92.9 0-168.9-71.9-175.5-163.1C87.2 334.2 32 269.6 32 192L32 71.1c0-27.5 17.6-52 43.8-60.7l26.1-8.7c16.8-5.6 34.9 3.5 40.5 20.2zM480 224a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg>
+<div>
+<h4 class="text-sm md:text-base font-bold text-navy m-0 uppercase tracking-wide">NANDA看護診断（上位6件）</h4>
+<p class="text-[11px] font-bold text-slate-500 m-0 mt-0.5">新生児学と子宮外適応に焦点を当てたクロスリファレンス。</p>
+</div>
+</div>
+<div class="p-5 bg-white">
+<ul id="lista-nanda" class="space-y-0"></ul>
+</div>
+</div>
+
+</div>
+
+<!-- Botões PDF -->
+<div class="flex flex-col sm:flex-row gap-4 justify-center no-print mt-8 pt-6 border-t-2 border-slate-200">
+<button id="btnGerarPDF" class="btn-danger flex items-center justify-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 144-208 0c-35.3 0-64 28.7-64 64l0 144-48 0c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"/></svg> カルテPDF保存
+</button>
+<button id="btnImprimir" class="btn-secondary flex items-center justify-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M128 0C92.7 0 64 28.7 64 64l0 96 64 0 0-96 226.7 0L384 93.3l0 66.7 64 0 0-66.7c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0L128 0zM384 352l0 32 0 64-256 0 0-64 0-16 0-16 256 0zm64 32l32 0c17.7 0 32-14.3 32-32l0-96c0-35.3-28.7-64-64-64L64 192c-35.3 0-64 28.7-64 64l0 96c0 17.7 14.3 32 32 32l32 0 0 64c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-64zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg> レポート印刷
+</button>
+</div>
+
+</div>
+</div>
+
+<aside class="lg:col-span-4 space-y-6 no-print hidden lg:block">
+
+<div class="apgar-card p-6 bg-white border-2 border-slate-200 shadow-md lg:sticky lg:top-6">
+<h3 class="text-[15px] font-black text-navy mb-5 border-b-2 border-slate-200 pb-3 flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="text-blue-500" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg> 関連スケール
+</h3>
+<ul class="space-y-3">
+<li>
+<a href="capurro.html" class="flex items-start gap-3 p-3 rounded-xl border-2 border-slate-200 hover:bg-blue-50 hover:border-blue-300 transition-all group shadow-sm">
+<div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="text-slate-500 group-hover:text-blue-600 text-lg" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M256 192L.1 192C2.7 117.9 41.3 52.9 99 14.1c13.3-8.9 30.8-4.3 39.9 8.8L256 192zm128-32c0-35.3 28.7-64 64-64l32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32 0 0 64c0 25.2-5.8 50.2-17 73.5s-27.8 44.5-48.6 62.3s-45.5 32-72.7 41.6S253.4 416 224 416s-58.5-5-85.7-14.6s-51.9-23.8-72.7-41.6s-37.3-39-48.6-62.3S0 249.2 0 224l224 0 160 0 0-64zM80 416a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm240 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0z"/></svg>
+</div>
+<div>
+<h4 class="text-[13px] font-bold text-slate-800 group-hover:text-navy m-0 leading-tight mb-1">カプーロ法</h4>
+<p class="text-[11px] font-medium text-slate-500 m-0 leading-snug">在胎週数の推定。</p>
+</div>
+</a>
+</li>
+<li>
+<a href="ballard.html" class="flex items-start gap-3 p-3 rounded-xl border-2 border-slate-200 hover:bg-blue-50 hover:border-blue-300 transition-all group shadow-sm">
+<div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="text-slate-500 group-hover:text-blue-600 text-lg" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M152 88a72 72 0 1 1 144 0A72 72 0 1 1 152 88zM39.7 144.5c13-17.9 38-21.8 55.9-8.8L131.8 162c26.8 19.5 59.1 30 92.2 30s65.4-10.5 92.2-30l36.2-26.4c17.9-13 42.9-9 55.9 8.8s9 42.9-8.8 55.9l-36.2 26.4c-13.6 9.9-28.1 18.2-43.3 25l0 36.3-192 0 0-36.3c-15.2-6.7-29.7-15.1-43.3-25L48.5 200.3c-17.9-13-21.8-38-8.8-55.9zm89.8 184.8l60.6 53-26 37.2 24.3 24.3c15.6 15.6 15.6 40.9 0 56.6s-40.9 15.6-56.6 0l-48-48C70 438.6 68.1 417 79.2 401.1l50.2-71.8zm128.5 53l60.6-53 50.2 71.8c11.1 15.9 9.2 37.5-4.5 51.2l-48 48c-15.6 15.6-40.9 15.6-56.6 0s-15.6-40.9 0-56.6L284 419.4l-26-37.2z"/></svg>
+</div>
+<div>
+<h4 class="text-[13px] font-bold text-slate-800 group-hover:text-navy m-0 leading-tight mb-1">バラードスケール</h4>
+<p class="text-[11px] font-medium text-slate-500 m-0 leading-snug">新生児の神経筋成熟度。</p>
+</div>
+</a>
+</li>
+<li>
+<a href="silverman.html" class="flex items-start gap-3 p-3 rounded-xl border-2 border-slate-200 hover:bg-blue-50 hover:border-blue-300 transition-all group shadow-sm">
+<div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="text-slate-500 group-hover:text-blue-600 text-lg" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M320 0c17.7 0 32 14.3 32 32l0 132.1c0 16.4 8.4 31.7 22.2 40.5l9.8 6.2 0-45.5C384 127 415 96 453.3 96c21.7 0 42.8 10.2 55.8 28.8c15.4 22.1 44.3 65.4 71 116.9c26.5 50.9 52.4 112.5 59.6 170.3c.2 1.3 .2 2.6 .2 4l0 7c0 49.1-39.8 89-89 89c-7.3 0-14.5-.9-21.6-2.7l-72.7-18.2C414 480.5 384 442.1 384 398l0-73 90.5 57.6c7.5 4.7 17.3 2.5 22.1-4.9s2.5-17.3-4.9-22.1L384 287.1l0-.4-44.1-28.1c-7.3-4.6-13.9-10.1-19.9-16.1c-5.9 6-12.6 11.5-19.9 16.1L256 286.7 161.2 347l-13.5 8.6c0 0 0 0-.1 0c-7.4 4.8-9.6 14.6-4.8 22.1c4.7 7.5 14.6 9.7 22.1 4.9l91.1-58 0 73.4c0 44.1-30 82.5-72.7 93.1l-72.7 18.2c-7.1 1.8-14.3 2.7-21.6 2.7c-49.1 0-89-39.8-89-89l0-7c0-1.3 .1-2.7 .2-4c7.2-57.9 33.1-119.4 59.6-170.3c26.8-51.5 55.6-94.8 71-116.9c13-18.6 34-28.8 55.8-28.8C225 96 256 127 256 165.3l0 45.5 9.8-6.2c13.8-8.8 22.2-24.1 22.2-40.5L288 32c0-17.7 14.3-32 32-32z"/></svg>
+</div>
+<div>
+<h4 class="text-[13px] font-bold text-slate-800 group-hover:text-navy m-0 leading-tight mb-1">シルバーマン・アンダーソン</h4>
+<p class="text-[11px] font-medium text-slate-500 m-0 leading-snug">新生児の呼吸窮迫。</p>
+</div>
+</a>
+</li>
+</ul>
+</div>
+
+<div class="bg-slate-50 rounded-xl p-5 border-2 border-slate-300 shadow-sm">
+<h3 class="text-xs font-black text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="text-slate-500" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M96 0C43 0 0 43 0 96L0 416c0 53 43 96 96 96l288 0 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-64c17.7 0 32-14.3 32-32l0-320c0-17.7-14.3-32-32-32L384 0 96 0zm0 384l256 0 0 64L96 448c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16l192 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-192 0c-8.8 0-16-7.2-16-16zm16 48l192 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-192 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg> 参考文献
+</h3>
+<ul class="text-[11px] font-medium text-slate-600 leading-relaxed m-0 text-justify space-y-2 list-none p-0">
+<li>APGAR, Virginia. A proposal for a new method of evaluation of the newborn infant. <strong>Current Researches in Anesthesia & Analgesia</strong>, v. 32, n. 4, p. 260-267, 1953. Available at: <a href="https://journals.lww.com/anesthesia-analgesia/Citation/1953/07000/A_Proposal_for_a_New_Method_of_Evaluation_of_the.4.aspx" target="_blank" class="text-blue-600 hover:underline">LWW Journals</a>.</li>
+</ul>
+</div>
+
+</aside>
+</div>
+</main>
+
+<script>
+(function () {
+"use strict";
+
+// ESTRUTURA DE DADOS APGAR
+const ITENS_APGAR = [
+{ id: "fc", label: "1. 心拍数", max: 2, desc: "心拍の測定（聴診器または臍帯）。",
+opts: [{val: -1, text: "Selecione..."}, {val: 0, text: "なし（0点）"}, {val: 1, text: "< 100 bpm（1点）"}, {val: 2, text: "≥ 100 bpm（2点）"}] },
+{ id: "resp", label: "2. 呼吸努力", max: 2, desc: "泣き声と呼吸の評価。",
+opts: [{val: -1, text: "Selecione..."}, {val: 0, text: "なし（0点）"}, {val: 1, text: "遅いまたは不規則（1点）"}, {val: 2, text: "力強い泣き声（2点）"}] },
+{ id: "tonus", label: "3. 筋緊張", max: 2, desc: "四肢の屈曲の程度。",
+opts: [{val: -1, text: "Selecione..."}, {val: 0, text: "弛緩（0点）"}, {val: 1, text: "四肢のわずかな屈曲（1点）"}, {val: 2, text: "活発な動き/良好な屈曲（2点）"}] },
+{ id: "reflexo", label: "4. 反射刺激応答", max: 2, desc: "刺激（カテーテルまたは足底を叩く）への反応。",
+opts: [{val: -1, text: "Selecione..."}, {val: 0, text: "なし（0点）"}, {val: 1, text: "しかめ面または弱い泣き声（1点）"}, {val: 2, text: "強い泣き声、咳、くしゃみ（2点）"}] },
+{ id: "cor", label: "5. 皮膚の色", max: 2, desc: "チアノーゼと灌流の評価。",
+opts: [{val: -1, text: "Selecione..."}, {val: 0, text: "中枢性チアノーゼまたは全身蒼白（0点）"}, {val: 1, text: "体はピンク色、四肢にチアノーゼ（1点）"}, {val: 2, text: "完全にピンク色（2点）"}] }
+];
+
+function renderizarForm() {
+const container = document.getElementById("apgarForm");
+container.innerHTML = "";
+
+ITENS_APGAR.forEach(item => {
+let optsHtml = item.opts.map(op => `<option value="${op.val}" ${op.val === -1 ? 'disabled selected' : ''}>${op.text}</option>`).join('');
+const div = document.createElement("div");
+div.className = "item-card";
+div.innerHTML = `
+<div class="flex items-center justify-between mb-2">
+<label for="${item.id}" class="text-[13px] font-black text-slate-800">${item.label}</label>
+<span id="badge_${item.id}" class="item-badge">--/${item.max}</span>
+</div>
+<p class="text-[11px] font-medium text-slate-500 mb-3 leading-snug h-8">${item.desc}</p>
+<select id="${item.id}" class="item-select">${optsHtml}</select>
+<div class="mini-bar-wrap">
+<div id="bar_${item.id}" class="mini-bar-fill" style="width: 0%; background-color: transparent;"></div>
+</div>
+`;
+container.appendChild(div);
+document.getElementById(item.id).addEventListener("change", () => atualizarCard(item.id));
+});
+}
+
+function atualizarCard(id) {
+const select = document.getElementById(id);
+const val = parseInt(select.value);
+if (isNaN(val) || val === -1) return;
+
+const max = ITENS_APGAR.find(i => i.id === id).max;
+let pct = (val / max) * 100;
+
+const badge = document.getElementById(`badge_${id}`);
+const bar = document.getElementById(`bar_${id}`);
+
+badge.textContent = `${val}/${max}`;
+bar.style.width = val === 0 ? "100%" : `${pct}%`; 
+
+if (val === 2) {
+bar.style.backgroundColor = "var(--green)"; badge.style.color = "var(--green)"; badge.style.borderColor = "var(--green)"; badge.style.background = "#ecfdf5";
+} else if (val === 1) {
+bar.style.backgroundColor = "var(--orange)"; badge.style.color = "var(--orange)"; badge.style.borderColor = "var(--orange)"; badge.style.background = "#fff7ed";
+} else {
+bar.style.backgroundColor = "var(--red)"; badge.style.color = "var(--red)"; badge.style.borderColor = "var(--red)"; badge.style.background = "#fff1f2";
+}
+atualizarGlobais();
+}
+
+function atualizarGlobais() {
+let preenchidos = 0;
+ITENS_APGAR.forEach(i => { if (parseInt(document.getElementById(i.id).value) !== -1 && !isNaN(parseInt(document.getElementById(i.id).value))) preenchidos++; });
+document.getElementById("progress-bar-global").style.width = `${(preenchidos / 5) * 100}%`;
+document.getElementById("contadorPreenchidos").textContent = preenchidos;
+}
+
+document.getElementById("btnToggleDados").addEventListener("click", function() {
+const body = document.getElementById("dadosBody");
+const chevron = document.getElementById("dadosChevron");
+body.classList.toggle("open");
+chevron.style.transform = body.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
+this.style.background = body.classList.contains("open") ? "#EFF6FF" : "white";
 });
 
-window.addEventListener('afterprint', function() {
-  var pt = document.getElementById('printTemplate');
-  if (pt) pt.style.display = 'none';
+// --- CALCULAR APGAR ---
+const resSection = document.getElementById("resultado-section");
+let calcScore = 0;
+let calcClass = "";
+let calcConduta = "";
+
+function calcular() {
+let incompleto = false;
+let somaScore = 0;
+const vals = {};
+
+ITENS_APGAR.forEach(i => {
+let val = parseInt(document.getElementById(i.id).value);
+if (isNaN(val) || val === -1) incompleto = true;
+somaScore += val;
+vals[i.id] = val;
 });
+
+if (incompleto) {
+alert("アプガースコアを算出するには、5つのバイタルサインすべてを入力してください。");
+return;
+}
+
+calcScore = somaScore;
+let bg = "";
+
+if (calcScore >= 8) { 
+calcClass = "良好な活力（正常）"; bg = "var(--green)"; 
+calcConduta = "仮死のない新生児。ルーチンケア（臍帯クランプ、保温、肌と肌の接触）を進めてください。";
+} else if (calcScore >= 4) { 
+calcClass = "中等度仮死"; bg = "var(--orange)";
+calcConduta = "サポートが必要。気道確保、保温、触覚刺激、および必要に応じてPPV（陽圧換気）を維持してください。";
+} else { 
+calcClass = "重度仮死"; bg = "var(--red)";
+calcConduta = "新生児緊急事態。直ちに新生児心肺蘇生プロトコル（PPV、胸骨圧迫、必要に応じて薬剤）を開始してください。";
+}
+
+document.getElementById("scoreValor").textContent = calcScore;
+
+const pill = document.getElementById("statusPill");
+const msg = document.getElementById("resultadoMensagem");
+
+pill.textContent = calcClass;
+pill.style.backgroundColor = bg;
+
+msg.innerHTML = `新生児のアプガースコアは <strong>${calcScore}点</strong>で、<strong>${calcClass}</strong>を示唆しています。<br><br><strong>対応:</strong> ${calcConduta}`;
+document.getElementById("somaObtida").textContent = calcScore;
+document.getElementById("somaObtida").style.color = bg;
+
+// Memoria Tabela
+const tbody = document.getElementById("tabelaDominios");
+tbody.innerHTML = "";
+ITENS_APGAR.forEach(i => {
+let v = vals[i.id];
+let color = "var(--green)";
+if (v === 1) color = "var(--orange)";
+if (v === 0) color = "var(--red)";
+
+let pct = v === 0 ? 100 : Math.round((v / i.max) * 100);
+
+let tr = document.createElement("tr");
+tr.innerHTML = `
+<td class="font-bold text-slate-700">${i.label}</td>
+<td class="text-center font-black" style="color:${color}">${v}</td>
+<td class="text-center font-bold text-slate-500">${i.max}</td>
+<td>
+<div style="display:flex;align-items:center;gap:8px;">
+<div style="flex:1;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;">
+<div style="width:${pct}%;height:100%;background:${color};border-radius:4px;"></div>
+</div>
+</div>
+</td>
+`;
+tbody.appendChild(tr);
+});
+
+resSection.classList.add("visible");
+setTimeout(() => resSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+
+chamarNanda(calcScore, vals);
+}
+
+// --- NANDA API (Neonatal) ---
+async function chamarNanda(score, vals) {
+const lista = document.getElementById("lista-nanda");
+if (score >= 8) {
+lista.innerHTML = '<li class="text-xs font-bold text-slate-500 text-center py-4"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="text-green-500 text-xl block mb-2" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>活力良好な新生児。維持看護診断に焦点：効果的な母乳育児、快適さの向上の準備状態。</li>';
+return;
+}
+
+lista.innerHTML = '<li class="text-sm font-bold text-slate-500 text-center py-6"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fa-spin mr-2" fill="currentColor" width="1em" height="1em" aria-hidden="true"><path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/></svg> 新生児臨床推論を処理中...</li>';
+try {
+const response = await fetch('/banco_nanda_en.json');
+if (!response.ok) throw new Error("Erro");
+const banco = await response.json();
+
+let keywords = ['newborn', 'baby', 'neonate', 'asphyxia', 'thermoregulation'];
+if (vals.resp < 2) keywords.push('breathing', 'troca de gases', 'ventilation', 'airway', 'aspiração');
+if (vals.fc < 2 || vals.cor < 2) keywords.push('cardiac output', 'perfusão tissular', 'shock');
+
+let excludeWords = ['adult', 'elderly', 'pregnant', 'maternal', 'aging', 'parenting', 'parents'];
+
+let pontuados = banco.map(diag => {
+let matchScore = 0;
+let text = (diag.diagnostico + " " + diag.definicao).toLowerCase();
+
+let hasExclude = excludeWords.some(ew => text.includes(ew));
+if (hasExclude) return { ...diag, matchScore: 0 }; 
+
+keywords.forEach(kw => { if (text.includes(kw)) matchScore++; });
+return { ...diag, matchScore: matchScore };
+}).filter(d => d.matchScore > 0);
+
+pontuados.sort((a, b) => b.matchScore - a.matchScore);
+const top6 = pontuados.slice(0, 6);
+
+if (top6.length === 0) {
+lista.innerHTML = '<li class="text-xs font-bold text-slate-500 text-center py-4">要約データベースに直接の診断は見つかりませんでした。</li>';
+return;
+}
+
+lista.innerHTML = '';
+top6.forEach(d => {
+lista.innerHTML += `<li class="nanda-item flex items-start gap-3"><span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-1 rounded shadow-sm mt-0.5">${d.codigo}</span><div><h5 class="text-[13px] font-bold text-slate-800 leading-tight mb-1">${d.diagnostico}</h5><p class="text-[11px] font-medium text-slate-500 m-0">${d.definicao}</p></div></li>`;
+});
+} catch (e) {
+lista.innerHTML = '<li class="text-xs font-bold text-red-500 text-center py-4">NANDAデータベースが利用できません。</li>';
+}
+}
+
+function limpar() {
+ITENS_APGAR.forEach(i => {
+let el = document.getElementById(i.id);
+el.selectedIndex = 0;
+document.getElementById(`badge_${i.id}`).textContent = `--/${i.max}`;
+document.getElementById(`badge_${i.id}`).style = "";
+document.getElementById(`bar_${i.id}`).style.width = "0%";
+});
+document.getElementById('pacNome').value = '';
+document.getElementById('pacMinuto').selectedIndex = 1;
+document.getElementById('pacData').value = '';
+document.getElementById('pacProfissional').value = '';
+atualizarGlobais();
+resSection.classList.remove("visible");
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// --- IMPRESSAO / PDF JS ---
+function gerarPDF() {
+if(typeof window.jspdf === 'undefined') { alert("PDFの読み込みをお待ちください。"); return; }
+
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+const navy = [26, 62, 116];
+const slate = [100, 116, 139];
+const slateLight = [241, 245, 249];
+const W = 210, marginL = 18, marginR = 18, usable = W - marginL - marginR;
+
+// Cabecalho
+doc.setFillColor(...navy);
+doc.rect(0, 0, W, 32, "F");
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(14);
+doc.text("アプガースコア", marginL, 13);
+doc.setFontSize(9);
+doc.setFont("helvetica", "normal");
+doc.text("新生児活力評価 - 看護計算機", marginL, 20);
+
+const nome = document.getElementById("pacNome").value.trim();
+const minuto = document.getElementById("pacMinuto").value;
+const dataHora = document.getElementById("pacData").value;
+const prof = document.getElementById("pacProfissional").value.trim();
+const dataFormatada = new Date().toLocaleDateString("pt-BR");
+
+doc.text("発行日: " + dataFormatada, W - marginR, 20, { align: "right" });
+doc.setDrawColor(74, 144, 226); doc.setLineWidth(1); doc.line(0, 32, W, 32);
+
+let y = 42;
+
+// Identificacao
+if (nome || minuto || dataHora || prof) {
+doc.setFillColor(...slateLight); doc.roundedRect(marginL, y, usable, 8, 2, 2, "F");
+doc.setTextColor(...navy); doc.setFont("helvetica", "bold"); doc.text("新生児識別情報", marginL + 4, y + 5.5);
+y += 12;
+
+const campos = [];
+if (nome) campos.push(["Recém-nascido", nome]);
+if (minuto) campos.push(["評価日時", minuto]);
+if (dataHora) campos.push(["Nascimento", dataHora.replace("T", " ")]);
+if (prof) campos.push(["Avaliador", prof]);
+
+campos.forEach(c => {
+doc.setFont("helvetica", "bold"); doc.setTextColor(...navy); doc.text(c[0] + ":", marginL, y);
+doc.setFont("helvetica", "normal"); doc.setTextColor(30, 41, 59); doc.text(c[1], marginL + 25, y);
+y += 6;
+});
+y += 4;
+}
+
+// Pontuacao Total
+doc.setFillColor(...navy); doc.roundedRect(marginL, y, usable, 22, 3, 3, "F");
+doc.setTextColor(147, 197, 253); doc.setFont("helvetica", "bold"); doc.setFontSize(8);
+doc.text("アプガー最終スコア", W / 2, y + 6, { align: "center" });
+doc.setTextColor(255, 255, 255); doc.setFontSize(26);
+doc.text(`${calcScore} / 10`, W / 2, y + 17, { align: "center" });
+y += 28;
+
+// Status
+let corPill = [22, 163, 74]; 
+if (calcScore < 8) corPill = [249, 115, 22]; 
+if (calcScore < 4) corPill = [225, 29, 72];
+
+doc.setFillColor(...corPill); doc.roundedRect(marginL, y, usable, 8, 2, 2, "F");
+doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(9);
+doc.text(calcClass.toUpperCase(), W / 2, y + 5.5, { align: "center" });
+y += 12;
+
+// Mensagem e Conduta
+doc.setFillColor(248, 250, 252); doc.roundedRect(marginL, y, usable, 18, 2, 2, "F");
+doc.setTextColor(30, 41, 59); doc.setFont("helvetica", "normal"); doc.setFontSize(9);
+const msg = `推奨対応: ${calcConduta}`;
+const linhas = doc.splitTextToSize(msg, usable - 8);
+doc.text(linhas, marginL + 4, y + 6);
+y += 22;
+
+// Tabela de Dominios
+doc.setFillColor(...slateLight); doc.roundedRect(marginL, y, usable, 8, 2, 2, "F");
+doc.setTextColor(...navy); doc.setFont("helvetica", "bold"); doc.setFontSize(9);
+doc.text("身体評価記録", marginL + 4, y + 5.5);
+y += 11;
+
+const domVals = ITENS_APGAR.map(i => parseInt(document.getElementById(i.id).value) || 0);
+
+doc.autoTable({
+startY: y,
+margin: { left: marginL, right: marginR },
+head: [["バイタルサイン", "取得スコア", "Máximo"]],
+body: ITENS_APGAR.map((item, i) => [item.label.replace(/^\d+\.\s*/, ''), domVals[i], item.max]),
+foot: [["合計スコア", calcScore, 10]],
+styles: { fontSize: 9, cellPadding: 3, lineColor: [226, 232, 240], lineWidth: 0.3 },
+headStyles: { fillColor: navy, textColor: 255, fontStyle: "bold" },
+footStyles: { fillColor: [239, 246, 255], textColor: navy, fontStyle: "bold" },
+columnStyles: { 0: { cellWidth: 100 }, 1: { halign: "center" }, 2: { halign: "center" } },
+alternateRowStyles: { fillColor: [248, 250, 252] },
+});
+
+y = doc.lastAutoTable.finalY + 8;
+
+// Assinatura
+if (y > 240) { doc.addPage(); y = 20; }
+const colW = (usable - 10) / 2;
+doc.setDrawColor(...navy); doc.setLineWidth(0.5);
+doc.line(marginL, y + 14, marginL + colW, y + 14);
+doc.line(marginL + colW + 10, y + 14, marginL + colW * 2 + 10, y + 14);
+doc.setTextColor(...slate); doc.setFont("helvetica", "normal"); doc.setFontSize(8);
+doc.text(prof || "医療従事者署名", marginL + colW / 2, y + 18, { align: "center" });
+doc.text("場所と日付", marginL + colW + 10 + colW / 2, y + 18, { align: "center" });
+
+// Rodape
+y = 280;
+doc.setDrawColor(...slateLight); doc.setLineWidth(0.3); doc.line(marginL, y, W - marginR, y);
+doc.setTextColor(148, 163, 184); doc.setFontSize(7.5);
+doc.text("APGAR, Virginia. A proposal for a new method of evaluation of the newborn infant (1953).", marginL, y + 5);
+doc.text("看護計算機 — www.calculadorasdeenfermagem.com.br", W - marginR, y + 5, { align: "right" });
+
+const nomePac = nome ? nome.split(/\s+/).join("-").toLowerCase() : "neonato";
+doc.save(`laudo-apgar-${nomePac}-${new Date().toISOString().slice(0, 10)}.pdf`);
+}
+
+// ---- IMPRESSÃO HTML ----
+function imprimirLaudo() {
+const nome = document.getElementById("pacNome").value.trim();
+const minuto = document.getElementById("pacMinuto").value;
+const dataHora = document.getElementById("pacData").value;
+const prof = document.getElementById("pacProfissional").value.trim();
+const dataFormatada = new Date().toLocaleDateString("pt-BR");
+
+const domVals = ITENS_APGAR.map(i => parseInt(document.getElementById(i.id).value) || 0);
+const domMaxArr = ITENS_APGAR.map(i => i.max);
+
+const linhasTabela = ITENS_APGAR.map((item, i) => {
+let v = domVals[i];
+let cor = "#16a34a"; // verde
+if (v === 1) cor = "#f97316"; // laranja
+if (v === 0) cor = "#e11d48"; // vermelho
+
+return `<tr><td>${item.label.replace(/^\d+\.\s*/, '')}</td><td style="text-align:center;font-weight:700;color:${cor};">${v}</td><td style="text-align:center;color:#94A3B8;">${domMaxArr[i]}</td></tr>`;
+}).join("");
+
+const nandaHtml = document.getElementById("lista-nanda").innerHTML;
+
+let corPill = "#16a34a"; 
+if (calcScore < 8) corPill = "#f97316"; 
+if (calcScore < 4) corPill = "#e11d48";
+
+const html =
+`<!DOCTYPE html><html lang="ja-JP"><head><meta charset="UTF-8"><title>Laudo Índice de Apgar</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;font-size:10pt;color:#1E293B;padding:24px 32px}
+.hdr{background:#1A3E74;color:white;padding:14px 20px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.hdr h1{font-size:13pt;font-weight:900}
+.hdr p{font-size:8pt;opacity:0.8;margin-top:3px}
+.secao{margin-bottom:14px}
+.sec-titulo{font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#1A3E74;background:#EFF6FF;padding:5px 10px;border-radius:4px;margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:9.5pt}
+.res-box{border:2px solid #1A3E74;border-radius:8px;padding:14px 18px;background:#F8FAFC;text-align:center;margin-bottom:14px}
+.res-score{font-size:28pt;font-weight:900;color:#1A3E74;line-height:1}
+.res-pill{display:inline-block;background:${corPill};color:white;font-size:8pt;font-weight:700;padding:3px 14px;border-radius:20px;text-transform:uppercase;margin:6px 0}
+.res-msg{font-size:9.5pt;color:#1E293B;line-height:1.6;margin-top:8px}
+table{width:100%;border-collapse:collapse}
+th{background:#1A3E74;color:white;font-size:8pt;padding:6px 8px;text-align:left}
+td{font-size:9pt;padding:5px 8px;border-bottom:1px solid #F1F5F9}
+tfoot td{background:#EFF6FF;font-weight:700;color:#1A3E74;border-top:2px solid #1A3E74}
+.nanda-box{border:1px solid #E2E8F0;border-radius:8px;padding:12px;font-size:9pt}
+ul{list-style:none;} .nanda-item{border-bottom:1px solid #f1f5f9;padding:6px 0;} .nanda-item:last-child{border:none}
+.sig{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:28px}
+.sig-line{border-top:1px solid #1A3E74;padding-top:5px;font-size:8pt;color:#64748B;text-align:center}
+.footer{text-align:center;font-size:7.5pt;color:#94A3B8;margin-top:20px;border-top:1px solid #E2E8F0;padding-top:8px}
+</style></head><body>
+<div class="hdr"><div><h1>Índice de Apgar</h1><p>Avaliação da Condição e Vitalidade Neonatal</p></div><div style="text-align:right;font-size:8.5pt;"><strong>Data Emissão:</strong> ${dataFormatada}</div></div>
+${(nome || minuto || dataHora || prof ? `<div class="secao"><div class="sec-titulo">Identificação do RN</div><div class="grid2">${nome ? `<p><strong>Recém-nascido:</strong> ${nome}</p>` : ""}${minuto ? `<p><strong>Avaliação no:</strong> ${minuto}</p>` : ""}${dataHora ? `<p><strong>Nascimento:</strong> ${dataHora.replace("T", " ")}</p>` : ""}${prof ? `<p><strong>Avaliador:</strong> ${prof}</p>` : ""}</div></div>` : "")}
+<div class="secao"><div class="res-box"><div class="res-score">${calcScore} <span style="font-size:16px; color:#64748b">/ 10</span></div><div><span class="res-pill">${calcClass}</span></div><p class="res-msg"><strong>Conduta:</strong> ${calcConduta}</p></div></div>
+<div class="secao"><div class="sec-titulo">Memória da Avaliação (Sinais Clínicos)</div>
+<table><thead><tr><th>Critério</th><th style="text-align:center">Obtido</th><th style="text-align:center">Máximo</th></tr></thead><tbody>${linhasTabela}</tbody>
+<tfoot><tr><td>ESCORE TOTAL</td><td style="text-align:center">${calcScore}</td><td style="text-align:center">10</td></tr></tfoot></table></div>
+<div class="secao"><div class="sec-titulo">Diagnósticos NANDA Sugeridos (Top 6)</div><div class="nanda-box"><ul>${nandaHtml}</ul></div></div>
+<div class="sig"><div class="sig-line">${prof || "医療従事者署名"}</div><div class="sig-line">Local e Data</div></div>
+<div class="footer">APGAR, Virginia. A proposal for a new method of evaluation of the newborn infant (1953). | Calculadoras de Enfermagem</div>
+<script>window.onload=function(){window.print();}<\/script></body></html>`;
+
+const janela = window.open("", "_blank");
+janela.document.write(html);
+janela.document.close();
+}
+
+document.getElementById("btnCalcular").addEventListener("click", calcular);
+document.getElementById("btnLimpar").addEventListener("click", limpar);
+document.getElementById("btnGerarPDF").addEventListener("click", function() {
+const btn = this;
+const textoOriginal = btn.innerHTML;
+
+// Se a biblioteca já foi carregada nesta sessão, apenas gera o PDF
+if (typeof window.jspdf !== 'undefined') {
+gerarPDF();
+return;
+}
+
+// Dá um feedback visual rápido para o usuário não clicar duas vezes
+btn.innerHTML = "Carregando gerador...";
+btn.style.opacity = "0.7";
+btn.style.pointerEvents = "none";
+
+// Cria e injeta o script principal do jsPDF
+const scriptMain = document.createElement('script');
+scriptMain.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+document.body.appendChild(scriptMain);
+
+scriptMain.onload = function() {
+// Assim que o principal carregar, injeta o plugin AutoTable
+const scriptPlugin = document.createElement('script');
+scriptPlugin.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js";
+document.body.appendChild(scriptPlugin);
+
+scriptPlugin.onload = function() {
+// Quando ambos carregarem, restaura o botão e dispara a geração do PDF
+btn.innerHTML = textoOriginal;
+btn.style.opacity = "1";
+btn.style.pointerEvents = "auto";
+gerarPDF();
+};
+};
+});
+document.getElementById("btnImprimir").addEventListener("click", imprimirLaudo);
+renderizarForm();
+})();
 </script>
 
+<!-- MULTIPLEX_AD_RESERVED_START -->
+<style>
+  .multiplex-ad-reserved {
+    box-sizing: border-box;
+    display: block;
+    width: calc(100% - 32px);
+    max-width: 1200px;
+    min-height: 260px;
+    margin: 32px auto;
+    overflow: visible;
+  }
+  @media (max-width: 600px) {
+    .multiplex-ad-reserved {
+      width: calc(100% - 24px);
+      min-height: 220px;
+      margin: 24px auto;
+    }
+  }
+</style>
+<aside id="multiplex-ad-reserved" class="multiplex-ad-reserved" aria-label="Publicidade">
+  <ins class="adsbygoogle"
+       style="display:block;width:100%"
+       data-ad-format="autorelaxed"
+       data-ad-client="ca-pub-6472730056006847"
+       data-ad-slot="3341197364"
+       data-matched-content-rows-num="1,1"
+       data-matched-content-columns-num="1,4"
+       data-matched-content-ui-type="image_card_sidebyside,image_card_sidebyside"></ins>
+</aside>
+<!-- MULTIPLEX_AD_RESERVED_END -->
+
+<div id="footer-placeholder"></div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+setTimeout(() => {
+fetch("footer.html")
+.then((response) => response.text())
+.then((data) => {
+document.getElementById("footer-placeholder").innerHTML = data;
+});
+}, 150);
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,210 @@
+﻿<!-- Barra de Acessibilidade (Padrão Heparina) --><!-- Botão Flutuante de Acessibilidade (Mobile) --><html lang="nl-NL"><head><link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/nl/global-body-elements.html"></head><body><button id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade">
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- Painel Lateral de Acessibilidade (Mobile) -->
+<div id="pwaAcessibilidadeBar">
+  <div class="pwa-acessibilidade-header">
+    <h3>Toegankelijkhei</h3>
+    <button id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">
+      ×
+    </button>
+  </div>
+  <button id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte">
+    <i class="fas fa-text-height"></i><span id="fontSizeTextPWA">Kort</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha">
+    <i class="fas fa-align-justify"></i><span id="lineHeightTextPWA">Regels</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra">
+    <i class="fas fa-text-width"></i><span id="letterSpacingTextPWA">Kort</span>
+  </button>
+  <button id="btnAlternarContrastePWA" aria-label="Alternar alto contraste">
+    <i class="fas fa-contrast"></i><span>Hoog contrast</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro">
+    <i class="fas fa-moon"></i><span>Donkere modus</span>
+  </button>
+  <button id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia">
+    <i class="fas fa-font"></i><span>Bron: Dyslexie</span>
+  </button>
+  <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+    <button class="color-option" style="background-color: yellow" data-color="yellow" aria-label="Cor de foco amarela"></button>
+    <button class="color-option" style="background-color: lime" data-color="lime" aria-label="Cor de foco verde-limão"></button>
+    <button class="color-option" style="background-color: cyan" data-color="cyan" aria-label="Cor de foco ciano"></button>
+    <button class="color-option" style="background-color: magenta" data-color="magenta" aria-label="Cor de foco magenta"></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado">
+    <i class="fas fa-keyboard"></i><span>Snelkoppelingen</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações">
+    <i class="fas fa-undo"></i><span>Alles resetten</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- Overlay para Menus Laterais --><div id="barraAcessibilidade">
+  <button id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type">
+      <polyline points="4 7 4 4 20 4 20 7"></polyline>
+      <line x1="9" x2="15" y1="20" y2="20"></line>
+      <line x1="12" x2="12" y1="4" y2="20"></line>
+    </svg>
+    <span id="fontSizeText">Normaal</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-justify">
+      <line x1="3" x2="21" y1="6" y2="6"></line>
+      <line x1="3" x2="21" y1="12" y2="12"></line>
+      <line x1="3" x2="21" y1="18" y2="18"></line>
+    </svg>
+    <span id="lineHeightText">Gemiddeld</span>
+  </button>
+  <button id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-spacing">
+      <path d="M10 12H3"></path>
+      <path d="M21 12h-7"></path>
+      <path d="M12 20V4"></path>
+    </svg>
+    <span id="letterSpacingText">Normaal</span>
+  </button>
+  <button id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gauge">
+      <path d="M12 14v4"></path>
+      <path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"></path>
+    </svg>
+    <span id="readingSpeedText">Normaal</span>
+  </button>
+  <button id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play">
+      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">Toneellezen</span>
+  </button>
+  <button id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-ccw">
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"></path>
+      <path d="M3 3v5h5"></path>
+    </svg>
+    <span class="sr-only">kniel beginnen met</span>
+  </button>
+  <button id="btnReadFocused" aria-label="Ler elemento focado">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2">
+      <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"></path>
+    </svg>
+    <span class="sr-only">Lee's Focus</span>
+  </button>
+  <button id="btnAlternarContraste" aria-label="Alternar alto contraste" aria-pressed="false">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-contrast">
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M12 18a6 6 0 0 0 0-12v12z"></path>
+    </svg>
+    <span class="sr-only">Contrast</span>
+  </button>
+  <button id="btnAlternarModoEscuro" aria-label="Alternar modo escuro" aria-pressed="false">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+    </svg>
+    <span class="sr-only">Donkere modus</span>
+  </button>
+  <button id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-type">
+      <polyline points="4 7 4 4 20 4 20 7"></polyline>
+      <line x1="9" x2="15" y1="20" y2="20"></line>
+      <line x1="12" x2="12" y1="4" y2="20"></line>
+    </svg>
+    <span class="sr-only">Bron: Dyslexie</span>
+  </button>
+  <div class="flex space-x-1" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+    <button class="color-option" style="background-color: yellow" data-color="yellow" aria-label="Cor de foco amarela"></button>
+    <button class="color-option" style="background-color: lime" data-color="lime" aria-label="Cor de foco verde-limão"></button>
+    <button class="color-option" style="background-color: cyan" data-color="cyan" aria-label="Cor de foco ciano"></button>
+    <button class="color-option" style="background-color: magenta" data-color="magenta" aria-label="Cor de foco magenta"></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">sneltoetsen</span>
+  </button>
+  <button id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw">
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"></path>
+      <path d="M3 3v5h5"></path>
+    </svg>
+    <span class="sr-only">Reset</span>
+  </button>
+</div>
+
+
+
+<!-- Banner de Consentimento de Cookies -->
+<div id="cookieConsentBanner">
+  <p>Wij gebruiken cookies om uw werking op elf websites te verbeteren. Als u verder bladert, gaat u akkoord met ons cookiebeleid.<a href="politica.html" class="underline text-blue-200 hover:text-blue-100">Cookiebeleid</a>.
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">Alle cookies accepteren</button>
+    <button id="manageCookiesBtn" class="secondary">Koekjes hier</button>
+    <button id="refuseAllCookiesBtn" class="secondary">Wij eisen cookies.</button>
+  </div>
+</div>
+
+<!-- Modal Granular de Cookies -->
+<div id="granularCookieModal" role="dialog" aria-modal="true" aria-labelledby="granularModalTitle" class="hidden">
+  <div class="granular-modal-content">
+    <button id="granularModalCloseButton" class="modal-close-btn" aria-label="Fechar configurações de cookies">
+      ×
+    </button>
+    <h3 id="granularModalTitle">Privacyinstructies</h3>
+    <p>We gebruiken cookies om ervoor te zorgen dat de website goed werkt en om de inhoud te personaliseren. U kunt uw voorkeuren hieronder aanpassen:</p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"><input type="checkbox" id="cookieEssential" checked="" disabled="">Essent zaken</label>
+      <span class="description">Noodzakelijk voor de basiswerking van de site. Ze kunnen niet worden uitgeschakeld.</span>
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"><input type="checkbox" id="cookieAnalytics">Analytisch</label>
+      <span class="description">We verzamelen informatie over hoe u de site gebruikt om ons te helpen tien te verbeteren.</span>
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"><input type="checkbox" id="cookieMarketing">Marketing</label>
+      <span class="description">Wordt gebruikt om relevante advertenties weer te geven op basis van uw interesses.</span>
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">Voorkeuren opslaan</button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">Annuleren</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Atalhos de Teclado -->
+<div id="keyboardShortcutsModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+  <div class="keyboard-modal-content">
+    <button id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">Toetsenboard sneltoetsen en navigatie</h3>
+    <h4 class="font-bold mb-2">Toegankelijkheidssneltoetsen (Accesskey)</h4>
+    <p class="mb-4">Gebruik de volgende toetsencombinaties om snel toegang te krijgen tot toegankelijkheidsfuncties:</p>
+    <ul>
+      <li><strong>Alt + Shift + I:</strong>Ga naar de homepage</li>
+      <li><strong>Alt + Shift + C:</strong>Ga naar de hoofdinhoud</li>
+      <li>
+        <strong>Alt + Shift + A:</strong>Ga naar de toegankelijkheidswerkbalk.</li>
+      <li><strong>Alt + Shift + T:</strong>Terug naar boven aan de pagina</li>
+    </ul>
+  </div>
+</div>
+<!-- Menu OffCanvas (Mobile) --><!-- Botão Voltar ao Topo -->
+<button id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Terug naar</button></body></html>

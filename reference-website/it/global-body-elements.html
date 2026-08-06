@@ -1,0 +1,465 @@
+﻿<!-- Barra di Accessibilità (Standard Heparina) -->
+<!-- Pulsante Fluttuante di Accessibilità (Mobile) -->
+<button id="accessibilityToggleButton" aria-label="Apri menu accessibilità">
+  <i class="fas fa-universal-access"></i>
+</button>
+
+<!-- Pannello Laterale di Accessibilità (Mobile) -->
+<div id="pwaAcessibilidadeBar">
+  <div class="pwa-acessibilidade-header">
+    <h3>Accessibilità</h3>
+    <button
+      id="pwaAcessibilidadeCloseBtn"
+      class="pwa-acessibilidade-close-btn"
+      aria-label="Chiudi menu accessibilità"
+    >
+      &times;
+    </button>
+  </div>
+  <button
+    id="btnAlternarTamanhoFontePWA"
+    aria-label="Cambia dimensione carattere"
+  >
+    <i class="fas fa-text-height"></i
+    ><span id="fontSizeTextPWA">Dimensione Carattere</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinhaPWA" aria-label="Cambia interlinea">
+    <i class="fas fa-align-justify"></i
+    ><span id="lineHeightTextPWA">Interlinea</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLetraPWA"
+    aria-label="Cambia spaziatura lettere"
+  >
+    <i class="fas fa-text-width"></i
+    ><span id="letterSpacingTextPWA">Spaziatura Lettere</span>
+  </button>
+  <button id="btnAlternarContrastePWA" aria-label="Alterna contrasto elevato">
+    <i class="fas fa-contrast"></i><span>Contrasto Elevato</span>
+  </button>
+  <button id="btnAlternarModoEscuroPWA" aria-label="Alterna modalità scura">
+    <i class="fas fa-moon"></i><span>Modalità Scura</span>
+  </button>
+  <button
+    id="btnAlternarFonteDislexiaPWA"
+    aria-label="Alterna font per dislessia"
+  >
+    <i class="fas fa-font"></i><span>Font Dislessia</span>
+  </button>
+  <div
+    class="color-options-pwa"
+    role="radiogroup"
+    aria-label="Colore focus accessibilità"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="Colore focus giallo"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="Colore focus verde lime"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="Colore focus ciano"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="Colore focus magenta"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcutsPWA" aria-label="Scorciatoie da tastiera">
+    <i class="fas fa-keyboard"></i><span>Scorciatoie</span>
+  </button>
+  <button id="btnResetarAcessibilidadePWA" aria-label="Ripristina impostazioni">
+    <i class="fas fa-undo"></i><span>Ripristina Tutto</span>
+  </button>
+</div>
+<script>
+  // Ouve notificações do Service Worker e atualiza a página quando houver uma nova versão
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', function (event) {
+      try {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.log('Service Worker: atualização detectada, recarregando página...');
+          // Recarrega para garantir que a página use os arquivos cacheados mais recentes
+          window.location.reload();
+        }
+      } catch (e) { console.warn('Erro ao processar mensagem do SW', e); }
+    });
+  }
+</script>
+
+<!-- Overlay per Menu Laterali --><div id="barraAcessibilidade">
+  <button id="btnAlternarTamanhoFonte" aria-label="Cambia dimensione carattere">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span id="fontSizeText">Normale</span>
+  </button>
+  <button id="btnAlternarEspacamentoLinha" aria-label="Cambia interlinea">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-align-justify"
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+    <span id="lineHeightText">Media</span>
+  </button>
+  <button
+    id="btnAlternarEspacamentoLetra"
+    aria-label="Cambia spaziatura lettere"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-text-spacing"
+    >
+      <path d="M10 12H3" />
+      <path d="M21 12h-7" />
+      <path d="M12 20V4" />
+    </svg>
+    <span id="letterSpacingText">Normale</span>
+  </button>
+  <button
+    id="btnAlternarVelocidadeLeitura"
+    aria-label="Cambia velocità di lettura"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-gauge"
+    >
+      <path d="M12 14v4" />
+      <path
+        d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"
+      />
+    </svg>
+    <span id="readingSpeedText">Normale</span>
+  </button>
+  <button
+    id="btnToggleLeitura"
+    aria-label="Riproduci/Pausa lettura contenuto principale"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-play"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    <span class="sr-only" id="toggleLeituraText">Riproduci Lettura</span>
+  </button>
+  <button
+    id="btnReiniciarLeitura"
+    aria-label="Riavvia lettura contenuto principale"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-rotate-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">Riavvia Lettura</span>
+  </button>
+  <button id="btnReadFocused" aria-label="Leggi elemento focalizzato">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-volume-2"
+    >
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path
+        d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"
+      />
+    </svg>
+    <span class="sr-only">Leggi Focus</span>
+  </button>
+  <button
+    id="btnAlternarContraste"
+    aria-label="Alterna contrasto elevato"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-contrast"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 18a6 6 0 0 0 0-12v12z" />
+    </svg>
+    <span class="sr-only">Contrasto</span>
+  </button>
+  <button
+    id="btnAlternarModoEscuro"
+    aria-label="Alterna modalità scura"
+    aria-pressed="false"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-moon"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+    <span class="sr-only">Modalità Scura</span>
+  </button>
+  <button id="btnAlternarFonteDislexia" aria-label="Alterna font per dislessia">
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-type"
+    >
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" x2="15" y1="20" y2="20" />
+      <line x1="12" x2="12" y1="4" y2="20" />
+    </svg>
+    <span class="sr-only">Font Dislessia</span>
+  </button>
+  <div
+    class="flex space-x-1"
+    role="radiogroup"
+    aria-label="Colore focus accessibilità"
+  >
+    <button
+      class="color-option"
+      style="background-color: yellow"
+      data-color="yellow"
+      aria-label="Colore focus giallo"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: lime"
+      data-color="lime"
+      aria-label="Colore focus verde lime"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: cyan"
+      data-color="cyan"
+      aria-label="Colore focus ciano"
+    ></button>
+    <button
+      class="color-option"
+      style="background-color: magenta"
+      data-color="magenta"
+      aria-label="Colore focus magenta"
+    ></button>
+  </div>
+  <button id="btnKeyboardShortcuts" aria-label="Scorciatoie da tastiera">
+    <i class="fas fa-keyboard" aria-hidden="true"></i>
+    <span class="sr-only">Scorciatoie da Tastiera</span>
+  </button>
+  <button
+    id="btnResetarAcessibilidade"
+    aria-label="Ripristina impostazioni accessibilità"
+  >
+    <svg
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-refresh-ccw"
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    <span class="sr-only">Ripristina</span>
+  </button>
+</div><!-- Banner Consenso Cookie -->
+<div id="cookieConsentBanner">
+  <p>
+    Utilizziamo i cookie per migliorare la tua esperienza sul nostro sito.
+    Continuando a navigare, accetti la nostra
+    <a href="politica.html" class="underline text-blue-200 hover:text-blue-100"
+      >Politica sui Cookie</a
+    >.
+  </p>
+  <div class="cookie-buttons">
+    <button id="acceptAllCookiesBtn">Accetta tutti i cookie</button>
+    <button id="manageCookiesBtn" class="secondary">Gestisci cookie</button>
+    <button id="refuseAllCookiesBtn" class="secondary">
+      Rifiuta tutti i cookie
+    </button>
+  </div>
+</div>
+
+<!-- Modale Cookie Granulare -->
+<div
+  id="granularCookieModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="granularModalTitle"
+  class="hidden"
+>
+  <div class="granular-modal-content">
+    <button
+      id="granularModalCloseButton"
+      class="modal-close-btn"
+      aria-label="Chiudi impostazioni cookie"
+    >
+      ×
+    </button>
+    <h3 id="granularModalTitle">Impostazioni Privacy</h3>
+    <p>
+      Utilizziamo i cookie per garantire il funzionamento del nostro sito e per
+      personalizzare i contenuti. Puoi regolare le tue preferenze qui sotto:
+    </p>
+    <div class="checkbox-group">
+      <label for="cookieEssential"
+        ><input type="checkbox" id="cookieEssential" checked disabled />
+        Essenziali</label
+      >
+      <span class="description"
+        >Necessari per le funzionalità base del sito. Non possono essere
+        disattivati.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieAnalytics"
+        ><input type="checkbox" id="cookieAnalytics" /> Analitici</label
+      >
+      <span class="description"
+        >Raccolgono informazioni su come usi il sito per aiutarci a
+        migliorarlo.</span
+      >
+    </div>
+    <div class="checkbox-group">
+      <label for="cookieMarketing"
+        ><input type="checkbox" id="cookieMarketing" /> Marketing</label
+      >
+      <span class="description"
+        >Utilizzati per mostrarti annunci pertinenti basati sui tuoi
+        interessi.</span
+      >
+    </div>
+    <div class="modal-buttons">
+      <button id="saveGranularPreferencesBtn" class="btn-save">
+        Salva Preferenze
+      </button>
+      <button id="cancelGranularPreferencesBtn" class="btn-cancel">
+        Annulla
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modale Scorciatoie da Tastiera -->
+<div
+  id="keyboardShortcutsModal"
+  class="hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="keyboardModalTitle"
+>
+  <div class="keyboard-modal-content">
+    <button
+      id="keyboardModalCloseButton"
+      class="modal-close-btn"
+      aria-label="Chiudi scorciatoie da tastiera"
+    >
+      ×
+    </button>
+    <h3 id="keyboardModalTitle">Scorciatoie da Tastiera e Navigazione</h3>
+    <h4 class="font-bold mb-2">Scorciatoie di Accessibilità (Accesskey)</h4>
+    <p class="mb-4">
+      Utilizza le seguenti combinazioni di tasti per accedere rapidamente alle
+      funzionalità di accessibilità:
+    </p>
+    <ul>
+      <li><strong>Alt + Shift + I:</strong> Vai alla Home</li>
+      <li><strong>Alt + Shift + C:</strong> Vai al Contenuto Principale</li>
+      <li><strong>Alt + Shift + A:</strong> Vai alla Barra di Accessibilità</li>
+      <li><strong>Alt + Shift + T:</strong> Torna in Cima alla Pagina</li>
+    </ul>
+    <!-- Nota: le combinazioni possono variare a seconda del browser e del sistema operativo (es. solo Alt su Windows/Linux). -->
+  </div>
+</div>
+
+<!-- Menu OffCanvas (Mobile) --><!-- Pulsante Torna Su -->
+<button id="backToTopBtn" aria-label="Torna in cima alla pagina" accesskey="T">
+  Torna Su
+</button>
