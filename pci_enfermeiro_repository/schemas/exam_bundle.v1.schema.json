@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://calenf-nkd/schemas/exam_bundle.v1.schema.json",
+  "title": "PCI Exam Bundle v1",
+  "description": "A discovered PCI Concursos exam page and its downloadable artifacts.",
+  "type": "object",
+  "required": ["detail_url", "role_title", "year", "artifacts"],
+  "properties": {
+    "detail_url": { "type": "string", "format": "uri" },
+    "scrape_key": { "type": "string" },
+    "title": { "type": "string" },
+    "role_title": { "type": "string" },
+    "year": { "type": "integer", "minimum": 1900, "maximum": 2200 },
+    "institution": { "type": ["string", "null"] },
+    "organizer": { "type": ["string", "null"] },
+    "jurisdiction": { "type": ["string", "null"] },
+    "access_status": {
+      "type": "string",
+      "enum": ["discovered", "challenge_required", "downloaded", "failed"]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact_type", "filename"],
+        "properties": {
+          "artifact_type": {
+            "type": "string",
+            "enum": [
+              "exam_pdf",
+              "answer_key_pdf",
+              "preliminary_answer_key_pdf",
+              "final_answer_key_pdf",
+              "rectified_answer_key_pdf",
+              "errata",
+              "annulment_notice"
+            ]
+          },
+          "filename": { "type": "string" },
+          "source_url": { "type": ["string", "null"] },
+          "version_label": { "type": ["string", "null"] },
+          "download_status": {
+            "type": "string",
+            "enum": ["pending", "downloaded", "failed"]
+          },
+          "sha256": { "type": ["string", "null"] },
+          "size_bytes": { "type": ["integer", "null"] }
+        }
+      }
+    }
+  }
+}
