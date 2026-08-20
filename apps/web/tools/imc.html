@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMC — Índice de Massa Corporal</title>
+  <meta name="description" content="Calcule o Índice de Massa Corporal (IMC) a partir de peso e altura, com interpretação OMS e recomendações de enfermagem.">
+  <link rel="canonical" href="https://www.calculadorasdeenfermagem.com.br/imc.html">
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">NIS</a>
+      <p class="brand-sub">Nursing Intelligence System</p>
+    </div>
+  </header>
+  <main id="conteudo" class="wrap tool-page">
+    <nav class="breadcrumb" aria-label="Trilha">
+      <a href="../index.html">Calculadoras</a>
+      <span aria-hidden="true">/</span>
+      <span>Nutrição</span>
+    </nav>
+    <header class="tool-hero">
+      <p class="eyebrow">Nutrição</p>
+      <h1>Índice de Massa Corporal</h1>
+      <p class="lede">Estimar a relação peso/altura para classificar o estado nutricional do adulto segundo a OMS.</p>
+      <p class="meta">Enfermagem · Nutrição · Atenção primária · 30 segundos</p>
+    </header>
+    <form id="calcForm" class="calc-card">
+      <input type="hidden" name="slug" value="imc">
+      <fieldset>
+        <legend>1. Avaliação</legend>
+        <p class="hint">Triagem nutricional em adultos. Não substitui avaliação antropométrica completa nem composição corporal.</p>
+        
+          <label class="field">
+            <span class="field-label">Peso<span class="field-unit">kg</span></span>
+            <span class="field-help">Peso corporal atual.</span>
+            <input id="input-peso" name="peso" type="number" data-calc-input="peso" value="70" min="20" max="400" step="0.1">
+          </label>
+
+          <label class="field">
+            <span class="field-label">Altura<span class="field-unit">m</span></span>
+            <span class="field-help">Estatura em metros (ex.: 1.70).</span>
+            <input id="input-altura" name="altura" type="number" data-calc-input="altura" value="1.7" min="0.5" max="2.5" step="0.01">
+          </label>
+      </fieldset>
+      <div class="result-block" id="resultBlock" style="--risk:#0f766e">
+        <p class="result-kicker">IMC</p>
+        <p class="result-value"><span id="calcResultValue">24.2</span>
+          <span id="calcResultUnit" class="result-unit">kg/m²</span></p>
+        <p id="calcStatusTitle" class="result-label">Eutrofia</p>
+        <p id="calcStatusText" class="result-note">Faixa considerada adequada para a maioria dos adultos segundo a OMS.</p>
+      </div>
+      <p class="actions">
+        <button type="submit" class="btn-primary" id="calcSubmit">Calcular e ver raciocínio</button>
+      </p>
+    </form>
+    
+      <section class="clinical-step" id="step-sae" hidden>
+        <h2>Raciocínio NANDA · NIC · NOC</h2>
+        <div class="sae-grid">
+          <section class="sae-col"><h3>NANDA</h3><article><h4>Nutrição desequilibrada: mais do que as necessidades corporais</h4><p>Ingestão de nutrientes que excede as necessidades metabólicas.</p></article></section>
+          <section class="sae-col"><h3>NIC</h3><article><h4>Manejo da nutrição</h4><ul><li>Avaliar hábitos alimentares</li>
+<li>Orientar plano alimentar</li>
+<li>Monitorar peso</li></ul></article></section>
+          <section class="sae-col"><h3>NOC</h3><article><h4>Estado nutricional</h4><ul><li>IMC na faixa-alvo</li>
+<li>Ingestão alimentar adequada</li></ul></article></section>
+        </div>
+      </section>
+    
+      <section class="clinical-step" id="step-plan" hidden>
+        <h2>Plano de ação</h2>
+        <ul class="action-list"><li>Manter hábitos alimentares e atividade física</li>
+<li>Reavaliar periodicamente</li></ul>
+      </section>
+    
+      <section class="panel">
+        <h2>Como funciona o IMC</h2>
+        <p>O Índice de Massa Corporal divide o peso em quilogramas pelo quadrado da altura em metros. A classificação segue os pontos de corte da OMS para adultos.</p>
+        <p>O IMC (peso/altura²) é o indicador antropométrico mais usado para classificar o estado nutricional de adultos em nível populacional.</p><p><strong>Limitações:</strong> Não distingue massa magra de gordura. Interpretação deve considerar idade, sexo, etnia e composição corporal.</p>
+        <div class="examples"><button type="button" class="example-btn" data-example data-values='{&quot;peso&quot;: 65, &quot;altura&quot;: 1.7}'>✅ Eutrofia — IMC 22,5</button><button type="button" class="example-btn" data-example data-values='{&quot;peso&quot;: 80, &quot;altura&quot;: 1.7}'>⚠️ Sobrepeso — IMC 27,7</button></div>
+      </section>
+      <section class="panel"><h2>Dicas clínicas</h2><ul><li>Informe a altura em metros (1,70), não em centímetros.</li>
+<li>IMC isolado não diagnostica obesidade sarcopênica nem risco em atletas.</li>
+<li>Combine com circunferência abdominal na avaliação de risco cardiometabólico.</li></ul></section>
+      <section class="panel"><h2>Quiz</h2><article class="quiz-card" data-quiz-card="0" data-correct="1">
+            <p class="quiz-q">Qual é a fórmula do IMC?</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-quiz="0" data-opt="0">peso × altura</button><button type="button" class="quiz-opt" data-quiz="0" data-opt="1">peso / (altura × altura)</button><button type="button" class="quiz-opt" data-quiz="0" data-opt="2">altura / peso</button><button type="button" class="quiz-opt" data-quiz="0" data-opt="3">peso² / altura</button></div>
+            <p class="quiz-expl" hidden>IMC = peso (kg) dividido pela altura (m) ao quadrado.</p>
+          </article></section>
+      <section class="panel"><h2>Perguntas frequentes</h2><details><summary>Posso usar o IMC em crianças?</summary><p>Não este classificador OMS de adultos. Em pediatria usa-se IMC para idade com curvas de crescimento.</p></details><details><summary>Altura deve ser em cm ou m?</summary><p>Em metros. 170 cm = 1,70 m.</p></details></section>
+      <section class="panel"><h2>Referências</h2><ul><li>WORLD HEALTH ORGANIZATION. Obesity: preventing and managing the global epidemic. Geneva: WHO, 2000.</li>
+<li>BRASIL. Ministério da Saúde. Protocolos do Sistema de Vigilância Alimentar e Nutricional — SISVAN. Brasília: MS.</li></ul></section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Protótipo greenfield do NIS. Conteúdo clínico de apoio — não substitui julgamento profissional.</p>
+    </div>
+  </footer>
+  <script type="application/json" id="tool-config">{
+  "id": "a1b2c3d4-e5f6-4789-a012-3456789abcde",
+  "code": "CALC-IMC-001",
+  "slug": "imc",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "IMC — Índice de Massa Corporal",
+    "description": "Calcule o Índice de Massa Corporal (IMC) a partir de peso e altura, com interpretação OMS e recomendações de enfermagem.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/imc.html"
+  },
+  "breadcrumb": {
+    "category": "Nutrição",
+    "categoryHref": "index.html"
+  },
+  "overview": {
+    "name": "Índice de Massa Corporal",
+    "acronym": "IMC",
+    "categoryBadge": "Nutrição",
+    "icon": "i-activity",
+    "objective": "Estimar a relação peso/altura para classificar o estado nutricional do adulto segundo a OMS.",
+    "indication": "Triagem nutricional em adultos. Não substitui avaliação antropométrica completa nem composição corporal.",
+    "targetPopulation": "Adultos a partir de 18 anos. Não usar isoladamente em gestantes, atletas ou idosos frágeis.",
+    "specialty": [
+      "Enfermagem",
+      "Nutrição",
+      "Atenção primária"
+    ],
+    "averageTime": "30 segundos",
+    "evidenceLevel": "I",
+    "originalAuthors": [
+      "Adolphe Quetelet"
+    ],
+    "organizations": [
+      "Organização Mundial da Saúde"
+    ],
+    "complexity": "basic"
+  },
+  "calculator": {
+    "inputs": [
+      {
+        "id": "peso",
+        "type": "number",
+        "label": "Peso",
+        "description": "Peso corporal atual.",
+        "unit": "kg",
+        "defaultValue": 70,
+        "min": 20,
+        "max": 400,
+        "step": 0.1
+      },
+      {
+        "id": "altura",
+        "type": "number",
+        "label": "Altura",
+        "description": "Estatura em metros (ex.: 1.70).",
+        "unit": "m",
+        "defaultValue": 1.7,
+        "min": 0.5,
+        "max": 2.5,
+        "step": 0.01
+      }
+    ],
+    "formula": {
+      "type": "expression",
+      "expression": "peso / (altura * altura)",
+      "resultLabel": "IMC",
+      "resultUnit": "kg/m²",
+      "decimals": 1
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {
+        "min": 0,
+        "max": 18.4,
+        "label": "Baixo peso",
+        "riskLevel": "moderate",
+        "color": "#0369a1",
+        "clinicalImplications": "IMC abaixo da faixa de eutrofia. Investigar perda ponderal, ingestão e condições clínicas associadas.",
+        "recommendations": "• Avaliar ingestão alimentar e sinais de desnutrição\n• Encaminhar para avaliação nutricional\n• Monitorar peso semanalmente"
+      },
+      {
+        "min": 18.5,
+        "max": 24.9,
+        "label": "Eutrofia",
+        "riskLevel": "none",
+        "color": "#0f766e",
+        "clinicalImplications": "Faixa considerada adequada para a maioria dos adultos segundo a OMS.",
+        "recommendations": "• Manter hábitos alimentares e atividade física\n• Reavaliar periodicamente"
+      },
+      {
+        "min": 25,
+        "max": 29.9,
+        "label": "Sobrepeso",
+        "riskLevel": "low",
+        "color": "#ca8a04",
+        "clinicalImplications": "Excesso de peso. Risco cardiovascular aumentado quando associado a outros fatores.",
+        "recommendations": "• Orientar alimentação e atividade física\n• Avaliar circunferência abdominal\n• Rastrear hipertensão e glicemia"
+      },
+      {
+        "min": 30,
+        "max": 34.9,
+        "label": "Obesidade grau I",
+        "riskLevel": "high",
+        "color": "#ea580c",
+        "clinicalImplications": "Obesidade grau I. Risco elevado de doenças crônicas não transmissíveis.",
+        "recommendations": "• Plano alimentar individualizado\n• Encaminhar à equipe multiprofissional\n• Rastrear comorbidades"
+      },
+      {
+        "min": 35,
+        "max": 39.9,
+        "label": "Obesidade grau II",
+        "riskLevel": "high",
+        "color": "#c2410c",
+        "clinicalImplications": "Obesidade grau II. Alto risco metabólico e cardiovascular.",
+        "recommendations": "• Acompanhamento especializado\n• Avaliar indicações de tratamento intensivo"
+      },
+      {
+        "min": 40,
+        "max": 200,
+        "label": "Obesidade grau III",
+        "riskLevel": "critical",
+        "color": "#b91c1c",
+        "clinicalImplications": "Obesidade grau III. Risco muito elevado; requer abordagem multidisciplinar.",
+        "recommendations": "• Encaminhamento urgente à equipe especializada\n• Avaliar comorbidades e funcionalidade"
+      }
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {
+        "diagnosis": "Nutrição desequilibrada: mais do que as necessidades corporais",
+        "definition": "Ingestão de nutrientes que excede as necessidades metabólicas."
+      }
+    ],
+    "noc": [
+      {
+        "outcome": "Estado nutricional",
+        "indicators": [
+          "IMC na faixa-alvo",
+          "Ingestão alimentar adequada"
+        ]
+      }
+    ],
+    "nic": [
+      {
+        "intervention": "Manejo da nutrição",
+        "activities": [
+          "Avaliar hábitos alimentares",
+          "Orientar plano alimentar",
+          "Monitorar peso"
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "O IMC (peso/altura²) é o indicador antropométrico mais usado para classificar o estado nutricional de adultos em nível populacional.",
+    "limitations": "Não distingue massa magra de gordura. Interpretação deve considerar idade, sexo, etnia e composição corporal.",
+    "references": [
+      {
+        "text": "WORLD HEALTH ORGANIZATION. Obesity: preventing and managing the global epidemic. Geneva: WHO, 2000."
+      },
+      {
+        "text": "BRASIL. Ministério da Saúde. Protocolos do Sistema de Vigilância Alimentar e Nutricional — SISVAN. Brasília: MS."
+      }
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Informe a altura em metros (1,70), não em centímetros.",
+      "IMC isolado não diagnostica obesidade sarcopênica nem risco em atletas.",
+      "Combine com circunferência abdominal na avaliação de risco cardiometabólico."
+    ],
+    "examples": [
+      {
+        "label": "Eutrofia",
+        "sublabel": "IMC 22,5",
+        "emoji": "✅",
+        "values": {
+          "peso": 65,
+          "altura": 1.7
+        }
+      },
+      {
+        "label": "Sobrepeso",
+        "sublabel": "IMC 27,7",
+        "emoji": "⚠️",
+        "values": {
+          "peso": 80,
+          "altura": 1.7
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Qual é a fórmula do IMC?",
+        "opts": [
+          "peso × altura",
+          "peso / (altura × altura)",
+          "altura / peso",
+          "peso² / altura"
+        ],
+        "correct": 1,
+        "expl": "IMC = peso (kg) dividido pela altura (m) ao quadrado."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Posso usar o IMC em crianças?",
+      "a": "Não este classificador OMS de adultos. Em pediatria usa-se IMC para idade com curvas de crescimento."
+    },
+    {
+      "q": "Altura deve ser em cm ou m?",
+      "a": "Em metros. 170 cm = 1,70 m."
+    }
+  ],
+  "about": {
+    "title": "Como funciona o IMC",
+    "html": "<p>O Índice de Massa Corporal divide o peso em quilogramas pelo quadrado da altura em metros. A classificação segue os pontos de corte da OMS para adultos.</p>"
+  }
+}</script>
+  <script src="../js/calc-engine.js"></script>
+</body>
+</html>

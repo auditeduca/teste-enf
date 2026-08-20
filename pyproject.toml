@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nis-engine"
+version = "0.1.0"
+description = "Nursing Intelligence System — validate, score, and generate clinical calculators."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Leivis Melo" }]
+dependencies = [
+  "jsonschema>=4.22",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+nis = "nis_engine.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["packages"]
+include = ["nis_engine*"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages/tests"]
+pythonpath = ["packages"]
