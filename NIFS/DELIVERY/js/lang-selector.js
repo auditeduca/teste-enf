@@ -936,7 +936,11 @@
     });
   }
 
+  var inited = false;
   function init() {
+    if (inited) return;
+    if (!document.getElementById("gh-region-list")) return;
+    inited = true;
     // Seletor de idiomas centralizado no cabeçalho (mega-menu Idiomas) — o
     // rodapé não possui mais seletor próprio.
 
@@ -963,4 +967,5 @@
   } else {
     init();
   }
+  document.addEventListener("partials:ready", init);
 })();
