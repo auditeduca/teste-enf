@@ -11,7 +11,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .paths import ROOT
+from .paths import ROOT, TOOLS_DIR
 
 WHO_HOME = "https://www.who.int/"
 WHO_ICNP = (
@@ -210,6 +210,41 @@ def runtime_who_local_key() -> str:
     return who_local_key(RUNTIME_WHO_SRC, RUNTIME_LOCAL_BCP47)
 
 
+PILOT_SLUGS = (
+    "gotejamento",
+    "meows",
+    "cinco-ts-pcr",
+    "simulado-tecnico",
+    "dimensionamento",
+)
+
+
+def _translation_envelopes() -> list[dict]:
+    """Owner F20 APPROVED the composite key. Strings are not invented. Selector stays HOLD."""
+    key = runtime_who_local_key()
+    rows = []
+    for slug in PILOT_SLUGS:
+        rows.append({
+            "business_key": f"TR-ENV-{slug.upper().replace('-', '_')}-WHO-EN-LOCAL-PT-BR",
+            "uuid": None,
+            "tool_slug": slug,
+            "in_data_tools": (TOOLS_DIR / f"{slug}.json").exists(),
+            "who_local_key": key,
+            "src_lang": RUNTIME_WHO_SRC,
+            "trg_lang": RUNTIME_LOCAL_BCP47,
+            "src_strings": None,
+            "trg_strings": None,
+            "human_review": "HOLD",
+            "wired_to_frontend": False,
+            "owner_decision": "APPROVED",
+            "note": (
+                "Chave who.en+local.pt-BR aprovada. Sem inventar inglês. "
+                "Português do piloto permanece no JSON da ferramenta, não como tradução."
+            ),
+        })
+    return rows
+
+
 def lusophone_variant_rows() -> list[dict]:
     rows = []
     for item in LUSOPHONE_LOCALES:
@@ -312,6 +347,9 @@ def compose_who_i18n() -> dict:
         "assured": False,
         "translation_gate": "HOLD",
         "wired_to_frontend": False,
+        "owner_decision": "APPROVED",
+        "approved_key": runtime_who_local_key(),
+        "translation_envelopes_ref": "MD-TR-ENV-001",
         "layer": "L310",
         "agency_key": "AGY-WHO",
         "role": (
@@ -472,12 +510,13 @@ def compose_who_i18n() -> dict:
             "Não inferir pt → pt-BR nem pt-PT → pt-BR nem pt-AO → pt-BR.",
             "CLDR default content pt=pt-BR é fato Unicode, não regra CKO.",
             "GHO/ICD/ICNP = SOURCE_DERIVED. Sem dump de termos.",
-            "Frontend translation_gate HOLD até objeto MD de tradução + revisão humana.",
+            "Frontend translation_gate HOLD. Chave who.en+local.pt-BR APPROVED. Seletor não ligado. Sem inventar strings EN.",
             "CIPE/ICNP não substitui NANDA sem decisão OPT-C.",
             "PAHO pt-br observado; não inventar PAHO-pt-PT.",
             "Zip de design/imagens SKIP_BINARY. Sem copiar bandeiras.",
         ],
         "icd_icnp_gho_dump": "FORBIDDEN",
+        "translation_envelopes": _translation_envelopes(),
         "evaluated_at": _now(),
     }
 
@@ -485,12 +524,32 @@ def compose_who_i18n() -> dict:
 def evaluate_who_i18n() -> dict:
     payload = compose_who_i18n()
     _dump(ROOT / "cko_md" / "who_i18n_modulation.json", payload)
+    envelopes = {
+        "business_key": "MD-TR-ENV-001",
+        "uuid": None,
+        "status": "REGISTERED",
+        "implemented": True,
+        "publication": "HOLD",
+        "assured": False,
+        "owner_decision": "APPROVED",
+        "approved_key": payload["approved_key"],
+        "translation_gate": "HOLD",
+        "wired_to_frontend": False,
+        "who_ref": "MD-WHO-I18N-001",
+        "envelopes": payload["translation_envelopes"],
+        "population": len(payload["translation_envelopes"]),
+        "rule": "Um envelope por piloto × chave who.en+local.pt-BR. Strings EN não inventadas. Seletor HOLD.",
+        "evaluated_at": payload["evaluated_at"],
+    }
+    _dump(ROOT / "cko_md" / "translation_envelopes.json", envelopes)
     i18n = _load(ROOT / "cko_reg" / "i18n_profile.json")
     i18n.update({
         "business_key": i18n.get("business_key") or "REG-I18N-001",
         "uuid": None,
         "who_ref": "MD-WHO-I18N-001",
         "md_ref": "MD-LOCALE-REG-001",
+        "translation_envelopes_ref": "MD-TR-ENV-001",
+        "owner_decision": "APPROVED",
         "translation_gate": "HOLD",
         "human_review_required": True,
         "wired_to_frontend": False,
@@ -500,9 +559,9 @@ def evaluate_who_i18n() -> dict:
         "lusophone_hold": payload["lusophone_hold"],
         "who_official_intersection": payload["drive_intersection"],
         "rule": (
-            "Locale é identidade MD. Chave de envelope who.{src}+local.{bcp47}. "
+            "Locale é identidade MD. Chave de envelope who.{src}+local.{bcp47} APPROVED. "
             "OMS/WHO HQ modula 6 oficiais; português local tem variantes BCP47. "
-            "REG governa BCP47, rights e revisão humana. Frontend não cria locale."
+            "REG governa BCP47, rights e revisão humana. Frontend não cria locale. Seletor HOLD."
         ),
     })
     notes = list(i18n.get("notes") or [])
@@ -582,6 +641,7 @@ def evaluate_who_i18n() -> dict:
         "class": "MD",
         "role": "CHECKER",
         "status": "HOLD",
+        "owner_decision": "APPROVED",
         "translation_gate": "HOLD",
         "wired_to_frontend": False,
         "who_official_count": len(payload["who_official_languages"]),

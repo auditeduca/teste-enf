@@ -17,8 +17,8 @@
   "braden_in_data_tools": false,
   "counts": {
     "envelope_complete": 44,
-    "md_populated": 26,
-    "md_implemented": 22,
+    "md_populated": 27,
+    "md_implemented": 23,
     "reg_populated": 19,
     "assured": 0
   },
@@ -88,7 +88,7 @@
       ],
       "owner_secret": true,
       "goal": "NNN HOLD até A/B/C. Cookie banner NÃO implantado. ISO 27001 cláusula indisponível.",
-      "md_populated": 0,
+      "md_populated": 1,
       "layer_count": 3
     },
     {
@@ -625,15 +625,18 @@
       "md": {
         "profile_ref": "LAYER-120-MD",
         "registers": "concept system, term, code, mappings",
-        "population": "HOLD",
-        "populated": false,
-        "implemented": false,
+        "population": "PARTIAL",
+        "populated": true,
+        "implemented": true,
         "assured": false,
         "identities": [
-          "MD-NNN-RIGHTS-001"
+          "MD-NNN-RIGHTS-001",
+          "MD-NNN-IDENTITY-001",
+          "CKO-NNN-DIAG-00046"
         ],
         "evidence_ok": [
-          "cko_md/nnn_rights_architecture.json"
+          "cko_md/nnn_rights_architecture.json",
+          "cko_md/nnn_identity_catalog.json"
         ],
         "evidence_missing": []
       },
@@ -648,7 +651,7 @@
         "applicability": "APPLICABILITY_UNVERIFIED",
         "instruments": []
       },
-      "gap": "nanda-00046.json QUARANTINE. Sem texto licenciado.",
+      "gap": "UNBLOCK-NNN-LICENSE OPT-B: identity catalog codes+deep-link. Labels withheld. nanda-00046.json QUARANTINE.",
       "do_not": "Copiar banco NANDA/NIC/NOC.",
       "owner_unblock": "UNBLOCK-NNN-LICENSE",
       "publication": "HOLD"
@@ -1402,11 +1405,13 @@
         "assured": false,
         "identities": [
           "who.en+local.pt-BR",
-          "MD-WHO-I18N-001"
+          "MD-WHO-I18N-001",
+          "MD-TR-ENV-001"
         ],
         "evidence_ok": [
           "cko_md/who_i18n_modulation.json",
-          "cko_reg/i18n_profile.json"
+          "cko_reg/i18n_profile.json",
+          "cko_md/translation_envelopes.json"
         ],
         "evidence_missing": []
       },
@@ -1423,8 +1428,8 @@
           "FLD-I18N-WHO-LOCAL-KEY"
         ]
       },
-      "gap": "translation_gate HOLD. Variantes lusófonas catalogadas, não ligadas.",
-      "do_not": "Inferir pt→pt-BR. Dump ICD/ICNP/GHO.",
+      "gap": "Owner APPROVED who.en+local.pt-BR. translation_gate HOLD. Seletor não ligado. Sem strings EN inventadas.",
+      "do_not": "Inferir pt→pt-BR. Dump ICD/ICNP/GHO. Ligar o seletor.",
       "owner_unblock": "UNBLOCK-I18N-TRANSLATION",
       "publication": "HOLD"
     },
@@ -1922,5 +1927,5 @@
   ],
   "layer_records_remain_m0": true,
   "note": "cko_core/layer_registry.json permanece M0_REGISTERED (EXISTS). Este catálogo qualifica evidência por camada sem promover maturidade M5.",
-  "evaluated_at": "2026-08-25T22:27:16Z"
+  "evaluated_at": "2026-08-25T23:46:41Z"
 }

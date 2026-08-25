@@ -14,7 +14,8 @@
       "priority": 1,
       "frente": "F2",
       "kind": "SECRET",
-      "status": "BLOCKED",
+      "status": "HOLD",
+      "owner_decision": "HOLD",
       "title": "SQL read-only no Supabase ativo",
       "project_ref_observed": "aevqrmkdhffmursdtcmo",
       "project_ref_owner_mcp": "yskgekcjzndptzmnjfke",
@@ -23,7 +24,7 @@
         {"name": "SUPABASE_DB_PASSWORD", "optional": false},
         {"name": "SUPABASE_PROJECT_REF", "optional": true}
       ],
-      "how": "No ambiente Cursor Cloud, adicionar a senha do usuário supabase_read_only_user. GRANT só SELECT. Sem DDL, INSERT, UPDATE, DELETE. Sem RLS change. MCP Cursor já está em .cursor/mcp.json (read_only, project_ref=yskgekcjzndptzmnjfke).",
+      "how": "Dono: F2 permanece HOLD neste ciclo. Não coletar SUPABASE_DB_PASSWORD. Schema SQL EVIDENCE_PENDING. Sem list_tables. MCP OAuth já SKIPPED_BY_OWNER.",
       "current_fail": "28P01 no ref aevqrmkdhffmursdtcmo; MCP -32600 permission denied no ref yskgekcjzndptzmnjfke para o OAuth deste Cloud Agent.",
       "do_not": "Não enviar service_role. Não pedir ao agente para inventar 172 entidades. Não commitar chave publishable/secret."
     },
@@ -44,14 +45,16 @@
       "priority": 2,
       "frente": "F12",
       "kind": "DECISION",
-      "status": "HOLD",
+      "status": "DECIDED_B",
+      "owner_decision": "B",
+      "chosen": ["OPT-B-IDENTIFIERS", "OPT-D-DEEPLINK"],
       "title": "Decisão NANDA / NIC / NOC",
       "options": [
         "A — contrato NANDA-I + Elsevier NIC/NOC e sidecar privado (fora do GitHub público)",
         "B — só códigos + mapeamento CID/CIPE (recomendado agora)",
         "C — HOLD de exibição para sempre"
       ],
-      "how": "Responder A, B ou C nesta conversa. Não enviar nanda-00046.json / nic-2312.json / noc-0401.json para o repositório.",
+      "how": "Dono escolheu B. Catálogo de identidade (códigos + URI + deep-link). Sem texto NANDA/NIC/NOC. nanda-00046.json / nic-2312.json / noc-0401.json permanecem QUARANTINE.",
       "recommended_now": "B + deep-link ao titular (OPT-B + OPT-D em MD-NNN-RIGHTS-001)"
     },
     {
@@ -104,20 +107,24 @@
       "priority": 8,
       "frente": "F20",
       "kind": "EVIDENCE",
-      "status": "HOLD",
+      "status": "APPROVED",
+      "owner_decision": "APPROVED",
+      "approved_key": "who.en+local.pt-BR",
       "title": "Objeto MD de tradução por ferramenta + revisão humana",
-      "how": "Um envelope por chave who.{src}+local.{bcp47}. pt-PT ≠ pt-BR. Sem ligar o seletor antes da revisão.",
-      "do_not": "Não inferir pt → pt-BR. Não dump ICD/ICNP/GHO."
+      "how": "Dono aprovou a chave composta who.en+local.pt-BR para os 5 pilotos. Envelopes MD existem. translation_gate HOLD. Seletor não ligado. Sem inventar strings EN. pt ≠ pt-BR ≠ pt-PT.",
+      "do_not": "Não inferir pt → pt-BR. Não dump ICD/ICNP/GHO. Não ligar o seletor."
     },
     {
       "id": "UNBLOCK-DICT-SHEETS",
       "priority": 9,
       "frente": "F21",
       "kind": "EVIDENCE",
-      "status": "HOLD",
+      "status": "RECEIVED",
+      "owner_decision": "RECEIVED",
+      "drive_file_id": "152MrVMQHG76G8nVN0wMMqedvTpHzfEB-",
       "title": "Completar Content_Schemas/Meta_Schemas do dicionário Drive",
-      "how": "Índice reivindica sheets ausentes no xlsx. Decidir quais campos Foundation viram FLD-* runtime — não dump dos 163.",
-      "do_not": "Não promover Braden. Não adotar UUIDv4 do Drive."
+      "how": "Dono enviou o zip já observado (Dicionario clinico.zip). Sheets Content_Schemas/Meta_Schemas ainda MISSING. Só FLD-* existentes. Sem dump dos 163 Foundation. Sem novo ficheiro Drive.",
+      "do_not": "Não promover Braden. Não adotar UUIDv4 do Drive. Não unzip de mega-zips Vila_do_Cuidado."
     },
     {
       "id": "QUARANTINE-PARECER-360",

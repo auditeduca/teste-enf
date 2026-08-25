@@ -536,6 +536,7 @@ def page_library(ctx: dict, **kwargs) -> str:
     libmap = load_json(ROOT / "cko_md" / "library_api_map.json")
     pages_pend = load_json(ROOT / "cko_md" / "pages_full_reg_pendencies.json")
     clin = load_json(ROOT / "cko_md" / "clinical_dictionary_catalog.json")
+    nnn_id = load_json(ROOT / "cko_md" / "nnn_identity_catalog.json")
     alerts = load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
     laws = load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
     res_rows = [
@@ -612,6 +613,17 @@ def page_library(ctx: dict, **kwargs) -> str:
         for item in (clin.get("pilot_codes") or [])
     ]
     clin_tool_rows = [[esc(name)] for name in (clin.get("new_tool_names") or [])[:20]]
+    nnn_rows = [
+        [
+            esc(item.get("system")),
+            esc(item.get("code")),
+            esc(item.get("canonical_label") or "—"),
+            esc(item.get("display_label")),
+            f'<a href="{esc(item.get("deep_link"))}">{esc(item.get("deep_link"))}</a>' if item.get("deep_link") else "—",
+            _status_chip(item.get("drive_file_status") or "QUARANTINE"),
+        ]
+        for item in (nnn_id.get("identities") or [])
+    ]
     inner = f"""
     <header class="page-hero">
       <h1>Biblioteca de recursos.</h1>
@@ -626,11 +638,16 @@ def page_library(ctx: dict, **kwargs) -> str:
     </section>
     <section class="panel">
       <h2>Dicionário clínico Drive ({esc(clin.get("business_key") or "MD-CLIN-DICT-001")})</h2>
-      <p>Zip {esc(clin.get("title"))} · campos Foundation/Knowledge={esc(clin.get("dictionary_field_count"))} · nomes de ferramenta={esc(clin.get("new_tool_name_count"))} · publicação {_status_chip(clin.get("publication") or "HOLD")} · UUIDv4 adotado={esc((clin.get("identity_conflict") or {}).get("adopt_uuid_v4"))} · data/tools promovido={esc(clin.get("promoted_to_data_tools"))}.</p>
-      <p class="hold-banner">COMPARE only. Sem dump de cláusula ABNT/ISO. Escalas de terceiros (Braden/Norton/Glasgow) não entram em data/tools. Content_Schemas/Meta_Schemas reivindicados no índice e ausentes no xlsx.</p>
+      <p>Zip {esc(clin.get("title"))} · dono {esc(clin.get("owner_sent_ref") or "UNBLOCK-DICT-SHEETS")} enviado={esc(clin.get("owner_sent"))} · sheets Content_Schemas/Meta_Schemas={esc(clin.get("sheets_content_meta") or "MISSING")} · FLD policy={esc(clin.get("runtime_fld_policy") or "ONLY_EXISTING_FLD")} · campos Foundation/Knowledge={esc(clin.get("dictionary_field_count"))} · nomes de ferramenta={esc(clin.get("new_tool_name_count"))} · publicação {_status_chip(clin.get("publication") or "HOLD")} · UUIDv4 adotado={esc((clin.get("identity_conflict") or {}).get("adopt_uuid_v4"))} · data/tools promovido={esc(clin.get("promoted_to_data_tools"))}.</p>
+      <p class="hold-banner">COMPARE only. F21 RECEIVED no zip já observado. Sem dump de cláusula ABNT/ISO. Sem dump dos 163 Foundation para FLD-*. Escalas de terceiros (Braden/Norton/Glasgow) não entram em data/tools. Content_Schemas/Meta_Schemas reivindicados no índice e ausentes no xlsx.</p>
       {_table(["slug piloto", "código", "kind", "relação Drive", "nomes no zip"], clin_code_rows or [["rode extract", "—", "—", "HOLD", "—"]])}
       <p>Primeiros nomes da matriz de novas ferramentas:</p>
       {_table(["ferramenta (Drive)"], clin_tool_rows or [["—"]])}
+    </section>
+    <section class="panel">
+      <h2>NANDA / NIC / NOC identidade OPT-B ({esc(nnn_id.get("business_key") or "MD-NNN-IDENTITY-001")})</h2>
+      <p>Dono F12 = B. Códigos a partir dos nomes de ficheiro Drive. canonical_label=null. Deep-link ao titular. Sem texto licenciado. Publicação {_status_chip(nnn_id.get("publication") or "HOLD")}.</p>
+      {_table(["sistema", "código", "label canônico", "exibição", "deep-link", "Drive"], nnn_rows or [["rode extract", "—", "—", "texto indisponível (licença)", "—", "QUARANTINE"]])}
     </section>
     <section class="panel">
       <h2>Legislação federal</h2>
@@ -865,8 +882,8 @@ def page_locales(ctx: dict, **kwargs) -> str:
     inner = f"""
     <header class="page-hero">
       <h1>Locales e Drive.</h1>
-      <p class="lede">MD-LOCALE-REG-001 registra {esc(locales.get("population"))} códigos extraídos de locales.zip ({esc(locales.get("epistemic_status"))}). REG-I18N-001 mantém tradução em HOLD. Runtime {esc(who.get("runtime_who_local_key") or "who.en+local.pt-BR")}. OMS/WHO HQ (6 oficiais) + locale local BCP47; não liga o seletor.</p>
-      <p class="hold-banner">Stems observados: cookies, footer. Sem strings de calculadora. Banner de cookies do zip NÃO implantado (NO_SENSITIVE_CAPTURE). Dump ICD/ICNP/GHO FORBIDDEN. pt ≠ pt-BR ≠ pt-PT ≠ pt-AO. CLDR default pt→pt-BR NÃO adotado.</p>
+      <p class="lede">MD-LOCALE-REG-001 registra {esc(locales.get("population"))} códigos extraídos de locales.zip ({esc(locales.get("epistemic_status"))}). REG-I18N-001 mantém tradução em HOLD. Runtime {esc(who.get("runtime_who_local_key") or "who.en+local.pt-BR")}. Dono APPROVED a chave composta; OMS/WHO HQ (6 oficiais) + locale local BCP47; não liga o seletor.</p>
+      <p class="hold-banner">Dono i18n={esc(who.get("owner_decision") or i18n.get("owner_decision") or "HOLD")} · gate {esc(who.get("translation_gate") or "HOLD")} · wired={esc(who.get("wired_to_frontend"))}. Stems observados: cookies, footer. Sem strings de calculadora. Banner de cookies do zip NÃO implantado (NO_SENSITIVE_CAPTURE). Dump ICD/ICNP/GHO FORBIDDEN. pt ≠ pt-BR ≠ pt-PT ≠ pt-AO. CLDR default pt→pt-BR NÃO adotado.</p>
     </header>
     <section class="panel">
       <h2>Modulação WHO/OMS ({esc(who.get("business_key"))})</h2>
@@ -1090,6 +1107,8 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
         ROOT / "cko_core" / "design_token_registry.json",
         ROOT / "cko_md" / "locale_registry.json",
         ROOT / "cko_md" / "who_i18n_modulation.json",
+        ROOT / "cko_md" / "translation_envelopes.json",
+        ROOT / "cko_md" / "nnn_identity_catalog.json",
         ROOT / "cko_md" / "layer_md_reg_phase.json",
     ):
         if source.exists():

@@ -48,7 +48,8 @@ def test_inventory_keeps_schema_pending_and_records_owner_ref():
     plan = plan_fronts()
     assert result["schema"] == "EVIDENCE_PENDING"
     assert result["sql_blocked"] is True
-    assert "F2" in plan["blocked"]
+    assert "F2" in plan["hold"]
+    assert "F2" not in plan["blocked"]
     inv = json.loads((ROOT / "cko_inbox" / "extracted" / "supabase_inventory.json").read_text(encoding="utf-8"))
     refs = {item["ref"] for item in inv["projects"]}
     assert OWNER_REF in refs

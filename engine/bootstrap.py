@@ -542,12 +542,17 @@ def write_registries() -> list[Path]:
     from .who_i18n import evaluate_who_i18n
     from .clinical_dict import evaluate_clinical_dict
     from .layer_phase import evaluate_layer_md_reg
+    from .rights import bind_nnn_opt_b
 
+    bind_nnn_opt_b()
     evaluate_who_i18n()
     evaluate_clinical_dict()
     evaluate_layer_md_reg()
+    written.append(MD_DIR / "nnn_identity_catalog.json")
+    written.append(MD_DIR / "nnn_rights_architecture.json")
     written.append(MD_DIR / "who_i18n_modulation.json")
     written.append(REG_DIR / "i18n_profile.json")
+    written.append(MD_DIR / "translation_envelopes.json")
     written.append(MD_DIR / "clinical_dictionary_catalog.json")
     written.append(MD_DIR / "layer_md_reg_phase.json")
     return written

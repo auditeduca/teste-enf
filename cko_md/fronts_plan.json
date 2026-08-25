@@ -33,13 +33,14 @@
     {
       "id": "F2",
       "name": "Leitura Supabase",
-      "status": "BLOCKED",
+      "status": "HOLD",
       "agents": [
         "AG-INVENTORY-SUPABASE"
       ],
       "gap": "GAP-SUPABASE-READ",
-      "action": "MCP .cursor/mcp.json read_only no ref yskgekcjzndptzmnjfke DOCUMENTADO. OAuth deste agente: permission denied. SQL 28P01 no ref aevqrmkdhffmursdtcmo. Não inventar schema nem 172 entidades.",
+      "action": "Dono HOLD. MCP .cursor/mcp.json read_only DOCUMENTADO. Schema SQL EVIDENCE_PENDING. Sem coletar SUPABASE_DB_PASSWORD. Sem list_tables. Sem inventar 172 entidades.",
       "schema": "EVIDENCE_PENDING",
+      "owner_decision": "HOLD",
       "gap_status": "BLOCKED"
     },
     {
@@ -151,13 +152,14 @@
     {
       "id": "F12",
       "name": "NANDA/NIC/NOC rights-safe",
-      "status": "HOLD",
+      "status": "REGISTERED",
       "agents": [
         "AG-PLAN-FRONTS",
         "AG-RIGHTS-BIND"
       ],
       "gap": "GAP-NNN-RIGHTS",
-      "action": "Identificadores + sidecar licenciado. Não copiar nanda-00046.json do Drive.",
+      "action": "Dono B: identidade+código+deep-link. Sem texto NANDA/NIC/NOC. nanda-00046.json permanece QUARANTINE.",
+      "owner_decision": "B",
       "gap_status": "HOLD"
     },
     {
@@ -244,25 +246,27 @@
     {
       "id": "F20",
       "name": "L310 i18n WHO/OMS",
-      "status": "HOLD",
+      "status": "REGISTERED",
       "agents": [
         "AG-WHO-I18N",
         "AG-ISO8000-PROFILE"
       ],
       "gap": "GAP-WHO-I18N",
-      "action": "Seletor who.int (en ar zh fr ru es) ∩ locales.zip. Chave runtime who.en+local.pt-BR. Variantes lusófonas HOLD. Sem dump ICD/ICNP/GHO. translation_gate HOLD.",
+      "action": "Dono APPROVED chave who.en+local.pt-BR nos 5 pilotos. translation_gate HOLD. Seletor não ligado. Sem dump ICD/ICNP/GHO. Sem inventar strings EN.",
+      "owner_decision": "APPROVED",
       "gap_status": "HOLD"
     },
     {
       "id": "F21",
       "name": "Dicionário clínico Drive + códigos piloto",
-      "status": "HOLD",
+      "status": "COMPARE_ONLY",
       "agents": [
         "AG-CLIN-DICT",
         "AG-ISO8000-PROFILE"
       ],
       "gap": "GAP-CLIN-DICT",
-      "action": "Namelist COMPARE. Pilotos CALC-/SCALE-/GUIDE-/EXAM-*. Sem Braden em data/tools. UUIDv4 não adotado. ABNT/ISO cláusula HOLD.",
+      "action": "Dono enviou Dicionario clinico.zip (já observado). Sheets Content_Schemas/Meta_Schemas MISSING. Só FLD-* existentes. Sem Braden. UUIDv4 não adotado.",
+      "owner_decision": "RECEIVED",
       "gap_status": "HOLD"
     },
     {
@@ -280,16 +284,16 @@
   ],
   "next_executable": [
     "F1 replay offline a cada extract",
-    "F2 bloqueado: MCP Cursor JSON read_only DOCUMENTADO; schema SQL ainda EVIDENCE_PENDING",
+    "F2 HOLD: MCP read_only DOCUMENTADO; schema SQL EVIDENCE_PENDING; sem senha neste ciclo",
     "F9 COMPARE pages_full vs pilotos; catálogo de pendências REG; sem unzip",
     "F10 vacinas 15 CAL-VAC PATTERN_CANDIDATE; 32 EVIDENCE_PENDING",
-    "F12 NNN HOLD até decisão de licença A/B/C",
+    "F12 NNN OPT-B REGISTERED: códigos+deep-link; texto licenciado withheld",
     "F15 PGDADOS /pgdados explícito no perfil ISO (não certificação)",
     "F18 OG first-party LinkedIn; 151 cards Drive não copiados",
-    "F20 WHO/OMS i18n envelopes; translation HOLD; sem dump",
-    "F21 Dicionario clinico.zip COMPARE; códigos piloto; sem escalas de terceiros",
+    "F20 chave who.en+local.pt-BR APPROVED; seletor HOLD; sem dump",
+    "F21 zip recebido COMPARE; sheets Content_Schemas/Meta_Schemas MISSING",
     "F22 envelope MD+REG das 44 camadas P0–P5; sem claim 100% completo",
     "F3/F4 só com evidência HTTP/Congress já no tubo"
   ],
-  "updated_at": "2026-08-25T23:18:47Z"
+  "updated_at": "2026-08-25T23:46:41Z"
 }

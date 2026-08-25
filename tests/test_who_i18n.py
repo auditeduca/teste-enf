@@ -51,6 +51,7 @@ def test_who_i18n_holds_translation_and_forbids_dumps():
     result = evaluate_who_i18n()
     assert result["agent_id"] == "AG-WHO-I18N"
     assert result["status"] == "HOLD"
+    assert result["owner_decision"] == "APPROVED"
     assert result["translation_gate"] == "HOLD"
     assert result["wired_to_frontend"] is False
     assert result["promotes_to_md"] is False
@@ -112,6 +113,7 @@ def test_admin_locales_surfaces_who_overlay_without_wiring_chrome():
     assert "HOLD" in locales
     home = (ROOT / "render" / "fetch" / "index.html").read_text(encoding="utf-8")
     assert 'data-i18n-gate="HOLD"' in home
+    assert 'data-owner-i18n="APPROVED"' in home
     assert 'data-who-official="en,ar,zh,fr,ru,es"' in home
     assert 'data-who-local-key="who.en+local.pt-BR"' in home
     assert 'data-local-bcp47="pt-BR"' in home

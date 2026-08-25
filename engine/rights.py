@@ -137,6 +137,7 @@ def bind_rights(*, law_text: str | None = None, law_sha256: str | None = None) -
     _dump(ROOT / "cko_reg" / "instrument_registry.json", instruments)
     _dump(ROOT / "cko_md" / "work_registry.json", work_registry)
     _dump(ROOT / "cko_reg" / "rights_profile.json", rights_profile)
+    bind_nnn_opt_b()
     return {
         "agent_id": "AG-RIGHTS-BIND",
         "class": "REGULATORY",
@@ -148,4 +149,122 @@ def bind_rights(*, law_text: str | None = None, law_sha256: str | None = None) -
         "assured": False,
         "llm_used": False,
         "promotes_to_md": False,
+    }
+
+
+# Codes taken from Drive *filenames* only (nanda-00046.json / nic-2312.json / noc-0401.json).
+# Never copy definingCharacteristics, NIC activities, or NOC indicators.
+NNN_DRIVE_CODES = (
+    {
+        "system": "NANDA",
+        "code": "00046",
+        "drive_filename": "nanda-00046.json",
+        "cko_key": "CKO-NNN-DIAG-00046",
+        "holder": "NANDA-I",
+        "deep_link": "https://nanda.org/",
+    },
+    {
+        "system": "NIC",
+        "code": "2312",
+        "drive_filename": "nic-2312.json",
+        "cko_key": "CKO-NNN-INT-2312",
+        "holder": "Elsevier",
+        "deep_link": "https://www.elsevier.com/",
+    },
+    {
+        "system": "NOC",
+        "code": "0401",
+        "drive_filename": "noc-0401.json",
+        "cko_key": "CKO-NNN-OUT-0401",
+        "holder": "Elsevier",
+        "deep_link": "https://www.elsevier.com/",
+    },
+)
+DISPLAY_LICENSE_UNAVAILABLE = "texto indisponível (licença)"
+
+
+def bind_nnn_opt_b() -> dict:
+    """Owner F12 = B. Identity catalog only. Zero licensed NANDA/NIC/NOC text."""
+    identities = []
+    for item in NNN_DRIVE_CODES:
+        identities.append({
+            "business_key": item["cko_key"],
+            "uuid": None,
+            "system": item["system"],
+            "code": item["code"],
+            "canonical_label": None,
+            "display_label": DISPLAY_LICENSE_UNAVAILABLE,
+            "drive_filename": item["drive_filename"],
+            "drive_file_status": "QUARANTINE",
+            "holder": item["holder"],
+            "deep_link": item["deep_link"],
+            "licensed_text": False,
+            "in_data_tools": (TOOLS_DIR / item["drive_filename"]).exists(),
+            "mapping": {"cid": None, "cipec": None, "note": "Arestas públicas HOLD até evidência HTTP."},
+        })
+    catalog = {
+        "business_key": "MD-NNN-IDENTITY-001",
+        "uuid": None,
+        "status": "REGISTERED",
+        "implemented": True,
+        "publication": "HOLD",
+        "assured": False,
+        "owner_decision": "B",
+        "chosen": ["OPT-B-IDENTIFIERS", "OPT-D-DEEPLINK"],
+        "mode": "IDENTIFIERS_ONLY",
+        "layer": "L120",
+        "architecture_ref": "MD-NNN-RIGHTS-001",
+        "owner_unblock": "UNBLOCK-NNN-LICENSE",
+        "codes_source": "Drive filenames only. No JSON body copied.",
+        "display_policy": DISPLAY_LICENSE_UNAVAILABLE,
+        "do_not": [
+            "Copiar nanda-00046.json / nic-2312.json / noc-0401.json para data/tools.",
+            "Republicar definingCharacteristics, NIC activities ou NOC indicators.",
+            "Inventar label canônico equivalente via LLM.",
+        ],
+        "identities": identities,
+        "population": len(identities),
+        "bound_at": _now(),
+    }
+    _dump(ROOT / "cko_md" / "nnn_identity_catalog.json", catalog)
+
+    arch_path = ROOT / "cko_md" / "nnn_rights_architecture.json"
+    architecture = {}
+    if arch_path.exists():
+        architecture = json.loads(arch_path.read_text(encoding="utf-8"))
+    architecture.update({
+        "business_key": architecture.get("business_key") or "MD-NNN-RIGHTS-001",
+        "uuid": None,
+        "status": "DOCUMENTADO",
+        "implemented": True,
+        "publication": "HOLD",
+        "assured": False,
+        "layer": "L120",
+        "owner_decision": "B",
+        "chosen": ["OPT-B-IDENTIFIERS", "OPT-D-DEEPLINK"],
+        "identity_catalog_ref": "MD-NNN-IDENTITY-001",
+        "gap": (
+            "UNBLOCK-NNN-LICENSE OPT-B CHOSEN: identity catalog (codes+URI+deep-link); "
+            "canonical labels withheld; no NANDA/NIC/NOC dump"
+        ),
+    })
+    options = list(architecture.get("options_for_owner") or [])
+    by_id = {item.get("id"): dict(item) for item in options}
+    if "OPT-B-IDENTIFIERS" in by_id:
+        by_id["OPT-B-IDENTIFIERS"]["status"] = "CHOSEN"
+    if "OPT-D-DEEPLINK" in by_id:
+        by_id["OPT-D-DEEPLINK"]["status"] = "CHOSEN"
+    if "OPT-A-LICENSE" in by_id:
+        by_id["OPT-A-LICENSE"]["status"] = "HOLD_UNTIL_CONTRACT"
+    architecture["options_for_owner"] = list(by_id.values()) or architecture.get("options_for_owner")
+    architecture["recommended_now"] = "OPT-B-IDENTIFIERS + OPT-D-DEEPLINK chosen by owner. OPT-A só após contrato."
+    _dump(arch_path, architecture)
+    return {
+        "agent_id": "AG-RIGHTS-BIND",
+        "step": "NNN_OPT_B",
+        "status": "REGISTERED",
+        "owner_decision": "B",
+        "population": catalog["population"],
+        "licensed_text": False,
+        "publication": "HOLD",
     }

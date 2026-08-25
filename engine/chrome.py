@@ -191,7 +191,7 @@ def ds_language_bar(home_href: str) -> str:
         )
     menu = "\n        ".join(items)
     key = runtime_who_local_key()
-    return f"""<div id="language-selector-placeholder" data-i18n-gate="HOLD" data-who-official="en,ar,zh,fr,ru,es" data-who-local-key="{attr(key)}" data-local-bcp47="{attr(RUNTIME_LOCAL_BCP47)}" data-pt-variants="HOLD">
+    return f"""<div id="language-selector-placeholder" data-i18n-gate="HOLD" data-owner-i18n="APPROVED" data-who-official="en,ar,zh,fr,ru,es" data-who-local-key="{attr(key)}" data-local-bcp47="{attr(RUNTIME_LOCAL_BCP47)}" data-pt-variants="HOLD">
     <div class="wrap lang-bar">
       <p class="lang-runtime">{esc(key)} · i18n HOLD. Variantes lusófonas catalogadas, não ligadas. Candidatos WHO HQ (en ar zh fr ru es) não ligam o seletor. PAHO pt-br observado. Bandeiras EVIDENCE_PENDING. Tradução não redireciona.</p>
       <div id="language-dropdown-wrapper">
