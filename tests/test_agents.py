@@ -36,6 +36,10 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
         "AG-IPE-EXTRACT",
         "AG-LINK-MD",
         "AG-LIBRARY-CATALOG",
+        "AG-INVENTORY-DRIVE",
+        "AG-INVENTORY-SUPABASE",
+        "AG-COMPARE-STORES",
+        "AG-PLAN-FRONTS",
         "AG-CONTENT-CURRICULUM",
         "AG-COMPARE-SOURCE",
         "AG-COMPARE-INTERNAL",
@@ -54,7 +58,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     slugs = {path.stem for path in TOOLS_DIR.glob("*.json")}
     assert slugs == {"gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico", "dimensionamento"}
     agents = json.loads((ROOT / "cko_assurance" / "agent_registry.json").read_text(encoding="utf-8"))
-    assert agents["population"] == 27
+    assert agents["population"] == 31
     assert agents["implemented"] is True
     assert agents["publication_implemented"] is False
     ipe = json.loads((ROOT / "cko_inbox" / "extracted" / "ipe_extract.json").read_text(encoding="utf-8"))
@@ -67,6 +71,21 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     assert shell_step.get("chrome_projection") == "A11Y_PWA_KEYBOARD_BACKTOTOP_NO_ADS"
     assert "adsbygoogle" in (shell_step.get("forbidden_token_hits") or {})
     assert all(step.get("promotes_to_md") is not True for step in run["steps"])
+    drive_inv = json.loads((ROOT / "cko_inbox" / "extracted" / "drive_inventory.json").read_text(encoding="utf-8"))
+    assert drive_inv["promotes_to_md"] is False
+    assert drive_inv["quarantine"] is True
+    parecer = next(item for item in drive_inv["files"] if item["id"] == "1OUlaOO-hvxKk7IHoiBoKWuJRg26hP3uC")
+    assert parecer["classification"] == "DISCOVERY_QUARANTINE"
+    mega = next(item for item in drive_inv["files"] if item["id"] == "1VwN7LjxR30GbPctX6-Uq6IH7A-eh7idA")
+    assert mega["classification"] == "SKIP_BINARY_DUMP"
+    supabase_inv = json.loads((ROOT / "cko_inbox" / "extracted" / "supabase_inventory.json").read_text(encoding="utf-8"))
+    assert supabase_inv["schema"] == "EVIDENCE_PENDING"
+    assert supabase_inv["promotes_to_md"] is False
+    fronts = json.loads((ROOT / "cko_md" / "fronts_plan.json").read_text(encoding="utf-8"))
+    assert fronts["business_key"] == "MD-FRONTS-PLAN-001"
+    assert fronts["publication"] == "HOLD"
+    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 9)}
+    assert not (TOOLS_DIR / "braden.json").exists()
 
 
 def test_public_chrome_matches_production_contract_without_ads():

@@ -211,6 +211,20 @@ def page_database(ctx: dict, **kwargs) -> str:
         ])
     types = (load_json(ROOT / "cko_md" / "entity_type_registry.json").get("types") or [])
     type_rows = [[esc(t.get("business_key")), esc(t.get("name"))] for t in types]
+    supabase = load_json(ROOT / "cko_inbox" / "extracted" / "supabase_inventory.json")
+    project_rows = [
+        [
+            esc(item.get("ref")),
+            esc(item.get("name")),
+            esc(item.get("status")),
+            esc(item.get("region")),
+        ]
+        for item in (supabase.get("projects") or [])
+    ] or [["—", "—", "EVIDENCE_PENDING", "—"]]
+    fn_rows = [
+        [esc(item.get("slug")), esc(item.get("status")), esc(item.get("source") or "NOT_FETCHED")]
+        for item in (supabase.get("edge_functions") or [])
+    ] or [["—", "—", "não observado"]]
     inner = f"""
     <header class="page-hero">
       <h1>Banco de dados Day Zero.</h1>
@@ -223,6 +237,13 @@ def page_database(ctx: dict, **kwargs) -> str:
     <section class="panel">
       <h2>Entity types MD</h2>
       {_table(["business_key", "nome"], type_rows)}
+    </section>
+    <section class="panel">
+      <h2>Supabase (descoberta, não canônico)</h2>
+      <p class="hold-banner">Schema SQL: {esc(supabase.get("schema") or "EVIDENCE_PENDING")}. 28P01 em list_tables/list_migrations. Não inventar tabelas. LLM gateway HOLD. Fonte de Edge Function NÃO baixada.</p>
+      {_table(["ref", "nome", "status", "região"], project_rows)}
+      <h3>Edge Functions (nome apenas)</h3>
+      {_table(["slug", "status", "source"], fn_rows)}
     </section>
     <section class="panel">
       <h2>RLS / Postgres</h2>
@@ -368,12 +389,35 @@ def page_agents(ctx: dict, **kwargs) -> str:
             _status_chip(item.get("cko_status")),
         ])
     steps = "".join(f"<li>{esc(step.get('agent_id'))} · {esc(step.get('status'))}</li>" for step in (run.get("steps") or []))
+    fronts = load_json(ROOT / "cko_md" / "fronts_plan.json")
+    front_rows = [
+        [
+            esc(item.get("id")),
+            esc(item.get("name")),
+            _status_chip(item.get("status")),
+            esc(", ".join(item.get("agents") or [])),
+            esc(item.get("gap")),
+            esc((item.get("action") or "")[:160]),
+        ]
+        for item in (fronts.get("fronts") or [])
+    ] or [["—", "—", "HOLD", "—", "—", "Plano ainda não gerado."]]
+    drive = load_json(ROOT / "cko_inbox" / "extracted" / "drive_inventory.json")
+    counts = drive.get("counts") or {}
     inner = f"""
     <header class="page-hero">
       <h1>Agentes.</h1>
       <p class="lede">Runner de extração IMPLEMENTADO (inbox). Publicação clínica HOLD. MAKER ≠ CHECKER ≠ AUDITOR. CLI: <code>python3 -m engine.cli extract</code>.</p>
       <p class="hold-banner">Último run: {esc(run.get("run_id") or "nenhum")} · status {esc(run.get("status") or "UNKNOWN")} · publicação {esc(run.get("publication") or "HOLD")} · IPE reliance={esc(run.get("ipe_reliance"))}.</p>
     </header>
+    <section class="panel">
+      <h2>Frentes do plano vivo ({esc(fronts.get("business_key") or "MD-FRONTS-PLAN-001")})</h2>
+      <p>Método {esc(fronts.get("method") or "RECOVER → COMPARE → GAP ONLY")}. Publicação {esc(fronts.get("publication") or "HOLD")}. LLM autoridade={esc(fronts.get("llm_authority"))}.</p>
+      {_table(["frente", "nome", "status", "agentes", "gap", "ação"], front_rows)}
+    </section>
+    <section class="panel">
+      <h2>Inventário Drive classificado</h2>
+      <p>População {esc(drive.get("population"))} · ALREADY_IN_CKO={esc(counts.get("ALREADY_IN_CKO"))} · QUARANTINE={esc(counts.get("DISCOVERY_QUARANTINE"))} · SKIP={esc(counts.get("SKIP_BINARY_DUMP"))} · GAP={esc(counts.get("CANDIDATE_GAP"))}. HTML de escalas não entra no header público.</p>
+    </section>
     <section class="panel">
       <h2>Registry CKO ({esc(registry.get("population"))} agentes)</h2>
       {_table(["agent_id", "classe", "runtime", "escreve em", "MD"], class_rows)}

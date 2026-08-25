@@ -217,6 +217,38 @@
       "note": "Catálogo de metadados. Não republica HTML integral."
     },
     {
+      "agent_id": "AG-INVENTORY-DRIVE",
+      "class": "DISCOVERY",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/drive_inventory.json",
+      "promotes_to_md": false,
+      "note": "Replay do listing Drive persistido. Não unzip mega-zip nem promove HTML."
+    },
+    {
+      "agent_id": "AG-INVENTORY-SUPABASE",
+      "class": "DISCOVERY",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/supabase_inventory.json",
+      "promotes_to_md": false,
+      "note": "Projetos e slugs de Edge Function observados. Schema SQL EVIDENCE_PENDING (28P01)."
+    },
+    {
+      "agent_id": "AG-COMPARE-STORES",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/compare_stores.json",
+      "promotes_to_md": false,
+      "note": "CHECKER: Drive/Supabase vs GitHub MD/REG. Só gaps."
+    },
+    {
+      "agent_id": "AG-PLAN-FRONTS",
+      "class": "ORCHESTRATOR",
+      "implemented": true,
+      "writes_to": "cko_md/fronts_plan.json",
+      "promotes_to_md": false,
+      "note": "Plano vivo por frentes. Não é waterfall. LLM não é autoridade."
+    },
+    {
       "agent_id": "AG-CONTENT-CURRICULUM",
       "class": "CONTENT",
       "implemented": true,
@@ -242,5 +274,5 @@
       "note": "Alerta JSON/Admin. Sem e-mail. Pendência ALTA se norma indisponível."
     }
   ],
-  "population": 27
+  "population": 31
 }

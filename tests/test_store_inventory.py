@@ -1,0 +1,49 @@
+"""Store inventory agents classify Drive/Supabase without promoting HTML."""
+
+from engine.store_inventory import classify_drive_file, inventory_drive, inventory_supabase, plan_fronts
+
+
+def test_classify_does_not_promote_html_or_mega_zip():
+    parecer = classify_drive_file({
+        "id": "1OUlaOO-hvxKk7IHoiBoKWuJRg26hP3uC",
+        "title": "CKO-MasterData-Parecer-360-v1.0.md",
+        "mimeType": "text/markdown",
+        "fileSize": "14581",
+    })
+    assert parecer["classification"] == "DISCOVERY_QUARANTINE"
+    assert parecer["promotes_to_md"] is False
+    grok = classify_drive_file({
+        "id": "1VwN7LjxR30GbPctX6-Uq6IH7A-eh7idA",
+        "title": "fH1ew2tMuINgm9Yt-grok-workspace.zip",
+        "mimeType": "application/x-zip-compressed",
+        "fileSize": "140316423",
+    })
+    assert grok["classification"] == "SKIP_BINARY_DUMP"
+    shell = classify_drive_file({
+        "id": "1HEOd0k5i_iBtereT_ob_T1q8qI9MzKKU",
+        "title": "site-shell-calculadoras-enfermagem.zip",
+        "mimeType": "application/zip",
+        "fileSize": "82453",
+    })
+    assert shell["classification"] == "ALREADY_IN_CKO"
+    completo = classify_drive_file({
+        "id": "1QGdvsnUhKSr2XTQ03sJzWowKp8lQUxZf",
+        "title": "site-shell-calculadoras-enfermagem-completo.zip",
+        "mimeType": "application/zip",
+        "fileSize": "296119",
+    })
+    assert completo["classification"] == "CANDIDATE_GAP"
+    assert completo["action"] == "COMPARE_ONLY"
+
+
+def test_inventory_agents_keep_schema_pending_and_plan_hold():
+    drive = inventory_drive()
+    supabase = inventory_supabase()
+    plan = plan_fronts()
+    assert drive["promotes_to_md"] is False
+    assert drive["do_not_unzip"] is True
+    assert supabase["schema"] == "EVIDENCE_PENDING"
+    assert supabase["sql_blocked"] is True
+    assert plan["publication"] == "HOLD"
+    assert plan["front_count"] == 8
+    assert "F2" in plan["blocked"]

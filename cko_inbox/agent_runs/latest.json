@@ -1,10 +1,10 @@
 {
   "business_key": "IPE-AGENT-RUN-001",
-  "run_id": "RUN-EXTRACT-20260825T143639Z",
+  "run_id": "RUN-EXTRACT-20260825T170255Z",
   "uuid": null,
   "status": "HOLD",
   "network": false,
-  "started_at": "2026-08-25T14:36:39Z",
+  "started_at": "2026-08-25T17:02:55Z",
   "chain": "vault → CKO-MD → CKO-REG → projection → renderer → frontend",
   "rule": "DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO. Extração ≠ promoção. LLM não é checker.",
   "publication": "HOLD",
@@ -772,6 +772,67 @@
       "publication": "HOLD"
     },
     {
+      "agent_id": "AG-INVENTORY-DRIVE",
+      "class": "DISCOVERY",
+      "role": "MAKER",
+      "status": "OBSERVED",
+      "promotes_to_md": false,
+      "writes_to": "cko_inbox/extracted/drive_inventory.json",
+      "population": 117,
+      "counts": {
+        "DISCOVERY_QUARANTINE": 78,
+        "ALREADY_IN_CKO": 4,
+        "SKIP_BINARY_DUMP": 21,
+        "FOLDER_OBSERVED": 12,
+        "CANDIDATE_GAP": 1,
+        "SKIP_PII": 1
+      },
+      "pagination_complete": false,
+      "do_not_unzip": true
+    },
+    {
+      "agent_id": "AG-INVENTORY-SUPABASE",
+      "class": "DISCOVERY",
+      "role": "MAKER",
+      "status": "EVIDENCE_PENDING",
+      "promotes_to_md": false,
+      "writes_to": "cko_inbox/extracted/supabase_inventory.json",
+      "schema": "EVIDENCE_PENDING",
+      "projects_observed": 2,
+      "edge_functions_observed": 7,
+      "sql_blocked": true,
+      "llm_gateway": "HOLD"
+    },
+    {
+      "agent_id": "AG-COMPARE-STORES",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "OBSERVED",
+      "promotes_to_md": false,
+      "writes_to": "cko_inbox/extracted/compare_stores.json",
+      "gap_count": 12,
+      "braden_in_data_tools": false,
+      "supabase_schema": "EVIDENCE_PENDING"
+    },
+    {
+      "agent_id": "AG-PLAN-FRONTS",
+      "class": "ORCHESTRATOR",
+      "role": "MD",
+      "status": "DOCUMENTADO",
+      "promotes_to_md": false,
+      "writes_to": "cko_md/fronts_plan.json",
+      "front_count": 8,
+      "publication": "HOLD",
+      "blocked": [
+        "F2"
+      ],
+      "hold": [
+        "F5",
+        "F7",
+        "F8"
+      ]
+    },
+    {
       "agent_id": "AG-CONTENT-CURRICULUM",
       "class": "CONTENT",
       "role": "MAKER",
@@ -806,8 +867,8 @@
       "class": "MONITORING",
       "role": "CHECKER",
       "status": "HOLD",
-      "population": 82,
-      "open_source_drift": 82,
+      "population": 96,
+      "open_source_drift": 96,
       "open_internal_drift": 0,
       "wired_to_frontend": true,
       "llm_used": false,

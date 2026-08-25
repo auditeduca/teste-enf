@@ -919,6 +919,38 @@ def agent_records() -> list[dict]:
             "note": "Catálogo de metadados. Não republica HTML integral.",
         },
         {
+            "agent_id": "AG-INVENTORY-DRIVE",
+            "class": "DISCOVERY",
+            "implemented": True,
+            "writes_to": "cko_inbox/extracted/drive_inventory.json",
+            "promotes_to_md": False,
+            "note": "Replay do listing Drive persistido. Não unzip mega-zip nem promove HTML.",
+        },
+        {
+            "agent_id": "AG-INVENTORY-SUPABASE",
+            "class": "DISCOVERY",
+            "implemented": True,
+            "writes_to": "cko_inbox/extracted/supabase_inventory.json",
+            "promotes_to_md": False,
+            "note": "Projetos e slugs de Edge Function observados. Schema SQL EVIDENCE_PENDING (28P01).",
+        },
+        {
+            "agent_id": "AG-COMPARE-STORES",
+            "class": "MONITORING",
+            "implemented": True,
+            "writes_to": "cko_inbox/extracted/compare_stores.json",
+            "promotes_to_md": False,
+            "note": "CHECKER: Drive/Supabase vs GitHub MD/REG. Só gaps.",
+        },
+        {
+            "agent_id": "AG-PLAN-FRONTS",
+            "class": "ORCHESTRATOR",
+            "implemented": True,
+            "writes_to": "cko_md/fronts_plan.json",
+            "promotes_to_md": False,
+            "note": "Plano vivo por frentes. Não é waterfall. LLM não é autoridade.",
+        },
+        {
             "agent_id": "AG-CONTENT-CURRICULUM",
             "class": "CONTENT",
             "implemented": True,
@@ -985,6 +1017,7 @@ def run_extraction(*, network: bool = True) -> dict:
     from .monitor import compare_internal, compare_source, monitor_drift
     from .rights import bind_rights
     from .site_shell import parse_site_shell
+    from .store_inventory import compare_stores, inventory_drive, inventory_supabase, plan_fronts
     from .vault import put_known_sources
 
     run_id = "RUN-EXTRACT-" + _now().replace(":", "").replace("-", "")
@@ -1009,6 +1042,10 @@ def run_extraction(*, network: bool = True) -> dict:
         ipe_carr(),
         link_to_md(),
         catalog_library(),
+        inventory_drive(),
+        inventory_supabase(),
+        compare_stores(),
+        plan_fronts(),
         content_curriculum(),
         compare_source(network=network, fetch_fn=_http_get),
         compare_internal(),

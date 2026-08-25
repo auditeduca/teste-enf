@@ -32,7 +32,8 @@
         "lei8080-sus.html com ads",
         "pages_full HTML de escalas não publicadas",
         "IDs NIFS LEG.BR.*"
-      ]
+      ],
+      "inventory_ref": "IPE-DRIVE-INV-001"
     },
     "nifs": {
       "role": "DISCOVERY_ONLY",
@@ -55,14 +56,40 @@
           "sql": "not queried — inactive"
         }
       ],
-      "note": "Não inventar schema nem 172 entidades. Reabrir só com credencial de leitura."
+      "note": "Não inventar schema nem 172 entidades. Reabrir só com credencial de leitura.",
+      "inventory_ref": "IPE-SUPABASE-INV-001",
+      "schema": "EVIDENCE_PENDING",
+      "edge_functions_observed": [
+        "extrair-questoes-enfermagem",
+        "recover-cko-artifact",
+        "invoke-recover-cko-artifact-once",
+        "santos-study-renderer",
+        "santos-study-export-once",
+        "cko-deepseek-gateway",
+        "calculadoras-smart-deepseek-gateway"
+      ]
     }
   },
   "federal_catalog_rule": {
     "publication_house": "Congresso Nacional / normas.leg.br",
     "emitting_organ_is_not_catalog_identity": true,
-    "allow": ["CF", "LEI", "LCP promulgada", "DEC-n regulamentar"],
-    "block": ["PL", "PLP", "PEC", "REQ", "parecer", "DEC-sn", "DEC-cl", "portaria de órgão neste tubo", "resolução COFEN neste tubo"]
+    "allow": [
+      "CF",
+      "LEI",
+      "LCP promulgada",
+      "DEC-n regulamentar"
+    ],
+    "block": [
+      "PL",
+      "PLP",
+      "PEC",
+      "REQ",
+      "parecer",
+      "DEC-sn",
+      "DEC-cl",
+      "portaria de órgão neste tubo",
+      "resolução COFEN neste tubo"
+    ]
   },
   "living_gaps": [
     {
@@ -115,7 +142,18 @@
       "id": "GAP-DIMENSIONAMENTO",
       "status": "HOLD",
       "reason": "Constituição: cinco pilotos; dimensionamento permanece HOLD."
+    },
+    {
+      "id": "GAP-DRIVE-INVENTORY",
+      "status": "REGISTERED",
+      "reason": "Listing Drive classificado. Paginação de imagens ChatGPT incompleta. Não promover HTML."
+    },
+    {
+      "id": "GAP-DRIVE-SHELL-COMPLETO",
+      "status": "COMPARE_ONLY",
+      "reason": "site-shell-completo.zip maior que o zip já ingerido. COMPARE_ONLY; sem unzip em data/tools."
     }
   ],
-  "rule": "O plano vivo é este JSON. Gap só fecha com evidência. Reconstrução é último recurso."
+  "rule": "O plano vivo é este JSON. Gap só fecha com evidência. Reconstrução é último recurso.",
+  "fronts_plan_ref": "MD-FRONTS-PLAN-001"
 }

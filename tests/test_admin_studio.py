@@ -66,6 +66,7 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
     locales = (ROOT / "render" / "fetch" / "admin" / "locales.html").read_text(encoding="utf-8")
     maturity = (ROOT / "render" / "fetch" / "admin" / "maturity.html").read_text(encoding="utf-8")
     frameworks = (ROOT / "render" / "fetch" / "admin" / "frameworks.html").read_text(encoding="utf-8")
+    agents_html = (ROOT / "render" / "fetch" / "admin" / "agents.html").read_text(encoding="utf-8")
     fetch_index = (ROOT / "render" / "fetch" / "index.html").read_text(encoding="utf-8")
     assert "CKO Studio" in fetch_admin
     assert 'id="barraAcessibilidade"' in fetch_admin
@@ -87,10 +88,15 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
     assert "EVIDENCE_PENDING" in design
     assert "git push é FORBIDDEN" in deploy
     assert "Nenhuma alteração de RLS" in database
+    assert "EVIDENCE_PENDING" in database
+    assert "28P01" in database
+    assert "extrair-questoes-enfermagem" in database or "Edge Functions" in database
     assert "MD-LOCALE-REG-001" in locales or "19" in locales
     assert "SOURCE_DERIVED" in locales
     assert "HOLD" in maturity
     assert "CLAUSE_TEXT_UNAVAILABLE" in frameworks
+    assert "AG-INVENTORY-DRIVE" in agents_html
+    assert "AG-PLAN-FRONTS" in agents_html
     assert "cdn.jsdelivr" not in fetch_admin.lower()
     parity = check_parity()
     assert parity["status"] == "PASS"
@@ -117,7 +123,7 @@ def test_maturity_panorama_is_hold_without_fake_pass():
     panorama = evaluate_maturity()
     assert panorama["release"] == "HOLD"
     assert panorama["layers"]["population"] == 44
-    assert panorama["agents"]["population"] == 27
+    assert panorama["agents"]["population"] == 31
     assert panorama["agents"]["implemented"] is True
     assert panorama["agents"]["publication_implemented"] is False
     assert panorama["ipe"]["registry_implemented"] is False

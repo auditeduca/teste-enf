@@ -1,0 +1,118 @@
+{
+  "business_key": "MD-FRONTS-PLAN-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": true,
+  "publication": "HOLD",
+  "assured": false,
+  "method_ref": "MD-OPS-METHOD-001",
+  "method": "RECOVER → COMPARE → GAP ONLY → REPERFORM → CLOSE",
+  "plan_policy": "Plano vivo em JSON. Agentes atuam nas frentes; não criam autoridade nem identidade REG.",
+  "maker_neq_checker": true,
+  "llm_authority": false,
+  "fronts": [
+    {
+      "id": "F1",
+      "name": "Inventário Drive",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-INVENTORY-DRIVE",
+        "AG-COMPARE-STORES"
+      ],
+      "gap": "GAP-DRIVE-INVENTORY",
+      "action": "Classificar listing persistido. Não unzip Abelha/grok/pages_full/nkos.",
+      "population": 117,
+      "pagination_complete": false,
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F2",
+      "name": "Leitura Supabase",
+      "status": "BLOCKED",
+      "agents": [
+        "AG-INVENTORY-SUPABASE"
+      ],
+      "gap": "GAP-SUPABASE-READ",
+      "action": "Reabrir só com senha read-only. Não inventar schema nem 172 entidades.",
+      "schema": "EVIDENCE_PENDING",
+      "gap_status": "BLOCKED"
+    },
+    {
+      "id": "F3",
+      "name": "Catálogo federal incremental",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-PROBE-CONGRESS-API",
+        "AG-FETCH-FEDERAL-LEGISLATION",
+        "AG-LIBRARY-CATALOG"
+      ],
+      "gap": "GAP-DEC-7508",
+      "action": "Só LCP/lei/DEC-n. Não misturar portaria de órgão neste tubo.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F4",
+      "name": "PGDADOS restante",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-FETCH-GOV-SOURCES",
+        "AG-LIBRARY-CATALOG"
+      ],
+      "gap": "GAP-PGDADOS",
+      "action": "Parte 3 PDF e cartilhas 4–5 EVIDENCE_PENDING. ABNT/mwpt ignorado.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F5",
+      "name": "Atos de órgão",
+      "status": "HOLD",
+      "agents": [
+        "AG-FETCH-REGULATED"
+      ],
+      "gap": "GAP-ORGAN-ACTS",
+      "action": "Portaria MS / Resolução COFEN = segundo tubo. Não ingestão em massa via Congresso.",
+      "gap_status": "HOLD"
+    },
+    {
+      "id": "F6",
+      "name": "COFEN REST",
+      "status": "EVIDENCE_PENDING",
+      "agents": [
+        "AG-API-PROBE",
+        "AG-FETCH-REGULATED"
+      ],
+      "gap": "GAP-COFEN-REST",
+      "action": "HTML observado. REST sem HTTP 200. Não inventar adapter. COREN CLOSED_NOT_OBSERVED.",
+      "gap_status": "EVIDENCE_PENDING"
+    },
+    {
+      "id": "F7",
+      "name": "Dimensionamento",
+      "status": "HOLD",
+      "agents": [
+        "AG-LINK-MD"
+      ],
+      "gap": "GAP-DIMENSIONAMENTO",
+      "action": "Cinco pilotos. Dimensionamento permanece HOLD.",
+      "gap_status": "HOLD"
+    },
+    {
+      "id": "F8",
+      "name": "Parecer 360",
+      "status": "QUARANTINE",
+      "agents": [
+        "AG-INVENTORY-DRIVE",
+        "AG-COMPARE-STORES"
+      ],
+      "gap": "GAP-PARECER-360",
+      "action": "Não promover workbook a golden MD.",
+      "gap_status": "QUARANTINE"
+    }
+  ],
+  "next_executable": [
+    "F1 replay offline a cada extract",
+    "F2 bloqueado até credencial SQL read-only",
+    "F3/F4 só com evidência HTTP/Congress já no tubo"
+  ],
+  "updated_at": "2026-08-25T17:02:55Z"
+}
