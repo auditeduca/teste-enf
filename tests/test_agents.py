@@ -130,7 +130,7 @@ def test_public_chrome_matches_production_contract_without_ads():
         "icontopbar1-calculadoras-de-enfermagem.webp",
         "iconrodape1-80-calculadoras-de-enfermagem.webp",
         "Navegação Principal",
-        "pt-BR · i18n HOLD",
+        "who.en+local.pt-BR · i18n HOLD",
         'id="langButton"',
         'id="hamburgerButton"',
     ):

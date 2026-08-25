@@ -541,7 +541,7 @@ def plan_fronts() -> dict:
             "status": "HOLD",
             "agents": ["AG-WHO-I18N", "AG-ISO8000-PROFILE"],
             "gap": "GAP-WHO-I18N",
-            "action": "Seletor who.int (en ar zh fr ru es) ∩ locales.zip = candidatos. Sem dump ICD/ICNP/GHO. translation_gate HOLD. pt ≠ pt-BR.",
+            "action": "Seletor who.int (en ar zh fr ru es) ∩ locales.zip. Chave runtime who.en+local.pt-BR. Variantes lusófonas HOLD. Sem dump ICD/ICNP/GHO. translation_gate HOLD.",
         },
         {
             "id": "F21",
@@ -600,7 +600,6 @@ def plan_fronts() -> dict:
         method["stores"]["supabase"]["edge_functions_observed"] = [
             item.get("slug") for item in (supabase.get("edge_functions") or [])
         ]
-    existing_ids = {item.get("id") for item in (method.get("living_gaps") or [])}
     extra = [
         {
             "id": "GAP-DRIVE-INVENTORY",
@@ -670,7 +669,7 @@ def plan_fronts() -> dict:
         {
             "id": "GAP-WHO-I18N",
             "status": "HOLD",
-            "reason": "who.int seletor en/ar/zh/fr/ru/es. Sem dump ICD/ICNP/GHO. translation_gate HOLD. pt ≠ pt-BR.",
+            "reason": "who.int seletor en/ar/zh/fr/ru/es. Chave who.en+local.pt-BR. Variantes pt-PT/pt-AO HOLD. Sem dump ICD/ICNP/GHO. translation_gate HOLD.",
         },
         {
             "id": "GAP-CLIN-DICT",
@@ -679,10 +678,10 @@ def plan_fronts() -> dict:
         },
     ]
     living_gaps = list(method.get("living_gaps") or [])
+    by_id = {item.get("id"): item for item in living_gaps}
     for item in extra:
-        if item["id"] not in existing_ids:
-            living_gaps.append(item)
-    method["living_gaps"] = living_gaps
+        by_id[item["id"]] = item
+    method["living_gaps"] = list(by_id.values())
     method["layer_intent_ref"] = "MD-LAYER-INTENT-001"
     method["nnn_rights_ref"] = "MD-NNN-RIGHTS-001"
     method["owner_unblock_ref"] = "MD-OWNER-UNBLOCK-001"

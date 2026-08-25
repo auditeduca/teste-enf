@@ -180,6 +180,8 @@ def ds_header(home_href: str, prefix: str) -> str:
 
 
 def ds_language_bar(home_href: str) -> str:
+    from .who_i18n import RUNTIME_LOCAL_BCP47, runtime_who_local_key
+
     locales = home_href.replace("index.html", "admin/locales.html") if home_href.endswith("index.html") else "admin/locales.html"
     items = []
     for code, name in _shell_languages():
@@ -188,9 +190,10 @@ def ds_language_bar(home_href: str) -> str:
             f'<span>{esc(name)}</span> <code>{esc(code)}</code></button>'
         )
     menu = "\n        ".join(items)
-    return f"""<div id="language-selector-placeholder" data-i18n-gate="HOLD" data-who-official="en,ar,zh,fr,ru,es">
+    key = runtime_who_local_key()
+    return f"""<div id="language-selector-placeholder" data-i18n-gate="HOLD" data-who-official="en,ar,zh,fr,ru,es" data-who-local-key="{attr(key)}" data-local-bcp47="{attr(RUNTIME_LOCAL_BCP47)}" data-pt-variants="HOLD">
     <div class="wrap lang-bar">
-      <p class="lang-runtime">pt-BR · i18n HOLD. Candidatos WHO/OMS (en ar zh fr ru es) não ligam o seletor. Bandeiras do seletor não vieram no zip (EVIDENCE_PENDING). Tradução não redireciona.</p>
+      <p class="lang-runtime">{esc(key)} · i18n HOLD. Variantes lusófonas catalogadas, não ligadas. Candidatos WHO HQ (en ar zh fr ru es) não ligam o seletor. PAHO pt-br observado. Bandeiras EVIDENCE_PENDING. Tradução não redireciona.</p>
       <div id="language-dropdown-wrapper">
         <button type="button" id="langButton" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu">
           <span id="langText">Português</span>

@@ -24,7 +24,7 @@ GHO_DIMENSION = "https://ghoapi.azureedge.net/api/Dimension"
 NLM_ICD10CM = "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?terms=sepsis&maxList=1"
 IRIS = "https://iris.who.int/"
 
-# Codes OBSERVED in the who.int language <select> (2026-08-25).
+# Codes OBSERVED in the who.int language <select> (2026-08-25). UN/WHO HQ six.
 WHO_OFFICIAL_SELECTOR = (
     {"bcp47": "en", "label_observed": "English"},
     {"bcp47": "ar", "label_observed": "العربية"},
@@ -32,6 +32,140 @@ WHO_OFFICIAL_SELECTOR = (
     {"bcp47": "fr", "label_observed": "Français"},
     {"bcp47": "ru", "label_observed": "Русский"},
     {"bcp47": "es", "label_observed": "Español"},
+)
+
+# Runtime local UI. WHO HQ official src remains `en` (Portuguese is not in the six).
+RUNTIME_WHO_SRC = "en"
+RUNTIME_LOCAL_BCP47 = "pt-BR"
+
+WHO_PT_HOME = "https://www.who.int/pt"
+WHO_PT_ABOUT = "https://www.who.int/pt/about"
+WHO_LUSOPHONE = (
+    "https://www.who.int/pt/teams/global-hiv-hepatitis-and-stis-programmes/"
+    "strategies/lusophone-countries-collaboration-to-eliminate-hiv--hepatitis--stis-and-tb"
+)
+PAHO_PT = "https://www.paho.org/pt"
+CLDR_DEFAULT_CONTENT = "https://cldr.unicode.org/translation/translation-guide-general/default-content"
+BCP47_RFC = "https://www.rfc-editor.org/rfc/rfc5646"
+RFC4647 = "https://www.rfc-editor.org/rfc/rfc4647"
+XLIFF20 = "https://docs.oasis-open.org/xliff/xliff-core/v2.0/os/xliff-core-v2.0-os.html"
+
+DESIGN_ZIP_7 = {
+    "file_id": "1QS84_ws1yhCLCbHdPWyQDdbZoqI2Mo6Z",
+    "title": "Design e arquivos das imagens (7).zip",
+    "bytes": 121704396,
+    "classification": "SKIP_BINARY_DUMP",
+    "unzipped": False,
+    "promoted_to_chrome": False,
+    "note": (
+        "Zip de design/imagens ≥20MB. Não unzip. Não é dicionário de locales. "
+        "Mesmo tamanho em bytes que Design e arquivos das imagens (6).zip. "
+        "Bandeiras do seletor permanecem EVIDENCE_PENDING."
+    ),
+}
+
+# BCP47 = ISO 639-1 `pt` + ISO 3166-1 region. Not a dump of NIFS locales.json.
+# who_lusophone_page: names counted on WHO_LUSOPHONE HTML this cycle.
+LUSOPHONE_LOCALES = (
+    {
+        "bcp47": "pt-BR",
+        "iso3166": "BR",
+        "who_region": "AMRO",
+        "label": "Brasil",
+        "epistemic_status": "OBSERVED",
+        "runtime": True,
+        "wired_to_frontend": False,
+        "who_lusophone_page": True,
+        "source": "Runtime CKO html lang=pt-BR. WHO lusophone page names Brasil. PAHO Content-Language pt-br.",
+    },
+    {
+        "bcp47": "pt-PT",
+        "iso3166": "PT",
+        "who_region": "EURO",
+        "label": "Portugal",
+        "epistemic_status": "OBSERVED",
+        "runtime": False,
+        "wired_to_frontend": False,
+        "who_lusophone_page": True,
+        "source": "WHO lusophone page names Portugal. Não inferir pt-PT → pt-BR.",
+    },
+    {
+        "bcp47": "pt-AO",
+        "iso3166": "AO",
+        "who_region": "AFRO",
+        "label": "Angola",
+        "epistemic_status": "OBSERVED",
+        "runtime": False,
+        "wired_to_frontend": False,
+        "who_lusophone_page": True,
+        "source": "WHO lusophone page names Angola.",
+    },
+    {
+        "bcp47": "pt-CV",
+        "iso3166": "CV",
+        "who_region": "AFRO",
+        "label": "Cabo Verde",
+        "epistemic_status": "OBSERVED",
+        "runtime": False,
+        "wired_to_frontend": False,
+        "who_lusophone_page": True,
+        "source": "WHO lusophone page names Cabo Verde.",
+    },
+    {
+        "bcp47": "pt-MZ",
+        "iso3166": "MZ",
+        "who_region": "AFRO",
+        "label": "Moçambique",
+        "epistemic_status": "PROPOSED",
+        "runtime": False,
+        "wired_to_frontend": False,
+        "who_lusophone_page": False,
+        "source": "BCP47 pt+MZ. Não nomeado na página WHO lusophone deste ciclo.",
+    },
+    {
+        "bcp47": "pt-GW",
+        "iso3166": "GW",
+        "who_region": "AFRO",
+        "label": "Guiné-Bissau",
+        "epistemic_status": "PROPOSED",
+        "runtime": False,
+        "wired_to_frontend": False,
+        "who_lusophone_page": False,
+        "source": "BCP47 pt+GW. Não nomeado na página WHO lusophone deste ciclo.",
+    },
+    {
+        "bcp47": "pt-ST",
+        "iso3166": "ST",
+        "who_region": "AFRO",
+        "label": "São Tomé e Príncipe",
+        "epistemic_status": "PROPOSED",
+        "runtime": False,
+        "wired_to_frontend": False,
+        "who_lusophone_page": False,
+        "source": "BCP47 pt+ST. Não nomeado na página WHO lusophone deste ciclo.",
+    },
+    {
+        "bcp47": "pt-TL",
+        "iso3166": "TL",
+        "who_region": "WPRO",
+        "label": "Timor-Leste",
+        "epistemic_status": "PROPOSED",
+        "runtime": False,
+        "wired_to_frontend": False,
+        "who_lusophone_page": False,
+        "source": "BCP47 pt+TL. Não nomeado na página WHO lusophone deste ciclo.",
+    },
+    {
+        "bcp47": "pt-GQ",
+        "iso3166": "GQ",
+        "who_region": "AFRO",
+        "label": "Guiné Equatorial",
+        "epistemic_status": "PROPOSED",
+        "runtime": False,
+        "wired_to_frontend": False,
+        "who_lusophone_page": False,
+        "source": "BCP47 pt+GQ. Português é língua oficial; não nomeado na página WHO lusophone deste ciclo.",
+    },
 )
 
 DRIVE_ZIP_CODES = (
@@ -67,6 +201,31 @@ def who_official_codes() -> set[str]:
     return {item["bcp47"] for item in WHO_OFFICIAL_SELECTOR}
 
 
+def who_local_key(who_src: str, local_bcp47: str) -> str:
+    """XLIFF-style src+trg identity. WHO official src is not a BCP47 region tag."""
+    return f"who.{who_src}+local.{local_bcp47}"
+
+
+def runtime_who_local_key() -> str:
+    return who_local_key(RUNTIME_WHO_SRC, RUNTIME_LOCAL_BCP47)
+
+
+def lusophone_variant_rows() -> list[dict]:
+    rows = []
+    for item in LUSOPHONE_LOCALES:
+        rows.append({
+            **item,
+            "uuid": None,
+            "who_local_key": who_local_key(RUNTIME_WHO_SRC, item["bcp47"]),
+            "who_pt_path_key": who_local_key("pt", item["bcp47"]),
+            "paho_local_key": f"paho.pt-BR+local.{item['bcp47']}",
+            "cldr_default_content_is_pt_br": True,
+            "adopt_cldr_pt_fallback": False,
+            "rfc4647_sibling_fallback": False,
+        })
+    return rows
+
+
 def who_i18n_fields() -> list[dict]:
     """MD fields for i18n modulation. Still carry PGDADOS interoperability binding."""
     common = {
@@ -91,6 +250,21 @@ def who_i18n_fields() -> list[dict]:
         ("FLD-I18N-ICD-CODE", "i18n.icd_code", "Identidade de código ICD. Sem texto ICD-11 (licença WHO). NLM ICD-10-CM = busca US."),
         ("FLD-I18N-ICNP-CANDIDATE", "i18n.icnp_candidate", "CIPE/ICNP no WHO-FIC. Texto não copiado. OPT-C EVIDENCE_PENDING."),
         ("FLD-I18N-WHO-REGION", "i18n.who_region", "Dimensão GHO REGION (WHO regions). Geografia, não string de UI."),
+        (
+            "FLD-I18N-WHO-LOCAL-KEY",
+            "i18n.who_local_key",
+            "Chave composta who.{src}+local.{bcp47} (XLIFF srcLang/trgLang). Runtime who.en+local.pt-BR.",
+        ),
+        (
+            "FLD-I18N-LOCAL-VARIANT",
+            "i18n.local_variant",
+            "Variante BCP47 lusófona (pt-BR ≠ pt-PT ≠ pt-AO). Sem fallback irmão RFC 4647. Sem ligar seletor.",
+        ),
+        (
+            "FLD-I18N-PAHO-PT",
+            "i18n.paho_pt",
+            "OPAS/OMS português observado em paho.org/pt (Content-Language pt-br). Não é seletor who.int.",
+        ),
     ]
     return [
         {
@@ -197,7 +371,50 @@ def compose_who_i18n() -> dict:
                 "url": "https://www.paho.org/en",
                 "http_status": 200,
                 "epistemic_status": "OBSERVED",
-                "note": "html lang en/es/fr observados. Português NÃO observado. Não inferir PAHO-pt.",
+                "note": "Hub EN. Português vive em SRC-PAHO-PT, não neste URL.",
+            },
+            {
+                "business_key": "SRC-PAHO-PT",
+                "url": PAHO_PT,
+                "http_status": 200,
+                "content_language": "pt-br",
+                "epistemic_status": "OBSERVED",
+                "note": "OPAS/OMS português. Content-Language pt-br. Não colapsar pt-PT/pt-AO neste valor.",
+            },
+            {
+                "business_key": "SRC-WHO-PT-HOME",
+                "url": WHO_PT_HOME,
+                "http_status": 404,
+                "epistemic_status": "OBSERVED",
+                "note": "Raiz /pt 404. Português WHO não é locale site-wide. Não promover who.int/pt a seletor oficial.",
+            },
+            {
+                "business_key": "SRC-WHO-PT-ABOUT",
+                "url": WHO_PT_ABOUT,
+                "http_status": 200,
+                "html_lang": "pt",
+                "epistemic_status": "OBSERVED",
+                "note": "Caminho de conteúdo /pt/about. html lang=pt ≠ pt-BR. Fora do seletor das 6 oficiais.",
+            },
+            {
+                "business_key": "SRC-WHO-LUSOPHONE",
+                "url": WHO_LUSOPHONE,
+                "http_status": 200,
+                "html_lang": "pt",
+                "epistemic_status": "OBSERVED",
+                "names_counted": ["Angola", "Brasil", "Cabo Verde", "Portugal"],
+                "note": "Página de colaboração lusófona. Não dump de termos clínicos.",
+            },
+            {
+                "business_key": "SRC-DRIVE-DESIGN-ZIP-7",
+                "url": f"https://drive.google.com/file/d/{DESIGN_ZIP_7['file_id']}/view",
+                "file_id": DESIGN_ZIP_7["file_id"],
+                "title": DESIGN_ZIP_7["title"],
+                "bytes": DESIGN_ZIP_7["bytes"],
+                "classification": DESIGN_ZIP_7["classification"],
+                "unzipped": False,
+                "epistemic_status": "OBSERVED",
+                "note": DESIGN_ZIP_7["note"],
             },
         ],
         "who_official_languages": [
@@ -207,16 +424,58 @@ def compose_who_i18n() -> dict:
         "drive_intersection": sorted(official & set(DRIVE_ZIP_CODES)),
         "drive_only": sorted(set(DRIVE_ZIP_CODES) - official),
         "languages": languages,
-        "runtime_locale": "pt-BR",
+        "runtime_locale": RUNTIME_LOCAL_BCP47,
+        "runtime_who_src": RUNTIME_WHO_SRC,
+        "runtime_who_local_key": runtime_who_local_key(),
         "runtime_not_in_who_selector": True,
+        "lusophone_variants": lusophone_variant_rows(),
+        "lusophone_runtime": [item["bcp47"] for item in LUSOPHONE_LOCALES if item["runtime"]],
+        "lusophone_hold": [item["bcp47"] for item in LUSOPHONE_LOCALES if not item["runtime"]],
+        "practices": [
+            {
+                "id": "BCP47",
+                "url": BCP47_RFC,
+                "rule": "Identidade local = language-region (pt-BR, pt-PT, pt-AO). pt sozinho não nomeia país.",
+            },
+            {
+                "id": "RFC4647-LOOKUP",
+                "url": RFC4647,
+                "rule": "Matching Lookup: mais longo primeiro. Sem fallback irmão (pt-AO ↛ pt-BR).",
+            },
+            {
+                "id": "CLDR-DEFAULT-CONTENT",
+                "url": CLDR_DEFAULT_CONTENT,
+                "rule": "CLDR default content de pt é pt-BR (fato Unicode). CKO NÃO adota isso como fallback de produto.",
+                "adopted": False,
+            },
+            {
+                "id": "XLIFF-SRC-TRG",
+                "url": XLIFF20,
+                "rule": "Chave de envelope = who.{srcLang}+local.{trgLang}. Eixos separados: idioma WHO vs locale local.",
+            },
+            {
+                "id": "WHO-UN-SIX",
+                "url": WHO_HOME,
+                "rule": "Seletor who.int = 6 oficiais ONU. Português é caminho de conteúdo (/pt/about), não oficial HQ.",
+            },
+            {
+                "id": "PAHO-PT-BR",
+                "url": PAHO_PT,
+                "rule": "OPAS observa Content-Language pt-br. Não substitui variantes africanas/europeias.",
+            },
+        ],
+        "design_zip": DESIGN_ZIP_7,
         "rules": [
             "Um conceito → uma identidade MD → projeções por BCP47.",
-            "Candidato i18n WHO = código no seletor who.int ∩ locales.zip.",
-            "Não inferir pt → pt-BR.",
+            "Chave runtime = who.{src_oficial}+local.{bcp47_variante}.",
+            "Candidato i18n WHO HQ = código no seletor who.int ∩ locales.zip.",
+            "Não inferir pt → pt-BR nem pt-PT → pt-BR nem pt-AO → pt-BR.",
+            "CLDR default content pt=pt-BR é fato Unicode, não regra CKO.",
             "GHO/ICD/ICNP = SOURCE_DERIVED. Sem dump de termos.",
             "Frontend translation_gate HOLD até objeto MD de tradução + revisão humana.",
             "CIPE/ICNP não substitui NANDA sem decisão OPT-C.",
-            "PAHO não observa pt; não inventar locale PAHO-pt.",
+            "PAHO pt-br observado; não inventar PAHO-pt-PT.",
+            "Zip de design/imagens SKIP_BINARY. Sem copiar bandeiras.",
         ],
         "icd_icnp_gho_dump": "FORBIDDEN",
         "evaluated_at": _now(),
@@ -235,17 +494,22 @@ def evaluate_who_i18n() -> dict:
         "translation_gate": "HOLD",
         "human_review_required": True,
         "wired_to_frontend": False,
-        "display_language_runtime": "pt-BR",
+        "display_language_runtime": RUNTIME_LOCAL_BCP47,
+        "runtime_who_local_key": runtime_who_local_key(),
+        "runtime_who_src": RUNTIME_WHO_SRC,
+        "lusophone_hold": payload["lusophone_hold"],
         "who_official_intersection": payload["drive_intersection"],
         "rule": (
-            "Locale é identidade MD. OMS/WHO modula candidatos internacionais (6 idiomas do seletor who.int). "
+            "Locale é identidade MD. Chave de envelope who.{src}+local.{bcp47}. "
+            "OMS/WHO HQ modula 6 oficiais; português local tem variantes BCP47. "
             "REG governa BCP47, rights e revisão humana. Frontend não cria locale."
         ),
     })
     notes = list(i18n.get("notes") or [])
     who_note = (
         "OMS who.int seletor observado: en ar zh fr ru es. Interseção com locales.zip = candidatos i18n. "
-        "pt-BR runtime não está no seletor WHO. Tradução HOLD."
+        "Runtime who.en+local.pt-BR. Variantes lusófonas catalogadas HOLD. PAHO Content-Language pt-br. "
+        "who.int/pt raiz 404. Tradução HOLD."
     )
     if who_note not in notes:
         notes.append(who_note)
@@ -258,7 +522,54 @@ def evaluate_who_i18n() -> dict:
     lang["related_drive_catalog"] = "MD-LOCALE-REG-001"
     lang["translation_gate"] = "HOLD"
     lang["wired_to_frontend"] = False
+    lang["runtime_who_local_key"] = runtime_who_local_key()
+    lang["runtime_who_src"] = RUNTIME_WHO_SRC
+    lang["adopt_cldr_pt_fallback"] = False
+    locales = list(lang.get("locales") or [])
+    by_bcp = {item.get("bcp47"): item for item in locales}
+    territories = list(lang.get("territories") or [])
+    by_iso = {item.get("iso3166"): item for item in territories}
+    for row in payload["lusophone_variants"]:
+        loc = by_bcp.get(row["bcp47"]) or {
+            "business_key": f"LOC-{row['bcp47'].upper().replace('-', '-')}",
+            "bcp47": row["bcp47"],
+        }
+        loc.update({
+            "business_key": f"LOC-{row['bcp47'].upper()}",
+            "bcp47": row["bcp47"],
+            "epistemic_status": row["epistemic_status"],
+            "runtime": row["runtime"],
+            "wired_to_frontend": False,
+            "who_local_key": row["who_local_key"],
+            "who_region": row["who_region"],
+            "source": row["source"],
+        })
+        by_bcp[row["bcp47"]] = loc
+        terr = by_iso.get(row["iso3166"]) or {
+            "business_key": f"TERR-{row['iso3166']}",
+            "iso3166": row["iso3166"],
+        }
+        terr.update({
+            "business_key": f"TERR-{row['iso3166']}",
+            "iso3166": row["iso3166"],
+            "epistemic_status": row["epistemic_status"],
+            "note": row["source"],
+        })
+        by_iso[row["iso3166"]] = terr
+    lang["locales"] = list(by_bcp.values())
+    lang["territories"] = list(by_iso.values())
+    lang["note"] = (
+        "Runtime who.en+local.pt-BR. Variantes lusófonas são catálogo HOLD. "
+        "locales.zip (19 códigos) não substitui este registry. Overlay WHO por AG-WHO-I18N."
+    )
     _dump(ROOT / "cko_md" / "language_locale_registry.json", lang)
+    _dump(ROOT / "cko_inbox" / "extracted" / "design_zip7_skip.json", {
+        "business_key": "IPE-DESIGN-ZIP7-SKIP-001",
+        "uuid": None,
+        "status": "SOURCE_DERIVED",
+        **DESIGN_ZIP_7,
+        "captured_at": payload["evaluated_at"],
+    })
     drive_locales = _load(ROOT / "cko_md" / "locale_registry.json")
     if drive_locales:
         drive_locales["who_ref"] = "MD-WHO-I18N-001"
@@ -275,6 +586,8 @@ def evaluate_who_i18n() -> dict:
         "wired_to_frontend": False,
         "who_official_count": len(payload["who_official_languages"]),
         "drive_intersection": payload["drive_intersection"],
+        "runtime_who_local_key": runtime_who_local_key(),
+        "lusophone_hold": payload["lusophone_hold"],
         "llm_used": False,
         "promotes_to_md": False,
         "publication": "HOLD",

@@ -74,7 +74,7 @@ def test_extract_binds_rights_iso_lineage_without_fake_pass():
     assert masks["llm_as_checker"] == "FORBIDDEN"
     assert mask_run["llm_used"] is False
 
-    assert fields["population"] >= 46
+    assert fields["population"] >= 49
     assert fields.get("certified") is False
     assert fields.get("iso_implemented") is False
     assert all(item.get("pgdados_ref") == "MD-PGDADOS-001" for item in fields["fields"])

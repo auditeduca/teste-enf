@@ -920,7 +920,7 @@ def agent_records() -> list[dict]:
             "writes_to": "cko_md/who_i18n_modulation.json",
             "promotes_to_md": False,
             "wired_to_frontend": False,
-            "note": "OMS who.int seletor (en ar zh fr ru es). translation_gate HOLD. Sem dump ICD/ICNP/GHO.",
+            "note": "OMS who.int seletor (en ar zh fr ru es). Chave who.en+local.pt-BR. Variantes lusófonas HOLD. Sem dump ICD/ICNP/GHO.",
         },
         {
             "agent_id": "AG-CLIN-DICT",

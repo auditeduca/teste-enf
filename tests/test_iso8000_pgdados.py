@@ -16,7 +16,7 @@ def test_compose_dictionary_binds_every_field_to_pgdados():
     assert payload["certified"] is False
     assert payload["iso_implemented"] is False
     assert payload["population"] == len(payload["fields"])
-    assert payload["population"] >= 46
+    assert payload["population"] >= 49
     keys = [item["business_key"] for item in payload["fields"]]
     assert len(keys) == len(set(keys))
     assert "FLD-ISO8000-IDENTITY-BK" in keys

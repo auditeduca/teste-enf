@@ -839,13 +839,21 @@ def page_locales(ctx: dict, **kwargs) -> str:
     inner = f"""
     <header class="page-hero">
       <h1>Locales e Drive.</h1>
-      <p class="lede">MD-LOCALE-REG-001 registra {esc(locales.get("population"))} códigos extraídos de locales.zip ({esc(locales.get("epistemic_status"))}). REG-I18N-001 mantém tradução em HOLD. Runtime permanece pt-BR. OMS/WHO modula candidatos internacionais; não liga o seletor.</p>
-      <p class="hold-banner">Stems observados: cookies, footer. Sem strings de calculadora. Banner de cookies do zip NÃO implantado (NO_SENSITIVE_CAPTURE). Dump ICD/ICNP/GHO FORBIDDEN. pt ≠ pt-BR.</p>
+      <p class="lede">MD-LOCALE-REG-001 registra {esc(locales.get("population"))} códigos extraídos de locales.zip ({esc(locales.get("epistemic_status"))}). REG-I18N-001 mantém tradução em HOLD. Runtime {esc(who.get("runtime_who_local_key") or "who.en+local.pt-BR")}. OMS/WHO HQ (6 oficiais) + locale local BCP47; não liga o seletor.</p>
+      <p class="hold-banner">Stems observados: cookies, footer. Sem strings de calculadora. Banner de cookies do zip NÃO implantado (NO_SENSITIVE_CAPTURE). Dump ICD/ICNP/GHO FORBIDDEN. pt ≠ pt-BR ≠ pt-PT ≠ pt-AO. CLDR default pt→pt-BR NÃO adotado.</p>
     </header>
     <section class="panel">
       <h2>Modulação WHO/OMS ({esc(who.get("business_key"))})</h2>
-      <p>Seletor who.int observado: {esc(", ".join(item.get("bcp47") or "" for item in (who.get("who_official_languages") or [])))}. Interseção Drive ∩ WHO: {esc(", ".join(who.get("drive_intersection") or []))}. Drive-only: {esc(", ".join(who.get("drive_only") or []))}. Gate: {_status_chip(who.get("translation_gate") or i18n.get("translation_gate"))} · wired={esc(who.get("wired_to_frontend"))} · runtime pt-BR fora do seletor WHO={esc(who.get("runtime_not_in_who_selector"))}.</p>
+      <p>Seletor who.int observado: {esc(", ".join(item.get("bcp47") or "" for item in (who.get("who_official_languages") or [])))}. Interseção Drive ∩ WHO: {esc(", ".join(who.get("drive_intersection") or []))}. Drive-only: {esc(", ".join(who.get("drive_only") or []))}. Gate: {_status_chip(who.get("translation_gate") or i18n.get("translation_gate"))} · wired={esc(who.get("wired_to_frontend"))} · chave runtime={esc(who.get("runtime_who_local_key"))} · who.int/pt raiz=404.</p>
       {_table(["BCP47", "rótulo observado", "Drive zip"], who_rows)}
+    </section>
+    <section class="panel">
+      <h2>Chave WHO + local (variantes lusófonas)</h2>
+      <p>XLIFF srcLang/trgLang. RFC 5646 BCP47. RFC 4647 sem fallback irmão. PAHO Content-Language pt-br. Zip design/imagens SKIP_BINARY.</p>
+      {_table(["BCP47", "país", "região WHO", "chave who+local", "estado", "runtime"], [
+        [esc(item.get("bcp47")), esc(item.get("label")), esc(item.get("who_region")), esc(item.get("who_local_key")), _status_chip(item.get("epistemic_status")), esc(item.get("runtime"))]
+        for item in (who.get("lusophone_variants") or [])
+      ])}
     </section>
     <section class="panel">
       <h2>Registry MD ({esc(locales.get("file_count"))} arquivos)</h2>

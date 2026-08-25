@@ -5,7 +5,14 @@ import json
 from engine.generate import build
 from engine.iso8000 import compose_field_dictionary, evaluate_profile
 from engine.paths import ROOT
-from engine.who_i18n import WHO_OFFICIAL_SELECTOR, compose_who_i18n, evaluate_who_i18n, who_official_codes
+from engine.who_i18n import (
+    WHO_OFFICIAL_SELECTOR,
+    compose_who_i18n,
+    evaluate_who_i18n,
+    runtime_who_local_key,
+    who_local_key,
+    who_official_codes,
+)
 
 
 def test_who_official_selector_excludes_runtime_pt_br():
@@ -26,10 +33,13 @@ def test_who_fields_bind_pgdados_interoperability_without_iso_clause():
         "FLD-I18N-ICD-CODE",
         "FLD-I18N-ICNP-CANDIDATE",
         "FLD-I18N-WHO-REGION",
+        "FLD-I18N-WHO-LOCAL-KEY",
+        "FLD-I18N-LOCAL-VARIANT",
+        "FLD-I18N-PAHO-PT",
     ):
         assert key in keys
     who_fields = [item for item in compose_field_dictionary()["fields"] if item["business_key"].startswith("FLD-I18N-")]
-    assert len(who_fields) == 7
+    assert len(who_fields) == 10
     for field in who_fields:
         assert field["iso_test_id"] == "ISO8000-CKO-WHO-I18N"
         assert field["pgdados_term"] == "Interoperabilidade"
@@ -57,7 +67,32 @@ def test_who_i18n_holds_translation_and_forbids_dumps():
     assert i18n["display_language_runtime"] == "pt-BR"
     blob = json.dumps(payload)
     assert "ICD-11 License" in blob or "texto não copiado" in blob
-    assert "Não inferir pt → pt-BR." in payload["rules"]
+    assert "Não inferir pt → pt-BR nem pt-PT → pt-BR nem pt-AO → pt-BR." in payload["rules"]
+    assert payload["runtime_who_local_key"] == "who.en+local.pt-BR"
+    assert payload["runtime_who_src"] == "en"
+    assert who_local_key("en", "pt-PT") == "who.en+local.pt-PT"
+    assert runtime_who_local_key() == "who.en+local.pt-BR"
+    variants = {item["bcp47"]: item for item in payload["lusophone_variants"]}
+    assert variants["pt-BR"]["runtime"] is True
+    assert variants["pt-PT"]["runtime"] is False
+    assert variants["pt-AO"]["wired_to_frontend"] is False
+    assert variants["pt-AO"]["rfc4647_sibling_fallback"] is False
+    assert variants["pt-AO"]["adopt_cldr_pt_fallback"] is False
+    assert "pt-PT" in payload["lusophone_hold"]
+    paho = next(item for item in payload["sources"] if item["business_key"] == "SRC-PAHO-PT")
+    assert paho["http_status"] == 200
+    assert paho["content_language"] == "pt-br"
+    who_pt = next(item for item in payload["sources"] if item["business_key"] == "SRC-WHO-PT-HOME")
+    assert who_pt["http_status"] == 404
+    design = payload["design_zip"]
+    assert design["file_id"] == "1QS84_ws1yhCLCbHdPWyQDdbZoqI2Mo6Z"
+    assert design["unzipped"] is False
+    assert design["classification"] == "SKIP_BINARY_DUMP"
+    lang = json.loads((ROOT / "cko_md" / "language_locale_registry.json").read_text(encoding="utf-8"))
+    assert lang["runtime_who_local_key"] == "who.en+local.pt-BR"
+    assert lang["adopt_cldr_pt_fallback"] is False
+    i18n = json.loads((ROOT / "cko_reg" / "i18n_profile.json").read_text(encoding="utf-8"))
+    assert i18n["runtime_who_local_key"] == "who.en+local.pt-BR"
 
 
 def test_iso_profile_includes_who_i18n_test():
@@ -78,10 +113,20 @@ def test_admin_locales_surfaces_who_overlay_without_wiring_chrome():
     home = (ROOT / "render" / "fetch" / "index.html").read_text(encoding="utf-8")
     assert 'data-i18n-gate="HOLD"' in home
     assert 'data-who-official="en,ar,zh,fr,ru,es"' in home
-    assert "pt-BR · i18n HOLD" in home
+    assert 'data-who-local-key="who.en+local.pt-BR"' in home
+    assert 'data-local-bcp47="pt-BR"' in home
+    assert 'data-pt-variants="HOLD"' in home
+    assert "who.en+local.pt-BR · i18n HOLD" in home
     mdm = (ROOT / "render" / "fetch" / "admin" / "mdm.html").read_text(encoding="utf-8")
     assert "FLD-I18N-WHO-OFFICIAL" in mdm
+    assert "FLD-I18N-WHO-LOCAL-KEY" in mdm
+    assert "FLD-I18N-LOCAL-VARIANT" in mdm
+    assert "FLD-I18N-PAHO-PT" in mdm
     assert "Interoperabilidade" in mdm
+    locales = (ROOT / "render" / "fetch" / "admin" / "locales.html").read_text(encoding="utf-8")
+    assert "Chave WHO + local" in locales
+    assert "who.en+local.pt-PT" in locales
+    assert "pt-AO" in locales
     modulation = json.loads((ROOT / "render" / "fetch" / "admin" / "who_i18n_modulation.json").read_text(encoding="utf-8"))
     assert modulation["wired_to_frontend"] is False
     assert compose_who_i18n()["publication"] == "HOLD"

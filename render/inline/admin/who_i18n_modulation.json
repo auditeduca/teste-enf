@@ -63,7 +63,55 @@
       "url": "https://www.paho.org/en",
       "http_status": 200,
       "epistemic_status": "OBSERVED",
-      "note": "html lang en/es/fr observados. Português NÃO observado. Não inferir PAHO-pt."
+      "note": "Hub EN. Português vive em SRC-PAHO-PT, não neste URL."
+    },
+    {
+      "business_key": "SRC-PAHO-PT",
+      "url": "https://www.paho.org/pt",
+      "http_status": 200,
+      "content_language": "pt-br",
+      "epistemic_status": "OBSERVED",
+      "note": "OPAS/OMS português. Content-Language pt-br. Não colapsar pt-PT/pt-AO neste valor."
+    },
+    {
+      "business_key": "SRC-WHO-PT-HOME",
+      "url": "https://www.who.int/pt",
+      "http_status": 404,
+      "epistemic_status": "OBSERVED",
+      "note": "Raiz /pt 404. Português WHO não é locale site-wide. Não promover who.int/pt a seletor oficial."
+    },
+    {
+      "business_key": "SRC-WHO-PT-ABOUT",
+      "url": "https://www.who.int/pt/about",
+      "http_status": 200,
+      "html_lang": "pt",
+      "epistemic_status": "OBSERVED",
+      "note": "Caminho de conteúdo /pt/about. html lang=pt ≠ pt-BR. Fora do seletor das 6 oficiais."
+    },
+    {
+      "business_key": "SRC-WHO-LUSOPHONE",
+      "url": "https://www.who.int/pt/teams/global-hiv-hepatitis-and-stis-programmes/strategies/lusophone-countries-collaboration-to-eliminate-hiv--hepatitis--stis-and-tb",
+      "http_status": 200,
+      "html_lang": "pt",
+      "epistemic_status": "OBSERVED",
+      "names_counted": [
+        "Angola",
+        "Brasil",
+        "Cabo Verde",
+        "Portugal"
+      ],
+      "note": "Página de colaboração lusófona. Não dump de termos clínicos."
+    },
+    {
+      "business_key": "SRC-DRIVE-DESIGN-ZIP-7",
+      "url": "https://drive.google.com/file/d/1QS84_ws1yhCLCbHdPWyQDdbZoqI2Mo6Z/view",
+      "file_id": "1QS84_ws1yhCLCbHdPWyQDdbZoqI2Mo6Z",
+      "title": "Design e arquivos das imagens (7).zip",
+      "bytes": 121704396,
+      "classification": "SKIP_BINARY_DUMP",
+      "unzipped": false,
+      "epistemic_status": "OBSERVED",
+      "note": "Zip de design/imagens ≥20MB. Não unzip. Não é dicionário de locales. Mesmo tamanho em bytes que Design e arquivos das imagens (6).zip. Bandeiras do seletor permanecem EVIDENCE_PENDING."
     }
   ],
   "who_official_languages": [
@@ -339,16 +387,240 @@
     }
   ],
   "runtime_locale": "pt-BR",
+  "runtime_who_src": "en",
+  "runtime_who_local_key": "who.en+local.pt-BR",
   "runtime_not_in_who_selector": true,
+  "lusophone_variants": [
+    {
+      "bcp47": "pt-BR",
+      "iso3166": "BR",
+      "who_region": "AMRO",
+      "label": "Brasil",
+      "epistemic_status": "OBSERVED",
+      "runtime": true,
+      "wired_to_frontend": false,
+      "who_lusophone_page": true,
+      "source": "Runtime CKO html lang=pt-BR. WHO lusophone page names Brasil. PAHO Content-Language pt-br.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-BR",
+      "who_pt_path_key": "who.pt+local.pt-BR",
+      "paho_local_key": "paho.pt-BR+local.pt-BR",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    },
+    {
+      "bcp47": "pt-PT",
+      "iso3166": "PT",
+      "who_region": "EURO",
+      "label": "Portugal",
+      "epistemic_status": "OBSERVED",
+      "runtime": false,
+      "wired_to_frontend": false,
+      "who_lusophone_page": true,
+      "source": "WHO lusophone page names Portugal. Não inferir pt-PT → pt-BR.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-PT",
+      "who_pt_path_key": "who.pt+local.pt-PT",
+      "paho_local_key": "paho.pt-BR+local.pt-PT",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    },
+    {
+      "bcp47": "pt-AO",
+      "iso3166": "AO",
+      "who_region": "AFRO",
+      "label": "Angola",
+      "epistemic_status": "OBSERVED",
+      "runtime": false,
+      "wired_to_frontend": false,
+      "who_lusophone_page": true,
+      "source": "WHO lusophone page names Angola.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-AO",
+      "who_pt_path_key": "who.pt+local.pt-AO",
+      "paho_local_key": "paho.pt-BR+local.pt-AO",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    },
+    {
+      "bcp47": "pt-CV",
+      "iso3166": "CV",
+      "who_region": "AFRO",
+      "label": "Cabo Verde",
+      "epistemic_status": "OBSERVED",
+      "runtime": false,
+      "wired_to_frontend": false,
+      "who_lusophone_page": true,
+      "source": "WHO lusophone page names Cabo Verde.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-CV",
+      "who_pt_path_key": "who.pt+local.pt-CV",
+      "paho_local_key": "paho.pt-BR+local.pt-CV",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    },
+    {
+      "bcp47": "pt-MZ",
+      "iso3166": "MZ",
+      "who_region": "AFRO",
+      "label": "Moçambique",
+      "epistemic_status": "PROPOSED",
+      "runtime": false,
+      "wired_to_frontend": false,
+      "who_lusophone_page": false,
+      "source": "BCP47 pt+MZ. Não nomeado na página WHO lusophone deste ciclo.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-MZ",
+      "who_pt_path_key": "who.pt+local.pt-MZ",
+      "paho_local_key": "paho.pt-BR+local.pt-MZ",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    },
+    {
+      "bcp47": "pt-GW",
+      "iso3166": "GW",
+      "who_region": "AFRO",
+      "label": "Guiné-Bissau",
+      "epistemic_status": "PROPOSED",
+      "runtime": false,
+      "wired_to_frontend": false,
+      "who_lusophone_page": false,
+      "source": "BCP47 pt+GW. Não nomeado na página WHO lusophone deste ciclo.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-GW",
+      "who_pt_path_key": "who.pt+local.pt-GW",
+      "paho_local_key": "paho.pt-BR+local.pt-GW",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    },
+    {
+      "bcp47": "pt-ST",
+      "iso3166": "ST",
+      "who_region": "AFRO",
+      "label": "São Tomé e Príncipe",
+      "epistemic_status": "PROPOSED",
+      "runtime": false,
+      "wired_to_frontend": false,
+      "who_lusophone_page": false,
+      "source": "BCP47 pt+ST. Não nomeado na página WHO lusophone deste ciclo.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-ST",
+      "who_pt_path_key": "who.pt+local.pt-ST",
+      "paho_local_key": "paho.pt-BR+local.pt-ST",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    },
+    {
+      "bcp47": "pt-TL",
+      "iso3166": "TL",
+      "who_region": "WPRO",
+      "label": "Timor-Leste",
+      "epistemic_status": "PROPOSED",
+      "runtime": false,
+      "wired_to_frontend": false,
+      "who_lusophone_page": false,
+      "source": "BCP47 pt+TL. Não nomeado na página WHO lusophone deste ciclo.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-TL",
+      "who_pt_path_key": "who.pt+local.pt-TL",
+      "paho_local_key": "paho.pt-BR+local.pt-TL",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    },
+    {
+      "bcp47": "pt-GQ",
+      "iso3166": "GQ",
+      "who_region": "AFRO",
+      "label": "Guiné Equatorial",
+      "epistemic_status": "PROPOSED",
+      "runtime": false,
+      "wired_to_frontend": false,
+      "who_lusophone_page": false,
+      "source": "BCP47 pt+GQ. Português é língua oficial; não nomeado na página WHO lusophone deste ciclo.",
+      "uuid": null,
+      "who_local_key": "who.en+local.pt-GQ",
+      "who_pt_path_key": "who.pt+local.pt-GQ",
+      "paho_local_key": "paho.pt-BR+local.pt-GQ",
+      "cldr_default_content_is_pt_br": true,
+      "adopt_cldr_pt_fallback": false,
+      "rfc4647_sibling_fallback": false
+    }
+  ],
+  "lusophone_runtime": [
+    "pt-BR"
+  ],
+  "lusophone_hold": [
+    "pt-PT",
+    "pt-AO",
+    "pt-CV",
+    "pt-MZ",
+    "pt-GW",
+    "pt-ST",
+    "pt-TL",
+    "pt-GQ"
+  ],
+  "practices": [
+    {
+      "id": "BCP47",
+      "url": "https://www.rfc-editor.org/rfc/rfc5646",
+      "rule": "Identidade local = language-region (pt-BR, pt-PT, pt-AO). pt sozinho não nomeia país."
+    },
+    {
+      "id": "RFC4647-LOOKUP",
+      "url": "https://www.rfc-editor.org/rfc/rfc4647",
+      "rule": "Matching Lookup: mais longo primeiro. Sem fallback irmão (pt-AO ↛ pt-BR)."
+    },
+    {
+      "id": "CLDR-DEFAULT-CONTENT",
+      "url": "https://cldr.unicode.org/translation/translation-guide-general/default-content",
+      "rule": "CLDR default content de pt é pt-BR (fato Unicode). CKO NÃO adota isso como fallback de produto.",
+      "adopted": false
+    },
+    {
+      "id": "XLIFF-SRC-TRG",
+      "url": "https://docs.oasis-open.org/xliff/xliff-core/v2.0/os/xliff-core-v2.0-os.html",
+      "rule": "Chave de envelope = who.{srcLang}+local.{trgLang}. Eixos separados: idioma WHO vs locale local."
+    },
+    {
+      "id": "WHO-UN-SIX",
+      "url": "https://www.who.int/",
+      "rule": "Seletor who.int = 6 oficiais ONU. Português é caminho de conteúdo (/pt/about), não oficial HQ."
+    },
+    {
+      "id": "PAHO-PT-BR",
+      "url": "https://www.paho.org/pt",
+      "rule": "OPAS observa Content-Language pt-br. Não substitui variantes africanas/europeias."
+    }
+  ],
+  "design_zip": {
+    "file_id": "1QS84_ws1yhCLCbHdPWyQDdbZoqI2Mo6Z",
+    "title": "Design e arquivos das imagens (7).zip",
+    "bytes": 121704396,
+    "classification": "SKIP_BINARY_DUMP",
+    "unzipped": false,
+    "promoted_to_chrome": false,
+    "note": "Zip de design/imagens ≥20MB. Não unzip. Não é dicionário de locales. Mesmo tamanho em bytes que Design e arquivos das imagens (6).zip. Bandeiras do seletor permanecem EVIDENCE_PENDING."
+  },
   "rules": [
     "Um conceito → uma identidade MD → projeções por BCP47.",
-    "Candidato i18n WHO = código no seletor who.int ∩ locales.zip.",
-    "Não inferir pt → pt-BR.",
+    "Chave runtime = who.{src_oficial}+local.{bcp47_variante}.",
+    "Candidato i18n WHO HQ = código no seletor who.int ∩ locales.zip.",
+    "Não inferir pt → pt-BR nem pt-PT → pt-BR nem pt-AO → pt-BR.",
+    "CLDR default content pt=pt-BR é fato Unicode, não regra CKO.",
     "GHO/ICD/ICNP = SOURCE_DERIVED. Sem dump de termos.",
     "Frontend translation_gate HOLD até objeto MD de tradução + revisão humana.",
     "CIPE/ICNP não substitui NANDA sem decisão OPT-C.",
-    "PAHO não observa pt; não inventar locale PAHO-pt."
+    "PAHO pt-br observado; não inventar PAHO-pt-PT.",
+    "Zip de design/imagens SKIP_BINARY. Sem copiar bandeiras."
   ],
   "icd_icnp_gho_dump": "FORBIDDEN",
-  "evaluated_at": "2026-08-25T20:35:52Z"
+  "evaluated_at": "2026-08-25T21:50:45Z"
 }
