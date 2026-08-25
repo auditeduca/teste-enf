@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MEOWS — alerta precoce obstétrico</title>
+  <meta name="description" content="Some os oito parâmetros fisiológicos do MEOWS e classifique o risco de deterioração materna.">
+  <meta name="theme-color" content="#1A3E74">
+  <style>
+:root {
+  --navy-primary: #1A3E74;
+  --navy-medium: #1E4D8C;
+  --navy-dark: #163269;
+  --blue-light: #4A90E2;
+  --white: #ffffff;
+  --gray-bg: #f4f7fb;
+  --gray-text: #475569;
+  --ink: #12233a;
+  --line: #d7e1ee;
+  --risk: #1A3E74;
+  --hold: #92400e;
+  --hold-bg: #fff7ed;
+  --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { color-scheme: light; }
+
+body {
+  margin: 0;
+  background: var(--gray-bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4, .brand, .result-value {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy-primary);
+}
+
+a { color: var(--navy-medium); }
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3.2rem;
+  background: var(--navy-dark);
+  color: var(--white);
+  padding: 0.55rem 0.9rem;
+  z-index: 20;
+}
+.skip-link:focus { top: 0.6rem; }
+
+.wrap {
+  width: min(980px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header, .site-footer {
+  background: var(--navy-primary);
+  color: var(--white);
+}
+
+.site-header { padding: 1rem 0; }
+.site-footer {
+  margin-top: 3rem;
+  padding: 1.4rem 0;
+  font-size: 0.92rem;
+}
+.site-footer p { margin: 0.2rem 0; color: #dbe7f6; }
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1.45rem;
+}
+.brand-sub { margin: 0.1rem 0 0; color: #c5d7ee; font-size: 0.85rem; }
+
+.nav { display: flex; gap: 1rem; }
+.nav a { color: #e8f0fb; min-height: 44px; display: inline-flex; align-items: center; }
+
+.page-hero, .tool-hero { padding: 2.2rem 0 1.2rem; }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--navy-medium);
+  margin: 0 0 0.55rem;
+}
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15; margin: 0 0 0.7rem; }
+.lede { font-size: 1.12rem; max-width: 42rem; color: var(--gray-text); }
+.meta { color: var(--gray-text); }
+
+.breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1.3rem;
+  font-size: 0.92rem;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding-bottom: 1.4rem;
+}
+
+.tool-card, .calc-card, .panel, .clinical-step, .content-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.2rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(26, 62, 116, 0.06);
+}
+
+.tool-card, .content-card { text-decoration: none; color: inherit; display: block; }
+.tool-card:hover, .content-card:hover { border-color: var(--blue-light); }
+
+.calc-card { display: grid; gap: 1.1rem; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+legend { font-size: 1.15rem; color: var(--navy-primary); margin-bottom: 0.15rem; }
+.hint { margin: 0; color: var(--gray-text); }
+
+.field { display: grid; gap: 0.25rem; }
+.field-label { font-weight: 650; }
+.field-unit { margin-left: 0.35rem; color: var(--gray-text); font-weight: 500; }
+.field-help { font-size: 0.88rem; color: var(--gray-text); }
+
+select, input[type="number"], .btn-primary, .example-btn, .quiz-opt {
+  font: inherit;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 0.7rem 0.85rem;
+  min-height: 44px;
+}
+
+select, input[type="number"] { width: 100%; }
+
+.result-block {
+  border-left: 8px solid var(--risk);
+  background: #f8fbff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+.result-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--gray-text); }
+.result-value { font-size: 2.6rem; margin: 0.2rem 0; line-height: 1; }
+.result-unit { font-size: 1rem; color: var(--gray-text); margin-left: 0.3rem; }
+.result-label { font-weight: 700; margin: 0.2rem 0; }
+.result-note { margin: 0; color: var(--gray-text); }
+
+.btn-primary {
+  background: var(--navy-primary);
+  color: var(--white);
+  border-color: var(--navy-primary);
+  cursor: pointer;
+  font-weight: 650;
+}
+.btn-primary:hover { background: var(--navy-medium); }
+
+.clinical-step, .panel { margin-top: 1rem; }
+.sae-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+.sae-col { background: #f4f8fd; border-radius: 12px; padding: 0.8rem; }
+.code { font-size: 0.8rem; color: var(--navy-medium); margin: 0; }
+.action-list { padding-left: 1.1rem; }
+.examples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.example-btn, .quiz-opt { cursor: pointer; }
+.quiz-card { margin: 0.8rem 0; }
+.quiz-opts { display: grid; gap: 0.4rem; }
+.quiz-opt { text-align: left; }
+.quiz-opt.is-correct { background: #dcfce7; border-color: #15803d; }
+.quiz-opt.is-wrong { background: #fee2e2; border-color: #b91c1c; }
+.quiz-expl { color: var(--gray-text); }
+
+.hold-banner {
+  background: var(--hold-bg);
+  color: var(--hold);
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-weight: 650;
+}
+
+.inspect { width: 100%; border-collapse: collapse; }
+.inspect th, .inspect td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); }
+
+details { margin: 0.45rem 0; }
+summary { cursor: pointer; font-weight: 650; }
+
+</style>
+  
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <div>
+        <a class="brand" href="../index.html">CKO</a>
+        <p class="brand-sub">Calculadoras de Enfermagem</p>
+      </div>
+      <nav class="nav" aria-label="Principal">
+        <a href="../index.html">Início</a>
+        <a href="../inspector.html">Inspector</a>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" class="wrap tool-page">
+    <nav class="breadcrumb" aria-label="Trilha">
+      <a href="../index.html">Início</a>
+      <span aria-hidden="true">/</span>
+      <span>Obstetrícia</span>
+    </nav>
+    
+    <header class="tool-hero">
+      <p class="eyebrow">Obstetrícia</p>
+      <h1>MEOWS</h1>
+      <p class="lede">Estratificar o risco de deterioração clínica em gestantes e puérperas a partir de oito parâmetros fisiológicos.</p>
+      <p class="meta">Enfermagem obstétrica · Urgência</p>
+    </header>
+    
+    <form id="calcForm" class="calc-card">
+      <input type="hidden" name="slug" value="meows">
+      <fieldset>
+        <legend>Avaliação</legend>
+        <p class="hint">Monitorização de alerta precoce em internamento obstétrico. Não substitui avaliação clínica completa nem decisão médica.</p>
+        
+          <label class="field">
+            <span class="field-label">Temperatura (°C)</span>
+            <span class="field-help">Aferição térmica materna.</span>
+            <select id="input-temperatura" name="temperatura" data-calc-input="temperatura">
+              <option value="t2l">≤ 35.0 (2 pts)</option>
+              <option value="t1">35.1 a 36.0 (1 pt)</option>
+              <option value="t0">36.1 a 37.9 (0 pts)</option>
+              <option value="t2h">≥ 38.0 (2 pts)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">PA sistólica (mmHg)</span>
+            <span class="field-help">Pressão arterial sistólica atual.</span>
+            <select id="input-pas" name="pas" data-calc-input="pas">
+              <option value="s2l">≤ 90 (2 pts)</option>
+              <option value="s1l">91 a 100 (1 pt)</option>
+              <option value="s0">101 a 149 (0 pts)</option>
+              <option value="s1h">150 a 159 (1 pt)</option>
+              <option value="s2h">≥ 160 (2 pts)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">PA diastólica (mmHg)</span>
+            <span class="field-help">Pressão arterial diastólica atual.</span>
+            <select id="input-pad" name="pad" data-calc-input="pad">
+              <option value="d0">≤ 89 (0 pts)</option>
+              <option value="d1">90 a 99 (1 pt)</option>
+              <option value="d2">≥ 100 (2 pts)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Frequência cardíaca (bpm)</span>
+            <span class="field-help">Batimentos cardíacos maternos.</span>
+            <select id="input-fc" name="fc" data-calc-input="fc">
+              <option value="fc2l">≤ 40 (2 pts)</option>
+              <option value="fc1l">41 a 50 (1 pt)</option>
+              <option value="fc0">51 a 99 (0 pts)</option>
+              <option value="fc1h">100 a 119 (1 pt)</option>
+              <option value="fc2h">≥ 120 (2 pts)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Frequência respiratória (irpm)</span>
+            <span class="field-help">Incursões respiratórias por minuto.</span>
+            <select id="input-fr" name="fr" data-calc-input="fr">
+              <option value="fr2l">≤ 10 (2 pts)</option>
+              <option value="fr0">11 a 20 (0 pts)</option>
+              <option value="fr1">21 a 29 (1 pt)</option>
+              <option value="fr2h">≥ 30 (2 pts)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Saturação de O₂ (%)</span>
+            <span class="field-help">Saturação periférica de oxigênio.</span>
+            <select id="input-satO2" name="satO2" data-calc-input="satO2">
+              <option value="sat2">≤ 95% (2 pts)</option>
+              <option value="sat0">96 a 100% (0 pts)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Dor pélvica/abdominal</span>
+            <span class="field-help">Escore subjetivo 0–3 agrupado.</span>
+            <select id="input-dor" name="dor" data-calc-input="dor">
+              <option value="dor0">Normal (0 a 1) (0 pts)</option>
+              <option value="dor1">Anormal (2 a 3) (1 pt)</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Nível de consciência (AVDI)</span>
+            <span class="field-help">Estado neurológico materno.</span>
+            <select id="input-consciencia" name="consciencia" data-calc-input="consciencia">
+              <option value="c0">Alerta (A) (0 pts)</option>
+              <option value="c1">Verbal (V) (1 pt)</option>
+              <option value="c2">Dor ou inconsciente (D, I) (2 pts)</option>
+            </select>
+          </label>
+      </fieldset>
+      <div class="result-block" id="resultBlock" style="--risk:#15803d">
+        <p class="result-kicker">Escore MEOWS</p>
+        <p class="result-value"><span id="calcResultValue">0</span>
+          <span id="calcResultUnit" class="result-unit">pontos</span></p>
+        <p id="calcStatusTitle" class="result-label">Baixo risco</p>
+        <p id="calcStatusText" class="result-note">Escore baixo. Manter monitoramento de rotina materno-fetal conforme protocolo institucional.</p>
+      </div>
+      <p class="actions">
+        <button type="submit" class="btn-primary" id="calcSubmit">Calcular e ver raciocínio</button>
+      </p>
+    </form>
+    
+      <section class="clinical-step" id="step-sae" hidden>
+        <h2>Raciocínio NANDA · NIC · NOC</h2>
+        <p class="hold-banner">SAE em HOLD: códigos NIC/NOC são candidatos internos até fonte canônica/licenciada.</p>
+        <div class="sae-grid">
+          <section class="sae-col"><h3>NANDA</h3><article><p class="code">00205</p><h4>Risco de choque</h4><p>Candidato após avaliação. O escore não fecha diagnóstico de enfermagem.</p></article></section>
+          <section class="sae-col"><h3>NIC</h3><article><p class="code">6680</p><h4>Monitoração dos sinais vitais</h4><ul><li>Repetir o escore</li>
+<li>Escalar conforme faixa de risco</li>
+<li>Registrar tendência</li></ul></article></section>
+          <section class="sae-col"><h3>NOC</h3><article><p class="code">0802</p><h4>Sinais vitais</h4><ul><li>Temperatura</li>
+<li>Pressão arterial</li>
+<li>Frequência cardíaca e respiratória</li></ul></article></section>
+        </div>
+      </section>
+    
+      <section class="clinical-step" id="step-plan" hidden>
+        <h2>Plano de ação</h2>
+        <ul class="action-list"><li>Continuar sinais vitais de rotina</li>
+<li>Reavaliar se houver queixa nova</li>
+<li>Registrar o escore e o horário</li></ul>
+      </section>
+    
+      
+      <section class="panel">
+        <h2>Como o escore é somado</h2>
+        <p>Cada parâmetro contribui com 0, 1 ou 2 pontos. O total vai de 0 a 15. Faixas: 0–2 baixo, 3–4 moderado, ≥ 5 elevado.</p>
+        <p>O MEOWS soma parâmetros fisiológicos maternos para detectar deterioração precoce. Este objeto usa oito itens e três faixas de conduta educacional.</p><p><strong>Limitações:</strong> Limiares e condutas devem seguir o protocolo da instituição. Este lote não afirma equivalência a uma edição licenciada específica da escala.</p>
+        <div class="examples"><button type="button" class="example-btn" data-example data-values="{&quot;temperatura&quot;: &quot;t0&quot;, &quot;pas&quot;: &quot;s0&quot;, &quot;pad&quot;: &quot;d0&quot;, &quot;fc&quot;: &quot;fc0&quot;, &quot;fr&quot;: &quot;fr0&quot;, &quot;satO2&quot;: &quot;sat0&quot;, &quot;dor&quot;: &quot;dor0&quot;, &quot;consciencia&quot;: &quot;c0&quot;}">✅ Estável — todos 0</button><button type="button" class="example-btn" data-example data-values="{&quot;temperatura&quot;: &quot;t2h&quot;, &quot;pas&quot;: &quot;s2h&quot;, &quot;pad&quot;: &quot;d0&quot;, &quot;fc&quot;: &quot;fc1h&quot;, &quot;fr&quot;: &quot;fr0&quot;, &quot;satO2&quot;: &quot;sat0&quot;, &quot;dor&quot;: &quot;dor1&quot;, &quot;consciencia&quot;: &quot;c0&quot;}">🚨 Alerta — escore 6</button></div>
+      </section>
+      <section class="panel"><h2>Dicas clínicas</h2><ul><li>Um único parâmetro em 2 pontos já exige atenção, mesmo com escore total baixo.</li>
+<li>Dor e consciência entram no escore; não avalie só números de monitor.</li>
+<li>Trate a tendência: escore que sobe entre aferições é tão importante quanto o valor absoluto.</li></ul></section>
+      
+      <section class="panel"><h2>Perguntas frequentes</h2><details><summary>MEOWS substitui o exame obstétrico?</summary><p>Não. É ferramenta de alerta. A conduta segue avaliação clínica e protocolo local.</p></details></section>
+      <section class="panel"><h2>Referências</h2><ul><li>BRASIL. Ministério da Saúde. Manual de gestação de alto risco. Brasília: MS.</li>
+<li>SINGH, S. et al. A validation study of the CEMACH recommended modified early obstetric warning system (MEOWS).</li></ul></section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
+      <p>Audit Educa · CKO v0.1</p>
+    </div>
+  </footer>
+  <script type="application/json" id="tool-config">{
+  "id": "2a7f0c44-1d8b-4c55-b9e0-7e4d2a91c3f1",
+  "code": "SCALE-MEOWS-001",
+  "slug": "meows",
+  "kind": "scale",
+  "version": "0.1.0",
+  "status": "review",
+  "seo": {
+    "title": "MEOWS — alerta precoce obstétrico",
+    "description": "Some os oito parâmetros fisiológicos do MEOWS e classifique o risco de deterioração materna."
+  },
+  "breadcrumb": {
+    "category": "Obstetrícia"
+  },
+  "overview": {
+    "name": "MEOWS",
+    "acronym": "MEOWS",
+    "categoryBadge": "Obstetrícia",
+    "objective": "Estratificar o risco de deterioração clínica em gestantes e puérperas a partir de oito parâmetros fisiológicos.",
+    "indication": "Monitorização de alerta precoce em internamento obstétrico. Não substitui avaliação clínica completa nem decisão médica.",
+    "targetPopulation": "Gestantes e puérperas em ambiente hospitalar.",
+    "specialty": [
+      "Enfermagem obstétrica",
+      "Urgência"
+    ],
+    "averageTime": "2 minutos",
+    "evidenceLevel": "II",
+    "originalAuthors": [
+      "CEMACH / sistemas de alerta precoce obstétrico"
+    ],
+    "organizations": [
+      "Ministério da Saúde"
+    ],
+    "complexity": "intermediate"
+  },
+  "calculator": {
+    "inputs": [
+      {
+        "id": "temperatura",
+        "type": "select",
+        "label": "Temperatura (°C)",
+        "description": "Aferição térmica materna.",
+        "defaultValue": 0,
+        "options": [
+          {
+            "value": "t2l",
+            "label": "≤ 35.0 (2 pts)",
+            "score": 2
+          },
+          {
+            "value": "t1",
+            "label": "35.1 a 36.0 (1 pt)",
+            "score": 1
+          },
+          {
+            "value": "t0",
+            "label": "36.1 a 37.9 (0 pts)",
+            "score": 0
+          },
+          {
+            "value": "t2h",
+            "label": "≥ 38.0 (2 pts)",
+            "score": 2
+          }
+        ]
+      },
+      {
+        "id": "pas",
+        "type": "select",
+        "label": "PA sistólica (mmHg)",
+        "description": "Pressão arterial sistólica atual.",
+        "defaultValue": 0,
+        "options": [
+          {
+            "value": "s2l",
+            "label": "≤ 90 (2 pts)",
+            "score": 2
+          },
+          {
+            "value": "s1l",
+            "label": "91 a 100 (1 pt)",
+            "score": 1
+          },
+          {
+            "value": "s0",
+            "label": "101 a 149 (0 pts)",
+            "score": 0
+          },
+          {
+            "value": "s1h",
+            "label": "150 a 159 (1 pt)",
+            "score": 1
+          },
+          {
+            "value": "s2h",
+            "label": "≥ 160 (2 pts)",
+            "score": 2
+          }
+        ]
+      },
+      {
+        "id": "pad",
+        "type": "select",
+        "label": "PA diastólica (mmHg)",
+        "description": "Pressão arterial diastólica atual.",
+        "defaultValue": 0,
+        "options": [
+          {
+            "value": "d0",
+            "label": "≤ 89 (0 pts)",
+            "score": 0
+          },
+          {
+            "value": "d1",
+            "label": "90 a 99 (1 pt)",
+            "score": 1
+          },
+          {
+            "value": "d2",
+            "label": "≥ 100 (2 pts)",
+            "score": 2
+          }
+        ]
+      },
+      {
+        "id": "fc",
+        "type": "select",
+        "label": "Frequência cardíaca (bpm)",
+        "description": "Batimentos cardíacos maternos.",
+        "defaultValue": 0,
+        "options": [
+          {
+            "value": "fc2l",
+            "label": "≤ 40 (2 pts)",
+            "score": 2
+          },
+          {
+            "value": "fc1l",
+            "label": "41 a 50 (1 pt)",
+            "score": 1
+          },
+          {
+            "value": "fc0",
+            "label": "51 a 99 (0 pts)",
+            "score": 0
+          },
+          {
+            "value": "fc1h",
+            "label": "100 a 119 (1 pt)",
+            "score": 1
+          },
+          {
+            "value": "fc2h",
+            "label": "≥ 120 (2 pts)",
+            "score": 2
+          }
+        ]
+      },
+      {
+        "id": "fr",
+        "type": "select",
+        "label": "Frequência respiratória (irpm)",
+        "description": "Incursões respiratórias por minuto.",
+        "defaultValue": 0,
+        "options": [
+          {
+            "value": "fr2l",
+            "label": "≤ 10 (2 pts)",
+            "score": 2
+          },
+          {
+            "value": "fr0",
+            "label": "11 a 20 (0 pts)",
+            "score": 0
+          },
+          {
+            "value": "fr1",
+            "label": "21 a 29 (1 pt)",
+            "score": 1
+          },
+          {
+            "value": "fr2h",
+            "label": "≥ 30 (2 pts)",
+            "score": 2
+          }
+        ]
+      },
+      {
+        "id": "satO2",
+        "type": "select",
+        "label": "Saturação de O₂ (%)",
+        "description": "Saturação periférica de oxigênio.",
+        "defaultValue": 0,
+        "options": [
+          {
+            "value": "sat2",
+            "label": "≤ 95% (2 pts)",
+            "score": 2
+          },
+          {
+            "value": "sat0",
+            "label": "96 a 100% (0 pts)",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "dor",
+        "type": "select",
+        "label": "Dor pélvica/abdominal",
+        "description": "Escore subjetivo 0–3 agrupado.",
+        "defaultValue": 0,
+        "options": [
+          {
+            "value": "dor0",
+            "label": "Normal (0 a 1) (0 pts)",
+            "score": 0
+          },
+          {
+            "value": "dor1",
+            "label": "Anormal (2 a 3) (1 pt)",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "consciencia",
+        "type": "select",
+        "label": "Nível de consciência (AVDI)",
+        "description": "Estado neurológico materno.",
+        "defaultValue": 0,
+        "options": [
+          {
+            "value": "c0",
+            "label": "Alerta (A) (0 pts)",
+            "score": 0
+          },
+          {
+            "value": "c1",
+            "label": "Verbal (V) (1 pt)",
+            "score": 1
+          },
+          {
+            "value": "c2",
+            "label": "Dor ou inconsciente (D, I) (2 pts)",
+            "score": 2
+          }
+        ]
+      }
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "Escore MEOWS",
+      "resultUnit": "pontos",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {
+        "min": 0,
+        "max": 2,
+        "label": "Baixo risco",
+        "riskLevel": "low",
+        "color": "#15803d",
+        "clinicalImplications": "Escore baixo. Manter monitoramento de rotina materno-fetal conforme protocolo institucional.",
+        "recommendations": "• Continuar sinais vitais de rotina\n• Reavaliar se houver queixa nova\n• Registrar o escore e o horário"
+      },
+      {
+        "min": 3,
+        "max": 4,
+        "label": "Risco moderado",
+        "riskLevel": "moderate",
+        "color": "#ca8a04",
+        "clinicalImplications": "Deterioração possível. Intensificar a vigilância e considerar acionamento da equipe médica.",
+        "recommendations": "• Monitorar a cada 30–60 minutos\n• Avaliação clínica detalhada\n• Comunicar a equipe obstétrica"
+      },
+      {
+        "min": 5,
+        "max": 15,
+        "label": "Risco elevado",
+        "riskLevel": "critical",
+        "color": "#b91c1c",
+        "clinicalImplications": "Alerta alto de deterioração obstétrica. Acionamento imediato e monitoramento contínuo.",
+        "recommendations": "• Acionar a equipe obstétrica imediatamente\n• Monitoramento contínuo (5–15 min)\n• Iniciar intervenções do protocolo local"
+      }
+    ]
+  },
+  "sae": {
+    "status": "HOLD",
+    "nanda": [
+      {
+        "code": "00205",
+        "status": "CANDIDATE",
+        "diagnosis": "Risco de choque",
+        "definition": "Candidato após avaliação. O escore não fecha diagnóstico de enfermagem."
+      }
+    ],
+    "nic": [
+      {
+        "code": "6680",
+        "status": "HOLD",
+        "intervention": "Monitoração dos sinais vitais",
+        "activities": [
+          "Repetir o escore",
+          "Escalar conforme faixa de risco",
+          "Registrar tendência"
+        ]
+      }
+    ],
+    "noc": [
+      {
+        "code": "0802",
+        "status": "HOLD",
+        "outcome": "Sinais vitais",
+        "indicators": [
+          "Temperatura",
+          "Pressão arterial",
+          "Frequência cardíaca e respiratória"
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "O MEOWS soma parâmetros fisiológicos maternos para detectar deterioração precoce. Este objeto usa oito itens e três faixas de conduta educacional.",
+    "limitations": "Limiares e condutas devem seguir o protocolo da instituição. Este lote não afirma equivalência a uma edição licenciada específica da escala.",
+    "references": [
+      {
+        "text": "BRASIL. Ministério da Saúde. Manual de gestação de alto risco. Brasília: MS."
+      },
+      {
+        "text": "SINGH, S. et al. A validation study of the CEMACH recommended modified early obstetric warning system (MEOWS)."
+      }
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Um único parâmetro em 2 pontos já exige atenção, mesmo com escore total baixo.",
+      "Dor e consciência entram no escore; não avalie só números de monitor.",
+      "Trate a tendência: escore que sobe entre aferições é tão importante quanto o valor absoluto."
+    ],
+    "examples": [
+      {
+        "label": "Estável",
+        "sublabel": "todos 0",
+        "emoji": "✅",
+        "values": {
+          "temperatura": "t0",
+          "pas": "s0",
+          "pad": "d0",
+          "fc": "fc0",
+          "fr": "fr0",
+          "satO2": "sat0",
+          "dor": "dor0",
+          "consciencia": "c0"
+        }
+      },
+      {
+        "label": "Alerta",
+        "sublabel": "escore 6",
+        "emoji": "🚨",
+        "values": {
+          "temperatura": "t2h",
+          "pas": "s2h",
+          "pad": "d0",
+          "fc": "fc1h",
+          "fr": "fr0",
+          "satO2": "sat0",
+          "dor": "dor1",
+          "consciencia": "c0"
+        }
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "MEOWS substitui o exame obstétrico?",
+      "a": "Não. É ferramenta de alerta. A conduta segue avaliação clínica e protocolo local."
+    }
+  ],
+  "about": {
+    "title": "Como o escore é somado",
+    "html": "<p>Cada parâmetro contribui com 0, 1 ou 2 pontos. O total vai de 0 a 15. Faixas: 0–2 baixo, 3–4 moderado, ≥ 5 elevado.</p>"
+  }
+}</script>
+<script>
+/* CKO calc-engine — interactive scoring for generated pages. No CDN. */
+(function () {
+  "use strict";
+
+  var configEl = document.getElementById("tool-config");
+  var CONFIG = {};
+  if (configEl) {
+    try {
+      CONFIG = JSON.parse(configEl.textContent);
+    } catch (err) {
+      console.error("calc-engine: invalid #tool-config", err);
+    }
+  }
+
+  var inputsCfg = (CONFIG.calculator && CONFIG.calculator.inputs) || [];
+  var formulaCfg = (CONFIG.calculator && CONFIG.calculator.formula) || { type: "none" };
+  var ranges = (CONFIG.interpretation && CONFIG.interpretation.ranges) || [];
+  var decimals = typeof formulaCfg.decimals === "number" ? formulaCfg.decimals : 0;
+  var state = {};
+
+  inputsCfg.forEach(function (inp) {
+    state[inp.id] = inp.defaultValue !== undefined ? inp.defaultValue : 0;
+  });
+
+  function fields(id) {
+    return Array.prototype.slice.call(document.querySelectorAll('[data-calc-input="' + id + '"]'));
+  }
+
+  function scoreOf(inputId) {
+    var inp = inputsCfg.filter(function (item) { return item.id === inputId; })[0];
+    if (!inp) return 0;
+    var val = state[inputId];
+    if (inp.type === "select" && inp.options) {
+      var opt = inp.options.filter(function (item) { return String(item.value) === String(val); })[0];
+      if (!opt) return 0;
+      return opt.score !== undefined ? Number(opt.score) : Number(opt.value);
+    }
+    return Number(val) || 0;
+  }
+
+  function safeEval(expr) {
+    if (!/^[0-9+\-*/().\s]+$/.test(expr)) return NaN;
+    try {
+      return Function('"use strict"; return (' + expr + ");")();
+    } catch (err) {
+      return NaN;
+    }
+  }
+
+  function computeTotal() {
+    if (formulaCfg.type === "sum") {
+      return inputsCfg.reduce(function (acc, inp) { return acc + scoreOf(inp.id); }, 0);
+    }
+    if (formulaCfg.type === "expression" && formulaCfg.expression) {
+      var expr = formulaCfg.expression;
+      inputsCfg.forEach(function (inp) {
+        expr = expr.replace(new RegExp("\\b" + inp.id + "\\b", "g"), String(scoreOf(inp.id)));
+      });
+      var result = safeEval(expr);
+      return isNaN(result) ? 0 : result;
+    }
+    return 0;
+  }
+
+  function findRange(total) {
+    for (var i = 0; i < ranges.length; i += 1) {
+      if (total >= ranges[i].min && total <= ranges[i].max) return ranges[i];
+    }
+    return null;
+  }
+
+  function fmt(n) {
+    return decimals > 0 ? Number(n).toFixed(decimals) : String(Math.round(n));
+  }
+
+  function recommendationItems(range) {
+    if (!range || !range.recommendations) return [];
+    return range.recommendations.split("\n").map(function (line) {
+      return line.replace(/^[•\-\s]+/, "").trim();
+    }).filter(Boolean);
+  }
+
+  function revealClinical() {
+    ["step-sae", "step-plan"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.hidden = false;
+    });
+  }
+
+  function renderAll() {
+    if (!inputsCfg.length) return;
+    var total = computeTotal();
+    var range = findRange(total);
+    var valueEl = document.getElementById("calcResultValue");
+    var unitEl = document.getElementById("calcResultUnit");
+    var titleEl = document.getElementById("calcStatusTitle");
+    var textEl = document.getElementById("calcStatusText");
+    var block = document.getElementById("resultBlock");
+    if (valueEl) valueEl.textContent = fmt(total);
+    if (unitEl && formulaCfg.resultUnit) unitEl.textContent = formulaCfg.resultUnit;
+    if (titleEl) titleEl.textContent = range ? range.label : "";
+    if (textEl) textEl.textContent = range ? range.clinicalImplications : "";
+    if (block && range && range.color) block.style.setProperty("--risk", range.color);
+
+    var plan = document.getElementById("step-plan");
+    if (plan) {
+      var list = plan.querySelector(".action-list");
+      var items = recommendationItems(range);
+      if (list && items.length) {
+        list.innerHTML = items.map(function (item) {
+          return "<li>" + item.replace(/</g, "&lt;") + "</li>";
+        }).join("");
+      }
+    }
+  }
+
+  function readField(el, inp) {
+    var raw = el.value;
+    state[inp.id] = inp.type === "number" ? parseFloat(raw) || 0 : raw;
+  }
+
+  inputsCfg.forEach(function (inp) {
+    fields(inp.id).forEach(function (el) {
+      ["input", "change"].forEach(function (evt) {
+        el.addEventListener(evt, function () {
+          readField(el, inp);
+          renderAll();
+        });
+      });
+    });
+  });
+
+  var form = document.getElementById("calcForm");
+  if (form) {
+    form.addEventListener("submit", function (evt) {
+      evt.preventDefault();
+      renderAll();
+      revealClinical();
+      var sae = document.getElementById("step-sae") || document.getElementById("step-plan");
+      if (sae && sae.scrollIntoView) sae.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  document.querySelectorAll("[data-example]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var values;
+      try {
+        values = JSON.parse(btn.getAttribute("data-values") || "{}");
+      } catch (err) {
+        return;
+      }
+      Object.keys(values).forEach(function (key) {
+        state[key] = values[key];
+        fields(key).forEach(function (el) { el.value = String(values[key]); });
+      });
+      renderAll();
+      revealClinical();
+    });
+  });
+
+  document.querySelectorAll("[data-quiz-card]").forEach(function (card) {
+    var correct = Number(card.getAttribute("data-correct"));
+    card.querySelectorAll(".quiz-opt").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var chosen = Number(btn.getAttribute("data-opt"));
+        card.querySelectorAll(".quiz-opt").forEach(function (opt) { opt.disabled = true; });
+        btn.classList.add(chosen === correct ? "is-correct" : "is-wrong");
+        var expl = card.querySelector(".quiz-expl");
+        if (expl) expl.hidden = false;
+      });
+    });
+  });
+
+  renderAll();
+})();
+
+</script>
+</body>
+</html>

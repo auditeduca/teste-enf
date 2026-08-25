@@ -1,0 +1,66 @@
+{
+  "id": "de5a18f2-44c1-4b90-9c77-1a2e9f08b6c3",
+  "code": "CALC-DIMENSIONAMENTO-001",
+  "slug": "dimensionamento",
+  "kind": "guide",
+  "version": "0.1.0",
+  "status": "hold",
+  "hold": {
+    "reason": "HOLD: o cálculo THE/HPPD da Resolução COFEN nº 743/2024 e do Parecer Normativo nº 01/2024 ainda não está no motor. Esta página documenta o objeto; não emite quadro de pessoal.",
+    "owner": "domínio-gestão"
+  },
+  "seo": {
+    "title": "Dimensionamento de enfermagem — objeto em HOLD",
+    "description": "Contrato do piloto de dimensionamento. A fórmula canônica de quadro de pessoal ainda não foi implementada."
+  },
+  "breadcrumb": { "category": "Gestão" },
+  "overview": {
+    "name": "Dimensionamento de enfermagem",
+    "acronym": "THE/HPPD",
+    "categoryBadge": "Gestão",
+    "objective": "Reservar o identificador e o contrato do cálculo de quadro por carga de trabalho, sem emitir resultado numérico nesta versão.",
+    "indication": "Planejamento de pessoal. Sem implementação no v0.1.",
+    "targetPopulation": "Gestores e enfermeiros responsáveis por quadro.",
+    "specialty": ["Gestão em enfermagem"],
+    "averageTime": "—",
+    "evidenceLevel": "IV",
+    "organizations": ["COFEN"],
+    "complexity": "expert"
+  },
+  "content": {
+    "sections": [
+      {
+        "title": "Por que está em HOLD",
+        "body": "Dimensionar quadro a partir de leitos, ocupação, classificação de cuidados e jornada envolve regras normativas densas. Publicar uma fórmula simplificada como se fosse o cálculo COFEN seria um erro clínico e regulatório. O motor só passará a calcular quando a expressão, as faixas, os testes e o aprovador de domínio existirem."
+      },
+      {
+        "title": "O que já está contratado",
+        "body": "Identidade (slug, código, versão), tipo de objeto, referências normativas a validar, e o gate: ausência de fórmula implica HOLD, não um número inventado."
+      },
+      {
+        "title": "Entradas previstas (ainda não no calculator)",
+        "items": [
+          { "kicker": "1", "title": "Leitos e ocupação", "body": "Número de leitos e taxa de ocupação para estimar pacientes-dia." },
+          { "kicker": "2", "title": "HPPD / THE", "body": "Horas de enfermagem por paciente-dia segundo classificação de cuidados." },
+          { "kicker": "3", "title": "Jornada e IST", "body": "Jornada semanal e índice de segurança técnica, quando aplicáveis à regra aprovada." }
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "A regulação brasileira de dimensionamento de enfermagem inclui a Resolução COFEN nº 743/2024 e o Parecer Normativo COFEN nº 01/2024 (THE/HPPD). Este objeto apenas aponta o driver; não implementa o cálculo.",
+    "limitations": "Sem motor, sem teste numérico, sem aprovação de domínio. Não usar esta página para dimensionar escala real.",
+    "references": [
+      { "text": "COFEN. Resolução nº 743/2024 — dimensionamento de profissionais de enfermagem." },
+      { "text": "COFEN. Parecer Normativo nº 01/2024 — cálculo por carga de trabalho (THE/HPPD)." }
+    ]
+  },
+  "faq": [
+    { "q": "Posso preencher leitos e obter o quadro?", "a": "Não neste v0.1. O botão de cálculo não existe de propósito." },
+    { "q": "Isso bloqueia o lote piloto?", "a": "O piloto existe como objeto documentado. A promoção clínica/regulatória do cálculo permanece HOLD." }
+  ],
+  "about": {
+    "title": "Fail closed",
+    "html": "<p>Ausência de fórmula canônica não vira estimativa informal. O renderer mostra o guia e o banner de HOLD.</p>"
+  }
+}

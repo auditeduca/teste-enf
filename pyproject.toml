@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cko-engine"
+version = "0.1.0"
+description = "CKO — Clinical Knowledge OS. Canonical engine, validators and static renderer for nursing calculators."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Leivis Melo" }]
+dependencies = [
+  "jsonschema>=4.22",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+cko = "engine.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["engine*", "validators*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

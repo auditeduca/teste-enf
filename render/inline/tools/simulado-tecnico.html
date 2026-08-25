@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulado técnico — lote piloto</title>
+  <meta name="description" content="Itens originais de estudo ligados aos pilotos deste aplicativo. Não é prova de banca.">
+  <meta name="theme-color" content="#1A3E74">
+  <style>
+:root {
+  --navy-primary: #1A3E74;
+  --navy-medium: #1E4D8C;
+  --navy-dark: #163269;
+  --blue-light: #4A90E2;
+  --white: #ffffff;
+  --gray-bg: #f4f7fb;
+  --gray-text: #475569;
+  --ink: #12233a;
+  --line: #d7e1ee;
+  --risk: #1A3E74;
+  --hold: #92400e;
+  --hold-bg: #fff7ed;
+  --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { color-scheme: light; }
+
+body {
+  margin: 0;
+  background: var(--gray-bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4, .brand, .result-value {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy-primary);
+}
+
+a { color: var(--navy-medium); }
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3.2rem;
+  background: var(--navy-dark);
+  color: var(--white);
+  padding: 0.55rem 0.9rem;
+  z-index: 20;
+}
+.skip-link:focus { top: 0.6rem; }
+
+.wrap {
+  width: min(980px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header, .site-footer {
+  background: var(--navy-primary);
+  color: var(--white);
+}
+
+.site-header { padding: 1rem 0; }
+.site-footer {
+  margin-top: 3rem;
+  padding: 1.4rem 0;
+  font-size: 0.92rem;
+}
+.site-footer p { margin: 0.2rem 0; color: #dbe7f6; }
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1.45rem;
+}
+.brand-sub { margin: 0.1rem 0 0; color: #c5d7ee; font-size: 0.85rem; }
+
+.nav { display: flex; gap: 1rem; }
+.nav a { color: #e8f0fb; min-height: 44px; display: inline-flex; align-items: center; }
+
+.page-hero, .tool-hero { padding: 2.2rem 0 1.2rem; }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--navy-medium);
+  margin: 0 0 0.55rem;
+}
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15; margin: 0 0 0.7rem; }
+.lede { font-size: 1.12rem; max-width: 42rem; color: var(--gray-text); }
+.meta { color: var(--gray-text); }
+
+.breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1.3rem;
+  font-size: 0.92rem;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding-bottom: 1.4rem;
+}
+
+.tool-card, .calc-card, .panel, .clinical-step, .content-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.2rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(26, 62, 116, 0.06);
+}
+
+.tool-card, .content-card { text-decoration: none; color: inherit; display: block; }
+.tool-card:hover, .content-card:hover { border-color: var(--blue-light); }
+
+.calc-card { display: grid; gap: 1.1rem; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+legend { font-size: 1.15rem; color: var(--navy-primary); margin-bottom: 0.15rem; }
+.hint { margin: 0; color: var(--gray-text); }
+
+.field { display: grid; gap: 0.25rem; }
+.field-label { font-weight: 650; }
+.field-unit { margin-left: 0.35rem; color: var(--gray-text); font-weight: 500; }
+.field-help { font-size: 0.88rem; color: var(--gray-text); }
+
+select, input[type="number"], .btn-primary, .example-btn, .quiz-opt {
+  font: inherit;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 0.7rem 0.85rem;
+  min-height: 44px;
+}
+
+select, input[type="number"] { width: 100%; }
+
+.result-block {
+  border-left: 8px solid var(--risk);
+  background: #f8fbff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+.result-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--gray-text); }
+.result-value { font-size: 2.6rem; margin: 0.2rem 0; line-height: 1; }
+.result-unit { font-size: 1rem; color: var(--gray-text); margin-left: 0.3rem; }
+.result-label { font-weight: 700; margin: 0.2rem 0; }
+.result-note { margin: 0; color: var(--gray-text); }
+
+.btn-primary {
+  background: var(--navy-primary);
+  color: var(--white);
+  border-color: var(--navy-primary);
+  cursor: pointer;
+  font-weight: 650;
+}
+.btn-primary:hover { background: var(--navy-medium); }
+
+.clinical-step, .panel { margin-top: 1rem; }
+.sae-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+.sae-col { background: #f4f8fd; border-radius: 12px; padding: 0.8rem; }
+.code { font-size: 0.8rem; color: var(--navy-medium); margin: 0; }
+.action-list { padding-left: 1.1rem; }
+.examples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.example-btn, .quiz-opt { cursor: pointer; }
+.quiz-card { margin: 0.8rem 0; }
+.quiz-opts { display: grid; gap: 0.4rem; }
+.quiz-opt { text-align: left; }
+.quiz-opt.is-correct { background: #dcfce7; border-color: #15803d; }
+.quiz-opt.is-wrong { background: #fee2e2; border-color: #b91c1c; }
+.quiz-expl { color: var(--gray-text); }
+
+.hold-banner {
+  background: var(--hold-bg);
+  color: var(--hold);
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-weight: 650;
+}
+
+.inspect { width: 100%; border-collapse: collapse; }
+.inspect th, .inspect td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); }
+
+details { margin: 0.45rem 0; }
+summary { cursor: pointer; font-weight: 650; }
+
+</style>
+  
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <div>
+        <a class="brand" href="../index.html">CKO</a>
+        <p class="brand-sub">Calculadoras de Enfermagem</p>
+      </div>
+      <nav class="nav" aria-label="Principal">
+        <a href="../index.html">Início</a>
+        <a href="../inspector.html">Inspector</a>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" class="wrap tool-page">
+    <nav class="breadcrumb" aria-label="Trilha">
+      <a href="../index.html">Início</a>
+      <span aria-hidden="true">/</span>
+      <span>Aprendizado</span>
+    </nav>
+    
+    <header class="tool-hero">
+      <p class="eyebrow">Aprendizado</p>
+      <h1>Simulado técnico (piloto)</h1>
+      <p class="lede">Exercitar o runtime de prova com itens originais ligados a gotejamento, MEOWS, PCR e dimensionamento.</p>
+      <p class="meta">Educação em enfermagem</p>
+    </header>
+    
+    
+      <section class="panel"><h2>O que este simulado é — e o que não é</h2><p>Seis itens originais para validar o tipo exam. Não há banco de 50 questões, gabarito de concurso nem aquisição de prova anterior neste lote. A fábrica de provas permanece especificada, não implementada.</p></section>
+      <section class="panel">
+        <h2>Runtime de prova</h2>
+        <p>O tipo <code>exam</code> reutiliza o bloco de quiz do renderer. Cada item tem enunciado, alternativas, índice correto e explicação.</p>
+        <p>Itens escritos para o lote piloto, com gabarito derivado das fórmulas e contratos deste repositório.</p><p><strong>Limitações:</strong> Não é exame oficial. Não usa questões de provas anteriores.</p>
+        
+      </section>
+      
+      <section class="panel"><h2>Questões</h2><article class="quiz-card" data-quiz-card="0" data-correct="1">
+            <p class="quiz-q">500 mL em 8 horas em equipo de macrogotas (20 gts/mL) resultam em aproximadamente:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">10 gotas/min</button><button type="button" class="quiz-opt" data-opt="1">21 gotas/min</button><button type="button" class="quiz-opt" data-opt="2">60 gotas/min</button><button type="button" class="quiz-opt" data-opt="3">125 gotas/min</button></div>
+            <p class="quiz-expl" hidden>(500 × 20) ÷ 480 minutos ≈ 20,8 → 21 gotas/min.</p>
+          </article><article class="quiz-card" data-quiz-card="1" data-correct="2">
+            <p class="quiz-q">No MEOWS educacional deste aplicativo, escore 6 classifica:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">Baixo risco</button><button type="button" class="quiz-opt" data-opt="1">Risco moderado</button><button type="button" class="quiz-opt" data-opt="2">Risco elevado</button><button type="button" class="quiz-opt" data-opt="3">Escore inválido</button></div>
+            <p class="quiz-expl" hidden>Faixa ≥ 5 é risco elevado neste objeto.</p>
+          </article><article class="quiz-card" data-quiz-card="2" data-correct="1">
+            <p class="quiz-q">Tamponamento cardíaco é uma causa reversível da PCR do grupo:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">5 Hs</button><button type="button" class="quiz-opt" data-opt="1">5 Ts</button><button type="button" class="quiz-opt" data-opt="2">Cadeia de sobrevivência</button><button type="button" class="quiz-opt" data-opt="3">Escala de coma</button></div>
+            <p class="quiz-expl" hidden>Tamponamento é um dos 5 Ts.</p>
+          </article><article class="quiz-card" data-quiz-card="3" data-correct="1">
+            <p class="quiz-q">Dimensionamento de enfermagem por carga de trabalho (THE/HPPD) neste aplicativo está:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">Implementado e aprovado pelo COFEN no motor</button><button type="button" class="quiz-opt" data-opt="1">Em HOLD, sem fórmula canônica no v0.1</button><button type="button" class="quiz-opt" data-opt="2">Irrelevante para gestão</button><button type="button" class="quiz-opt" data-opt="3">Substituído pelo MEOWS</button></div>
+            <p class="quiz-expl" hidden>O piloto de dimensionamento permanece HOLD até o cálculo COFEN ser especificado, testado e aprovado.</p>
+          </article><article class="quiz-card" data-quiz-card="4" data-correct="1">
+            <p class="quiz-q">Conhecimento canônico validado, neste aplicativo, deve ser:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">Regenerado por LLM a cada página</button><button type="button" class="quiz-opt" data-opt="1">Projetado em novos usos, sem regeneração silenciosa</button><button type="button" class="quiz-opt" data-opt="2">Sobrescrito por snapshot externo</button><button type="button" class="quiz-opt" data-opt="3">Publicado sem hash</button></div>
+            <p class="quiz-expl" hidden>Princípio: não regenerar o canônico; projetar.</p>
+          </article><article class="quiz-card" data-quiz-card="5" data-correct="1">
+            <p class="quiz-q">O modo de renderização de produção deste aplicativo carrega CSS:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">De CDN pública</button><button type="button" class="quiz-opt" data-opt="1">First-party via fetch/link local</button><button type="button" class="quiz-opt" data-opt="2">Apenas inline, nunca separado</button><button type="button" class="quiz-opt" data-opt="3">De e-mail</button></div>
+            <p class="quiz-expl" hidden>Produção fetch usa CSS local; preview inline embute o mesmo CSS.</p>
+          </article></section>
+      <section class="panel"><h2>Perguntas frequentes</h2><details><summary>Haverá 50 questões?</summary><p>Sim, quando a fábrica de provas e o banco canônico existirem. Neste v0.1 o objetivo é o runtime.</p></details></section>
+      <section class="panel"><h2>Referências</h2><ul><li>CKO. data/tools/gotejamento.json — fórmula de gotejamento.</li>
+<li>CKO. data/tools/meows.json — faixas de risco.</li></ul></section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
+      <p>Audit Educa · CKO v0.1</p>
+    </div>
+  </footer>
+  <script type="application/json" id="tool-config">{
+  "id": "c0e91b33-8a76-4d12-9f04-2bb71e5a0d88",
+  "code": "EXAM-SIMULADO-TEC-001",
+  "slug": "simulado-tecnico",
+  "kind": "exam",
+  "version": "0.1.0",
+  "status": "review",
+  "seo": {
+    "title": "Simulado técnico — lote piloto",
+    "description": "Itens originais de estudo ligados aos pilotos deste aplicativo. Não é prova de banca."
+  },
+  "breadcrumb": {
+    "category": "Aprendizado"
+  },
+  "overview": {
+    "name": "Simulado técnico (piloto)",
+    "acronym": "Simulado",
+    "categoryBadge": "Aprendizado",
+    "objective": "Exercitar o runtime de prova com itens originais ligados a gotejamento, MEOWS, PCR e dimensionamento.",
+    "indication": "Estudo. Não reproduz edital, banca ou prova anterior.",
+    "targetPopulation": "Estudantes de técnico de enfermagem.",
+    "specialty": [
+      "Educação em enfermagem"
+    ],
+    "averageTime": "8 minutos",
+    "evidenceLevel": "V",
+    "complexity": "basic"
+  },
+  "content": {
+    "sections": [
+      {
+        "title": "O que este simulado é — e o que não é",
+        "body": "Seis itens originais para validar o tipo exam. Não há banco de 50 questões, gabarito de concurso nem aquisição de prova anterior neste lote. A fábrica de provas permanece especificada, não implementada."
+      }
+    ]
+  },
+  "learning": {
+    "quiz": [
+      {
+        "q": "500 mL em 8 horas em equipo de macrogotas (20 gts/mL) resultam em aproximadamente:",
+        "opts": [
+          "10 gotas/min",
+          "21 gotas/min",
+          "60 gotas/min",
+          "125 gotas/min"
+        ],
+        "correct": 1,
+        "expl": "(500 × 20) ÷ 480 minutos ≈ 20,8 → 21 gotas/min."
+      },
+      {
+        "q": "No MEOWS educacional deste aplicativo, escore 6 classifica:",
+        "opts": [
+          "Baixo risco",
+          "Risco moderado",
+          "Risco elevado",
+          "Escore inválido"
+        ],
+        "correct": 2,
+        "expl": "Faixa ≥ 5 é risco elevado neste objeto."
+      },
+      {
+        "q": "Tamponamento cardíaco é uma causa reversível da PCR do grupo:",
+        "opts": [
+          "5 Hs",
+          "5 Ts",
+          "Cadeia de sobrevivência",
+          "Escala de coma"
+        ],
+        "correct": 1,
+        "expl": "Tamponamento é um dos 5 Ts."
+      },
+      {
+        "q": "Dimensionamento de enfermagem por carga de trabalho (THE/HPPD) neste aplicativo está:",
+        "opts": [
+          "Implementado e aprovado pelo COFEN no motor",
+          "Em HOLD, sem fórmula canônica no v0.1",
+          "Irrelevante para gestão",
+          "Substituído pelo MEOWS"
+        ],
+        "correct": 1,
+        "expl": "O piloto de dimensionamento permanece HOLD até o cálculo COFEN ser especificado, testado e aprovado."
+      },
+      {
+        "q": "Conhecimento canônico validado, neste aplicativo, deve ser:",
+        "opts": [
+          "Regenerado por LLM a cada página",
+          "Projetado em novos usos, sem regeneração silenciosa",
+          "Sobrescrito por snapshot externo",
+          "Publicado sem hash"
+        ],
+        "correct": 1,
+        "expl": "Princípio: não regenerar o canônico; projetar."
+      },
+      {
+        "q": "O modo de renderização de produção deste aplicativo carrega CSS:",
+        "opts": [
+          "De CDN pública",
+          "First-party via fetch/link local",
+          "Apenas inline, nunca separado",
+          "De e-mail"
+        ],
+        "correct": 1,
+        "expl": "Produção fetch usa CSS local; preview inline embute o mesmo CSS."
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "Itens escritos para o lote piloto, com gabarito derivado das fórmulas e contratos deste repositório.",
+    "limitations": "Não é exame oficial. Não usa questões de provas anteriores.",
+    "references": [
+      {
+        "text": "CKO. data/tools/gotejamento.json — fórmula de gotejamento."
+      },
+      {
+        "text": "CKO. data/tools/meows.json — faixas de risco."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Haverá 50 questões?",
+      "a": "Sim, quando a fábrica de provas e o banco canônico existirem. Neste v0.1 o objetivo é o runtime."
+    }
+  ],
+  "about": {
+    "title": "Runtime de prova",
+    "html": "<p>O tipo <code>exam</code> reutiliza o bloco de quiz do renderer. Cada item tem enunciado, alternativas, índice correto e explicação.</p>"
+  }
+}</script>
+<script>
+/* CKO calc-engine — interactive scoring for generated pages. No CDN. */
+(function () {
+  "use strict";
+
+  var configEl = document.getElementById("tool-config");
+  var CONFIG = {};
+  if (configEl) {
+    try {
+      CONFIG = JSON.parse(configEl.textContent);
+    } catch (err) {
+      console.error("calc-engine: invalid #tool-config", err);
+    }
+  }
+
+  var inputsCfg = (CONFIG.calculator && CONFIG.calculator.inputs) || [];
+  var formulaCfg = (CONFIG.calculator && CONFIG.calculator.formula) || { type: "none" };
+  var ranges = (CONFIG.interpretation && CONFIG.interpretation.ranges) || [];
+  var decimals = typeof formulaCfg.decimals === "number" ? formulaCfg.decimals : 0;
+  var state = {};
+
+  inputsCfg.forEach(function (inp) {
+    state[inp.id] = inp.defaultValue !== undefined ? inp.defaultValue : 0;
+  });
+
+  function fields(id) {
+    return Array.prototype.slice.call(document.querySelectorAll('[data-calc-input="' + id + '"]'));
+  }
+
+  function scoreOf(inputId) {
+    var inp = inputsCfg.filter(function (item) { return item.id === inputId; })[0];
+    if (!inp) return 0;
+    var val = state[inputId];
+    if (inp.type === "select" && inp.options) {
+      var opt = inp.options.filter(function (item) { return String(item.value) === String(val); })[0];
+      if (!opt) return 0;
+      return opt.score !== undefined ? Number(opt.score) : Number(opt.value);
+    }
+    return Number(val) || 0;
+  }
+
+  function safeEval(expr) {
+    if (!/^[0-9+\-*/().\s]+$/.test(expr)) return NaN;
+    try {
+      return Function('"use strict"; return (' + expr + ");")();
+    } catch (err) {
+      return NaN;
+    }
+  }
+
+  function computeTotal() {
+    if (formulaCfg.type === "sum") {
+      return inputsCfg.reduce(function (acc, inp) { return acc + scoreOf(inp.id); }, 0);
+    }
+    if (formulaCfg.type === "expression" && formulaCfg.expression) {
+      var expr = formulaCfg.expression;
+      inputsCfg.forEach(function (inp) {
+        expr = expr.replace(new RegExp("\\b" + inp.id + "\\b", "g"), String(scoreOf(inp.id)));
+      });
+      var result = safeEval(expr);
+      return isNaN(result) ? 0 : result;
+    }
+    return 0;
+  }
+
+  function findRange(total) {
+    for (var i = 0; i < ranges.length; i += 1) {
+      if (total >= ranges[i].min && total <= ranges[i].max) return ranges[i];
+    }
+    return null;
+  }
+
+  function fmt(n) {
+    return decimals > 0 ? Number(n).toFixed(decimals) : String(Math.round(n));
+  }
+
+  function recommendationItems(range) {
+    if (!range || !range.recommendations) return [];
+    return range.recommendations.split("\n").map(function (line) {
+      return line.replace(/^[•\-\s]+/, "").trim();
+    }).filter(Boolean);
+  }
+
+  function revealClinical() {
+    ["step-sae", "step-plan"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.hidden = false;
+    });
+  }
+
+  function renderAll() {
+    if (!inputsCfg.length) return;
+    var total = computeTotal();
+    var range = findRange(total);
+    var valueEl = document.getElementById("calcResultValue");
+    var unitEl = document.getElementById("calcResultUnit");
+    var titleEl = document.getElementById("calcStatusTitle");
+    var textEl = document.getElementById("calcStatusText");
+    var block = document.getElementById("resultBlock");
+    if (valueEl) valueEl.textContent = fmt(total);
+    if (unitEl && formulaCfg.resultUnit) unitEl.textContent = formulaCfg.resultUnit;
+    if (titleEl) titleEl.textContent = range ? range.label : "";
+    if (textEl) textEl.textContent = range ? range.clinicalImplications : "";
+    if (block && range && range.color) block.style.setProperty("--risk", range.color);
+
+    var plan = document.getElementById("step-plan");
+    if (plan) {
+      var list = plan.querySelector(".action-list");
+      var items = recommendationItems(range);
+      if (list && items.length) {
+        list.innerHTML = items.map(function (item) {
+          return "<li>" + item.replace(/</g, "&lt;") + "</li>";
+        }).join("");
+      }
+    }
+  }
+
+  function readField(el, inp) {
+    var raw = el.value;
+    state[inp.id] = inp.type === "number" ? parseFloat(raw) || 0 : raw;
+  }
+
+  inputsCfg.forEach(function (inp) {
+    fields(inp.id).forEach(function (el) {
+      ["input", "change"].forEach(function (evt) {
+        el.addEventListener(evt, function () {
+          readField(el, inp);
+          renderAll();
+        });
+      });
+    });
+  });
+
+  var form = document.getElementById("calcForm");
+  if (form) {
+    form.addEventListener("submit", function (evt) {
+      evt.preventDefault();
+      renderAll();
+      revealClinical();
+      var sae = document.getElementById("step-sae") || document.getElementById("step-plan");
+      if (sae && sae.scrollIntoView) sae.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  document.querySelectorAll("[data-example]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var values;
+      try {
+        values = JSON.parse(btn.getAttribute("data-values") || "{}");
+      } catch (err) {
+        return;
+      }
+      Object.keys(values).forEach(function (key) {
+        state[key] = values[key];
+        fields(key).forEach(function (el) { el.value = String(values[key]); });
+      });
+      renderAll();
+      revealClinical();
+    });
+  });
+
+  document.querySelectorAll("[data-quiz-card]").forEach(function (card) {
+    var correct = Number(card.getAttribute("data-correct"));
+    card.querySelectorAll(".quiz-opt").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var chosen = Number(btn.getAttribute("data-opt"));
+        card.querySelectorAll(".quiz-opt").forEach(function (opt) { opt.disabled = true; });
+        btn.classList.add(chosen === correct ? "is-correct" : "is-wrong");
+        var expl = card.querySelector(".quiz-expl");
+        if (expl) expl.hidden = false;
+      });
+    });
+  });
+
+  renderAll();
+})();
+
+</script>
+</body>
+</html>

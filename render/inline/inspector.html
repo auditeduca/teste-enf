@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inspector — CKO</title>
+  <meta name="description" content="Inspeção read-only do catálogo canônico.">
+  <meta name="theme-color" content="#1A3E74">
+  <style>
+:root {
+  --navy-primary: #1A3E74;
+  --navy-medium: #1E4D8C;
+  --navy-dark: #163269;
+  --blue-light: #4A90E2;
+  --white: #ffffff;
+  --gray-bg: #f4f7fb;
+  --gray-text: #475569;
+  --ink: #12233a;
+  --line: #d7e1ee;
+  --risk: #1A3E74;
+  --hold: #92400e;
+  --hold-bg: #fff7ed;
+  --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { color-scheme: light; }
+
+body {
+  margin: 0;
+  background: var(--gray-bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4, .brand, .result-value {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy-primary);
+}
+
+a { color: var(--navy-medium); }
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3.2rem;
+  background: var(--navy-dark);
+  color: var(--white);
+  padding: 0.55rem 0.9rem;
+  z-index: 20;
+}
+.skip-link:focus { top: 0.6rem; }
+
+.wrap {
+  width: min(980px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header, .site-footer {
+  background: var(--navy-primary);
+  color: var(--white);
+}
+
+.site-header { padding: 1rem 0; }
+.site-footer {
+  margin-top: 3rem;
+  padding: 1.4rem 0;
+  font-size: 0.92rem;
+}
+.site-footer p { margin: 0.2rem 0; color: #dbe7f6; }
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1.45rem;
+}
+.brand-sub { margin: 0.1rem 0 0; color: #c5d7ee; font-size: 0.85rem; }
+
+.nav { display: flex; gap: 1rem; }
+.nav a { color: #e8f0fb; min-height: 44px; display: inline-flex; align-items: center; }
+
+.page-hero, .tool-hero { padding: 2.2rem 0 1.2rem; }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--navy-medium);
+  margin: 0 0 0.55rem;
+}
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15; margin: 0 0 0.7rem; }
+.lede { font-size: 1.12rem; max-width: 42rem; color: var(--gray-text); }
+.meta { color: var(--gray-text); }
+
+.breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1.3rem;
+  font-size: 0.92rem;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding-bottom: 1.4rem;
+}
+
+.tool-card, .calc-card, .panel, .clinical-step, .content-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.2rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(26, 62, 116, 0.06);
+}
+
+.tool-card, .content-card { text-decoration: none; color: inherit; display: block; }
+.tool-card:hover, .content-card:hover { border-color: var(--blue-light); }
+
+.calc-card { display: grid; gap: 1.1rem; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+legend { font-size: 1.15rem; color: var(--navy-primary); margin-bottom: 0.15rem; }
+.hint { margin: 0; color: var(--gray-text); }
+
+.field { display: grid; gap: 0.25rem; }
+.field-label { font-weight: 650; }
+.field-unit { margin-left: 0.35rem; color: var(--gray-text); font-weight: 500; }
+.field-help { font-size: 0.88rem; color: var(--gray-text); }
+
+select, input[type="number"], .btn-primary, .example-btn, .quiz-opt {
+  font: inherit;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 0.7rem 0.85rem;
+  min-height: 44px;
+}
+
+select, input[type="number"] { width: 100%; }
+
+.result-block {
+  border-left: 8px solid var(--risk);
+  background: #f8fbff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+.result-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--gray-text); }
+.result-value { font-size: 2.6rem; margin: 0.2rem 0; line-height: 1; }
+.result-unit { font-size: 1rem; color: var(--gray-text); margin-left: 0.3rem; }
+.result-label { font-weight: 700; margin: 0.2rem 0; }
+.result-note { margin: 0; color: var(--gray-text); }
+
+.btn-primary {
+  background: var(--navy-primary);
+  color: var(--white);
+  border-color: var(--navy-primary);
+  cursor: pointer;
+  font-weight: 650;
+}
+.btn-primary:hover { background: var(--navy-medium); }
+
+.clinical-step, .panel { margin-top: 1rem; }
+.sae-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+.sae-col { background: #f4f8fd; border-radius: 12px; padding: 0.8rem; }
+.code { font-size: 0.8rem; color: var(--navy-medium); margin: 0; }
+.action-list { padding-left: 1.1rem; }
+.examples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.example-btn, .quiz-opt { cursor: pointer; }
+.quiz-card { margin: 0.8rem 0; }
+.quiz-opts { display: grid; gap: 0.4rem; }
+.quiz-opt { text-align: left; }
+.quiz-opt.is-correct { background: #dcfce7; border-color: #15803d; }
+.quiz-opt.is-wrong { background: #fee2e2; border-color: #b91c1c; }
+.quiz-expl { color: var(--gray-text); }
+
+.hold-banner {
+  background: var(--hold-bg);
+  color: var(--hold);
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-weight: 650;
+}
+
+.inspect { width: 100%; border-collapse: collapse; }
+.inspect th, .inspect td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); }
+
+details { margin: 0.45rem 0; }
+summary { cursor: pointer; font-weight: 650; }
+
+</style>
+  
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <div>
+        <a class="brand" href="index.html">CKO</a>
+        <p class="brand-sub">Calculadoras de Enfermagem</p>
+      </div>
+      <nav class="nav" aria-label="Principal">
+        <a href="index.html">Início</a>
+        <a href="inspector.html">Inspector</a>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" class="wrap">
+    <header class="page-hero">
+      <p class="eyebrow">CMS / Inspector</p>
+      <h1>Inspeção read-only do catálogo.</h1>
+      <p class="lede">Este inspector não edita objetos. Completude clínica do lote: <strong>HOLD</strong>.</p>
+    </header>
+    <section class="panel">
+      <h2>Objetos</h2>
+      <table class="inspect">
+        <thead><tr><th>Slug</th><th>Tipo</th><th>Status</th><th>Nome</th></tr></thead>
+        <tbody><tr><td><a href="tools/cinco-ts-pcr.html">cinco-ts-pcr</a></td><td>guide</td><td>review</td><td>5 Ts da PCR</td></tr><tr><td><a href="tools/dimensionamento.html">dimensionamento</a></td><td>guide</td><td>hold</td><td>Dimensionamento de enfermagem</td></tr><tr><td><a href="tools/gotejamento.html">gotejamento</a></td><td>calculator</td><td>review</td><td>Gotejamento de soro</td></tr><tr><td><a href="tools/meows.html">meows</a></td><td>scale</td><td>review</td><td>MEOWS</td></tr><tr><td><a href="tools/simulado-tecnico.html">simulado-tecnico</a></td><td>exam</td><td>review</td><td>Simulado técnico (piloto)</td></tr></tbody>
+      </table>
+    </section>
+    <section class="panel">
+      <h2>Achados de completude</h2>
+      <ul><li>SAE_REQUIRED_NANDA: NANDA candidato interno, sem fonte canônica/licenciada: 00195.</li><li>SAE_REQUIRED_NIC: NIC candidato interno, sem fonte canônica/licenciada: 2314.</li><li>SAE_REQUIRED_NOC: NOC candidato interno, sem fonte canônica/licenciada: 0413.</li><li>OBJECT_HOLD: tool:gotejamento permanece HOLD.</li><li>SAE_REQUIRED_NANDA: NANDA candidato interno, sem fonte canônica/licenciada: 00205.</li><li>SAE_REQUIRED_NIC: NIC candidato interno, sem fonte canônica/licenciada: 6680.</li><li>SAE_REQUIRED_NOC: NOC candidato interno, sem fonte canônica/licenciada: 0802.</li><li>OBJECT_HOLD: tool:meows permanece HOLD.</li></ul>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
+      <p>Audit Educa · CKO v0.1</p>
+    </div>
+  </footer>
+  
+</body>
+</html>

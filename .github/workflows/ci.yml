@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: python3 -m pip install -e ".[dev]"
+      - name: Validate
+        run: python3 -m engine.cli validate
+      - name: Test
+        run: python3 -m pytest -q
+      - name: Build and audit
+        run: |
+          python3 -m engine.cli build
+          python3 -m engine.cli audit

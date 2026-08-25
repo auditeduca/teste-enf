@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TrustAssessment",
+  "type": "object",
+  "required": ["trustAssessmentId", "artifactRef", "claimRef", "decision"],
+  "properties": {
+    "trustAssessmentId": { "type": "string" },
+    "sourceRef": { "type": "string" },
+    "artifactRef": { "type": "string" },
+    "claimRef": { "type": "string" },
+    "contextRef": { "type": "string" },
+    "jurisdictionRef": { "type": "string" },
+    "purpose": { "type": "string" },
+    "assessorId": { "type": "string" },
+    "assessorVersion": { "type": "string" },
+    "dimensionResults": { "type": "object" },
+    "conflictRefs": { "type": "array", "items": { "type": "string" } },
+    "decision": {
+      "type": "string",
+      "enum": ["PASS", "PENDING_VALIDATION", "QUARANTINED_CANDIDATE", "BLOCKED"]
+    },
+    "rationale": { "type": "string" },
+    "checkedAt": { "type": "string" },
+    "validUntil": { "type": "string" },
+    "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+    "humanReviewRef": { "type": "string" }
+  }
+}

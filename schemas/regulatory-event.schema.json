@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RegulatoryEvent",
+  "type": "object",
+  "required": ["regulatoryEventId", "sourceRef", "driverRef", "status", "detectedAt"],
+  "properties": {
+    "regulatoryEventId": { "type": "string" },
+    "sourceRef": { "type": "string" },
+    "driverRef": { "type": "string" },
+    "jurisdictionRef": { "type": "string" },
+    "oldVersionRef": { "type": "string" },
+    "newVersionRef": { "type": "string" },
+    "detectedAt": { "type": "string" },
+    "collectorRunId": { "type": "string" },
+    "snapshotRefs": { "type": "array", "items": { "type": "string" } },
+    "diffHash": { "type": "string" },
+    "changedSections": { "type": "array", "items": { "type": "string" } },
+    "affectedRequirementRefs": { "type": "array", "items": { "type": "string" } },
+    "affectedObjectRefs": { "type": "array", "items": { "type": "string" } },
+    "affectedConsumerRefs": { "type": "array", "items": { "type": "string" } },
+    "impactLevel": { "type": "string", "enum": ["low", "moderate", "high", "critical"] },
+    "status": {
+      "type": "string",
+      "enum": ["DETECTED", "QUARANTINED", "PENDING_VALIDATION", "CONFIRMED", "REJECTED", "IMPACT_ASSESSED", "REVALIDATION_REQUIRED", "CLOSED"]
+    },
+    "validatorRefs": { "type": "array", "items": { "type": "string" } },
+    "humanReviewRequired": { "type": "boolean" },
+    "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+  }
+}
