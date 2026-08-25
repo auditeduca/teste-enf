@@ -168,11 +168,12 @@ def compare_internal() -> dict:
 def monitor_drift() -> dict:
     """AG-MONITOR-DRIFT — surface change events for admin/frontend."""
     events = _load_events()
+    real_events = [item for item in (events.get("events") or []) if not str(item.get("logical_id") or "").startswith("TEST-")]
     events["status"] = "OBSERVED"
     events["monitor_run_at"] = _now()
-    events["population"] = len(events.get("events") or [])
-    events["open_source_drift"] = sum(1 for item in events.get("events") or [] if item.get("kind") == "SOURCE_DRIFT")
-    events["open_internal_drift"] = sum(1 for item in events.get("events") or [] if item.get("kind") == "INTERNAL_DRIFT")
+    events["population"] = len(real_events)
+    events["open_source_drift"] = sum(1 for item in real_events if item.get("kind") == "SOURCE_DRIFT")
+    events["open_internal_drift"] = sum(1 for item in real_events if item.get("kind") == "INTERNAL_DRIFT")
     events["rule"] = "Qualquer SOURCE_DRIFT ou INTERNAL_DRIFT deve ser informado para ajuste. Sem IPE → sem reliance."
     _dump(ROOT / "cko_inbox" / "extracted" / "change_events.json", events)
     _dump(ROOT / "cko_assurance" / "monitoring_events.json", {

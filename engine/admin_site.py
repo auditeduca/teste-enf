@@ -393,7 +393,7 @@ def page_monitoring(ctx: dict, **kwargs) -> str:
     monitor = load_json(ROOT / "cko_assurance" / "monitoring_events.json")
     compare_src = load_json(ROOT / "cko_inbox" / "extracted" / "compare_source.json")
     compare_int = load_json(ROOT / "cko_inbox" / "extracted" / "compare_internal.json")
-    events = events_doc.get("events") or []
+    events = [item for item in (events_doc.get("events") or []) if not str(item.get("logical_id") or "").startswith("TEST-")]
     event_rows = [
         [
             esc(item.get("kind")),
