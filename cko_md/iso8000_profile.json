@@ -17,7 +17,7 @@
   "cko_profile_applied": true,
   "status": "PASS_PROFILE_ONLY",
   "epistemic_status": "PROPOSED",
-  "note": "Perfil CKO de unicidade, proveniência, WORM, lineage e dicionário, vinculado aos instrumentos e dimensões PGDADOS. NÃO é implantação certificada da ISO 8000.",
+  "note": "Perfil CKO de unicidade, proveniência, WORM, lineage e dicionário, vinculado aos instrumentos e dimensões PGDADOS. Envelopes i18n WHO/OMS (L310) não ligam o seletor de idioma. NÃO é implantação certificada da ISO 8000.",
   "tests": [
     {
       "id": "ISO8000-CKO-UNIQUENESS",
@@ -71,7 +71,7 @@
       "pgdados_term": "Atributos de referência",
       "status": "PASS",
       "observed": {
-        "fields": 27
+        "fields": 34
       }
     },
     {
@@ -144,11 +144,39 @@
       "pgdados_term": "Atributos de referência",
       "status": "PASS",
       "observed": {
-        "fields": 27,
-        "links": 27,
+        "fields": 34,
+        "links": 34,
         "binding_ref": "MD-ISO8000-PGDADOS-BIND-001"
+      }
+    },
+    {
+      "id": "ISO8000-CKO-WHO-I18N",
+      "principle": "WHO/OMS official selector modulates international i18n envelopes",
+      "pgdados_term": "Interoperabilidade",
+      "status": "PASS",
+      "observed": {
+        "who_fields": [
+          "FLD-I18N-BCP47",
+          "FLD-I18N-GHO-INDICATOR",
+          "FLD-I18N-ICD-CODE",
+          "FLD-I18N-ICNP-CANDIDATE",
+          "FLD-I18N-TRANSLATION-OBJECT",
+          "FLD-I18N-WHO-OFFICIAL",
+          "FLD-I18N-WHO-REGION"
+        ],
+        "who_official": [
+          "en",
+          "ar",
+          "zh",
+          "fr",
+          "ru",
+          "es"
+        ],
+        "translation_gate": "HOLD",
+        "icd_icnp_dump": "FORBIDDEN",
+        "pt_br_in_who_selector": false
       }
     }
   ],
-  "evaluated_at": "2026-08-25T20:26:27Z"
+  "evaluated_at": "2026-08-25T20:35:52Z"
 }

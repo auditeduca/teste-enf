@@ -57,7 +57,7 @@ def test_who_i18n_holds_translation_and_forbids_dumps():
     assert i18n["display_language_runtime"] == "pt-BR"
     blob = json.dumps(payload)
     assert "ICD-11 License" in blob or "texto não copiado" in blob
-    assert "Não inferir pt → pt-BR" in payload["rules"]
+    assert "Não inferir pt → pt-BR." in payload["rules"]
 
 
 def test_iso_profile_includes_who_i18n_test():

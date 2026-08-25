@@ -1,0 +1,354 @@
+{
+  "business_key": "MD-WHO-I18N-001",
+  "uuid": null,
+  "status": "REGISTERED",
+  "implemented": true,
+  "publication": "HOLD",
+  "assured": false,
+  "translation_gate": "HOLD",
+  "wired_to_frontend": false,
+  "layer": "L310",
+  "agency_key": "AGY-WHO",
+  "role": "Modular conteúdo internacional: identidade de idioma WHO ∩ Drive zip. Não traduz calculadora. Não copia ICD/ICNP/GHO como texto canônico.",
+  "sources": [
+    {
+      "business_key": "SRC-WHO-INT-SELECTOR",
+      "url": "https://www.who.int/",
+      "observed": "language-selector options en ar zh fr ru es",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED"
+    },
+    {
+      "business_key": "SRC-WHO-GHO",
+      "url": "https://ghoapi.azureedge.net/api/Indicator?$top=1",
+      "dimension_url": "https://ghoapi.azureedge.net/api/Dimension",
+      "adapter_ref": "API-WHO-GHO-INDICATOR",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "note": "Indicator.Language=EN no probe $top=1. Dimensão REGION/COUNTRY para recorte geográfico."
+    },
+    {
+      "business_key": "SRC-WHO-ICD11",
+      "url": "https://icd.who.int/en",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "license": "ICD-11 License page named; texto não copiado.",
+      "dump": "FORBIDDEN"
+    },
+    {
+      "business_key": "SRC-WHO-ICNP",
+      "url": "https://www.who.int/standards/classifications/other-classifications/international-classification-for-nursing-practice",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "nnn_option": "OPT-C-CIPE",
+      "dump": "FORBIDDEN"
+    },
+    {
+      "business_key": "SRC-NLM-ICD10CM",
+      "url": "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?terms=sepsis&maxList=1",
+      "adapter_ref": "API-NLM-CLINICALTABLES-ICD10CM",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "note": "Classificação US relacionada. Não é ICD-11 OMS."
+    },
+    {
+      "business_key": "SRC-WHO-IRIS",
+      "url": "https://iris.who.int/",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "note": "HTML de descoberta. Não republica escala."
+    },
+    {
+      "business_key": "SRC-PAHO",
+      "url": "https://www.paho.org/en",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "note": "html lang en/es/fr observados. Português NÃO observado. Não inferir PAHO-pt."
+    }
+  ],
+  "who_official_languages": [
+    {
+      "bcp47": "en",
+      "label_observed": "English",
+      "in_drive_zip": true,
+      "source_url": "https://www.who.int/"
+    },
+    {
+      "bcp47": "ar",
+      "label_observed": "العربية",
+      "in_drive_zip": true,
+      "source_url": "https://www.who.int/"
+    },
+    {
+      "bcp47": "zh",
+      "label_observed": "中文",
+      "in_drive_zip": true,
+      "source_url": "https://www.who.int/"
+    },
+    {
+      "bcp47": "fr",
+      "label_observed": "Français",
+      "in_drive_zip": true,
+      "source_url": "https://www.who.int/"
+    },
+    {
+      "bcp47": "ru",
+      "label_observed": "Русский",
+      "in_drive_zip": true,
+      "source_url": "https://www.who.int/"
+    },
+    {
+      "bcp47": "es",
+      "label_observed": "Español",
+      "in_drive_zip": true,
+      "source_url": "https://www.who.int/"
+    }
+  ],
+  "drive_intersection": [
+    "ar",
+    "en",
+    "es",
+    "fr",
+    "ru",
+    "zh"
+  ],
+  "drive_only": [
+    "de",
+    "hi",
+    "id",
+    "it",
+    "ja",
+    "ko",
+    "nl",
+    "pl",
+    "pt",
+    "sv",
+    "tr",
+    "uk",
+    "vi"
+  ],
+  "languages": [
+    {
+      "business_key": "WHO-LANG-AR",
+      "uuid": null,
+      "bcp47": "ar",
+      "in_drive_zip": true,
+      "in_who_int_selector": true,
+      "modulation_role": "WHO_OFFICIAL_CANDIDATE",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-DE",
+      "uuid": null,
+      "bcp47": "de",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-EN",
+      "uuid": null,
+      "bcp47": "en",
+      "in_drive_zip": true,
+      "in_who_int_selector": true,
+      "modulation_role": "WHO_OFFICIAL_CANDIDATE",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-ES",
+      "uuid": null,
+      "bcp47": "es",
+      "in_drive_zip": true,
+      "in_who_int_selector": true,
+      "modulation_role": "WHO_OFFICIAL_CANDIDATE",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-FR",
+      "uuid": null,
+      "bcp47": "fr",
+      "in_drive_zip": true,
+      "in_who_int_selector": true,
+      "modulation_role": "WHO_OFFICIAL_CANDIDATE",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-HI",
+      "uuid": null,
+      "bcp47": "hi",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-ID",
+      "uuid": null,
+      "bcp47": "id",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-IT",
+      "uuid": null,
+      "bcp47": "it",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-JA",
+      "uuid": null,
+      "bcp47": "ja",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-KO",
+      "uuid": null,
+      "bcp47": "ko",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-NL",
+      "uuid": null,
+      "bcp47": "nl",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-PL",
+      "uuid": null,
+      "bcp47": "pl",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-PT",
+      "uuid": null,
+      "bcp47": "pt",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_PT_NOT_WHO_SELECTOR",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": "pt no zip ≠ pt-BR de runtime. who.int não listou pt no seletor observado."
+    },
+    {
+      "business_key": "WHO-LANG-RU",
+      "uuid": null,
+      "bcp47": "ru",
+      "in_drive_zip": true,
+      "in_who_int_selector": true,
+      "modulation_role": "WHO_OFFICIAL_CANDIDATE",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-SV",
+      "uuid": null,
+      "bcp47": "sv",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-TR",
+      "uuid": null,
+      "bcp47": "tr",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-UK",
+      "uuid": null,
+      "bcp47": "uk",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-VI",
+      "uuid": null,
+      "bcp47": "vi",
+      "in_drive_zip": true,
+      "in_who_int_selector": false,
+      "modulation_role": "DRIVE_ONLY",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    },
+    {
+      "business_key": "WHO-LANG-ZH",
+      "uuid": null,
+      "bcp47": "zh",
+      "in_drive_zip": true,
+      "in_who_int_selector": true,
+      "modulation_role": "WHO_OFFICIAL_CANDIDATE",
+      "wired_to_frontend": false,
+      "runtime": false,
+      "note": null
+    }
+  ],
+  "runtime_locale": "pt-BR",
+  "runtime_not_in_who_selector": true,
+  "rules": [
+    "Um conceito → uma identidade MD → projeções por BCP47.",
+    "Candidato i18n WHO = código no seletor who.int ∩ locales.zip.",
+    "Não inferir pt → pt-BR.",
+    "GHO/ICD/ICNP = SOURCE_DERIVED. Sem dump de termos.",
+    "Frontend translation_gate HOLD até objeto MD de tradução + revisão humana.",
+    "CIPE/ICNP não substitui NANDA sem decisão OPT-C.",
+    "PAHO não observa pt; não inventar locale PAHO-pt."
+  ],
+  "icd_icnp_gho_dump": "FORBIDDEN",
+  "evaluated_at": "2026-08-25T20:35:52Z"
+}
