@@ -18,6 +18,8 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     assert [step["agent_id"] for step in run["steps"]] == [
         "AG-FETCH-ORIGIN",
         "AG-FETCH-REGULATED",
+        "AG-FETCH-GOV-SOURCES",
+        "AG-API-PROBE",
         "AG-PARSE-PAGES-FULL",
         "AG-PARSE-SITEMAP",
         "AG-PARSE-CHROME",
@@ -31,9 +33,13 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
         "AG-CAAT-EXTRACT",
         "AG-IPE-EXTRACT",
         "AG-LINK-MD",
+        "AG-LIBRARY-CATALOG",
+        "AG-CONTENT-CURRICULUM",
         "AG-COMPARE-SOURCE",
         "AG-COMPARE-INTERNAL",
         "AG-MONITOR-DRIFT",
+        "AG-ALERT-FRESHNESS",
+        "AG-OPS-DB-SYNC",
     ]
     inventory = json.loads((ROOT / "cko_inbox" / "drive" / "pages_full" / "INVENTORY.json").read_text(encoding="utf-8"))
     assert inventory["business_key"] == "MD-PAGE-INV-001"
@@ -46,7 +52,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     slugs = {path.stem for path in TOOLS_DIR.glob("*.json")}
     assert slugs == {"gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico", "dimensionamento"}
     agents = json.loads((ROOT / "cko_assurance" / "agent_registry.json").read_text(encoding="utf-8"))
-    assert agents["population"] == 19
+    assert agents["population"] == 25
     assert agents["implemented"] is True
     assert agents["publication_implemented"] is False
     ipe = json.loads((ROOT / "cko_inbox" / "extracted" / "ipe_extract.json").read_text(encoding="utf-8"))

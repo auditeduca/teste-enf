@@ -151,6 +151,7 @@ def ds_header(home_href: str, prefix: str) -> str:
     logo = f"{prefix}assets/img/icontopbar1-calculadoras-de-enfermagem.webp"
     inspector = home_href.replace("index.html", "inspector.html") if home_href.endswith("index.html") else "inspector.html"
     admin = home_href.replace("index.html", "admin.html") if home_href.endswith("index.html") else "admin.html"
+    biblioteca = home_href.replace("index.html", "biblioteca.html") if home_href.endswith("index.html") else "biblioteca.html"
     calc_href = "gotejamento.html" if home_href.startswith("../") else "tools/gotejamento.html"
     return f"""<div id="global-header-container">
     <header class="site-header" role="banner">
@@ -167,9 +168,10 @@ def ds_header(home_href: str, prefix: str) -> str:
       </a>
       <nav id="primary-nav" class="nav desktop-nav" aria-label="Navegação Principal">
         <a href="{attr(home_href)}" accesskey="I">Início</a>
+        <a href="{attr(biblioteca)}">Biblioteca</a>
         <a href="{attr(inspector)}">Sobre Nós</a>
         <a href="{attr(calc_href)}">Calculadoras</a>
-        <a href="{attr(inspector)}">Conteúdos</a>
+        <a href="{attr(biblioteca)}#curriculo">Conteúdos</a>
         <a href="{attr(admin)}">Admin</a>
       </nav>
     </div>

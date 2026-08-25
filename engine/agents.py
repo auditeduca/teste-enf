@@ -77,12 +77,13 @@ def _dump(path: Path, payload: dict) -> Path:
 def _http_get(url: str, timeout: int = 20, *, user_agent: str | None = None) -> dict:
     rec: dict = {"url": url}
     agents = [user_agent] if user_agent else [UA]
-    if "planalto.gov.br" in url or "iso.org" in url:
+    gov_hosts = ("planalto.gov.br", "iso.org", "gov.br", "cofen.gov.br", "coren-sp.gov.br", "dados.gov.br", "opendatasus.saude.gov.br", "bvsms.saude.gov.br")
+    if any(host in url for host in gov_hosts) and not user_agent:
         agents = [UA_BROWSER, UA]
     last_error = None
     for agent in agents:
         try:
-            req = Request(url, headers={"User-Agent": agent, "Accept": "text/html,application/xhtml+xml,*/*"})
+            req = Request(url, headers={"User-Agent": agent, "Accept": "text/html,application/xhtml+xml,application/json,*/*"})
             with urlopen(req, timeout=timeout) as resp:
                 body = resp.read()
                 rec.update({
@@ -863,6 +864,55 @@ def agent_records() -> list[dict]:
             "promotes_to_md": False,
             "wired_to_frontend": True,
         },
+        {
+            "agent_id": "AG-FETCH-GOV-SOURCES",
+            "class": "ACQUISITION",
+            "implemented": True,
+            "writes_to": "cko_inbox/extracted/gov_pages.json",
+            "promotes_to_md": False,
+            "note": "ANVISA, MS, COFEN, COREN-SP, BVSMS. HTML oficial. Sem inventar API.",
+        },
+        {
+            "agent_id": "AG-API-PROBE",
+            "class": "ACQUISITION",
+            "implemented": True,
+            "writes_to": "cko_md/api_adapter_registry.json",
+            "promotes_to_md": False,
+            "note": "CKAN dados.gov.br / OpenDataSUS. base_url só se HTTP 200.",
+        },
+        {
+            "agent_id": "AG-LIBRARY-CATALOG",
+            "class": "CONTENT",
+            "implemented": True,
+            "writes_to": "cko_md/resource_library.json",
+            "promotes_to_md": False,
+            "note": "Catálogo de metadados. Não republica HTML integral.",
+        },
+        {
+            "agent_id": "AG-CONTENT-CURRICULUM",
+            "class": "CONTENT",
+            "implemented": True,
+            "writes_to": "cko_md/content_curriculum.json",
+            "promotes_to_md": False,
+            "note": "Básico→avançado a partir do MD da ferramenta. LLM FORBIDDEN.",
+        },
+        {
+            "agent_id": "AG-OPS-DB-SYNC",
+            "class": "MD",
+            "implemented": True,
+            "writes_to": "cko_inbox/cko_ops.sqlite",
+            "promotes_to_md": False,
+            "note": "Espelho SQLite inbox. Não é Postgres de produção. Sem RLS.",
+        },
+        {
+            "agent_id": "AG-ALERT-FRESHNESS",
+            "class": "MONITORING",
+            "implemented": True,
+            "writes_to": "cko_assurance/freshness_alerts.json",
+            "promotes_to_md": False,
+            "wired_to_frontend": True,
+            "note": "Alerta JSON/Admin. Sem e-mail. Pendência ALTA se norma indisponível.",
+        },
     ]
 
 
@@ -891,6 +941,14 @@ def write_agent_registry(run: dict | None = None) -> None:
 
 def run_extraction(*, network: bool = True) -> dict:
     """AG-ORCHESTRATOR — ordered pipeline. Never auto-PASS publication."""
+    from .govlib import (
+        alert_freshness,
+        catalog_library,
+        content_curriculum,
+        fetch_gov_sources,
+        probe_apis,
+        sync_ops_db,
+    )
     from .iso8000 import evaluate_profile
     from .lineage import bind_lineage
     from .monitor import compare_internal, compare_source, monitor_drift
@@ -902,6 +960,8 @@ def run_extraction(*, network: bool = True) -> dict:
     steps = [
         fetch_origin(network=network),
         fetch_regulated_pages(network=network),
+        fetch_gov_sources(network=network),
+        probe_apis(network=network),
         parse_pages_full_zip(),
         parse_sitemap(network=network),
         parse_chrome_contract(),
@@ -915,9 +975,13 @@ def run_extraction(*, network: bool = True) -> dict:
         caat_extracted_population(),
         ipe_carr(),
         link_to_md(),
+        catalog_library(),
+        content_curriculum(),
         compare_source(network=network, fetch_fn=_http_get),
         compare_internal(),
         monitor_drift(),
+        alert_freshness(),
+        sync_ops_db(),
     ]
     caat = next(step for step in steps if step.get("agent_id") == "AG-CAAT-EXTRACT")
     ipe = next(step for step in steps if step.get("agent_id") == "AG-IPE-EXTRACT")

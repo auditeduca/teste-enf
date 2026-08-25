@@ -4,7 +4,7 @@
   "status": "EXTRACTION_RUNNER_IMPLEMENTED_INBOX_ONLY",
   "note": "AG-051 publication permanece enabled:false. Runner de extração: python3 -m engine.cli extract (cko_inbox). Não promove a data/tools.",
   "agents": [
-    {"agentId": "AG-001", "capabilityId": "regulatory-monitor", "purpose": "Detectar mudanças em fontes aprovadas", "enabled": true, "runtime": "AG-FETCH-ORIGIN / AG-FETCH-REGULATED / AG-COMPARE-SOURCE / AG-MONITOR-DRIFT", "promotes_to_md": false},
+    {"agentId": "AG-001", "capabilityId": "regulatory-monitor", "purpose": "Detectar mudanças em fontes aprovadas", "enabled": true, "runtime": "AG-FETCH-ORIGIN / AG-FETCH-REGULATED / AG-FETCH-GOV-SOURCES / AG-API-PROBE / AG-COMPARE-SOURCE / AG-MONITOR-DRIFT / AG-ALERT-FRESHNESS", "promotes_to_md": false},
     {"agentId": "AG-002", "capabilityId": "requirement-extractor", "purpose": "Extrair candidato de requisito / slug", "enabled": true, "runtime": "AG-PARSE-PAGES-FULL / AG-PARSE-SITEMAP / AG-PARSE-CHROME / AG-PARSE-SITE-SHELL", "promotes_to_md": false},
     {"agentId": "AG-003", "capabilityId": "compliance-mapper", "purpose": "Propor vínculo requisito–controle–teste", "enabled": true, "runtime": "AG-MASK-APPLY / AG-RIGHTS-BIND / AG-ISO8000-PROFILE", "promotes_to_md": false, "note": "Máscara desenhada; execução determinística. Sem LLM checker."},
     {"agentId": "AG-010", "capabilityId": "concept-builder", "purpose": "Criar conceito candidato", "enabled": false},
@@ -14,6 +14,6 @@
     {"agentId": "AG-041", "capabilityId": "semantic-validator", "purpose": "Validar coerência semântica", "enabled": false},
     {"agentId": "AG-042", "capabilityId": "regulatory-validator", "purpose": "Testar mapeamento previamente aprovado", "enabled": false},
     {"agentId": "AG-043", "capabilityId": "trust-validator", "purpose": "Avaliar artefato, claim e contexto", "enabled": true, "runtime": "AG-IPE-EXTRACT", "promotes_to_md": false, "reliance": false},
-    {"agentId": "AG-051", "capabilityId": "publication-manager", "purpose": "Publicar release manifest aprovado", "enabled": false}
+    {"agentId": "AG-060", "capabilityId": "library-catalog", "purpose": "Catalogar metadados de fontes governamentais e currículo básico→avançado", "enabled": true, "runtime": "AG-LIBRARY-CATALOG / AG-CONTENT-CURRICULUM / AG-OPS-DB-SYNC", "promotes_to_md": false, "note": "Não republica HTML integral. LLM FORBIDDEN."},
   ]
 }

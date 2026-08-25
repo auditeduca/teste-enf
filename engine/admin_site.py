@@ -18,6 +18,8 @@ MODULES = [
     ("validations", "Validações", "admin/validations.html"),
     ("agents", "Agentes", "admin/agents.html"),
     ("monitoring", "Monitoramento", "admin/monitoring.html"),
+    ("library", "Biblioteca", "admin/library.html"),
+    ("apis", "APIs / órgãos", "admin/apis.html"),
     ("backlog", "Backlog", "admin/backlog.html"),
     ("design", "Design System", "admin/design-system.html"),
     ("locales", "Locales / Drive", "admin/locales.html"),
@@ -171,7 +173,8 @@ def page_dashboard(ctx: dict, *, css_href: str, home_href: str, inline_css: bool
       <a class="tool-card" href="{attr(_module_href('admin/renderer.html', nested))}"><p class="eyebrow">L400</p><h2>Renderer</h2><p>Botão local gera fetch + inline. PRESENTATION_ONLY.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/deploy.html', nested))}"><p class="eyebrow">Git</p><h2>Deploy</h2><p>Prepara changeset. git push é FORBIDDEN no botão.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/maturity.html', nested))}"><p class="eyebrow">M0–M7</p><h2>Maturidade</h2><p>Panorama observado de MD, REG, agentes, CAAT, IPE, Drive e DS.</p></a>
-      <a class="tool-card" href="{attr(_module_href('admin/locales.html', nested))}"><p class="eyebrow">L310</p><h2>Locales / Drive</h2><p>19 códigos extraídos. Tradução HOLD. HTML Drive não promovido.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/library.html', nested))}"><p class="eyebrow">L60</p><h2>Biblioteca</h2><p>Recursos ANVISA/MS/COFEN + currículo básico→avançado. Publicação HOLD.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/apis.html', nested))}"><p class="eyebrow">APIs</p><h2>Órgãos / APIs</h2><p>Probe CKAN. base_url null até HTTP 200. SQLite inbox.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/mdm.html', nested))}"><p class="eyebrow">L10</p><h2>Master Data</h2><p>Entity types e locale registry. Mockup MDM = linguagem de layout.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/frameworks.html', nested))}"><p class="eyebrow">COSO/COBIT/ISO</p><h2>Frameworks</h2><p>Registry only. CLAUSE_TEXT_UNAVAILABLE. ISO 8000 = perfil CKO, não certificação.</p></a>
     </section>
@@ -438,6 +441,118 @@ def page_monitoring(ctx: dict, **kwargs) -> str:
     </section>
     """
     return admin_shell( title="Monitoramento · CKO Studio", description="Drift vault vs fonte vs frontend.", current="monitoring", inner=inner, **kwargs)
+
+
+def page_library(ctx: dict, **kwargs) -> str:
+    lib = load_json(ROOT / "cko_md" / "resource_library.json")
+    curr = load_json(ROOT / "cko_md" / "content_curriculum.json")
+    alerts = load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
+    res_rows = [
+        [
+            esc(item.get("business_key")),
+            esc(item.get("title")),
+            esc(item.get("status")),
+            f"<code>{esc(item.get('md_ref'))}</code>",
+            f"<code>{esc(item.get('reg_ref'))}</code>",
+        ]
+        for item in (lib.get("resources") or [])
+    ]
+    unit_rows = [
+        [
+            esc(item.get("tool_slug")),
+            esc(item.get("level")),
+            esc((item.get("body") or {}).get("status")),
+            f"<code>{esc(item.get('tool_md_ref'))}</code>",
+            f"<code>{esc(item.get('reg_ref'))}</code>",
+        ]
+        for item in (curr.get("units") or [])
+    ]
+    pend_rows = [
+        [esc(item.get("business_key")), esc(item.get("severity")), esc(item.get("reason"))]
+        for item in (curr.get("pending_high") or [])
+    ]
+    alert_rows = [
+        [esc(item.get("severity")), esc(item.get("kind")), esc((item.get("message") or "")[:180])]
+        for item in (alerts.get("alerts") or [])
+    ]
+    inner = f"""
+    <header class="page-hero">
+      <h1>Biblioteca de recursos.</h1>
+      <p class="lede">Catálogo MD + currículo documental. Sem HTML integral. Sem LLM. Publicação HOLD.</p>
+      <p class="hold-banner">Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Pendências ALTA {esc(curr.get("pending_high_count"))} · Alertas {esc(alerts.get("population"))}</p>
+    </header>
+    <section class="panel">
+      <h2>Recursos</h2>
+      {_table(["id", "título", "status", "MD", "REG"], res_rows or [["—", "rode extract", "—", "—", "—"]])}
+    </section>
+    <section class="panel">
+      <h2>Currículo básico → avançado</h2>
+      {_table(["ferramenta", "nível", "status", "MD", "REG"], unit_rows or [["—", "—", "—", "—", "—"]])}
+    </section>
+    <section class="panel">
+      <h2>Pendências ALTA</h2>
+      {_table(["id", "severidade", "razão"], pend_rows)}
+    </section>
+    <section class="panel">
+      <h2>Alertas</h2>
+      {_table(["severidade", "tipo", "mensagem"], alert_rows or [["—", "—", "sem alertas"]])}
+      <p>Sem dispatch de e-mail (NO_SENSITIVE_CAPTURE). Frequência {esc(alerts.get("frequency_hours") or 24)}h.</p>
+    </section>
+    """
+    return admin_shell(title="Biblioteca · CKO Studio", description="Biblioteca canônica e currículo.", current="library", inner=inner, **kwargs)
+
+
+def page_apis(ctx: dict, **kwargs) -> str:
+    adapters = load_json(ROOT / "cko_md" / "api_adapter_registry.json")
+    gov = load_json(ROOT / "cko_inbox" / "extracted" / "gov_pages.json")
+    agencies = load_json(ROOT / "cko_md" / "agency_registry.json")
+    db_path = ROOT / "cko_inbox" / "cko_ops.sqlite"
+    api_rows = [
+        [
+            esc(item.get("business_key")),
+            esc(item.get("agency")),
+            esc(item.get("http_status")),
+            esc(item.get("base_url") or "null"),
+            _status_chip(item.get("epistemic_status")),
+            f"<code>{esc(item.get('md_ref'))}</code>",
+            f"<code>{esc(item.get('reg_ref'))}</code>",
+        ]
+        for item in (adapters.get("adapters") or [])
+    ]
+    gov_rows = [
+        [
+            esc(item.get("agency")),
+            esc(item.get("http_status")),
+            _status_chip(item.get("epistemic_status")),
+            f"<code>{esc((item.get('sha256') or '')[:16])}</code>",
+        ]
+        for item in (gov.get("pages") or [])
+    ]
+    ag_rows = [[esc(item.get("business_key")), esc(item.get("name")), _status_chip(item.get("status"))] for item in (agencies.get("agencies") or [])]
+    inner = f"""
+    <header class="page-hero">
+      <h1>APIs e órgãos.</h1>
+      <p class="lede">ANVISA, MS, COFEN, COREN. Probe CKAN. <code>base_url</code> só após HTTP 200 observado. API pode ficar offline; extração a cada 24h.</p>
+      <p class="hold-banner">Adapters {esc(adapters.get("population"))} · produção API={esc(adapters.get("production_api"))} · SQLite inbox {esc("presente" if db_path.exists() else "ausente")} · Postgres produção=NÃO · RLS inalterado</p>
+    </header>
+    <section class="panel">
+      <h2>Agências MD</h2>
+      {_table(["business_key", "nome", "status"], ag_rows)}
+    </section>
+    <section class="panel">
+      <h2>Probe de API</h2>
+      {_table(["adapter", "órgão", "HTTP", "base_url", "estado", "MD", "REG"], api_rows or [["—", "rode extract --network", "—", "null", "EVIDENCE_PENDING", "—", "—"]])}
+    </section>
+    <section class="panel">
+      <h2>Portais HTML oficiais</h2>
+      {_table(["órgão", "HTTP", "estado", "sha256"], gov_rows)}
+    </section>
+    <section class="panel">
+      <h2>Banco operacional</h2>
+      <p>Espelho SQLite <code>cko_inbox/cko_ops.sqlite</code> (inbox). Store canônico continua JSON no GitHub. Nenhuma alteração de RLS. Sem captura de e-mail para alerta.</p>
+    </section>
+    """
+    return admin_shell(title="APIs / órgãos · CKO Studio", description="Adapters ANVISA/MS/COFEN observados.", current="apis", inner=inner, **kwargs)
 
 
 def page_backlog(ctx: dict, **kwargs) -> str:
@@ -715,6 +830,8 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
         "validations.html": page_validations,
         "agents.html": page_agents,
         "monitoring.html": page_monitoring,
+        "library.html": page_library,
+        "apis.html": page_apis,
         "backlog.html": page_backlog,
         "design-system.html": page_design,
         "renderer.html": page_renderer,

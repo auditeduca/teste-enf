@@ -120,6 +120,27 @@ def cmd_monitor(args: argparse.Namespace) -> int:
     return 0 if run.get("status") != "FAIL" else 1
 
 
+def cmd_govsync(args: argparse.Namespace) -> int:
+    run = run_extraction(network=not args.offline)
+    wanted = {
+        "AG-FETCH-GOV-SOURCES",
+        "AG-API-PROBE",
+        "AG-LIBRARY-CATALOG",
+        "AG-CONTENT-CURRICULUM",
+        "AG-OPS-DB-SYNC",
+        "AG-ALERT-FRESHNESS",
+    }
+    steps = [step for step in (run.get("steps") or []) if step.get("agent_id") in wanted]
+    print(json.dumps({
+        "run_id": run.get("run_id"),
+        "status": run.get("status"),
+        "publication": run.get("publication"),
+        "frequency_hours": 24,
+        "steps": steps,
+    }, ensure_ascii=False, indent=2))
+    return 0 if run.get("status") != "FAIL" else 1
+
+
 def cmd_serve(args: argparse.Namespace) -> int:
     status = cmd_build(args)
     if status != 0:
@@ -150,6 +171,9 @@ def main(argv: list[str] | None = None) -> int:
     monitor = sub.add_parser("monitor")
     monitor.add_argument("--offline", action="store_true", help="Compare vault vs inbox/projections without live fetch")
     monitor.set_defaults(func=cmd_monitor)
+    govsync = sub.add_parser("govsync")
+    govsync.add_argument("--offline", action="store_true", help="Replay inbox without live government/API fetch")
+    govsync.set_defaults(func=cmd_govsync)
     args = parser.parse_args(argv)
     return args.func(args)
 

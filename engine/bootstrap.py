@@ -239,6 +239,11 @@ def write_registries() -> list[Path]:
             {"business_key": "ETYPE-LINEAGE", "name": "Lineage"},
             {"business_key": "ETYPE-MASK", "name": "Norm Mask"},
             {"business_key": "ETYPE-CHANGE_EVENT", "name": "Change Event"},
+            {"business_key": "ETYPE-AGENCY", "name": "Agency"},
+            {"business_key": "ETYPE-RESOURCE", "name": "Resource"},
+            {"business_key": "ETYPE-API_ADAPTER", "name": "API Adapter"},
+            {"business_key": "ETYPE-CURRICULUM_UNIT", "name": "Curriculum Unit"},
+            {"business_key": "ETYPE-ALERT", "name": "Alert"},
         ],
         "note": "Tipos mínimos do bootstrap. Locale Drive (MD-LOCALE-REG-001) é RELATED_TAXONOMY a MD-LANG-LOC-001, não substitui pt-BR runtime.",
     }))
@@ -451,6 +456,7 @@ def write_registries() -> list[Path]:
             {"business_key": "API-CAND-ANVISA", "name": "ANVISA", "base_url": None, "html_page": "https://www.gov.br/anvisa/pt-br", "kind": "REGULATED_HTML_PAGE", "status": "SOURCE_DERIVED"},
             {"business_key": "API-CAND-MS", "name": "Ministério da Saúde", "base_url": None, "html_page": "https://www.gov.br/saude/pt-br", "kind": "REGULATED_HTML_PAGE", "status": "SOURCE_DERIVED"},
             {"business_key": "API-CAND-INTERNAL", "name": "CKO extract runner", "base_url": None, "cli": "python3 -m engine.cli extract", "status": "IMPLEMENTED_INBOX_ONLY"},
+            {"business_key": "API-CKAN-DADOSGOV", "name": "dados.gov.br CKAN", "base_url": None, "html_page": "https://dados.gov.br/", "kind": "CKAN_CANDIDATE", "status": "EVIDENCE_PENDING", "note": "base_url só após AG-API-PROBE HTTP 200."},
         ],
     }))
     written.append(dump(ASSURANCE_DIR / "twin_registry.json", {

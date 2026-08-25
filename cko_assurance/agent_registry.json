@@ -175,7 +175,56 @@
       "writes_to": "cko_assurance/monitoring_events.json",
       "promotes_to_md": false,
       "wired_to_frontend": true
+    },
+    {
+      "agent_id": "AG-FETCH-GOV-SOURCES",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/gov_pages.json",
+      "promotes_to_md": false,
+      "note": "ANVISA, MS, COFEN, COREN-SP, BVSMS. HTML oficial. Sem inventar API."
+    },
+    {
+      "agent_id": "AG-API-PROBE",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_md/api_adapter_registry.json",
+      "promotes_to_md": false,
+      "note": "CKAN dados.gov.br / OpenDataSUS. base_url só se HTTP 200."
+    },
+    {
+      "agent_id": "AG-LIBRARY-CATALOG",
+      "class": "CONTENT",
+      "implemented": true,
+      "writes_to": "cko_md/resource_library.json",
+      "promotes_to_md": false,
+      "note": "Catálogo de metadados. Não republica HTML integral."
+    },
+    {
+      "agent_id": "AG-CONTENT-CURRICULUM",
+      "class": "CONTENT",
+      "implemented": true,
+      "writes_to": "cko_md/content_curriculum.json",
+      "promotes_to_md": false,
+      "note": "Básico→avançado a partir do MD da ferramenta. LLM FORBIDDEN."
+    },
+    {
+      "agent_id": "AG-OPS-DB-SYNC",
+      "class": "MD",
+      "implemented": true,
+      "writes_to": "cko_inbox/cko_ops.sqlite",
+      "promotes_to_md": false,
+      "note": "Espelho SQLite inbox. Não é Postgres de produção. Sem RLS."
+    },
+    {
+      "agent_id": "AG-ALERT-FRESHNESS",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_assurance/freshness_alerts.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": true,
+      "note": "Alerta JSON/Admin. Sem e-mail. Pendência ALTA se norma indisponível."
     }
   ],
-  "population": 19
+  "population": 25
 }

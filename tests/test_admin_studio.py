@@ -37,6 +37,8 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
         "validations.html",
         "agents.html",
         "monitoring.html",
+        "library.html",
+        "apis.html",
         "backlog.html",
         "design-system.html",
         "locales.html",
@@ -115,7 +117,7 @@ def test_maturity_panorama_is_hold_without_fake_pass():
     panorama = evaluate_maturity()
     assert panorama["release"] == "HOLD"
     assert panorama["layers"]["population"] == 44
-    assert panorama["agents"]["population"] == 19
+    assert panorama["agents"]["population"] == 25
     assert panorama["agents"]["implemented"] is True
     assert panorama["agents"]["publication_implemented"] is False
     assert panorama["ipe"]["registry_implemented"] is False

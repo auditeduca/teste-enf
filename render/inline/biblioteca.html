@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca de recursos — Calculadoras de Enfermagem</title>
+  <meta name="description" content="Biblioteca canônica de fontes ANVISA, MS, COFEN e currículo básico a avançado. Publicação HOLD.">
+  <meta name="theme-color" content="#1A3E74">
+  <style>
+:root {
+  --navy-primary: #1A3E74;
+  --navy-medium: #1E4D8C;
+  --navy-dark: #163269;
+  --navy-hover: #122C54;
+  --navy-secondary: #003366;
+  --blue-light: #4A90E2;
+  --white: #ffffff;
+  --gray-bg: #f4f7fb;
+  --gray-text: #475569;
+  --ink: #12233a;
+  --line: #d7e1ee;
+  --risk: #1A3E74;
+  --hold: #92400e;
+  --hold-bg: #fff7ed;
+  --header-bg: #ffffff;
+  --a11y-focus: #ffd400;
+  --cor-foco-acessibilidade: #ff0;
+  --espacamento-linha: 1.5;
+  --espacamento-letra: 0em;
+  --header-height: 96px;
+  --a11y-height: 36px;
+  --lang-height: 46px;
+  --radius-control: 8px;
+  --font: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Nunito Sans", "Inter", "Segoe UI", sans-serif;
+}
+
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-600.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-900.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-900.woff2") format("woff2");font-weight:900;font-display:swap}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { color-scheme: light; }
+
+body {
+  margin: 0;
+  background: var(--gray-bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: var(--espacamento-linha);
+  letter-spacing: var(--espacamento-letra);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main { flex-grow: 1; }
+
+h1, h2, h3, h4, .brand, .result-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy-primary);
+}
+
+a { color: var(--navy-medium); }
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3.2rem;
+  background: var(--navy-dark);
+  color: var(--white);
+  padding: 0.55rem 0.9rem;
+  z-index: 20;
+}
+.skip-link:focus { top: 0.6rem; }
+
+:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-foco-acessibilidade, #ff0);
+  outline-offset: 2px;
+}
+
+#barraAcessibilidade {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 8px;
+  height: var(--a11y-height);
+  padding: 4px 20px;
+  background: var(--navy-primary);
+  color: var(--white);
+  z-index: 30;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+#barraAcessibilidade button {
+  appearance: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 28px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid hsla(0,0%,100%,.4);
+  color: var(--white);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+#barraAcessibilidade button:hover,
+#barraAcessibilidade button:focus-visible {
+  background: hsla(0,0%,100%,.15);
+  border-color: #fff;
+}
+#barraAcessibilidade svg { width: 16px; height: 16px; }
+.color-options { display: inline-flex; gap: 0.2rem; }
+.color-option {
+  width: 28px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 !important;
+  border-radius: 5px !important;
+  border: 2px solid hsla(0,0%,100%,.5) !important;
+}
+.color-option.selected,
+.color-option[aria-checked="true"] {
+  border-color: var(--cor-foco-acessibilidade, #ff0) !important;
+}
+#accessibilityToggleButton {
+  display: none;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--navy-primary);
+  color: var(--white);
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+#accessibilityToggleButton svg { width: 22px; height: 22px; }
+#pwaAcessibilidadeBar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 85%;
+  max-width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  transition: transform .3s ease-in-out;
+  background: var(--navy-primary);
+  color: var(--white);
+  z-index: 45;
+  padding: 20px;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0,0,0,.2);
+}
+#pwaAcessibilidadeBar.is-open { transform: translateX(0); }
+.pwa-acessibilidade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid hsla(0,0%,100%,.2);
+}
+.pwa-acessibilidade-header h3 { margin: 0; font-size: 1.25rem; color: var(--white); }
+.pwa-acessibilidade-close-btn {
+  background: transparent;
+  border: 0;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+#pwaAcessibilidadeBar button {
+  width: 100%;
+  padding: 10px 15px;
+  background: hsla(0,0%,100%,.1);
+  border: 1px solid hsla(0,0%,100%,.3);
+  border-radius: 5px;
+  color: var(--white);
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+#pwaAcessibilidadeBar button:hover { background: hsla(0,0%,100%,.2); }
+#pwaAcessibilidadeBar .pwa-acessibilidade-close-btn { width: auto; padding: 0 0.4rem; border: 0; background: transparent; }
+#pwaAcessibilidadeBar svg { width: 18px; height: 18px; }
+.color-options-pwa {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+  padding: 10px;
+  background: hsla(0,0%,100%,.1);
+  border-radius: 5px;
+}
+.color-options-pwa .color-option { width: 38px !important; height: 38px !important; }
+.menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 44;
+}
+.menu-overlay.is-open { display: block; }
+#keyboardShortcutsModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+}
+#keyboardShortcutsModal.show { display: flex; }
+.keyboard-modal-content {
+  background: var(--white);
+  color: var(--ink);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 32rem;
+  width: calc(100% - 2rem);
+  position: relative;
+}
+.keyboard-modal-content h3 { margin-top: 0; }
+.modal-close-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  border: 0;
+  background: transparent;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+#backToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(26,62,116,.8);
+  color: var(--white);
+  font-size: .875rem;
+  padding: .5rem 1rem;
+  border-radius: 9999px;
+  border: 0;
+  cursor: pointer;
+  z-index: 35;
+}
+#backToTopBtn:hover { background: rgba(18,42,80,.9); }
+
+.wrap {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+#global-header-container {
+  display: block;
+  width: 100%;
+  min-height: var(--header-height);
+  background-color: transparent;
+}
+.site-header {
+  background: var(--header-bg);
+  color: var(--navy-primary);
+  min-height: var(--header-height);
+  border-bottom: 1px solid var(--line);
+}
+#language-selector-placeholder {
+  display: block;
+  width: 100%;
+  min-height: var(--lang-height);
+  background: #f9fafb;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 20;
+}
+.lang-bar {
+  min-height: var(--lang-height);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.35rem 0;
+}
+.lang-runtime { margin: 0 auto 0 0; font-size: 0.78rem; color: var(--gray-text); }
+#language-dropdown-wrapper { position: relative; z-index: 21; }
+#langButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--line);
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 0.25rem 0.7rem;
+  min-height: 32px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--ink);
+}
+#langButton[aria-expanded="true"] { outline: 3px solid var(--a11y-focus); }
+.lang-caret { width: 1rem; height: 1rem; }
+#langMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  width: 16rem;
+  max-height: 18rem;
+  overflow: auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(18, 35, 58, 0.12);
+  z-index: 30;
+  padding: 0.25rem;
+}
+#langMenu.hidden { display: none; }
+.lang-option {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0.4rem 0.55rem;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.lang-option:hover, .lang-option:focus-visible { background: #eef3f9; }
+.hamburger-button {
+  display: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--navy-primary);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+}
+.hamburger-button svg { width: 24px; height: 24px; }
+#footer-placeholder {
+  display: block;
+  min-height: 520px;
+  background-color: transparent;
+}
+.footer-logo-row { padding-top: 0.4rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.35); margin-bottom: 1.2rem; }
+.footer-mark-80 { display: block; width: 80px; height: 80px; object-fit: contain; }
+.footer-hold { color: #dbe7f6; opacity: 0.85; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+.prod-hero {
+  background: linear-gradient(135deg, #1A3E74 0%, #1E4D8C 60%, #163269 100%);
+  color: var(--white);
+  border-radius: 16px;
+  padding: 2.2rem 1.6rem;
+  box-shadow: 0 12px 34px rgba(0,0,0,.18);
+  margin-bottom: 1.4rem;
+}
+.prod-hero h1, .prod-hero p, .prod-hero .eyebrow { color: var(--white); }
+.prod-hero .eyebrow { color: #93c5fd; }
+.prod-hero .lede { color: #dbeafe; }
+.prod-hero .meta a { color: #fff; }
+.observed-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 1.6rem;
+}
+.observed-strip article {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 8px 24px rgba(26,62,116,.08);
+}
+.observed-strip h2 { margin: 0; font-size: 1.4rem; }
+.observed-strip p { margin: 0.2rem 0 0; font-size: 0.78rem; color: var(--gray-text); }
+.site-footer {
+  background: var(--navy-primary);
+  color: var(--white);
+  margin-top: 3rem;
+  padding: 2rem 0 1.2rem;
+  font-size: 0.92rem;
+}
+.site-footer a { color: #dbe7f6; }
+.site-footer h2 {
+  color: var(--white);
+  font-size: 0.92rem;
+  margin: 0 0 0.6rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1.4fr) repeat(3, minmax(10rem, 1fr));
+  gap: 1.4rem;
+}
+.footer-brand p, .footer-col li { color: #dbe7f6; }
+.footer-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.35rem; }
+.footer-mark { display: block; max-width: 220px; height: auto; margin-bottom: 0.7rem; }
+.footer-bottom {
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.18);
+}
+.footer-bottom p { margin: 0.2rem 0; color: #dbe7f6; }
+
+.header-row {
+  min-height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  color: var(--navy-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.brand-mark { width: 48px; height: 32px; object-fit: contain; }
+.brand-text { display: grid; line-height: 1.15; }
+.brand-name { font-size: 1.05rem; font-weight: 800; }
+.brand-sub { margin: 0; color: var(--gray-text); font-size: 0.75rem; font-weight: 500; letter-spacing: 0; }
+
+.nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.nav a {
+  color: var(--navy-primary);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.55rem;
+  text-decoration: none;
+  font-weight: 650;
+}
+.nav a:hover { color: var(--navy-hover); }
+.lang-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.78rem !important;
+  color: var(--hold) !important;
+  background: var(--hold-bg);
+}
+
+html.a11y-font-lg { font-size: 112.5%; }
+html.a11y-font-xl { font-size: 125%; }
+html.a11y-line-lg body { line-height: 1.85; }
+html.a11y-letter-lg body { letter-spacing: 0.06em; }
+html.fonte-dislexia body,
+html.fonte-dislexia button,
+html.fonte-dislexia input,
+html.fonte-dislexia select,
+.fonte-dislexia,
+.fonte-dislexia body,
+.fonte-dislexia button,
+.fonte-dislexia input,
+.fonte-dislexia select {
+  font-family: Arial, Verdana, sans-serif !important;
+}
+html.contraste-alto body,
+body.contraste-alto { background: #000 !important; color: #ffe600 !important; }
+html.contraste-alto .site-header,
+html.contraste-alto #barraAcessibilidade,
+html.contraste-alto .site-footer,
+html.contraste-alto .admin-side,
+html.contraste-alto .tool-card,
+html.contraste-alto .panel,
+.contraste-alto .site-header,
+.contraste-alto #barraAcessibilidade,
+.contraste-alto .site-footer,
+.contraste-alto .admin-side,
+.contraste-alto .tool-card,
+.contraste-alto .panel {
+  background: #000 !important;
+  color: #ffe600 !important;
+  border-color: #ffe600 !important;
+}
+html.contraste-alto a, html.contraste-alto .brand, html.contraste-alto .nav a,
+.contraste-alto a, .contraste-alto .brand, .contraste-alto .nav a { color: #4dd2ff !important; }
+html.rd-dark body, html.dark-mode body, body.dark-mode { background: #0b1220; color: #e7ecf5; }
+html.rd-dark .site-header, html.dark-mode .site-header, .dark-mode .site-header { background: #121a2b; border-color: #223049; }
+html.rd-dark .tool-card, html.rd-dark .panel, html.rd-dark .calc-card,
+html.dark-mode .tool-card, html.dark-mode .panel, html.dark-mode .calc-card,
+.dark-mode .tool-card, .dark-mode .panel, .dark-mode .calc-card { background: #121a2b; border-color: #223049; color: #e7ecf5; }
+
+@media (max-width: 768px) {
+  #global-header-container { min-height: 60px; }
+  .site-header, .header-row { min-height: 60px; }
+  #footer-placeholder { min-height: 520px; }
+  #barraAcessibilidade { display: none; }
+  #accessibilityToggleButton { display: inline-flex; align-items: center; justify-content: center; }
+  #pwaAcessibilidadeBar { display: flex; }
+  #backToTopBtn { display: none !important; }
+  .hamburger-button { display: inline-flex; align-items: center; justify-content: center; }
+  .desktop-nav { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 0.35rem; padding: 0.5rem 0 0.8rem; }
+  .desktop-nav.is-open { display: flex; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .brand-name { font-size: 0.92rem; }
+}
+@media (min-width: 769px) {
+  #accessibilityToggleButton,
+  #pwaAcessibilidadeBar { display: none !important; }
+  #footer-placeholder { min-height: 277px; }
+}
+
+.page-hero, .tool-hero { padding: 2.2rem 0 1.2rem; }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--navy-medium);
+  margin: 0 0 0.55rem;
+}
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15; margin: 0 0 0.7rem; }
+.lede { font-size: 1.12rem; max-width: 42rem; color: var(--gray-text); }
+.meta { color: var(--gray-text); }
+
+.breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1.3rem;
+  font-size: 0.92rem;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding-bottom: 1.4rem;
+}
+
+.tool-card, .calc-card, .panel, .clinical-step, .content-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.2rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(26, 62, 116, 0.06);
+}
+
+.tool-card, .content-card { text-decoration: none; color: inherit; display: block; }
+.tool-card:hover, .content-card:hover { border-color: var(--blue-light); }
+
+.calc-card { display: grid; gap: 1.1rem; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+legend { font-size: 1.15rem; color: var(--navy-primary); margin-bottom: 0.15rem; }
+.hint { margin: 0; color: var(--gray-text); }
+
+.field { display: grid; gap: 0.25rem; }
+.field-label { font-weight: 650; }
+.field-unit { margin-left: 0.35rem; color: var(--gray-text); font-weight: 500; }
+.field-help { font-size: 0.88rem; color: var(--gray-text); }
+
+select, input[type="number"], .btn-primary, .btn-secondary, .example-btn, .quiz-opt {
+  font: inherit;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 12px 24px;
+  min-height: 44px;
+}
+
+select, input[type="number"] { width: 100%; }
+
+.result-block {
+  border-left: 8px solid var(--risk);
+  background: #f8fbff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+.result-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--gray-text); }
+.result-value { font-size: 2.6rem; margin: 0.2rem 0; line-height: 1; }
+.result-unit { font-size: 1rem; color: var(--gray-text); margin-left: 0.3rem; }
+.result-label { font-weight: 700; margin: 0.2rem 0; }
+.result-note { margin: 0; color: var(--gray-text); }
+
+.btn-primary {
+  background: var(--navy-primary);
+  color: var(--white);
+  border-color: var(--navy-primary);
+  cursor: pointer;
+  font-weight: 650;
+}
+.btn-primary:hover { background: var(--navy-hover); }
+.btn-secondary {
+  background: var(--navy-secondary);
+  color: var(--white);
+  border-color: var(--navy-secondary);
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-secondary:hover { background: #002244; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+.clinical-step, .panel { margin-top: 1rem; }
+.sae-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+.sae-col { background: #f4f8fd; border-radius: 12px; padding: 0.8rem; }
+.code { font-size: 0.8rem; color: var(--navy-medium); margin: 0; }
+.action-list { padding-left: 1.1rem; }
+.examples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.example-btn, .quiz-opt { cursor: pointer; }
+.quiz-card { margin: 0.8rem 0; }
+.quiz-opts { display: grid; gap: 0.4rem; }
+.quiz-opt { text-align: left; }
+.quiz-opt.is-correct { background: #dcfce7; border-color: #15803d; }
+.quiz-opt.is-wrong { background: #fee2e2; border-color: #b91c1c; }
+.quiz-expl { color: var(--gray-text); }
+
+.hold-banner {
+  background: var(--hold-bg);
+  color: var(--hold);
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-weight: 650;
+}
+
+.lineage-panel { margin-top: 1.5rem; }
+.lineage-dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 0.8rem 0;
+}
+.lineage-dl dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gray-text); }
+.lineage-dl dd { margin: 0.15rem 0 0; font-weight: 650; overflow-wrap: anywhere; word-break: break-word; }
+.lineage-dl code { font-size: 0.85rem; }
+
+.inspect { width: 100%; border-collapse: collapse; }
+.inspect th, .inspect td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); }
+.table-wrap { overflow-x: auto; }
+.wrap-wide { width: min(1120px, calc(100% - 2rem)); }
+
+details { margin: 0.45rem 0; }
+summary { cursor: pointer; font-weight: 650; }
+
+.admin-app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+.admin-side {
+  background: var(--navy-primary);
+  color: var(--white);
+  padding: 1.2rem 1rem 2rem;
+}
+.admin-brand { margin: 0; font-weight: 800; font-size: 1.15rem; }
+.admin-brand-sub { margin: 0.2rem 0 1rem; color: #c5d7ee; font-size: 0.82rem; }
+.admin-nav { display: grid; gap: 0.15rem; }
+.admin-nav a {
+  color: #e8f0fb;
+  text-decoration: none;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.6rem;
+  border-radius: var(--radius-control);
+}
+.admin-nav a:hover, .admin-nav a[aria-current="page"] { background: rgba(255,255,255,.12); color: var(--white); }
+.admin-side-note { margin-top: 1.5rem; font-size: 0.85rem; }
+.admin-side-note a { color: #c5d7ee; }
+.admin-top {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  padding: 0.85rem 1.4rem;
+}
+.admin-kicker { margin: 0; color: var(--gray-text); font-size: 0.88rem; }
+.admin-content { padding: 0 1.4rem 2.5rem; }
+.admin-out {
+  background: #0F2A50;
+  color: #e8f0fb;
+  padding: 1rem;
+  border-radius: var(--radius-control);
+  overflow-x: auto;
+  font-size: 0.82rem;
+}
+.chip {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  background: #e8f0fb;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+.chip-hold { background: var(--hold-bg); color: var(--hold); }
+.chip-ok { background: #dcfce7; color: #166534; }
+.ds-swatches { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+.swatch { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); }
+.admin-cards { padding-top: 0.4rem; }
+
+@media (max-width: 860px) {
+  .admin-app { grid-template-columns: 1fr; }
+  .admin-nav { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+}
+
+</style>
+  
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    <button type="button" id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeTextPWA">Tamanho da Fonte</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightTextPWA">Espaçamento Linha</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingTextPWA">Espaçamento Letra</span></button>
+    <button type="button" id="btnAlternarContrastePWA" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Alto Contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Modo Escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Fonte Dislexia</span></button>
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span>Atalhos</span></button>
+    <button type="button" id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Redefinir Tudo</span></button>
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Normal</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Médio</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Normal</span></button>
+    <button type="button" id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/></svg><span id="readingSpeedText">Normal</span></button>
+    <button type="button" id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span class="sr-only">Reproduzir/Pausar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/></svg><span class="sr-only">Reiniciar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReadFocused" aria-label="Ler elemento focado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/></svg><span class="sr-only">Ler elemento focado</span></button>
+    <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span class="sr-only">Alternar alto contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="sr-only">Alternar modo escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span class="sr-only">Alternar fonte para dislexia</span></button>
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="sr-only">Atalhos de Teclado</span></button>
+    <button type="button" id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="sr-only">Redefinir configurações de acessibilidade</span></button>
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
+    </div>
+  </div>
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button><div id="global-header-container">
+    <header class="site-header" role="banner">
+    <div class="wrap header-row">
+      <button type="button" id="hamburgerButton" class="hamburger-button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="primary-nav">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/img/icontopbar1-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
+        <span class="brand-text">
+          <span class="brand-name">Calculadoras de Enfermagem</span>
+          <span class="brand-sub">CKO · lote piloto</span>
+        </span>
+      </a>
+      <nav id="primary-nav" class="nav desktop-nav" aria-label="Navegação Principal">
+        <a href="index.html" accesskey="I">Início</a>
+        <a href="biblioteca.html">Biblioteca</a>
+        <a href="inspector.html">Sobre Nós</a>
+        <a href="tools/gotejamento.html">Calculadoras</a>
+        <a href="biblioteca.html#curriculo">Conteúdos</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </div>
+  </header>
+  </div><div id="language-selector-placeholder" data-i18n-gate="HOLD">
+    <div class="wrap lang-bar">
+      <p class="lang-runtime">pt-BR · i18n HOLD. Bandeiras do seletor não vieram no zip (EVIDENCE_PENDING). Tradução não redireciona.</p>
+      <div id="language-dropdown-wrapper">
+        <button type="button" id="langButton" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu">
+          <span id="langText">Português</span>
+          <svg class="lang-caret" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div id="langMenu" class="hidden" role="listbox" aria-label="Idiomas observados no site-shell">
+        <button type="button" class="lang-option" data-value="pt" lang="pt"><span>Português</span> <code>pt</code></button>
+        <button type="button" class="lang-option" data-value="en" lang="en"><span>English</span> <code>en</code></button>
+        <button type="button" class="lang-option" data-value="es" lang="es"><span>Español</span> <code>es</code></button>
+        <button type="button" class="lang-option" data-value="de" lang="de"><span>Deutsch</span> <code>de</code></button>
+        <button type="button" class="lang-option" data-value="it" lang="it"><span>Italiano</span> <code>it</code></button>
+        <button type="button" class="lang-option" data-value="fr" lang="fr"><span>Français</span> <code>fr</code></button>
+        <button type="button" class="lang-option" data-value="hi" lang="hi"><span>हिन्दी</span> <code>hi</code></button>
+        <button type="button" class="lang-option" data-value="zh" lang="zh"><span>中文</span> <code>zh</code></button>
+        <button type="button" class="lang-option" data-value="ar" lang="ar"><span>العربية</span> <code>ar</code></button>
+        <button type="button" class="lang-option" data-value="ja" lang="ja"><span>日本語</span> <code>ja</code></button>
+        <button type="button" class="lang-option" data-value="ru" lang="ru"><span>Русский</span> <code>ru</code></button>
+        <button type="button" class="lang-option" data-value="ko" lang="ko"><span>한국어</span> <code>ko</code></button>
+        <button type="button" class="lang-option" data-value="tr" lang="tr"><span>Türkçe</span> <code>tr</code></button>
+        <button type="button" class="lang-option" data-value="nl" lang="nl"><span>Nederlands</span> <code>nl</code></button>
+        <button type="button" class="lang-option" data-value="pl" lang="pl"><span>Polski</span> <code>pl</code></button>
+        <button type="button" class="lang-option" data-value="sv" lang="sv"><span>Svenska</span> <code>sv</code></button>
+        <button type="button" class="lang-option" data-value="id" lang="id"><span>Bahasa Indonesia</span> <code>id</code></button>
+        <button type="button" class="lang-option" data-value="vi" lang="vi"><span>Tiếng Việt</span> <code>vi</code></button>
+        <button type="button" class="lang-option" data-value="uk" lang="uk"><span>Українська</span> <code>uk</code></button>
+        </div>
+      </div>
+      <a class="lang-chip" href="admin/locales.html">Locales / Drive</a>
+    </div>
+  </div>
+  <main id="conteudo" class="wrap">
+    <header class="page-hero">
+      <p class="eyebrow">L60 Biblioteca · ambiente controlado</p>
+      <h1>Biblioteca de recursos.</h1>
+      <p class="lede">Catálogo canônico de fontes governamentais (ANVISA, MS, COFEN, COREN) e currículo documental básico→avançado. Cada objeto tem MD e REG. Publicação HOLD. HTML integral não é republicado.</p>
+      <p class="hold-banner">Agências 5 · Recursos 11 · Unidades 25 · Alertas ALTA 8 · APIs online 1 · release HOLD</p>
+    </header>
+    <section class="panel">
+      <h2>Fontes e APIs observadas</h2>
+      <p>API REST só entra com <code>base_url</code> após HTTP 200. Sem 200 permanece null. Extração periódica 24h. Portal pode ficar offline.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>adapter</th><th>órgão</th><th>HTTP</th><th>base_url</th><th>estado</th></tr></thead><tbody><tr><td><code>API-CKAN-DADOSGOV-STATUS</code></td><td>dados.gov.br</td><td>401</td><td>null</td><td>EVIDENCE_PENDING</td></tr><tr><td><code>API-CKAN-DADOSGOV-ANVISA</code></td><td>ANVISA via dados.gov.br</td><td>401</td><td>null</td><td>EVIDENCE_PENDING</td></tr><tr><td><code>API-CKAN-OPENDATASUS-STATUS</code></td><td>OpenDataSUS</td><td>200</td><td>https://opendatasus.saude.gov.br/</td><td>OBSERVED</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Recursos catalogados</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>título</th><th>agência</th><th>camada</th><th>status</th><th>MD</th><th>REG</th></tr></thead><tbody><tr><td><code>RES-SRC-GOV-ANVISA-PORTAL</code></td><td>Português (Brasil)</td><td>AGY-ANVISA</td><td>L60</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-ANVISA</code></td><td><code>REG-SRC-ANVISA</code></td></tr><tr><td><code>RES-SRC-GOV-MS-PORTAL</code></td><td>Ministério da Saúde</td><td>AGY-MS</td><td>L110</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-MS</code></td><td><code>REG-SRC-MS</code></td></tr><tr><td><code>RES-SRC-GOV-BVSMS</code></td><td>Ministério da Saúde / BVSMS</td><td>AGY-MS</td><td>L140</td><td>EVIDENCE_PENDING</td><td><code>MD-AGY-MS</code></td><td><code>REG-SRC-MS</code></td></tr><tr><td><code>RES-SRC-GOV-COFEN-PORTAL</code></td><td>Início - Cofen</td><td>AGY-COFEN</td><td>L110</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-COFEN</code></td><td><code>REG-SRC-COFEN</code></td></tr><tr><td><code>RES-SRC-GOV-COREN-SP-PORTAL</code></td><td>COREN-SP</td><td>AGY-COREN-SP</td><td>L110</td><td>EVIDENCE_PENDING</td><td><code>MD-AGY-COREN-SP</code></td><td><code>REG-SRC-COREN-SP</code></td></tr><tr><td><code>LIB-L60-DISPOSITIVOS</code></td><td>Dispositivos e materiais</td><td>AGY-ANVISA</td><td>L60</td><td>DOCUMENTADO</td><td><code>MD-LIB-L60-DISPOSITIVOS</code></td><td><code>REG-LIB-L60-DISPOSITIVOS</code></td></tr><tr><td><code>LIB-L70-MEDICAMENTOS</code></td><td>Medicamentos e soluções</td><td>AGY-ANVISA</td><td>L70</td><td>DOCUMENTADO</td><td><code>MD-LIB-L70-MEDICAMENTOS</code></td><td><code>REG-LIB-L70-MEDICAMENTOS</code></td></tr><tr><td><code>LIB-L80-EXAMES</code></td><td>Exames laboratoriais</td><td>AGY-MS</td><td>L80</td><td>DOCUMENTADO</td><td><code>MD-LIB-L80-EXAMES</code></td><td><code>REG-LIB-L80-EXAMES</code></td></tr><tr><td><code>LIB-L110-PROTOCOLOS</code></td><td>Procedimentos e protocolos</td><td>AGY-COFEN</td><td>L110</td><td>DOCUMENTADO</td><td><code>MD-LIB-L110-PROTOCOLOS</code></td><td><code>REG-LIB-L110-PROTOCOLOS</code></td></tr><tr><td><code>LIB-L130-CONCURSO</code></td><td>Educação / concurso</td><td>AGY-MS</td><td>L130</td><td>DOCUMENTADO</td><td><code>MD-LIB-L130-CONCURSO</code></td><td><code>REG-LIB-L130-CONCURSO</code></td></tr><tr><td><code>LIB-L150-GUIAS</code></td><td>Artigos / guias / resumos</td><td>AGY-MS</td><td>L150</td><td>DOCUMENTADO</td><td><code>MD-LIB-L150-GUIAS</code></td><td><code>REG-LIB-L150-GUIAS</code></td></tr></tbody></table></div>
+    </section>
+    <section id="curriculo">
+      <h2>Currículo documental (básico → avançado)</h2>
+      <p>Texto extraído só dos campos já existentes em <code>data/tools</code>. LLM não autorou. Dimensionamento permanece HOLD.</p>
+      <article class='panel'><h3>cinco-ts-pcr</h3><ol><li><strong>BASICO</strong> · O que é, indicação e limites · DOCUMENTADO · MD MD-TOOL-cinco-ts-pcr · REG REG-RIGHTS-LEI-9610</li><li><strong>FUNDAMENTOS</strong> · Variáveis, unidades e população · DOCUMENTADO · MD MD-TOOL-cinco-ts-pcr · REG REG-RIGHTS-LEI-9610</li><li><strong>PROCEDIMENTO</strong> · Passo a passo do cálculo ou protocolo · HOLD · MD MD-TOOL-cinco-ts-pcr · REG REG-RIGHTS-LEI-9610</li><li><strong>INTERPRETACAO</strong> · Leitura do resultado e ações · HOLD · MD MD-TOOL-cinco-ts-pcr · REG REG-RIGHTS-LEI-9610</li><li><strong>AVANCADO</strong> · SAE, exceções e o que permanece HOLD · DOCUMENTADO · MD MD-TOOL-cinco-ts-pcr · REG REG-RIGHTS-LEI-9610</li></ol></article><article class='panel'><h3>dimensionamento</h3><ol><li><strong>BASICO</strong> · O que é, indicação e limites · DOCUMENTADO · MD MD-TOOL-dimensionamento · REG REG-RIGHTS-LEI-9610</li><li><strong>FUNDAMENTOS</strong> · Variáveis, unidades e população · DOCUMENTADO · MD MD-TOOL-dimensionamento · REG REG-RIGHTS-LEI-9610</li><li><strong>PROCEDIMENTO</strong> · Passo a passo do cálculo ou protocolo · HOLD · MD MD-TOOL-dimensionamento · REG REG-RIGHTS-LEI-9610</li><li><strong>INTERPRETACAO</strong> · Leitura do resultado e ações · HOLD · MD MD-TOOL-dimensionamento · REG REG-RIGHTS-LEI-9610</li><li><strong>AVANCADO</strong> · SAE, exceções e o que permanece HOLD · HOLD · MD MD-TOOL-dimensionamento · REG REG-RIGHTS-LEI-9610</li></ol></article><article class='panel'><h3>gotejamento</h3><ol><li><strong>BASICO</strong> · O que é, indicação e limites · DOCUMENTADO · MD MD-TOOL-gotejamento · REG REG-RIGHTS-LEI-9610</li><li><strong>FUNDAMENTOS</strong> · Variáveis, unidades e população · DOCUMENTADO · MD MD-TOOL-gotejamento · REG REG-RIGHTS-LEI-9610</li><li><strong>PROCEDIMENTO</strong> · Passo a passo do cálculo ou protocolo · DOCUMENTADO · MD MD-TOOL-gotejamento · REG REG-RIGHTS-LEI-9610</li><li><strong>INTERPRETACAO</strong> · Leitura do resultado e ações · HOLD · MD MD-TOOL-gotejamento · REG REG-RIGHTS-LEI-9610</li><li><strong>AVANCADO</strong> · SAE, exceções e o que permanece HOLD · HOLD · MD MD-TOOL-gotejamento · REG REG-RIGHTS-LEI-9610</li></ol></article><article class='panel'><h3>meows</h3><ol><li><strong>BASICO</strong> · O que é, indicação e limites · DOCUMENTADO · MD MD-TOOL-meows · REG REG-RIGHTS-LEI-9610</li><li><strong>FUNDAMENTOS</strong> · Variáveis, unidades e população · DOCUMENTADO · MD MD-TOOL-meows · REG REG-RIGHTS-LEI-9610</li><li><strong>PROCEDIMENTO</strong> · Passo a passo do cálculo ou protocolo · HOLD · MD MD-TOOL-meows · REG REG-RIGHTS-LEI-9610</li><li><strong>INTERPRETACAO</strong> · Leitura do resultado e ações · HOLD · MD MD-TOOL-meows · REG REG-RIGHTS-LEI-9610</li><li><strong>AVANCADO</strong> · SAE, exceções e o que permanece HOLD · HOLD · MD MD-TOOL-meows · REG REG-RIGHTS-LEI-9610</li></ol></article><article class='panel'><h3>simulado-tecnico</h3><ol><li><strong>BASICO</strong> · O que é, indicação e limites · DOCUMENTADO · MD MD-TOOL-simulado-tecnico · REG REG-RIGHTS-LEI-9610</li><li><strong>FUNDAMENTOS</strong> · Variáveis, unidades e população · DOCUMENTADO · MD MD-TOOL-simulado-tecnico · REG REG-RIGHTS-LEI-9610</li><li><strong>PROCEDIMENTO</strong> · Passo a passo do cálculo ou protocolo · HOLD · MD MD-TOOL-simulado-tecnico · REG REG-RIGHTS-LEI-9610</li><li><strong>INTERPRETACAO</strong> · Leitura do resultado e ações · HOLD · MD MD-TOOL-simulado-tecnico · REG REG-RIGHTS-LEI-9610</li><li><strong>AVANCADO</strong> · SAE, exceções e o que permanece HOLD · DOCUMENTADO · MD MD-TOOL-simulado-tecnico · REG REG-RIGHTS-LEI-9610</li></ol></article>
+    </section>
+    <section class="panel">
+      <h2>Pendências ALTA</h2>
+      <ul><li><strong>ALTA</strong> — Apenas COREN-SP tem portal candidato neste lote. Demais Conselhos Regionais não observados.</li><li><strong>ALTA</strong> — Texto de cláusula ISO licenciada indisponível. Government alternative NÃO substitui ISO 8000 clause text.</li><li><strong>ALTA</strong> — Braden/Norton/Glasgow: obra de terceiros. cko_copyright_claim FORBIDDEN. Sem promoção a data/tools.</li><li><strong>ALTA</strong> — 1516 HTML em quarentena. Extração em massa de conteúdo clínico a partir deles é FORBIDDEN até MD+REG+rights por página.</li><li><strong>ALTA</strong> — API de produtos ANVISA autenticada/consulta não observada como REST pública estável neste ambiente.</li></ul>
+    </section>
+    <section class="panel">
+      <h2>Alertas de frescura / offline</h2>
+      <ul><li><strong>ALTA</strong> SOURCE_OFFLINE: Ministério da Saúde / BVSMS HTTP None — extração periódica 24h. API/portal pode estar offline.</li><li><strong>MEDIA</strong> SOURCE_OFFLINE: COREN-SP HTTP 500 — extração periódica 24h. API/portal pode estar offline.</li><li><strong>ALTA</strong> API_OFFLINE: dados.gov.br não observou HTTP 200. base_url null. Reprobe a cada 24h.</li><li><strong>ALTA</strong> API_OFFLINE: ANVISA via dados.gov.br não observou HTTP 200. base_url null. Reprobe a cada 24h.</li><li><strong>ALTA</strong> COPYRIGHT_OR_EVIDENCE: Apenas COREN-SP tem portal candidato neste lote. Demais Conselhos Regionais não observados.</li><li><strong>ALTA</strong> COPYRIGHT_OR_EVIDENCE: Texto de cláusula ISO licenciada indisponível. Government alternative NÃO substitui ISO 8000 clause text.</li><li><strong>ALTA</strong> COPYRIGHT_OR_EVIDENCE: Braden/Norton/Glasgow: obra de terceiros. cko_copyright_claim FORBIDDEN. Sem promoção a data/tools.</li><li><strong>ALTA</strong> COPYRIGHT_OR_EVIDENCE: 1516 HTML em quarentena. Extração em massa de conteúdo clínico a partir deles é FORBIDDEN até MD+REG+rights por página.</li><li><strong>ALTA</strong> COPYRIGHT_OR_EVIDENCE: API de produtos ANVISA autenticada/consulta não observada como REST pública estável neste ambiente.</li></ul>
+      <p class="meta"><a href="admin/library.html">Admin biblioteca</a> · <a href="admin/apis.html">Admin APIs</a> · <a href="admin/monitoring.html">Monitoramento</a></p>
+    </section>
+  </main>
+  <div id="footer-placeholder">
+  <footer class="site-footer" id="institucional" role="contentinfo" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">Rodapé do site</h2>
+    <div class="wrap footer-logo-row">
+      <a href="index.html" aria-label="Ir para a página inicial">
+        <img class="footer-mark-80" src="assets/img/iconrodape1-80-calculadoras-de-enfermagem.webp" width="80" height="80" alt="Calculadoras de Enfermagem" decoding="async">
+      </a>
+    </div>
+    <div class="wrap footer-grid">
+      <nav class="footer-col" aria-label="Institucional">
+        <h2>Institucional</h2>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="inspector.html">Sobre Nós</a></li>
+          <li><a href="inspector.html">Mapa do Site</a></li>
+          <li><span class="footer-hold">Central de Privacidade · HOLD</span></li>
+          <li><span class="footer-hold">Termos e Condições de Uso · HOLD</span></li>
+          <li><span class="footer-hold">Política de Acessibilidade · HOLD</span></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Sustentabilidade Digital">
+        <h2>Sustentabilidade Digital</h2>
+        <ul>
+          <li><a href="admin/maturity.html">Nosso Compromisso</a></li>
+          <li><span class="footer-hold">Relatório de Impacto · HOLD</span></li>
+          <li><span class="footer-hold">Tecnologia Verde · HOLD</span></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Nosso Compromisso</h2>
+        <p>Nosso site adota elevados padrões de acessibilidade digital, sustentabilidade digital, segurança da informação e proteção de dados, promovendo uma experiência inclusiva, eficiente e responsável para todos os usuários.</p>
+        <p class="footer-commitment">Sem captura de e-mail e sem mural de cookies neste lote (NO_SENSITIVE_CAPTURE).</p>
+      </div>
+      <div class="footer-col">
+        <h2>Siga-nos</h2>
+        <ul>
+          <li><a href="https://linkedin.com/company/calculadoras-de-enfermagem" rel="noopener noreferrer me">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/calculadorasdeenfermagem/" rel="noopener noreferrer me">Instagram</a></li>
+          <li><a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" rel="noopener noreferrer me">YouTube</a></li>
+          <li><a href="admin.html">Admin Studio</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
+      <p>© 2026 Calculadoras de Enfermagem. Todos os direitos reservados. Audit Educa · CKO. Newsletter/e-mail não implantados.</p>
+    </div>
+  </footer>
+  </div>
+  <script>
+(function () {
+  "use strict";
+  var FONT_SIZES = ["1em", "1.15em", "1.3em", "1.5em", "2em"];
+  var FONT_LABELS = ["Normal", "Médio", "Grande", "Extra Grande", "Máximo"];
+  var LINE_VALUES = ["1.5", "1.8", "2.2"];
+  var LINE_LABELS = ["Médio", "Grande", "Extra Grande"];
+  var LETTER_VALUES = ["0em", ".05em", ".1em"];
+  var LETTER_LABELS = ["Normal", "Médio", "Grande"];
+  var SPEEDS = [
+    { rate: 0.8, label: "Lenta" },
+    { rate: 1, label: "Normal" },
+    { rate: 1.5, label: "Rápida" }
+  ];
+  var KEYS = {
+    font: "fontSize",
+    line: "lineHeight",
+    letter: "letterSpacing",
+    speed: "readingSpeed",
+    contrast: "highContrast",
+    dark: "darkMode",
+    dyslexia: "dyslexiaFont",
+    focus: "focusColor"
+  };
+
+  var fontLevel = 1;
+  var lineLevel = 1;
+  var letterLevel = 1;
+  var speedLevel = 1;
+  var lastFocus = null;
+  var speaking = false;
+  var paused = false;
+  var synth = window.speechSynthesis || null;
+
+  function readInt(key, fallback) {
+    try {
+      var raw = parseInt(localStorage.getItem(key) || String(fallback), 10);
+      return isNaN(raw) ? fallback : raw;
+    } catch (ignore) {
+      return fallback;
+    }
+  }
+
+  function readFlag(key) {
+    try {
+      return localStorage.getItem(key) === "true";
+    } catch (ignore) {
+      return false;
+    }
+  }
+
+  function write(key, value) {
+    try {
+      localStorage.setItem(key, String(value));
+    } catch (ignore) {
+      /* quota / private mode */
+    }
+  }
+
+  function removeKey(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (ignore) {}
+  }
+
+  function announce(message) {
+    var status = document.getElementById("statusMessage");
+    if (status) {
+      status.textContent = message;
+      window.setTimeout(function () {
+        if (status.textContent === message) status.textContent = "";
+      }, 3000);
+    }
+  }
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function clamp(level, max) {
+    var n = parseInt(level, 10);
+    if (isNaN(n) || n < 1) return 1;
+    return n > max ? max : n;
+  }
+
+  function applyFont(level, speak) {
+    fontLevel = clamp(level, FONT_SIZES.length);
+    var idx = fontLevel - 1;
+    document.documentElement.style.fontSize = FONT_SIZES[idx];
+    setText("fontSizeText", FONT_LABELS[idx]);
+    setText("fontSizeTextPWA", FONT_LABELS[idx]);
+    write(KEYS.font, fontLevel);
+    if (speak) announce("Tamanho da fonte: " + FONT_LABELS[idx]);
+  }
+
+  function applyLine(level, speak) {
+    lineLevel = clamp(level, LINE_VALUES.length);
+    var idx = lineLevel - 1;
+    document.documentElement.style.setProperty("--espacamento-linha", LINE_VALUES[idx]);
+    setText("lineHeightText", LINE_LABELS[idx]);
+    setText("lineHeightTextPWA", LINE_LABELS[idx]);
+    write(KEYS.line, lineLevel);
+    if (speak) announce("Espaçamento de linha: " + LINE_LABELS[idx]);
+  }
+
+  function applyLetter(level, speak) {
+    letterLevel = clamp(level, LETTER_VALUES.length);
+    var idx = letterLevel - 1;
+    document.documentElement.style.setProperty("--espacamento-letra", LETTER_VALUES[idx]);
+    setText("letterSpacingText", LETTER_LABELS[idx]);
+    setText("letterSpacingTextPWA", LETTER_LABELS[idx]);
+    write(KEYS.letter, letterLevel);
+    if (speak) announce("Espaçamento de letra: " + LETTER_LABELS[idx]);
+  }
+
+  function applySpeed(level, speak) {
+    speedLevel = clamp(level, SPEEDS.length);
+    var sp = SPEEDS[speedLevel - 1];
+    setText("readingSpeedText", sp.label);
+    write(KEYS.speed, speedLevel);
+    if (speak) announce("Velocidade de leitura: " + sp.label);
+  }
+
+  function applyFocus(color, speak) {
+    var value = color || "yellow";
+    document.documentElement.style.setProperty("--cor-foco-acessibilidade", value);
+    document.documentElement.style.setProperty("--a11y-focus", value);
+    write(KEYS.focus, value);
+    document.querySelectorAll(".color-option").forEach(function (btn) {
+      var on = btn.getAttribute("data-color") === value;
+      btn.classList.toggle("selected", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    if (speak) announce("Cor de foco alterada.");
+  }
+
+  function setBodyClass(name, on) {
+    document.body.classList.toggle(name, !!on);
+    document.documentElement.classList.toggle(name, !!on);
+    if (name === "dark-mode") {
+      document.documentElement.classList.toggle("rd-dark", !!on);
+    }
+  }
+
+  function speakText(text) {
+    if (!text || !synth) {
+      announce("Leitura HOLD neste navegador.");
+      return;
+    }
+    synth.cancel();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "pt-BR";
+    utter.rate = (SPEEDS[speedLevel - 1] || SPEEDS[1]).rate;
+    utter.onstart = function () {
+      speaking = true;
+      paused = false;
+    };
+    utter.onend = function () {
+      speaking = false;
+      paused = false;
+    };
+    utter.onerror = function () {
+      speaking = false;
+      paused = false;
+    };
+    synth.speak(utter);
+  }
+
+  function toggleReadMain() {
+    if (!synth) {
+      announce("Leitura HOLD neste navegador.");
+      return;
+    }
+    if (speaking) {
+      if (paused) {
+        synth.resume();
+        paused = false;
+      } else {
+        synth.pause();
+        paused = true;
+      }
+      return;
+    }
+    var main = document.querySelector("main");
+    speakText(main ? main.innerText : document.body.innerText);
+  }
+
+  function restartRead() {
+    if (synth) synth.cancel();
+    speaking = false;
+    paused = false;
+    window.setTimeout(function () {
+      var main = document.querySelector("main");
+      speakText(main ? main.innerText : document.body.innerText);
+    }, 80);
+  }
+
+  function readFocused() {
+    if (!lastFocus) return;
+    var text = (lastFocus.textContent || lastFocus.getAttribute("aria-label") || lastFocus.alt || lastFocus.value || "").trim();
+    speakText(text);
+  }
+
+  function restore() {
+    applyFont(readInt(KEYS.font, 1), false);
+    applyLine(readInt(KEYS.line, 1), false);
+    applyLetter(readInt(KEYS.letter, 1), false);
+    applySpeed(readInt(KEYS.speed, 1), false);
+    setBodyClass("contraste-alto", readFlag(KEYS.contrast));
+    setBodyClass("dark-mode", readFlag(KEYS.dark));
+    setBodyClass("fonte-dislexia", readFlag(KEYS.dyslexia));
+    var focus = "yellow";
+    try {
+      focus = localStorage.getItem(KEYS.focus) || "yellow";
+    } catch (ignore) {}
+    applyFocus(focus, false);
+  }
+
+  function resetAll() {
+    if (synth) synth.cancel();
+    speaking = false;
+    paused = false;
+    applyFont(1, false);
+    applyLine(1, false);
+    applyLetter(1, false);
+    applySpeed(1, false);
+    setBodyClass("contraste-alto", false);
+    setBodyClass("dark-mode", false);
+    setBodyClass("fonte-dislexia", false);
+    applyFocus("yellow", false);
+    Object.keys(KEYS).forEach(function (k) {
+      removeKey(KEYS[k]);
+    });
+    try {
+      localStorage.removeItem("cko-a11y");
+    } catch (ignore) {}
+    announce("Configurações redefinidas para o padrão");
+  }
+
+  function bindIds(ids, fn) {
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener("click", fn);
+    });
+  }
+
+  function closePwa() {
+    var bar = document.getElementById("pwaAcessibilidadeBar");
+    var overlay = document.getElementById("menuOverlay");
+    var toggle = document.getElementById("accessibilityToggleButton");
+    if (bar) bar.classList.remove("is-open");
+    if (overlay) overlay.classList.remove("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function openPwa() {
+    var bar = document.getElementById("pwaAcessibilidadeBar");
+    var overlay = document.getElementById("menuOverlay");
+    var toggle = document.getElementById("accessibilityToggleButton");
+    if (bar) bar.classList.add("is-open");
+    if (overlay) overlay.classList.add("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+  }
+
+  function onReady() {
+    restore();
+    document.addEventListener("focusin", function (ev) {
+      lastFocus = ev.target;
+    });
+    bindIds(["btnAlternarTamanhoFonte", "btnAlternarTamanhoFontePWA"], function () {
+      applyFont(fontLevel % FONT_SIZES.length + 1, true);
+    });
+    bindIds(["btnAlternarEspacamentoLinha", "btnAlternarEspacamentoLinhaPWA"], function () {
+      applyLine(lineLevel % LINE_VALUES.length + 1, true);
+    });
+    bindIds(["btnAlternarEspacamentoLetra", "btnAlternarEspacamentoLetraPWA"], function () {
+      applyLetter(letterLevel % LETTER_VALUES.length + 1, true);
+    });
+    bindIds(["btnAlternarContraste", "btnAlternarContrastePWA"], function () {
+      var on = !document.body.classList.contains("contraste-alto");
+      setBodyClass("contraste-alto", on);
+      write(KEYS.contrast, on);
+      announce("Alto contraste " + (on ? "ativado" : "desativado"));
+    });
+    bindIds(["btnAlternarModoEscuro", "btnAlternarModoEscuroPWA"], function () {
+      var on = !document.body.classList.contains("dark-mode");
+      setBodyClass("dark-mode", on);
+      write(KEYS.dark, on);
+      announce("Modo escuro " + (on ? "ativado" : "desativado"));
+    });
+    bindIds(["btnAlternarFonteDislexia", "btnAlternarFonteDislexiaPWA"], function () {
+      var on = !document.body.classList.contains("fonte-dislexia");
+      setBodyClass("fonte-dislexia", on);
+      write(KEYS.dyslexia, on);
+      announce("Fonte para dislexia " + (on ? "ativada" : "desativada"));
+    });
+    bindIds(["btnResetarAcessibilidade", "btnResetarAcessibilidadePWA"], resetAll);
+    bindIds(["btnToggleLeitura"], toggleReadMain);
+    bindIds(["btnReiniciarLeitura"], restartRead);
+    bindIds(["btnAlternarVelocidadeLeitura"], function () {
+      applySpeed(speedLevel % SPEEDS.length + 1, true);
+    });
+    bindIds(["btnReadFocused"], readFocused);
+    document.querySelectorAll(".color-option").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        applyFocus(btn.getAttribute("data-color") || "yellow", true);
+      });
+    });
+
+    var modal = document.getElementById("keyboardShortcutsModal");
+    function openModal() {
+      if (modal) modal.classList.add("show");
+    }
+    function closeModal() {
+      if (modal) modal.classList.remove("show");
+    }
+    bindIds(["btnKeyboardShortcuts", "btnKeyboardShortcutsPWA"], openModal);
+    bindIds(["keyboardModalCloseButton"], closeModal);
+
+    var toggle = document.getElementById("accessibilityToggleButton");
+    var closeBtn = document.getElementById("pwaAcessibilidadeCloseBtn");
+    var overlay = document.getElementById("menuOverlay");
+    if (toggle) toggle.addEventListener("click", function () {
+      var bar = document.getElementById("pwaAcessibilidadeBar");
+      if (bar && bar.classList.contains("is-open")) closePwa();
+      else openPwa();
+    });
+    if (closeBtn) closeBtn.addEventListener("click", closePwa);
+    if (overlay) overlay.addEventListener("click", closePwa);
+
+    window.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      closeModal();
+      closePwa();
+    });
+
+    var topBtn = document.getElementById("backToTopBtn");
+    if (topBtn) {
+      var ticking = false;
+      var lastY = 0;
+      window.addEventListener("scroll", function () {
+        lastY = window.scrollY;
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          var mobile = window.innerWidth <= 768;
+          var show = !mobile && lastY > 200;
+          topBtn.style.display = show ? "block" : "none";
+          ticking = false;
+        });
+      }, { passive: true });
+      topBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+
+    var hamburger = document.getElementById("hamburgerButton");
+    var nav = document.getElementById("primary-nav");
+    if (hamburger && nav) {
+      hamburger.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        hamburger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+
+    var langButton = document.getElementById("langButton");
+    var langMenu = document.getElementById("langMenu");
+    var langText = document.getElementById("langText");
+    if (langButton && langMenu) {
+      langButton.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        var hidden = langMenu.classList.toggle("hidden");
+        langButton.setAttribute("aria-expanded", hidden ? "false" : "true");
+      });
+      document.addEventListener("click", function (ev) {
+        if (!langButton.contains(ev.target) && !langMenu.contains(ev.target)) {
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+        }
+      });
+      langMenu.querySelectorAll(".lang-option").forEach(function (item) {
+        item.addEventListener("click", function () {
+          if (langText) langText.textContent = item.querySelector("span") ? item.querySelector("span").textContent : item.textContent;
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+          announce("Tradução HOLD. Runtime permanece pt-BR.");
+        });
+      });
+    }
+  }
+
+  try {
+    var prodFont = localStorage.getItem("fontSize");
+    if (prodFont && prodFont !== "1") {
+      var idx = Math.min(Math.max(parseInt(prodFont, 10), 1), FONT_SIZES.length);
+      document.documentElement.style.fontSize = FONT_SIZES[idx - 1];
+    }
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("rd-dark", "dark-mode");
+    }
+  } catch (ignore) {}
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+})();
+
+</script>
+</body>
+</html>

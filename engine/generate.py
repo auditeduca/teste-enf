@@ -423,7 +423,7 @@ def generate_index(tools: list[dict], *, css_href: str, home_href: str, inline_c
       <p class="eyebrow">Plataforma Clínica</p>
       <h1>Calculadoras de Enfermagem</h1>
       <p class="lede">Conhecimento baseado em evidências, escalas, protocolos, calculadoras clínicas e recursos digitais para apoiar a prática da enfermagem.</p>
-      <p class="meta"><a href="admin.html">Abrir Admin</a> · <a href="{attr(inspector_href)}">Abrir Inspector</a> · <a href="admin/maturity.html">Maturidade</a></p>
+      <p class="meta"><a href="admin.html">Abrir Admin</a> · <a href="biblioteca.html">Biblioteca de recursos</a> · <a href="{attr(inspector_href)}">Abrir Inspector</a> · <a href="admin/maturity.html">Maturidade</a></p>
     </section>
     <section class="observed-strip" aria-label="Contagens observadas">
       <article><p class="eyebrow">Pilotos CKO</p><h2>{len(tools)}</h2><p>Candidatos em data/tools. Não são golden records.</p></article>
@@ -496,6 +496,100 @@ def generate_inspector(tools: list[dict], completeness: dict, *, css_href: str, 
     return _shell(
         "Inspector — CKO",
         "Inspeção read-only do catálogo canônico.",
+        body,
+        css_href=None if inline_css else css_href,
+        css_inline="file" if inline_css else None,
+        home_href=home_href,
+    )
+
+
+def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> str:
+    lib = _load_json(ROOT / "cko_md" / "resource_library.json")
+    curr = _load_json(ROOT / "cko_md" / "content_curriculum.json")
+    agencies = _load_json(ROOT / "cko_md" / "agency_registry.json")
+    alerts = _load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
+    adapters = _load_json(ROOT / "cko_md" / "api_adapter_registry.json")
+    res_rows = []
+    for item in lib.get("resources") or []:
+        res_rows.append(
+            "<tr>"
+            f"<td><code>{esc(item.get('business_key'))}</code></td>"
+            f"<td>{esc(item.get('title'))}</td>"
+            f"<td>{esc(item.get('agency_key'))}</td>"
+            f"<td>{esc(item.get('layer'))}</td>"
+            f"<td>{esc(item.get('status'))}</td>"
+            f"<td><code>{esc(item.get('md_ref'))}</code></td>"
+            f"<td><code>{esc(item.get('reg_ref'))}</code></td>"
+            "</tr>"
+        )
+    units_by_tool: dict[str, list] = {}
+    for unit in curr.get("units") or []:
+        units_by_tool.setdefault(unit.get("tool_slug") or "?", []).append(unit)
+    curr_blocks = []
+    for slug, units in units_by_tool.items():
+        lis = "".join(
+            f"<li><strong>{esc(u.get('level'))}</strong> · {esc(u.get('label'))} · "
+            f"{esc((u.get('body') or {}).get('status'))} · MD {esc(u.get('tool_md_ref'))} · REG {esc(u.get('reg_ref'))}</li>"
+            for u in units
+        )
+        curr_blocks.append(f"<article class='panel'><h3>{esc(slug)}</h3><ol>{lis}</ol></article>")
+    pending = "".join(
+        f"<li><strong>{esc(p.get('severity'))}</strong> — {esc(p.get('reason'))}</li>"
+        for p in (curr.get("pending_high") or [])
+    )
+    alert_items = "".join(
+        f"<li><strong>{esc(a.get('severity'))}</strong> {esc(a.get('kind'))}: {esc(a.get('message'))}</li>"
+        for a in (alerts.get("alerts") or [])[:12]
+    )
+    api_rows = []
+    for item in adapters.get("adapters") or []:
+        api_rows.append(
+            "<tr>"
+            f"<td><code>{esc(item.get('business_key'))}</code></td>"
+            f"<td>{esc(item.get('agency'))}</td>"
+            f"<td>{esc(item.get('http_status'))}</td>"
+            f"<td>{esc(item.get('base_url') or 'null')}</td>"
+            f"<td>{esc(item.get('epistemic_status'))}</td>"
+            "</tr>"
+        )
+    agency_n = agencies.get("population") or 0
+    header, footer = _header_footer(home_href)
+    body = f"""{header}
+  <main id="conteudo" class="wrap">
+    <header class="page-hero">
+      <p class="eyebrow">L60 Biblioteca · ambiente controlado</p>
+      <h1>Biblioteca de recursos.</h1>
+      <p class="lede">Catálogo canônico de fontes governamentais (ANVISA, MS, COFEN, COREN) e currículo documental básico→avançado. Cada objeto tem MD e REG. Publicação HOLD. HTML integral não é republicado.</p>
+      <p class="hold-banner">Agências {esc(agency_n)} · Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Alertas ALTA {esc(alerts.get("alta_count"))} · APIs online {esc(adapters.get("adapters") and sum(1 for a in adapters.get("adapters") or [] if a.get("online")))} · release HOLD</p>
+    </header>
+    <section class="panel">
+      <h2>Fontes e APIs observadas</h2>
+      <p>API REST só entra com <code>base_url</code> após HTTP 200. Sem 200 permanece null. Extração periódica {esc(alerts.get("frequency_hours") or 24)}h. Portal pode ficar offline.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>adapter</th><th>órgão</th><th>HTTP</th><th>base_url</th><th>estado</th></tr></thead><tbody>{"".join(api_rows) or "<tr><td colspan='5'>EVIDENCE_PENDING — rode extract com rede.</td></tr>"}</tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Recursos catalogados</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>título</th><th>agência</th><th>camada</th><th>status</th><th>MD</th><th>REG</th></tr></thead><tbody>{"".join(res_rows) or "<tr><td colspan='7'>Biblioteca vazia até AG-LIBRARY-CATALOG.</td></tr>"}</tbody></table></div>
+    </section>
+    <section id="curriculo">
+      <h2>Currículo documental (básico → avançado)</h2>
+      <p>Texto extraído só dos campos já existentes em <code>data/tools</code>. LLM não autorou. Dimensionamento permanece HOLD.</p>
+      {"".join(curr_blocks) or "<p>Currículo EVIDENCE_PENDING.</p>"}
+    </section>
+    <section class="panel">
+      <h2>Pendências ALTA</h2>
+      <ul>{pending or "<li>Nenhuma pendência registrada.</li>"}</ul>
+    </section>
+    <section class="panel">
+      <h2>Alertas de frescura / offline</h2>
+      <ul>{alert_items or "<li>Sem alertas neste lote.</li>"}</ul>
+      <p class="meta"><a href="admin/library.html">Admin biblioteca</a> · <a href="admin/apis.html">Admin APIs</a> · <a href="admin/monitoring.html">Monitoramento</a></p>
+    </section>
+  </main>
+  {footer}"""
+    return _shell(
+        "Biblioteca de recursos — Calculadoras de Enfermagem",
+        "Biblioteca canônica de fontes ANVISA, MS, COFEN e currículo básico a avançado. Publicação HOLD.",
         body,
         css_href=None if inline_css else css_href,
         css_inline="file" if inline_css else None,
@@ -616,6 +710,16 @@ def _emit_tree(dest: Path, tools: list[dict], *, inline_css: bool) -> list[Path]
         encoding="utf-8",
     )
     written.append(inspector)
+    biblioteca = dest / "biblioteca.html"
+    biblioteca.write_text(
+        generate_biblioteca(
+            css_href=css_href,
+            home_href=home_from_home,
+            inline_css=inline_css,
+        ),
+        encoding="utf-8",
+    )
+    written.append(biblioteca)
 
     from .admin_site import emit_admin_pages, studio_map, token_registry
     from .bootstrap import evaluate_layer_registry
