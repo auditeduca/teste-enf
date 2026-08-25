@@ -12,6 +12,7 @@ from pathlib import Path
 
 from .paths import ROOT, TOOLS_DIR
 from .vault import MANIFEST_PATH, POINTERS_PATH
+from .who_i18n import WHO_OFFICIAL_SELECTOR, who_i18n_fields
 
 OFFICIAL_CATALOG_URL = "https://www.iso.org/standard/80766.html"
 PGDADOS_REF_URL = (
@@ -336,7 +337,7 @@ def pgdados_bound_fields() -> list[dict]:
 
 
 def compose_field_dictionary() -> dict:
-    fields = base_governance_fields() + pgdados_bound_fields()
+    fields = base_governance_fields() + pgdados_bound_fields() + who_i18n_fields()
     keys = [item["business_key"] for item in fields]
     if len(keys) != len(set(keys)):
         raise ValueError("duplicate field business_key")
@@ -350,10 +351,11 @@ def compose_field_dictionary() -> dict:
         "iso_catalog_url": OFFICIAL_CATALOG_URL,
         "iso_implemented": False,
         "certified": False,
+        "who_ref": "MD-WHO-I18N-001",
         "fields": fields,
         "note": (
-            "Dicionário operacional CKO com binding PGDADOS. Não é cláusula ISO 8000. "
-            "Não é dicionário clínico completo. Não é certificação."
+            "Dicionário operacional CKO com binding PGDADOS e envelopes i18n WHO/OMS. "
+            "Não é cláusula ISO 8000. Não é dump ICD/ICNP/GHO. Não é certificação."
         ),
     }
 
@@ -442,6 +444,15 @@ def evaluate_profile() -> dict:
         and len(PGDADOS_INSTRUMENTS) == 3
     )
     dims_ok = [item["name"] for item in binding["data_quality_dimensions"]] == list(DATA_QUALITY_DIMENSIONS)
+    who_ids = {item["business_key"] for item in who_i18n_fields()}
+    dict_ids = {item["business_key"] for item in field_dict["fields"]}
+    who_ok = who_ids.issubset(dict_ids) and all(
+        item.get("iso_test_id") == "ISO8000-CKO-WHO-I18N"
+        and item.get("pgdados_term") == "Interoperabilidade"
+        and item.get("iso_clause_text") == "CLAUSE_TEXT_UNAVAILABLE"
+        for item in field_dict["fields"]
+        if item["business_key"] in who_ids
+    ) and "pt-BR" not in {item["bcp47"] for item in WHO_OFFICIAL_SELECTOR}
 
     tests = [
         {
@@ -542,6 +553,19 @@ def evaluate_profile() -> dict:
                 "binding_ref": "MD-ISO8000-PGDADOS-BIND-001",
             },
         },
+        {
+            "id": "ISO8000-CKO-WHO-I18N",
+            "principle": "WHO/OMS official selector modulates international i18n envelopes",
+            "pgdados_term": "Interoperabilidade",
+            "status": "PASS" if who_ok else "FAIL",
+            "observed": {
+                "who_fields": sorted(who_ids),
+                "who_official": [item["bcp47"] for item in WHO_OFFICIAL_SELECTOR],
+                "translation_gate": "HOLD",
+                "icd_icnp_dump": "FORBIDDEN",
+                "pt_br_in_who_selector": False,
+            },
+        },
     ]
     statuses = {item["status"] for item in tests}
     overall = "HOLD"
@@ -575,6 +599,7 @@ def evaluate_profile() -> dict:
         "note": (
             "Perfil CKO de unicidade, proveniência, WORM, lineage e dicionário, "
             "vinculado aos instrumentos e dimensões PGDADOS. "
+            "Envelopes i18n WHO/OMS (L310) não ligam o seletor de idioma. "
             "NÃO é implantação certificada da ISO 8000."
         ),
         "tests": tests,

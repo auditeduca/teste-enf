@@ -423,7 +423,7 @@ def write_registries() -> list[Path]:
         ],
         "related_drive_catalog": "MD-LOCALE-REG-001",
         "relation_type": "RELATED_TAXONOMY",
-        "note": "pt-BR é o locale de runtime observado. Os 19 códigos de locales.zip não substituem este registry.",
+        "note": "pt-BR é o locale de runtime observado. Os 19 códigos de locales.zip não substituem este registry. Overlay WHO aplicado depois por AG-WHO-I18N.",
     }))
     written.append(dump(MD_DIR / "field_dictionary.json", field_dictionary_payload()))
     agents = agent_records()
@@ -539,6 +539,11 @@ def write_registries() -> list[Path]:
             }
         ],
     }))
+    from .who_i18n import evaluate_who_i18n
+
+    evaluate_who_i18n()
+    written.append(MD_DIR / "who_i18n_modulation.json")
+    written.append(REG_DIR / "i18n_profile.json")
     return written
 
 

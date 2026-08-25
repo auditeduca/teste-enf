@@ -914,6 +914,15 @@ def agent_records() -> list[dict]:
             "note": "Perfil CKO. clause_text CLAUSE_TEXT_UNAVAILABLE. certified=false.",
         },
         {
+            "agent_id": "AG-WHO-I18N",
+            "class": "MD",
+            "implemented": True,
+            "writes_to": "cko_md/who_i18n_modulation.json",
+            "promotes_to_md": False,
+            "wired_to_frontend": False,
+            "note": "OMS who.int seletor (en ar zh fr ru es). translation_gate HOLD. Sem dump ICD/ICNP/GHO.",
+        },
+        {
             "agent_id": "AG-MASK-APPLY",
             "class": "REGULATORY",
             "implemented": True,
@@ -1079,6 +1088,7 @@ def run_extraction(*, network: bool = True) -> dict:
     )
     from .iso8000 import evaluate_profile
     from .lineage import bind_lineage
+    from .who_i18n import evaluate_who_i18n
     from .monitor import compare_internal, compare_source, monitor_drift
     from .rights import bind_rights
     from .site_shell import parse_site_shell
@@ -1102,6 +1112,7 @@ def run_extraction(*, network: bool = True) -> dict:
         bind_rights(),
         bind_lineage(),
         evaluate_profile(),
+        evaluate_who_i18n(),
         apply_norm_masks(),
         caat_extracted_population(),
         ipe_carr(),

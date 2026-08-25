@@ -799,6 +799,7 @@ def page_deploy(ctx: dict, **kwargs) -> str:
 def page_locales(ctx: dict, **kwargs) -> str:
     locales = load_json(ROOT / "cko_md" / "locale_registry.json")
     i18n = load_json(ROOT / "cko_reg" / "i18n_profile.json")
+    who = load_json(ROOT / "cko_md" / "who_i18n_modulation.json")
     drive = load_json(ROOT / "cko_inbox" / "drive" / "INVENTORY.json")
     rows = []
     for item in locales.get("locales") or []:
@@ -809,21 +810,30 @@ def page_locales(ctx: dict, **kwargs) -> str:
             _status_chip("HOLD" if not item.get("wired_to_frontend") else "WIRED"),
             str(len(item.get("files") or [])),
         ])
+    who_rows = [
+        [esc(item.get("bcp47")), esc(item.get("label_observed")), _status_chip("DRIVE" if item.get("in_drive_zip") else "WHO_ONLY")]
+        for item in (who.get("who_official_languages") or [])
+    ]
     drive_in = [[esc(a.get("title")), esc(a.get("action") or a.get("reason")), esc(a.get("id"))] for a in (drive.get("ingested") or [])]
     drive_out = [[esc(a.get("title")), esc(a.get("reason")), esc(a.get("id"))] for a in (drive.get("not_ingested") or [])]
     inner = f"""
     <header class="page-hero">
       <h1>Locales e Drive.</h1>
-      <p class="lede">MD-LOCALE-REG-001 registra {esc(locales.get("population"))} códigos extraídos de locales.zip ({esc(locales.get("epistemic_status"))}). REG-I18N-001 mantém tradução em HOLD. Runtime permanece pt-BR.</p>
-      <p class="hold-banner">Stems observados: cookies, footer. Sem strings de calculadora. Banner de cookies do zip NÃO implantado (NO_SENSITIVE_CAPTURE).</p>
+      <p class="lede">MD-LOCALE-REG-001 registra {esc(locales.get("population"))} códigos extraídos de locales.zip ({esc(locales.get("epistemic_status"))}). REG-I18N-001 mantém tradução em HOLD. Runtime permanece pt-BR. OMS/WHO modula candidatos internacionais; não liga o seletor.</p>
+      <p class="hold-banner">Stems observados: cookies, footer. Sem strings de calculadora. Banner de cookies do zip NÃO implantado (NO_SENSITIVE_CAPTURE). Dump ICD/ICNP/GHO FORBIDDEN. pt ≠ pt-BR.</p>
     </header>
+    <section class="panel">
+      <h2>Modulação WHO/OMS ({esc(who.get("business_key"))})</h2>
+      <p>Seletor who.int observado: {esc(", ".join(item.get("bcp47") or "" for item in (who.get("who_official_languages") or [])))}. Interseção Drive ∩ WHO: {esc(", ".join(who.get("drive_intersection") or []))}. Drive-only: {esc(", ".join(who.get("drive_only") or []))}. Gate: {_status_chip(who.get("translation_gate") or i18n.get("translation_gate"))} · wired={esc(who.get("wired_to_frontend"))} · runtime pt-BR fora do seletor WHO={esc(who.get("runtime_not_in_who_selector"))}.</p>
+      {_table(["BCP47", "rótulo observado", "Drive zip"], who_rows)}
+    </section>
     <section class="panel">
       <h2>Registry MD ({esc(locales.get("file_count"))} arquivos)</h2>
       {_table(["business_key", "código zip", "stems", "frontend", "arquivos"], rows)}
     </section>
     <section class="panel">
       <h2>Perfil REG</h2>
-      <p>Gate: {_status_chip(i18n.get("translation_gate"))} · revisão humana: {esc(i18n.get("human_review_required"))} · {esc(i18n.get("rule"))}</p>
+      <p>Gate: {_status_chip(i18n.get("translation_gate"))} · revisão humana: {esc(i18n.get("human_review_required"))} · who_ref: {esc(i18n.get("who_ref"))} · {esc(i18n.get("rule"))}</p>
     </section>
     <section class="panel">
       <h2>Drive ingerido neste ciclo</h2>
@@ -834,7 +844,7 @@ def page_locales(ctx: dict, **kwargs) -> str:
       {_table(["artefato", "motivo", "fileId"], drive_out)}
     </section>
     """
-    return admin_shell(title="Locales / Drive · CKO Studio", description="Locales Drive em quarentena.", current="locales", inner=inner, **kwargs)
+    return admin_shell(title="Locales / Drive · CKO Studio", description="Locales Drive em quarentena. Overlay WHO HOLD.", current="locales", inner=inner, **kwargs)
 
 
 def page_mdm(ctx: dict, **kwargs) -> str:
@@ -1025,6 +1035,7 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
         ROOT / "cko_core" / "layer_registry.json",
         ROOT / "cko_core" / "design_token_registry.json",
         ROOT / "cko_md" / "locale_registry.json",
+        ROOT / "cko_md" / "who_i18n_modulation.json",
     ):
         if source.exists():
             target = dest / "admin" / source.name

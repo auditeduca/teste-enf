@@ -50,6 +50,7 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
         "studio_cms_map.v1.json",
         "mockup_reference_map.v1.json",
         "locale_registry.json",
+        "who_i18n_modulation.json",
         "design_token_registry.json",
         "admin-control.js",
         "a11y.js",
@@ -133,7 +134,7 @@ def test_maturity_panorama_is_hold_without_fake_pass():
     panorama = evaluate_maturity()
     assert panorama["release"] == "HOLD"
     assert panorama["layers"]["population"] == 44
-    assert panorama["agents"]["population"] == 31
+    assert panorama["agents"]["population"] == 32
     assert panorama["agents"]["implemented"] is True
     assert panorama["agents"]["publication_implemented"] is False
     assert panorama["ipe"]["registry_implemented"] is False

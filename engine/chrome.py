@@ -188,9 +188,9 @@ def ds_language_bar(home_href: str) -> str:
             f'<span>{esc(name)}</span> <code>{esc(code)}</code></button>'
         )
     menu = "\n        ".join(items)
-    return f"""<div id="language-selector-placeholder" data-i18n-gate="HOLD">
+    return f"""<div id="language-selector-placeholder" data-i18n-gate="HOLD" data-who-official="en,ar,zh,fr,ru,es">
     <div class="wrap lang-bar">
-      <p class="lang-runtime">pt-BR · i18n HOLD. Bandeiras do seletor não vieram no zip (EVIDENCE_PENDING). Tradução não redireciona.</p>
+      <p class="lang-runtime">pt-BR · i18n HOLD. Candidatos WHO/OMS (en ar zh fr ru es) não ligam o seletor. Bandeiras do seletor não vieram no zip (EVIDENCE_PENDING). Tradução não redireciona.</p>
       <div id="language-dropdown-wrapper">
         <button type="button" id="langButton" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu">
           <span id="langText">Português</span>

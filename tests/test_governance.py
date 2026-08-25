@@ -74,10 +74,11 @@ def test_extract_binds_rights_iso_lineage_without_fake_pass():
     assert masks["llm_as_checker"] == "FORBIDDEN"
     assert mask_run["llm_used"] is False
 
-    assert fields["population"] >= 27
+    assert fields["population"] >= 34
     assert fields.get("certified") is False
     assert fields.get("iso_implemented") is False
     assert all(item.get("pgdados_ref") == "MD-PGDADOS-001" for item in fields["fields"])
+    assert any(item["business_key"] == "FLD-I18N-WHO-OFFICIAL" for item in fields["fields"])
     binding = json.loads((ROOT / "cko_md" / "iso8000_pgdados_binding.json").read_text(encoding="utf-8"))
     assert binding["population"] == fields["population"]
     assert binding["certified"] is False
@@ -86,6 +87,7 @@ def test_extract_binds_rights_iso_lineage_without_fake_pass():
     test_ids = {item["id"] for item in iso["tests"]}
     assert "ISO8000-CKO-PGDADOS-BINDING" in test_ids
     assert "ISO8000-CKO-PGDADOS-QUALITY-DIMS" in test_ids
+    assert "ISO8000-CKO-WHO-I18N" in test_ids
     assert iso["binding_ref"] == "MD-ISO8000-PGDADOS-BIND-001"
     assert lineage["complete_count"] >= 4
     assert shell["hash_match"] is True

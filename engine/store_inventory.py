@@ -532,6 +532,14 @@ def plan_fronts() -> dict:
             "gap": "GAP-MENU-DRIVE",
             "action": "151 destinos no menu.json Drive. Não promover mega-menu/Braden ao chrome público.",
         },
+        {
+            "id": "F20",
+            "name": "L310 i18n WHO/OMS",
+            "status": "HOLD",
+            "agents": ["AG-WHO-I18N", "AG-ISO8000-PROFILE"],
+            "gap": "GAP-WHO-I18N",
+            "action": "Seletor who.int (en ar zh fr ru es) ∩ locales.zip = candidatos. Sem dump ICD/ICNP/GHO. translation_gate HOLD. pt ≠ pt-BR.",
+        },
     ]
     for front in fronts:
         living = gap_by_id.get(front["gap"]) or {}
@@ -563,6 +571,7 @@ def plan_fronts() -> dict:
             "F12 NNN HOLD até decisão de licença A/B/C",
             "F15 PGDADOS /pgdados explícito no perfil ISO (não certificação)",
             "F18 OG first-party LinkedIn; 151 cards Drive não copiados",
+            "F20 WHO/OMS i18n envelopes; translation HOLD; sem dump",
             "F3/F4 só com evidência HTTP/Congress já no tubo",
         ],
         "updated_at": _now(),
@@ -646,6 +655,11 @@ def plan_fronts() -> dict:
             "status": "COMPARE_ONLY",
             "reason": "Menu Drive 151 destinos. Chrome público permanece 5 pilotos. Sem Braden no header.",
         },
+        {
+            "id": "GAP-WHO-I18N",
+            "status": "HOLD",
+            "reason": "who.int seletor en/ar/zh/fr/ru/es. Sem dump ICD/ICNP/GHO. translation_gate HOLD. pt ≠ pt-BR.",
+        },
     ]
     living_gaps = list(method.get("living_gaps") or [])
     for item in extra:
@@ -668,5 +682,5 @@ def plan_fronts() -> dict:
         "front_count": len(fronts),
         "publication": "HOLD",
         "blocked": ["F2"],
-        "hold": ["F5", "F7", "F8", "F12"],
+        "hold": ["F5", "F7", "F8", "F12", "F20"],
     }
