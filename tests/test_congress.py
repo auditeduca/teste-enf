@@ -81,6 +81,7 @@ def test_extract_offline_writes_legislation_md_reg_without_inventing_uuid():
     assert "DEC-sn" not in (reg.get("allow_siglas") or [])
     keys = {item.get("business_key") for item in md.get("instruments") or []}
     assert "INS-DEC-7508-2011" in keys
+    assert "INS-DEC-10046-2019" in keys
     dec = next(item for item in md["instruments"] if item["business_key"] == "INS-DEC-7508-2011")
     assert dec.get("force_of_law") is False
     assert dec.get("force_of_regulation") is True
@@ -106,4 +107,5 @@ def test_extract_offline_writes_legislation_md_reg_without_inventing_uuid():
     biblioteca = (ROOT / "render" / "fetch" / "biblioteca.html").read_text(encoding="utf-8")
     assert "INS-DEC-7508-2011" in biblioteca
     assert "7.508" in biblioteca
+    assert "10.046" in biblioteca or "INS-DEC-10046-2019" in biblioteca
     assert "adsbygoogle" not in biblioteca

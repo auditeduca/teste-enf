@@ -490,7 +490,7 @@ def page_library(ctx: dict, **kwargs) -> str:
     inner = f"""
     <header class="page-hero">
       <h1>Biblioteca de recursos.</h1>
-      <p class="lede">Catálogo MD + currículo documental + legislação federal do Congresso. Sem HTML integral. Sem LLM. Publicação HOLD. PLP bloqueado.</p>
+      <p class="lede">Catálogo MD + currículo documental + legislação federal do Congresso + PGDADOS (SGD). Sem HTML/PDF integral. Sem LLM. Publicação HOLD. PLP bloqueado. COREN sem API REST.</p>
       <p class="hold-banner">Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Pendências ALTA {esc(curr.get("pending_high_count"))} · Alertas {esc(alerts.get("population"))}</p>
     </header>
     <section class="panel">
@@ -561,7 +561,7 @@ def page_apis(ctx: dict, **kwargs) -> str:
     inner = f"""
     <header class="page-hero">
       <h1>APIs e órgãos.</h1>
-      <p class="lede">ANVISA, MS, COFEN, COREN e Congresso Nacional. <code>base_url</code> só após HTTP 200. Catálogo federal bloqueia proposição sem efeito jurídico (ex.: PLP). Decreto numerado entra como regulamentar. Norma revogada pode ser ferramenta.</p>
+      <p class="lede">ANVISA, MS, COFEN, COREN-SP (HTML; sem REST), SGD/PGDADOS e Congresso Nacional. <code>base_url</code> só após HTTP 200. Catálogo federal bloqueia proposição sem efeito jurídico (ex.: PLP). Decreto numerado entra como regulamentar. Norma revogada pode ser ferramenta.</p>
       <p class="hold-banner">Adapters {esc(adapters.get("population"))} · produção API={esc(adapters.get("production_api"))} · tipos Senado ALLOW {esc(types.get("senado_allow"))} / BLOCK {esc(types.get("senado_block"))} · leis {esc(laws.get("population"))} · SQLite inbox {esc("presente" if db_path.exists() else "ausente")} · Postgres produção=NÃO · RLS inalterado</p>
     </header>
     <section class="panel">

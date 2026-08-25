@@ -200,6 +200,19 @@ FEDERAL_SEEDS = (
         "md_ref": "MD-INS-DEC-7508-2011",
         "reg_ref": "REG-INS-DEC-7508-2011",
     },
+    {
+        "business_key": "INS-DEC-10046-2019",
+        "tipo": "DEC",
+        "numero": 10046,
+        "ano": 2019,
+        "discovery": (
+            "Página oficial PGDADOS (SGD/MGI) cita Decreto 10.046/2019. "
+            "CKO re-identifica via Congresso API. Não copiar HTML do portal."
+        ),
+        "tool_slugs": [],
+        "md_ref": "MD-INS-DEC-10046-2019",
+        "reg_ref": "REG-INS-DEC-10046-2019",
+    },
 )
 
 GATE_NOTE = (

@@ -596,9 +596,17 @@
     {
       "business_key": "PEND-COREN-DEMAIS-UFS",
       "severity": "ALTA",
-      "reason": "Apenas COREN-SP tem portal candidato neste lote. Demais Conselhos Regionais não observados.",
+      "reason": "Apenas COREN-SP tem portal HTML candidato. REST API de COREN não observada. Não inventar adapter. Demais Conselhos Regionais não observados.",
       "government_alternative_sought": true,
-      "alternative": "Portal COFEN nacional como referência federal.",
+      "alternative": "Portal COFEN nacional (também HTML; REST não observada).",
+      "status": "PENDENCIA_ALTA"
+    },
+    {
+      "business_key": "PEND-COFEN-REST-NOT-OBSERVED",
+      "severity": "ALTA",
+      "reason": "COFEN: portal HTML observado. REST/dados abertos sem HTTP 200 neste lote. Não inventar base_url.",
+      "government_alternative_sought": true,
+      "alternative": "https://www.cofen.gov.br/ — HTML. Plano de dados abertos = EVIDENCE_PENDING.",
       "status": "PENDENCIA_ALTA"
     },
     {
@@ -641,7 +649,7 @@
       "status": "PENDENCIA_ALTA"
     }
   ],
-  "pending_high_count": 6,
+  "pending_high_count": 7,
   "publication": "HOLD",
   "rule": "Envelope de conteúdo referencia MD/REG. Não inventa dose, fórmula nem cláusula."
 }

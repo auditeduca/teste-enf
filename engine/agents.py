@@ -884,7 +884,7 @@ def agent_records() -> list[dict]:
             "implemented": True,
             "writes_to": "cko_inbox/extracted/gov_pages.json",
             "promotes_to_md": False,
-            "note": "ANVISA, MS, COFEN, COREN-SP, BVSMS. HTML oficial. Sem inventar API.",
+            "note": "ANVISA, MS, COFEN, COREN-SP HTML, SGD PGDADOS. Sem inventar API REST.",
         },
         {
             "agent_id": "AG-API-PROBE",

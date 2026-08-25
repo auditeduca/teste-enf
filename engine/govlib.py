@@ -64,6 +64,7 @@ GOV_HTML = (
         "md_ref": "MD-AGY-COFEN",
         "reg_ref": "REG-SRC-COFEN",
         "layer": "L110",
+        "note": "Portal HTML. REST API não observada. Não inventar adapter COFEN.",
     },
     {
         "business_key": "SRC-GOV-COREN-SP-PORTAL",
@@ -75,7 +76,47 @@ GOV_HTML = (
         "md_ref": "MD-AGY-COREN-SP",
         "reg_ref": "REG-SRC-COREN-SP",
         "layer": "L110",
-        "note": "Um COREN estadual OBSERVÁVEL. Demais CORENs = PENDENCIA_ALTA.",
+        "note": "Portal HTML estadual. REST API não observada. Não inventar adapter COREN.",
+    },
+    {
+        "business_key": "SRC-GOV-PGDADOS-HUB",
+        "agency_key": "AGY-SGD",
+        "agency": "Secretaria de Governo Digital / MGI",
+        "url": "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados",
+        "kind": "REGULATED_HTML_PAGE",
+        "frequency_hours": FREQ_HOURS,
+        "md_ref": "MD-AGY-SGD",
+        "reg_ref": "REG-SRC-PGDADOS-HUB",
+        "layer": "L150",
+        "note": "Hub PGDADOS / Trilha de Governança de Dados. Metadados; PDF integral não vira regra de produto.",
+    },
+    {
+        "business_key": "SRC-GOV-PGDADOS-GUIA",
+        "agency_key": "AGY-SGD",
+        "agency": "Secretaria de Governo Digital / MGI",
+        "url": "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados",
+        "kind": "REGULATED_HTML_PAGE",
+        "frequency_hours": FREQ_HOURS,
+        "md_ref": "MD-AGY-SGD",
+        "reg_ref": "REG-SRC-PGDADOS-GUIA",
+        "layer": "L150",
+        "note": "Guia de Implementação PGDADOS. Parte 3 PDF só entra se href.gov.br for observado.",
+    },
+    {
+        "business_key": "SRC-GOV-QUALIDADE-DIGIT",
+        "agency_key": "AGY-SGD",
+        "agency": "Secretaria de Governo Digital / MGI",
+        "url": (
+            "https://www.gov.br/governodigital/pt-br/estrategias-e-governanca-digital/"
+            "transformacao-digital/central-de-qualidade/padroes-de-qualidade/"
+            "padroes-de-qualidade-para-servicos-publicos-digitais"
+        ),
+        "kind": "REGULATED_HTML_PAGE",
+        "frequency_hours": FREQ_HOURS,
+        "md_ref": "MD-AGY-SGD",
+        "reg_ref": "REG-SRC-QUALIDADE-DIGIT",
+        "layer": "L150",
+        "note": "Padrões de Qualidade (7 dimensões). Texto de atributo não copiado como regra CKO.",
     },
 )
 
@@ -125,6 +166,7 @@ LIBRARY_TOPICS = (
     ("LIB-L130-CONCURSO", "L130", "Educação / concurso", "AGY-MS", "PENDENCIA_ALTA"),
     ("LIB-L140-LEGISLACAO-FEDERAL", "L140", "Legislação federal (Congresso)", "AGY-CONGRESSO", "PENDENCIA_ALTA"),
     ("LIB-L150-GUIAS", "L150", "Artigos / guias / resumos", "AGY-MS", "PENDENCIA_ALTA"),
+    ("LIB-L150-PGDADOS", "L150", "PGDADOS / governança de dados (SGD)", "AGY-SGD", "PENDENCIA_ALTA"),
 )
 
 
@@ -151,12 +193,180 @@ def _title(body: bytes) -> str | None:
     return re.sub(r"\s+", " ", match.group(1)).strip()[:200]
 
 
+def _official_gov_pdf_links(html: str, page_url: str) -> list[dict]:
+    """href .pdf on gov.br only. Ignore third-party chrome (ABNT/mwpt)."""
+    from urllib.parse import urljoin
+
+    found = []
+    seen = set()
+    for href, label in re.findall(r'href=["\']([^"\']+)["\'][^>]*>([^<]{0,200})', html, flags=re.I):
+        full = urljoin(page_url, href).split("#")[0]
+        if ".pdf" not in full.lower():
+            continue
+        host = urlparse(full).netloc.lower()
+        if host.endswith("mwpt.com.br") or "abnt-nbr" in full.lower():
+            continue
+        if not host.endswith("gov.br"):
+            continue
+        if full in seen:
+            continue
+        seen.add(full)
+        found.append({
+            "url": full,
+            "label": re.sub(r"\s+", " ", label).strip()[:180] or None,
+        })
+    return found
+
+
+def _quality_dimension_names(html: str) -> list[dict]:
+    text = re.sub(r"<script[\s\S]*?</script>", " ", html, flags=re.I)
+    text = re.sub(r"<style[\s\S]*?</style>", " ", text, flags=re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"\s+", " ", text)
+    names = []
+    seen = set()
+    dim_re = re.compile(
+        r"DIMENS[AÃ]O\s+(\d+)\s+(Facilidade|Comunica[cç][aã]o|Atendimento|Experi[eê]ncia Unificada|"
+        r"Acessibilidade|Privacidade e Seguran[cç]a|Escuta Ativa)",
+        flags=re.I,
+    )
+    for match in dim_re.finditer(text):
+        n = int(match.group(1))
+        name = match.group(2).strip()
+        if n in seen or not name:
+            continue
+        seen.add(n)
+        names.append({"n": n, "name": name, "clause_text": "NOT_COPIED_AS_PRODUCT_RULE"})
+    return names
+
+
+def catalog_pgdados(pages: list[dict]) -> dict:
+    """MD catalog of observed PGDADOS/quality pages and official PDF hrefs. No PDF body as product rule."""
+    gov_dir = ROOT / "cko_inbox" / "gov"
+    guia_parts = []
+    cartilhas = []
+    quality_dims = []
+    ignored_third_party = 0
+    for src in GOV_HTML:
+        key = src["business_key"]
+        html_path = gov_dir / f"{key}.html"
+        page = next((item for item in pages if item.get("business_key") == key), {})
+        html = html_path.read_text(encoding="utf-8", errors="replace") if html_path.exists() else ""
+        pdfs = _official_gov_pdf_links(html, src["url"]) if html else []
+        ignored_third_party += html.lower().count("mwpt.com.br") if html else 0
+        if key == "SRC-GOV-PGDADOS-GUIA":
+            for pdf in pdfs:
+                label = (pdf.get("label") or pdf["url"]).lower()
+                part = None
+                if "parte-1" in pdf["url"] or "parte 1" in label:
+                    part = 1
+                elif "parte-2" in pdf["url"] or "parte 2" in label:
+                    part = 2
+                elif "parte-3" in pdf["url"] or "parte 3" in label:
+                    part = 3
+                guia_parts.append({
+                    "business_key": f"RES-PGDADOS-GUIA-P{part}" if part else f"RES-PGDADOS-GUIA-{len(guia_parts)+1}",
+                    "uuid": None,
+                    "part": part,
+                    "title": pdf.get("label") or f"Guia PGDADOS parte {part}",
+                    "url": pdf["url"],
+                    "source_ref": key,
+                    "md_ref": src["md_ref"],
+                    "reg_ref": src["reg_ref"],
+                    "status": "SOURCE_DERIVED" if page.get("http_status") == 200 else "EVIDENCE_PENDING",
+                    "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+                    "republication": "METADATA_ONLY",
+                })
+            if not any(item.get("part") == 3 for item in guia_parts):
+                guia_parts.append({
+                    "business_key": "RES-PGDADOS-GUIA-P3",
+                    "uuid": None,
+                    "part": 3,
+                    "title": "Parte 3 — PDF gov.br não observado",
+                    "url": None,
+                    "source_ref": key,
+                    "md_ref": src["md_ref"],
+                    "reg_ref": src["reg_ref"],
+                    "status": "EVIDENCE_PENDING",
+                    "note": "Estrutura citada na página. PDF gov.br não observado neste lote.",
+                    "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+                    "republication": "METADATA_ONLY",
+                })
+        if key == "SRC-GOV-PGDADOS-HUB":
+            for pdf in pdfs:
+                vol = None
+                m = re.search(r"volume-(\d+)", pdf["url"], flags=re.I)
+                if m:
+                    vol = int(m.group(1))
+                cartilhas.append({
+                    "business_key": f"RES-PGDADOS-CARTILHA-V{vol}" if vol else f"RES-PGDADOS-CARTILHA-{len(cartilhas)+1}",
+                    "uuid": None,
+                    "volume": vol,
+                    "title": pdf.get("label") or f"Cartilha volume {vol}",
+                    "url": pdf["url"],
+                    "source_ref": key,
+                    "md_ref": src["md_ref"],
+                    "reg_ref": src["reg_ref"],
+                    "status": "SOURCE_DERIVED" if page.get("http_status") == 200 else "EVIDENCE_PENDING",
+                    "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+                    "republication": "METADATA_ONLY",
+                })
+            html_l = html.lower()
+            for vol in (4, 5):
+                if any(item.get("volume") == vol for item in cartilhas):
+                    continue
+                mentioned = f"volume {vol}" in html_l or f"volume-{vol}" in html_l
+                cartilhas.append({
+                    "business_key": f"RES-PGDADOS-CARTILHA-V{vol}",
+                    "uuid": None,
+                    "volume": vol,
+                    "title": f"Volume {vol} — PDF gov.br não observado",
+                    "url": None,
+                    "source_ref": key,
+                    "md_ref": src["md_ref"],
+                    "reg_ref": src["reg_ref"],
+                    "status": "EVIDENCE_PENDING",
+                    "label_mentioned_on_page": mentioned,
+                    "note": "Volume previsto na trilha. Sem href PDF gov.br neste lote.",
+                    "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+                    "republication": "METADATA_ONLY",
+                })
+        if key == "SRC-GOV-QUALIDADE-DIGIT" and html:
+            quality_dims = _quality_dimension_names(html)
+    payload = {
+        "business_key": "MD-PGDADOS-001",
+        "uuid": None,
+        "status": "REGISTERED",
+        "publication": "HOLD",
+        "assured": False,
+        "issuer": "Secretaria de Governo Digital / MGI",
+        "agency_key": "AGY-SGD",
+        "parent_agency": "AGY-MGI",
+        "drive": "NOT_FOUND",
+        "nifs": "NOT_FOUND",
+        "supabase": "EVIDENCE_PENDING",
+        "guia_parts": guia_parts,
+        "cartilhas": cartilhas,
+        "quality_dimensions": quality_dims,
+        "quality_dimension_count": len(quality_dims),
+        "third_party_pdf_ignored": ignored_third_party > 0,
+        "third_party_note": "PDF ABNT/mwpt no chrome do portal não entra no catálogo CKO.",
+        "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+        "rule": "Catálogo de metadados oficiais. PDF não é regra de produto. LLM não autorou o conteúdo.",
+    }
+    _dump(ROOT / "cko_md" / "pgdados_program.json", payload)
+    _dump(ROOT / "cko_inbox" / "extracted" / "pgdados_program.json", payload)
+    return payload
+
+
 def write_agency_md() -> dict:
     agencies = [
         {"business_key": "AGY-ANVISA", "name": "ANVISA", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED"},
         {"business_key": "AGY-MS", "name": "Ministério da Saúde", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED"},
-        {"business_key": "AGY-COFEN", "name": "COFEN", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED"},
-        {"business_key": "AGY-COREN-SP", "name": "COREN-SP", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "note": "Demais CORENs não observados neste lote."},
+        {"business_key": "AGY-COFEN", "name": "COFEN", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "rest_api": "NOT_OBSERVED", "note": "Portal HTML. Sem REST HTTP 200 neste lote. Não inventar base_url."},
+        {"business_key": "AGY-COREN-SP", "name": "COREN-SP", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "rest_api": "NOT_OBSERVED", "note": "Sem API REST. Portal HTML estadual apenas. Demais CORENs não observados."},
+        {"business_key": "AGY-MGI", "name": "Ministério da Gestão e da Inovação em Serviços Públicos", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "rest_api": "NOT_OBSERVED"},
+        {"business_key": "AGY-SGD", "name": "Secretaria de Governo Digital", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "parent_agency": "AGY-MGI", "rest_api": "NOT_OBSERVED", "note": "Portal Gov.br / Governo Digital. PGDADOS e Padrões de Qualidade."},
         {"business_key": "AGY-DADOSGOV", "name": "dados.gov.br", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED"},
         {"business_key": "AGY-CONGRESSO", "name": "Congresso Nacional", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "note": "Legislação federal via Dados Abertos Senado/Câmara. Não é NIFS."},
     ]
@@ -170,6 +380,41 @@ def write_agency_md() -> dict:
         "rule": "Identidade MD da agência precede adapter de API e conteúdo.",
     }
     _dump(ROOT / "cko_md" / "agency_registry.json", payload)
+    api_path = ROOT / "cko_assurance" / "api_registry.json"
+    try:
+        api_payload = json.loads(api_path.read_text(encoding="utf-8")) if api_path.exists() else {}
+    except json.JSONDecodeError:
+        api_payload = {}
+    apis = [item for item in (api_payload.get("apis") or []) if item.get("business_key") not in {"API-CAND-COFEN", "API-CAND-COREN"}]
+    apis = [
+        {
+            "business_key": "API-CAND-COFEN",
+            "name": "COFEN",
+            "base_url": None,
+            "html_page": "https://www.cofen.gov.br/",
+            "kind": "REGULATED_HTML_PAGE",
+            "rest_api": "NOT_OBSERVED",
+            "status": "SOURCE_DERIVED",
+            "note": "Portal HTML. Sem REST HTTP 200. Não inventar base_url.",
+        },
+        {
+            "business_key": "API-CAND-COREN",
+            "name": "COREN",
+            "base_url": None,
+            "html_page": "https://www.coren-sp.gov.br/",
+            "kind": "NO_REST_API",
+            "rest_api": "NOT_OBSERVED",
+            "status": "SOURCE_DERIVED",
+            "note": "COREN não possui API REST observada. Apenas portal HTML estadual.",
+        },
+    ] + apis
+    _dump(api_path, {
+        "business_key": api_payload.get("business_key") or "REG-API-001",
+        "status": "REGISTERED",
+        "implemented": False,
+        "note": "API REST base_url permanece null até HTTP 200. COREN/COFEN sem REST observada.",
+        "apis": apis,
+    })
     return payload
 
 
@@ -191,6 +436,7 @@ def write_source_reg() -> dict:
             "republication": "FORBIDDEN_FULL_HTML",
             "status": "DOCUMENTADO",
             "uuid": None,
+            "rest_api": "NOT_OBSERVED" if src["agency_key"] in {"AGY-COFEN", "AGY-COREN-SP"} else None,
         })
     for api in API_CANDIDATES:
         items.append({
@@ -290,6 +536,7 @@ def fetch_gov_sources(*, network: bool) -> dict:
             "frequency_hours": FREQ_HOURS,
             "pages": pages,
         })
+    catalog_pgdados(pages)
     return {
         "agent_id": "AG-FETCH-GOV-SOURCES",
         "class": "ACQUISITION",
@@ -434,6 +681,48 @@ def catalog_library() -> dict:
                 else "Norma revogada permitida como ferramenta. Texto integral não republicado."
             ),
         })
+    pgd = json.loads((ROOT / "cko_md" / "pgdados_program.json").read_text(encoding="utf-8")) if (ROOT / "cko_md" / "pgdados_program.json").exists() else {}
+    for item in (pgd.get("guia_parts") or []) + (pgd.get("cartilhas") or []):
+        resources.append({
+            "business_key": item["business_key"],
+            "uuid": None,
+            "entity_type": "ETYPE-RESOURCE",
+            "title": item.get("title") or item["business_key"],
+            "agency_key": "AGY-SGD",
+            "source_ref": item.get("source_ref"),
+            "md_ref": item.get("md_ref") or "MD-AGY-SGD",
+            "reg_ref": item.get("reg_ref") or "REG-SRC-PGDADOS-HUB",
+            "layer": "L150",
+            "url": item.get("url"),
+            "sha256": None,
+            "kind": "GOVERNMENT_PDF_METADATA",
+            "republication": "METADATA_ONLY",
+            "status": item.get("status") or "EVIDENCE_PENDING",
+            "assured": False,
+            "publication": "HOLD",
+            "note": item.get("note") or "PDF oficial catalogado por href. Texto não copiado.",
+        })
+    if pgd.get("quality_dimensions"):
+        resources.append({
+            "business_key": "RES-QUALIDADE-DIGIT-DIM",
+            "uuid": None,
+            "entity_type": "ETYPE-RESOURCE",
+            "title": "Padrões de Qualidade — 7 dimensões (SGD)",
+            "agency_key": "AGY-SGD",
+            "source_ref": "SRC-GOV-QUALIDADE-DIGIT",
+            "md_ref": "MD-AGY-SGD",
+            "reg_ref": "REG-SRC-QUALIDADE-DIGIT",
+            "layer": "L150",
+            "url": next((src["url"] for src in GOV_HTML if src["business_key"] == "SRC-GOV-QUALIDADE-DIGIT"), None),
+            "kind": "GOVERNMENT_QUALITY_DIMENSIONS",
+            "republication": "METADATA_ONLY",
+            "status": "SOURCE_DERIVED",
+            "dimension_count": pgd.get("quality_dimension_count"),
+            "assured": False,
+            "publication": "HOLD",
+            "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+            "note": "Nomes das dimensões observados na página. Atributos não copiados.",
+        })
     for topic_key, layer, title, agency, pending in LIBRARY_TOPICS:
         has_source = any(
             item.get("agency_key") == agency and item.get("status") in {"SOURCE_DERIVED", "REVOKED_TOOL_OK"}
@@ -566,9 +855,17 @@ def content_curriculum() -> dict:
         {
             "business_key": "PEND-COREN-DEMAIS-UFS",
             "severity": "ALTA",
-            "reason": "Apenas COREN-SP tem portal candidato neste lote. Demais Conselhos Regionais não observados.",
+            "reason": "Apenas COREN-SP tem portal HTML candidato. REST API de COREN não observada. Não inventar adapter. Demais Conselhos Regionais não observados.",
             "government_alternative_sought": True,
-            "alternative": "Portal COFEN nacional como referência federal.",
+            "alternative": "Portal COFEN nacional (também HTML; REST não observada).",
+            "status": "PENDENCIA_ALTA",
+        },
+        {
+            "business_key": "PEND-COFEN-REST-NOT-OBSERVED",
+            "severity": "ALTA",
+            "reason": "COFEN: portal HTML observado. REST/dados abertos sem HTTP 200 neste lote. Não inventar base_url.",
+            "government_alternative_sought": True,
+            "alternative": "https://www.cofen.gov.br/ — HTML. Plano de dados abertos = EVIDENCE_PENDING.",
             "status": "PENDENCIA_ALTA",
         },
         {

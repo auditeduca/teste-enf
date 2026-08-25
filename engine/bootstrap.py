@@ -452,7 +452,8 @@ def write_registries() -> list[Path]:
         "implemented": False,
         "note": "API REST base_url permanece null. Páginas HTML oficiais observadas em cko_inbox/extracted/regulated_pages.json.",
         "apis": [
-            {"business_key": "API-CAND-COFEN", "name": "COFEN", "base_url": None, "html_page": "https://www.cofen.gov.br/", "kind": "REGULATED_HTML_PAGE", "status": "SOURCE_DERIVED"},
+            {"business_key": "API-CAND-COFEN", "name": "COFEN", "base_url": None, "html_page": "https://www.cofen.gov.br/", "kind": "REGULATED_HTML_PAGE", "rest_api": "NOT_OBSERVED", "status": "SOURCE_DERIVED", "note": "Portal HTML. Sem REST HTTP 200. Não inventar base_url."},
+            {"business_key": "API-CAND-COREN", "name": "COREN", "base_url": None, "html_page": "https://www.coren-sp.gov.br/", "kind": "NO_REST_API", "rest_api": "NOT_OBSERVED", "status": "SOURCE_DERIVED", "note": "COREN não possui API REST observada. Apenas portal HTML estadual."},
             {"business_key": "API-CAND-ANVISA", "name": "ANVISA", "base_url": None, "html_page": "https://www.gov.br/anvisa/pt-br", "kind": "REGULATED_HTML_PAGE", "status": "SOURCE_DERIVED"},
             {"business_key": "API-CAND-MS", "name": "Ministério da Saúde", "base_url": None, "html_page": "https://www.gov.br/saude/pt-br", "kind": "REGULATED_HTML_PAGE", "status": "SOURCE_DERIVED"},
             {"business_key": "API-CAND-INTERNAL", "name": "CKO extract runner", "base_url": None, "cli": "python3 -m engine.cli extract", "status": "IMPLEMENTED_INBOX_ONLY"},
