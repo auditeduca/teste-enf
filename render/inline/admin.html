@@ -24,11 +24,21 @@
   --hold-bg: #fff7ed;
   --header-bg: #ffffff;
   --a11y-focus: #ffd400;
-  --header-height: 60px;
+  --header-height: 96px;
   --a11y-height: 36px;
+  --lang-height: 46px;
   --radius-control: 8px;
   --font: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Nunito Sans", "Inter", "Segoe UI", sans-serif;
 }
+
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-600.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-900.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-900.woff2") format("woff2");font-weight:900;font-display:swap}
 
 *,
 *::before,
@@ -45,6 +55,7 @@ body {
 }
 
 h1, h2, h3, h4, .brand, .result-value {
+  font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--navy-primary);
@@ -143,12 +154,90 @@ a { color: var(--navy-medium); }
   margin: 0 auto;
 }
 
+#global-header-container {
+  display: block;
+  width: 100%;
+  min-height: var(--header-height);
+  background-color: transparent;
+}
 .site-header {
   background: var(--header-bg);
   color: var(--navy-primary);
   min-height: var(--header-height);
   border-bottom: 1px solid var(--line);
 }
+#language-selector-placeholder {
+  display: block;
+  width: 100%;
+  min-height: var(--lang-height);
+  background: #eef3f9;
+  border-bottom: 1px solid var(--line);
+}
+.lang-bar {
+  min-height: var(--lang-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.35rem 0;
+}
+.lang-runtime { margin: 0; font-size: 0.78rem; color: var(--gray-text); }
+.lang-codes { margin: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.lang-code {
+  font-size: 0.68rem;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--navy-primary);
+  background: var(--white);
+}
+#footer-placeholder {
+  display: block;
+  min-height: 520px;
+  background-color: transparent;
+}
+.footer-logo-row { padding-top: 0.4rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.35); margin-bottom: 1.2rem; }
+.footer-mark-80 { display: block; width: 80px; height: 80px; object-fit: contain; }
+.footer-hold { color: #dbe7f6; opacity: 0.85; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+.prod-hero {
+  background: linear-gradient(135deg, #1A3E74 0%, #1E4D8C 60%, #163269 100%);
+  color: var(--white);
+  border-radius: 16px;
+  padding: 2.2rem 1.6rem;
+  box-shadow: 0 12px 34px rgba(0,0,0,.18);
+  margin-bottom: 1.4rem;
+}
+.prod-hero h1, .prod-hero p, .prod-hero .eyebrow { color: var(--white); }
+.prod-hero .eyebrow { color: #93c5fd; }
+.prod-hero .lede { color: #dbeafe; }
+.prod-hero .meta a { color: #fff; }
+.observed-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 1.6rem;
+}
+.observed-strip article {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 8px 24px rgba(26,62,116,.08);
+}
+.observed-strip h2 { margin: 0; font-size: 1.4rem; }
+.observed-strip p { margin: 0.2rem 0 0; font-size: 0.78rem; color: var(--gray-text); }
 .site-footer {
   background: var(--navy-primary);
   color: var(--white);
@@ -239,12 +328,18 @@ html.rd-dark body { background: #0b1220; color: #e7ecf5; }
 html.rd-dark .site-header { background: #121a2b; border-color: #223049; }
 html.rd-dark .tool-card, html.rd-dark .panel, html.rd-dark .calc-card { background: #121a2b; border-color: #223049; color: #e7ecf5; }
 
-@media (max-width: 860px) {
+@media (max-width: 768px) {
+  #global-header-container { min-height: 60px; }
+  .site-header, .header-row { min-height: 60px; }
+  #footer-placeholder { min-height: 520px; }
   #barraAcessibilidade { height: auto; display: none; }
   #barraAcessibilidade.is-open { display: block; padding: 0.5rem 0; }
   #accessibilityToggleButton { display: inline-flex; align-items: center; justify-content: center; }
   .footer-grid { grid-template-columns: 1fr; }
   .brand-name { font-size: 0.92rem; }
+}
+@media (min-width: 768px) {
+  #footer-placeholder { min-height: 277px; }
 }
 
 .page-hero, .tool-hero { padding: 2.2rem 0 1.2rem; }
@@ -498,7 +593,8 @@ summary { cursor: pointer; font-weight: 650; }
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-  <div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
     <div class="a11y-bar-inner wrap">
       <p class="a11y-kicker">Acessibilidade</p>
       <div class="a11y-actions">
@@ -519,7 +615,7 @@ summary { cursor: pointer; font-weight: 650; }
       </div>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
 <div class="admin-app">
   <aside class="admin-side" aria-label="Módulos do Studio">
     <p class="admin-brand">CKO Studio</p>
@@ -621,6 +717,17 @@ summary { cursor: pointer; font-weight: 650; }
 <script>
 (function () {
   "use strict";
+  try {
+    var prodFont = localStorage.getItem("fontSize");
+    if (prodFont && prodFont !== "1") {
+      var sizes = ["1em", "1.15em", "1.3em", "1.5em", "2em"];
+      var idx = Math.min(Math.max(parseInt(prodFont, 10), 1), sizes.length);
+      document.documentElement.style.fontSize = sizes[idx - 1];
+    }
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("rd-dark");
+    }
+  } catch (ignore) {}
   var KEY = "cko-a11y";
   var FONT = ["Fonte", "Grande", "Maior"];
   var LINE = ["Linha", "Ampla"];

@@ -14,6 +14,7 @@ from .bootstrap import evaluate_layer_registry, write_registries
 from .generate import build
 from .paths import FETCH_DIR, ROOT
 from .validate import validate_tools_dir
+from .agents import run_extraction
 
 from validators.clinical_completeness import evaluate_catalog
 from validators.dual_render import check_parity
@@ -93,6 +94,19 @@ def cmd_audit(_: argparse.Namespace) -> int:
     return 0 if release["status"] != "ERROR" else 1
 
 
+def cmd_extract(args: argparse.Namespace) -> int:
+    run = run_extraction(network=not args.offline)
+    print(json.dumps({
+        "run_id": run.get("run_id"),
+        "status": run.get("status"),
+        "publication": run.get("publication"),
+        "caat_status": run.get("caat_status"),
+        "ipe_status": run.get("ipe_status"),
+        "steps": [step.get("agent_id") for step in run.get("steps") or []],
+    }, ensure_ascii=False, indent=2))
+    return 0 if run.get("status") != "FAIL" else 1
+
+
 def cmd_serve(args: argparse.Namespace) -> int:
     status = cmd_build(args)
     if status != 0:
@@ -117,6 +131,9 @@ def main(argv: list[str] | None = None) -> int:
     serve = sub.add_parser("serve")
     serve.add_argument("--port", type=int, default=int(os.environ.get("PORT", "8081")))
     serve.set_defaults(func=cmd_serve)
+    extract = sub.add_parser("extract")
+    extract.add_argument("--offline", action="store_true", help="Replay inbox without network fetch")
+    extract.set_defaults(func=cmd_extract)
     args = parser.parse_args(argv)
     return args.func(args)
 

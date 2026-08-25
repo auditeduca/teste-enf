@@ -24,11 +24,21 @@
   --hold-bg: #fff7ed;
   --header-bg: #ffffff;
   --a11y-focus: #ffd400;
-  --header-height: 60px;
+  --header-height: 96px;
   --a11y-height: 36px;
+  --lang-height: 46px;
   --radius-control: 8px;
   --font: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Nunito Sans", "Inter", "Segoe UI", sans-serif;
 }
+
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-600.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-900.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-900.woff2") format("woff2");font-weight:900;font-display:swap}
 
 *,
 *::before,
@@ -45,6 +55,7 @@ body {
 }
 
 h1, h2, h3, h4, .brand, .result-value {
+  font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--navy-primary);
@@ -143,12 +154,90 @@ a { color: var(--navy-medium); }
   margin: 0 auto;
 }
 
+#global-header-container {
+  display: block;
+  width: 100%;
+  min-height: var(--header-height);
+  background-color: transparent;
+}
 .site-header {
   background: var(--header-bg);
   color: var(--navy-primary);
   min-height: var(--header-height);
   border-bottom: 1px solid var(--line);
 }
+#language-selector-placeholder {
+  display: block;
+  width: 100%;
+  min-height: var(--lang-height);
+  background: #eef3f9;
+  border-bottom: 1px solid var(--line);
+}
+.lang-bar {
+  min-height: var(--lang-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.35rem 0;
+}
+.lang-runtime { margin: 0; font-size: 0.78rem; color: var(--gray-text); }
+.lang-codes { margin: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.lang-code {
+  font-size: 0.68rem;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--navy-primary);
+  background: var(--white);
+}
+#footer-placeholder {
+  display: block;
+  min-height: 520px;
+  background-color: transparent;
+}
+.footer-logo-row { padding-top: 0.4rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.35); margin-bottom: 1.2rem; }
+.footer-mark-80 { display: block; width: 80px; height: 80px; object-fit: contain; }
+.footer-hold { color: #dbe7f6; opacity: 0.85; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+.prod-hero {
+  background: linear-gradient(135deg, #1A3E74 0%, #1E4D8C 60%, #163269 100%);
+  color: var(--white);
+  border-radius: 16px;
+  padding: 2.2rem 1.6rem;
+  box-shadow: 0 12px 34px rgba(0,0,0,.18);
+  margin-bottom: 1.4rem;
+}
+.prod-hero h1, .prod-hero p, .prod-hero .eyebrow { color: var(--white); }
+.prod-hero .eyebrow { color: #93c5fd; }
+.prod-hero .lede { color: #dbeafe; }
+.prod-hero .meta a { color: #fff; }
+.observed-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 1.6rem;
+}
+.observed-strip article {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 8px 24px rgba(26,62,116,.08);
+}
+.observed-strip h2 { margin: 0; font-size: 1.4rem; }
+.observed-strip p { margin: 0.2rem 0 0; font-size: 0.78rem; color: var(--gray-text); }
 .site-footer {
   background: var(--navy-primary);
   color: var(--white);
@@ -239,12 +328,18 @@ html.rd-dark body { background: #0b1220; color: #e7ecf5; }
 html.rd-dark .site-header { background: #121a2b; border-color: #223049; }
 html.rd-dark .tool-card, html.rd-dark .panel, html.rd-dark .calc-card { background: #121a2b; border-color: #223049; color: #e7ecf5; }
 
-@media (max-width: 860px) {
+@media (max-width: 768px) {
+  #global-header-container { min-height: 60px; }
+  .site-header, .header-row { min-height: 60px; }
+  #footer-placeholder { min-height: 520px; }
   #barraAcessibilidade { height: auto; display: none; }
   #barraAcessibilidade.is-open { display: block; padding: 0.5rem 0; }
   #accessibilityToggleButton { display: inline-flex; align-items: center; justify-content: center; }
   .footer-grid { grid-template-columns: 1fr; }
   .brand-name { font-size: 0.92rem; }
+}
+@media (min-width: 768px) {
+  #footer-placeholder { min-height: 277px; }
 }
 
 .page-hero, .tool-hero { padding: 2.2rem 0 1.2rem; }
@@ -434,7 +529,8 @@ summary { cursor: pointer; font-weight: 650; }
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-  <div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
     <div class="a11y-bar-inner wrap">
       <p class="a11y-kicker">Acessibilidade</p>
       <div class="a11y-actions">
@@ -455,23 +551,33 @@ summary { cursor: pointer; font-weight: 650; }
       </div>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button><header class="site-header" role="banner">
+  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button><div id="global-header-container">
+    <header class="site-header" role="banner">
     <div class="wrap header-row">
       <a class="brand" href="../index.html">
-        <img class="brand-mark" src="../assets/img/logotipo-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
+        <img class="brand-mark" src="../assets/img/icontopbar1-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
         <span class="brand-text">
           <span class="brand-name">Calculadoras de Enfermagem</span>
           <span class="brand-sub">CKO · lote piloto</span>
         </span>
       </a>
-      <nav class="nav" aria-label="Principal">
+      <nav class="nav desktop-nav" aria-label="Navegação Principal">
         <a href="../index.html" accesskey="I">Início</a>
-        <a href="../inspector.html">Inspector</a>
+        <a href="../inspector.html">Sobre Nós</a>
+        <a href="gotejamento.html">Calculadoras</a>
+        <a href="../inspector.html">Conteúdos</a>
         <a href="../admin.html">Admin</a>
         <a class="lang-chip" href="../admin/locales.html" title="19 códigos observados no Drive; tradução HOLD">pt-BR · i18n HOLD</a>
       </nav>
     </div>
   </header>
+  </div><div id="language-selector-placeholder" data-i18n-gate="HOLD">
+    <div class="wrap lang-bar">
+      <p class="lang-runtime">Idioma de runtime: <strong>pt-BR</strong>. Seletor observado (Drive/origin) · tradução HOLD.</p>
+      <p class="lang-codes" aria-label="Códigos de locale observados"><span class="lang-code" lang="ar">ar</span> <span class="lang-code" lang="de">de</span> <span class="lang-code" lang="en">en</span> <span class="lang-code" lang="es">es</span> <span class="lang-code" lang="fr">fr</span> <span class="lang-code" lang="hi">hi</span> <span class="lang-code" lang="id">id</span> <span class="lang-code" lang="it">it</span> <span class="lang-code" lang="ja">ja</span> <span class="lang-code" lang="ko">ko</span> <span class="lang-code" lang="nl">nl</span> <span class="lang-code" lang="pl">pl</span> <span class="lang-code" lang="pt">pt</span> <span class="lang-code" lang="ru">ru</span> <span class="lang-code" lang="sv">sv</span> <span class="lang-code" lang="tr">tr</span> <span class="lang-code" lang="uk">uk</span> <span class="lang-code" lang="vi">vi</span> <span class="lang-code" lang="zh">zh</span></p>
+      <a class="lang-chip" href="../admin/locales.html">Locales / Drive</a>
+    </div>
+  </div>
   <main id="conteudo" class="wrap tool-page">
     <nav class="breadcrumb" aria-label="Trilha">
       <a href="../index.html">Início</a>
@@ -567,46 +673,55 @@ summary { cursor: pointer; font-weight: 650; }
       <section class="panel"><h2>Referências</h2><ul><li>BRASIL. Ministério da Saúde. Protocolos de enfermagem para administração de medicamentos e soluções. Brasília: MS.</li>
 <li>ISMP BRASIL. Medicamentos potencialmente perigosos. Orientações para prevenção de erros de infusão.</li></ul></section>
   </main>
-  <footer class="site-footer" id="institucional" role="contentinfo" aria-label="Rodapé do site">
+  <div id="footer-placeholder">
+  <footer class="site-footer" id="institucional" role="contentinfo" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">Rodapé do site</h2>
+    <div class="wrap footer-logo-row">
+      <a href="../index.html" aria-label="Ir para a página inicial">
+        <img class="footer-mark-80" src="../assets/img/iconrodape1-80-calculadoras-de-enfermagem.webp" width="80" height="80" alt="Calculadoras de Enfermagem" decoding="async">
+      </a>
+    </div>
     <div class="wrap footer-grid">
-      <div class="footer-brand">
-        <img class="footer-mark" src="../assets/img/logotipo-footer.png" width="220" height="52" alt="Calculadoras de Enfermagem" decoding="async">
-        <p>Tecnologia e conhecimento para uma enfermagem mais eficiente, com domínio e sustentável.</p>
-        <p class="footer-commitment">Padrões de acessibilidade, sustentabilidade digital, segurança da informação e proteção de dados. Sem captura de e-mail neste lote (NO_SENSITIVE_CAPTURE).</p>
-      </div>
-      <div class="footer-col">
+      <nav class="footer-col" aria-label="Institucional">
         <h2>Institucional</h2>
         <ul>
           <li><a href="../index.html">Início</a></li>
-          <li><a href="../inspector.html">Inspector</a></li>
+          <li><a href="../inspector.html">Sobre Nós</a></li>
+          <li><a href="../inspector.html">Mapa do Site</a></li>
+          <li><span class="footer-hold">Central de Privacidade · HOLD</span></li>
+          <li><span class="footer-hold">Termos e Condições de Uso · HOLD</span></li>
+          <li><span class="footer-hold">Política de Acessibilidade · HOLD</span></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Sustentabilidade Digital">
+        <h2>Sustentabilidade Digital</h2>
+        <ul>
+          <li><a href="../admin/maturity.html">Nosso Compromisso</a></li>
+          <li><span class="footer-hold">Relatório de Impacto · HOLD</span></li>
+          <li><span class="footer-hold">Tecnologia Verde · HOLD</span></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Nosso Compromisso</h2>
+        <p>Nosso site adota elevados padrões de acessibilidade digital, sustentabilidade digital, segurança da informação e proteção de dados, promovendo uma experiência inclusiva, eficiente e responsável para todos os usuários.</p>
+        <p class="footer-commitment">Sem captura de e-mail e sem mural de cookies neste lote (NO_SENSITIVE_CAPTURE).</p>
+      </div>
+      <div class="footer-col">
+        <h2>Siga-nos</h2>
+        <ul>
+          <li><a href="https://linkedin.com/company/calculadoras-de-enfermagem" rel="noopener noreferrer me">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/calculadorasdeenfermagem/" rel="noopener noreferrer me">Instagram</a></li>
+          <li><a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" rel="noopener noreferrer me">YouTube</a></li>
           <li><a href="../admin.html">Admin Studio</a></li>
-          <li><a href="../admin/maturity.html">Panorama de maturidade</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>Acessibilidade</h2>
-        <ul>
-          <li>Barra de acessibilidade (36px)</li>
-          <li>Skip link · teclado</li>
-          <li>Contraste, fonte, espaçamento</li>
-          <li>Fonte dislexia: fallback Arial (woff2 GAP)</li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>Governança</h2>
-        <ul>
-          <li>CKO-MD → CKO-REG → front-end</li>
-          <li>Constituição CKO-INS-AI-PROJECT-001</li>
-          <li>Renderer PRESENTATION_ONLY</li>
-          <li>Release clínica HOLD</li>
         </ul>
       </div>
     </div>
     <div class="wrap footer-bottom">
       <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
-      <p>© 2026 Calculadoras de Enfermagem. Audit Educa · CKO. Newsletter/e-mail não implantados.</p>
+      <p>© 2026 Calculadoras de Enfermagem. Todos os direitos reservados. Audit Educa · CKO. Newsletter/e-mail não implantados.</p>
     </div>
   </footer>
+  </div>
   <script type="application/json" id="tool-config">{
   "id": "6c1e8a12-9b44-4d3a-9e71-0c2a8f4b91aa",
   "code": "CALC-GOTEJAMENTO-001",
@@ -1024,6 +1139,17 @@ summary { cursor: pointer; font-weight: 650; }
 <script>
 (function () {
   "use strict";
+  try {
+    var prodFont = localStorage.getItem("fontSize");
+    if (prodFont && prodFont !== "1") {
+      var sizes = ["1em", "1.15em", "1.3em", "1.5em", "2em"];
+      var idx = Math.min(Math.max(parseInt(prodFont, 10), 1), sizes.length);
+      document.documentElement.style.fontSize = sizes[idx - 1];
+    }
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("rd-dark");
+    }
+  } catch (ignore) {}
   var KEY = "cko-a11y";
   var FONT = ["Fonte", "Grande", "Maior"];
   var LINE = ["Linha", "Ampla"];

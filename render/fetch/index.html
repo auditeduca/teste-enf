@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CKO — Calculadoras de Enfermagem</title>
-  <meta name="description" content="Engine canônico de calculadoras, escalas, guias e simulados de enfermagem.">
+  <title>Calculadoras de Enfermagem, Simulados e Escalas Clínicas</title>
+  <meta name="description" content="Calculadoras de enfermagem, escalas clínicas e dosagem de medicamentos. Lote piloto CKO com extração em quarentena.">
   <meta name="theme-color" content="#1A3E74">
   <link rel="stylesheet" href="assets/app.css">
   
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-  <div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
     <div class="a11y-bar-inner wrap">
       <p class="a11y-kicker">Acessibilidade</p>
       <div class="a11y-actions">
@@ -32,31 +33,47 @@
       </div>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button><header class="site-header" role="banner">
+  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button><div id="global-header-container">
+    <header class="site-header" role="banner">
     <div class="wrap header-row">
       <a class="brand" href="index.html">
-        <img class="brand-mark" src="assets/img/logotipo-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
+        <img class="brand-mark" src="assets/img/icontopbar1-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
         <span class="brand-text">
           <span class="brand-name">Calculadoras de Enfermagem</span>
           <span class="brand-sub">CKO · lote piloto</span>
         </span>
       </a>
-      <nav class="nav" aria-label="Principal">
+      <nav class="nav desktop-nav" aria-label="Navegação Principal">
         <a href="index.html" accesskey="I">Início</a>
-        <a href="inspector.html">Inspector</a>
+        <a href="inspector.html">Sobre Nós</a>
+        <a href="tools/gotejamento.html">Calculadoras</a>
+        <a href="inspector.html">Conteúdos</a>
         <a href="admin.html">Admin</a>
         <a class="lang-chip" href="admin/locales.html" title="19 códigos observados no Drive; tradução HOLD">pt-BR · i18n HOLD</a>
       </nav>
     </div>
   </header>
+  </div><div id="language-selector-placeholder" data-i18n-gate="HOLD">
+    <div class="wrap lang-bar">
+      <p class="lang-runtime">Idioma de runtime: <strong>pt-BR</strong>. Seletor observado (Drive/origin) · tradução HOLD.</p>
+      <p class="lang-codes" aria-label="Códigos de locale observados"><span class="lang-code" lang="ar">ar</span> <span class="lang-code" lang="de">de</span> <span class="lang-code" lang="en">en</span> <span class="lang-code" lang="es">es</span> <span class="lang-code" lang="fr">fr</span> <span class="lang-code" lang="hi">hi</span> <span class="lang-code" lang="id">id</span> <span class="lang-code" lang="it">it</span> <span class="lang-code" lang="ja">ja</span> <span class="lang-code" lang="ko">ko</span> <span class="lang-code" lang="nl">nl</span> <span class="lang-code" lang="pl">pl</span> <span class="lang-code" lang="pt">pt</span> <span class="lang-code" lang="ru">ru</span> <span class="lang-code" lang="sv">sv</span> <span class="lang-code" lang="tr">tr</span> <span class="lang-code" lang="uk">uk</span> <span class="lang-code" lang="vi">vi</span> <span class="lang-code" lang="zh">zh</span></p>
+      <a class="lang-chip" href="admin/locales.html">Locales / Drive</a>
+    </div>
+  </div>
   <main id="conteudo" class="wrap">
-    <header class="page-hero">
-      <p class="eyebrow">Constituição CKO-INS-AI-PROJECT-001 · lote piloto</p>
-      <h1>Conhecimento canônico, projetado em HTML.</h1>
-      <p class="lede">CKO-MD e CKO-REG nascem no GitHub. Cinco objetos piloto são candidatos de domínio, não golden records. Admin e frontend leem os mesmos contratos.</p>
-      <p class="meta"><a href="admin.html">Abrir Admin</a> · <a href="inspector.html">Abrir Inspector</a></p>
-    </header>
-    <section class="catalog" aria-label="Pilotos">
+    <section class="prod-hero" aria-label="Topo">
+      <p class="eyebrow">Plataforma Clínica</p>
+      <h1>Calculadoras de Enfermagem</h1>
+      <p class="lede">Conhecimento baseado em evidências, escalas, protocolos, calculadoras clínicas e recursos digitais para apoiar a prática da enfermagem.</p>
+      <p class="meta"><a href="admin.html">Abrir Admin</a> · <a href="inspector.html">Abrir Inspector</a> · <a href="admin/maturity.html">Maturidade</a></p>
+    </section>
+    <section class="observed-strip" aria-label="Contagens observadas">
+      <article><p class="eyebrow">Pilotos CKO</p><h2>5</h2><p>Candidatos em data/tools. Não são golden records.</p></article>
+      <article><p class="eyebrow">pages_full.zip</p><h2>1516</h2><p>HTML SOURCE_DERIVED em quarentena. Não publicados.</p></article>
+      <article><p class="eyebrow">Stems únicos</p><h2>1507</h2><p>Inventário extraído. Promoção MD HOLD.</p></article>
+      <article><p class="eyebrow">Locales Drive</p><h2>19</h2><p>Códigos observados. Tradução HOLD.</p></article>
+    </section>
+    <section class="catalog" id="pilotos" aria-label="Pilotos">
       <a class="tool-card" href="tools/cinco-ts-pcr.html">
         <p class="eyebrow">Emergência · review</p>
         <h2>5 Ts da PCR</h2>
@@ -81,50 +98,59 @@
     </section>
     <section class="panel">
       <h2>Como este aplicativo funciona</h2>
-      <p>Registries Day Zero vivem em <code>cko_core</code>, <code>cko_md</code>, <code>cko_reg</code> e <code>cko_assurance</code>. Candidatos de domínio vivem em <code>data/tools</code>. O motor valida o contrato, calcula quando há fórmula, e gera duas projeções HTML semanticamente equivalentes: preview inline e produção fetch, ambas first-party, sem CDN.</p>
-      <p>O Admin não grava fórmula. O frontend não grava objeto canônico.</p>
+      <p>Registries Day Zero vivem em <code>cko_core</code>, <code>cko_md</code>, <code>cko_reg</code> e <code>cko_assurance</code>. Candidatos de domínio vivem em <code>data/tools</code>. Agentes extraem para <code>cko_inbox</code>; não promovem HTML a ferramenta. O motor valida o contrato e gera duas projeções HTML semanticamente equivalentes, first-party, sem CDN e sem anúncios.</p>
+      <p>O Admin não grava fórmula. O frontend não grava objeto canônico. KPIs de produção (+1500 páginas, +5 Mi acessos) permanecem DOCUMENT_CLAIM até IPE.</p>
     </section>
   </main>
-  <footer class="site-footer" id="institucional" role="contentinfo" aria-label="Rodapé do site">
+  <div id="footer-placeholder">
+  <footer class="site-footer" id="institucional" role="contentinfo" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">Rodapé do site</h2>
+    <div class="wrap footer-logo-row">
+      <a href="index.html" aria-label="Ir para a página inicial">
+        <img class="footer-mark-80" src="assets/img/iconrodape1-80-calculadoras-de-enfermagem.webp" width="80" height="80" alt="Calculadoras de Enfermagem" decoding="async">
+      </a>
+    </div>
     <div class="wrap footer-grid">
-      <div class="footer-brand">
-        <img class="footer-mark" src="assets/img/logotipo-footer.png" width="220" height="52" alt="Calculadoras de Enfermagem" decoding="async">
-        <p>Tecnologia e conhecimento para uma enfermagem mais eficiente, com domínio e sustentável.</p>
-        <p class="footer-commitment">Padrões de acessibilidade, sustentabilidade digital, segurança da informação e proteção de dados. Sem captura de e-mail neste lote (NO_SENSITIVE_CAPTURE).</p>
-      </div>
-      <div class="footer-col">
+      <nav class="footer-col" aria-label="Institucional">
         <h2>Institucional</h2>
         <ul>
           <li><a href="index.html">Início</a></li>
-          <li><a href="inspector.html">Inspector</a></li>
+          <li><a href="inspector.html">Sobre Nós</a></li>
+          <li><a href="inspector.html">Mapa do Site</a></li>
+          <li><span class="footer-hold">Central de Privacidade · HOLD</span></li>
+          <li><span class="footer-hold">Termos e Condições de Uso · HOLD</span></li>
+          <li><span class="footer-hold">Política de Acessibilidade · HOLD</span></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Sustentabilidade Digital">
+        <h2>Sustentabilidade Digital</h2>
+        <ul>
+          <li><a href="admin/maturity.html">Nosso Compromisso</a></li>
+          <li><span class="footer-hold">Relatório de Impacto · HOLD</span></li>
+          <li><span class="footer-hold">Tecnologia Verde · HOLD</span></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Nosso Compromisso</h2>
+        <p>Nosso site adota elevados padrões de acessibilidade digital, sustentabilidade digital, segurança da informação e proteção de dados, promovendo uma experiência inclusiva, eficiente e responsável para todos os usuários.</p>
+        <p class="footer-commitment">Sem captura de e-mail e sem mural de cookies neste lote (NO_SENSITIVE_CAPTURE).</p>
+      </div>
+      <div class="footer-col">
+        <h2>Siga-nos</h2>
+        <ul>
+          <li><a href="https://linkedin.com/company/calculadoras-de-enfermagem" rel="noopener noreferrer me">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/calculadorasdeenfermagem/" rel="noopener noreferrer me">Instagram</a></li>
+          <li><a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" rel="noopener noreferrer me">YouTube</a></li>
           <li><a href="admin.html">Admin Studio</a></li>
-          <li><a href="admin/maturity.html">Panorama de maturidade</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>Acessibilidade</h2>
-        <ul>
-          <li>Barra de acessibilidade (36px)</li>
-          <li>Skip link · teclado</li>
-          <li>Contraste, fonte, espaçamento</li>
-          <li>Fonte dislexia: fallback Arial (woff2 GAP)</li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>Governança</h2>
-        <ul>
-          <li>CKO-MD → CKO-REG → front-end</li>
-          <li>Constituição CKO-INS-AI-PROJECT-001</li>
-          <li>Renderer PRESENTATION_ONLY</li>
-          <li>Release clínica HOLD</li>
         </ul>
       </div>
     </div>
     <div class="wrap footer-bottom">
       <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
-      <p>© 2026 Calculadoras de Enfermagem. Audit Educa · CKO. Newsletter/e-mail não implantados.</p>
+      <p>© 2026 Calculadoras de Enfermagem. Todos os direitos reservados. Audit Educa · CKO. Newsletter/e-mail não implantados.</p>
     </div>
   </footer>
+  </div>
   <script src="assets/a11y.js"></script>
 </body>
 </html>

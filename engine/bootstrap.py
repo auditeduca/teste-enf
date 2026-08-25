@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from .paths import ROOT
+from .agents import agent_records
 
 CORE_DIR = ROOT / "cko_core"
 MD_DIR = ROOT / "cko_md"
@@ -389,10 +390,12 @@ def write_registries() -> list[Path]:
         "fields": [],
         "note": "Dicionário existe. Campos de domínio ainda não populados.",
     }))
+    agents = agent_records()
     written.append(dump(ASSURANCE_DIR / "agent_registry.json", {
         "business_key": "REG-AGENT-001",
-        "status": "REGISTERED",
-        "implemented": False,
+        "status": "IMPLEMENTED_INBOX_ONLY",
+        "implemented": True,
+        "publication_implemented": False,
         "rule": "Agente executa processo. Agente não cria autoridade. MAKER ≠ CHECKER ≠ AUDITOR.",
         "classes": [
             "ORCHESTRATOR", "DISCOVERY", "ACQUISITION", "EXTRACTION", "NORMALIZATION",
@@ -401,19 +404,19 @@ def write_registries() -> list[Path]:
             "RENDERER", "PUBLICATION", "VALIDATION", "CAAT", "IPE", "RISK",
             "AUDIT", "SEARCH", "SAE", "MONITORING",
         ],
-        "agents": [],
-        "population": 0,
+        "agents": agents,
+        "population": len(agents),
     }))
     written.append(dump(ASSURANCE_DIR / "api_registry.json", {
         "business_key": "REG-API-001",
         "status": "REGISTERED",
         "implemented": False,
-        "note": "Candidatos nominais. base_url permanece null até captura oficial com snapshot.",
+        "note": "API REST base_url permanece null. Páginas HTML oficiais observadas em cko_inbox/extracted/regulated_pages.json.",
         "apis": [
-            {"business_key": "API-CAND-COFEN", "name": "COFEN (candidate)", "base_url": None, "status": "EVIDENCE_PENDING"},
-            {"business_key": "API-CAND-ANVISA", "name": "ANVISA (candidate)", "base_url": None, "status": "EVIDENCE_PENDING"},
-            {"business_key": "API-CAND-MS", "name": "Ministério da Saúde (candidate)", "base_url": None, "status": "EVIDENCE_PENDING"},
-            {"business_key": "API-CAND-INTERNAL", "name": "CKO internal (candidate)", "base_url": None, "status": "EVIDENCE_PENDING"},
+            {"business_key": "API-CAND-COFEN", "name": "COFEN", "base_url": None, "html_page": "https://www.cofen.gov.br/", "kind": "REGULATED_HTML_PAGE", "status": "SOURCE_DERIVED"},
+            {"business_key": "API-CAND-ANVISA", "name": "ANVISA", "base_url": None, "html_page": "https://www.gov.br/anvisa/pt-br", "kind": "REGULATED_HTML_PAGE", "status": "SOURCE_DERIVED"},
+            {"business_key": "API-CAND-MS", "name": "Ministério da Saúde", "base_url": None, "html_page": "https://www.gov.br/saude/pt-br", "kind": "REGULATED_HTML_PAGE", "status": "SOURCE_DERIVED"},
+            {"business_key": "API-CAND-INTERNAL", "name": "CKO extract runner", "base_url": None, "cli": "python3 -m engine.cli extract", "status": "IMPLEMENTED_INBOX_ONLY"},
         ],
     }))
     written.append(dump(ASSURANCE_DIR / "twin_registry.json", {

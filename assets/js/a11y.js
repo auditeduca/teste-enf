@@ -1,5 +1,16 @@
 (function () {
   "use strict";
+  try {
+    var prodFont = localStorage.getItem("fontSize");
+    if (prodFont && prodFont !== "1") {
+      var sizes = ["1em", "1.15em", "1.3em", "1.5em", "2em"];
+      var idx = Math.min(Math.max(parseInt(prodFont, 10), 1), sizes.length);
+      document.documentElement.style.fontSize = sizes[idx - 1];
+    }
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("rd-dark");
+    }
+  } catch (ignore) {}
   var KEY = "cko-a11y";
   var FONT = ["Fonte", "Grande", "Maior"];
   var LINE = ["Linha", "Ampla"];

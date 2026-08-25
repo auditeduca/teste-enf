@@ -41,6 +41,11 @@ def evaluate_maturity() -> dict:
         (item for item in (tokens.get("tokens") or []) if item.get("business_key") == "TOK-SHELL-HEADER-BG"),
         {},
     )
+    font_token = next(
+        (item for item in (tokens.get("tokens") or []) if item.get("business_key") == "TOK-FONT-SANS"),
+        {},
+    )
+    fonts_present = (ROOT / "assets" / "fonts" / "inter" / "inter-regular.woff2").exists()
     return {
         "business_key": "IPE-MATURITY-PANORAMA-001",
         "uuid": None,
@@ -63,6 +68,7 @@ def evaluate_maturity() -> dict:
         "agents": {
             "registry_status": agents.get("status"),
             "implemented": agents.get("implemented"),
+            "publication_implemented": agents.get("publication_implemented"),
             "population": agents.get("population"),
             "classes": len(agents.get("classes") or []),
         },
@@ -87,7 +93,9 @@ def evaluate_maturity() -> dict:
         "design_system": {
             "official_ds_status": tokens.get("official_ds_status"),
             "header_compare": header_token.get("compare"),
-            "fonts": "GAP (Inter/Nunito woff2 ausentes; sem CDN)",
+            "fonts": font_token.get("compare") or ("RESTORED" if fonts_present else "GAP"),
+            "header_min_height": "96px desktop / 60px mobile",
+            "language_selector": "46px HOLD",
         },
         "frameworks": [
             {
@@ -109,10 +117,10 @@ def evaluate_maturity() -> dict:
             "population": len(mockups.get("references") or []),
         },
         "next_gate": [
-            "Agentes com envelope MD→REG, CAAT e IPE em runtime (population > 0).",
+            "Revisão humana dos 1516 HTML SOURCE_DERIVED antes de qualquer promoção MD.",
             "Locales: BCP47 + revisão humana; não ligar 19 códigos só porque o zip existe.",
-            "Não promover HTML Drive (braden.html etc.) a golden MD.",
-            "IPE CARR sobre relatórios internos antes de reliance.",
-            "Release clínica permanece HOLD.",
+            "Não promover HTML Drive/pages_full (braden.html etc.) a golden MD.",
+            "IPE CARR: RELIABLE=FAIL para publicação; sem reliance neste lote.",
+            "Release clínica permanece HOLD. Agentes de extração não autorizam release.",
         ],
     }

@@ -1,13 +1,15 @@
-"""Public Design System chrome: a11y bar, white header, navy footer.
+"""Public Design System chrome matching production placeholders.
 
-SOURCE_DERIVED from annex + reference-website + Drive logos/locales.
-Renderer remains PRESENTATION_ONLY. No email capture. No CDN. No cookie wall.
+SOURCE_DERIVED from origin snapshots + Drive locales + pages_full inventory.
+Renderer remains PRESENTATION_ONLY. No ads. No email capture. No CDN. No cookie wall.
 """
 
 from __future__ import annotations
 
+import json
+
 from .html import attr, esc
-from .paths import ASSETS_DIR
+from .paths import ASSETS_DIR, ROOT
 
 SITE_NAME = "Calculadoras de Enfermagem"
 SITE_NS = "CKO"
@@ -39,8 +41,25 @@ def _icon(name: str) -> str:
     )
 
 
+def _footer_strings() -> dict:
+    path = ROOT / "cko_inbox" / "drive" / "locales" / "pt" / "footer.json"
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return payload.get("footer") or {}
+
+
+def _locale_codes() -> list[str]:
+    path = ROOT / "cko_md" / "locale_registry.json"
+    if not path.exists():
+        return ["pt-BR"]
+    codes = json.loads(path.read_text(encoding="utf-8")).get("zip_codes_observed") or []
+    return list(codes)
+
+
 def ds_a11y_bar() -> str:
-    return f"""<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
+    return f"""<div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
     <div class="a11y-bar-inner wrap">
       <p class="a11y-kicker">Acessibilidade</p>
       <div class="a11y-actions">
@@ -61,15 +80,17 @@ def ds_a11y_bar() -> str:
       </div>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false">{_icon("access")}</button>"""
+  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false">{_icon("access")}</button>"""
 
 
 def ds_header(home_href: str, prefix: str) -> str:
-    logo = f"{prefix}assets/img/logotipo-calculadoras-de-enfermagem.webp"
+    logo = f"{prefix}assets/img/icontopbar1-calculadoras-de-enfermagem.webp"
     inspector = home_href.replace("index.html", "inspector.html") if home_href.endswith("index.html") else "inspector.html"
     admin = home_href.replace("index.html", "admin.html") if home_href.endswith("index.html") else "admin.html"
     locales = home_href.replace("index.html", "admin/locales.html") if home_href.endswith("index.html") else "admin/locales.html"
-    return f"""<header class="site-header" role="banner">
+    calc_href = "gotejamento.html" if home_href.startswith("../") else "tools/gotejamento.html"
+    return f"""<div id="global-header-container">
+    <header class="site-header" role="banner">
     <div class="wrap header-row">
       <a class="brand" href="{attr(home_href)}">
         <img class="brand-mark" src="{attr(logo)}" width="48" height="32" alt="{esc(SITE_NAME)}" decoding="async">
@@ -78,66 +99,96 @@ def ds_header(home_href: str, prefix: str) -> str:
           <span class="brand-sub">{esc(SITE_NS)} · lote piloto</span>
         </span>
       </a>
-      <nav class="nav" aria-label="Principal">
+      <nav class="nav desktop-nav" aria-label="Navegação Principal">
         <a href="{attr(home_href)}" accesskey="I">Início</a>
-        <a href="{attr(inspector)}">Inspector</a>
+        <a href="{attr(inspector)}">Sobre Nós</a>
+        <a href="{attr(calc_href)}">Calculadoras</a>
+        <a href="{attr(inspector)}">Conteúdos</a>
         <a href="{attr(admin)}">Admin</a>
         <a class="lang-chip" href="{attr(locales)}" title="19 códigos observados no Drive; tradução HOLD">pt-BR · i18n HOLD</a>
       </nav>
     </div>
-  </header>"""
+  </header>
+  </div>"""
+
+
+def ds_language_bar(home_href: str) -> str:
+    locales = home_href.replace("index.html", "admin/locales.html") if home_href.endswith("index.html") else "admin/locales.html"
+    chips = " ".join(
+        f'<span class="lang-code" lang="{esc(code)}">{esc(code)}</span>'
+        for code in _locale_codes()
+    )
+    return f"""<div id="language-selector-placeholder" data-i18n-gate="HOLD">
+    <div class="wrap lang-bar">
+      <p class="lang-runtime">Idioma de runtime: <strong>pt-BR</strong>. Seletor observado (Drive/origin) · tradução HOLD.</p>
+      <p class="lang-codes" aria-label="Códigos de locale observados">{chips}</p>
+      <a class="lang-chip" href="{attr(locales)}">Locales / Drive</a>
+    </div>
+  </div>"""
 
 
 def ds_footer(home_href: str, prefix: str) -> str:
-    logo = f"{prefix}assets/img/logotipo-footer.png"
+    t = _footer_strings()
+    logo = f"{prefix}assets/img/iconrodape1-80-calculadoras-de-enfermagem.webp"
     inspector = home_href.replace("index.html", "inspector.html") if home_href.endswith("index.html") else "inspector.html"
     admin = home_href.replace("index.html", "admin.html") if home_href.endswith("index.html") else "admin.html"
     maturity = home_href.replace("index.html", "admin/maturity.html") if home_href.endswith("index.html") else "admin/maturity.html"
-    return f"""<footer class="site-footer" id="institucional" role="contentinfo" aria-label="Rodapé do site">
+    copyright_text = str(t.get("copyright") or "© {{year}} Calculadoras de Enfermagem. Todos os direitos reservados.").replace("{{year}}", "2026")
+    heading = t.get("footerHeading") or "Rodapé do site"
+    return f"""<div id="footer-placeholder">
+  <footer class="site-footer" id="institucional" role="contentinfo" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">{esc(heading)}</h2>
+    <div class="wrap footer-logo-row">
+      <a href="{attr(home_href)}" aria-label="{esc(t.get("homeAria") or "Ir para a página inicial")}">
+        <img class="footer-mark-80" src="{attr(logo)}" width="80" height="80" alt="{esc(t.get("logoAlt") or SITE_NAME)}" decoding="async">
+      </a>
+    </div>
     <div class="wrap footer-grid">
-      <div class="footer-brand">
-        <img class="footer-mark" src="{attr(logo)}" width="220" height="52" alt="{esc(SITE_NAME)}" decoding="async">
-        <p>Tecnologia e conhecimento para uma enfermagem mais eficiente, com domínio e sustentável.</p>
-        <p class="footer-commitment">Padrões de acessibilidade, sustentabilidade digital, segurança da informação e proteção de dados. Sem captura de e-mail neste lote (NO_SENSITIVE_CAPTURE).</p>
+      <nav class="footer-col" aria-label="{esc(t.get("institutional") or "Institucional")}">
+        <h2>{esc(t.get("institutional") or "Institucional")}</h2>
+        <ul>
+          <li><a href="{attr(home_href)}">{esc(t.get("home") or "Início")}</a></li>
+          <li><a href="{attr(inspector)}">{esc(t.get("about") or "Sobre Nós")}</a></li>
+          <li><a href="{attr(inspector)}">{esc(t.get("siteMap") or "Mapa do Site")}</a></li>
+          <li><span class="footer-hold">{esc(t.get("privacyCenter") or "Central de Privacidade")} · HOLD</span></li>
+          <li><span class="footer-hold">{esc(t.get("terms") or "Termos e Condições de Uso")} · HOLD</span></li>
+          <li><span class="footer-hold">{esc(t.get("accessibilityPolicy") or "Política de Acessibilidade")} · HOLD</span></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="{esc(t.get("digitalSustainability") or "Sustentabilidade Digital")}">
+        <h2>{esc(t.get("digitalSustainability") or "Sustentabilidade Digital")}</h2>
+        <ul>
+          <li><a href="{attr(maturity)}">{esc(t.get("ourCommitment") or "Nosso Compromisso")}</a></li>
+          <li><span class="footer-hold">{esc(t.get("impact") or "Relatório de Impacto")} · HOLD</span></li>
+          <li><span class="footer-hold">{esc(t.get("greenTech") or "Tecnologia Verde")} · HOLD</span></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>{esc(t.get("ourCommitment") or "Nosso Compromisso")}</h2>
+        <p>{esc(t.get("commitmentText") or "Padrões de acessibilidade, sustentabilidade digital, segurança da informação e proteção de dados.")}</p>
+        <p class="footer-commitment">Sem captura de e-mail e sem mural de cookies neste lote (NO_SENSITIVE_CAPTURE).</p>
       </div>
       <div class="footer-col">
-        <h2>Institucional</h2>
+        <h2>{esc(t.get("followUs") or "Siga-nos")}</h2>
         <ul>
-          <li><a href="{attr(home_href)}">Início</a></li>
-          <li><a href="{attr(inspector)}">Inspector</a></li>
+          <li><a href="https://linkedin.com/company/calculadoras-de-enfermagem" rel="noopener noreferrer me">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/calculadorasdeenfermagem/" rel="noopener noreferrer me">Instagram</a></li>
+          <li><a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" rel="noopener noreferrer me">YouTube</a></li>
           <li><a href="{attr(admin)}">Admin Studio</a></li>
-          <li><a href="{attr(maturity)}">Panorama de maturidade</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>Acessibilidade</h2>
-        <ul>
-          <li>Barra de acessibilidade (36px)</li>
-          <li>Skip link · teclado</li>
-          <li>Contraste, fonte, espaçamento</li>
-          <li>Fonte dislexia: fallback Arial (woff2 GAP)</li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>Governança</h2>
-        <ul>
-          <li>CKO-MD → CKO-REG → front-end</li>
-          <li>Constituição CKO-INS-AI-PROJECT-001</li>
-          <li>Renderer PRESENTATION_ONLY</li>
-          <li>Release clínica HOLD</li>
         </ul>
       </div>
     </div>
     <div class="wrap footer-bottom">
       <p>{esc(DISCLAIMER)}</p>
-      <p>© 2026 {esc(SITE_NAME)}. Audit Educa · {esc(SITE_NS)}. Newsletter/e-mail não implantados.</p>
+      <p>{esc(copyright_text)} Audit Educa · {esc(SITE_NS)}. Newsletter/e-mail não implantados.</p>
     </div>
-  </footer>"""
+  </footer>
+  </div>"""
 
 
 def ds_header_footer(home_href: str) -> tuple[str, str]:
     prefix = asset_prefix(home_href)
-    header = ds_a11y_bar() + ds_header(home_href, prefix)
+    header = ds_a11y_bar() + ds_header(home_href, prefix) + ds_language_bar(home_href)
     return header, ds_footer(home_href, prefix)
 
 

@@ -2,31 +2,38 @@
   "business_key": "REG-API-001",
   "status": "REGISTERED",
   "implemented": false,
-  "note": "Candidatos nominais. base_url permanece null até captura oficial com snapshot.",
+  "note": "API REST base_url permanece null. Páginas HTML oficiais observadas em cko_inbox/extracted/regulated_pages.json.",
   "apis": [
     {
       "business_key": "API-CAND-COFEN",
-      "name": "COFEN (candidate)",
+      "name": "COFEN",
       "base_url": null,
-      "status": "EVIDENCE_PENDING"
+      "html_page": "https://www.cofen.gov.br/",
+      "kind": "REGULATED_HTML_PAGE",
+      "status": "SOURCE_DERIVED"
     },
     {
       "business_key": "API-CAND-ANVISA",
-      "name": "ANVISA (candidate)",
+      "name": "ANVISA",
       "base_url": null,
-      "status": "EVIDENCE_PENDING"
+      "html_page": "https://www.gov.br/anvisa/pt-br",
+      "kind": "REGULATED_HTML_PAGE",
+      "status": "SOURCE_DERIVED"
     },
     {
       "business_key": "API-CAND-MS",
-      "name": "Ministério da Saúde (candidate)",
+      "name": "Ministério da Saúde",
       "base_url": null,
-      "status": "EVIDENCE_PENDING"
+      "html_page": "https://www.gov.br/saude/pt-br",
+      "kind": "REGULATED_HTML_PAGE",
+      "status": "SOURCE_DERIVED"
     },
     {
       "business_key": "API-CAND-INTERNAL",
-      "name": "CKO internal (candidate)",
+      "name": "CKO extract runner",
       "base_url": null,
-      "status": "EVIDENCE_PENDING"
+      "cli": "python3 -m engine.cli extract",
+      "status": "IMPLEMENTED_INBOX_ONLY"
     }
   ]
 }

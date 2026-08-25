@@ -1,7 +1,8 @@
 {
   "business_key": "REG-AGENT-001",
-  "status": "REGISTERED",
-  "implemented": false,
+  "status": "IMPLEMENTED_INBOX_ONLY",
+  "implemented": true,
+  "publication_implemented": false,
   "rule": "Agente executa processo. Agente não cria autoridade. MAKER ≠ CHECKER ≠ AUDITOR.",
   "classes": [
     "ORCHESTRATOR",
@@ -31,6 +32,80 @@
     "SAE",
     "MONITORING"
   ],
-  "agents": [],
-  "population": 0
+  "agents": [
+    {
+      "agent_id": "AG-ORCHESTRATOR",
+      "class": "ORCHESTRATOR",
+      "implemented": true,
+      "writes_to": "cko_inbox/agent_runs",
+      "promotes_to_md": false,
+      "note": "Orquestra MAKER then CHECKER. Não publica."
+    },
+    {
+      "agent_id": "AG-FETCH-ORIGIN",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_inbox/origin",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-FETCH-REGULATED",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/regulated_pages.json",
+      "promotes_to_md": false,
+      "note": "HTML oficial. API REST base_url null."
+    },
+    {
+      "agent_id": "AG-PARSE-PAGES-FULL",
+      "class": "EXTRACTION",
+      "implemented": true,
+      "writes_to": "cko_inbox/drive/pages_full/INVENTORY.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-SITEMAP",
+      "class": "EXTRACTION",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/sitemap_slugs.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-CHROME",
+      "class": "A11Y",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/chrome_contract.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-INTEGRITY",
+      "class": "EVIDENCE",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/hash_chain.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-CAAT-EXTRACT",
+      "class": "CAAT",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/caat_extract.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-IPE-EXTRACT",
+      "class": "IPE",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/ipe_extract.json",
+      "promotes_to_md": false,
+      "reliance": false
+    },
+    {
+      "agent_id": "AG-LINK-MD",
+      "class": "ENTITY_RESOLUTION",
+      "implemented": true,
+      "writes_to": "cko_reg/extraction_profile.json",
+      "promotes_to_md": false
+    }
+  ],
+  "population": 10
 }

@@ -1,10 +1,9 @@
 # Governança de agentes
 
-**Estado:** ESPECIFICADO — NÃO IMPLEMENTADO / NÃO TESTADO.
+**Estado:** EXTRAÇÃO IMPLEMENTADA (inbox) — PUBLICAÇÃO NÃO IMPLEMENTADA / NÃO ASSURED.
 
-Este documento define arquitetura e controles. Não comprova que agentes, registries, pipelines ou gates estejam implantados.
+O runner `python3 -m engine.cli extract` materializa AG-FETCH / AG-PARSE / AG-CAAT / AG-IPE em `cko_inbox`. Isso não comprova conformidade regulatória, golden MD nem publicação segura. AG-051 permanece `enabled: false`.
 
-São proibidas, com base apenas nesta especificação, as afirmações “agentes implantados”, “fontes validadas”, “conformidade regulatória automatizada” ou “publicação segura”.
 
 O termo Regulatory Digital Twin Agentic é nomenclatura interna. Não é norma ISO, NIST, W3C ou OWASP.
 

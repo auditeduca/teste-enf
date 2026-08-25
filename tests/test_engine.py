@@ -103,8 +103,12 @@ def test_generated_gotejamento_html_has_contract():
     assert 'id="tool-config"' in html
     assert "Ir para o conteúdo" in html
     assert 'id="barraAcessibilidade"' in html
+    assert 'id="global-header-container"' in html
+    assert 'id="language-selector-placeholder"' in html
+    assert 'id="footer-placeholder"' in html
     assert "cdn" not in html.lower()
     assert 'type="email"' not in html
+    assert "adsbygoogle" not in html
     config = html.split('id="tool-config">', 1)[1].split("</script>", 1)[0]
     parsed = json.loads(config)
     assert parsed["slug"] == "gotejamento"

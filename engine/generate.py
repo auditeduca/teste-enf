@@ -374,28 +374,40 @@ def generate_index(tools: list[dict], *, css_href: str, home_href: str, inline_c
         <p>{esc(overview.get("objective"))}</p>
       </a>"""
         )
+    inv_path = ROOT / "cko_md" / "page_inventory.json"
+    inventory = json.loads(inv_path.read_text(encoding="utf-8")) if inv_path.exists() else {}
+    html_count = inventory.get("html_count") or "—"
+    unique_stems = inventory.get("unique_stems") or "—"
+    locales = json.loads((ROOT / "cko_md" / "locale_registry.json").read_text(encoding="utf-8")) if (ROOT / "cko_md" / "locale_registry.json").exists() else {}
+    locale_n = locales.get("population") or "—"
     header, footer = _header_footer(home_href)
     body = f"""{header}
   <main id="conteudo" class="wrap">
-    <header class="page-hero">
-      <p class="eyebrow">Constituição CKO-INS-AI-PROJECT-001 · lote piloto</p>
-      <h1>Conhecimento canônico, projetado em HTML.</h1>
-      <p class="lede">CKO-MD e CKO-REG nascem no GitHub. Cinco objetos piloto são candidatos de domínio, não golden records. Admin e frontend leem os mesmos contratos.</p>
-      <p class="meta"><a href="admin.html">Abrir Admin</a> · <a href="{attr(inspector_href)}">Abrir Inspector</a></p>
-    </header>
-    <section class="catalog" aria-label="Pilotos">
+    <section class="prod-hero" aria-label="Topo">
+      <p class="eyebrow">Plataforma Clínica</p>
+      <h1>Calculadoras de Enfermagem</h1>
+      <p class="lede">Conhecimento baseado em evidências, escalas, protocolos, calculadoras clínicas e recursos digitais para apoiar a prática da enfermagem.</p>
+      <p class="meta"><a href="admin.html">Abrir Admin</a> · <a href="{attr(inspector_href)}">Abrir Inspector</a> · <a href="admin/maturity.html">Maturidade</a></p>
+    </section>
+    <section class="observed-strip" aria-label="Contagens observadas">
+      <article><p class="eyebrow">Pilotos CKO</p><h2>{len(tools)}</h2><p>Candidatos em data/tools. Não são golden records.</p></article>
+      <article><p class="eyebrow">pages_full.zip</p><h2>{esc(html_count)}</h2><p>HTML SOURCE_DERIVED em quarentena. Não publicados.</p></article>
+      <article><p class="eyebrow">Stems únicos</p><h2>{esc(unique_stems)}</h2><p>Inventário extraído. Promoção MD HOLD.</p></article>
+      <article><p class="eyebrow">Locales Drive</p><h2>{esc(locale_n)}</h2><p>Códigos observados. Tradução HOLD.</p></article>
+    </section>
+    <section class="catalog" id="pilotos" aria-label="Pilotos">
       {"".join(cards)}
     </section>
     <section class="panel">
       <h2>Como este aplicativo funciona</h2>
-      <p>Registries Day Zero vivem em <code>cko_core</code>, <code>cko_md</code>, <code>cko_reg</code> e <code>cko_assurance</code>. Candidatos de domínio vivem em <code>data/tools</code>. O motor valida o contrato, calcula quando há fórmula, e gera duas projeções HTML semanticamente equivalentes: preview inline e produção fetch, ambas first-party, sem CDN.</p>
-      <p>O Admin não grava fórmula. O frontend não grava objeto canônico.</p>
+      <p>Registries Day Zero vivem em <code>cko_core</code>, <code>cko_md</code>, <code>cko_reg</code> e <code>cko_assurance</code>. Candidatos de domínio vivem em <code>data/tools</code>. Agentes extraem para <code>cko_inbox</code>; não promovem HTML a ferramenta. O motor valida o contrato e gera duas projeções HTML semanticamente equivalentes, first-party, sem CDN e sem anúncios.</p>
+      <p>O Admin não grava fórmula. O frontend não grava objeto canônico. KPIs de produção (+1500 páginas, +5 Mi acessos) permanecem DOCUMENT_CLAIM até IPE.</p>
     </section>
   </main>
   {footer}"""
     return _shell(
-        f"{SITE_NAME} — {SITE_SUB}",
-        "Engine canônico de calculadoras, escalas, guias e simulados de enfermagem.",
+        "Calculadoras de Enfermagem, Simulados e Escalas Clínicas",
+        "Calculadoras de enfermagem, escalas clínicas e dosagem de medicamentos. Lote piloto CKO com extração em quarentena.",
         body,
         css_href=None if inline_css else css_href,
         css_inline="file" if inline_css else None,
@@ -482,11 +494,21 @@ def _emit_tree(dest: Path, tools: list[dict], *, inline_css: bool) -> list[Path]
     written: list[Path] = []
     img_dest = dest / "assets" / "img"
     img_dest.mkdir(parents=True, exist_ok=True)
-    for name in ("logotipo-calculadoras-de-enfermagem.webp", "logotipo-footer.png"):
+    for name in (
+        "logotipo-calculadoras-de-enfermagem.webp",
+        "logotipo-footer.png",
+        "icontopbar1-calculadoras-de-enfermagem.webp",
+        "iconrodape1-80-calculadoras-de-enfermagem.webp",
+    ):
         src = ASSETS_DIR / "img" / name
         if src.exists():
             shutil.copy2(src, img_dest / name)
             written.append(img_dest / name)
+    fonts_src = ASSETS_DIR / "fonts"
+    if fonts_src.exists():
+        fonts_dest = dest / "assets" / "fonts"
+        shutil.copytree(fonts_src, fonts_dest, dirs_exist_ok=True)
+        written.extend(sorted(fonts_dest.rglob("*.woff2")))
     if not inline_css:
         assets = dest / "assets"
         assets.mkdir(parents=True, exist_ok=True)

@@ -346,7 +346,16 @@ def page_validations(ctx: dict, **kwargs) -> str:
 
 def page_agents(ctx: dict, **kwargs) -> str:
     registry = load_json(ROOT / "cko_assurance" / "agent_registry.json")
-    class_rows = [[esc(name), _status_chip("REGISTERED"), esc("population 0")] for name in (registry.get("classes") or [])]
+    run = load_json(ROOT / "cko_inbox" / "agent_runs" / "latest.json")
+    class_rows = []
+    for item in registry.get("agents") or []:
+        class_rows.append([
+            esc(item.get("agent_id")),
+            esc(item.get("class")),
+            _status_chip("IMPLEMENTED" if item.get("implemented") else "REGISTERED"),
+            esc(item.get("writes_to")),
+            _status_chip("HOLD" if not item.get("promotes_to_md") else "PROMOTED"),
+        ])
     studio_rows = []
     for item in ctx["studio"].get("agentes_tarefas") or []:
         studio_rows.append([
@@ -355,22 +364,28 @@ def page_agents(ctx: dict, **kwargs) -> str:
             esc(item.get("data_hora")),
             _status_chip(item.get("cko_status")),
         ])
+    steps = "".join(f"<li>{esc(step.get('agent_id'))} · {esc(step.get('status'))}</li>" for step in (run.get("steps") or []))
     inner = f"""
     <header class="page-hero">
       <h1>Agentes.</h1>
-      <p class="lede">Classes registradas no Day Zero. Runtime agêntico: NÃO IMPLEMENTADO. MAKER ≠ CHECKER ≠ AUDITOR. O mapa Studio que marca Extração/Publicação como Concluído é DOCUMENT_CLAIM.</p>
+      <p class="lede">Runner de extração IMPLEMENTADO (inbox). Publicação clínica HOLD. MAKER ≠ CHECKER ≠ AUDITOR. CLI: <code>python3 -m engine.cli extract</code>.</p>
+      <p class="hold-banner">Último run: {esc(run.get("run_id") or "nenhum")} · status {esc(run.get("status") or "UNKNOWN")} · publicação {esc(run.get("publication") or "HOLD")} · IPE reliance={esc(run.get("ipe_reliance"))}.</p>
     </header>
     <section class="panel">
       <h2>Registry CKO ({esc(registry.get("population"))} agentes)</h2>
-      {_table(["classe", "status", "nota"], class_rows[:12])}
-      <p>Total de classes: {len(registry.get("classes") or [])}. Lista completa no JSON.</p>
+      {_table(["agent_id", "classe", "runtime", "escreve em", "MD"], class_rows)}
+      <p>Publication implemented={esc(registry.get("publication_implemented"))}. Lista completa no JSON.</p>
+    </section>
+    <section class="panel">
+      <h2>Pipeline do último run</h2>
+      <ol>{steps or "<li>Nenhum run gravado.</li>"}</ol>
     </section>
     <section class="panel">
       <h2>Execução alegada no mapa Braden</h2>
       {_table(["agente", "Studio", "data", "CKO"], studio_rows)}
     </section>
     """
-    return admin_shell( title="Agentes · CKO Studio", description="Agent registry e claims Studio.", current="agents", inner=inner, **kwargs)
+    return admin_shell( title="Agentes · CKO Studio", description="Agent registry e extração inbox.", current="agents", inner=inner, **kwargs)
 
 
 def page_monitoring(ctx: dict, **kwargs) -> str:
@@ -421,7 +436,7 @@ def page_design(ctx: dict, **kwargs) -> str:
     <header class="page-hero">
       <h1>Design System — recuperação.</h1>
       <p class="lede">{esc(registry.get("note"))}</p>
-      <p class="hold-banner">Status oficial do DS: {esc(registry.get("official_ds_status"))}. Inter/Nunito: arquivos ausentes. Sem CDN.</p>
+      <p class="hold-banner">Status oficial do DS: {esc(registry.get("official_ds_status"))}. Inter/Nunito woff2 first-party RESTORED. OpenDyslexic EVIDENCE_PENDING (fallback Arial, sem CDN).</p>
     </header>
     <section class="panel">
       <div class="ds-swatches" aria-label="Swatches navy">
@@ -595,7 +610,7 @@ def page_maturity(ctx: dict, **kwargs) -> str:
     <section class="catalog admin-cards" aria-label="KPIs observados">
       <article class="tool-card"><p class="eyebrow">Camadas</p><h2>{esc(layers.get("population"))}</h2><p>44 no registry. Nenhuma ASSURED.</p></article>
       <article class="tool-card"><p class="eyebrow">Pilotos</p><h2>{esc((panorama.get("domain_candidates") or {}).get("tools"))}</h2><p>HOLD internos: {esc((panorama.get("domain_candidates") or {}).get("hold"))}. Braden em data/tools: {esc((panorama.get("domain_candidates") or {}).get("braden_in_data_tools"))}.</p></article>
-      <article class="tool-card"><p class="eyebrow">Agentes</p><h2>{esc(agents.get("population"))}</h2><p>Classes {esc(agents.get("classes"))}. Runtime: {_status_chip("NOT_IMPLEMENTED")}.</p></article>
+      <article class="tool-card"><p class="eyebrow">Agentes</p><h2>{esc(agents.get("population"))}</h2><p>Classes {esc(agents.get("classes"))}. Runtime extração: {_status_chip("IMPLEMENTED_INBOX_ONLY" if agents.get("implemented") else "NOT_IMPLEMENTED")}. Publicação HOLD.</p></article>
       <article class="tool-card"><p class="eyebrow">CAAT 44</p><h2>{esc(layer_caat.get("status"))}</h2><p>Só a população do Layer Registry. Não é PASS do projeto.</p></article>
       <article class="tool-card"><p class="eyebrow">Locales Drive</p><h2>{esc(locales.get("population"))}</h2><p>Stems {esc(", ".join(locales.get("stems_only") or []))} · wired={esc(locales.get("wired_to_frontend"))}.</p></article>
       <article class="tool-card"><p class="eyebrow">DS header</p><h2>{esc(ds.get("header_compare"))}</h2><p>{esc(ds.get("fonts"))}</p></article>

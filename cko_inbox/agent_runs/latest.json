@@ -1,0 +1,219 @@
+{
+  "business_key": "IPE-AGENT-RUN-001",
+  "run_id": "RUN-EXTRACT-20260825T064854Z",
+  "uuid": null,
+  "status": "HOLD",
+  "network": false,
+  "started_at": "2026-08-25T06:48:54Z",
+  "chain": "CKO-MD → CKO-REG → projection → renderer → frontend",
+  "rule": "DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO. Extração ≠ promoção.",
+  "publication": "HOLD",
+  "ipe_reliance": false,
+  "caat_status": "PASS_WITH_FINDINGS",
+  "ipe_status": "HOLD",
+  "steps": [
+    {
+      "agent_id": "AG-FETCH-ORIGIN",
+      "class": "ACQUISITION",
+      "role": "MAKER",
+      "network": false,
+      "origin": "https://www.calculadorasdeenfermagem.com.br/",
+      "live_fetches": [],
+      "inbox_manifest_files": 12,
+      "promotes_to_md": false,
+      "status": "OBSERVED"
+    },
+    {
+      "agent_id": "AG-FETCH-REGULATED",
+      "class": "ACQUISITION",
+      "role": "MAKER",
+      "network": false,
+      "pages": [
+        {
+          "business_key": "API-CAND-COFEN",
+          "name": "COFEN",
+          "url": "https://www.cofen.gov.br/",
+          "kind": "REGULATED_HTML_PAGE",
+          "api_base_url": null,
+          "http_status": 200,
+          "bytes": 407650,
+          "sha256": "001050f8d800ba4580aa3dd34b8bec3cf91ccce0788b96b6554c34fd76d57382",
+          "final_url": "https://www.cofen.gov.br/",
+          "epistemic_status": "OBSERVED",
+          "title": "Início - Cofen",
+          "note": "Página HTML pública observada. Não é API REST. base_url de API permanece null."
+        },
+        {
+          "business_key": "API-CAND-ANVISA",
+          "name": "ANVISA",
+          "url": "https://www.gov.br/anvisa/pt-br",
+          "kind": "REGULATED_HTML_PAGE",
+          "api_base_url": null,
+          "http_status": 200,
+          "bytes": 573030,
+          "sha256": "af4e75fc4ea184b2b2f91fcf988b3b0a8b5b7f605807831e71184ace80cff095",
+          "final_url": "https://www.gov.br/anvisa/pt-br",
+          "epistemic_status": "OBSERVED",
+          "title": "Português (Brasil)",
+          "note": "Página HTML pública observada. Não é API REST. base_url de API permanece null."
+        },
+        {
+          "business_key": "API-CAND-MS",
+          "name": "Ministério da Saúde",
+          "url": "https://www.gov.br/saude/pt-br",
+          "kind": "REGULATED_HTML_PAGE",
+          "api_base_url": null,
+          "http_status": 200,
+          "bytes": 153905,
+          "sha256": "6275c3aca0fc6b8bdde9bdd5dbd4f7f8a89a407ac19ec7720a61ce6752ec533b",
+          "final_url": "https://www.gov.br/saude/pt-br",
+          "epistemic_status": "OBSERVED",
+          "title": "Ministério da Saúde",
+          "note": "Página HTML pública observada. Não é API REST. base_url de API permanece null."
+        }
+      ],
+      "api_base_url_set": false,
+      "promotes_to_md": false,
+      "status": "OBSERVED"
+    },
+    {
+      "agent_id": "AG-PARSE-PAGES-FULL",
+      "class": "EXTRACTION",
+      "role": "MAKER",
+      "status": "SOURCE_DERIVED",
+      "replay": false,
+      "html_count": 1516,
+      "unique_stems": 1507,
+      "duplicate_stems": [
+        "balancohidrico",
+        "genogramaeecomapa",
+        "index",
+        "medicamentos",
+        "notificacao-compulsoria",
+        "nr1",
+        "teorias-de-enfermagem",
+        "time-de-resposta-rapida"
+      ],
+      "hash_match": true,
+      "path": "cko_inbox/drive/pages_full/INVENTORY.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-SITEMAP",
+      "class": "EXTRACTION",
+      "role": "MAKER",
+      "status": "SOURCE_DERIVED",
+      "loc_count": 1552,
+      "unique_slugs": 1544,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-CHROME",
+      "class": "EXTRACTION",
+      "role": "MAKER",
+      "status": "SOURCE_DERIVED",
+      "contract_path": "cko_inbox/extracted/chrome_contract.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-INTEGRITY",
+      "class": "EVIDENCE",
+      "role": "CHECKER",
+      "status": "OBSERVED",
+      "items": 6,
+      "missing": 0
+    },
+    {
+      "agent_id": "AG-CAAT-EXTRACT",
+      "class": "CAAT",
+      "role": "CHECKER",
+      "status": "PASS_WITH_FINDINGS",
+      "findings": [
+        {
+          "id": "CAAT-STEM-COLLISION",
+          "status": "FINDING",
+          "detail": [
+            "balancohidrico",
+            "genogramaeecomapa",
+            "index",
+            "medicamentos",
+            "notificacao-compulsoria",
+            "nr1",
+            "teorias-de-enfermagem",
+            "time-de-resposta-rapida"
+          ],
+          "note": "Stems repetidos entre buckets. Não auto-merge."
+        },
+        {
+          "id": "CAAT-PAGE-POPULATION",
+          "status": "PASS",
+          "tested": 1516,
+          "unique": 1507,
+          "note": "População do zip. Não é PASS clínico."
+        },
+        {
+          "id": "CAAT-SITEMAP-POPULATION",
+          "status": "PASS",
+          "loc_count": 1552,
+          "unique_slugs": 1544,
+          "note": "População do sitemap. Não é PASS clínico."
+        },
+        {
+          "id": "CAAT-PILOT-SET",
+          "status": "PASS",
+          "tested": 5,
+          "note": "Cinco pilotos inalterados. Braden fora de data/tools."
+        },
+        {
+          "id": "CAAT-BRADEN-NOT-PROMOTED",
+          "status": "PASS",
+          "note": "braden.html permanece quarentena."
+        }
+      ],
+      "html_count": 1516,
+      "unique_stems": 1507
+    },
+    {
+      "agent_id": "AG-IPE-EXTRACT",
+      "class": "IPE",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "reliance": false,
+      "carr": {
+        "COMPLETE": "PASS",
+        "ACCURATE": "UNKNOWN",
+        "RELEVANT": "PASS",
+        "RELIABLE": "FAIL",
+        "REPRODUCIBLE": "PASS"
+      }
+    },
+    {
+      "agent_id": "AG-LINK-MD",
+      "class": "ENTITY_RESOLUTION",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "bound_pilots": [
+        "dimensionamento",
+        "gotejamento",
+        "meows"
+      ],
+      "quarantined_examples": [
+        "braden",
+        "gasometria",
+        "glasgow",
+        "imc",
+        "insulina",
+        "norton"
+      ],
+      "promotes_to_md": false
+    }
+  ],
+  "forbidden_copied": [
+    "adsbygoogle",
+    "googleads",
+    "doubleclick",
+    "type=\"email\"",
+    "cdn.jsdelivr",
+    "opendyslexic"
+  ]
+}

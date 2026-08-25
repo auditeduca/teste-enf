@@ -11,7 +11,8 @@
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-  <div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
     <div class="a11y-bar-inner wrap">
       <p class="a11y-kicker">Acessibilidade</p>
       <div class="a11y-actions">
@@ -32,7 +33,7 @@
       </div>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
 <div class="admin-app">
   <aside class="admin-side" aria-label="Módulos do Studio">
     <p class="admin-brand">CKO Studio</p>
@@ -49,8 +50,8 @@
       
     <header class="page-hero">
       <h1>Design System — recuperação.</h1>
-      <p class="lede">Tokens abaixo são SOURCE_DERIVED do anexo de documentação v4. Não promover o anexo a Design System oficial sem confirmação de stewardship. Inter/Nunito woff2 NÃO ENCONTRADOS neste repositório; CDN é proibido.</p>
-      <p class="hold-banner">Status oficial do DS: EVIDENCE_PENDING. Inter/Nunito: arquivos ausentes. Sem CDN.</p>
+      <p class="lede">Tokens SOURCE_DERIVED do anexo v4 + origin de produção. Inter/Nunito woff2 capturados first-party. CDN continua proibido.</p>
+      <p class="hold-banner">Status oficial do DS: SOURCE_DERIVED. Inter/Nunito woff2 first-party RESTORED. OpenDyslexic EVIDENCE_PENDING (fallback Arial, sem CDN).</p>
     </header>
     <section class="panel">
       <div class="ds-swatches" aria-label="Swatches navy">
@@ -61,7 +62,7 @@
         <span class="swatch" style="background:#122C54"></span>
         <span class="swatch" style="background:#003366"></span>
       </div>
-      <div class="table-wrap"><table class="inspect"><thead><tr><th>token</th><th>css</th><th>anexo</th><th>runtime</th><th>compare</th><th>epistemic</th></tr></thead><tbody><tr><td>TOK-COLOR-NAVY-PRIMARY</td><td><code>--navy-primary</code></td><td>#1A3E74</td><td>#1A3E74</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-NAVY-MEDIUM</td><td><code>--navy-medium</code></td><td>#1E4D8C</td><td>#1E4D8C</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-NAVY-DARK</td><td><code>--navy-dark</code></td><td>#163269</td><td>#163269</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-BLUE-LIGHT</td><td><code>--blue-light</code></td><td>#4A90E2</td><td>#4A90E2</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-BTN-HOVER</td><td><code>--navy-hover</code></td><td>#122C54</td><td>#122C54</td><td><span class="chip chip-ok">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-COLOR-BTN-SECONDARY</td><td><code>--navy-secondary</code></td><td>#003366</td><td>#003366</td><td><span class="chip chip-ok">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-RADIUS-CONTROL</td><td><code>--radius-control</code></td><td>8px</td><td>8px</td><td><span class="chip chip-ok">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-FONT-SANS</td><td><code>--font</code></td><td>Inter / Nunito Sans (woff2 first-party)</td><td>Inter, Segoe UI, Helvetica Neue, Arial, sans-serif</td><td><span class="chip">GAP</span></td><td>EVIDENCE_PENDING</td></tr><tr><td>TOK-SHELL-HEADER-BG</td><td><code>--header-bg</code></td><td>#ffffff (header público do anexo)</td><td>#ffffff</td><td><span class="chip chip-ok">RESTORED</span></td><td>SOURCE_DERIVED</td></tr></tbody></table></div>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>token</th><th>css</th><th>anexo</th><th>runtime</th><th>compare</th><th>epistemic</th></tr></thead><tbody><tr><td>TOK-COLOR-NAVY-PRIMARY</td><td><code>--navy-primary</code></td><td>#1A3E74</td><td>#1A3E74</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-NAVY-MEDIUM</td><td><code>--navy-medium</code></td><td>#1E4D8C</td><td>#1E4D8C</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-NAVY-DARK</td><td><code>--navy-dark</code></td><td>#163269</td><td>#163269</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-BLUE-LIGHT</td><td><code>--blue-light</code></td><td>#4A90E2</td><td>#4A90E2</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-BTN-HOVER</td><td><code>--navy-hover</code></td><td>#122C54</td><td>#122C54</td><td><span class="chip chip-ok">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-COLOR-BTN-SECONDARY</td><td><code>--navy-secondary</code></td><td>#003366</td><td>#003366</td><td><span class="chip chip-ok">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-RADIUS-CONTROL</td><td><code>--radius-control</code></td><td>8px</td><td>8px</td><td><span class="chip chip-ok">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-FONT-SANS</td><td><code>--font</code></td><td>Inter / Nunito Sans (woff2 first-party)</td><td>Inter + Nunito Sans woff2 em assets/fonts (origin 200)</td><td><span class="chip chip-ok">RESTORED</span></td><td>OBSERVED</td></tr><tr><td>TOK-SHELL-HEADER-BG</td><td><code>--header-bg</code></td><td>#ffffff header 96px desktop / 60px mobile + a11y 36px + lang 46px</td><td>#ffffff</td><td><span class="chip chip-ok">RESTORED</span></td><td>SOURCE_DERIVED</td></tr></tbody></table></div>
     </section>
     
     </main>

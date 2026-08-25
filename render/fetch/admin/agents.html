@@ -4,14 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agentes · CKO Studio</title>
-  <meta name="description" content="Agent registry e claims Studio.">
+  <meta name="description" content="Agent registry e extração inbox.">
   <meta name="theme-color" content="#1A3E74">
   <link rel="stylesheet" href="../assets/app.css">
   <meta name="robots" content="noindex,nofollow">
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-  <div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
     <div class="a11y-bar-inner wrap">
       <p class="a11y-kicker">Acessibilidade</p>
       <div class="a11y-actions">
@@ -32,7 +33,7 @@
       </div>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
 <div class="admin-app">
   <aside class="admin-side" aria-label="Módulos do Studio">
     <p class="admin-brand">CKO Studio</p>
@@ -49,12 +50,17 @@
       
     <header class="page-hero">
       <h1>Agentes.</h1>
-      <p class="lede">Classes registradas no Day Zero. Runtime agêntico: NÃO IMPLEMENTADO. MAKER ≠ CHECKER ≠ AUDITOR. O mapa Studio que marca Extração/Publicação como Concluído é DOCUMENT_CLAIM.</p>
+      <p class="lede">Runner de extração IMPLEMENTADO (inbox). Publicação clínica HOLD. MAKER ≠ CHECKER ≠ AUDITOR. CLI: <code>python3 -m engine.cli extract</code>.</p>
+      <p class="hold-banner">Último run: RUN-EXTRACT-20260825T064854Z · status HOLD · publicação HOLD · IPE reliance=False.</p>
     </header>
     <section class="panel">
-      <h2>Registry CKO (0 agentes)</h2>
-      <div class="table-wrap"><table class="inspect"><thead><tr><th>classe</th><th>status</th><th>nota</th></tr></thead><tbody><tr><td>ORCHESTRATOR</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>DISCOVERY</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>ACQUISITION</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>EXTRACTION</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>NORMALIZATION</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>ENTITY_RESOLUTION</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>MD</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>REGULATORY</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>KNOWLEDGE</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>EVIDENCE</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>CONTENT</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr><tr><td>SEO</td><td><span class="chip">REGISTERED</span></td><td>population 0</td></tr></tbody></table></div>
-      <p>Total de classes: 26. Lista completa no JSON.</p>
+      <h2>Registry CKO (10 agentes)</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>agent_id</th><th>classe</th><th>runtime</th><th>escreve em</th><th>MD</th></tr></thead><tbody><tr><td>AG-ORCHESTRATOR</td><td>ORCHESTRATOR</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/agent_runs</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-FETCH-ORIGIN</td><td>ACQUISITION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/origin</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-FETCH-REGULATED</td><td>ACQUISITION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/regulated_pages.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PARSE-PAGES-FULL</td><td>EXTRACTION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/drive/pages_full/INVENTORY.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PARSE-SITEMAP</td><td>EXTRACTION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/sitemap_slugs.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PARSE-CHROME</td><td>A11Y</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/chrome_contract.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-INTEGRITY</td><td>EVIDENCE</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/hash_chain.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-CAAT-EXTRACT</td><td>CAAT</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/caat_extract.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-IPE-EXTRACT</td><td>IPE</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/ipe_extract.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-LINK-MD</td><td>ENTITY_RESOLUTION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_reg/extraction_profile.json</td><td><span class="chip chip-hold">HOLD</span></td></tr></tbody></table></div>
+      <p>Publication implemented=False. Lista completa no JSON.</p>
+    </section>
+    <section class="panel">
+      <h2>Pipeline do último run</h2>
+      <ol><li>AG-FETCH-ORIGIN · OBSERVED</li><li>AG-FETCH-REGULATED · OBSERVED</li><li>AG-PARSE-PAGES-FULL · SOURCE_DERIVED</li><li>AG-PARSE-SITEMAP · SOURCE_DERIVED</li><li>AG-PARSE-CHROME · SOURCE_DERIVED</li><li>AG-INTEGRITY · OBSERVED</li><li>AG-CAAT-EXTRACT · PASS_WITH_FINDINGS</li><li>AG-IPE-EXTRACT · HOLD</li><li>AG-LINK-MD · HOLD</li></ol>
     </section>
     <section class="panel">
       <h2>Execução alegada no mapa Braden</h2>

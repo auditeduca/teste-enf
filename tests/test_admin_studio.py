@@ -52,6 +52,8 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
         "admin-control.js",
         "a11y.js",
         "logotipo-calculadoras-de-enfermagem.webp",
+        "icontopbar1-calculadoras-de-enfermagem.webp",
+        "iconrodape1-80-calculadoras-de-enfermagem.webp",
     ):
         assert name in names
     fetch_admin = (ROOT / "render" / "fetch" / "admin.html").read_text(encoding="utf-8")
@@ -66,6 +68,11 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
     assert "CKO Studio" in fetch_admin
     assert 'id="barraAcessibilidade"' in fetch_admin
     assert 'id="barraAcessibilidade"' in fetch_index
+    assert 'id="global-header-container"' in fetch_index
+    assert 'id="language-selector-placeholder"' in fetch_index
+    assert 'id="footer-placeholder"' in fetch_index
+    assert "adsbygoogle" not in fetch_index
+    assert "googleads" not in fetch_index.lower()
     assert 'type="email"' not in fetch_index
     assert "--header-bg: #ffffff" in (ROOT / "assets" / "css" / "app.css").read_text(encoding="utf-8")
     assert "cdn.jsdelivr" not in fetch_index.lower()
@@ -73,6 +80,8 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
     assert "Layer Registry (44)" in fetch_admin
     assert "QUARANTINED" in catalog
     assert "STUDIO-CAND-BRADEN" in catalog
+    assert "SOURCE_DERIVED" in design
+    assert "RESTORED" in design
     assert "EVIDENCE_PENDING" in design
     assert "git push é FORBIDDEN" in deploy
     assert "Nenhuma alteração de RLS" in database
@@ -104,7 +113,9 @@ def test_maturity_panorama_is_hold_without_fake_pass():
     panorama = evaluate_maturity()
     assert panorama["release"] == "HOLD"
     assert panorama["layers"]["population"] == 44
-    assert panorama["agents"]["population"] == 0
+    assert panorama["agents"]["population"] == 10
+    assert panorama["agents"]["implemented"] is True
+    assert panorama["agents"]["publication_implemented"] is False
     assert panorama["ipe"]["registry_implemented"] is False
     assert panorama["domain_candidates"]["braden_in_data_tools"] is False
     assert "APO12.01" not in json.dumps(panorama)
