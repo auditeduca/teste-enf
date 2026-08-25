@@ -170,28 +170,77 @@ a { color: var(--navy-medium); }
   display: block;
   width: 100%;
   min-height: var(--lang-height);
-  background: #eef3f9;
+  background: #f9fafb;
   border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 20;
 }
 .lang-bar {
   min-height: var(--lang-height);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.75rem;
   flex-wrap: wrap;
   padding: 0.35rem 0;
 }
-.lang-runtime { margin: 0; font-size: 0.78rem; color: var(--gray-text); }
-.lang-codes { margin: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; }
-.lang-code {
-  font-size: 0.68rem;
-  padding: 0.12rem 0.4rem;
+.lang-runtime { margin: 0 auto 0 0; font-size: 0.78rem; color: var(--gray-text); }
+#language-dropdown-wrapper { position: relative; z-index: 21; }
+#langButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--navy-primary);
-  background: var(--white);
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 0.25rem 0.7rem;
+  min-height: 32px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--ink);
 }
+#langButton[aria-expanded="true"] { outline: 3px solid var(--a11y-focus); }
+.lang-caret { width: 1rem; height: 1rem; }
+#langMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  width: 16rem;
+  max-height: 18rem;
+  overflow: auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(18, 35, 58, 0.12);
+  z-index: 30;
+  padding: 0.25rem;
+}
+#langMenu.hidden { display: none; }
+.lang-option {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0.4rem 0.55rem;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.lang-option:hover, .lang-option:focus-visible { background: #eef3f9; }
+.hamburger-button {
+  display: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--navy-primary);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+}
+.hamburger-button svg { width: 24px; height: 24px; }
 #footer-placeholder {
   display: block;
   min-height: 520px;
@@ -335,6 +384,9 @@ html.rd-dark .tool-card, html.rd-dark .panel, html.rd-dark .calc-card { backgrou
   #barraAcessibilidade { height: auto; display: none; }
   #barraAcessibilidade.is-open { display: block; padding: 0.5rem 0; }
   #accessibilityToggleButton { display: inline-flex; align-items: center; justify-content: center; }
+  .hamburger-button { display: inline-flex; align-items: center; justify-content: center; }
+  .desktop-nav { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 0.35rem; padding: 0.5rem 0 0.8rem; }
+  .desktop-nav.is-open { display: flex; }
   .footer-grid { grid-template-columns: 1fr; }
   .brand-name { font-size: 0.92rem; }
 }
@@ -565,6 +617,9 @@ summary { cursor: pointer; font-weight: 650; }
   <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button><div id="global-header-container">
     <header class="site-header" role="banner">
     <div class="wrap header-row">
+      <button type="button" id="hamburgerButton" class="hamburger-button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="primary-nav">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
       <a class="brand" href="../index.html">
         <img class="brand-mark" src="../assets/img/icontopbar1-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
         <span class="brand-text">
@@ -572,20 +627,45 @@ summary { cursor: pointer; font-weight: 650; }
           <span class="brand-sub">CKO · lote piloto</span>
         </span>
       </a>
-      <nav class="nav desktop-nav" aria-label="Navegação Principal">
+      <nav id="primary-nav" class="nav desktop-nav" aria-label="Navegação Principal">
         <a href="../index.html" accesskey="I">Início</a>
         <a href="../inspector.html">Sobre Nós</a>
         <a href="gotejamento.html">Calculadoras</a>
         <a href="../inspector.html">Conteúdos</a>
         <a href="../admin.html">Admin</a>
-        <a class="lang-chip" href="../admin/locales.html" title="19 códigos observados no Drive; tradução HOLD">pt-BR · i18n HOLD</a>
       </nav>
     </div>
   </header>
   </div><div id="language-selector-placeholder" data-i18n-gate="HOLD">
     <div class="wrap lang-bar">
-      <p class="lang-runtime">Idioma de runtime: <strong>pt-BR</strong>. Seletor observado (Drive/origin) · tradução HOLD.</p>
-      <p class="lang-codes" aria-label="Códigos de locale observados"><span class="lang-code" lang="ar">ar</span> <span class="lang-code" lang="de">de</span> <span class="lang-code" lang="en">en</span> <span class="lang-code" lang="es">es</span> <span class="lang-code" lang="fr">fr</span> <span class="lang-code" lang="hi">hi</span> <span class="lang-code" lang="id">id</span> <span class="lang-code" lang="it">it</span> <span class="lang-code" lang="ja">ja</span> <span class="lang-code" lang="ko">ko</span> <span class="lang-code" lang="nl">nl</span> <span class="lang-code" lang="pl">pl</span> <span class="lang-code" lang="pt">pt</span> <span class="lang-code" lang="ru">ru</span> <span class="lang-code" lang="sv">sv</span> <span class="lang-code" lang="tr">tr</span> <span class="lang-code" lang="uk">uk</span> <span class="lang-code" lang="vi">vi</span> <span class="lang-code" lang="zh">zh</span></p>
+      <p class="lang-runtime">pt-BR · i18n HOLD. Bandeiras do seletor não vieram no zip (EVIDENCE_PENDING). Tradução não redireciona.</p>
+      <div id="language-dropdown-wrapper">
+        <button type="button" id="langButton" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu">
+          <span id="langText">Português</span>
+          <svg class="lang-caret" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div id="langMenu" class="hidden" role="listbox" aria-label="Idiomas observados no site-shell">
+        <button type="button" class="lang-option" data-value="pt" lang="pt"><span>Português</span> <code>pt</code></button>
+        <button type="button" class="lang-option" data-value="en" lang="en"><span>English</span> <code>en</code></button>
+        <button type="button" class="lang-option" data-value="es" lang="es"><span>Español</span> <code>es</code></button>
+        <button type="button" class="lang-option" data-value="de" lang="de"><span>Deutsch</span> <code>de</code></button>
+        <button type="button" class="lang-option" data-value="it" lang="it"><span>Italiano</span> <code>it</code></button>
+        <button type="button" class="lang-option" data-value="fr" lang="fr"><span>Français</span> <code>fr</code></button>
+        <button type="button" class="lang-option" data-value="hi" lang="hi"><span>हिन्दी</span> <code>hi</code></button>
+        <button type="button" class="lang-option" data-value="zh" lang="zh"><span>中文</span> <code>zh</code></button>
+        <button type="button" class="lang-option" data-value="ar" lang="ar"><span>العربية</span> <code>ar</code></button>
+        <button type="button" class="lang-option" data-value="ja" lang="ja"><span>日本語</span> <code>ja</code></button>
+        <button type="button" class="lang-option" data-value="ru" lang="ru"><span>Русский</span> <code>ru</code></button>
+        <button type="button" class="lang-option" data-value="ko" lang="ko"><span>한국어</span> <code>ko</code></button>
+        <button type="button" class="lang-option" data-value="tr" lang="tr"><span>Türkçe</span> <code>tr</code></button>
+        <button type="button" class="lang-option" data-value="nl" lang="nl"><span>Nederlands</span> <code>nl</code></button>
+        <button type="button" class="lang-option" data-value="pl" lang="pl"><span>Polski</span> <code>pl</code></button>
+        <button type="button" class="lang-option" data-value="sv" lang="sv"><span>Svenska</span> <code>sv</code></button>
+        <button type="button" class="lang-option" data-value="id" lang="id"><span>Bahasa Indonesia</span> <code>id</code></button>
+        <button type="button" class="lang-option" data-value="vi" lang="vi"><span>Tiếng Việt</span> <code>vi</code></button>
+        <button type="button" class="lang-option" data-value="uk" lang="uk"><span>Українська</span> <code>uk</code></button>
+        </div>
+      </div>
       <a class="lang-chip" href="../admin/locales.html">Locales / Drive</a>
     </div>
   </div>
@@ -1133,6 +1213,39 @@ summary { cursor: pointer; font-weight: 650; }
       toggle.addEventListener("click", function () {
         var open = bar.classList.toggle("is-open");
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+    var hamburger = document.getElementById("hamburgerButton");
+    var nav = document.getElementById("primary-nav");
+    if (hamburger && nav) {
+      hamburger.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        hamburger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+    var langButton = document.getElementById("langButton");
+    var langMenu = document.getElementById("langMenu");
+    var langText = document.getElementById("langText");
+    var status = document.getElementById("statusMessage");
+    if (langButton && langMenu) {
+      langButton.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        var hidden = langMenu.classList.toggle("hidden");
+        langButton.setAttribute("aria-expanded", hidden ? "false" : "true");
+      });
+      document.addEventListener("click", function (ev) {
+        if (!langButton.contains(ev.target) && !langMenu.contains(ev.target)) {
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+        }
+      });
+      langMenu.querySelectorAll(".lang-option").forEach(function (item) {
+        item.addEventListener("click", function () {
+          if (langText) langText.textContent = item.querySelector("span") ? item.querySelector("span").textContent : item.textContent;
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+          if (status) status.textContent = "Tradução HOLD. Runtime permanece pt-BR.";
+        });
       });
     }
   }

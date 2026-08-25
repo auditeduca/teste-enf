@@ -119,6 +119,39 @@
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
       });
     }
+    var hamburger = document.getElementById("hamburgerButton");
+    var nav = document.getElementById("primary-nav");
+    if (hamburger && nav) {
+      hamburger.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        hamburger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+    var langButton = document.getElementById("langButton");
+    var langMenu = document.getElementById("langMenu");
+    var langText = document.getElementById("langText");
+    var status = document.getElementById("statusMessage");
+    if (langButton && langMenu) {
+      langButton.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        var hidden = langMenu.classList.toggle("hidden");
+        langButton.setAttribute("aria-expanded", hidden ? "false" : "true");
+      });
+      document.addEventListener("click", function (ev) {
+        if (!langButton.contains(ev.target) && !langMenu.contains(ev.target)) {
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+        }
+      });
+      langMenu.querySelectorAll(".lang-option").forEach(function (item) {
+        item.addEventListener("click", function () {
+          if (langText) langText.textContent = item.querySelector("span") ? item.querySelector("span").textContent : item.textContent;
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+          if (status) status.textContent = "Tradução HOLD. Runtime permanece pt-BR.";
+        });
+      });
+    }
   }
 
   if (document.readyState === "loading") {

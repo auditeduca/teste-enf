@@ -73,8 +73,13 @@ def test_public_chrome_matches_production_contract_without_ads():
         "iconrodape1-80-calculadoras-de-enfermagem.webp",
         "Navegação Principal",
         "pt-BR · i18n HOLD",
+        'id="langButton"',
+        'id="hamburgerButton"',
     ):
         assert token in html
+    assert "braden.html" not in html
+    assert "cookie-modal" not in html
+    assert "adsbygoogle" not in html
     assert "--header-height: 96px" in css
     assert "--lang-height: 46px" in css
     assert "cdn.jsdelivr" not in html.lower()

@@ -7,6 +7,7 @@ Renderer remains PRESENTATION_ONLY. No ads. No email capture. No CDN. No cookie 
 from __future__ import annotations
 
 import json
+import re
 
 from .html import attr, esc
 from .paths import ASSETS_DIR, ROOT
@@ -42,11 +43,24 @@ def _icon(name: str) -> str:
 
 
 def _footer_strings() -> dict:
-    path = ROOT / "cko_inbox" / "drive" / "locales" / "pt" / "footer.json"
+    for path in (
+        ROOT / "cko_inbox" / "drive" / "site_shell" / "site-shell" / "footer.json",
+        ROOT / "cko_inbox" / "drive" / "locales" / "pt" / "footer.json",
+    ):
+        if path.exists():
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            return payload.get("footer") or {}
+    return {}
+
+
+def _shell_languages() -> list[tuple[str, str]]:
+    """Language names from Drive site-shell. Flag images are not in the zip."""
+    path = ROOT / "cko_inbox" / "drive" / "site_shell" / "site-shell" / "_language_selector.html"
     if not path.exists():
-        return {}
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    return payload.get("footer") or {}
+        return [("pt", "Português")]
+    text = path.read_text(encoding="utf-8")
+    pairs = re.findall(r'data-value="([^"]+)"[\s\S]*?<span>([^<]+)</span>', text)
+    return [(code, name.strip()) for code, name in pairs] or [("pt", "Português")]
 
 
 def _locale_codes() -> list[str]:
@@ -87,11 +101,13 @@ def ds_header(home_href: str, prefix: str) -> str:
     logo = f"{prefix}assets/img/icontopbar1-calculadoras-de-enfermagem.webp"
     inspector = home_href.replace("index.html", "inspector.html") if home_href.endswith("index.html") else "inspector.html"
     admin = home_href.replace("index.html", "admin.html") if home_href.endswith("index.html") else "admin.html"
-    locales = home_href.replace("index.html", "admin/locales.html") if home_href.endswith("index.html") else "admin/locales.html"
     calc_href = "gotejamento.html" if home_href.startswith("../") else "tools/gotejamento.html"
     return f"""<div id="global-header-container">
     <header class="site-header" role="banner">
     <div class="wrap header-row">
+      <button type="button" id="hamburgerButton" class="hamburger-button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="primary-nav">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
       <a class="brand" href="{attr(home_href)}">
         <img class="brand-mark" src="{attr(logo)}" width="48" height="32" alt="{esc(SITE_NAME)}" decoding="async">
         <span class="brand-text">
@@ -99,13 +115,12 @@ def ds_header(home_href: str, prefix: str) -> str:
           <span class="brand-sub">{esc(SITE_NS)} · lote piloto</span>
         </span>
       </a>
-      <nav class="nav desktop-nav" aria-label="Navegação Principal">
+      <nav id="primary-nav" class="nav desktop-nav" aria-label="Navegação Principal">
         <a href="{attr(home_href)}" accesskey="I">Início</a>
         <a href="{attr(inspector)}">Sobre Nós</a>
         <a href="{attr(calc_href)}">Calculadoras</a>
         <a href="{attr(inspector)}">Conteúdos</a>
         <a href="{attr(admin)}">Admin</a>
-        <a class="lang-chip" href="{attr(locales)}" title="19 códigos observados no Drive; tradução HOLD">pt-BR · i18n HOLD</a>
       </nav>
     </div>
   </header>
@@ -114,14 +129,25 @@ def ds_header(home_href: str, prefix: str) -> str:
 
 def ds_language_bar(home_href: str) -> str:
     locales = home_href.replace("index.html", "admin/locales.html") if home_href.endswith("index.html") else "admin/locales.html"
-    chips = " ".join(
-        f'<span class="lang-code" lang="{esc(code)}">{esc(code)}</span>'
-        for code in _locale_codes()
-    )
+    items = []
+    for code, name in _shell_languages():
+        items.append(
+            f'<button type="button" class="lang-option" data-value="{attr(code)}" lang="{attr(code)}">'
+            f'<span>{esc(name)}</span> <code>{esc(code)}</code></button>'
+        )
+    menu = "\n        ".join(items)
     return f"""<div id="language-selector-placeholder" data-i18n-gate="HOLD">
     <div class="wrap lang-bar">
-      <p class="lang-runtime">Idioma de runtime: <strong>pt-BR</strong>. Seletor observado (Drive/origin) · tradução HOLD.</p>
-      <p class="lang-codes" aria-label="Códigos de locale observados">{chips}</p>
+      <p class="lang-runtime">pt-BR · i18n HOLD. Bandeiras do seletor não vieram no zip (EVIDENCE_PENDING). Tradução não redireciona.</p>
+      <div id="language-dropdown-wrapper">
+        <button type="button" id="langButton" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu">
+          <span id="langText">Português</span>
+          <svg class="lang-caret" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div id="langMenu" class="hidden" role="listbox" aria-label="Idiomas observados no site-shell">
+        {menu}
+        </div>
+      </div>
       <a class="lang-chip" href="{attr(locales)}">Locales / Drive</a>
     </div>
   </div>"""
