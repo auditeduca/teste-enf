@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
+from http.client import IncompleteRead
 
 from .paths import ROOT, TOOLS_DIR
 
@@ -74,16 +75,21 @@ def _dump(path: Path, payload: dict) -> Path:
     return path
 
 
-def _http_get(url: str, timeout: int = 20, *, user_agent: str | None = None) -> dict:
+def _http_get(url: str, timeout: int = 20, *, user_agent: str | None = None, accept: str | None = None) -> dict:
     rec: dict = {"url": url}
     agents = [user_agent] if user_agent else [UA]
-    gov_hosts = ("planalto.gov.br", "iso.org", "gov.br", "cofen.gov.br", "coren-sp.gov.br", "dados.gov.br", "opendatasus.saude.gov.br", "bvsms.saude.gov.br")
+    gov_hosts = (
+        "planalto.gov.br", "iso.org", "gov.br", "cofen.gov.br", "coren-sp.gov.br",
+        "dados.gov.br", "opendatasus.saude.gov.br", "bvsms.saude.gov.br",
+        "camara.leg.br", "senado.leg.br", "congressonacional.leg.br", "normas.leg.br",
+    )
     if any(host in url for host in gov_hosts) and not user_agent:
         agents = [UA_BROWSER, UA]
     last_error = None
+    accept_header = accept or "text/html,application/xhtml+xml,application/json,*/*"
     for agent in agents:
         try:
-            req = Request(url, headers={"User-Agent": agent, "Accept": "text/html,application/xhtml+xml,application/json,*/*"})
+            req = Request(url, headers={"User-Agent": agent, "Accept": accept_header})
             with urlopen(req, timeout=timeout) as resp:
                 body = resp.read()
                 rec.update({
@@ -106,6 +112,14 @@ def _http_get(url: str, timeout: int = 20, *, user_agent: str | None = None) -> 
             if err.code == 403:
                 continue
             break
+        except IncompleteRead as err:
+            last_error = err
+            rec.update({
+                "http_status": None,
+                "error": f"IncompleteRead: {str(err)[:180]}",
+                "epistemic_status": "EVIDENCE_PENDING",
+            })
+            continue
         except (URLError, TimeoutError, OSError) as err:
             last_error = err
             rec.update({
@@ -881,6 +895,22 @@ def agent_records() -> list[dict]:
             "note": "CKAN dados.gov.br / OpenDataSUS. base_url só se HTTP 200.",
         },
         {
+            "agent_id": "AG-PROBE-CONGRESS-API",
+            "class": "ACQUISITION",
+            "implemented": True,
+            "writes_to": "cko_inbox/extracted/congress_probe.json",
+            "promotes_to_md": False,
+            "note": "Câmara + Senado/Congresso. base_url só se HTTP 200.",
+        },
+        {
+            "agent_id": "AG-FETCH-FEDERAL-LEGISLATION",
+            "class": "ACQUISITION",
+            "implemented": True,
+            "writes_to": "cko_md/legislation_instrument_registry.json",
+            "promotes_to_md": False,
+            "note": "Legislação federal com força de lei. PLP bloqueado. Norma revogada permitida para ferramenta.",
+        },
+        {
             "agent_id": "AG-LIBRARY-CATALOG",
             "class": "CONTENT",
             "implemented": True,
@@ -941,6 +971,7 @@ def write_agent_registry(run: dict | None = None) -> None:
 
 def run_extraction(*, network: bool = True) -> dict:
     """AG-ORCHESTRATOR — ordered pipeline. Never auto-PASS publication."""
+    from .congress import fetch_federal_legislation, probe_congress_apis
     from .govlib import (
         alert_freshness,
         catalog_library,
@@ -962,6 +993,8 @@ def run_extraction(*, network: bool = True) -> dict:
         fetch_regulated_pages(network=network),
         fetch_gov_sources(network=network),
         probe_apis(network=network),
+        probe_congress_apis(network=network),
+        fetch_federal_legislation(network=network),
         parse_pages_full_zip(),
         parse_sitemap(network=network),
         parse_chrome_contract(),

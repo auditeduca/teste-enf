@@ -125,6 +125,8 @@ def cmd_govsync(args: argparse.Namespace) -> int:
     wanted = {
         "AG-FETCH-GOV-SOURCES",
         "AG-API-PROBE",
+        "AG-PROBE-CONGRESS-API",
+        "AG-FETCH-FEDERAL-LEGISLATION",
         "AG-LIBRARY-CATALOG",
         "AG-CONTENT-CURRICULUM",
         "AG-OPS-DB-SYNC",

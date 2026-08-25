@@ -123,6 +123,7 @@ LIBRARY_TOPICS = (
     ("LIB-L80-EXAMES", "L80", "Exames laboratoriais", "AGY-MS", "PENDENCIA_ALTA"),
     ("LIB-L110-PROTOCOLOS", "L110", "Procedimentos e protocolos", "AGY-COFEN", "PENDENCIA_ALTA"),
     ("LIB-L130-CONCURSO", "L130", "Educação / concurso", "AGY-MS", "PENDENCIA_ALTA"),
+    ("LIB-L140-LEGISLACAO-FEDERAL", "L140", "Legislação federal (Congresso)", "AGY-CONGRESSO", "PENDENCIA_ALTA"),
     ("LIB-L150-GUIAS", "L150", "Artigos / guias / resumos", "AGY-MS", "PENDENCIA_ALTA"),
 )
 
@@ -157,6 +158,7 @@ def write_agency_md() -> dict:
         {"business_key": "AGY-COFEN", "name": "COFEN", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED"},
         {"business_key": "AGY-COREN-SP", "name": "COREN-SP", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "note": "Demais CORENs não observados neste lote."},
         {"business_key": "AGY-DADOSGOV", "name": "dados.gov.br", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED"},
+        {"business_key": "AGY-CONGRESSO", "name": "Congresso Nacional", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "note": "Legislação federal via Dados Abertos Senado/Câmara. Não é NIFS."},
     ]
     payload = {
         "business_key": "MD-AGENCY-REG-001",
@@ -385,6 +387,7 @@ def catalog_library() -> dict:
     """AG-LIBRARY-CATALOG — catalog observed gov pages as library resources. No full HTML republish."""
     gov = json.loads((ROOT / "cko_inbox" / "extracted" / "gov_pages.json").read_text(encoding="utf-8")) if (ROOT / "cko_inbox" / "extracted" / "gov_pages.json").exists() else {}
     probe = json.loads((ROOT / "cko_inbox" / "extracted" / "api_probe.json").read_text(encoding="utf-8")) if (ROOT / "cko_inbox" / "extracted" / "api_probe.json").exists() else {}
+    laws = json.loads((ROOT / "cko_md" / "legislation_instrument_registry.json").read_text(encoding="utf-8")) if (ROOT / "cko_md" / "legislation_instrument_registry.json").exists() else {}
     resources = []
     for page in gov.get("pages") or []:
         observed = page.get("epistemic_status") == "OBSERVED" and page.get("http_status") == 200
@@ -406,8 +409,32 @@ def catalog_library() -> dict:
             "assured": False,
             "publication": "HOLD",
         })
+    for item in laws.get("instruments") or []:
+        resources.append({
+            "business_key": f"RES-{item['business_key']}",
+            "uuid": None,
+            "entity_type": "ETYPE-RESOURCE",
+            "title": item.get("title") or item.get("business_key"),
+            "agency_key": "AGY-CONGRESSO",
+            "source_ref": item.get("business_key"),
+            "md_ref": item.get("md_ref"),
+            "reg_ref": item.get("reg_ref"),
+            "layer": "L140",
+            "url": item.get("url"),
+            "sha256": item.get("sha256"),
+            "kind": "FEDERAL_LEGISLATION_METADATA",
+            "republication": "METADATA_ONLY",
+            "status": "REVOKED_TOOL_OK" if item.get("revoked") else "SOURCE_DERIVED",
+            "revoked": bool(item.get("revoked")),
+            "assured": False,
+            "publication": "HOLD",
+            "note": "Norma revogada permitida como ferramenta. Texto integral não republicado.",
+        })
     for topic_key, layer, title, agency, pending in LIBRARY_TOPICS:
-        has_source = any(item.get("agency_key") == agency and item.get("status") == "SOURCE_DERIVED" for item in resources)
+        has_source = any(
+            item.get("agency_key") == agency and item.get("status") in {"SOURCE_DERIVED", "REVOKED_TOOL_OK"}
+            for item in resources
+        )
         resources.append({
             "business_key": topic_key,
             "uuid": None,
@@ -571,6 +598,14 @@ def content_curriculum() -> dict:
             "alternative": "CKAN dados.gov.br package_search q=anvisa, se HTTP 200.",
             "status": "PENDENCIA_ALTA",
         },
+        {
+            "business_key": "PEND-SUPABASE-LEGISLATION",
+            "severity": "ALTA",
+            "reason": "Supabase legislation/tables: autenticação MCP falhou. Nada inventado. Extração federal usa API do Congresso.",
+            "government_alternative_sought": True,
+            "alternative": "https://legis.senado.leg.br/dadosabertos/legislacao",
+            "status": "PENDENCIA_ALTA",
+        },
     ]
     payload = {
         "business_key": "MD-CONTENT-CURR-001",
@@ -644,16 +679,29 @@ def sync_ops_db() -> dict:
             status TEXT,
             created_at TEXT
         );
+        CREATE TABLE IF NOT EXISTS legislation (
+            business_key TEXT PRIMARY KEY,
+            tipo TEXT,
+            numero TEXT,
+            ano INTEGER,
+            md_ref TEXT NOT NULL,
+            reg_ref TEXT NOT NULL,
+            status TEXT,
+            revoked INTEGER,
+            sha256 TEXT
+        );
         """
     )
     gov = json.loads((ROOT / "cko_inbox" / "extracted" / "gov_pages.json").read_text(encoding="utf-8")) if (ROOT / "cko_inbox" / "extracted" / "gov_pages.json").exists() else {}
     lib = json.loads((ROOT / "cko_md" / "resource_library.json").read_text(encoding="utf-8")) if (ROOT / "cko_md" / "resource_library.json").exists() else {}
     curr = json.loads((ROOT / "cko_md" / "content_curriculum.json").read_text(encoding="utf-8")) if (ROOT / "cko_md" / "content_curriculum.json").exists() else {}
     alerts = json.loads((ROOT / "cko_assurance" / "freshness_alerts.json").read_text(encoding="utf-8")) if (ROOT / "cko_assurance" / "freshness_alerts.json").exists() else {}
+    laws = json.loads((ROOT / "cko_md" / "legislation_instrument_registry.json").read_text(encoding="utf-8")) if (ROOT / "cko_md" / "legislation_instrument_registry.json").exists() else {}
     conn.execute("DELETE FROM sources")
     conn.execute("DELETE FROM resources")
     conn.execute("DELETE FROM content_units")
     conn.execute("DELETE FROM alerts")
+    conn.execute("DELETE FROM legislation")
     for page in gov.get("pages") or []:
         conn.execute(
             "INSERT INTO sources VALUES (?,?,?,?,?,?,?,?,?,?)",
@@ -682,6 +730,15 @@ def sync_ops_db() -> dict:
                 (unit.get("body") or {}).get("status"), unit.get("sha256"),
             ),
         )
+    for item in laws.get("instruments") or []:
+        conn.execute(
+            "INSERT INTO legislation VALUES (?,?,?,?,?,?,?,?,?)",
+            (
+                item.get("business_key"), item.get("tipo"), str(item.get("numero") or ""),
+                item.get("ano"), item.get("md_ref") or "UNKNOWN", item.get("reg_ref") or "UNKNOWN",
+                item.get("status"), 1 if item.get("revoked") else 0, item.get("sha256"),
+            ),
+        )
     for alert in alerts.get("alerts") or []:
         conn.execute(
             "INSERT INTO alerts VALUES (?,?,?,?,?,?,?)",
@@ -697,9 +754,13 @@ def sync_ops_db() -> dict:
         "resources": conn.execute("SELECT COUNT(*) FROM resources").fetchone()[0],
         "content_units": conn.execute("SELECT COUNT(*) FROM content_units").fetchone()[0],
         "alerts": conn.execute("SELECT COUNT(*) FROM alerts").fetchone()[0],
+        "legislation": conn.execute("SELECT COUNT(*) FROM legislation").fetchone()[0],
     }
     missing = conn.execute(
         "SELECT COUNT(*) FROM resources WHERE md_ref IS NULL OR md_ref='' OR reg_ref IS NULL OR reg_ref=''"
+    ).fetchone()[0]
+    missing_leg = conn.execute(
+        "SELECT COUNT(*) FROM legislation WHERE md_ref IS NULL OR md_ref='' OR reg_ref IS NULL OR reg_ref=''"
     ).fetchone()[0]
     conn.close()
     return {
@@ -708,7 +769,7 @@ def sync_ops_db() -> dict:
         "role": "MAKER",
         "path": str(INBOX_DB.relative_to(ROOT)),
         "counts": counts,
-        "rows_missing_md_or_reg": missing,
+        "rows_missing_md_or_reg": missing + missing_leg,
         "production_postgres": False,
         "rls_changed": False,
         "promotes_to_md": False,
@@ -720,6 +781,7 @@ def alert_freshness() -> dict:
     """AG-ALERT-FRESHNESS — periodic extraction expectation + HIGH copyright/source gaps."""
     gov = json.loads((ROOT / "cko_inbox" / "extracted" / "gov_pages.json").read_text(encoding="utf-8")) if (ROOT / "cko_inbox" / "extracted" / "gov_pages.json").exists() else {}
     probe = json.loads((ROOT / "cko_inbox" / "extracted" / "api_probe.json").read_text(encoding="utf-8")) if (ROOT / "cko_inbox" / "extracted" / "api_probe.json").exists() else {}
+    congress = json.loads((ROOT / "cko_inbox" / "extracted" / "congress_probe.json").read_text(encoding="utf-8")) if (ROOT / "cko_inbox" / "extracted" / "congress_probe.json").exists() else {}
     curr = json.loads((ROOT / "cko_md" / "content_curriculum.json").read_text(encoding="utf-8")) if (ROOT / "cko_md" / "content_curriculum.json").exists() else {}
     alerts = []
     for page in gov.get("pages") or []:
@@ -733,7 +795,7 @@ def alert_freshness() -> dict:
                 "status": "OPEN",
                 "created_at": _now(),
             })
-    for adapter in probe.get("adapters") or []:
+    for adapter in (probe.get("adapters") or []) + (congress.get("adapters") or []):
         if not adapter.get("online"):
             alerts.append({
                 "business_key": f"ALRT-API-{adapter['business_key']}",

@@ -58,6 +58,8 @@ def test_ops_sqlite_mirrors_md_reg_and_biblioteca_renders():
     html = (ROOT / "render" / "fetch" / "biblioteca.html").read_text(encoding="utf-8")
     assert "Biblioteca de recursos" in html
     assert "PENDENCIA_ALTA" in html or "ALTA" in html
+    assert "Congresso" in html or "legislação federal" in html.lower()
+    assert "PLP" in html
     assert "adsbygoogle" not in html
     assert 'type="email"' not in html
     assert "braden.html" not in html

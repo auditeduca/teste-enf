@@ -509,6 +509,9 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     agencies = _load_json(ROOT / "cko_md" / "agency_registry.json")
     alerts = _load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
     adapters = _load_json(ROOT / "cko_md" / "api_adapter_registry.json")
+    laws = _load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
+    links = _load_json(ROOT / "cko_md" / "legislation_tool_links.json")
+    types = _load_json(ROOT / "cko_inbox" / "extracted" / "congress_types.json")
     res_rows = []
     for item in lib.get("resources") or []:
         res_rows.append(
@@ -552,6 +555,22 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
             f"<td>{esc(item.get('epistemic_status'))}</td>"
             "</tr>"
         )
+    law_rows = []
+    for item in laws.get("instruments") or []:
+        law_rows.append(
+            "<tr>"
+            f"<td><code>{esc(item.get('business_key'))}</code></td>"
+            f"<td>{esc(item.get('title'))}</td>"
+            f"<td>{esc(item.get('tipo'))}</td>"
+            f"<td>{esc('REVOKED' if item.get('revoked') else item.get('status'))}</td>"
+            f"<td>{esc(', '.join(item.get('tool_slugs') or []) or '—')}</td>"
+            f"<td><code>{esc(item.get('md_ref'))}</code></td>"
+            f"<td><code>{esc(item.get('reg_ref'))}</code></td>"
+            "</tr>"
+        )
+    link_n = links.get("population") or 0
+    senado_block = types.get("senado_block")
+    camara_block = types.get("camara_block")
     agency_n = agencies.get("population") or 0
     header, footer = _header_footer(home_href)
     body = f"""{header}
@@ -559,13 +578,18 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     <header class="page-hero">
       <p class="eyebrow">L60 Biblioteca · ambiente controlado</p>
       <h1>Biblioteca de recursos.</h1>
-      <p class="lede">Catálogo canônico de fontes governamentais (ANVISA, MS, COFEN, COREN) e currículo documental básico→avançado. Cada objeto tem MD e REG. Publicação HOLD. HTML integral não é republicado.</p>
-      <p class="hold-banner">Agências {esc(agency_n)} · Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Alertas ALTA {esc(alerts.get("alta_count"))} · APIs online {esc(adapters.get("adapters") and sum(1 for a in adapters.get("adapters") or [] if a.get("online")))} · release HOLD</p>
+      <p class="lede">Catálogo canônico de fontes governamentais (ANVISA, MS, COFEN, COREN), legislação federal do Congresso Nacional e currículo documental básico→avançado. Cada objeto tem MD e REG. Publicação HOLD. HTML integral não é republicado. Projeto de lei complementar (PLP) é bloqueado.</p>
+      <p class="hold-banner">Agências {esc(agency_n)} · Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Alertas ALTA {esc(alerts.get("alta_count"))} · APIs online {esc(adapters.get("adapters") and sum(1 for a in adapters.get("adapters") or [] if a.get("online")))} · release HOLD</p>
     </header>
     <section class="panel">
       <h2>Fontes e APIs observadas</h2>
       <p>API REST só entra com <code>base_url</code> após HTTP 200. Sem 200 permanece null. Extração periódica {esc(alerts.get("frequency_hours") or 24)}h. Portal pode ficar offline.</p>
       <div class="table-wrap"><table class="inspect"><thead><tr><th>adapter</th><th>órgão</th><th>HTTP</th><th>base_url</th><th>estado</th></tr></thead><tbody>{"".join(api_rows) or "<tr><td colspan='5'>EVIDENCE_PENDING — rode extract com rede.</td></tr>"}</tbody></table></div>
+    </section>
+    <section id="legislacao" class="panel">
+      <h2>Legislação federal (API do Congresso)</h2>
+      <p>Fonte: Dados Abertos do Senado/Congresso (<code>legislacao/</code>). Tipos sem força de lei bloqueados (PLP, PL, requerimento, parecer). Lei Complementar promulgada (LCP) tem força de lei. Norma revogada pode vincular ferramenta. Tipos Senado bloqueados {esc(senado_block)} · Câmara bloqueados {esc(camara_block)} · vínculos ferramenta {esc(link_n)}.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>norma</th><th>tipo</th><th>status</th><th>ferramentas</th><th>MD</th><th>REG</th></tr></thead><tbody>{"".join(law_rows) or "<tr><td colspan='7'>EVIDENCE_PENDING — rode extract com rede.</td></tr>"}</tbody></table></div>
     </section>
     <section class="panel">
       <h2>Recursos catalogados</h2>
@@ -589,7 +613,7 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
   {footer}"""
     return _shell(
         "Biblioteca de recursos — Calculadoras de Enfermagem",
-        "Biblioteca canônica de fontes ANVISA, MS, COFEN e currículo básico a avançado. Publicação HOLD.",
+        "Biblioteca canônica de fontes ANVISA, MS, COFEN, legislação federal do Congresso e currículo básico a avançado. Publicação HOLD.",
         body,
         css_href=None if inline_css else css_href,
         css_inline="file" if inline_css else None,

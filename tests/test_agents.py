@@ -20,6 +20,8 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
         "AG-FETCH-REGULATED",
         "AG-FETCH-GOV-SOURCES",
         "AG-API-PROBE",
+        "AG-PROBE-CONGRESS-API",
+        "AG-FETCH-FEDERAL-LEGISLATION",
         "AG-PARSE-PAGES-FULL",
         "AG-PARSE-SITEMAP",
         "AG-PARSE-CHROME",
@@ -52,7 +54,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     slugs = {path.stem for path in TOOLS_DIR.glob("*.json")}
     assert slugs == {"gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico", "dimensionamento"}
     agents = json.loads((ROOT / "cko_assurance" / "agent_registry.json").read_text(encoding="utf-8"))
-    assert agents["population"] == 25
+    assert agents["population"] == 27
     assert agents["implemented"] is True
     assert agents["publication_implemented"] is False
     ipe = json.loads((ROOT / "cko_inbox" / "extracted" / "ipe_extract.json").read_text(encoding="utf-8"))

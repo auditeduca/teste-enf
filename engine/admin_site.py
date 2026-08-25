@@ -174,7 +174,7 @@ def page_dashboard(ctx: dict, *, css_href: str, home_href: str, inline_css: bool
       <a class="tool-card" href="{attr(_module_href('admin/deploy.html', nested))}"><p class="eyebrow">Git</p><h2>Deploy</h2><p>Prepara changeset. git push é FORBIDDEN no botão.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/maturity.html', nested))}"><p class="eyebrow">M0–M7</p><h2>Maturidade</h2><p>Panorama observado de MD, REG, agentes, CAAT, IPE, Drive e DS.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/library.html', nested))}"><p class="eyebrow">L60</p><h2>Biblioteca</h2><p>Recursos ANVISA/MS/COFEN + currículo básico→avançado. Publicação HOLD.</p></a>
-      <a class="tool-card" href="{attr(_module_href('admin/apis.html', nested))}"><p class="eyebrow">APIs</p><h2>Órgãos / APIs</h2><p>Probe CKAN. base_url null até HTTP 200. SQLite inbox.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/apis.html', nested))}"><p class="eyebrow">APIs</p><h2>Órgãos / APIs</h2><p>CKAN + Congresso. base_url null até HTTP 200. PLP bloqueado. SQLite inbox.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/mdm.html', nested))}"><p class="eyebrow">L10</p><h2>Master Data</h2><p>Entity types e locale registry. Mockup MDM = linguagem de layout.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/frameworks.html', nested))}"><p class="eyebrow">COSO/COBIT/ISO</p><h2>Frameworks</h2><p>Registry only. CLAUSE_TEXT_UNAVAILABLE. ISO 8000 = perfil CKO, não certificação.</p></a>
     </section>
@@ -447,6 +447,7 @@ def page_library(ctx: dict, **kwargs) -> str:
     lib = load_json(ROOT / "cko_md" / "resource_library.json")
     curr = load_json(ROOT / "cko_md" / "content_curriculum.json")
     alerts = load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
+    laws = load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
     res_rows = [
         [
             esc(item.get("business_key")),
@@ -475,12 +476,27 @@ def page_library(ctx: dict, **kwargs) -> str:
         [esc(item.get("severity")), esc(item.get("kind")), esc((item.get("message") or "")[:180])]
         for item in (alerts.get("alerts") or [])
     ]
+    law_rows = [
+        [
+            esc(item.get("business_key")),
+            esc(item.get("title")),
+            esc(item.get("tipo")),
+            esc("REVOKED" if item.get("revoked") else item.get("status")),
+            f"<code>{esc(item.get('md_ref'))}</code>",
+            f"<code>{esc(item.get('reg_ref'))}</code>",
+        ]
+        for item in (laws.get("instruments") or [])
+    ]
     inner = f"""
     <header class="page-hero">
       <h1>Biblioteca de recursos.</h1>
-      <p class="lede">Catálogo MD + currículo documental. Sem HTML integral. Sem LLM. Publicação HOLD.</p>
-      <p class="hold-banner">Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Pendências ALTA {esc(curr.get("pending_high_count"))} · Alertas {esc(alerts.get("population"))}</p>
+      <p class="lede">Catálogo MD + currículo documental + legislação federal do Congresso. Sem HTML integral. Sem LLM. Publicação HOLD. PLP bloqueado.</p>
+      <p class="hold-banner">Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Pendências ALTA {esc(curr.get("pending_high_count"))} · Alertas {esc(alerts.get("population"))}</p>
     </header>
+    <section class="panel">
+      <h2>Legislação federal</h2>
+      {_table(["id", "norma", "tipo", "status", "MD", "REG"], law_rows or [["—", "rode extract", "—", "—", "—", "—"]])}
+    </section>
     <section class="panel">
       <h2>Recursos</h2>
       {_table(["id", "título", "status", "MD", "REG"], res_rows or [["—", "rode extract", "—", "—", "—"]])}
@@ -506,6 +522,9 @@ def page_apis(ctx: dict, **kwargs) -> str:
     adapters = load_json(ROOT / "cko_md" / "api_adapter_registry.json")
     gov = load_json(ROOT / "cko_inbox" / "extracted" / "gov_pages.json")
     agencies = load_json(ROOT / "cko_md" / "agency_registry.json")
+    types = load_json(ROOT / "cko_inbox" / "extracted" / "congress_types.json")
+    laws = load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
+    gate = load_json(ROOT / "cko_reg" / "legislation_qualification.json")
     db_path = ROOT / "cko_inbox" / "cko_ops.sqlite"
     api_rows = [
         [
@@ -529,11 +548,21 @@ def page_apis(ctx: dict, **kwargs) -> str:
         for item in (gov.get("pages") or [])
     ]
     ag_rows = [[esc(item.get("business_key")), esc(item.get("name")), _status_chip(item.get("status"))] for item in (agencies.get("agencies") or [])]
+    gate_rows = [
+        [
+            esc(item.get("source_ref")),
+            esc(item.get("tipo")),
+            esc(item.get("gate_decision")),
+            esc("sim" if item.get("revoked") else "não"),
+            esc((item.get("gate_reason") or "")[:160]),
+        ]
+        for item in (gate.get("qualifications") or [])
+    ]
     inner = f"""
     <header class="page-hero">
       <h1>APIs e órgãos.</h1>
-      <p class="lede">ANVISA, MS, COFEN, COREN. Probe CKAN. <code>base_url</code> só após HTTP 200 observado. API pode ficar offline; extração a cada 24h.</p>
-      <p class="hold-banner">Adapters {esc(adapters.get("population"))} · produção API={esc(adapters.get("production_api"))} · SQLite inbox {esc("presente" if db_path.exists() else "ausente")} · Postgres produção=NÃO · RLS inalterado</p>
+      <p class="lede">ANVISA, MS, COFEN, COREN e Congresso Nacional. <code>base_url</code> só após HTTP 200. Legislação federal bloqueia tipo sem força de lei (ex.: PLP). Norma revogada pode ser ferramenta.</p>
+      <p class="hold-banner">Adapters {esc(adapters.get("population"))} · produção API={esc(adapters.get("production_api"))} · tipos Senado ALLOW {esc(types.get("senado_allow"))} / BLOCK {esc(types.get("senado_block"))} · leis {esc(laws.get("population"))} · SQLite inbox {esc("presente" if db_path.exists() else "ausente")} · Postgres produção=NÃO · RLS inalterado</p>
     </header>
     <section class="panel">
       <h2>Agências MD</h2>
@@ -544,6 +573,11 @@ def page_apis(ctx: dict, **kwargs) -> str:
       {_table(["adapter", "órgão", "HTTP", "base_url", "estado", "MD", "REG"], api_rows or [["—", "rode extract --network", "—", "null", "EVIDENCE_PENDING", "—", "—"]])}
     </section>
     <section class="panel">
+      <h2>Gate de força de lei</h2>
+      <p>{esc(gate.get("gate_note") or "REG-LEG-GATE-001")}</p>
+      {_table(["instrumento", "tipo", "decisão", "revogada", "razão"], gate_rows or [["—", "—", "EVIDENCE_PENDING", "—", "rode extract"]])}
+    </section>
+    <section class="panel">
       <h2>Portais HTML oficiais</h2>
       {_table(["órgão", "HTTP", "estado", "sha256"], gov_rows)}
     </section>
@@ -552,7 +586,7 @@ def page_apis(ctx: dict, **kwargs) -> str:
       <p>Espelho SQLite <code>cko_inbox/cko_ops.sqlite</code> (inbox). Store canônico continua JSON no GitHub. Nenhuma alteração de RLS. Sem captura de e-mail para alerta.</p>
     </section>
     """
-    return admin_shell(title="APIs / órgãos · CKO Studio", description="Adapters ANVISA/MS/COFEN observados.", current="apis", inner=inner, **kwargs)
+    return admin_shell(title="APIs / órgãos · CKO Studio", description="Adapters ANVISA/MS/COFEN/Congresso observados.", current="apis", inner=inner, **kwargs)
 
 
 def page_backlog(ctx: dict, **kwargs) -> str:
