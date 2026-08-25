@@ -422,13 +422,17 @@ def catalog_library() -> dict:
             "layer": "L140",
             "url": item.get("url"),
             "sha256": item.get("sha256"),
-            "kind": "FEDERAL_LEGISLATION_METADATA",
+            "kind": "FEDERAL_REGULATORY_DECREE_METADATA" if str(item.get("tipo") or "").startswith("DEC") else "FEDERAL_LEGISLATION_METADATA",
             "republication": "METADATA_ONLY",
             "status": "REVOKED_TOOL_OK" if item.get("revoked") else "SOURCE_DERIVED",
             "revoked": bool(item.get("revoked")),
             "assured": False,
             "publication": "HOLD",
-            "note": "Norma revogada permitida como ferramenta. Texto integral não republicado.",
+            "note": (
+                "Decreto regulamentar: órgão emite; corpus federal no Congresso/normas.leg.br. Texto integral não republicado."
+                if str(item.get("tipo") or "").startswith("DEC")
+                else "Norma revogada permitida como ferramenta. Texto integral não republicado."
+            ),
         })
     for topic_key, layer, title, agency, pending in LIBRARY_TOPICS:
         has_source = any(

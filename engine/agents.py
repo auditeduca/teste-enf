@@ -908,7 +908,7 @@ def agent_records() -> list[dict]:
             "implemented": True,
             "writes_to": "cko_md/legislation_instrument_registry.json",
             "promotes_to_md": False,
-            "note": "Legislação federal com força de lei. PLP bloqueado. Norma revogada permitida para ferramenta.",
+            "note": "Catálogo federal: LCP/lei ALLOW; PLP BLOCK; decreto numerado REGULATORY; norma revogada para ferramenta.",
         },
         {
             "agent_id": "AG-LIBRARY-CATALOG",

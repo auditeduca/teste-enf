@@ -1,0 +1,97 @@
+{
+  "business_key": "MD-OPS-METHOD-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": true,
+  "publication": "HOLD",
+  "assured": false,
+  "canonical_store": "GitHub JSON MD/REG (branch). Chat não é fonte de verdade.",
+  "method": "RECOVER → COMPARE → GAP ONLY → REPERFORM → CLOSE",
+  "plan_policy": "Não escrever plano waterfall isolado nem executar Drive/Supabase à cega. Recuperar inventário observável, comparar com MD/REG no GitHub, planejar só o gap, executar um gap com evidência.",
+  "anti_loss": [
+    "Toda decisão persistida em MD/REG versionado, não só no chat.",
+    "Um conceito → uma business_key CKO → projeções.",
+    "Drive/NIFS/Supabase = descoberta/quarentena. Não promovem identidade."
+  ],
+  "anti_hallucination": [
+    "SEM EVIDÊNCIA → UNKNOWN / EVIDENCE_PENDING / HOLD. Nunca PASS por inferência.",
+    "Não inventar UUID, hash, texto de cláusula, DOI, URL, PASS ou claim de produção.",
+    "Resposta de API não é canônica sem snapshot + hash + MD + REG + validação.",
+    "LLM não é autoridade clínica nem regulatória."
+  ],
+  "stores": {
+    "github_md_reg": {
+      "role": "CANONICAL",
+      "status": "OBSERVED"
+    },
+    "drive": {
+      "role": "DISCOVERY_QUARANTINE",
+      "status": "OBSERVED",
+      "do_not_promote": [
+        "CKO-MasterData-Parecer-360-v1.0.md (1OUlaOO-hvxKk7IHoiBoKWuJRg26hP3uC) — documental FAIL; 0/24 implementação evidenciada",
+        "lei8080-sus.html com ads",
+        "pages_full HTML de escalas não publicadas",
+        "IDs NIFS LEG.BR.*"
+      ]
+    },
+    "nifs": {
+      "role": "DISCOVERY_ONLY",
+      "status": "OBSERVED"
+    },
+    "supabase": {
+      "role": "DISCOVERY",
+      "status": "EVIDENCE_PENDING",
+      "projects_observed": [
+        {
+          "ref": "aevqrmkdhffmursdtcmo",
+          "name": "auditeduca's Project",
+          "status": "ACTIVE_HEALTHY",
+          "sql": "password authentication failed for supabase_read_only_user"
+        },
+        {
+          "ref": "bsawvgyideporzailnys",
+          "name": "simulados-para-enfermagem",
+          "status": "INACTIVE",
+          "sql": "not queried — inactive"
+        }
+      ],
+      "note": "Não inventar schema nem 172 entidades. Reabrir só com credencial de leitura."
+    }
+  },
+  "federal_catalog_rule": {
+    "publication_house": "Congresso Nacional / normas.leg.br",
+    "emitting_organ_is_not_catalog_identity": true,
+    "allow": ["CF", "LEI", "LCP promulgada", "DEC-n regulamentar"],
+    "block": ["PL", "PLP", "PEC", "REQ", "parecer", "DEC-sn", "DEC-cl", "portaria de órgão neste tubo", "resolução COFEN neste tubo"]
+  },
+  "living_gaps": [
+    {
+      "id": "GAP-DEC-7508",
+      "status": "REGISTERED",
+      "publication": "HOLD",
+      "business_key": "INS-DEC-7508-2011",
+      "evidence": "Congress API legis.senado legislacao/412353 tipo DEC-n. Identidade CKO, não LEG.BR.DEC.7508.2011."
+    },
+    {
+      "id": "GAP-SUPABASE-READ",
+      "status": "BLOCKED",
+      "reason": "MCP list_tables/execute_sql: password authentication failed. EVIDENCE_PENDING."
+    },
+    {
+      "id": "GAP-ORGAN-ACTS",
+      "status": "HOLD",
+      "reason": "Portaria MS / Resolução COFEN = segundo tubo (portal do órgão), não misturar no catálogo de legislação federal."
+    },
+    {
+      "id": "GAP-PARECER-360",
+      "status": "QUARANTINE",
+      "reason": "Workbook documental. Não promover a golden MD."
+    },
+    {
+      "id": "GAP-DIMENSIONAMENTO",
+      "status": "HOLD",
+      "reason": "Constituição: cinco pilotos; dimensionamento permanece HOLD."
+    }
+  ],
+  "rule": "O plano vivo é este JSON. Gap só fecha com evidência. Reconstrução é último recurso."
+}

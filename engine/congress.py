@@ -2,10 +2,14 @@
 
 CKO path (not NIFS IDs, not Drive HTML, not invented UUIDs):
 
-- Senado/Congresso `legis.senado.leg.br/dadosabertos/legislacao` is the enacted-norm source.
+- Senado/Congresso `legis.senado.leg.br/dadosabertos/legislacao` is the official
+  federal corpus of the República (publication house). Issuing organ ≠ catalog identity.
 - Câmara `dadosabertos.camara.leg.br/api/v2` supplies proposition-type catalogs.
-- Types without force of law are blocked (PL, PLP / projeto de lei complementar, REQ, parecer, …).
+- Types without federal legal effect are blocked (PL, PLP, REQ, parecer, …).
 - Enacted Lei Complementar (LCP) has force of law (CF/88 art. 59, II) and is allowed.
+- Numbered/regulatory decree (DEC, DEC-n) is allowed as REGULATORY effect
+  (CF/88 art. 84, IV). It is not a law of Congress. DEC-sn / DEC-cl stay blocked.
+- Portaria / resolução of agencies stay on a separate organ pipe.
 - Revoked enacted norms are allowed as tool references, never as current applicability.
 
 Drive/NIFS used only as discovery seeds. Supabase unread → EVIDENCE_PENDING.
@@ -64,7 +68,14 @@ PROBE_CANDIDATES = (
     },
 )
 
-# Enacted species with force of law (CF/88 art. 59 and Constituição itself).
+# Numbered/regulatory executive decree. Official federal corpus, not CF/88 art. 59.
+REGULATORY_DECREE_SIGLAS = frozenset({
+    "DEC",    # parent type (Instanciavel=0); used as lista?tipo=DEC
+    "DEC-n",  # Decreto Numerado — e.g. Decreto 7.508/2011
+})
+
+# Enacted species with force of law (CF/88 art. 59 and Constituição itself)
+# plus numbered regulatory decrees catalogued by the same official house.
 ALLOW_SIGLAS = frozenset({
     "CON", "CON-v", "CON-nv", "ADCT",
     "EMC", "EMC-n", "EMC-sn", "EMR",
@@ -78,7 +89,7 @@ ALLOW_SIGLAS = frozenset({
     "DEL", "DEL-mpv",
     "AILEI", "AIEMC",
     "CDL", "CDL-n", "CDL-sn",
-})
+}) | REGULATORY_DECREE_SIGLAS
 
 # Explicit denylist. User example "lei complementar" maps to PLP / projeto, not enacted LCP.
 BLOCK_SIGLAS = frozenset({
@@ -176,12 +187,28 @@ FEDERAL_SEEDS = (
         "reg_ref": "REG-INS-LEI-2312-1954",
         "expect_revoked": True,
     },
+    {
+        "business_key": "INS-DEC-7508-2011",
+        "tipo": "DEC",
+        "numero": 7508,
+        "ano": 2011,
+        "discovery": (
+            "NIFS LEG.BR.DEC.7508.2011 e corpus Planalto — descoberta only. "
+            "CKO re-identifica via Congresso API como Decreto numerado que regulamenta a Lei 8.080."
+        ),
+        "tool_slugs": ["simulado-tecnico"],
+        "md_ref": "MD-INS-DEC-7508-2011",
+        "reg_ref": "REG-INS-DEC-7508-2011",
+    },
 )
 
 GATE_NOTE = (
-    "Instrumento sem força de lei é bloqueado. Exemplo do pedido: 'lei complementar' "
-    "→ PLP / Projeto de Lei Complementar (não é lei). Lei Complementar promulgada (LCP) "
-    "tem força de lei (CF/88 art. 59, II) e entra. Norma revogada entra só como "
+    "Catálogo federal da República (legis.senado / normas.leg.br): entra o que tem efeito "
+    "jurídico federal observável. Órgão emite; a casa legislativa publica o corpus. "
+    "PLP / projeto = BLOCK. LCP promulgada = ALLOW (força de lei, CF/88 art. 59, II). "
+    "Decreto numerado/regulamentar (DEC, DEC-n) = ALLOW como efeito REGULATORY "
+    "(CF/88 art. 84, IV) — não é lei do Congresso. DEC-sn e DEC-cl permanecem BLOCK. "
+    "Portaria MS / Resolução COFEN não entram neste tubo. Norma revogada entra só como "
     "ferramenta (REVOKED), nunca como aplicabilidade vigente."
 )
 
@@ -210,40 +237,72 @@ def _as_list(value):
     return [value]
 
 
+def _gate_fields(*, sigla: str | None, nome: str | None, source: str, decision: str, reason: str,
+                 legal_effect: str) -> dict:
+    return {
+        "sigla": sigla or None,
+        "nome": nome or None,
+        "source": source,
+        "decision": decision,
+        "force_of_law": legal_effect == "FORCE_OF_LAW",
+        "force_of_regulation": legal_effect == "REGULATORY",
+        "legal_effect": legal_effect,
+        "reason": reason,
+        "uuid": None,
+    }
+
+
+def issuer_meta(tipo: str | None) -> dict:
+    """Issuing organ vs official publication house. Does not create identity."""
+    t = tipo or ""
+    if t.startswith("DEC"):
+        return {
+            "issuer": "Presidência da República",
+            "issuer_role": "EMITTING_ORGAN",
+            "publication_channel": "Congresso Nacional / normas.leg.br",
+            "instrument_class": "FEDERAL_REGULATORY_DECREE",
+        }
+    return {
+        "issuer": "Congresso Nacional",
+        "issuer_role": "LEGISLATIVE_HOUSE",
+        "publication_channel": "Congresso Nacional / normas.leg.br",
+        "instrument_class": "FEDERAL_LEGISLATION",
+    }
+
+
 def classify_tipo(*, sigla: str | None, nome: str | None = None, source: str = "senado_tipos_norma") -> dict:
-    """REG gate: force of law vs blocked. Deterministic. No HTTP."""
+    """REG gate: federal legal effect vs blocked. Deterministic. No HTTP."""
     raw_sigla = (sigla or "").strip()
     raw_nome = (nome or "").strip()
     sigla_key = raw_sigla
     nome_l = raw_nome.lower()
-    decision = "HOLD"
-    reason = "Tipo sem sigla classificável."
     if source.startswith("camara"):
         # Câmara catalogs proposições. CON ali é Consulta, não Constituição.
         if sigla_key == "PLP" or "lei complementar" in nome_l and "projeto" in nome_l:
-            return {
-                "sigla": sigla_key or None,
-                "nome": raw_nome or None,
-                "source": source,
-                "decision": "BLOCK",
-                "force_of_law": False,
-                "reason": "PLP / Projeto de Lei Complementar não tem força de lei até transformação em LCP.",
-                "uuid": None,
-            }
-        return {
-            "sigla": sigla_key or None,
-            "nome": raw_nome or None,
-            "source": source,
-            "decision": "BLOCK",
-            "force_of_law": False,
-            "reason": (
+            return _gate_fields(
+                sigla=sigla_key, nome=raw_nome, source=source, decision="BLOCK",
+                legal_effect="NONE",
+                reason="PLP / Projeto de Lei Complementar não tem força de lei até transformação em LCP.",
+            )
+        return _gate_fields(
+            sigla=sigla_key, nome=raw_nome, source=source, decision="BLOCK",
+            legal_effect="NONE",
+            reason=(
                 "Proposicao da Câmara não entra como legislação federal. "
-                "Norma com força de lei entra só via API legislacao/ do Congresso."
+                "Norma com efeito jurídico federal entra só via API legislacao/ do Congresso."
             ),
-            "uuid": None,
-        }
+        )
+    if sigla_key in REGULATORY_DECREE_SIGLAS:
+        return _gate_fields(
+            sigla=sigla_key, nome=raw_nome, source=source, decision="ALLOW",
+            legal_effect="REGULATORY",
+            reason=(
+                "Decreto numerado/regulamentar do Executivo. Catálogo oficial da República "
+                "(legis.senado/normas.leg.br). Não é lei do Congresso (CF/88 art. 59). "
+                "Efeito jurídico regulamentar (CF/88 art. 84, IV). Órgão emite; a casa legislativa publica o corpus."
+            ),
+        )
     if sigla_key in ALLOW_SIGLAS:
-        decision = "ALLOW"
         reason = "Espécie com força de lei (CF/88 art. 59 / Constituição)."
         if sigla_key == "LCP":
             reason = (
@@ -252,40 +311,42 @@ def classify_tipo(*, sigla: str | None, nome: str | None = None, source: str = "
             )
         if sigla_key in {"CON-nv"}:
             reason = "Constituição anterior: força histórica. Ferramenta OK se REVOKED/SUPERSEDED. Não é vigente."
-    elif sigla_key in BLOCK_SIGLAS:
-        decision = "BLOCK"
+        return _gate_fields(
+            sigla=sigla_key, nome=raw_nome, source=source, decision="ALLOW",
+            legal_effect="FORCE_OF_LAW", reason=reason,
+        )
+    if sigla_key in BLOCK_SIGLAS:
         reason = "Tipo de instrumento legislativo sem força de lei."
         if sigla_key == "PLP":
             reason = "PLP = Projeto de Lei Complementar. Sem força de lei até transformação em LCP."
         if sigla_key == "ACP":
             reason = "Ato Complementar não é Lei Complementar e não tem força de lei ordinária/complementar."
-    else:
-        for frag in BLOCK_NAME_FRAGMENTS:
-            if frag in nome_l:
-                decision = "BLOCK"
-                reason = f"Nome do tipo indica instrumento sem força de lei ({frag})."
-                if "lei complementar" in frag:
-                    reason = (
-                        "Projeto de lei complementar / tipo sem força de lei. "
-                        "LCP promulgada permanece ALLOW."
-                    )
-                break
-        else:
-            if not sigla_key:
-                decision = "BLOCK"
-                reason = "Tipo sem sigla na API — tratado como não-lei."
-            else:
-                decision = "BLOCK"
-                reason = "Tipo fora da allowlist de força de lei. Default = BLOCK."
-    return {
-        "sigla": sigla_key or None,
-        "nome": raw_nome or None,
-        "source": source,
-        "decision": decision,
-        "force_of_law": decision == "ALLOW",
-        "reason": reason,
-        "uuid": None,
-    }
+        return _gate_fields(
+            sigla=sigla_key, nome=raw_nome, source=source, decision="BLOCK",
+            legal_effect="NONE", reason=reason,
+        )
+    for frag in BLOCK_NAME_FRAGMENTS:
+        if frag in nome_l:
+            reason = f"Nome do tipo indica instrumento sem força de lei ({frag})."
+            if "lei complementar" in frag:
+                reason = (
+                    "Projeto de lei complementar / tipo sem força de lei. "
+                    "LCP promulgada permanece ALLOW."
+                )
+            return _gate_fields(
+                sigla=sigla_key, nome=raw_nome, source=source, decision="BLOCK",
+                legal_effect="NONE", reason=reason,
+            )
+    if not sigla_key:
+        return _gate_fields(
+            sigla=sigla_key, nome=raw_nome, source=source, decision="BLOCK",
+            legal_effect="NONE", reason="Tipo sem sigla na API — tratado como não-lei.",
+        )
+    return _gate_fields(
+        sigla=sigla_key, nome=raw_nome, source=source, decision="BLOCK",
+        legal_effect="NONE",
+        reason="Tipo fora da allowlist de efeito jurídico federal. Default = BLOCK.",
+    )
 
 
 def _revocation_from_detalhe(detalhe: dict) -> dict:
@@ -719,9 +780,10 @@ def fetch_federal_legislation(*, network: bool) -> dict:
                 "drive": [
                     "lei8080-sus.html / lei8080-sus.webp — página de origem com ads. Não copiada.",
                     "CKO-Regulatory-Canonical-Delta ADR CURRENT-LEI7498 — referência, não golden MD.",
+                    "NIFS Decreto 7.508/2011 (LEG.BR.DEC.7508.2011) — descoberta; identidade CKO = INS-DEC-7508-2011.",
                 ],
-                "nifs": "NIFS/reference-datasets/regulatory/br/legislation_instruments.json — descoberta only.",
-                "supabase": "EVIDENCE_PENDING — password authentication failed.",
+                "nifs": "NIFS/reference-datasets/regulatory/br/legislation_instruments.json — descoberta only. IDs LEG.BR.* não promovidos.",
+                "supabase": "EVIDENCE_PENDING — password authentication failed for supabase_read_only_user.",
             },
             "instruments": instruments,
             "blocked_hits": blocked_hits,
@@ -794,6 +856,10 @@ def fetch_federal_legislation(*, network: bool) -> dict:
                 "sha256": item.get("sha256"),
                 "status": item.get("status"),
                 "revoked": bool((item.get("revocation") or {}).get("revoked")),
+                "legal_effect": (item.get("gate") or {}).get("legal_effect"),
+                "force_of_law": bool((item.get("gate") or {}).get("force_of_law")),
+                "force_of_regulation": bool((item.get("gate") or {}).get("force_of_regulation")),
+                **issuer_meta((item.get("metadata") or {}).get("tipo") or item.get("tipo")),
                 "tool_slugs": item.get("tool_slugs") or [],
                 "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
                 "publication": "HOLD",
@@ -801,7 +867,7 @@ def fetch_federal_legislation(*, network: bool) -> dict:
             }
             for item in allowed
         ],
-        "rule": "Identidade MD do instrumento precede REG e biblioteca. Texto de artigo não é regra de produto.",
+        "rule": "Identidade MD do instrumento precede REG e biblioteca. Texto de artigo não é regra de produto. Decreto regulamentar não copia ID NIFS.",
     }
     _dump(ROOT / "cko_md" / "legislation_instrument_registry.json", md)
 
@@ -832,17 +898,23 @@ def fetch_federal_legislation(*, network: bool) -> dict:
     for item in instruments:
         gate = item.get("gate") or {}
         revoked = bool((item.get("revocation") or {}).get("revoked"))
+        tipo = (item.get("metadata") or {}).get("tipo") or item.get("tipo")
+        org = issuer_meta(tipo)
         quals.append({
             "business_key": item.get("reg_ref") or f"REG-{item.get('business_key')}",
             "source_ref": item.get("business_key"),
             "md_ref": item.get("md_ref"),
             "reg_ref": item.get("reg_ref"),
             "agency_key": "AGY-CONGRESSO",
-            "issuer": "Congresso Nacional",
+            "issuer": org["issuer"],
+            "issuer_role": org["issuer_role"],
+            "publication_channel": org["publication_channel"],
             "jurisdiction": "JUR-BR",
-            "instrument_class": "FEDERAL_LEGISLATION",
-            "tipo": (item.get("metadata") or {}).get("tipo") or item.get("tipo"),
+            "instrument_class": org["instrument_class"],
+            "tipo": tipo,
             "force_of_law": gate.get("force_of_law"),
+            "force_of_regulation": gate.get("force_of_regulation"),
+            "legal_effect": gate.get("legal_effect"),
             "gate_decision": gate.get("decision"),
             "gate_reason": gate.get("reason"),
             "rights": "GOVERNMENT_METADATA_ONLY",
@@ -863,10 +935,14 @@ def fetch_federal_legislation(*, network: bool) -> dict:
             "reg_ref": "REG-BLK-CAMARA-PLP-SAMPLE",
             "agency_key": "AGY-CONGRESSO",
             "issuer": "Câmara dos Deputados",
+            "issuer_role": "PROPOSITION_HOUSE",
+            "publication_channel": "dadosabertos.camara.leg.br",
             "jurisdiction": "JUR-BR",
             "instrument_class": "LEGISLATIVE_PROPOSITION_NO_FORCE",
             "tipo": hit.get("siglaTipo"),
             "force_of_law": False,
+            "force_of_regulation": False,
+            "legal_effect": "NONE",
             "gate_decision": "BLOCK",
             "gate_reason": gate.get("reason"),
             "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
@@ -879,10 +955,11 @@ def fetch_federal_legislation(*, network: bool) -> dict:
         "status": "DOCUMENTADO",
         "gate_note": GATE_NOTE,
         "allow_siglas": sorted(ALLOW_SIGLAS),
+        "regulatory_decree_siglas": sorted(REGULATORY_DECREE_SIGLAS),
         "block_siglas": sorted(BLOCK_SIGLAS),
         "qualifications": quals,
         "population": len(quals),
-        "rule": "REG qualifica força de lei. REG não cria identidade. PLP bloqueado. LCP promulgada permitida.",
+        "rule": "REG qualifica efeito jurídico federal. REG não cria identidade. PLP bloqueado. LCP promulgada permitida. Decreto numerado permitido como REGULATORY. DEC-sn/DEC-cl bloqueados.",
     })
 
     return {

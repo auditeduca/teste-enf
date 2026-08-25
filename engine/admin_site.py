@@ -561,7 +561,7 @@ def page_apis(ctx: dict, **kwargs) -> str:
     inner = f"""
     <header class="page-hero">
       <h1>APIs e órgãos.</h1>
-      <p class="lede">ANVISA, MS, COFEN, COREN e Congresso Nacional. <code>base_url</code> só após HTTP 200. Legislação federal bloqueia tipo sem força de lei (ex.: PLP). Norma revogada pode ser ferramenta.</p>
+      <p class="lede">ANVISA, MS, COFEN, COREN e Congresso Nacional. <code>base_url</code> só após HTTP 200. Catálogo federal bloqueia proposição sem efeito jurídico (ex.: PLP). Decreto numerado entra como regulamentar. Norma revogada pode ser ferramenta.</p>
       <p class="hold-banner">Adapters {esc(adapters.get("population"))} · produção API={esc(adapters.get("production_api"))} · tipos Senado ALLOW {esc(types.get("senado_allow"))} / BLOCK {esc(types.get("senado_block"))} · leis {esc(laws.get("population"))} · SQLite inbox {esc("presente" if db_path.exists() else "ausente")} · Postgres produção=NÃO · RLS inalterado</p>
     </header>
     <section class="panel">
@@ -573,7 +573,7 @@ def page_apis(ctx: dict, **kwargs) -> str:
       {_table(["adapter", "órgão", "HTTP", "base_url", "estado", "MD", "REG"], api_rows or [["—", "rode extract --network", "—", "null", "EVIDENCE_PENDING", "—", "—"]])}
     </section>
     <section class="panel">
-      <h2>Gate de força de lei</h2>
+      <h2>Gate de legislação federal</h2>
       <p>{esc(gate.get("gate_note") or "REG-LEG-GATE-001")}</p>
       {_table(["instrumento", "tipo", "decisão", "revogada", "razão"], gate_rows or [["—", "—", "EVIDENCE_PENDING", "—", "rode extract"]])}
     </section>

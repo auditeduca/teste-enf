@@ -578,7 +578,7 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     <header class="page-hero">
       <p class="eyebrow">L60 Biblioteca · ambiente controlado</p>
       <h1>Biblioteca de recursos.</h1>
-      <p class="lede">Catálogo canônico de fontes governamentais (ANVISA, MS, COFEN, COREN), legislação federal do Congresso Nacional e currículo documental básico→avançado. Cada objeto tem MD e REG. Publicação HOLD. HTML integral não é republicado. Projeto de lei complementar (PLP) é bloqueado.</p>
+      <p class="lede">Catálogo canônico de fontes governamentais (ANVISA, MS, COFEN, COREN), legislação federal do Congresso Nacional (incluindo decreto regulamentar numerado) e currículo documental básico→avançado. Cada objeto tem MD e REG. Publicação HOLD. HTML integral não é republicado. Projeto de lei complementar (PLP) é bloqueado. Portaria/resolução de órgão não entra neste tubo.</p>
       <p class="hold-banner">Agências {esc(agency_n)} · Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Alertas ALTA {esc(alerts.get("alta_count"))} · APIs online {esc(adapters.get("adapters") and sum(1 for a in adapters.get("adapters") or [] if a.get("online")))} · release HOLD</p>
     </header>
     <section class="panel">
@@ -588,7 +588,7 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     </section>
     <section id="legislacao" class="panel">
       <h2>Legislação federal (API do Congresso)</h2>
-      <p>Fonte: Dados Abertos do Senado/Congresso (<code>legislacao/</code>). Tipos sem força de lei bloqueados (PLP, PL, requerimento, parecer). Lei Complementar promulgada (LCP) tem força de lei. Norma revogada pode vincular ferramenta. Tipos Senado bloqueados {esc(senado_block)} · Câmara bloqueados {esc(camara_block)} · vínculos ferramenta {esc(link_n)}.</p>
+      <p>Fonte: Dados Abertos do Senado/Congresso (<code>legislacao/</code>). Órgão emite; a casa legislativa publica o corpus. PLP/PL/requerimento/parecer bloqueados. LCP promulgada tem força de lei. Decreto numerado (DEC-n) entra como regulamentar. DEC-sn/DEC-cl bloqueados. Norma revogada pode vincular ferramenta. Tipos Senado bloqueados {esc(senado_block)} · Câmara bloqueados {esc(camara_block)} · vínculos ferramenta {esc(link_n)}.</p>
       <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>norma</th><th>tipo</th><th>status</th><th>ferramentas</th><th>MD</th><th>REG</th></tr></thead><tbody>{"".join(law_rows) or "<tr><td colspan='7'>EVIDENCE_PENDING — rode extract com rede.</td></tr>"}</tbody></table></div>
     </section>
     <section class="panel">
