@@ -1,11 +1,11 @@
 {
   "name": "CKO — Calculadoras de Enfermagem",
-  "install": "python3 -m pip install -e \".[dev]\"",
+  "install": "if [ -f pyproject.toml ]; then python3 -m pip install -e '.[dev]'; fi",
   "terminals": [
     {
       "name": "cko-site",
       "command": "python3 -m engine.cli serve --port 8081",
-      "description": "Serves the CKO fetch renderer at http://localhost:8081."
+      "description": "Serves the CKO fetch renderer at http://localhost:8081. Skip if pyproject.toml is absent on this revision."
     }
   ],
   "ports": [
@@ -15,3 +15,4 @@
     }
   ]
 }
+
