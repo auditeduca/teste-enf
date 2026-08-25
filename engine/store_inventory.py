@@ -257,13 +257,33 @@ def inventory_supabase() -> dict:
     raw_path = ROOT / "cko_inbox" / "extracted" / "supabase_listing_raw.json"
     dest = ROOT / "cko_inbox" / "extracted" / "supabase_inventory.json"
     raw = _load(raw_path)
-    sql = raw.get("sql") or {}
+    mcp = _load(ROOT / "cko_inbox" / "extracted" / "supabase_mcp_probe.json")
+    sql = dict(raw.get("sql") or {})
     schema_status = sql.get("schema_status") or "EVIDENCE_PENDING"
+    projects = list(raw.get("projects") or [])
+    mcp_ref = mcp.get("project_ref")
+    if mcp_ref and not any(item.get("ref") == mcp_ref for item in projects):
+        projects.append({
+            "ref": mcp_ref,
+            "name": mcp.get("project_name") or "UNKNOWN",
+            "region": mcp.get("region") or "UNKNOWN",
+            "status": mcp.get("project_status") or "OBSERVED_GATEWAY",
+            "sql": mcp.get("sql_status") or "MCP permission denied",
+        })
+    if mcp:
+        sql["mcp"] = {
+            "read_only": mcp.get("read_only"),
+            "project_ref": mcp_ref,
+            "get_project": "PERMISSION_DENIED",
+            "list_tables": "PERMISSION_DENIED",
+            "auth_settings_http": ((mcp.get("probes") or {}).get("auth_v1_settings_publishable") or {}).get("http_status"),
+            "config_paths": mcp.get("mcp_config_paths") or [],
+        }
     payload = {
         "business_key": "IPE-SUPABASE-INV-001",
         "uuid": None,
         "status": "SOURCE_DERIVED",
-        "epistemic_status": "OBSERVED" if raw.get("projects") else "EVIDENCE_PENDING",
+        "epistemic_status": "OBSERVED" if projects else "EVIDENCE_PENDING",
         "schema": schema_status,
         "promotes_to_md": False,
         "do_not_invent": [
@@ -272,11 +292,17 @@ def inventory_supabase() -> dict:
             "172 entities",
             "row counts",
         ],
-        "projects": raw.get("projects") or [],
+        "projects": projects,
         "sql": sql,
+        "mcp": {
+            "ref": "IPE-SUPABASE-MCP-001",
+            "read_only": True,
+            "url": mcp.get("mcp_url"),
+            "oauth_this_agent": "PERMISSION_DENIED",
+        },
         "edge_functions": raw.get("edge_functions") or [],
         "project_url": raw.get("project_url"),
-        "rule": "SQL 28P01 → schema UNKNOWN. Edge function slugs are names only; source not fetched; LLM gateway HOLD.",
+        "rule": "SQL 28P01 / MCP -32600 → schema UNKNOWN. Edge function slugs are names only; source not fetched; LLM gateway HOLD. Publishable key not committed.",
         "classified_at": _now(),
     }
     _dump(dest, payload)
@@ -330,7 +356,7 @@ def compare_stores() -> dict:
                 "id": "GAP-SUPABASE-READ",
                 "status": "BLOCKED",
                 "source": "IPE-SUPABASE-INV-001",
-                "reason": "SQL password authentication failed. Schema not observed.",
+                "reason": "MCP Cursor JSON read_only DOCUMENTADO. OAuth deste agente: permission denied no ref yskgekcjzndptzmnjfke. 28P01 no ref aevqrmkdhffmursdtcmo. Schema not observed.",
             })
     payload = {
         "business_key": "IPE-COMPARE-STORES-001",
@@ -396,7 +422,7 @@ def plan_fronts() -> dict:
             "status": "BLOCKED",
             "agents": ["AG-INVENTORY-SUPABASE"],
             "gap": "GAP-SUPABASE-READ",
-            "action": "Reabrir só com senha read-only. Não inventar schema nem 172 entidades.",
+            "action": "MCP .cursor/mcp.json read_only no ref yskgekcjzndptzmnjfke DOCUMENTADO. OAuth deste agente: permission denied. SQL 28P01 no ref aevqrmkdhffmursdtcmo. Não inventar schema nem 172 entidades.",
             "schema": supabase.get("schema") or "EVIDENCE_PENDING",
         },
         {
@@ -584,7 +610,7 @@ def plan_fronts() -> dict:
         "fronts": fronts,
         "next_executable": [
             "F1 replay offline a cada extract",
-            "F2 bloqueado até credencial SQL read-only (MD-OWNER-UNBLOCK-001)",
+            "F2 bloqueado: MCP Cursor JSON read_only DOCUMENTADO; schema SQL ainda EVIDENCE_PENDING",
             "F9 COMPARE pages_full vs pilotos; catálogo de pendências REG; sem unzip",
             "F10 vacinas 15 CAL-VAC PATTERN_CANDIDATE; 32 EVIDENCE_PENDING",
             "F12 NNN HOLD até decisão de licença A/B/C",

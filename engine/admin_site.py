@@ -241,7 +241,8 @@ def page_database(ctx: dict, **kwargs) -> str:
     </section>
     <section class="panel">
       <h2>Supabase (descoberta, não canônico)</h2>
-      <p class="hold-banner">Schema SQL: {esc(supabase.get("schema") or "EVIDENCE_PENDING")}. 28P01 em list_tables/list_migrations. Não inventar tabelas. LLM gateway HOLD. Fonte de Edge Function NÃO baixada.</p>
+      <p class="hold-banner">Schema SQL: {esc(supabase.get("schema") or "EVIDENCE_PENDING")}. 28P01 em list_tables no ref aevqrmkdhffmursdtcmo. MCP get_project/list_tables no ref yskgekcjzndptzmnjfke = permission denied. Não inventar tabelas. LLM gateway HOLD. Fonte de Edge Function NÃO baixada. Chave publishable não está no GitHub.</p>
+      <p>MCP Cursor (read_only): <code>https://mcp.supabase.com/mcp?project_ref=yskgekcjzndptzmnjfke&amp;read_only=true</code> em <code>.cursor/mcp.json</code> e <code>.mcp.json</code>. Skills: <code>.agents/skills/supabase</code>.</p>
       {_table(["ref", "nome", "status", "região"], project_rows)}
       <h3>Edge Functions (nome apenas)</h3>
       {_table(["slug", "status", "source"], fn_rows)}

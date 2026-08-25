@@ -4,7 +4,7 @@
   "status": "SOURCE_DERIVED",
   "epistemic_status": "OBSERVED",
   "promotes_to_md": false,
-  "compared_at": "2026-08-25T19:16:44Z",
+  "compared_at": "2026-08-25T23:18:47Z",
   "github_md_keys": [
     "AGY-ANVISA",
     "AGY-COFEN",
@@ -19,6 +19,7 @@
     "AGY-NLM",
     "AGY-SGD",
     "AGY-WHO",
+    "GAP-CLIN-DICT",
     "GAP-COFEN-REST",
     "GAP-COREN-REST",
     "GAP-DIMENSIONAMENTO",
@@ -30,6 +31,7 @@
     "GAP-L30-L40-PAGES-FULL",
     "GAP-L60-LIBRARIES",
     "GAP-L80-L120-API",
+    "GAP-LAYER-MD-REG",
     "GAP-MENU-DRIVE",
     "GAP-NNN-RIGHTS",
     "GAP-OG-SEO-JSONLD",
@@ -38,6 +40,7 @@
     "GAP-PARECER-360",
     "GAP-SCALE-LITERATURE",
     "GAP-SUPABASE-READ",
+    "GAP-WHO-I18N",
     "INS-CF-1988",
     "INS-DEC-10046-2019",
     "INS-DEC-7508-2011",
@@ -56,14 +59,17 @@
     "LIB-L80-EXAMES",
     "MD-AGENCY-REG-001",
     "MD-API-ADAPTER-REG-001",
+    "MD-CLIN-DICT-001",
     "MD-CONCEPT-RENDER-001",
     "MD-CONTENT-CURR-001",
     "MD-ENTITY-TYPE-REG-001",
     "MD-FIELD-DICT-001",
     "MD-FRONTS-PLAN-001",
+    "MD-ISO8000-PGDADOS-BIND-001",
     "MD-ISO8000-PROFILE-001",
     "MD-LANG-LOC-001",
     "MD-LAYER-INTENT-001",
+    "MD-LAYER-PHASE-001",
     "MD-LEG-INS-001",
     "MD-LEG-TLK-001",
     "MD-LIB-API-MAP-001",
@@ -77,7 +83,11 @@
     "MD-PAGES-REG-PEND-001",
     "MD-PGDADOS-001",
     "MD-W3C-EMAG-001",
+    "MD-WHO-I18N-001",
     "MD-WORK-REG-001",
+    "PGD-INSTR-ESTRATEGIA",
+    "PGD-INSTR-PLANO",
+    "PGD-INSTR-POLITICA",
     "RES-INS-CF-1988",
     "RES-INS-DEC-10046-2019",
     "RES-INS-DEC-7508-2011",
@@ -104,7 +114,7 @@
     "RES-SRC-GOV-PGDADOS-HUB",
     "RES-SRC-GOV-QUALIDADE-DIGIT"
   ],
-  "github_md_key_count": 97,
+  "github_md_key_count": 107,
   "pilots_in_data_tools": [
     "cinco-ts-pcr",
     "dimensionamento",
@@ -114,15 +124,15 @@
   ],
   "braden_in_data_tools": false,
   "drive": {
-    "population": 117,
+    "population": 118,
     "already_in_cko": 4,
     "quarantine": 76,
-    "candidate_gap": 3,
+    "candidate_gap": 4,
     "parecer_360": "QUARANTINE"
   },
   "supabase": {
     "schema": "EVIDENCE_PENDING",
-    "projects": 2
+    "projects": 3
   },
   "gaps": [
     {
@@ -135,7 +145,7 @@
       "id": "GAP-SUPABASE-READ",
       "status": "BLOCKED",
       "source": "MD-OPS-METHOD-001",
-      "reason": "MCP list_tables/execute_sql: password authentication failed. EVIDENCE_PENDING."
+      "reason": "MCP Cursor JSON read_only DOCUMENTADO (yskgekcjzndptzmnjfke). OAuth deste agente: permission denied. 28P01 no ref aevqrmkdhffmursdtcmo. Schema EVIDENCE_PENDING."
     },
     {
       "id": "GAP-ORGAN-ACTS",
@@ -258,10 +268,28 @@
       "reason": "Menu Drive 151 destinos. Chrome público permanece 5 pilotos. Sem Braden no header."
     },
     {
+      "id": "GAP-WHO-I18N",
+      "status": "HOLD",
+      "source": "MD-OPS-METHOD-001",
+      "reason": "who.int seletor en/ar/zh/fr/ru/es. Chave who.en+local.pt-BR. Variantes pt-PT/pt-AO HOLD. Sem dump ICD/ICNP/GHO. translation_gate HOLD."
+    },
+    {
+      "id": "GAP-CLIN-DICT",
+      "status": "HOLD",
+      "source": "MD-OPS-METHOD-001",
+      "reason": "Dicionario clinico.zip COMPARE. Campos Foundation/Knowledge + códigos piloto. Sem promover Braden. UUIDv4 não adotado."
+    },
+    {
+      "id": "GAP-LAYER-MD-REG",
+      "status": "REGISTERED",
+      "source": "MD-OPS-METHOD-001",
+      "reason": "Envelope MD+REG das 44 faseado. EXISTS≠POPULATED≠ASSURED. publication HOLD. Sem Braden."
+    },
+    {
       "id": "GAP-DRIVE-SHELL-COMPLETO",
       "status": "COMPARE_ONLY",
       "source": "IPE-DRIVE-INV-001",
-      "reason": "guia-metadados-avancado HTML COMPARE. 32 critérios SEO ≠ 32 bibliotecas. CDN fonts FORBIDDEN; não copiar HTML para render/."
+      "reason": "Dicionario clinico.zip COMPARE. Campos/códigos SOURCE_DERIVED. Sem promover escalas nem UUIDv4. PDF/DOCX não são cláusula."
     }
   ],
   "rule": "Não promover Drive/Supabase a identidade. Chat não é fonte. Reconstrução é último recurso."

@@ -58,3 +58,4 @@ python3 -m engine.cli serve --port 8081
 - Install: `python3 -m pip install -e ".[dev]"`
 - Testes: `python3 -m pytest -q`
 - Manual: `python3 -m engine.cli serve --port 8081`, abrir `/`, `/admin.html`, `/admin/database.html`, `/admin/renderer.html`, `/admin/deploy.html`, `/tools/gotejamento.html`
+- Supabase MCP (read_only, `project_ref=yskgekcjzndptzmnjfke`): `.cursor/mcp.json` e `.mcp.json`. Skills: `npx skills add supabase/agent-skills` → `.agents/skills/supabase`. Não commitar chave publishable/secret. Schema SQL permanece EVIDENCE_PENDING até `list_tables` HTTP/MCP 200.

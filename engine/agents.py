@@ -1024,7 +1024,7 @@ def agent_records() -> list[dict]:
             "implemented": True,
             "writes_to": "cko_inbox/extracted/supabase_inventory.json",
             "promotes_to_md": False,
-            "note": "Projetos e slugs de Edge Function observados. Schema SQL EVIDENCE_PENDING (28P01).",
+            "note": "Projetos e slugs de Edge Function observados. MCP Cursor JSON read_only DOCUMENTADO. Schema SQL EVIDENCE_PENDING (28P01 / MCP -32600).",
         },
         {
             "agent_id": "AG-COMPARE-STORES",

@@ -54,9 +54,27 @@
           "name": "simulados-para-enfermagem",
           "status": "INACTIVE",
           "sql": "not queried — inactive"
+        },
+        {
+          "ref": "yskgekcjzndptzmnjfke",
+          "name": "UNKNOWN",
+          "status": "OBSERVED_GATEWAY",
+          "sql": "MCP OAuth deste agente: permission denied. Auth/settings HTTP 200 com publishable."
         }
       ],
-      "note": "Não inventar schema nem 172 entidades. Reabrir só com credencial de leitura.",
+      "mcp": {
+        "config": "DOCUMENTADO",
+        "read_only": true,
+        "paths": [
+          ".cursor/mcp.json",
+          ".mcp.json"
+        ],
+        "skills": [
+          ".agents/skills/supabase",
+          ".agents/skills/supabase-postgres-best-practices"
+        ]
+      },
+      "note": "Não inventar schema nem 172 entidades. MCP JSON ≠ list_tables. Não commitar chave publishable.",
       "inventory_ref": "IPE-SUPABASE-INV-001",
       "schema": "EVIDENCE_PENDING",
       "edge_functions_observed": [
@@ -102,7 +120,7 @@
     {
       "id": "GAP-SUPABASE-READ",
       "status": "BLOCKED",
-      "reason": "MCP list_tables/execute_sql: password authentication failed. EVIDENCE_PENDING."
+      "reason": "MCP Cursor JSON read_only DOCUMENTADO (yskgekcjzndptzmnjfke). OAuth deste agente: permission denied. 28P01 no ref aevqrmkdhffmursdtcmo. Schema EVIDENCE_PENDING."
     },
     {
       "id": "GAP-ORGAN-ACTS",

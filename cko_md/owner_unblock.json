@@ -17,13 +17,27 @@
       "status": "BLOCKED",
       "title": "SQL read-only no Supabase ativo",
       "project_ref_observed": "aevqrmkdhffmursdtcmo",
+      "project_ref_owner_mcp": "yskgekcjzndptzmnjfke",
+      "mcp_config": "DOCUMENTADO",
       "secrets": [
         {"name": "SUPABASE_DB_PASSWORD", "optional": false},
         {"name": "SUPABASE_PROJECT_REF", "optional": true}
       ],
-      "how": "No ambiente Cursor Cloud, adicionar a senha do usuário supabase_read_only_user. GRANT só SELECT. Sem DDL, INSERT, UPDATE, DELETE. Sem RLS change.",
-      "current_fail": "28P01 autenticação supabase_read_only_user",
-      "do_not": "Não enviar service_role. Não pedir ao agente para inventar 172 entidades."
+      "how": "No ambiente Cursor Cloud, adicionar a senha do usuário supabase_read_only_user. GRANT só SELECT. Sem DDL, INSERT, UPDATE, DELETE. Sem RLS change. MCP Cursor já está em .cursor/mcp.json (read_only, project_ref=yskgekcjzndptzmnjfke).",
+      "current_fail": "28P01 no ref aevqrmkdhffmursdtcmo; MCP -32600 permission denied no ref yskgekcjzndptzmnjfke para o OAuth deste Cloud Agent.",
+      "do_not": "Não enviar service_role. Não pedir ao agente para inventar 172 entidades. Não commitar chave publishable/secret."
+    },
+    {
+      "id": "UNBLOCK-SUPABASE-MCP-OAUTH",
+      "priority": 1,
+      "frente": "F2",
+      "kind": "SECRET",
+      "status": "BLOCKED",
+      "title": "OAuth MCP no projeto yskgekcjzndptzmnjfke",
+      "project_ref_owner_mcp": "yskgekcjzndptzmnjfke",
+      "how": "No Cursor Desktop, Settings → Tools & MCP, autenticar o servidor da URL em .cursor/mcp.json (read_only). Neste Cloud Agent o OAuth visível só lista aevqrmkdhffmursdtcmo e bsawvgyideporzailnys.",
+      "current_fail": "get_project/list_tables/list_edge_functions = MCP error -32600 permission denied",
+      "do_not": "Não enviar service_role. Auth/settings HTTP 200 com publishable não é list_tables."
     },
     {
       "id": "UNBLOCK-NNN-LICENSE",

@@ -91,6 +91,8 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
     assert "Nenhuma alteração de RLS" in database
     assert "EVIDENCE_PENDING" in database
     assert "28P01" in database
+    assert "yskgekcjzndptzmnjfke" in database
+    assert ".cursor/mcp.json" in database
     assert "extrair-questoes-enfermagem" in database or "Edge Functions" in database
     assert "MD-LOCALE-REG-001" in locales or "19" in locales
     assert "SOURCE_DERIVED" in locales

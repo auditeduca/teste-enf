@@ -28,13 +28,37 @@
       "postgres_engine": "17",
       "created_at": "2026-08-14T04:31:12.660485Z",
       "sql": "not queried — inactive"
+    },
+    {
+      "ref": "yskgekcjzndptzmnjfke",
+      "name": "UNKNOWN",
+      "region": "UNKNOWN",
+      "status": "OBSERVED_GATEWAY",
+      "sql": "MCP OAuth deste agente: permission denied no ref yskgekcjzndptzmnjfke. 28P01 no ref aevqrmkdhffmursdtcmo."
     }
   ],
   "sql": {
     "schema_status": "EVIDENCE_PENDING",
     "list_tables": "FATAL: 28P01 password authentication failed for user supabase_read_only_user",
     "list_migrations": "FATAL: 28P01 password authentication failed for user postgres",
-    "note": "Do not invent tables, columns, or 172 entities."
+    "note": "Do not invent tables, columns, or 172 entities.",
+    "mcp": {
+      "read_only": true,
+      "project_ref": "yskgekcjzndptzmnjfke",
+      "get_project": "PERMISSION_DENIED",
+      "list_tables": "PERMISSION_DENIED",
+      "auth_settings_http": 200,
+      "config_paths": [
+        ".cursor/mcp.json",
+        ".mcp.json"
+      ]
+    }
+  },
+  "mcp": {
+    "ref": "IPE-SUPABASE-MCP-001",
+    "read_only": true,
+    "url": "https://mcp.supabase.com/mcp?project_ref=yskgekcjzndptzmnjfke&read_only=true&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching",
+    "oauth_this_agent": "PERMISSION_DENIED"
   },
   "edge_functions": [
     {
@@ -76,6 +100,6 @@
     }
   ],
   "project_url": "https://aevqrmkdhffmursdtcmo.supabase.co",
-  "rule": "SQL 28P01 → schema UNKNOWN. Edge function slugs are names only; source not fetched; LLM gateway HOLD.",
-  "classified_at": "2026-08-25T17:02:55Z"
+  "rule": "SQL 28P01 / MCP -32600 → schema UNKNOWN. Edge function slugs are names only; source not fetched; LLM gateway HOLD. Publishable key not committed.",
+  "classified_at": "2026-08-25T23:18:47Z"
 }

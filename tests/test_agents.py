@@ -104,7 +104,12 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     assert nnn["publication"] == "HOLD"
     unblock = json.loads((ROOT / "cko_md" / "owner_unblock.json").read_text(encoding="utf-8"))
     assert unblock["business_key"] == "MD-OWNER-UNBLOCK-001"
-    assert {item["id"] for item in unblock["actions"]} >= {"UNBLOCK-SUPABASE-SQL", "UNBLOCK-NNN-LICENSE", "UNBLOCK-32-LIST"}
+    assert {item["id"] for item in unblock["actions"]} >= {
+        "UNBLOCK-SUPABASE-SQL",
+        "UNBLOCK-SUPABASE-MCP-OAUTH",
+        "UNBLOCK-NNN-LICENSE",
+        "UNBLOCK-32-LIST",
+    }
     libmap = json.loads((ROOT / "cko_md" / "library_api_map.json").read_text(encoding="utf-8"))
     assert libmap["business_key"] == "MD-LIB-API-MAP-001"
     assert libmap["claimed_32_libraries"] == "EVIDENCE_PENDING"
