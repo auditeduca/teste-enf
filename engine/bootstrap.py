@@ -540,10 +540,13 @@ def write_registries() -> list[Path]:
         ],
     }))
     from .who_i18n import evaluate_who_i18n
+    from .clinical_dict import evaluate_clinical_dict
 
     evaluate_who_i18n()
+    evaluate_clinical_dict()
     written.append(MD_DIR / "who_i18n_modulation.json")
     written.append(REG_DIR / "i18n_profile.json")
+    written.append(MD_DIR / "clinical_dictionary_catalog.json")
     return written
 
 

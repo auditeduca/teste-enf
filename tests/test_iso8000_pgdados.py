@@ -16,13 +16,15 @@ def test_compose_dictionary_binds_every_field_to_pgdados():
     assert payload["certified"] is False
     assert payload["iso_implemented"] is False
     assert payload["population"] == len(payload["fields"])
-    assert payload["population"] >= 34
+    assert payload["population"] >= 46
     keys = [item["business_key"] for item in payload["fields"]]
     assert len(keys) == len(set(keys))
     assert "FLD-ISO8000-IDENTITY-BK" in keys
     assert "FLD-PGDADOS-PLANO" in keys
     assert "FLD-I18N-WHO-OFFICIAL" in keys
     assert "FLD-I18N-ICD-CODE" in keys
+    assert "FLD-TOOL-CODE" in keys
+    assert "FLD-REF-ACCESSED" in keys
     for field in payload["fields"]:
         assert field["pgdados_ref"] == "MD-PGDADOS-001"
         assert field["iso_clause_text"] == "CLAUSE_TEXT_UNAVAILABLE"
@@ -51,6 +53,7 @@ def test_evaluate_profile_writes_binding_without_cert_claim():
     assert ids["ISO8000-CKO-PGDADOS-BINDING"] == "PASS"
     assert ids["ISO8000-CKO-PGDADOS-QUALITY-DIMS"] == "PASS"
     assert ids["ISO8000-CKO-WHO-I18N"] == "PASS"
+    assert ids["ISO8000-CKO-CLIN-DICT"] == "PASS"
     profile = json.loads((ROOT / "cko_md" / "iso8000_profile.json").read_text(encoding="utf-8"))
     assert profile["iso_implemented"] is False
     assert "ISO 8000 certified" not in json.dumps(profile)

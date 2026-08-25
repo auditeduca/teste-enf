@@ -41,6 +41,9 @@ CANDIDATE_GAP_IDS = {
     "1mTJ0LQh2azuI3Nm0nnYbC6PUCXQIDG7D": (
         "guia-metadados-avancado HTML COMPARE. 32 critérios SEO ≠ 32 bibliotecas. CDN fonts FORBIDDEN; não copiar HTML para render/."
     ),
+    "152MrVMQHG76G8nVN0wMMqedvTpHzfEB-": (
+        "Dicionario clinico.zip COMPARE. Campos/códigos SOURCE_DERIVED. Sem promover escalas nem UUIDv4. PDF/DOCX não são cláusula."
+    ),
 }
 
 FOLDER_NOTES = {
@@ -540,6 +543,14 @@ def plan_fronts() -> dict:
             "gap": "GAP-WHO-I18N",
             "action": "Seletor who.int (en ar zh fr ru es) ∩ locales.zip = candidatos. Sem dump ICD/ICNP/GHO. translation_gate HOLD. pt ≠ pt-BR.",
         },
+        {
+            "id": "F21",
+            "name": "Dicionário clínico Drive + códigos piloto",
+            "status": "HOLD",
+            "agents": ["AG-CLIN-DICT", "AG-ISO8000-PROFILE"],
+            "gap": "GAP-CLIN-DICT",
+            "action": "Namelist COMPARE. Pilotos CALC-/SCALE-/GUIDE-/EXAM-*. Sem Braden em data/tools. UUIDv4 não adotado. ABNT/ISO cláusula HOLD.",
+        },
     ]
     for front in fronts:
         living = gap_by_id.get(front["gap"]) or {}
@@ -572,6 +583,7 @@ def plan_fronts() -> dict:
             "F15 PGDADOS /pgdados explícito no perfil ISO (não certificação)",
             "F18 OG first-party LinkedIn; 151 cards Drive não copiados",
             "F20 WHO/OMS i18n envelopes; translation HOLD; sem dump",
+            "F21 Dicionario clinico.zip COMPARE; códigos piloto; sem escalas de terceiros",
             "F3/F4 só com evidência HTTP/Congress já no tubo",
         ],
         "updated_at": _now(),
@@ -660,6 +672,11 @@ def plan_fronts() -> dict:
             "status": "HOLD",
             "reason": "who.int seletor en/ar/zh/fr/ru/es. Sem dump ICD/ICNP/GHO. translation_gate HOLD. pt ≠ pt-BR.",
         },
+        {
+            "id": "GAP-CLIN-DICT",
+            "status": "HOLD",
+            "reason": "Dicionario clinico.zip COMPARE. Campos Foundation/Knowledge + códigos piloto. Sem promover Braden. UUIDv4 não adotado.",
+        },
     ]
     living_gaps = list(method.get("living_gaps") or [])
     for item in extra:
@@ -682,5 +699,5 @@ def plan_fronts() -> dict:
         "front_count": len(fronts),
         "publication": "HOLD",
         "blocked": ["F2"],
-        "hold": ["F5", "F7", "F8", "F12", "F20"],
+        "hold": ["F5", "F7", "F8", "F12", "F20", "F21"],
     }

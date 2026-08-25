@@ -12,6 +12,7 @@ from pathlib import Path
 
 from .paths import ROOT, TOOLS_DIR
 from .vault import MANIFEST_PATH, POINTERS_PATH
+from .clinical_dict import CATALOG_PATH, DRIVE_MD_BLOCKERS, PILOT_CODES, clinical_dict_fields
 from .who_i18n import WHO_OFFICIAL_SELECTOR, who_i18n_fields
 
 OFFICIAL_CATALOG_URL = "https://www.iso.org/standard/80766.html"
@@ -337,7 +338,7 @@ def pgdados_bound_fields() -> list[dict]:
 
 
 def compose_field_dictionary() -> dict:
-    fields = base_governance_fields() + pgdados_bound_fields() + who_i18n_fields()
+    fields = base_governance_fields() + pgdados_bound_fields() + who_i18n_fields() + clinical_dict_fields()
     keys = [item["business_key"] for item in fields]
     if len(keys) != len(set(keys)):
         raise ValueError("duplicate field business_key")
@@ -354,7 +355,8 @@ def compose_field_dictionary() -> dict:
         "who_ref": "MD-WHO-I18N-001",
         "fields": fields,
         "note": (
-            "Dicionário operacional CKO com binding PGDADOS e envelopes i18n WHO/OMS. "
+            "Dicionário operacional CKO com binding PGDADOS, envelopes i18n WHO/OMS "
+            "e catálogo COMPARE do dicionário clínico Drive. "
             "Não é cláusula ISO 8000. Não é dump ICD/ICNP/GHO. Não é certificação."
         ),
     }
@@ -453,6 +455,22 @@ def evaluate_profile() -> dict:
         for item in field_dict["fields"]
         if item["business_key"] in who_ids
     ) and "pt-BR" not in {item["bcp47"] for item in WHO_OFFICIAL_SELECTOR}
+    clin_ids = {item["business_key"] for item in clinical_dict_fields()}
+    clin_ok = clin_ids.issubset(dict_ids) and all(
+        item.get("iso_test_id") == "ISO8000-CKO-CLIN-DICT"
+        and item.get("iso_clause_text") == "CLAUSE_TEXT_UNAVAILABLE"
+        for item in field_dict["fields"]
+        if item["business_key"] in clin_ids
+    ) and not (TOOLS_DIR / "braden.json").exists()
+    catalog = _load(CATALOG_PATH)
+    if catalog:
+        clin_ok = clin_ok and catalog.get("promoted_to_data_tools") is False
+        clin_ok = clin_ok and catalog.get("identity_conflict", {}).get("adopt_uuid_v4") is False
+        blocker_ids = {item[0] for item in DRIVE_MD_BLOCKERS}
+        clin_ok = clin_ok and blocker_ids.issubset(dict_ids)
+        clin_ok = clin_ok and all(
+            (TOOLS_DIR / f"{slug}.json").exists() for slug in PILOT_CODES
+        )
 
     tests = [
         {
@@ -564,6 +582,19 @@ def evaluate_profile() -> dict:
                 "translation_gate": "HOLD",
                 "icd_icnp_dump": "FORBIDDEN",
                 "pt_br_in_who_selector": False,
+            },
+        },
+        {
+            "id": "ISO8000-CKO-CLIN-DICT",
+            "principle": "Drive clinical dictionary modulates field/code envelopes without promoting scales",
+            "pgdados_term": "Atributos de referência",
+            "status": "PASS" if clin_ok else "FAIL",
+            "observed": {
+                "clin_fields": sorted(clin_ids),
+                "braden_in_data_tools": (TOOLS_DIR / "braden.json").exists(),
+                "adopt_uuid_v4": False,
+                "abnt_clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+                "catalog_ref": "MD-CLIN-DICT-001",
             },
         },
     ]

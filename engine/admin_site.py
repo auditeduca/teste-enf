@@ -509,6 +509,7 @@ def page_library(ctx: dict, **kwargs) -> str:
     curr = load_json(ROOT / "cko_md" / "content_curriculum.json")
     libmap = load_json(ROOT / "cko_md" / "library_api_map.json")
     pages_pend = load_json(ROOT / "cko_md" / "pages_full_reg_pendencies.json")
+    clin = load_json(ROOT / "cko_md" / "clinical_dictionary_catalog.json")
     alerts = load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
     laws = load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
     res_rows = [
@@ -574,6 +575,17 @@ def page_library(ctx: dict, **kwargs) -> str:
         [esc(item.get("stem")), esc(item.get("gap")), esc(item.get("in_data_tools"))]
         for item in (pages_pend.get("third_party_scale_stems") or [])
     ]
+    clin_code_rows = [
+        [
+            esc(item.get("slug")),
+            esc(item.get("code")),
+            esc(item.get("kind")),
+            _status_chip(item.get("relation")),
+            esc(", ".join(item.get("drive_name_hits") or []) or "—"),
+        ]
+        for item in (clin.get("pilot_codes") or [])
+    ]
+    clin_tool_rows = [[esc(name)] for name in (clin.get("new_tool_names") or [])[:20]]
     inner = f"""
     <header class="page-hero">
       <h1>Biblioteca de recursos.</h1>
@@ -585,6 +597,14 @@ def page_library(ctx: dict, **kwargs) -> str:
       <p>Contagens COMPARE do Drive. 32 APIs permanecem EVIDENCE_PENDING. Sem promover CAL-VAC nem nanda-00046.json.</p>
       {_table(["conjunto", "n", "tipo", "API", "nota"], set_rows or [["—", "—", "—", "—", "mapa ainda não gerado"]])}
       {_table(["camada", "adapter", "HTTP", "estado", "nota"], layer_api_rows or [["—", "—", "—", "HOLD", "—"]])}
+    </section>
+    <section class="panel">
+      <h2>Dicionário clínico Drive ({esc(clin.get("business_key") or "MD-CLIN-DICT-001")})</h2>
+      <p>Zip {esc(clin.get("title"))} · campos Foundation/Knowledge={esc(clin.get("dictionary_field_count"))} · nomes de ferramenta={esc(clin.get("new_tool_name_count"))} · publicação {_status_chip(clin.get("publication") or "HOLD")} · UUIDv4 adotado={esc((clin.get("identity_conflict") or {}).get("adopt_uuid_v4"))} · data/tools promovido={esc(clin.get("promoted_to_data_tools"))}.</p>
+      <p class="hold-banner">COMPARE only. Sem dump de cláusula ABNT/ISO. Escalas de terceiros (Braden/Norton/Glasgow) não entram em data/tools. Content_Schemas/Meta_Schemas reivindicados no índice e ausentes no xlsx.</p>
+      {_table(["slug piloto", "código", "kind", "relação Drive", "nomes no zip"], clin_code_rows or [["rode extract", "—", "—", "HOLD", "—"]])}
+      <p>Primeiros nomes da matriz de novas ferramentas:</p>
+      {_table(["ferramenta (Drive)"], clin_tool_rows or [["—"]])}
     </section>
     <section class="panel">
       <h2>Legislação federal</h2>

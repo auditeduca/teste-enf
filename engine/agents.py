@@ -923,6 +923,15 @@ def agent_records() -> list[dict]:
             "note": "OMS who.int seletor (en ar zh fr ru es). translation_gate HOLD. Sem dump ICD/ICNP/GHO.",
         },
         {
+            "agent_id": "AG-CLIN-DICT",
+            "class": "MD",
+            "implemented": True,
+            "writes_to": "cko_md/clinical_dictionary_catalog.json",
+            "promotes_to_md": False,
+            "wired_to_frontend": False,
+            "note": "Dicionario clinico.zip COMPARE. Códigos piloto CALC-/SCALE-/GUIDE-/EXAM-*. Sem Braden em data/tools. UUIDv4 não adotado.",
+        },
+        {
             "agent_id": "AG-MASK-APPLY",
             "class": "REGULATORY",
             "implemented": True,
@@ -1086,6 +1095,7 @@ def run_extraction(*, network: bool = True) -> dict:
         probe_apis,
         sync_ops_db,
     )
+    from .clinical_dict import evaluate_clinical_dict
     from .iso8000 import evaluate_profile
     from .lineage import bind_lineage
     from .who_i18n import evaluate_who_i18n
@@ -1111,6 +1121,7 @@ def run_extraction(*, network: bool = True) -> dict:
         put_known_sources(network=network, fetch_fn=_http_get),
         bind_rights(),
         bind_lineage(),
+        evaluate_clinical_dict(),
         evaluate_profile(),
         evaluate_who_i18n(),
         apply_norm_masks(),
