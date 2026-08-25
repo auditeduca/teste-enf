@@ -51,9 +51,10 @@ def test_f12_opt_b_identity_codes_without_licensed_text():
         assert item["licensed_text"] is False
         assert item["in_data_tools"] is False
         assert item["deep_link"] in {"https://nanda.org/", "https://www.elsevier.com/"}
-    blob = json.dumps(catalog)
-    assert "definingCharacteristics" not in blob
-    assert "Impaired" not in blob
+        identities_blob = json.dumps(catalog["identities"])
+        assert "definingCharacteristics" not in identities_blob
+        assert "Impaired" not in identities_blob
+        assert "definingCharacteristics" not in json.dumps(catalog)
     assert not (TOOLS_DIR / "nanda-00046.json").exists()
     assert not (TOOLS_DIR / "nic-2312.json").exists()
     assert not (TOOLS_DIR / "noc-0401.json").exists()

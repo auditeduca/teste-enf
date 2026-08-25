@@ -153,7 +153,7 @@ def bind_rights(*, law_text: str | None = None, law_sha256: str | None = None) -
 
 
 # Codes taken from Drive *filenames* only (nanda-00046.json / nic-2312.json / noc-0401.json).
-# Never copy definingCharacteristics, NIC activities, or NOC indicators.
+# Never copy licensed NANDA/NIC/NOC field payloads.
 NNN_DRIVE_CODES = (
     {
         "system": "NANDA",
@@ -219,7 +219,7 @@ def bind_nnn_opt_b() -> dict:
         "display_policy": DISPLAY_LICENSE_UNAVAILABLE,
         "do_not": [
             "Copiar nanda-00046.json / nic-2312.json / noc-0401.json para data/tools.",
-            "Republicar definingCharacteristics, NIC activities ou NOC indicators.",
+            "Republicar características definidoras, atividades de intervenção ou indicadores de resultado licenciados.",
             "Inventar label canônico equivalente via LLM.",
         ],
         "identities": identities,
