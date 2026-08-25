@@ -37,6 +37,9 @@ def test_classify_does_not_promote_html_or_mega_zip():
 
 
 def test_inventory_agents_keep_schema_pending_and_plan_hold():
+    from engine.paths import ROOT, TOOLS_DIR
+    import json
+
     drive = inventory_drive()
     supabase = inventory_supabase()
     plan = plan_fronts()
@@ -45,5 +48,13 @@ def test_inventory_agents_keep_schema_pending_and_plan_hold():
     assert supabase["schema"] == "EVIDENCE_PENDING"
     assert supabase["sql_blocked"] is True
     assert plan["publication"] == "HOLD"
-    assert plan["front_count"] == 8
+    assert plan["front_count"] == 14
     assert "F2" in plan["blocked"]
+    assert "F12" in plan["hold"]
+    vaccines = json.loads((ROOT / "cko_inbox" / "extracted" / "vaccines_zip_inventory.json").read_text(encoding="utf-8"))
+    assert vaccines["tool_id_count"] == 15
+    assert vaccines["claimed_library_count_32"] == "EVIDENCE_PENDING"
+    libs = json.loads((ROOT / "cko_inbox" / "extracted" / "templates_bibliotecas_compare.json").read_text(encoding="utf-8"))
+    assert libs["observed_counts"]["clinical_object_types_05"] == 24
+    assert libs["nnn_files_in_zip"]["nanda-00046.json"] == "QUARANTINE"
+    assert not (TOOLS_DIR / "nanda-00046.json").exists()

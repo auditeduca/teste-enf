@@ -84,7 +84,19 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     fronts = json.loads((ROOT / "cko_md" / "fronts_plan.json").read_text(encoding="utf-8"))
     assert fronts["business_key"] == "MD-FRONTS-PLAN-001"
     assert fronts["publication"] == "HOLD"
-    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 9)}
+    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 15)}
+    intent = json.loads((ROOT / "cko_md" / "layer_intent.json").read_text(encoding="utf-8"))
+    assert intent["business_key"] == "MD-LAYER-INTENT-001"
+    assert intent["claimed_32_libraries"] == "EVIDENCE_PENDING"
+    assert intent["publication"] == "HOLD"
+    nnn = json.loads((ROOT / "cko_md" / "nnn_rights_architecture.json").read_text(encoding="utf-8"))
+    assert nnn["business_key"] == "MD-NNN-RIGHTS-001"
+    assert nnn["publication"] == "HOLD"
+    vaccines = json.loads((ROOT / "cko_inbox" / "extracted" / "vaccines_zip_inventory.json").read_text(encoding="utf-8"))
+    assert vaccines["tool_id_count"] == 15
+    assert vaccines["promotes_to_md"] is False
+    assert not (TOOLS_DIR / "CAL-VAC-001.json").exists()
+    assert not (TOOLS_DIR / "nanda-00046.json").exists()
     assert not (TOOLS_DIR / "braden.json").exists()
 
 

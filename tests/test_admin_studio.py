@@ -97,6 +97,7 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
     assert "CLAUSE_TEXT_UNAVAILABLE" in frameworks
     assert "AG-INVENTORY-DRIVE" in agents_html
     assert "AG-PLAN-FRONTS" in agents_html
+    assert "F9" in agents_html or "L30" in agents_html
     assert "cdn.jsdelivr" not in fetch_admin.lower()
     parity = check_parity()
     assert parity["status"] == "PASS"

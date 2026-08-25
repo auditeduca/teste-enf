@@ -148,6 +148,42 @@ API_CANDIDATES = (
         "md_ref": "MD-API-OPENDATASUS",
         "reg_ref": "REG-API-MS",
     },
+    {
+        "business_key": "API-CKAN-OPENDATASUS-VACINA",
+        "agency_key": "AGY-MS",
+        "agency": "OpenDataSUS busca vacina",
+        "url": "https://opendatasus.saude.gov.br/api/3/action/package_search?q=vacina&rows=5",
+        "kind": "CKAN_ACTION",
+        "md_ref": "MD-API-OPENDATASUS-VACINA",
+        "reg_ref": "REG-API-MS",
+    },
+    {
+        "business_key": "API-CROSSREF-WORKS",
+        "agency_key": "AGY-CROSSREF",
+        "agency": "Crossref REST",
+        "url": "https://api.crossref.org/works?query=enfermagem&rows=1",
+        "kind": "BIBLIOGRAPHIC_SEARCH",
+        "md_ref": "MD-API-CROSSREF",
+        "reg_ref": "REG-API-CROSSREF",
+    },
+    {
+        "business_key": "API-NCBI-EUTILS-ESEARCH",
+        "agency_key": "AGY-NCBI",
+        "agency": "NCBI E-utilities",
+        "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=nursing&retmax=1&retmode=json",
+        "kind": "LITERATURE_SEARCH",
+        "md_ref": "MD-API-NCBI-EUTILS",
+        "reg_ref": "REG-API-NCBI",
+    },
+    {
+        "business_key": "API-NLM-CLINICALTABLES-ICD10CM",
+        "agency_key": "AGY-NLM",
+        "agency": "NLM Clinical Tables ICD-10-CM",
+        "url": "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?terms=sepsis&maxList=1",
+        "kind": "TERMINOLOGY_SEARCH",
+        "md_ref": "MD-API-NLM-ICD10CM",
+        "reg_ref": "REG-API-NLM",
+    },
 )
 
 LEVELS = (
@@ -369,6 +405,9 @@ def write_agency_md() -> dict:
         {"business_key": "AGY-SGD", "name": "Secretaria de Governo Digital", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "parent_agency": "AGY-MGI", "rest_api": "NOT_OBSERVED", "note": "Portal Gov.br / Governo Digital. PGDADOS e Padrões de Qualidade."},
         {"business_key": "AGY-DADOSGOV", "name": "dados.gov.br", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED"},
         {"business_key": "AGY-CONGRESSO", "name": "Congresso Nacional", "jurisdiction": "JUR-BR", "uuid": None, "status": "REGISTERED", "note": "Legislação federal via Dados Abertos Senado/Câmara. Não é NIFS."},
+        {"business_key": "AGY-CROSSREF", "name": "Crossref", "jurisdiction": "JUR-INTL", "uuid": None, "status": "REGISTERED", "note": "API bibliográfica. Não é autoridade clínica."},
+        {"business_key": "AGY-NCBI", "name": "NCBI / NLM", "jurisdiction": "JUR-US", "uuid": None, "status": "REGISTERED", "note": "E-utilities. Busca, não full-text canônico."},
+        {"business_key": "AGY-NLM", "name": "U.S. National Library of Medicine", "jurisdiction": "JUR-US", "uuid": None, "status": "REGISTERED", "note": "Clinical Tables = busca. Não dump de classificação."},
     ]
     payload = {
         "business_key": "MD-AGENCY-REG-001",
@@ -446,7 +485,7 @@ def write_source_reg() -> dict:
             "reg_ref": api["reg_ref"],
             "agency_key": api["agency_key"],
             "issuer": api["agency"],
-            "jurisdiction": "JUR-BR",
+            "jurisdiction": "JUR-INTL" if api["agency_key"] in {"AGY-CROSSREF", "AGY-NCBI", "AGY-NLM"} else "JUR-BR",
             "instrument_class": "OPEN_DATA_API_CANDIDATE",
             "rights": "OPEN_DATA_IF_OBSERVED",
             "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",

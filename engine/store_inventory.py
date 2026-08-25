@@ -421,6 +421,54 @@ def plan_fronts() -> dict:
             "gap": "GAP-PARECER-360",
             "action": "Não promover workbook a golden MD.",
         },
+        {
+            "id": "F9",
+            "name": "L30/L40 pages_full + institucionais",
+            "status": "REGISTERED",
+            "agents": ["AG-PARSE-PAGES-FULL", "AG-COMPARE-STORES"],
+            "gap": "GAP-L30-L40-PAGES-FULL",
+            "action": "COMPARE stems (index/missão/política/termos + calculadoras) vs 5 pilotos. Sem unzip em data/tools.",
+        },
+        {
+            "id": "F10",
+            "name": "L60 bibliotecas + vacinas",
+            "status": "COMPARE_ONLY",
+            "agents": ["AG-INVENTORY-DRIVE", "AG-LIBRARY-CATALOG"],
+            "gap": "GAP-L60-LIBRARIES",
+            "action": "15 CAL-VAC observados. 11+24 tipos no zip de templates. 32 APIs EVIDENCE_PENDING. Sem promover CAL-VAC.",
+        },
+        {
+            "id": "F11",
+            "name": "L80/L90/L100 API onde possível",
+            "status": "EVIDENCE_PENDING",
+            "agents": ["AG-API-PROBE"],
+            "gap": "GAP-L80-L120-API",
+            "action": "Probe só HTTP 200. Sem dump LOINC/UMLS/classificacoes_medicas.zip.",
+        },
+        {
+            "id": "F12",
+            "name": "NANDA/NIC/NOC rights-safe",
+            "status": "HOLD",
+            "agents": ["AG-PLAN-FRONTS", "AG-RIGHTS-BIND"],
+            "gap": "GAP-NNN-RIGHTS",
+            "action": "Identificadores + sidecar licenciado. Não copiar nanda-00046.json do Drive.",
+        },
+        {
+            "id": "F13",
+            "name": "L140/L150 API + pesquisa",
+            "status": "REGISTERED",
+            "agents": ["AG-API-PROBE", "AG-LIBRARY-CATALOG"],
+            "gap": "GAP-L140-L150-API-RESEARCH",
+            "action": "Crossref/NCBI observados como busca. Resposta API ≠ canônico sem snapshot/hash/MD/REG.",
+        },
+        {
+            "id": "F14",
+            "name": "L150/L160 guia por conceito",
+            "status": "REGISTERED",
+            "agents": ["AG-CONTENT-CURRICULUM"],
+            "gap": "GAP-L150-L160-CONCEPT-RENDERER",
+            "action": "Um conceito → uma identidade → renderer. LLM FORBIDDEN no canônico.",
+        },
     ]
     for front in fronts:
         living = gap_by_id.get(front["gap"]) or {}
@@ -434,6 +482,8 @@ def plan_fronts() -> dict:
         "publication": "HOLD",
         "assured": False,
         "method_ref": "MD-OPS-METHOD-001",
+        "layer_intent_ref": "MD-LAYER-INTENT-001",
+        "nnn_rights_ref": "MD-NNN-RIGHTS-001",
         "method": method.get("method") or "RECOVER → COMPARE → GAP ONLY → REPERFORM → CLOSE",
         "plan_policy": "Plano vivo em JSON. Agentes atuam nas frentes; não criam autoridade nem identidade REG.",
         "maker_neq_checker": True,
@@ -442,6 +492,9 @@ def plan_fronts() -> dict:
         "next_executable": [
             "F1 replay offline a cada extract",
             "F2 bloqueado até credencial SQL read-only",
+            "F9 COMPARE pages_full vs pilotos; sem unzip",
+            "F10 vacinas 15 CAL-VAC COMPARE; 32 EVIDENCE_PENDING",
+            "F12 NNN HOLD até decisão de licença",
             "F3/F4 só com evidência HTTP/Congress já no tubo",
         ],
         "updated_at": _now(),
@@ -470,12 +523,44 @@ def plan_fronts() -> dict:
             "status": "COMPARE_ONLY",
             "reason": "site-shell-completo.zip maior que o zip já ingerido. COMPARE_ONLY; sem unzip em data/tools.",
         },
+        {
+            "id": "GAP-L30-L40-PAGES-FULL",
+            "status": "REGISTERED",
+            "reason": "pages_full+locales já inventariados. COMPARE stems institucionais e calculadoras vs 5 pilotos. HTML ≠ MD.",
+        },
+        {
+            "id": "GAP-L60-LIBRARIES",
+            "status": "COMPARE_ONLY",
+            "reason": "15 CAL-VAC no zip de vacinas. 11 dispositivos + 24 tipos clínicos no zip de templates. 32 APIs EVIDENCE_PENDING.",
+        },
+        {
+            "id": "GAP-L80-L120-API",
+            "status": "EVIDENCE_PENDING",
+            "reason": "API só com HTTP 200 JSON. LOINC/UMLS/classificacoes_medicas.zip não entram no GitHub.",
+        },
+        {
+            "id": "GAP-NNN-RIGHTS",
+            "status": "HOLD",
+            "reason": "NANDA/NIC/NOC: identidade+código sem texto licenciado. nanda-00046.json Drive QUARANTINE.",
+        },
+        {
+            "id": "GAP-L140-L150-API-RESEARCH",
+            "status": "REGISTERED",
+            "reason": "Crossref e NCBI E-utilities como busca. Não republicar abstract como canônico.",
+        },
+        {
+            "id": "GAP-L150-L160-CONCEPT-RENDERER",
+            "status": "REGISTERED",
+            "reason": "Guia/questão por conceito único via renderer. LLM FORBIDDEN. Currículo já DOCUMENTADO.",
+        },
     ]
     living_gaps = list(method.get("living_gaps") or [])
     for item in extra:
         if item["id"] not in existing_ids:
             living_gaps.append(item)
     method["living_gaps"] = living_gaps
+    method["layer_intent_ref"] = "MD-LAYER-INTENT-001"
+    method["nnn_rights_ref"] = "MD-NNN-RIGHTS-001"
     _dump(ROOT / "cko_md" / "operating_method.json", method)
     return {
         "agent_id": "AG-PLAN-FRONTS",
@@ -487,5 +572,5 @@ def plan_fronts() -> dict:
         "front_count": len(fronts),
         "publication": "HOLD",
         "blocked": ["F2"],
-        "hold": ["F5", "F7", "F8"],
+        "hold": ["F5", "F7", "F8", "F12"],
     }
