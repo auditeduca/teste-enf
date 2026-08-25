@@ -59,10 +59,11 @@ def test_inventory_agents_keep_schema_pending_and_plan_hold():
     assert vaccines["tool_id_count"] == 15
     assert vaccines["claimed_library_count_32"] == "EVIDENCE_PENDING"
     assert vaccines.get("pattern_candidate") is True
-    menu = next(item for item in drive["files"] if item["id"] == "1b0ORWmyAaYk6b_bW112RVcuARtWwRd0T")
+    drive_inv = json.loads((ROOT / "cko_inbox" / "extracted" / "drive_inventory.json").read_text(encoding="utf-8"))
+    menu = next(item for item in drive_inv["files"] if item["id"] == "1b0ORWmyAaYk6b_bW112RVcuARtWwRd0T")
     assert menu["classification"] == "FOLDER_OBSERVED"
     assert "mega-menu" in menu["reason"]
-    vac_file = next(item for item in drive["files"] if item["id"] == "1E9OB0AKR0m2Hbeknf43Htwo-fXob6cP9")
+    vac_file = next(item for item in drive_inv["files"] if item["id"] == "1E9OB0AKR0m2Hbeknf43Htwo-fXob6cP9")
     assert vac_file["classification"] == "CANDIDATE_GAP"
     assert vac_file["action"] == "COMPARE_ONLY"
     libs = json.loads((ROOT / "cko_inbox" / "extracted" / "templates_bibliotecas_compare.json").read_text(encoding="utf-8"))

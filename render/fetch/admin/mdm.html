@@ -6,6 +6,7 @@
   <title>Master Data · CKO Studio</title>
   <meta name="description" content="MDM, ISO 8000 profile e lineage.">
   <meta name="theme-color" content="#1A3E74">
+  
   <link rel="stylesheet" href="../assets/app.css">
   <meta name="robots" content="noindex,nofollow">
 </head>
@@ -83,12 +84,12 @@
       
     <header class="page-hero">
       <h1>Master Data.</h1>
-      <p class="lede">CKO-MD first. ISO 8000 no CKO é perfil de unicidade/proveniência/WORM/lineage — não certificação. Lei 9.610 vincula obras originais candidatas; escalas de terceiros HOLD.</p>
-      <p class="hold-banner">ISO implemented=False · certified=False · clause=CLAUSE_TEXT_UNAVAILABLE · campos=8 · lineage completa=5</p>
+      <p class="lede">CKO-MD first. ISO 8000 no CKO é perfil de unicidade/proveniência/WORM/lineage — não certificação. Referência operacional BR explícita: <a href="https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados">PGDADOS /pgdados</a> (SGD/MGI). Lei 9.610 vincula obras originais candidatas; escalas de terceiros HOLD.</p>
+      <p class="hold-banner">ISO implemented=False · certified=False · clause=CLAUSE_TEXT_UNAVAILABLE · PGDADOS=https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados · campos=11 · lineage completa=5</p>
     </header>
     <section class="panel">
-      <h2>Field dictionary (8)</h2>
-      <div class="table-wrap"><table class="inspect"><thead><tr><th>business_key</th><th>campo</th><th>propósito</th></tr></thead><tbody><tr><td>FLD-PROVENANCE-SHA256</td><td>provenance.sha256</td><td>hash da cópia original</td></tr><tr><td>FLD-PROVENANCE-URL</td><td>provenance.url</td><td>URL da fonte observada</td></tr><tr><td>FLD-PROVENANCE-CAPTURED-AT</td><td>provenance.captured_at</td><td>instante da primeira captura</td></tr><tr><td>FLD-VAULT-IMMUTABLE</td><td>vault.immutable</td><td>WORM: cópia inalterável</td></tr><tr><td>FLD-LINEAGE-PROJECTION</td><td>lineage.projection</td><td>caminho da projeção frontend</td></tr><tr><td>FLD-WORK-CLASS</td><td>work.work_class</td><td>ORIGINAL_CKO_CANDIDATE | THIRD_PARTY_SCALE | HOLD_OBJECT</td></tr><tr><td>FLD-RIGHTS-STATUS</td><td>rights.status</td><td>DOCUMENTADO ≠ ASSURED</td></tr><tr><td>FLD-MASK-ID</td><td>mask.mask_id</td><td>máscara de norma aplicada na execução simples</td></tr></tbody></table></div>
+      <h2>Field dictionary (11)</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>business_key</th><th>campo</th><th>propósito</th></tr></thead><tbody><tr><td>FLD-PROVENANCE-SHA256</td><td>provenance.sha256</td><td>hash da cópia original</td></tr><tr><td>FLD-PROVENANCE-URL</td><td>provenance.url</td><td>URL da fonte observada</td></tr><tr><td>FLD-PROVENANCE-CAPTURED-AT</td><td>provenance.captured_at</td><td>instante da primeira captura</td></tr><tr><td>FLD-VAULT-IMMUTABLE</td><td>vault.immutable</td><td>WORM: cópia inalterável</td></tr><tr><td>FLD-LINEAGE-PROJECTION</td><td>lineage.projection</td><td>caminho da projeção frontend</td></tr><tr><td>FLD-WORK-CLASS</td><td>work.work_class</td><td>ORIGINAL_CKO_CANDIDATE | THIRD_PARTY_SCALE | HOLD_OBJECT</td></tr><tr><td>FLD-RIGHTS-STATUS</td><td>rights.status</td><td>DOCUMENTADO ≠ ASSURED</td></tr><tr><td>FLD-MASK-ID</td><td>mask.mask_id</td><td>máscara de norma aplicada na execução simples</td></tr><tr><td>FLD-A11Y-WCAG-EMAG</td><td>a11y.wcag_emag</td><td>WCAG nomeada; equivalente BR eMAG/LBI. Texto de cláusula W3C NÃO ingerido. Barra a11y = apresentação.</td></tr><tr><td>FLD-SEO-OG-IMAGE</td><td>seo.og_image</td><td>Open Graph 1200×630 first-party para LinkedIn. 151 cartões Drive COMPARE, não copiados.</td></tr><tr><td>FLD-JSONLD-TYPE</td><td>seo.jsonld_type</td><td>JSON-LD WebSite/Organization. NUNCA MedicalOrganization. health-lifesci só se clinico=true e REG fechar.</td></tr></tbody></table></div>
     </section>
     <section class="panel">
       <h2>Obras e direitos</h2>
@@ -100,7 +101,8 @@
     </section>
     <section class="panel">
       <h2>Perfil ISO 8000 CKO</h2>
-      <div class="table-wrap"><table class="inspect"><thead><tr><th>teste</th><th>status</th><th>princípio</th></tr></thead><tbody><tr><td>ISO8000-CKO-UNIQUENESS</td><td><span class="chip chip-ok">PASS</span></td><td>unique identification of master records</td></tr><tr><td>ISO8000-CKO-PROVENANCE</td><td><span class="chip chip-ok">PASS</span></td><td>provenance of source bytes (url, captured_at, sha256)</td></tr><tr><td>ISO8000-CKO-WORM</td><td><span class="chip chip-ok">PASS</span></td><td>unaltered source copy retained</td></tr><tr><td>ISO8000-CKO-LINEAGE</td><td><span class="chip chip-ok">PASS</span></td><td>source → master → projection completeness</td></tr><tr><td>ISO8000-CKO-FIELD-DICT</td><td><span class="chip chip-ok">PASS</span></td><td>data dictionary for master attributes</td></tr><tr><td>ISO8000-CKO-NO-CERT-CLAIM</td><td><span class="chip chip-ok">PASS</span></td><td>do not claim ISO certification without licensed evidence</td></tr></tbody></table></div>
+      <p>Catálogo ISO: <code>https://www.iso.org/standard/80766.html</code>. Referência BR: <a href="https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados">https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados</a>. Referência operacional BR explícita: PGDADOS (SGD/MGI), https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados. Não substitui texto de cláusula ISO licenciada. Não é certificação ISO 8000.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>teste</th><th>status</th><th>princípio</th></tr></thead><tbody><tr><td>ISO8000-CKO-UNIQUENESS</td><td><span class="chip chip-ok">PASS</span></td><td>unique identification of master records</td></tr><tr><td>ISO8000-CKO-PROVENANCE</td><td><span class="chip chip-ok">PASS</span></td><td>provenance of source bytes (url, captured_at, sha256)</td></tr><tr><td>ISO8000-CKO-WORM</td><td><span class="chip chip-ok">PASS</span></td><td>unaltered source copy retained</td></tr><tr><td>ISO8000-CKO-LINEAGE</td><td><span class="chip chip-ok">PASS</span></td><td>source → master → projection completeness</td></tr><tr><td>ISO8000-CKO-FIELD-DICT</td><td><span class="chip chip-ok">PASS</span></td><td>data dictionary for master attributes</td></tr><tr><td>ISO8000-CKO-NO-CERT-CLAIM</td><td><span class="chip chip-ok">PASS</span></td><td>do not claim ISO certification without licensed evidence</td></tr><tr><td>ISO8000-CKO-PGDADOS-EXPLICIT</td><td><span class="chip chip-ok">PASS</span></td><td>Brazilian government operational reference for the CKO ISO 8000 profile is PGDADOS (SGD/MGI)</td></tr></tbody></table></div>
     </section>
     <section class="panel">
       <h2>Entity types (32)</h2>

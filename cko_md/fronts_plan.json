@@ -122,7 +122,7 @@
         "AG-COMPARE-STORES"
       ],
       "gap": "GAP-L30-L40-PAGES-FULL",
-      "action": "COMPARE stems (index/missão/política/termos + calculadoras) vs 5 pilotos. Sem unzip em data/tools.",
+      "action": "COMPARE stems (index/missão/política/termos + calculadoras) vs 5 pilotos. Catálogo de pendências REG (MD-PAGES-REG-PEND-001). Sem unzip em data/tools.",
       "gap_status": "REGISTERED"
     },
     {
@@ -134,7 +134,7 @@
         "AG-LIBRARY-CATALOG"
       ],
       "gap": "GAP-L60-LIBRARIES",
-      "action": "15 CAL-VAC observados. 11+24 tipos no zip de templates. 32 APIs EVIDENCE_PENDING. Sem promover CAL-VAC.",
+      "action": "15 CAL-VAC observados (PATTERN_CANDIDATE). 11+24 tipos no zip de templates. 32 APIs EVIDENCE_PENDING. Sem promover CAL-VAC.",
       "gap_status": "COMPARE_ONLY"
     },
     {
@@ -182,15 +182,75 @@
       "gap": "GAP-L150-L160-CONCEPT-RENDERER",
       "action": "Um conceito → uma identidade → renderer. LLM FORBIDDEN no canônico.",
       "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F15",
+      "name": "ISO 8000 + PGDADOS explícito",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-ISO8000-PROFILE",
+        "AG-LIBRARY-CATALOG"
+      ],
+      "gap": "GAP-ISO8000-PGDADOS",
+      "action": "URL PGDADOS /pgdados persistida no perfil ISO. Não substitui cláusula licenciada. Sem certificação.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F16",
+      "name": "Escalas: busca PubMed/COFEN/OMS",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-API-PROBE",
+        "AG-RIGHTS-BIND"
+      ],
+      "gap": "GAP-SCALE-LITERATURE",
+      "action": "Busca bibliográfica HTTP. SciELO 403 EVIDENCE_PENDING. Não republicar Braden/Norton/Glasgow.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F17",
+      "name": "pages_full catálogo de pendências REG",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-PARSE-PAGES-FULL",
+        "AG-CONTENT-CURRICULUM"
+      ],
+      "gap": "GAP-PAGES-REG-PEND",
+      "action": "Owner override: inventário demonstra gaps MD+REG+rights. Extração clínica em massa FORBIDDEN.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F18",
+      "name": "L280/L290/L300 OG+SEO+JSON-LD",
+      "status": "COMPARE_ONLY",
+      "agents": [
+        "AG-INVENTORY-DRIVE"
+      ],
+      "gap": "GAP-OG-SEO-JSONLD",
+      "action": "Drive 151 cards COMPARE. OG first-party 1200×630 no site piloto. JSON-LD WebSite/Organization. Sem MedicalOrganization.",
+      "gap_status": "COMPARE_ONLY"
+    },
+    {
+      "id": "F19",
+      "name": "Menu Drive COMPARE",
+      "status": "COMPARE_ONLY",
+      "agents": [
+        "AG-INVENTORY-DRIVE"
+      ],
+      "gap": "GAP-MENU-DRIVE",
+      "action": "151 destinos no menu.json Drive. Não promover mega-menu/Braden ao chrome público.",
+      "gap_status": "COMPARE_ONLY"
     }
   ],
   "next_executable": [
     "F1 replay offline a cada extract",
     "F2 bloqueado até credencial SQL read-only (MD-OWNER-UNBLOCK-001)",
-    "F9 COMPARE pages_full vs pilotos; sem unzip",
-    "F10 vacinas 15 CAL-VAC COMPARE; 32 EVIDENCE_PENDING",
+    "F9 COMPARE pages_full vs pilotos; catálogo de pendências REG; sem unzip",
+    "F10 vacinas 15 CAL-VAC PATTERN_CANDIDATE; 32 EVIDENCE_PENDING",
     "F12 NNN HOLD até decisão de licença A/B/C",
+    "F15 PGDADOS /pgdados explícito no perfil ISO (não certificação)",
+    "F18 OG first-party LinkedIn; 151 cards Drive não copiados",
     "F3/F4 só com evidência HTTP/Congress já no tubo"
   ],
-  "updated_at": "2026-08-25T18:39:11Z"
+  "updated_at": "2026-08-25T19:16:44Z"
 }

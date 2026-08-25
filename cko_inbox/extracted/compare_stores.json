@@ -4,29 +4,39 @@
   "status": "SOURCE_DERIVED",
   "epistemic_status": "OBSERVED",
   "promotes_to_md": false,
-  "compared_at": "2026-08-25T18:33:07Z",
+  "compared_at": "2026-08-25T19:16:44Z",
   "github_md_keys": [
     "AGY-ANVISA",
     "AGY-COFEN",
     "AGY-CONGRESSO",
     "AGY-COREN-SP",
+    "AGY-CROSSREF",
     "AGY-DADOSGOV",
+    "AGY-FDA",
     "AGY-MGI",
     "AGY-MS",
+    "AGY-NCBI",
+    "AGY-NLM",
     "AGY-SGD",
+    "AGY-WHO",
     "GAP-COFEN-REST",
     "GAP-COREN-REST",
     "GAP-DIMENSIONAMENTO",
     "GAP-DRIVE-INVENTORY",
     "GAP-DRIVE-SHELL-COMPLETO",
+    "GAP-ISO8000-PGDADOS",
     "GAP-L140-L150-API-RESEARCH",
     "GAP-L150-L160-CONCEPT-RENDERER",
     "GAP-L30-L40-PAGES-FULL",
     "GAP-L60-LIBRARIES",
     "GAP-L80-L120-API",
+    "GAP-MENU-DRIVE",
     "GAP-NNN-RIGHTS",
+    "GAP-OG-SEO-JSONLD",
     "GAP-ORGAN-ACTS",
+    "GAP-PAGES-REG-PEND",
     "GAP-PARECER-360",
+    "GAP-SCALE-LITERATURE",
     "GAP-SUPABASE-READ",
     "INS-CF-1988",
     "INS-DEC-10046-2019",
@@ -46,6 +56,7 @@
     "LIB-L80-EXAMES",
     "MD-AGENCY-REG-001",
     "MD-API-ADAPTER-REG-001",
+    "MD-CONCEPT-RENDER-001",
     "MD-CONTENT-CURR-001",
     "MD-ENTITY-TYPE-REG-001",
     "MD-FIELD-DICT-001",
@@ -55,13 +66,17 @@
     "MD-LAYER-INTENT-001",
     "MD-LEG-INS-001",
     "MD-LEG-TLK-001",
+    "MD-LIB-API-MAP-001",
     "MD-LIB-RES-001",
     "MD-LINEAGE-REG-001",
     "MD-LOCALE-REG-001",
     "MD-NNN-RIGHTS-001",
     "MD-OPS-METHOD-001",
+    "MD-OWNER-UNBLOCK-001",
     "MD-PAGE-INV-001",
+    "MD-PAGES-REG-PEND-001",
     "MD-PGDADOS-001",
+    "MD-W3C-EMAG-001",
     "MD-WORK-REG-001",
     "RES-INS-CF-1988",
     "RES-INS-DEC-10046-2019",
@@ -89,7 +104,7 @@
     "RES-SRC-GOV-PGDADOS-HUB",
     "RES-SRC-GOV-QUALIDADE-DIGIT"
   ],
-  "github_md_key_count": 82,
+  "github_md_key_count": 97,
   "pilots_in_data_tools": [
     "cinco-ts-pcr",
     "dimensionamento",
@@ -101,8 +116,8 @@
   "drive": {
     "population": 117,
     "already_in_cko": 4,
-    "quarantine": 78,
-    "candidate_gap": 1,
+    "quarantine": 76,
+    "candidate_gap": 3,
     "parecer_360": "QUARANTINE"
   },
   "supabase": {
@@ -213,10 +228,40 @@
       "reason": "Guia/questão por conceito único via renderer. LLM FORBIDDEN. Currículo já DOCUMENTADO."
     },
     {
+      "id": "GAP-ISO8000-PGDADOS",
+      "status": "REGISTERED",
+      "source": "MD-OPS-METHOD-001",
+      "reason": "PGDADOS /pgdados é a referência BR explícita do perfil ISO 8000 CKO. Não substitui cláusula ISO."
+    },
+    {
+      "id": "GAP-SCALE-LITERATURE",
+      "status": "REGISTERED",
+      "source": "MD-OPS-METHOD-001",
+      "reason": "PubMed/COFEN/OMS busca. SciELO EVIDENCE_PENDING. Instrumento de terceiros não republicado."
+    },
+    {
+      "id": "GAP-PAGES-REG-PEND",
+      "status": "REGISTERED",
+      "source": "MD-OPS-METHOD-001",
+      "reason": "1516 HTML demonstram pendências REG. Extração em massa de fórmula clínica FORBIDDEN."
+    },
+    {
+      "id": "GAP-OG-SEO-JSONLD",
+      "status": "COMPARE_ONLY",
+      "source": "MD-OPS-METHOD-001",
+      "reason": "W3C não ingerido. eMAG/LBI nomeados. OG default first-party. 151 cards Drive não copiados."
+    },
+    {
+      "id": "GAP-MENU-DRIVE",
+      "status": "COMPARE_ONLY",
+      "source": "MD-OPS-METHOD-001",
+      "reason": "Menu Drive 151 destinos. Chrome público permanece 5 pilotos. Sem Braden no header."
+    },
+    {
       "id": "GAP-DRIVE-SHELL-COMPLETO",
       "status": "COMPARE_ONLY",
       "source": "IPE-DRIVE-INV-001",
-      "reason": "site-shell-completo.zip (296119 B) vs ingested site-shell 82453 B. COMPARE_ONLY; do not unzip into data/tools."
+      "reason": "guia-metadados-avancado HTML COMPARE. 32 critérios SEO ≠ 32 bibliotecas. CDN fonts FORBIDDEN; não copiar HTML para render/."
     }
   ],
   "rule": "Não promover Drive/Supabase a identidade. Chat não é fonte. Reconstrução é último recurso."
