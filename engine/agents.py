@@ -217,6 +217,63 @@ def _zip_candidates() -> list[Path]:
     ]
 
 
+def write_pages_full_reg_pendencies(inventory: dict | None = None) -> dict:
+    """Owner override: pages_full inventory demonstrates REG pendencies. No mass clinical extract."""
+    dest_inv = ROOT / "cko_inbox" / "drive" / "pages_full" / "INVENTORY.json"
+    inventory = inventory or (json.loads(dest_inv.read_text(encoding="utf-8")) if dest_inv.exists() else {})
+    pages = inventory.get("pages") or []
+    stems = {item.get("stem") for item in pages if item.get("stem")}
+    pilots = sorted(stems & {"gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico", "dimensionamento"})
+    scales = []
+    for stem in ("braden", "norton", "glasgow"):
+        if stem in stems:
+            scales.append({
+                "stem": stem,
+                "gap": "PEND-THIRD-PARTY-SCALES",
+                "in_data_tools": False,
+                "role": "pendency_evidence",
+            })
+    institutional = [stem for stem in ("index", "missao", "politica", "termos") if stem in stems]
+    catalog = {
+        "business_key": "MD-PAGES-REG-PEND-001",
+        "uuid": None,
+        "status": "SOURCE_DERIVED",
+        "inventory_ref": "MD-PAGE-INV-001",
+        "drive_file_id": inventory.get("drive_file_id") or "1tJ-AEv3_KpEQxNa3lMuY7A80skFtw4IK",
+        "html_count": inventory.get("html_count") or len(pages),
+        "unique_stems": inventory.get("unique_stems") or len(stems),
+        "buckets": inventory.get("buckets") or {},
+        "reg_pendency_catalog": True,
+        "promoted_to_data_tools": False,
+        "mass_clinical_extract": "FORBIDDEN",
+        "owner_override": (
+            "Inventário demonstra pendências REG do projeto. "
+            "Extração em massa de fórmula clínica para data/tools permanece FORBIDDEN."
+        ),
+        "gap_rule": "1 stem → 1 identidade MD+REG+rights pendente até COMPARE fechar",
+        "pilot_stems_in_inventory": pilots,
+        "pilot_stems_missing_from_inventory": sorted(
+            {"gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico", "dimensionamento"} - set(pilots)
+        ),
+        "third_party_scale_stems": scales,
+        "institutional_stems": institutional,
+        "publication": "HOLD",
+        "assured": False,
+    }
+    _dump(ROOT / "cko_md" / "pages_full_reg_pendencies.json", catalog)
+    md_dest = ROOT / "cko_md" / "page_inventory.json"
+    if dest_inv.exists():
+        md_payload = {k: v for k, v in inventory.items() if k != "pages"}
+        md_payload["reg_pendency_catalog"] = True
+        md_payload["catalog_ref"] = "MD-PAGES-REG-PEND-001"
+        md_payload["inventory_path"] = str(dest_inv.relative_to(ROOT))
+        md_payload["related_to"] = "data/catalog.json"
+        md_payload["relation_type"] = "RELATED_TAXONOMY"
+        md_payload["not"] = "1:1 replace of the five pilots"
+        _dump(md_dest, md_payload)
+    return catalog
+
+
 def parse_pages_full_zip(zip_path: Path | None = None) -> dict:
     """AG-PARSE-PAGES-FULL — inventory HTML stems. Does not copy pages to data/tools."""
     dest = ROOT / "cko_inbox" / "drive" / "pages_full" / "INVENTORY.json"
@@ -225,6 +282,7 @@ def parse_pages_full_zip(zip_path: Path | None = None) -> dict:
     if zip_path is None:
         if dest.exists():
             payload = json.loads(dest.read_text(encoding="utf-8"))
+            catalog = write_pages_full_reg_pendencies(payload)
             return {
                 "agent_id": "AG-PARSE-PAGES-FULL",
                 "class": "EXTRACTION",
@@ -233,6 +291,7 @@ def parse_pages_full_zip(zip_path: Path | None = None) -> dict:
                 "replay": True,
                 "html_count": payload.get("html_count"),
                 "unique_stems": payload.get("unique_stems"),
+                "reg_pendency_catalog": catalog.get("business_key"),
                 "path": str(dest.relative_to(ROOT)),
             }
         return {
@@ -293,7 +352,12 @@ def parse_pages_full_zip(zip_path: Path | None = None) -> dict:
         "buckets": dict(sorted(buckets.items())),
         "chrome_ids_in_sample": chrome_hits,
         "ads_in_sample": ads_hits,
-        "rule": "Inventário SOURCE_DERIVED. Não é catálogo MD de ferramentas. Não copiar HTML para data/tools.",
+        "rule": (
+            "Inventário SOURCE_DERIVED usado como catálogo de pendências REG "
+            "(1 stem → 1 gap MD+REG+rights). Extração em massa de fórmula clínica para data/tools permanece FORBIDDEN."
+        ),
+        "reg_pendency_catalog": True,
+        "catalog_ref": "MD-PAGES-REG-PEND-001",
         "promoted_to_data_tools": False,
         "extracted_at": _now(),
         "pages": pages,
@@ -305,6 +369,7 @@ def parse_pages_full_zip(zip_path: Path | None = None) -> dict:
     md_payload["relation_type"] = "RELATED_TAXONOMY"
     md_payload["not"] = "1:1 replace of the five pilots"
     _dump(md_dest, md_payload)
+    write_pages_full_reg_pendencies(payload)
     return {
         "agent_id": "AG-PARSE-PAGES-FULL",
         "class": "EXTRACTION",

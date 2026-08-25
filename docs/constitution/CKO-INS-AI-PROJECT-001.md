@@ -135,6 +135,10 @@ SAE: busca interna canônica primeiro (MD, REG, grafo, evidência). Web externa 
 
 COSO e COBIT: frameworks de controle/governança de TI. Não autoridade clínica. Texto de cláusula: CLAUSE_TEXT_UNAVAILABLE até publicação licenciada.
 
+ISO 8000: perfil CKO de unicidade, proveniência, WORM e lineage. Não é certificação. Referência operacional brasileira explícita: Programa de Governança de Dados (PGDADOS / SGD / MGI), https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados. PGDADOS não substitui texto de cláusula ISO licenciada.
+
+W3C / WCAG: nomeados nas camadas L220/L280/L300. Equivalente brasileiro a nomear: eMAG e LBI. Texto de cláusula W3C não é baixado nem armazenado neste repositório até evidência licenciada. JSON-LD público: WebSite/Organization. Nunca MedicalOrganization como prestador de assistência.
+
 ## 12. Banco, RLS, produção
 
 Schema: migration, não destrutivo por padrão, auditável. Sem DROP/TRUNCATE/mass DELETE automático.

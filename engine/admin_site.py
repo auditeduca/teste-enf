@@ -130,6 +130,7 @@ def admin_shell(
         extra_head='<meta name="robots" content="noindex,nofollow">' + extra_head,
         scripts=scripts,
         home_href=home_href,
+        social=False,
     )
 
 
@@ -507,6 +508,7 @@ def page_library(ctx: dict, **kwargs) -> str:
     lib = load_json(ROOT / "cko_md" / "resource_library.json")
     curr = load_json(ROOT / "cko_md" / "content_curriculum.json")
     libmap = load_json(ROOT / "cko_md" / "library_api_map.json")
+    pages_pend = load_json(ROOT / "cko_md" / "pages_full_reg_pendencies.json")
     alerts = load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
     laws = load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
     res_rows = [
@@ -568,6 +570,10 @@ def page_library(ctx: dict, **kwargs) -> str:
         ]
         for item in (libmap.get("api_where_possible") or [])
     ]
+    page_pend_rows = [
+        [esc(item.get("stem")), esc(item.get("gap")), esc(item.get("in_data_tools"))]
+        for item in (pages_pend.get("third_party_scale_stems") or [])
+    ]
     inner = f"""
     <header class="page-hero">
       <h1>Biblioteca de recursos.</h1>
@@ -595,6 +601,11 @@ def page_library(ctx: dict, **kwargs) -> str:
     <section class="panel">
       <h2>Pendências ALTA</h2>
       {_table(["id", "severidade", "razão"], pend_rows)}
+    </section>
+    <section class="panel">
+      <h2>pages_full — catálogo de pendências REG ({esc(pages_pend.get("business_key") or "MD-PAGES-REG-PEND-001")})</h2>
+      <p>{esc(pages_pend.get("owner_override") or "Inventário demonstra pendências REG.")} HTML={esc(pages_pend.get("html_count"))} · extração clínica em massa={esc(pages_pend.get("mass_clinical_extract") or "FORBIDDEN")}.</p>
+      {_table(["stem", "gap", "em data/tools"], page_pend_rows or [["—", "rode extract", "false"]])}
     </section>
     <section class="panel">
       <h2>Alertas</h2>
@@ -841,8 +852,8 @@ def page_mdm(ctx: dict, **kwargs) -> str:
     inner = f"""
     <header class="page-hero">
       <h1>Master Data.</h1>
-      <p class="lede">CKO-MD first. ISO 8000 no CKO é perfil de unicidade/proveniência/WORM/lineage — não certificação. Lei 9.610 vincula obras originais candidatas; escalas de terceiros HOLD.</p>
-      <p class="hold-banner">ISO implemented={esc(iso.get("iso_implemented"))} · certified={esc(iso.get("certified"))} · clause={esc(iso.get("clause_text"))} · campos={esc(fields.get("population"))} · lineage completa={esc(lineage.get("complete_count"))}</p>
+      <p class="lede">CKO-MD first. ISO 8000 no CKO é perfil de unicidade/proveniência/WORM/lineage — não certificação. Referência operacional BR explícita: <a href="https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados">PGDADOS /pgdados</a> (SGD/MGI). Lei 9.610 vincula obras originais candidatas; escalas de terceiros HOLD.</p>
+      <p class="hold-banner">ISO implemented={esc(iso.get("iso_implemented"))} · certified={esc(iso.get("certified"))} · clause={esc(iso.get("clause_text"))} · PGDADOS={esc(iso.get("pgdados_hub_url"))} · campos={esc(fields.get("population"))} · lineage completa={esc(lineage.get("complete_count"))}</p>
     </header>
     <section class="panel">
       <h2>Field dictionary ({esc(fields.get("population"))})</h2>
@@ -858,6 +869,7 @@ def page_mdm(ctx: dict, **kwargs) -> str:
     </section>
     <section class="panel">
       <h2>Perfil ISO 8000 CKO</h2>
+      <p>Catálogo ISO: <code>{esc(iso.get("official_catalog_url"))}</code>. Referência BR: <a href="{attr(iso.get("pgdados_hub_url") or "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados")}">{esc(iso.get("pgdados_hub_url") or "PGDADOS /pgdados")}</a>. {esc(iso.get("government_reference") or "")}</p>
       {_table(["teste", "status", "princípio"], iso_rows)}
     </section>
     <section class="panel">
@@ -888,7 +900,7 @@ def page_frameworks(ctx: dict, **kwargs) -> str:
     inner = f"""
     <header class="page-hero">
       <h1>Frameworks de controle.</h1>
-      <p class="lede">{esc(registry.get("note"))} Mockups COSO/COBIT (88,7%, APO12.01, 184/214 objetivos) são DOCUMENT_CLAIM. ISO 8000 sem texto de cláusula. Não copiar norma licenciada.</p>
+      <p class="lede">{esc(registry.get("note"))} Mockups COSO/COBIT (88,7%, APO12.01, 184/214 objetivos) são DOCUMENT_CLAIM. ISO 8000 sem texto de cláusula. Referência BR explícita: PGDADOS /pgdados. Não copiar norma licenciada.</p>
     </header>
     <section class="panel">
       {_table(["business_key", "nome", "papel", "cláusula", "epistemic"], rows)}

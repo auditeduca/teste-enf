@@ -23,12 +23,55 @@ from .paths import (
 from .score import compute, format_result, interpret
 from .validate import iter_tool_files, load_tool
 
+from .og_card import write_default_og_png
+
 SITE_NAME = "CKO"
 SITE_SUB = "Calculadoras de Enfermagem"
+SITE_ORIGIN = "https://www.calculadorasdeenfermagem.com.br"
+OG_IMAGE_ABS = f"{SITE_ORIGIN}/assets/img/og-default.png"
 
 
 def _read_css() -> str:
     return (ASSETS_DIR / "css" / "app.css").read_text(encoding="utf-8")
+
+
+def _social_head(*, title: str, description: str, home_href: str) -> str:
+    prefix = asset_prefix(home_href)
+    rel_img = f"{prefix}assets/img/og-default.png"
+    graph = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": f"{SITE_ORIGIN}/#organization",
+                "name": "Audit Educa",
+            },
+            {
+                "@type": "WebSite",
+                "@id": f"{SITE_ORIGIN}/#website",
+                "name": "Calculadoras de Enfermagem",
+                "url": f"{SITE_ORIGIN}/",
+                "inLanguage": "pt-BR",
+                "publisher": {"@id": f"{SITE_ORIGIN}/#organization"},
+            },
+        ],
+    }
+    return f"""
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Calculadoras de Enfermagem">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="{attr(title)}">
+  <meta property="og:description" content="{attr(description)}">
+  <meta property="og:image" content="{attr(OG_IMAGE_ABS)}">
+  <meta property="og:image:alt" content="Calculadoras de Enfermagem">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{attr(title)}">
+  <meta name="twitter:description" content="{attr(description)}">
+  <meta name="twitter:image" content="{attr(OG_IMAGE_ABS)}">
+  <link rel="image_src" href="{attr(rel_img)}">
+  <script type="application/ld+json">{dumps_json(graph)}</script>"""
 
 
 def _shell(
@@ -41,6 +84,7 @@ def _shell(
     extra_head: str = "",
     scripts: str = "",
     home_href: str = "index.html",
+    social: bool = True,
 ) -> str:
     if css_inline:
         style = f"<style>\n{_read_css() if css_inline == 'file' else css_inline}\n</style>"
@@ -48,6 +92,7 @@ def _shell(
         style = f'<link rel="stylesheet" href="{attr(css_href)}">'
     a11y = ds_a11y_script(inline=bool(css_inline), prefix=asset_prefix(home_href))
     combined = "\n".join(part for part in (scripts, a11y) if part)
+    social_head = _social_head(title=title, description=description, home_href=home_href) if social else ""
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -56,6 +101,7 @@ def _shell(
   <title>{esc(title)}</title>
   <meta name="description" content="{attr(description)}">
   <meta name="theme-color" content="#1A3E74">
+  {social_head}
   {style}
   {extra_head}
 </head>
@@ -503,7 +549,7 @@ def generate_inspector(tools: list[dict], completeness: dict, *, css_href: str, 
     )
 
 
-def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> str:
+def     generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> str:
     lib = _load_json(ROOT / "cko_md" / "resource_library.json")
     curr = _load_json(ROOT / "cko_md" / "content_curriculum.json")
     agencies = _load_json(ROOT / "cko_md" / "agency_registry.json")
@@ -515,6 +561,7 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     pgd = _load_json(ROOT / "cko_md" / "pgdados_program.json")
     libmap = _load_json(ROOT / "cko_md" / "library_api_map.json")
     concept = _load_json(ROOT / "cko_md" / "concept_renderer.json")
+    pages_pend = _load_json(ROOT / "cko_md" / "pages_full_reg_pendencies.json")
     res_rows = []
     for item in lib.get("resources") or []:
         res_rows.append(
@@ -588,6 +635,10 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     dim_txt = ", ".join(
         f"{d.get('n')} {d.get('name')}" for d in (pgd.get("quality_dimensions") or [])
     ) or "EVIDENCE_PENDING"
+    scale_stems = "".join(
+        f"<li><code>{esc(item.get('stem'))}</code> · {esc(item.get('gap'))} · data/tools={esc(item.get('in_data_tools'))}</li>"
+        for item in (pages_pend.get("third_party_scale_stems") or [])
+    )
     set_rows = []
     for item in libmap.get("observed_sets") or []:
         set_rows.append(
@@ -646,7 +697,7 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     </section>
     <section id="pgdados" class="panel">
       <h2>PGDADOS e qualidade digital (SGD / MGI)</h2>
-      <p>Fontes oficiais Gov.br. PDF catalogado por href <code>gov.br</code>. Texto do manual não vira regra de produto. Parte 3 e volumes 4–5 sem PDF observado permanecem EVIDENCE_PENDING. PDF ABNT de terceiro no chrome do portal é ignorado. Dimensões observadas: {esc(dim_txt)}.</p>
+      <p>Referência operacional BR explícita: <a href="https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados">gov.br …/governancadedados/pgdados</a>. PDF catalogado por href <code>gov.br</code>. Texto do manual não vira regra de produto. Não substitui cláusula ISO 8000 licenciada. Parte 3 e volumes 4–5 sem PDF observado permanecem EVIDENCE_PENDING. PDF ABNT de terceiro no chrome do portal é ignorado. Dimensões observadas: {esc(dim_txt)}.</p>
       <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>material</th><th>status</th><th>url</th></tr></thead><tbody>{"".join(pgd_rows) or "<tr><td colspan='4'>EVIDENCE_PENDING — rode extract com rede.</td></tr>"}</tbody></table></div>
     </section>
     <section class="panel">
@@ -661,6 +712,11 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     <section class="panel">
       <h2>Pendências ALTA</h2>
       <ul>{pending or "<li>Nenhuma pendência registrada.</li>"}</ul>
+    </section>
+    <section class="panel">
+      <h2>pages_full — catálogo de pendências REG</h2>
+      <p>{esc(pages_pend.get("owner_override") or "Inventário demonstra pendências REG. Extração clínica em massa FORBIDDEN.")} HTML={esc(pages_pend.get("html_count"))} · stems={esc(pages_pend.get("unique_stems"))} · ref <code>{esc(pages_pend.get("business_key") or "MD-PAGES-REG-PEND-001")}</code>.</p>
+      <ul>{scale_stems or "<li>Escalas de terceiros EVIDENCE_PENDING neste lote.</li>"}</ul>
     </section>
     <section class="panel">
       <h2>Alertas de frescura / offline</h2>
@@ -721,8 +777,11 @@ def _emit_tree(dest: Path, tools: list[dict], *, inline_css: bool) -> list[Path]
         "logotipo-footer.png",
         "icontopbar1-calculadoras-de-enfermagem.webp",
         "iconrodape1-80-calculadoras-de-enfermagem.webp",
+        "og-default.png",
     ):
         src = ASSETS_DIR / "img" / name
+        if name == "og-default.png" and not src.exists():
+            write_default_og_png(src)
         if src.exists():
             shutil.copy2(src, img_dest / name)
             written.append(img_dest / name)

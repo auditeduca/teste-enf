@@ -63,6 +63,7 @@ def test_extract_binds_rights_iso_lineage_without_fake_pass():
 
     iso_fw = next(item for item in frameworks["frameworks"] if item["business_key"] == "FWK-ISO-8000-001")
     assert iso_fw["clause_text"] == "CLAUSE_TEXT_UNAVAILABLE"
+    assert iso_fw["pgdados_hub_url"].endswith("/pgdados")
     assert iso["certified"] is False
     assert iso["iso_implemented"] is False
     assert iso["cko_profile_applied"] is True
@@ -73,7 +74,7 @@ def test_extract_binds_rights_iso_lineage_without_fake_pass():
     assert masks["llm_as_checker"] == "FORBIDDEN"
     assert mask_run["llm_used"] is False
 
-    assert fields["population"] == 8
+    assert fields["population"] == 11
     assert lineage["complete_count"] >= 4
     assert shell["hash_match"] is True
     assert shell["promoted_to_frontend"] is False
@@ -104,6 +105,7 @@ def test_frontend_lineage_and_monitoring_without_ads():
     assert "EXPECTED_REWRITE" in monitoring or "Fonte vs primeira cópia" in monitoring
     assert "FWK-ISO-8000-001" in frameworks or "ISO 8000" in frameworks
     assert "CLAUSE_TEXT_UNAVAILABLE" in frameworks
+    assert "pgdados" in mdm.lower()
     assert "certified" in mdm.lower() or "ISO 8000" in mdm
     assert "ca-pub-6472730056006847" not in tool
     parity = check_parity()

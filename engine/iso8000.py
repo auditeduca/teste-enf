@@ -13,6 +13,11 @@ from .paths import ROOT, TOOLS_DIR
 from .vault import MANIFEST_PATH, POINTERS_PATH
 
 OFFICIAL_CATALOG_URL = "https://www.iso.org/standard/80766.html"
+PGDADOS_REF_URL = (
+    "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/"
+    "governancadedados/pgdados"
+)
+PGDADOS_REF = "MD-PGDADOS-001"
 
 
 def _now() -> str:
@@ -88,6 +93,16 @@ def evaluate_profile() -> dict:
             "status": "PASS",
             "observed": {"certified": False, "clause_text": "CLAUSE_TEXT_UNAVAILABLE"},
         },
+        {
+            "id": "ISO8000-CKO-PGDADOS-EXPLICIT",
+            "principle": "Brazilian government operational reference for the CKO ISO 8000 profile is PGDADOS (SGD/MGI)",
+            "status": "PASS" if PGDADOS_REF_URL.endswith("/pgdados") else "FAIL",
+            "observed": {
+                "pgdados_hub_url": PGDADOS_REF_URL,
+                "pgdados_ref": PGDADOS_REF,
+                "replaces_iso_clause_text": False,
+            },
+        },
     ]
     statuses = {item["status"] for item in tests}
     overall = "HOLD"
@@ -102,6 +117,13 @@ def evaluate_profile() -> dict:
         "mask_id": "MASK-TECH-STD",
         "name": "ISO 8000 — Data quality / master data (CKO profile)",
         "official_catalog_url": OFFICIAL_CATALOG_URL,
+        "pgdados_hub_url": PGDADOS_REF_URL,
+        "pgdados_ref": PGDADOS_REF,
+        "government_reference": (
+            "Referência operacional BR explícita: PGDADOS (SGD/MGI), "
+            "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados. "
+            "Não substitui texto de cláusula ISO licenciada. Não é certificação ISO 8000."
+        ),
         "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
         "licensed_body": False,
         "certified": False,
@@ -109,7 +131,10 @@ def evaluate_profile() -> dict:
         "cko_profile_applied": True,
         "status": overall,
         "epistemic_status": "PROPOSED",
-        "note": "Perfil CKO de princípios já presentes na constituição (unicidade, proveniência, WORM, lineage). NÃO é implantação certificada da ISO 8000.",
+        "note": (
+            "Perfil CKO de princípios já presentes na constituição (unicidade, proveniência, WORM, lineage). "
+            "Referência governamental BR: PGDADOS. NÃO é implantação certificada da ISO 8000."
+        ),
         "tests": tests,
         "evaluated_at": _now(),
     }

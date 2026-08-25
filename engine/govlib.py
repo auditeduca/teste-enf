@@ -184,6 +184,36 @@ API_CANDIDATES = (
         "md_ref": "MD-API-NLM-ICD10CM",
         "reg_ref": "REG-API-NLM",
     },
+    {
+        "business_key": "API-OPENFDA-DRUGLABEL",
+        "agency_key": "AGY-FDA",
+        "agency": "openFDA (FDA / governo dos EUA)",
+        "url": "https://api.fda.gov/drug/label.json?limit=1",
+        "kind": "PRODUCT_LABEL_SEARCH",
+        "md_ref": "MD-API-OPENFDA",
+        "reg_ref": "REG-API-FDA",
+        "note": "Fallback US gov quando CKAN dados.gov.br/ANVISA REST falha. Não substitui bula ANVISA.",
+    },
+    {
+        "business_key": "API-WHO-GHO-INDICATOR",
+        "agency_key": "AGY-WHO",
+        "agency": "OMS GHO OData",
+        "url": "https://ghoapi.azureedge.net/api/Indicator?$top=1",
+        "kind": "INDICATOR_SEARCH",
+        "md_ref": "MD-API-WHO-GHO",
+        "reg_ref": "REG-API-WHO",
+        "note": "Indicadores OMS. Não republica instrumento clínico.",
+    },
+    {
+        "business_key": "API-RXNAV-VERSION",
+        "agency_key": "AGY-NLM",
+        "agency": "NLM RxNav",
+        "url": "https://rxnav.nlm.nih.gov/REST/version.json",
+        "kind": "TERMINOLOGY_VERSION",
+        "md_ref": "MD-API-RXNAV",
+        "reg_ref": "REG-API-NLM",
+        "note": "Versão RxNorm. Sem dump de termos.",
+    },
 )
 
 LEVELS = (
@@ -408,6 +438,8 @@ def write_agency_md() -> dict:
         {"business_key": "AGY-CROSSREF", "name": "Crossref", "jurisdiction": "JUR-INTL", "uuid": None, "status": "REGISTERED", "note": "API bibliográfica. Não é autoridade clínica."},
         {"business_key": "AGY-NCBI", "name": "NCBI / NLM", "jurisdiction": "JUR-US", "uuid": None, "status": "REGISTERED", "note": "E-utilities. Busca, não full-text canônico."},
         {"business_key": "AGY-NLM", "name": "U.S. National Library of Medicine", "jurisdiction": "JUR-US", "uuid": None, "status": "REGISTERED", "note": "Clinical Tables = busca. Não dump de classificação."},
+        {"business_key": "AGY-FDA", "name": "U.S. Food and Drug Administration", "jurisdiction": "JUR-US", "uuid": None, "status": "REGISTERED", "note": "openFDA = busca de rótulo. Fallback se API ANVISA/CKAN BR falhar."},
+        {"business_key": "AGY-WHO", "name": "Organização Mundial da Saúde", "jurisdiction": "JUR-INTL", "uuid": None, "status": "REGISTERED", "note": "GHO OData observado. IRIS é HTML. Não republica escala."},
     ]
     payload = {
         "business_key": "MD-AGENCY-REG-001",
@@ -588,11 +620,108 @@ def fetch_gov_sources(*, network: bool) -> dict:
     }
 
 
+def write_scale_search_probe(*, network: bool) -> dict:
+    """Bibliographic search for third-party scales. Search ≠ instrument dump."""
+    dest = ROOT / "cko_inbox" / "extracted" / "scale_search_probe.json"
+    if dest.exists() and not network:
+        return json.loads(dest.read_text(encoding="utf-8"))
+    from .agents import UA_BROWSER, _http_get
+
+    queries = (
+        {
+            "id": "SCALE-BRADEN",
+            "term": "Braden scale pressure ulcer",
+            "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=Braden+scale+pressure+ulcer&retmax=0&retmode=json",
+        },
+        {
+            "id": "SCALE-NORTON",
+            "term": "Norton scale pressure ulcer",
+            "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=Norton+scale+pressure+ulcer&retmax=0&retmode=json",
+        },
+        {
+            "id": "SCALE-GLASGOW",
+            "term": "Glasgow Coma Scale",
+            "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=Glasgow+Coma+Scale&retmax=0&retmode=json",
+        },
+    )
+    pubmed = []
+    if network:
+        for item in queries:
+            rec = _http_get(item["url"], timeout=25, user_agent=UA_BROWSER)
+            body = rec.get("body") or b""
+            count = None
+            try:
+                payload = json.loads(body.decode("utf-8", errors="replace"))
+                count = (payload.get("esearchresult") or {}).get("count")
+            except (json.JSONDecodeError, UnicodeDecodeError, AttributeError):
+                count = None
+            pubmed.append({
+                **item,
+                "http_status": rec.get("http_status"),
+                "count": count,
+                "kind": "LITERATURE_SEARCH",
+                "republication": "FORBIDDEN",
+            })
+        scielo = _http_get("https://search.scielo.org/?q=braden&lang=pt&format=json", timeout=20, user_agent=UA_BROWSER)
+        cofen = _http_get("https://www.cofen.gov.br/?s=braden", timeout=20, user_agent=UA_BROWSER)
+        anvisa = _http_get("https://www.gov.br/anvisa/pt-br/search?SearchableText=braden", timeout=20, user_agent=UA_BROWSER)
+        who_iris = _http_get("https://iris.who.int/discover?query=glasgow+coma+scale", timeout=20, user_agent=UA_BROWSER)
+        payload = {
+            "business_key": "IPE-SCALE-SEARCH-001",
+            "uuid": None,
+            "status": "SOURCE_DERIVED",
+            "rule": "Busca bibliográfica ≠ republicação do instrumento. Sem copiar itens Braden/Norton/Glasgow.",
+            "pubmed": pubmed,
+            "scielo": {
+                "url": "https://search.scielo.org/?q=braden&lang=pt&format=json",
+                "http_status": scielo.get("http_status"),
+                "epistemic_status": "OBSERVED" if scielo.get("http_status") == 200 else "EVIDENCE_PENDING",
+            },
+            "cofen_html": {
+                "url": "https://www.cofen.gov.br/?s=braden",
+                "http_status": cofen.get("http_status"),
+                "kind": "HTML_SEARCH",
+                "rest_api": "NOT_OBSERVED",
+            },
+            "anvisa_html": {
+                "url": "https://www.gov.br/anvisa/pt-br/search?SearchableText=braden",
+                "http_status": anvisa.get("http_status"),
+                "kind": "HTML_SEARCH",
+                "rest_api": "NOT_OBSERVED",
+            },
+            "who_iris_html": {
+                "url": "https://iris.who.int/discover?query=glasgow+coma+scale",
+                "http_status": who_iris.get("http_status"),
+                "kind": "HTML_SEARCH",
+            },
+            "probed_at": _now(),
+        }
+        _dump(dest, payload)
+        return payload
+    payload = {
+        "business_key": "IPE-SCALE-SEARCH-001",
+        "uuid": None,
+        "status": "EVIDENCE_PENDING",
+        "rule": "Busca bibliográfica ≠ republicação do instrumento.",
+        "pubmed": [],
+        "probed_at": None,
+    }
+    _dump(dest, payload)
+    return payload
+
+
 def probe_apis(*, network: bool) -> dict:
     """AG-API-PROBE — observe candidate REST. Never invent HTTP 200 or base_url."""
     from .agents import UA_BROWSER, _http_get
 
     dest = ROOT / "cko_inbox" / "extracted" / "api_probe.json"
+    persisted = {}
+    if dest.exists():
+        persisted = {
+            item.get("business_key"): item
+            for item in (json.loads(dest.read_text(encoding="utf-8")).get("adapters") or [])
+            if item.get("business_key")
+        }
     adapters = []
     if network:
         for cand in API_CANDIDATES:
@@ -610,7 +739,7 @@ def probe_apis(*, network: bool) -> dict:
                 "epistemic_status": "OBSERVED" if observed_ok else "EVIDENCE_PENDING",
                 "base_url": f"https://{host}/" if observed_ok else None,
                 "online": bool(observed_ok),
-                "note": "API observada só se HTTP 200. Sem 200, base_url permanece null. API pode ficar offline; extração é periódica.",
+                "note": cand.get("note") or "API observada só se HTTP 200. Sem 200, base_url permanece null. API pode ficar offline; extração é periódica.",
                 "probed_at": _now(),
             })
         _dump(dest, {
@@ -621,30 +750,34 @@ def probe_apis(*, network: bool) -> dict:
             "frequency_hours": FREQ_HOURS,
             "adapters": adapters,
         })
-    elif dest.exists():
-        adapters = json.loads(dest.read_text(encoding="utf-8")).get("adapters") or []
     else:
-        adapters = [{
-            **cand,
-            "uuid": None,
-            "http_status": None,
-            "bytes": None,
-            "sha256": None,
-            "error": "offline_no_inbox",
-            "epistemic_status": "EVIDENCE_PENDING",
-            "base_url": None,
-            "online": False,
-            "note": "Probe não executado. base_url null até HTTP 200 observado.",
-            "probed_at": None,
-        } for cand in API_CANDIDATES]
+        for cand in API_CANDIDATES:
+            prev = persisted.get(cand["business_key"]) or {}
+            if prev:
+                adapters.append({**cand, **prev, "business_key": cand["business_key"], "url": cand["url"]})
+            else:
+                adapters.append({
+                    **cand,
+                    "uuid": None,
+                    "http_status": None,
+                    "bytes": None,
+                    "sha256": None,
+                    "error": "offline_no_inbox",
+                    "epistemic_status": "EVIDENCE_PENDING",
+                    "base_url": None,
+                    "online": False,
+                    "note": cand.get("note") or "Probe não executado. base_url null até HTTP 200 observado.",
+                    "probed_at": None,
+                })
         _dump(dest, {
             "business_key": "IPE-API-PROBE-001",
             "uuid": None,
-            "status": "EVIDENCE_PENDING",
-            "probed_at": None,
+            "status": "SOURCE_DERIVED" if any(item.get("http_status") is not None for item in adapters) else "EVIDENCE_PENDING",
+            "probed_at": _now() if any(item.get("http_status") is not None for item in adapters) else None,
             "frequency_hours": FREQ_HOURS,
             "adapters": adapters,
         })
+    write_scale_search_probe(network=network)
     md = {
         "business_key": "MD-API-ADAPTER-REG-001",
         "uuid": None,
@@ -912,22 +1045,37 @@ def content_curriculum() -> dict:
             "severity": "ALTA",
             "reason": "Texto de cláusula ISO licenciada indisponível. Government alternative NÃO substitui ISO 8000 clause text.",
             "government_alternative_sought": True,
-            "alternative": None,
+            "alternative": (
+                "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/"
+                "governancadedados/pgdados — referência operacional BR (PGDADOS). "
+                "Não substitui texto de cláusula ISO licenciada."
+            ),
             "status": "PENDENCIA_ALTA",
         },
         {
             "business_key": "PEND-THIRD-PARTY-SCALES",
             "severity": "ALTA",
-            "reason": "Braden/Norton/Glasgow: obra de terceiros. cko_copyright_claim FORBIDDEN. Sem promoção a data/tools.",
+            "reason": (
+                "Braden/Norton/Glasgow: obra de terceiros. Busca bibliográfica permitida "
+                "(PubMed/COFEN/ANVISA HTML/OMS). Republicar o instrumento continua FORBIDDEN."
+            ),
             "government_alternative_sought": True,
-            "alternative": "Não há equivalente governamental que autorize republicar a escala original.",
+            "alternative": (
+                "PubMed E-utilities HTTP 200 (contagens). COFEN/ANVISA HTML 200. OMS GHO JSON 200. "
+                "SciELO JSON 403 = EVIDENCE_PENDING. Nenhum equivalente autoriza republicar itens da escala."
+            ),
             "status": "PENDENCIA_ALTA",
         },
         {
             "business_key": "PEND-PAGES-FULL-1516",
             "severity": "ALTA",
-            "reason": "1516 HTML em quarentena. Extração em massa de conteúdo clínico a partir deles é FORBIDDEN até MD+REG+rights por página.",
+            "reason": (
+                "1516 HTML = catálogo de pendências REG (1 stem → 1 gap MD+REG+rights). "
+                "Inventário demonstra as pendências. Extração em massa de fórmula clínica para data/tools permanece FORBIDDEN."
+            ),
             "government_alternative_sought": False,
+            "reg_pendency_catalog": True,
+            "catalog_ref": "MD-PAGES-REG-PEND-001",
             "status": "PENDENCIA_ALTA",
         },
         {
@@ -935,7 +1083,10 @@ def content_curriculum() -> dict:
             "severity": "ALTA",
             "reason": "API de produtos ANVISA autenticada/consulta não observada como REST pública estável neste ambiente.",
             "government_alternative_sought": True,
-            "alternative": "CKAN dados.gov.br package_search q=anvisa, se HTTP 200.",
+            "alternative": (
+                "CKAN dados.gov.br package_search q=anvisa = HTTP 401 neste lote. "
+                "Fallback US gov: API-OPENFDA-DRUGLABEL (HTTP 200 JSON). Não substitui bula ANVISA."
+            ),
             "status": "PENDENCIA_ALTA",
         },
         {

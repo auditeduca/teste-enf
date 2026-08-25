@@ -41,6 +41,7 @@ def test_pgdados_catalog_and_coren_has_no_rest_api():
 
     html = (ROOT / "render" / "fetch" / "biblioteca.html").read_text(encoding="utf-8")
     assert "PGDADOS" in html
+    assert "governancadedados/pgdados" in html
     assert "INS-DEC-10046-2019" in html or "10.046" in html
     assert "adsbygoogle" not in html
     assert "mwpt.com.br" not in html

@@ -48,7 +48,7 @@ def test_inventory_agents_keep_schema_pending_and_plan_hold():
     assert supabase["schema"] == "EVIDENCE_PENDING"
     assert supabase["sql_blocked"] is True
     assert plan["publication"] == "HOLD"
-    assert plan["front_count"] == 14
+    assert plan["front_count"] == 19
     assert "F2" in plan["blocked"]
     assert "F12" in plan["hold"]
     fronts = json.loads((ROOT / "cko_md" / "fronts_plan.json").read_text(encoding="utf-8"))
@@ -58,6 +58,13 @@ def test_inventory_agents_keep_schema_pending_and_plan_hold():
     vaccines = json.loads((ROOT / "cko_inbox" / "extracted" / "vaccines_zip_inventory.json").read_text(encoding="utf-8"))
     assert vaccines["tool_id_count"] == 15
     assert vaccines["claimed_library_count_32"] == "EVIDENCE_PENDING"
+    assert vaccines.get("pattern_candidate") is True
+    menu = next(item for item in drive["files"] if item["id"] == "1b0ORWmyAaYk6b_bW112RVcuARtWwRd0T")
+    assert menu["classification"] == "FOLDER_OBSERVED"
+    assert "mega-menu" in menu["reason"]
+    vac_file = next(item for item in drive["files"] if item["id"] == "1E9OB0AKR0m2Hbeknf43Htwo-fXob6cP9")
+    assert vac_file["classification"] == "CANDIDATE_GAP"
+    assert vac_file["action"] == "COMPARE_ONLY"
     libs = json.loads((ROOT / "cko_inbox" / "extracted" / "templates_bibliotecas_compare.json").read_text(encoding="utf-8"))
     assert libs["observed_counts"]["clinical_object_types_05"] == 24
     assert libs["nnn_files_in_zip"]["nanda-00046.json"] == "QUARANTINE"

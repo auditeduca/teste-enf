@@ -244,7 +244,7 @@ def ds_footer(home_href: str, prefix: str) -> str:
       <div class="footer-col">
         <h2>{esc(t.get("ourCommitment") or "Nosso Compromisso")}</h2>
         <p>{esc(t.get("commitmentText") or "Padrões de acessibilidade, sustentabilidade digital, segurança da informação e proteção de dados.")}</p>
-        <p class="footer-commitment">Sem captura de e-mail e sem mural de cookies neste lote (NO_SENSITIVE_CAPTURE).</p>
+        <p class="footer-commitment">WCAG nomeada; equivalente BR eMAG/LBI. Texto de cláusula W3C não ingerido. Sem captura de e-mail e sem mural de cookies neste lote (NO_SENSITIVE_CAPTURE).</p>
       </div>
       <div class="footer-col">
         <h2>{esc(t.get("followUs") or "Siga-nos")}</h2>

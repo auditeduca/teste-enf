@@ -35,6 +35,29 @@ CANDIDATE_GAP_IDS = {
     "1QGdvsnUhKSr2XTQ03sJzWowKp8lQUxZf": (
         "site-shell-completo.zip (296119 B) vs ingested site-shell 82453 B. COMPARE_ONLY; do not unzip into data/tools."
     ),
+    "1E9OB0AKR0m2Hbeknf43Htwo-fXob6cP9": (
+        "Vacinas zip PATTERN_CANDIDATE COMPARE. 15 CAL-VAC observados. Não copiar para data/tools."
+    ),
+    "1mTJ0LQh2azuI3Nm0nnYbC6PUCXQIDG7D": (
+        "guia-metadados-avancado HTML COMPARE. 32 critérios SEO ≠ 32 bibliotecas. CDN fonts FORBIDDEN; não copiar HTML para render/."
+    ),
+}
+
+FOLDER_NOTES = {
+    "1b0ORWmyAaYk6b_bW112RVcuARtWwRd0T": (
+        "Menu COMPARE (Auditoria-Menu-MetaDados). 151 destinos SOURCE_DERIVED no Drive. "
+        "Não ligar mega-menu/Braden no chrome público."
+    ),
+    "1GRoNBScNVf4UsnHL0YSY17J6jsGLAyJW": (
+        "OG cards Drive COMPARE. 151 WebP 1200×630 reivindicados. Não copiar cartões de /braden.html. "
+        "CKO usa OG first-party default."
+    ),
+    "1dbC8M3TOAivaa9iwWRg0O6gI8ryKr0Qs": (
+        "Passarinho-Vai-Lá COMPARE. Zips de brand/vila/design + imagens ChatGPT. Sem unzip mega; imagens SKIP."
+    ),
+    "1ZcE8AK0hVnrmMuuKISJ9t02t0w5QcJ0x": (
+        "Classificações Médicas COMPARE. Pastas ICPC-2/UMLS/UCUM/LOINC/RxNorm/MeSH. Zip 99 MB SKIP. Sem dump licenciado."
+    ),
 }
 
 PII_IDS = {
@@ -106,7 +129,7 @@ def classify_drive_file(item: dict) -> dict:
     if mime == "application/vnd.google-apps.folder":
         record.update({
             "classification": "FOLDER_OBSERVED",
-            "reason": "Pasta observada. Filhos HTML não são identidade MD.",
+            "reason": FOLDER_NOTES.get(file_id) or "Pasta observada. Filhos HTML não são identidade MD.",
         })
         return record
     if (
@@ -427,7 +450,7 @@ def plan_fronts() -> dict:
             "status": "REGISTERED",
             "agents": ["AG-PARSE-PAGES-FULL", "AG-COMPARE-STORES"],
             "gap": "GAP-L30-L40-PAGES-FULL",
-            "action": "COMPARE stems (index/missão/política/termos + calculadoras) vs 5 pilotos. Sem unzip em data/tools.",
+            "action": "COMPARE stems (index/missão/política/termos + calculadoras) vs 5 pilotos. Catálogo de pendências REG (MD-PAGES-REG-PEND-001). Sem unzip em data/tools.",
         },
         {
             "id": "F10",
@@ -435,7 +458,7 @@ def plan_fronts() -> dict:
             "status": "COMPARE_ONLY",
             "agents": ["AG-INVENTORY-DRIVE", "AG-LIBRARY-CATALOG"],
             "gap": "GAP-L60-LIBRARIES",
-            "action": "15 CAL-VAC observados. 11+24 tipos no zip de templates. 32 APIs EVIDENCE_PENDING. Sem promover CAL-VAC.",
+            "action": "15 CAL-VAC observados (PATTERN_CANDIDATE). 11+24 tipos no zip de templates. 32 APIs EVIDENCE_PENDING. Sem promover CAL-VAC.",
         },
         {
             "id": "F11",
@@ -469,6 +492,46 @@ def plan_fronts() -> dict:
             "gap": "GAP-L150-L160-CONCEPT-RENDERER",
             "action": "Um conceito → uma identidade → renderer. LLM FORBIDDEN no canônico.",
         },
+        {
+            "id": "F15",
+            "name": "ISO 8000 + PGDADOS explícito",
+            "status": "REGISTERED",
+            "agents": ["AG-ISO8000-PROFILE", "AG-LIBRARY-CATALOG"],
+            "gap": "GAP-ISO8000-PGDADOS",
+            "action": "URL PGDADOS /pgdados persistida no perfil ISO. Não substitui cláusula licenciada. Sem certificação.",
+        },
+        {
+            "id": "F16",
+            "name": "Escalas: busca PubMed/COFEN/OMS",
+            "status": "REGISTERED",
+            "agents": ["AG-API-PROBE", "AG-RIGHTS-BIND"],
+            "gap": "GAP-SCALE-LITERATURE",
+            "action": "Busca bibliográfica HTTP. SciELO 403 EVIDENCE_PENDING. Não republicar Braden/Norton/Glasgow.",
+        },
+        {
+            "id": "F17",
+            "name": "pages_full catálogo de pendências REG",
+            "status": "REGISTERED",
+            "agents": ["AG-PARSE-PAGES-FULL", "AG-CONTENT-CURRICULUM"],
+            "gap": "GAP-PAGES-REG-PEND",
+            "action": "Owner override: inventário demonstra gaps MD+REG+rights. Extração clínica em massa FORBIDDEN.",
+        },
+        {
+            "id": "F18",
+            "name": "L280/L290/L300 OG+SEO+JSON-LD",
+            "status": "COMPARE_ONLY",
+            "agents": ["AG-INVENTORY-DRIVE"],
+            "gap": "GAP-OG-SEO-JSONLD",
+            "action": "Drive 151 cards COMPARE. OG first-party 1200×630 no site piloto. JSON-LD WebSite/Organization. Sem MedicalOrganization.",
+        },
+        {
+            "id": "F19",
+            "name": "Menu Drive COMPARE",
+            "status": "COMPARE_ONLY",
+            "agents": ["AG-INVENTORY-DRIVE"],
+            "gap": "GAP-MENU-DRIVE",
+            "action": "151 destinos no menu.json Drive. Não promover mega-menu/Braden ao chrome público.",
+        },
     ]
     for front in fronts:
         living = gap_by_id.get(front["gap"]) or {}
@@ -495,9 +558,11 @@ def plan_fronts() -> dict:
         "next_executable": [
             "F1 replay offline a cada extract",
             "F2 bloqueado até credencial SQL read-only (MD-OWNER-UNBLOCK-001)",
-            "F9 COMPARE pages_full vs pilotos; sem unzip",
-            "F10 vacinas 15 CAL-VAC COMPARE; 32 EVIDENCE_PENDING",
+            "F9 COMPARE pages_full vs pilotos; catálogo de pendências REG; sem unzip",
+            "F10 vacinas 15 CAL-VAC PATTERN_CANDIDATE; 32 EVIDENCE_PENDING",
             "F12 NNN HOLD até decisão de licença A/B/C",
+            "F15 PGDADOS /pgdados explícito no perfil ISO (não certificação)",
+            "F18 OG first-party LinkedIn; 151 cards Drive não copiados",
             "F3/F4 só com evidência HTTP/Congress já no tubo",
         ],
         "updated_at": _now(),
@@ -555,6 +620,31 @@ def plan_fronts() -> dict:
             "id": "GAP-L150-L160-CONCEPT-RENDERER",
             "status": "REGISTERED",
             "reason": "Guia/questão por conceito único via renderer. LLM FORBIDDEN. Currículo já DOCUMENTADO.",
+        },
+        {
+            "id": "GAP-ISO8000-PGDADOS",
+            "status": "REGISTERED",
+            "reason": "PGDADOS /pgdados é a referência BR explícita do perfil ISO 8000 CKO. Não substitui cláusula ISO.",
+        },
+        {
+            "id": "GAP-SCALE-LITERATURE",
+            "status": "REGISTERED",
+            "reason": "PubMed/COFEN/OMS busca. SciELO EVIDENCE_PENDING. Instrumento de terceiros não republicado.",
+        },
+        {
+            "id": "GAP-PAGES-REG-PEND",
+            "status": "REGISTERED",
+            "reason": "1516 HTML demonstram pendências REG. Extração em massa de fórmula clínica FORBIDDEN.",
+        },
+        {
+            "id": "GAP-OG-SEO-JSONLD",
+            "status": "COMPARE_ONLY",
+            "reason": "W3C não ingerido. eMAG/LBI nomeados. OG default first-party. 151 cards Drive não copiados.",
+        },
+        {
+            "id": "GAP-MENU-DRIVE",
+            "status": "COMPARE_ONLY",
+            "reason": "Menu Drive 151 destinos. Chrome público permanece 5 pilotos. Sem Braden no header.",
         },
     ]
     living_gaps = list(method.get("living_gaps") or [])

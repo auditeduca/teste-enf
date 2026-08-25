@@ -52,6 +52,13 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     assert inventory["quarantine"] is True
     assert inventory["promoted_to_data_tools"] is False
     assert inventory["html_count"] >= 1500
+    catalog = json.loads((ROOT / "cko_md" / "pages_full_reg_pendencies.json").read_text(encoding="utf-8"))
+    assert catalog["business_key"] == "MD-PAGES-REG-PEND-001"
+    assert catalog["reg_pendency_catalog"] is True
+    assert catalog["promoted_to_data_tools"] is False
+    assert catalog["mass_clinical_extract"] == "FORBIDDEN"
+    stems_pend = {item["stem"] for item in catalog["third_party_scale_stems"]}
+    assert {"braden", "norton", "glasgow"} <= stems_pend
     stems = {item["stem"] for item in inventory["pages"]}
     assert "braden" in stems
     assert not (TOOLS_DIR / "braden.json").exists()
@@ -84,7 +91,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     fronts = json.loads((ROOT / "cko_md" / "fronts_plan.json").read_text(encoding="utf-8"))
     assert fronts["business_key"] == "MD-FRONTS-PLAN-001"
     assert fronts["publication"] == "HOLD"
-    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 15)}
+    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 20)}
     intent = json.loads((ROOT / "cko_md" / "layer_intent.json").read_text(encoding="utf-8"))
     assert intent["business_key"] == "MD-LAYER-INTENT-001"
     assert intent["claimed_32_libraries"] == "EVIDENCE_PENDING"
@@ -127,6 +134,16 @@ def test_public_chrome_matches_production_contract_without_ads():
     ):
         assert token in html
     assert "braden.html" not in html
+    assert 'property="og:image"' in html
+    assert "MedicalOrganization" not in html
+    admin = (ROOT / "render" / "fetch" / "admin.html").read_text(encoding="utf-8")
+    assert 'noindex' in admin
+    tool = (ROOT / "render" / "fetch" / "tools" / "gotejamento.html").read_text(encoding="utf-8")
+    assert 'property="og:image"' in tool
+    assert "summary_large_image" in tool
+    iso = json.loads((ROOT / "cko_md" / "iso8000_profile.json").read_text(encoding="utf-8"))
+    assert iso["pgdados_hub_url"].endswith("/pgdados")
+    assert any(item["id"] == "ISO8000-CKO-PGDADOS-EXPLICIT" and item["status"] == "PASS" for item in iso["tests"])
     assert "cookie-modal" not in html
     assert "cookieConsentBanner" not in html
     assert "granularCookieModal" not in html
