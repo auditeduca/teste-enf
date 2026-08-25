@@ -122,5 +122,7 @@ def evaluate_maturity() -> dict:
             "Não promover HTML Drive/pages_full (braden.html etc.) a golden MD.",
             "IPE CARR: RELIABLE=FAIL para publicação; sem reliance neste lote.",
             "Release clínica permanece HOLD. Agentes de extração não autorizam release.",
+            "Lei 9.610 documentada como instrumento; não ASSURED e não cobre escalas de terceiros.",
+            "ISO 8000: perfil CKO apenas. clause_text CLAUSE_TEXT_UNAVAILABLE. certified=false.",
         ],
     }

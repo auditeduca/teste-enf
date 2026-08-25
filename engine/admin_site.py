@@ -22,7 +22,7 @@ MODULES = [
     ("design", "Design System", "admin/design-system.html"),
     ("locales", "Locales / Drive", "admin/locales.html"),
     ("mdm", "Master Data", "admin/mdm.html"),
-    ("frameworks", "COSO / COBIT", "admin/frameworks.html"),
+    ("frameworks", "Frameworks", "admin/frameworks.html"),
     ("maturity", "Maturidade", "admin/maturity.html"),
     ("renderer", "Renderer", "admin/renderer.html"),
     ("deploy", "Deploy Git", "admin/deploy.html"),
@@ -173,7 +173,7 @@ def page_dashboard(ctx: dict, *, css_href: str, home_href: str, inline_css: bool
       <a class="tool-card" href="{attr(_module_href('admin/maturity.html', nested))}"><p class="eyebrow">M0–M7</p><h2>Maturidade</h2><p>Panorama observado de MD, REG, agentes, CAAT, IPE, Drive e DS.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/locales.html', nested))}"><p class="eyebrow">L310</p><h2>Locales / Drive</h2><p>19 códigos extraídos. Tradução HOLD. HTML Drive não promovido.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/mdm.html', nested))}"><p class="eyebrow">L10</p><h2>Master Data</h2><p>Entity types e locale registry. Mockup MDM = linguagem de layout.</p></a>
-      <a class="tool-card" href="{attr(_module_href('admin/frameworks.html', nested))}"><p class="eyebrow">COSO/COBIT</p><h2>Frameworks</h2><p>Registry only. CLAUSE_TEXT_UNAVAILABLE. Sem IDs inventados.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/frameworks.html', nested))}"><p class="eyebrow">COSO/COBIT/ISO</p><h2>Frameworks</h2><p>Registry only. CLAUSE_TEXT_UNAVAILABLE. ISO 8000 = perfil CKO, não certificação.</p></a>
     </section>
     <section class="panel">
       <h2>Mockups enviados nesta sessão</h2>
@@ -389,16 +389,55 @@ def page_agents(ctx: dict, **kwargs) -> str:
 
 
 def page_monitoring(ctx: dict, **kwargs) -> str:
+    events_doc = load_json(ROOT / "cko_inbox" / "extracted" / "change_events.json")
+    monitor = load_json(ROOT / "cko_assurance" / "monitoring_events.json")
+    compare_src = load_json(ROOT / "cko_inbox" / "extracted" / "compare_source.json")
+    compare_int = load_json(ROOT / "cko_inbox" / "extracted" / "compare_internal.json")
+    events = events_doc.get("events") or []
+    event_rows = [
+        [
+            esc(item.get("kind")),
+            esc(item.get("logical_id")),
+            esc(item.get("detected_at")),
+            esc((item.get("note") or "")[:180]),
+        ]
+        for item in events[-20:]
+    ] or [["—", "—", "—", "Nenhum evento de drift gravado."]]
+    cmp_rows = [
+        [esc(item.get("logical_id")), _status_chip(item.get("status")), esc((item.get("observed_sha256") or item.get("first_sha256") or "")[:16])]
+        for item in (compare_src.get("compared") or [])
+    ]
+    int_rows = [
+        [esc(item.get("logical_id")), _status_chip(item.get("status")), esc(", ".join(item.get("internal_has_forbidden") or []) or "—")]
+        for item in (compare_int.get("compared") or [])
+    ]
     kpis = (ctx["studio"].get("monitoramento") or {}).get("kpis") or []
-    rows = [[esc(k.get("metrica")), esc(k.get("valor_claimed")), esc(k.get("variacao_claimed")), _status_chip("UNKNOWN")] for k in kpis]
+    claim_rows = [[esc(k.get("metrica")), esc(k.get("valor_claimed")), esc(k.get("variacao_claimed")), _status_chip("UNKNOWN")] for k in kpis]
     inner = f"""
     <header class="page-hero">
       <h1>Monitoramento.</h1>
-      <p class="lede">{esc((ctx["studio"].get("monitoramento") or {}).get("note"))} Sem IPE não há reliance.</p>
+      <p class="lede">Eventos reais vault vs fonte vs projeção. KPIs do mockup Studio permanecem UNKNOWN. Sem IPE não há reliance.</p>
+      <p class="hold-banner">SOURCE_DRIFT={esc(monitor.get("open_source_drift"))} · INTERNAL_DRIFT={esc(monitor.get("open_internal_drift"))} · eventos={esc(monitor.get("population") or events_doc.get("population"))} · wired={esc(monitor.get("wired_to_frontend"))}</p>
     </header>
-    <section class="panel">{_table(["métrica", "valor claimed", "variação claimed", "CKO"], rows)}</section>
+    <section class="panel">
+      <h2>Eventos de alteração</h2>
+      {_table(["tipo", "logical_id", "quando", "nota"], event_rows)}
+    </section>
+    <section class="panel">
+      <h2>Fonte vs primeira cópia WORM</h2>
+      {_table(["alvo", "status", "sha256"], cmp_rows)}
+    </section>
+    <section class="panel">
+      <h2>Origem vs projeção interna</h2>
+      <p>Hash diferente com ads/email removidos = EXPECTED_REWRITE.</p>
+      {_table(["alvo", "status", "tokens proibidos na projeção"], int_rows)}
+    </section>
+    <section class="panel">
+      <h2>KPIs claimed do Studio (não usar)</h2>
+      {_table(["métrica", "valor claimed", "variação claimed", "CKO"], claim_rows)}
+    </section>
     """
-    return admin_shell( title="Monitoramento · CKO Studio", description="KPIs unverified.", current="monitoring", inner=inner, **kwargs)
+    return admin_shell( title="Monitoramento · CKO Studio", description="Drift vault vs fonte vs frontend.", current="monitoring", inner=inner, **kwargs)
 
 
 def page_backlog(ctx: dict, **kwargs) -> str:
@@ -541,21 +580,46 @@ def page_mdm(ctx: dict, **kwargs) -> str:
     types = (load_json(ROOT / "cko_md" / "entity_type_registry.json").get("types") or [])
     type_rows = [[esc(t.get("business_key")), esc(t.get("name")), _status_chip("M0_REGISTERED")] for t in types]
     locales = load_json(ROOT / "cko_md" / "locale_registry.json")
+    fields = load_json(ROOT / "cko_md" / "field_dictionary.json")
+    works = load_json(ROOT / "cko_md" / "work_registry.json")
+    iso = load_json(ROOT / "cko_md" / "iso8000_profile.json")
+    lineage = load_json(ROOT / "cko_md" / "lineage_registry.json")
+    field_rows = [[esc(f.get("business_key")), esc(f.get("name")), esc(f.get("purpose"))] for f in (fields.get("fields") or [])]
+    work_rows = [[esc(w.get("slug")), esc(w.get("work_class")), _status_chip(w.get("rights_status")), esc(w.get("cko_copyright_claim"))] for w in (works.get("works") or [])]
+    iso_rows = [[esc(t.get("id")), _status_chip(t.get("status")), esc(t.get("principle"))] for t in (iso.get("tests") or [])]
+    lin_rows = [[esc(item.get("slug")), _status_chip(item.get("status")), esc((item.get("md_vault_sha256") or "")[:12] or "—"), esc(item.get("frontend_href"))] for item in (lineage.get("links") or [])]
     inner = f"""
     <header class="page-hero">
       <h1>Master Data.</h1>
-      <p class="lede">CKO-MD first. O mural de MDM (Cliente/Produto/Fornecedor) é linguagem de layout corporativa — não cria domínios clínicos. Neste lote as entidades observadas são Layer, Calculator, Locale e demais types do registry.</p>
+      <p class="lede">CKO-MD first. ISO 8000 no CKO é perfil de unicidade/proveniência/WORM/lineage — não certificação. Lei 9.610 vincula obras originais candidatas; escalas de terceiros HOLD.</p>
+      <p class="hold-banner">ISO implemented={esc(iso.get("iso_implemented"))} · certified={esc(iso.get("certified"))} · clause={esc(iso.get("clause_text"))} · campos={esc(fields.get("population"))} · lineage completa={esc(lineage.get("complete_count"))}</p>
     </header>
+    <section class="panel">
+      <h2>Field dictionary ({esc(fields.get("population"))})</h2>
+      {_table(["business_key", "campo", "propósito"], field_rows)}
+    </section>
+    <section class="panel">
+      <h2>Obras e direitos</h2>
+      {_table(["slug", "classe", "direitos", "claim CKO"], work_rows)}
+    </section>
+    <section class="panel">
+      <h2>Lineage vault → frontend</h2>
+      {_table(["slug", "status", "vault MD", "href"], lin_rows)}
+    </section>
+    <section class="panel">
+      <h2>Perfil ISO 8000 CKO</h2>
+      {_table(["teste", "status", "princípio"], iso_rows)}
+    </section>
     <section class="panel">
       <h2>Entity types ({len(types)})</h2>
       {_table(["business_key", "nome", "maturidade"], type_rows)}
     </section>
     <section class="panel">
       <h2>Linha MD → consumo</h2>
-      <p>Fonte Drive/GitHub → quarentena <code>cko_inbox</code> → MD registry → REG profile → renderer → frontend. Locales: {esc(locales.get("population"))} códigos SOURCE_DERIVED, wired={esc(False)}.</p>
+      <p>Fonte Drive/GitHub → vault WORM → MD registry → REG profile → renderer → frontend. Locales: {esc(locales.get("population"))} códigos SOURCE_DERIVED, wired={esc(False)}.</p>
     </section>
     """
-    return admin_shell(title="Master Data · CKO Studio", description="MDM observado do registry.", current="mdm", inner=inner, **kwargs)
+    return admin_shell(title="Master Data · CKO Studio", description="MDM, ISO 8000 profile e lineage.", current="mdm", inner=inner, **kwargs)
 
 
 def page_frameworks(ctx: dict, **kwargs) -> str:
@@ -573,8 +637,8 @@ def page_frameworks(ctx: dict, **kwargs) -> str:
     mock_rows = [[esc(r.get("id")), esc(r.get("title")), esc(r.get("maps_to"))] for r in (mockups.get("references") or [])]
     inner = f"""
     <header class="page-hero">
-      <h1>COSO e COBIT.</h1>
-      <p class="lede">{esc(registry.get("note"))} Mockups COSO/COBIT (88,7%, APO12.01, 184/214 objetivos) são DOCUMENT_CLAIM. Não copiar cláusula licenciada.</p>
+      <h1>Frameworks de controle.</h1>
+      <p class="lede">{esc(registry.get("note"))} Mockups COSO/COBIT (88,7%, APO12.01, 184/214 objetivos) são DOCUMENT_CLAIM. ISO 8000 sem texto de cláusula. Não copiar norma licenciada.</p>
     </header>
     <section class="panel">
       {_table(["business_key", "nome", "papel", "cláusula", "epistemic"], rows)}
@@ -584,7 +648,7 @@ def page_frameworks(ctx: dict, **kwargs) -> str:
       {_table(["id", "título", "módulo CKO"], mock_rows)}
     </section>
     """
-    return admin_shell(title="COSO / COBIT · CKO Studio", description="Framework registry only.", current="frameworks", inner=inner, **kwargs)
+    return admin_shell(title="Frameworks · CKO Studio", description="Framework registry only.", current="frameworks", inner=inner, **kwargs)
 
 
 def page_maturity(ctx: dict, **kwargs) -> str:

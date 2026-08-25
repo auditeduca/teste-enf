@@ -1,16 +1,17 @@
 {
   "business_key": "IPE-AGENT-RUN-001",
-  "run_id": "RUN-EXTRACT-20260825T064854Z",
+  "run_id": "RUN-EXTRACT-20260825T073602Z",
   "uuid": null,
   "status": "HOLD",
   "network": false,
-  "started_at": "2026-08-25T06:48:54Z",
-  "chain": "CKO-MD → CKO-REG → projection → renderer → frontend",
-  "rule": "DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO. Extração ≠ promoção.",
+  "started_at": "2026-08-25T07:36:02Z",
+  "chain": "vault → CKO-MD → CKO-REG → projection → renderer → frontend",
+  "rule": "DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO. Extração ≠ promoção. LLM não é checker.",
   "publication": "HOLD",
   "ipe_reliance": false,
   "caat_status": "PASS_WITH_FINDINGS",
   "ipe_status": "HOLD",
+  "llm_used": false,
   "steps": [
     {
       "agent_id": "AG-FETCH-ORIGIN",
@@ -116,12 +117,233 @@
       "promotes_to_md": false
     },
     {
+      "agent_id": "AG-PARSE-SITE-SHELL",
+      "class": "EXTRACTION",
+      "role": "MAKER",
+      "status": "SOURCE_DERIVED",
+      "file_count": 12,
+      "hash_match": true,
+      "forbidden_token_hits": {
+        "cookie-modal": 2,
+        "adsbygoogle": 3,
+        "cdn.jsdelivr": 1,
+        "ca-pub-6472730056006847": 2,
+        "opendyslexic": 1,
+        "googleads": 1,
+        "doubleclick": 1
+      },
+      "chrome_ids_present": {
+        "barraAcessibilidade": 3,
+        "global-header-container": 3,
+        "language-selector-placeholder": 3,
+        "footer-placeholder": 2
+      },
+      "promotes_to_md": false,
+      "promoted_to_frontend": false,
+      "path": "cko_inbox/drive/site_shell/INVENTORY.json"
+    },
+    {
       "agent_id": "AG-INTEGRITY",
       "class": "EVIDENCE",
       "role": "CHECKER",
       "status": "OBSERVED",
-      "items": 6,
+      "items": 9,
       "missing": 0
+    },
+    {
+      "agent_id": "AG-VAULT-PUT",
+      "class": "EVIDENCE",
+      "role": "MAKER",
+      "status": "OBSERVED",
+      "stored": 22,
+      "changed_from_first": 0,
+      "objects": [
+        {
+          "logical_id": "SRC-ORIGIN-FOOTER",
+          "sha256": "cfc46bee5c4ba36c889290fc49a679cb5f9b6c91cbc11b3aab60f7668aafbed5",
+          "bytes": 10361
+        },
+        {
+          "logical_id": "SRC-ORIGIN-MENU",
+          "sha256": "ea322114d11856ec74bb0eeb09fdf4d64bcd499722bc49554af686669c58abd2",
+          "bytes": 87265
+        },
+        {
+          "logical_id": "SRC-ORIGIN-BODY",
+          "sha256": "6388911a157667def973163f8b72b9594983775a8ee8628d7c4e89f569dde6b9",
+          "bytes": 14032
+        },
+        {
+          "logical_id": "SRC-SITE-SHELL",
+          "sha256": "40795badc53e113a1f93f411a4a3a8299067352e7ed62fdc041b36fac1ae3d44",
+          "bytes": 82453
+        },
+        {
+          "logical_id": "SRC-SHELL-FOOTER",
+          "sha256": "cfc46bee5c4ba36c889290fc49a679cb5f9b6c91cbc11b3aab60f7668aafbed5",
+          "bytes": 10361
+        },
+        {
+          "logical_id": "SRC-SHELL-MENU",
+          "sha256": "ea322114d11856ec74bb0eeb09fdf4d64bcd499722bc49554af686669c58abd2",
+          "bytes": 87265
+        },
+        {
+          "logical_id": "SRC-SHELL-BODY",
+          "sha256": "6388911a157667def973163f8b72b9594983775a8ee8628d7c4e89f569dde6b9",
+          "bytes": 14032
+        },
+        {
+          "logical_id": "SRC-SHELL-HOME",
+          "sha256": "6d80305abf9622146daa4a21865c03d1532f0223a777441ec9cd62909df8c1a8",
+          "bytes": 103007
+        },
+        {
+          "logical_id": "SRC-SHELL-JS",
+          "sha256": "60617671986a6f88a94a92788b030f546ab0f801c6d75a8d2fa2aada4edca583",
+          "bytes": 41562
+        },
+        {
+          "logical_id": "SRC-SHELL-CSS",
+          "sha256": "5e8b97a5f132ea6e03d894b5b5e481899696ec019a4d53832f46bffbb773c93e",
+          "bytes": 31856
+        },
+        {
+          "logical_id": "SRC-LEI-9610-1998",
+          "sha256": "5e618741af81ae21f57b6156eebebd3cdb2f28f998e213a14957df5dd82ca7fc",
+          "bytes": 148434
+        },
+        {
+          "logical_id": "MD-TOOL-gotejamento",
+          "sha256": "3ab7da25c85091e6af442c13ef9a9296abaded6d2e70fd64f10bfda1abb07914",
+          "bytes": 7193
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-gotejamento",
+          "sha256": "8e635e5f46737d035bb0c7c7174e3fece4a04b445b83f6e63d376f2a6a7906e0",
+          "bytes": 48473
+        },
+        {
+          "logical_id": "MD-TOOL-meows",
+          "sha256": "446743a9c18f8cf02b11e6cfd322c4d20fffa8ca72e8df3285890fabcb4ac184",
+          "bytes": 8935
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-meows",
+          "sha256": "d76d691ee30f40d0817d69afb1aa9106a2fecd760e76e41a36eaab9692ca3f45",
+          "bytes": 60910
+        },
+        {
+          "logical_id": "MD-TOOL-cinco-ts-pcr",
+          "sha256": "a6283994623d3270f9071bab15d3943aefad549e9d3a2dd68392f38bb30fe16b",
+          "bytes": 4549
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-cinco-ts-pcr",
+          "sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+          "bytes": 9379
+        },
+        {
+          "logical_id": "MD-TOOL-simulado-tecnico",
+          "sha256": "6447a2611fe94e1d97e0446661578fcc4ea6050bc774d7c196dfd599378b28eb",
+          "bytes": 3999
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-simulado-tecnico",
+          "sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+          "bytes": 9379
+        },
+        {
+          "logical_id": "MD-TOOL-dimensionamento",
+          "sha256": "79289a49a02cd5ef29c0ee9d34ce9a6eaa9882789a62ea3414f55028ed18b3c8",
+          "bytes": 3613
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-dimensionamento",
+          "sha256": "1efad97ceb60d4a9c6894bbd9d0f9ed5997ae008ddacba8c8726e058d2a976e2",
+          "bytes": 76622
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-braden",
+          "sha256": "a4cb7fef4e8ebf83c320956dcfb635e489e29420c746fc0382f0c342f7a9f53c",
+          "bytes": 63685
+        }
+      ],
+      "live_fetches": [],
+      "worm": true,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-RIGHTS-BIND",
+      "class": "REGULATORY",
+      "role": "CHECKER",
+      "status": "DOCUMENTADO",
+      "instrument": "INS-LEI-9610-1998",
+      "works": 8,
+      "third_party_claimed": false,
+      "assured": false,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-LINEAGE-BIND",
+      "class": "ENTITY_RESOLUTION",
+      "role": "CHECKER",
+      "status": "IMPLEMENTED",
+      "population": 5,
+      "complete_count": 5,
+      "llm_used": false,
+      "promotes_to_md": false,
+      "wired_to_frontend": true
+    },
+    {
+      "agent_id": "AG-ISO8000-PROFILE",
+      "class": "MD",
+      "role": "CHECKER",
+      "status": "PASS_PROFILE_ONLY",
+      "certified": false,
+      "iso_implemented": false,
+      "cko_profile_applied": true,
+      "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+      "llm_used": false,
+      "promotes_to_md": false,
+      "tests": [
+        {
+          "id": "ISO8000-CKO-UNIQUENESS",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PROVENANCE",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-WORM",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-LINEAGE",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-FIELD-DICT",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-NO-CERT-CLAIM",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "agent_id": "AG-MASK-APPLY",
+      "class": "REGULATORY",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "population": 12,
+      "llm_used": false,
+      "execution_policy": "SIMPLE_DETERMINISTIC_ONLY",
+      "promotes_to_md": false
     },
     {
       "agent_id": "AG-CAAT-EXTRACT",
@@ -205,6 +427,37 @@
         "insulina",
         "norton"
       ],
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-COMPARE-SOURCE",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "OBSERVED",
+      "drift_count": 0,
+      "compared": 5,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-COMPARE-INTERNAL",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "OBSERVED",
+      "internal_drift_count": 0,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-MONITOR-DRIFT",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "population": 2,
+      "open_source_drift": 2,
+      "open_internal_drift": 0,
+      "wired_to_frontend": true,
+      "llm_used": false,
       "promotes_to_md": false
     }
   ],

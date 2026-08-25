@@ -1,0 +1,78 @@
+{
+  "business_key": "MD-ISO8000-PROFILE-001",
+  "uuid": null,
+  "framework_ref": "FWK-ISO-8000-001",
+  "mask_id": "MASK-TECH-STD",
+  "name": "ISO 8000 — Data quality / master data (CKO profile)",
+  "official_catalog_url": "https://www.iso.org/standard/80766.html",
+  "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+  "licensed_body": false,
+  "certified": false,
+  "iso_implemented": false,
+  "cko_profile_applied": true,
+  "status": "PASS_PROFILE_ONLY",
+  "epistemic_status": "PROPOSED",
+  "note": "Perfil CKO de princípios já presentes na constituição (unicidade, proveniência, WORM, lineage). NÃO é implantação certificada da ISO 8000.",
+  "tests": [
+    {
+      "id": "ISO8000-CKO-UNIQUENESS",
+      "principle": "unique identification of master records",
+      "status": "PASS",
+      "observed": {
+        "pilot_slugs": [
+          "cinco-ts-pcr",
+          "dimensionamento",
+          "gotejamento",
+          "meows",
+          "simulado-tecnico"
+        ],
+        "uuid_generator": "HOLD"
+      }
+    },
+    {
+      "id": "ISO8000-CKO-PROVENANCE",
+      "principle": "provenance of source bytes (url, captured_at, sha256)",
+      "status": "PASS",
+      "observed": {
+        "vault_objects": 21,
+        "pointers": 24
+      }
+    },
+    {
+      "id": "ISO8000-CKO-WORM",
+      "principle": "unaltered source copy retained",
+      "status": "PASS",
+      "observed": {
+        "worm": true,
+        "population": 21
+      }
+    },
+    {
+      "id": "ISO8000-CKO-LINEAGE",
+      "principle": "source → master → projection completeness",
+      "status": "PASS",
+      "observed": {
+        "links": 5,
+        "complete_count": 5
+      }
+    },
+    {
+      "id": "ISO8000-CKO-FIELD-DICT",
+      "principle": "data dictionary for master attributes",
+      "status": "PASS",
+      "observed": {
+        "fields": 8
+      }
+    },
+    {
+      "id": "ISO8000-CKO-NO-CERT-CLAIM",
+      "principle": "do not claim ISO certification without licensed evidence",
+      "status": "PASS",
+      "observed": {
+        "certified": false,
+        "clause_text": "CLAUSE_TEXT_UNAVAILABLE"
+      }
+    }
+  ],
+  "evaluated_at": "2026-08-25T07:36:02Z"
+}

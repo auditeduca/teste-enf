@@ -108,12 +108,14 @@ def test_drive_locales_are_source_derived_not_wired():
 
 
 def test_maturity_panorama_is_hold_without_fake_pass():
+    from engine.bootstrap import write_registries
     from engine.maturity import evaluate_maturity
 
+    write_registries()
     panorama = evaluate_maturity()
     assert panorama["release"] == "HOLD"
     assert panorama["layers"]["population"] == 44
-    assert panorama["agents"]["population"] == 10
+    assert panorama["agents"]["population"] == 19
     assert panorama["agents"]["implemented"] is True
     assert panorama["agents"]["publication_implemented"] is False
     assert panorama["ipe"]["registry_implemented"] is False

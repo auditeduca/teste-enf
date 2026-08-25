@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Monitoramento · CKO Studio</title>
-  <meta name="description" content="KPIs unverified.">
+  <meta name="description" content="Drift vault vs fonte vs frontend.">
   <meta name="theme-color" content="#1A3E74">
   <link rel="stylesheet" href="../assets/app.css">
   <meta name="robots" content="noindex,nofollow">
@@ -38,7 +38,7 @@
   <aside class="admin-side" aria-label="Módulos do Studio">
     <p class="admin-brand">CKO Studio</p>
     <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
-    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html">Pipeline</a><a href="layers.html">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html">Agentes</a><a href="monitoring.html" aria-current="page">Monitoramento</a><a href="backlog.html">Backlog</a><a href="design-system.html">Design System</a><a href="locales.html">Locales / Drive</a><a href="mdm.html">Master Data</a><a href="frameworks.html">COSO / COBIT</a><a href="maturity.html">Maturidade</a><a href="renderer.html">Renderer</a><a href="deploy.html">Deploy Git</a></nav>
+    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html">Pipeline</a><a href="layers.html">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html">Agentes</a><a href="monitoring.html" aria-current="page">Monitoramento</a><a href="backlog.html">Backlog</a><a href="design-system.html">Design System</a><a href="locales.html">Locales / Drive</a><a href="mdm.html">Master Data</a><a href="frameworks.html">Frameworks</a><a href="maturity.html">Maturidade</a><a href="renderer.html">Renderer</a><a href="deploy.html">Deploy Git</a></nav>
     <p class="admin-side-note"><a href="../index.html">Site público</a></p>
   </aside>
   <div class="admin-main">
@@ -50,9 +50,26 @@
       
     <header class="page-hero">
       <h1>Monitoramento.</h1>
-      <p class="lede">KPIs do mapa não têm IPE neste repositório. Sem reliance. Sem IPE não há reliance.</p>
+      <p class="lede">Eventos reais vault vs fonte vs projeção. KPIs do mockup Studio permanecem UNKNOWN. Sem IPE não há reliance.</p>
+      <p class="hold-banner">SOURCE_DRIFT=2 · INTERNAL_DRIFT=0 · eventos=2 · wired=True</p>
     </header>
-    <section class="panel"><div class="table-wrap"><table class="inspect"><thead><tr><th>métrica</th><th>valor claimed</th><th>variação claimed</th><th>CKO</th></tr></thead><tbody><tr><td>Visualizações</td><td>12.458</td><td>+18%</td><td><span class="chip chip-hold">UNKNOWN</span></td></tr><tr><td>Usuários</td><td>8.231</td><td>+14%</td><td><span class="chip chip-hold">UNKNOWN</span></td></tr><tr><td>Tempo Médio</td><td>02:35</td><td>+9%</td><td><span class="chip chip-hold">UNKNOWN</span></td></tr><tr><td>Taxa de Erro</td><td>0,2%</td><td>-70%</td><td><span class="chip chip-hold">UNKNOWN</span></td></tr></tbody></table></div></section>
+    <section class="panel">
+      <h2>Eventos de alteração</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>tipo</th><th>logical_id</th><th>quando</th><th>nota</th></tr></thead><tbody><tr><td>SOURCE_DRIFT</td><td>TEST-DRIFT-001</td><td>2026-08-25T07:36:02Z</td><td>Hash observado diferente da primeira cópia WORM. Ajustar conteúdo interno.</td></tr><tr><td>SOURCE_DRIFT</td><td>TEST-DRIFT-001</td><td>2026-08-25T07:36:02Z</td><td>Conteúdo vivo ou reobservado difere da cópia original inalterada.</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Fonte vs primeira cópia WORM</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>alvo</th><th>status</th><th>sha256</th></tr></thead><tbody><tr><td>SRC-ORIGIN-FOOTER</td><td><span class="chip chip-ok">MATCH</span></td><td>cfc46bee5c4ba36c</td></tr><tr><td>SRC-ORIGIN-MENU</td><td><span class="chip chip-ok">MATCH</span></td><td>ea322114d11856ec</td></tr><tr><td>SRC-ORIGIN-BODY</td><td><span class="chip chip-ok">MATCH</span></td><td>6388911a157667de</td></tr><tr><td>SRC-LEI-9610-1998</td><td><span class="chip chip-ok">MATCH</span></td><td>5e618741af81ae21</td></tr><tr><td>SRC-ISO-8000-CATALOG</td><td><span class="chip chip-hold">EVIDENCE_PENDING</span></td><td></td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Origem vs projeção interna</h2>
+      <p>Hash diferente com ads/email removidos = EXPECTED_REWRITE.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>alvo</th><th>status</th><th>tokens proibidos na projeção</th></tr></thead><tbody><tr><td>SRC-ORIGIN-FOOTER</td><td><span class="chip">EXPECTED_REWRITE</span></td><td>—</td></tr><tr><td>SRC-SITE-SHELL</td><td><span class="chip">EXPECTED_REWRITE</span></td><td>—</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>KPIs claimed do Studio (não usar)</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>métrica</th><th>valor claimed</th><th>variação claimed</th><th>CKO</th></tr></thead><tbody><tr><td>Visualizações</td><td>12.458</td><td>+18%</td><td><span class="chip chip-hold">UNKNOWN</span></td></tr><tr><td>Usuários</td><td>8.231</td><td>+14%</td><td><span class="chip chip-hold">UNKNOWN</span></td></tr><tr><td>Tempo Médio</td><td>02:35</td><td>+9%</td><td><span class="chip chip-hold">UNKNOWN</span></td></tr><tr><td>Taxa de Erro</td><td>0,2%</td><td>-70%</td><td><span class="chip chip-hold">UNKNOWN</span></td></tr></tbody></table></div>
+    </section>
     
     </main>
   </div>

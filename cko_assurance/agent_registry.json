@@ -105,7 +105,77 @@
       "implemented": true,
       "writes_to": "cko_reg/extraction_profile.json",
       "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-SITE-SHELL",
+      "class": "EXTRACTION",
+      "implemented": true,
+      "writes_to": "cko_inbox/drive/site_shell/INVENTORY.json",
+      "promotes_to_md": false,
+      "note": "Drive site-shell zip. Ads/CDN não copiados para o renderer."
+    },
+    {
+      "agent_id": "AG-VAULT-PUT",
+      "class": "EVIDENCE",
+      "implemented": true,
+      "writes_to": "cko_inbox/vault",
+      "promotes_to_md": false,
+      "note": "WORM: primeira cópia inalterada. Hash novo = objeto novo + evento."
+    },
+    {
+      "agent_id": "AG-RIGHTS-BIND",
+      "class": "REGULATORY",
+      "implemented": true,
+      "writes_to": "cko_reg/rights_profile.json",
+      "promotes_to_md": false,
+      "note": "Lei 9.610 como instrumento. Escalas de terceiros HOLD."
+    },
+    {
+      "agent_id": "AG-LINEAGE-BIND",
+      "class": "ENTITY_RESOLUTION",
+      "implemented": true,
+      "writes_to": "cko_md/lineage_registry.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": true
+    },
+    {
+      "agent_id": "AG-ISO8000-PROFILE",
+      "class": "MD",
+      "implemented": true,
+      "writes_to": "cko_md/iso8000_profile.json",
+      "promotes_to_md": false,
+      "note": "Perfil CKO. clause_text CLAUSE_TEXT_UNAVAILABLE. certified=false."
+    },
+    {
+      "agent_id": "AG-MASK-APPLY",
+      "class": "REGULATORY",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/mask_run.json",
+      "promotes_to_md": false,
+      "note": "Máscaras desenhadas (IA robusta). Execução determinística simples. LLM checker FORBIDDEN."
+    },
+    {
+      "agent_id": "AG-COMPARE-SOURCE",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/compare_source.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-COMPARE-INTERNAL",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/compare_internal.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-MONITOR-DRIFT",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_assurance/monitoring_events.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": true
     }
   ],
-  "population": 10
+  "population": 19
 }

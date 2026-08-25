@@ -107,6 +107,19 @@ def cmd_extract(args: argparse.Namespace) -> int:
     return 0 if run.get("status") != "FAIL" else 1
 
 
+def cmd_monitor(args: argparse.Namespace) -> int:
+    run = run_extraction(network=not args.offline)
+    monitor = next((step for step in run.get("steps") or [] if step.get("agent_id") == "AG-MONITOR-DRIFT"), {})
+    print(json.dumps({
+        "run_id": run.get("run_id"),
+        "status": run.get("status"),
+        "monitor": monitor,
+        "publication": run.get("publication"),
+        "llm_used": run.get("llm_used"),
+    }, ensure_ascii=False, indent=2))
+    return 0 if run.get("status") != "FAIL" else 1
+
+
 def cmd_serve(args: argparse.Namespace) -> int:
     status = cmd_build(args)
     if status != 0:
@@ -134,6 +147,9 @@ def main(argv: list[str] | None = None) -> int:
     extract = sub.add_parser("extract")
     extract.add_argument("--offline", action="store_true", help="Replay inbox without network fetch")
     extract.set_defaults(func=cmd_extract)
+    monitor = sub.add_parser("monitor")
+    monitor.add_argument("--offline", action="store_true", help="Compare vault vs inbox/projections without live fetch")
+    monitor.set_defaults(func=cmd_monitor)
     args = parser.parse_args(argv)
     return args.func(args)
 

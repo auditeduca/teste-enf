@@ -95,6 +95,28 @@ def layer_records() -> list[dict]:
     return records
 
 
+def field_dictionary_payload() -> dict:
+    fields = [
+        {"business_key": "FLD-PROVENANCE-SHA256", "name": "provenance.sha256", "purpose": "hash da cópia original", "layer": "L10"},
+        {"business_key": "FLD-PROVENANCE-URL", "name": "provenance.url", "purpose": "URL da fonte observada", "layer": "L10"},
+        {"business_key": "FLD-PROVENANCE-CAPTURED-AT", "name": "provenance.captured_at", "purpose": "instante da primeira captura", "layer": "L10"},
+        {"business_key": "FLD-VAULT-IMMUTABLE", "name": "vault.immutable", "purpose": "WORM: cópia inalterável", "layer": "L10"},
+        {"business_key": "FLD-LINEAGE-PROJECTION", "name": "lineage.projection", "purpose": "caminho da projeção frontend", "layer": "L270"},
+        {"business_key": "FLD-WORK-CLASS", "name": "work.work_class", "purpose": "ORIGINAL_CKO_CANDIDATE | THIRD_PARTY_SCALE | HOLD_OBJECT", "layer": "L140"},
+        {"business_key": "FLD-RIGHTS-STATUS", "name": "rights.status", "purpose": "DOCUMENTADO ≠ ASSURED", "layer": "L20"},
+        {"business_key": "FLD-MASK-ID", "name": "mask.mask_id", "purpose": "máscara de norma aplicada na execução simples", "layer": "L20"},
+    ]
+    return {
+        "business_key": "MD-FIELD-DICT-001",
+        "uuid": None,
+        "status": "POPULATED",
+        "maturity": "M2_CONFIGURED",
+        "population": len(fields),
+        "fields": fields,
+        "note": "Campos de proveniência/lineage/direitos realmente usados. Não é dicionário clínico completo.",
+    }
+
+
 def dump(path: Path, payload: dict) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -168,6 +190,20 @@ def write_registries() -> list[Path]:
                 "epistemic_status": "PROPOSED",
                 "note": "Não inventar IDs/texto de objetivos COBIT além dos nomes de família.",
             },
+            {
+                "business_key": "FWK-ISO-8000-001",
+                "name": "ISO 8000 Data quality / Master data",
+                "role": "master data quality principles (uniqueness, provenance, completeness) as CKO profile mapping target",
+                "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+                "official_catalog_url": "https://www.iso.org/standard/80766.html",
+                "certified": False,
+                "iso_implemented": False,
+                "cko_profile_ref": "MD-ISO8000-PROFILE-001",
+                "mask_id": "MASK-TECH-STD",
+                "status": "EVIDENCE_PENDING",
+                "epistemic_status": "PROPOSED",
+                "note": "Norma técnica licenciada. Sem texto de cláusula. Perfil CKO ≠ certificação ISO.",
+            },
         ],
     }))
     written.append(dump(MD_DIR / "entity_type_registry.json", {
@@ -197,6 +233,12 @@ def write_registries() -> list[Path]:
             {"business_key": "ETYPE-API", "name": "API"},
             {"business_key": "ETYPE-ROUTE", "name": "Route"},
             {"business_key": "ETYPE-ADMIN_SURFACE", "name": "Admin Surface"},
+            {"business_key": "ETYPE-WORK", "name": "Work"},
+            {"business_key": "ETYPE-INSTRUMENT", "name": "Instrument"},
+            {"business_key": "ETYPE-VAULT_OBJECT", "name": "Vault Object"},
+            {"business_key": "ETYPE-LINEAGE", "name": "Lineage"},
+            {"business_key": "ETYPE-MASK", "name": "Norm Mask"},
+            {"business_key": "ETYPE-CHANGE_EVENT", "name": "Change Event"},
         ],
         "note": "Tipos mínimos do bootstrap. Locale Drive (MD-LOCALE-REG-001) é RELATED_TAXONOMY a MD-LANG-LOC-001, não substitui pt-BR runtime.",
     }))
@@ -381,15 +423,7 @@ def write_registries() -> list[Path]:
         "relation_type": "RELATED_TAXONOMY",
         "note": "pt-BR é o locale de runtime observado. Os 19 códigos de locales.zip não substituem este registry.",
     }))
-    written.append(dump(MD_DIR / "field_dictionary.json", {
-        "business_key": "MD-FIELD-DICT-001",
-        "uuid": None,
-        "status": "REGISTERED",
-        "maturity": "M0_REGISTERED",
-        "population": 0,
-        "fields": [],
-        "note": "Dicionário existe. Campos de domínio ainda não populados.",
-    }))
+    written.append(dump(MD_DIR / "field_dictionary.json", field_dictionary_payload()))
     agents = agent_records()
     written.append(dump(ASSURANCE_DIR / "agent_registry.json", {
         "business_key": "REG-AGENT-001",

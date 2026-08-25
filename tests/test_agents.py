@@ -21,10 +21,19 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
         "AG-PARSE-PAGES-FULL",
         "AG-PARSE-SITEMAP",
         "AG-PARSE-CHROME",
+        "AG-PARSE-SITE-SHELL",
         "AG-INTEGRITY",
+        "AG-VAULT-PUT",
+        "AG-RIGHTS-BIND",
+        "AG-LINEAGE-BIND",
+        "AG-ISO8000-PROFILE",
+        "AG-MASK-APPLY",
         "AG-CAAT-EXTRACT",
         "AG-IPE-EXTRACT",
         "AG-LINK-MD",
+        "AG-COMPARE-SOURCE",
+        "AG-COMPARE-INTERNAL",
+        "AG-MONITOR-DRIFT",
     ]
     inventory = json.loads((ROOT / "cko_inbox" / "drive" / "pages_full" / "INVENTORY.json").read_text(encoding="utf-8"))
     assert inventory["business_key"] == "MD-PAGE-INV-001"
@@ -37,7 +46,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     slugs = {path.stem for path in TOOLS_DIR.glob("*.json")}
     assert slugs == {"gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico", "dimensionamento"}
     agents = json.loads((ROOT / "cko_assurance" / "agent_registry.json").read_text(encoding="utf-8"))
-    assert agents["population"] == 10
+    assert agents["population"] == 19
     assert agents["implemented"] is True
     assert agents["publication_implemented"] is False
     ipe = json.loads((ROOT / "cko_inbox" / "extracted" / "ipe_extract.json").read_text(encoding="utf-8"))
@@ -45,7 +54,10 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     assert ipe["carr"]["RELIABLE"] == "FAIL"
     regulated = json.loads((ROOT / "cko_inbox" / "extracted" / "regulated_pages.json").read_text(encoding="utf-8"))
     assert all(page.get("api_base_url") is None for page in regulated["pages"])
-    assert all("adsbygoogle" not in json.dumps(step) for step in run["steps"])
+    shell_step = next(step for step in run["steps"] if step["agent_id"] == "AG-PARSE-SITE-SHELL")
+    assert shell_step.get("promoted_to_frontend") is False
+    assert "adsbygoogle" in (shell_step.get("forbidden_token_hits") or {})
+    assert all(step.get("promotes_to_md") is not True for step in run["steps"])
 
 
 def test_public_chrome_matches_production_contract_without_ads():

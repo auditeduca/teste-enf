@@ -20,6 +20,7 @@ from urllib.request import Request, urlopen
 from .paths import ROOT, TOOLS_DIR
 
 UA = "CKO-FetchAgent/1.0 (origin recovery; calculadorasdeenfermagem)"
+UA_BROWSER = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 ORIGIN = "https://www.calculadorasdeenfermagem.com.br/"
 DRIVE_PAGES_FULL_ID = "1tJ-AEv3_KpEQxNa3lMuY7A80skFtw4IK"
 PAGES_FULL_SHA256 = "0ca5fe5f1f689a5da96bd0453c3fa8f658123d0c5072c8c244f526e1c09a6136"
@@ -73,32 +74,47 @@ def _dump(path: Path, payload: dict) -> Path:
     return path
 
 
-def _http_get(url: str, timeout: int = 20) -> dict:
+def _http_get(url: str, timeout: int = 20, *, user_agent: str | None = None) -> dict:
     rec: dict = {"url": url}
-    try:
-        req = Request(url, headers={"User-Agent": UA, "Accept": "*/*"})
-        with urlopen(req, timeout=timeout) as resp:
-            body = resp.read()
+    agents = [user_agent] if user_agent else [UA]
+    if "planalto.gov.br" in url or "iso.org" in url:
+        agents = [UA_BROWSER, UA]
+    last_error = None
+    for agent in agents:
+        try:
+            req = Request(url, headers={"User-Agent": agent, "Accept": "text/html,application/xhtml+xml,*/*"})
+            with urlopen(req, timeout=timeout) as resp:
+                body = resp.read()
+                rec.update({
+                    "http_status": getattr(resp, "status", None) or resp.getcode(),
+                    "bytes": len(body),
+                    "sha256": _sha256_bytes(body),
+                    "final_url": resp.geturl(),
+                    "body": body,
+                    "epistemic_status": "OBSERVED",
+                    "user_agent": agent,
+                })
+                return rec
+        except HTTPError as err:
+            last_error = err
             rec.update({
-                "http_status": getattr(resp, "status", None) or resp.getcode(),
-                "bytes": len(body),
-                "sha256": _sha256_bytes(body),
-                "final_url": resp.geturl(),
-                "body": body,
-                "epistemic_status": "OBSERVED",
+                "http_status": err.code,
+                "error": f"HTTPError {err.code}",
+                "epistemic_status": "EVIDENCE_PENDING",
             })
-    except HTTPError as err:
-        rec.update({
-            "http_status": err.code,
-            "error": f"HTTPError {err.code}",
-            "epistemic_status": "EVIDENCE_PENDING",
-        })
-    except (URLError, TimeoutError, OSError) as err:
-        rec.update({
-            "http_status": None,
-            "error": f"{type(err).__name__}: {str(err)[:180]}",
-            "epistemic_status": "EVIDENCE_PENDING",
-        })
+            if err.code == 403:
+                continue
+            break
+        except (URLError, TimeoutError, OSError) as err:
+            last_error = err
+            rec.update({
+                "http_status": None,
+                "error": f"{type(err).__name__}: {str(err)[:180]}",
+                "epistemic_status": "EVIDENCE_PENDING",
+            })
+            continue
+    if last_error and "error" not in rec:
+        rec["error"] = str(last_error)[:180]
     return rec
 
 
@@ -398,8 +414,11 @@ def integrity_hashes() -> dict:
     paths = [
         ROOT / "cko_inbox" / "origin" / "MANIFEST.json",
         ROOT / "cko_inbox" / "drive" / "pages_full" / "INVENTORY.json",
+        ROOT / "cko_inbox" / "drive" / "site-shell-calculadoras-enfermagem.zip",
         ROOT / "cko_inbox" / "extracted" / "chrome_contract.json",
         ROOT / "cko_inbox" / "extracted" / "regulated_pages.json",
+        ROOT / "cko_inbox" / "official" / "lei-9610.html",
+        ROOT / "cko_inbox" / "vault" / "MANIFEST.json",
         ROOT / "assets" / "img" / "icontopbar1-calculadoras-de-enfermagem.webp",
         ROOT / "assets" / "fonts" / "inter" / "inter-regular.woff2",
     ]
@@ -545,7 +564,7 @@ def ipe_carr() -> dict:
             "REPRODUCIBLE": "PASS" if reports["REPRODUCIBLE"] else "HOLD",
         },
         "notes": {
-            "ACCURATE": "Não houve comparação página-a-página live vs zip para cada um dos 1516 HTML.",
+            "ACCURATE": "Comparação WORM existe para chrome/site-shell/pilotos/Lei 9.610. Não houve comparação página-a-página live vs zip para cada um dos 1516 HTML.",
             "RELIABLE": "Relatório interno de extração não autoriza publicação clínica.",
         },
         "tested_at": _now(),
@@ -582,6 +601,10 @@ def link_to_md() -> dict:
         "rule": "Ligação MD só para identidade já existente. Extração não cria UUID nem golden record.",
         "linked_at": _now(),
     }
+    rights = {}
+    rights_path = ROOT / "cko_reg" / "rights_profile.json"
+    if rights_path.exists():
+        rights = json.loads(rights_path.read_text(encoding="utf-8"))
     _dump(ROOT / "cko_inbox" / "extracted" / "md_link.json", payload)
     _dump(ROOT / "cko_reg" / "extraction_profile.json", {
         "business_key": "REG-EXTRACT-001",
@@ -589,8 +612,10 @@ def link_to_md() -> dict:
         "status": "HOLD",
         "translation_gate": "HOLD",
         "publication_gate": "HOLD",
-        "rights_gate": "HOLD",
-        "note": "Conteúdo extraído de pages_full/sitemap/origin é SOURCE_DERIVED. REG não cria identidade.",
+        "rights_gate": rights.get("gate") or "HOLD",
+        "rights_ref": "REG-RIGHTS-001",
+        "instrument_ref": "INS-LEI-9610-1998",
+        "note": "Conteúdo extraído de pages_full/sitemap/origin/site-shell é SOURCE_DERIVED. REG não cria identidade. Lei 9.610 documentada; escalas de terceiros HOLD.",
         "bound_pilots": bound,
     })
     return {
@@ -600,6 +625,95 @@ def link_to_md() -> dict:
         "status": "HOLD",
         "bound_pilots": bound,
         "quarantined_examples": quarantined_examples,
+        "promotes_to_md": False,
+    }
+
+
+def apply_norm_masks() -> dict:
+    """AG-MASK-APPLY — simple deterministic execution of robust-AI-authored masks."""
+    from .masks import apply_all
+    from .vault import first_copy
+
+    law = first_copy("SRC-LEI-9610-1998")
+    law_text = (law or {}).get("bytes_payload", b"").decode("latin-1", errors="replace") if law else ""
+    fetch_index = ROOT / "render" / "fetch" / "index.html"
+    internal_text = fetch_index.read_text(encoding="utf-8") if fetch_index.exists() else ""
+    rights = {}
+    rights_path = ROOT / "cko_reg" / "rights_profile.json"
+    if rights_path.exists():
+        rights = json.loads(rights_path.read_text(encoding="utf-8"))
+    iso = {}
+    iso_path = ROOT / "cko_md" / "iso8000_profile.json"
+    if iso_path.exists():
+        iso = json.loads(iso_path.read_text(encoding="utf-8"))
+    lineage = {}
+    lineage_path = ROOT / "cko_md" / "lineage_registry.json"
+    if lineage_path.exists():
+        lineage = json.loads(lineage_path.read_text(encoding="utf-8"))
+    complete_slugs = {item.get("slug") for item in (lineage.get("links") or []) if item.get("complete")}
+    contexts = [
+        {
+            "mask_id": "MASK-LAW-BR",
+            "logical_id": "SRC-LEI-9610-1998",
+            "text": law_text,
+            "inbox_present": bool(law),
+            "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+        },
+        {
+            "mask_id": "MASK-TECH-STD",
+            "clause_text": iso.get("clause_text") or "CLAUSE_TEXT_UNAVAILABLE",
+            "licensed_body": False,
+            "certified": False,
+            "media_type": "text/html",
+        },
+        {
+            "mask_id": "MASK-ORIGIN-HTML",
+            "logical_id": "SRC-SITE-SHELL",
+            "internal_text": internal_text,
+        },
+        {
+            "mask_id": "MASK-REGULATED-HTML",
+            "api_base_url": None,
+            "invented_rest": False,
+        },
+    ]
+    for slug in ("gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico"):
+        contexts.append({
+            "mask_id": "MASK-TOOL-WORK",
+            "slug": slug,
+            "lineage_complete": slug in complete_slugs,
+            "rights_status": rights.get("status") or "HOLD",
+        })
+    for slug in ("braden", "norton", "glasgow"):
+        contexts.append({
+            "mask_id": "MASK-SCALE-THIRD-PARTY",
+            "slug": slug,
+            "quarantined": True,
+        })
+    dim_path = TOOLS_DIR / "dimensionamento.json"
+    dim = json.loads(dim_path.read_text(encoding="utf-8")) if dim_path.exists() else {}
+    contexts.append({
+        "mask_id": "MASK-HOLD-WORK",
+        "slug": "dimensionamento",
+        "status": dim.get("status"),
+        "has_formula": "calculator" in dim,
+    })
+    payload = apply_all(contexts)
+    _dump(ROOT / "cko_inbox" / "extracted" / "mask_run.json", payload)
+    statuses = {item.get("status") for item in payload.get("results") or []}
+    overall = "HOLD"
+    if payload.get("results") and all(item.get("status") == "PASS" for item in payload["results"]):
+        overall = "PASS"
+    elif "FAIL" in statuses:
+        overall = "FAIL"
+    return {
+        "agent_id": "AG-MASK-APPLY",
+        "class": "REGULATORY",
+        "role": "CHECKER",
+        "status": overall,
+        "population": payload.get("population"),
+        "llm_used": False,
+        "execution_policy": payload.get("execution_policy"),
         "promotes_to_md": False,
     }
 
@@ -679,6 +793,76 @@ def agent_records() -> list[dict]:
             "writes_to": "cko_reg/extraction_profile.json",
             "promotes_to_md": False,
         },
+        {
+            "agent_id": "AG-PARSE-SITE-SHELL",
+            "class": "EXTRACTION",
+            "implemented": True,
+            "writes_to": "cko_inbox/drive/site_shell/INVENTORY.json",
+            "promotes_to_md": False,
+            "note": "Drive site-shell zip. Ads/CDN não copiados para o renderer.",
+        },
+        {
+            "agent_id": "AG-VAULT-PUT",
+            "class": "EVIDENCE",
+            "implemented": True,
+            "writes_to": "cko_inbox/vault",
+            "promotes_to_md": False,
+            "note": "WORM: primeira cópia inalterada. Hash novo = objeto novo + evento.",
+        },
+        {
+            "agent_id": "AG-RIGHTS-BIND",
+            "class": "REGULATORY",
+            "implemented": True,
+            "writes_to": "cko_reg/rights_profile.json",
+            "promotes_to_md": False,
+            "note": "Lei 9.610 como instrumento. Escalas de terceiros HOLD.",
+        },
+        {
+            "agent_id": "AG-LINEAGE-BIND",
+            "class": "ENTITY_RESOLUTION",
+            "implemented": True,
+            "writes_to": "cko_md/lineage_registry.json",
+            "promotes_to_md": False,
+            "wired_to_frontend": True,
+        },
+        {
+            "agent_id": "AG-ISO8000-PROFILE",
+            "class": "MD",
+            "implemented": True,
+            "writes_to": "cko_md/iso8000_profile.json",
+            "promotes_to_md": False,
+            "note": "Perfil CKO. clause_text CLAUSE_TEXT_UNAVAILABLE. certified=false.",
+        },
+        {
+            "agent_id": "AG-MASK-APPLY",
+            "class": "REGULATORY",
+            "implemented": True,
+            "writes_to": "cko_inbox/extracted/mask_run.json",
+            "promotes_to_md": False,
+            "note": "Máscaras desenhadas (IA robusta). Execução determinística simples. LLM checker FORBIDDEN.",
+        },
+        {
+            "agent_id": "AG-COMPARE-SOURCE",
+            "class": "MONITORING",
+            "implemented": True,
+            "writes_to": "cko_inbox/extracted/compare_source.json",
+            "promotes_to_md": False,
+        },
+        {
+            "agent_id": "AG-COMPARE-INTERNAL",
+            "class": "MONITORING",
+            "implemented": True,
+            "writes_to": "cko_inbox/extracted/compare_internal.json",
+            "promotes_to_md": False,
+        },
+        {
+            "agent_id": "AG-MONITOR-DRIFT",
+            "class": "MONITORING",
+            "implemented": True,
+            "writes_to": "cko_assurance/monitoring_events.json",
+            "promotes_to_md": False,
+            "wired_to_frontend": True,
+        },
     ]
 
 
@@ -707,6 +891,13 @@ def write_agent_registry(run: dict | None = None) -> None:
 
 def run_extraction(*, network: bool = True) -> dict:
     """AG-ORCHESTRATOR — ordered pipeline. Never auto-PASS publication."""
+    from .iso8000 import evaluate_profile
+    from .lineage import bind_lineage
+    from .monitor import compare_internal, compare_source, monitor_drift
+    from .rights import bind_rights
+    from .site_shell import parse_site_shell
+    from .vault import put_known_sources
+
     run_id = "RUN-EXTRACT-" + _now().replace(":", "").replace("-", "")
     steps = [
         fetch_origin(network=network),
@@ -714,10 +905,19 @@ def run_extraction(*, network: bool = True) -> dict:
         parse_pages_full_zip(),
         parse_sitemap(network=network),
         parse_chrome_contract(),
+        parse_site_shell(),
         integrity_hashes(),
+        put_known_sources(network=network, fetch_fn=_http_get),
+        bind_rights(),
+        bind_lineage(),
+        evaluate_profile(),
+        apply_norm_masks(),
         caat_extracted_population(),
         ipe_carr(),
         link_to_md(),
+        compare_source(network=network, fetch_fn=_http_get),
+        compare_internal(),
+        monitor_drift(),
     ]
     caat = next(step for step in steps if step.get("agent_id") == "AG-CAAT-EXTRACT")
     ipe = next(step for step in steps if step.get("agent_id") == "AG-IPE-EXTRACT")
@@ -731,12 +931,13 @@ def run_extraction(*, network: bool = True) -> dict:
         "status": status,
         "network": network,
         "started_at": _now(),
-        "chain": "CKO-MD → CKO-REG → projection → renderer → frontend",
-        "rule": "DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO. Extração ≠ promoção.",
+        "chain": "vault → CKO-MD → CKO-REG → projection → renderer → frontend",
+        "rule": "DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO. Extração ≠ promoção. LLM não é checker.",
         "publication": "HOLD",
         "ipe_reliance": False,
         "caat_status": caat.get("status"),
         "ipe_status": ipe.get("status"),
+        "llm_used": False,
         "steps": steps,
         "forbidden_copied": list(FORBIDDEN_IN_PROJECTION),
     }

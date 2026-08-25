@@ -118,6 +118,41 @@ def _list_html(items: list, class_name: str = "") -> str:
     return f"<ul{cls}>{lis}</ul>"
 
 
+def _load_json(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _lineage_html(tool: dict, *, home_href: str) -> str:
+    slug = tool.get("slug")
+    lineage = _load_json(ROOT / "cko_md" / "lineage_registry.json")
+    works = _load_json(ROOT / "cko_md" / "work_registry.json")
+    rights = _load_json(ROOT / "cko_reg" / "rights_profile.json")
+    link = next((item for item in (lineage.get("links") or []) if item.get("slug") == slug), {})
+    work = next((item for item in (works.get("works") or []) if item.get("slug") == slug), {})
+    admin_monitoring = "admin/monitoring.html" if home_href in {"index.html", "./index.html"} else "../admin/monitoring.html"
+    inspector = "inspector.html" if home_href in {"index.html", "./index.html"} else "../inspector.html"
+    sha = (link.get("md_vault_sha256") or "EVIDENCE_PENDING")[:16]
+    origin_sha = (link.get("origin_vault_sha256") or "EVIDENCE_PENDING")[:16]
+    return f"""
+    <section class="panel lineage-panel" id="rastreio" data-lineage-slug="{attr(slug)}">
+      <h2>Rastreio da fonte</h2>
+      <p class="hint">Cópia original inalterada no vault → CKO-MD → CKO-REG → esta página. Monitoramento informa drift para ajuste.</p>
+      <dl class="lineage-dl">
+        <div><dt>Obra</dt><dd>{esc(work.get("work_class") or "UNKNOWN")}</dd></div>
+        <div><dt>Direitos</dt><dd>{esc(work.get("rights_status") or rights.get("gate") or "HOLD")} · {esc(work.get("cko_copyright_claim") or "não ASSURED")}</dd></div>
+        <div><dt>Instrumento</dt><dd>{esc(link.get("instrument_ref") or "INS-LEI-9610-1998")}</dd></div>
+        <div><dt>Máscara</dt><dd>{esc(link.get("mask_id") or "MASK-TOOL-WORK")}</dd></div>
+        <div><dt>Vault MD</dt><dd><code>{esc(sha)}</code></dd></div>
+        <div><dt>Vault origem</dt><dd><code>{esc(origin_sha)}</code></dd></div>
+        <div><dt>URL origem</dt><dd>{esc(link.get("origin_url") or "EVIDENCE_PENDING")}</dd></div>
+        <div><dt>Linha</dt><dd>{esc(link.get("status") or "HOLD")}</dd></div>
+      </dl>
+      <p class="meta"><a href="{attr(inspector)}">Inspector</a> · <a href="{attr(admin_monitoring)}">Monitoramento</a></p>
+    </section>"""
+
+
 def _sae_html(tool: dict) -> str:
     sae = tool.get("sae") or {}
     nanda = sae.get("nanda") or []
@@ -335,6 +370,7 @@ def generate_tool_page(tool: dict, *, css_href: str, script_href: str, home_href
     </header>
     {form_html}
     {_about_html(tool)}
+    {_lineage_html(tool, home_href=home_href)}
   </main>
   {footer}"""
     scripts = ""
@@ -416,13 +452,23 @@ def generate_index(tools: list[dict], *, css_href: str, home_href: str, inline_c
 
 
 def generate_inspector(tools: list[dict], completeness: dict, *, css_href: str, home_href: str, inline_css: bool) -> str:
+    lineage = _load_json(ROOT / "cko_md" / "lineage_registry.json")
+    works = _load_json(ROOT / "cko_md" / "work_registry.json")
+    by_slug = {item.get("slug"): item for item in (lineage.get("links") or [])}
+    work_by_slug = {item.get("slug"): item for item in (works.get("works") or [])}
     rows = []
     for tool in tools:
         overview = tool.get("overview") or {}
+        slug = tool.get("slug")
+        link = by_slug.get(slug) or {}
+        work = work_by_slug.get(slug) or {}
         rows.append(
-            f"<tr><td><a href=\"tools/{attr(tool['slug'])}.html\">{esc(tool.get('slug'))}</a></td>"
+            f"<tr><td><a href=\"tools/{attr(slug)}.html\">{esc(slug)}</a></td>"
             f"<td>{esc(tool.get('kind'))}</td><td>{esc(tool.get('status'))}</td>"
-            f"<td>{esc(overview.get('name'))}</td></tr>"
+            f"<td>{esc(overview.get('name'))}</td>"
+            f"<td>{esc(work.get('work_class') or 'UNKNOWN')}</td>"
+            f"<td>{esc(link.get('status') or 'HOLD')}</td>"
+            f"<td><code>{esc((link.get('md_vault_sha256') or '')[:12] or '—')}</code></td></tr>"
         )
     findings = completeness.get("blockingFindings") or []
     finding_items = "".join(f"<li>{esc(item.get('id'))}: {esc(item.get('reason', item.get('id')))}</li>" for item in findings) or "<li>Nenhum achado estrutural de schema.</li>"
@@ -437,7 +483,7 @@ def generate_inspector(tools: list[dict], completeness: dict, *, css_href: str, 
     <section class="panel">
       <h2>Objetos</h2>
       <table class="inspect">
-        <thead><tr><th>Slug</th><th>Tipo</th><th>Status</th><th>Nome</th></tr></thead>
+        <thead><tr><th>Slug</th><th>Tipo</th><th>Status</th><th>Nome</th><th>Obra</th><th>Lineage</th><th>Vault</th></tr></thead>
         <tbody>{"".join(rows)}</tbody>
       </table>
     </section>
