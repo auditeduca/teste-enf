@@ -513,6 +513,8 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     links = _load_json(ROOT / "cko_md" / "legislation_tool_links.json")
     types = _load_json(ROOT / "cko_inbox" / "extracted" / "congress_types.json")
     pgd = _load_json(ROOT / "cko_md" / "pgdados_program.json")
+    libmap = _load_json(ROOT / "cko_md" / "library_api_map.json")
+    concept = _load_json(ROOT / "cko_md" / "concept_renderer.json")
     res_rows = []
     for item in lib.get("resources") or []:
         res_rows.append(
@@ -586,6 +588,32 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
     dim_txt = ", ".join(
         f"{d.get('n')} {d.get('name')}" for d in (pgd.get("quality_dimensions") or [])
     ) or "EVIDENCE_PENDING"
+    set_rows = []
+    for item in libmap.get("observed_sets") or []:
+        set_rows.append(
+            "<tr>"
+            f"<td><code>{esc(item.get('id'))}</code></td>"
+            f"<td>{esc(item.get('count'))}</td>"
+            f"<td>{esc(item.get('kind'))}</td>"
+            f"<td>{esc(item.get('official_api') or item.get('official_api_status') or '—')}</td>"
+            f"<td>{esc((item.get('note') or '')[:180])}</td>"
+            "</tr>"
+        )
+    layer_api_rows = []
+    for item in libmap.get("api_where_possible") or []:
+        layer_api_rows.append(
+            "<tr>"
+            f"<td>{esc(item.get('layer'))}</td>"
+            f"<td><code>{esc(item.get('adapter') or 'null')}</code></td>"
+            f"<td>{esc(item.get('http_status') if item.get('http_status') is not None else 'null')}</td>"
+            f"<td>{esc(item.get('epistemic_status'))}</td>"
+            f"<td>{esc((item.get('note') or '')[:180])}</td>"
+            "</tr>"
+        )
+    concept_lis = "".join(
+        f"<li><code>{esc(p.get('id'))}</code> · {esc(p.get('layer'))} · {esc(p.get('source'))}</li>"
+        for p in (concept.get("projections") or [])
+    )
     header, footer = _header_footer(home_href)
     body = f"""{header}
   <main id="conteudo" class="wrap">
@@ -593,8 +621,19 @@ def generate_biblioteca(*, css_href: str, home_href: str, inline_css: bool) -> s
       <p class="eyebrow">L60 Biblioteca · ambiente controlado</p>
       <h1>Biblioteca de recursos.</h1>
       <p class="lede">Catálogo canônico de fontes governamentais (ANVISA, MS, COFEN, COREN-SP HTML, SGD/PGDADOS), legislação federal do Congresso Nacional (incluindo decreto regulamentar numerado) e currículo documental básico→avançado. Cada objeto tem MD e REG. Publicação HOLD. HTML/PDF integral não é republicado. Projeto de lei complementar (PLP) é bloqueado. Portaria/resolução de órgão não entra no tubo federal. COREN sem API REST observada.</p>
-      <p class="hold-banner">Agências {esc(agency_n)} · Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Alertas ALTA {esc(alerts.get("alta_count"))} · APIs online {esc(adapters.get("adapters") and sum(1 for a in adapters.get("adapters") or [] if a.get("online")))} · release HOLD</p>
+      <p class="hold-banner">Agências {esc(agency_n)} · Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Alertas ALTA {esc(alerts.get("alta_count"))} · APIs online {esc(adapters.get("adapters") and sum(1 for a in adapters.get("adapters") or [] if a.get("online")))} · 32 bibliotecas={esc(libmap.get("claimed_32_libraries") or "EVIDENCE_PENDING")} · release HOLD</p>
     </header>
+    <section class="panel">
+      <h2>L60 observado vs 32 reivindicadas</h2>
+      <p>COMPARE Drive ({esc(libmap.get("business_key") or "MD-LIB-API-MAP-001")}). Sem unzip em <code>data/tools</code>. Sem copiar nanda-00046.json.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>conjunto</th><th>n</th><th>tipo</th><th>API</th><th>nota</th></tr></thead><tbody>{"".join(set_rows) or "<tr><td colspan='5'>EVIDENCE_PENDING</td></tr>"}</tbody></table></div>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>camada</th><th>adapter</th><th>HTTP</th><th>estado</th><th>nota</th></tr></thead><tbody>{"".join(layer_api_rows) or "<tr><td colspan='5'>EVIDENCE_PENDING</td></tr>"}</tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Guia por conceito (L150/L160)</h2>
+      <p>{esc(concept.get("rule") or "Um conceito → uma identidade → renderer.")} LLM canónico={esc((concept.get("renderer") or {}).get("llm_canonical") or "FORBIDDEN")}.</p>
+      <ul>{concept_lis or "<li>MD-CONCEPT-RENDER-001 EVIDENCE_PENDING.</li>"}</ul>
+    </section>
     <section class="panel">
       <h2>Fontes e APIs observadas</h2>
       <p>API REST só entra com <code>base_url</code> após HTTP 200. Sem 200 permanece null. Extração periódica {esc(alerts.get("frequency_hours") or 24)}h. Portal pode ficar offline.</p>

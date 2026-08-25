@@ -484,6 +484,9 @@ def plan_fronts() -> dict:
         "method_ref": "MD-OPS-METHOD-001",
         "layer_intent_ref": "MD-LAYER-INTENT-001",
         "nnn_rights_ref": "MD-NNN-RIGHTS-001",
+        "owner_unblock_ref": "MD-OWNER-UNBLOCK-001",
+        "library_api_map_ref": "MD-LIB-API-MAP-001",
+        "concept_renderer_ref": "MD-CONCEPT-RENDER-001",
         "method": method.get("method") or "RECOVER → COMPARE → GAP ONLY → REPERFORM → CLOSE",
         "plan_policy": "Plano vivo em JSON. Agentes atuam nas frentes; não criam autoridade nem identidade REG.",
         "maker_neq_checker": True,
@@ -491,10 +494,10 @@ def plan_fronts() -> dict:
         "fronts": fronts,
         "next_executable": [
             "F1 replay offline a cada extract",
-            "F2 bloqueado até credencial SQL read-only",
+            "F2 bloqueado até credencial SQL read-only (MD-OWNER-UNBLOCK-001)",
             "F9 COMPARE pages_full vs pilotos; sem unzip",
             "F10 vacinas 15 CAL-VAC COMPARE; 32 EVIDENCE_PENDING",
-            "F12 NNN HOLD até decisão de licença",
+            "F12 NNN HOLD até decisão de licença A/B/C",
             "F3/F4 só com evidência HTTP/Congress já no tubo",
         ],
         "updated_at": _now(),
@@ -561,6 +564,9 @@ def plan_fronts() -> dict:
     method["living_gaps"] = living_gaps
     method["layer_intent_ref"] = "MD-LAYER-INTENT-001"
     method["nnn_rights_ref"] = "MD-NNN-RIGHTS-001"
+    method["owner_unblock_ref"] = "MD-OWNER-UNBLOCK-001"
+    method["library_api_map_ref"] = "MD-LIB-API-MAP-001"
+    method["concept_renderer_ref"] = "MD-CONCEPT-RENDER-001"
     _dump(ROOT / "cko_md" / "operating_method.json", method)
     return {
         "agent_id": "AG-PLAN-FRONTS",

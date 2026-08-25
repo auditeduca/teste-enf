@@ -1,0 +1,106 @@
+{
+  "business_key": "MD-OWNER-UNBLOCK-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": false,
+  "publication": "HOLD",
+  "assured": false,
+  "method_ref": "MD-OPS-METHOD-001",
+  "fronts_plan_ref": "MD-FRONTS-PLAN-001",
+  "rule": "O dono desbloqueia agentes com segredo, decisão de licença ou confirmação de evidência. Agente não inventa senha, schema, 32 APIs nem texto NANDA/NIC/NOC.",
+  "actions": [
+    {
+      "id": "UNBLOCK-SUPABASE-SQL",
+      "priority": 1,
+      "frente": "F2",
+      "kind": "SECRET",
+      "status": "BLOCKED",
+      "title": "SQL read-only no Supabase ativo",
+      "project_ref_observed": "aevqrmkdhffmursdtcmo",
+      "secrets": [
+        {"name": "SUPABASE_DB_PASSWORD", "optional": false},
+        {"name": "SUPABASE_PROJECT_REF", "optional": true}
+      ],
+      "how": "No ambiente Cursor Cloud, adicionar a senha do usuário supabase_read_only_user. GRANT só SELECT. Sem DDL, INSERT, UPDATE, DELETE. Sem RLS change.",
+      "current_fail": "28P01 autenticação supabase_read_only_user",
+      "do_not": "Não enviar service_role. Não pedir ao agente para inventar 172 entidades."
+    },
+    {
+      "id": "UNBLOCK-NNN-LICENSE",
+      "priority": 2,
+      "frente": "F12",
+      "kind": "DECISION",
+      "status": "HOLD",
+      "title": "Decisão NANDA / NIC / NOC",
+      "options": [
+        "A — contrato NANDA-I + Elsevier NIC/NOC e sidecar privado (fora do GitHub público)",
+        "B — só códigos + mapeamento CID/CIPE (recomendado agora)",
+        "C — HOLD de exibição para sempre"
+      ],
+      "how": "Responder A, B ou C nesta conversa. Não enviar nanda-00046.json / nic-2312.json / noc-0401.json para o repositório.",
+      "recommended_now": "B + deep-link ao titular (OPT-B + OPT-D em MD-NNN-RIGHTS-001)"
+    },
+    {
+      "id": "UNBLOCK-32-LIST",
+      "priority": 3,
+      "frente": "F10",
+      "kind": "EVIDENCE",
+      "status": "EVIDENCE_PENDING",
+      "title": "Confirmar o que são as 32 bibliotecas",
+      "observed": {
+        "device_library_slugs": 11,
+        "clinical_object_types": 24,
+        "matrix_libraries_mentioned": 22,
+        "cal_vac_tools": 15,
+        "pages_full_biblioteca_hubs": 5
+      },
+      "how": "Indicar o ficheiro Drive (id) que lista as 32, ou aceitar COMPARE 11+24+15 e tratar 32 como EVIDENCE_PENDING.",
+      "do_not": "Não enviar classificacoes_medicas.zip (99 MB), UMLS, nkos, Abelha ou grok-workspace para o GitHub."
+    },
+    {
+      "id": "UNBLOCK-PAGES-FULL-COMPARE",
+      "priority": 4,
+      "frente": "F9",
+      "kind": "CONFIRM",
+      "status": "REGISTERED",
+      "title": "pages_full e locales já partilhados",
+      "how": "Nada a enviar de novo. Agentes fazem COMPARE de stems (index/missão/política/termos + calculadoras) vs 5 pilotos. HTML Drive ≠ MD.",
+      "do_not": "Não pedir unzip de pages_full.zip em data/tools."
+    },
+    {
+      "id": "HOLD-ORGAN-ACTS",
+      "priority": 5,
+      "frente": "F5",
+      "kind": "HOLD",
+      "status": "HOLD",
+      "title": "Atos de órgão (portaria MS / resolução COFEN)",
+      "how": "Só desbloqueia com ordem explícita para o segundo tubo. Não misturar com API do Congresso."
+    },
+    {
+      "id": "HOLD-DIMENSIONAMENTO",
+      "priority": 6,
+      "frente": "F7",
+      "kind": "HOLD",
+      "status": "HOLD",
+      "title": "Dimensionamento permanece HOLD",
+      "how": "Constituição: cinco pilotos. Não pedir número de dimensionamento neste ciclo."
+    },
+    {
+      "id": "QUARANTINE-PARECER-360",
+      "priority": 7,
+      "frente": "F8",
+      "kind": "QUARANTINE",
+      "status": "QUARANTINE",
+      "title": "Parecer 360 não é golden MD",
+      "how": "Não promover o workbook Drive a identidade canónica."
+    }
+  ],
+  "agents_executable_without_owner": [
+    "F1 replay Drive listing",
+    "F3/F4 catálogo federal e PGDADOS com evidência HTTP já no tubo",
+    "F9 COMPARE pages_full vs pilotos",
+    "F10 COMPARE vacinas/templates sem promover CAL-VAC",
+    "F11/F13 probe de API só HTTP 200",
+    "F14 currículo por conceito nos 5 pilotos"
+  ]
+}

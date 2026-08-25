@@ -92,6 +92,15 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     nnn = json.loads((ROOT / "cko_md" / "nnn_rights_architecture.json").read_text(encoding="utf-8"))
     assert nnn["business_key"] == "MD-NNN-RIGHTS-001"
     assert nnn["publication"] == "HOLD"
+    unblock = json.loads((ROOT / "cko_md" / "owner_unblock.json").read_text(encoding="utf-8"))
+    assert unblock["business_key"] == "MD-OWNER-UNBLOCK-001"
+    assert {item["id"] for item in unblock["actions"]} >= {"UNBLOCK-SUPABASE-SQL", "UNBLOCK-NNN-LICENSE", "UNBLOCK-32-LIST"}
+    libmap = json.loads((ROOT / "cko_md" / "library_api_map.json").read_text(encoding="utf-8"))
+    assert libmap["business_key"] == "MD-LIB-API-MAP-001"
+    assert libmap["claimed_32_libraries"] == "EVIDENCE_PENDING"
+    concept = json.loads((ROOT / "cko_md" / "concept_renderer.json").read_text(encoding="utf-8"))
+    assert concept["business_key"] == "MD-CONCEPT-RENDER-001"
+    assert concept["renderer"]["llm_canonical"] == "FORBIDDEN"
     vaccines = json.loads((ROOT / "cko_inbox" / "extracted" / "vaccines_zip_inventory.json").read_text(encoding="utf-8"))
     assert vaccines["tool_id_count"] == 15
     assert vaccines["promotes_to_md"] is False

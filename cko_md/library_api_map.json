@@ -1,0 +1,159 @@
+{
+  "business_key": "MD-LIB-API-MAP-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": false,
+  "publication": "HOLD",
+  "assured": false,
+  "layer": "L60",
+  "claimed_32_libraries": "EVIDENCE_PENDING",
+  "rule": "API só com HTTP 200 JSON + snapshot + hash + MD + REG. Não inventar 32 adapters. HTML/zip Drive ≠ identidade MD.",
+  "drive": {
+    "parent_id": "0AFNnC8Uinv0BUk9PVA",
+    "vaccines_zip_id": "1E9OB0AKR0m2Hbeknf43Htwo-fXob6cP9",
+    "templates_zip_id": "1uEwfManbUqMMlI6BWiCxBQW1sFEc0VJF",
+    "pages_full_id": "1tJ-AEv3_KpEQxNa3lMuY7A80skFtw4IK",
+    "classificacoes_folder_id": "1ZcE8AK0hVnrmMuuKISJ9t02t0w5QcJ0x"
+  },
+  "observed_sets": [
+    {
+      "id": "SET-DEVICE-11",
+      "count": 11,
+      "kind": "device_library_slugs",
+      "source": "IPE-BIBLIOTECAS-TPL-001",
+      "items": [
+        "curativos",
+        "cateteres",
+        "agulhas",
+        "feridas",
+        "cirurgicos",
+        "sondas",
+        "luvas",
+        "ostomias",
+        "drenos",
+        "respiratorios",
+        "antissepticos"
+      ],
+      "official_api": "NOT_OBSERVED",
+      "note": "Candidato natural seria consulta de produto ANVISA. REST pública estável não observada neste ciclo."
+    },
+    {
+      "id": "SET-CLINICAL-24",
+      "count": 24,
+      "kind": "clinical_object_types",
+      "source": "IPE-BIBLIOTECAS-TPL-001",
+      "official_api": "MIXED_NOT_A_LIBRARY_API",
+      "quarantine": ["nanda-00046", "nic-2312", "noc-0401"],
+      "note": "24 tipos no gerador Drive. Não são 24 APIs. Três ficheiros NNN = QUARANTINE (texto licenciado)."
+    },
+    {
+      "id": "SET-VAC-15",
+      "count": 15,
+      "kind": "cal_vac_tools",
+      "source": "IPE-VACINAS-ZIP-001",
+      "items": [
+        "CAL-VAC-001",
+        "CAL-VAC-002",
+        "CAL-VAC-003",
+        "CAL-VAC-004",
+        "CAL-VAC-005",
+        "CAL-VAC-006",
+        "CAL-VAC-007",
+        "CAL-VAC-008",
+        "CAL-VAC-009",
+        "CAL-VAC-010",
+        "CAL-VAC-011",
+        "CAL-VAC-012",
+        "CAL-VAC-013",
+        "CAL-VAC-014",
+        "CAL-VAC-015"
+      ],
+      "official_api": "API-CKAN-OPENDATASUS-VACINA",
+      "official_api_status": "EVIDENCE_PENDING",
+      "note": "package_search q=vacina = HTTP 302 HTML. Não promover CAL-VAC para data/tools."
+    },
+    {
+      "id": "SET-HUBS-5",
+      "count": 5,
+      "kind": "pages_full_biblioteca_hubs",
+      "source": "IPE-PAGES-LAYER-001",
+      "items": [
+        "biblioteca-carinho-de-emergencia",
+        "biblioteca-cirurgica",
+        "biblioteca-curativo",
+        "biblioteca-provas",
+        "biblioteca-seringa"
+      ],
+      "official_api": "NOT_AN_API",
+      "note": "Hubs HTML. COMPARE only."
+    }
+  ],
+  "matrix_libraries_mentioned": 22,
+  "website_page_types_mentioned": 30,
+  "api_where_possible": [
+    {
+      "layer": "L60",
+      "intent": "API para bibliotecas onde existir API oficial",
+      "adapter": "API-CKAN-OPENDATASUS-VACINA",
+      "http_status": 302,
+      "epistemic_status": "EVIDENCE_PENDING",
+      "note": "Vacinas: CKAN OpenDataSUS não devolveu JSON neste ciclo. 11 dispositivos sem REST ANVISA observada."
+    },
+    {
+      "layer": "L80",
+      "intent": "API onde for possível (exames)",
+      "adapter": "API-NLM-CLINICALTABLES-ICD10CM",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "note": "Probe NLM é busca ICD-10-CM, não banco LOINC. Dump LOINC do Drive = FORBIDDEN."
+    },
+    {
+      "layer": "L90",
+      "intent": "API onde for possível (anatomia)",
+      "adapter": null,
+      "http_status": null,
+      "epistemic_status": "EVIDENCE_PENDING",
+      "note": "Pasta Anatomia no Drive. Sem REST oficial observada neste ciclo. UMLS = SKIP."
+    },
+    {
+      "layer": "L100",
+      "intent": "API onde for possível (doenças)",
+      "adapter": "API-NLM-CLINICALTABLES-ICD10CM",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "note": "Busca, não dump CID-10/11 DATASUS. classificacoes_medicas.zip 99 MB = SKIP_BINARY_DUMP."
+    },
+    {
+      "layer": "L120",
+      "intent": "API onde for possível (terminologias)",
+      "adapter": null,
+      "http_status": null,
+      "epistemic_status": "HOLD",
+      "note": "NANDA/NIC/NOC = MD-NNN-RIGHTS-001. Sem copiar banco de termos."
+    },
+    {
+      "layer": "L140",
+      "intent": "API + pesquisa (referências)",
+      "adapter": "API-CROSSREF-WORKS",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "note": "Busca bibliográfica. Resposta ≠ canónico sem snapshot+hash+MD+REG. Não republicar abstract."
+    },
+    {
+      "layer": "L150",
+      "intent": "API + pesquisa (artigos/guias)",
+      "adapter": "API-NCBI-EUTILS-ESEARCH",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "note": "Busca PubMed. Não é full-text. Guia por conceito via MD-CONCEPT-RENDER-001."
+    },
+    {
+      "layer": "L160",
+      "intent": "Guia/questão por conceito via renderer",
+      "adapter": null,
+      "http_status": null,
+      "epistemic_status": "REGISTERED",
+      "note": "Sem API de banco de provas de terceiros. Conteúdo original Audit Educa + renderer PRESENTATION_ONLY."
+    }
+  ]
+}

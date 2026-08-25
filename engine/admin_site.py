@@ -390,6 +390,7 @@ def page_agents(ctx: dict, **kwargs) -> str:
         ])
     steps = "".join(f"<li>{esc(step.get('agent_id'))} · {esc(step.get('status'))}</li>" for step in (run.get("steps") or []))
     fronts = load_json(ROOT / "cko_md" / "fronts_plan.json")
+    unblock = load_json(ROOT / "cko_md" / "owner_unblock.json")
     front_rows = [
         [
             esc(item.get("id")),
@@ -401,6 +402,16 @@ def page_agents(ctx: dict, **kwargs) -> str:
         ]
         for item in (fronts.get("fronts") or [])
     ] or [["—", "—", "HOLD", "—", "—", "Plano ainda não gerado."]]
+    unblock_rows = [
+        [
+            esc(item.get("id")),
+            esc(item.get("frente")),
+            _status_chip(item.get("status")),
+            esc(item.get("title")),
+            esc((item.get("how") or "")[:220]),
+        ]
+        for item in (unblock.get("actions") or [])
+    ] or [["—", "—", "HOLD", "—", "Checklist ainda não gerado."]]
     drive = load_json(ROOT / "cko_inbox" / "extracted" / "drive_inventory.json")
     counts = drive.get("counts") or {}
     inner = f"""
@@ -413,6 +424,11 @@ def page_agents(ctx: dict, **kwargs) -> str:
       <h2>Frentes do plano vivo ({esc(fronts.get("business_key") or "MD-FRONTS-PLAN-001")})</h2>
       <p>Método {esc(fronts.get("method") or "RECOVER → COMPARE → GAP ONLY")}. Publicação {esc(fronts.get("publication") or "HOLD")}. LLM autoridade={esc(fronts.get("llm_authority"))}.</p>
       {_table(["frente", "nome", "status", "agentes", "gap", "ação"], front_rows)}
+    </section>
+    <section class="panel">
+      <h2>Como o dono desbloqueia agentes ({esc(unblock.get("business_key") or "MD-OWNER-UNBLOCK-001")})</h2>
+      <p>Segredo, decisão de licença ou confirmação de evidência. Agente não inventa senha, 32 APIs nem texto NANDA/NIC/NOC.</p>
+      {_table(["id", "frente", "status", "pedido", "como apoiar"], unblock_rows)}
     </section>
     <section class="panel">
       <h2>Inventário Drive classificado</h2>
@@ -490,6 +506,7 @@ def page_monitoring(ctx: dict, **kwargs) -> str:
 def page_library(ctx: dict, **kwargs) -> str:
     lib = load_json(ROOT / "cko_md" / "resource_library.json")
     curr = load_json(ROOT / "cko_md" / "content_curriculum.json")
+    libmap = load_json(ROOT / "cko_md" / "library_api_map.json")
     alerts = load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
     laws = load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
     res_rows = [
@@ -531,12 +548,38 @@ def page_library(ctx: dict, **kwargs) -> str:
         ]
         for item in (laws.get("instruments") or [])
     ]
+    set_rows = [
+        [
+            esc(item.get("id")),
+            esc(item.get("count")),
+            esc(item.get("kind")),
+            esc(item.get("official_api") or item.get("official_api_status") or "—"),
+            esc((item.get("note") or "")[:180]),
+        ]
+        for item in (libmap.get("observed_sets") or [])
+    ]
+    layer_api_rows = [
+        [
+            esc(item.get("layer")),
+            esc(item.get("adapter") or "null"),
+            esc(item.get("http_status") if item.get("http_status") is not None else "null"),
+            _status_chip(item.get("epistemic_status")),
+            esc((item.get("note") or "")[:180]),
+        ]
+        for item in (libmap.get("api_where_possible") or [])
+    ]
     inner = f"""
     <header class="page-hero">
       <h1>Biblioteca de recursos.</h1>
       <p class="lede">Catálogo MD + currículo documental + legislação federal do Congresso + PGDADOS (SGD). Sem HTML/PDF integral. Sem LLM. Publicação HOLD. PLP bloqueado. COREN sem API REST.</p>
-      <p class="hold-banner">Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Pendências ALTA {esc(curr.get("pending_high_count"))} · Alertas {esc(alerts.get("population"))}</p>
+      <p class="hold-banner">Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Pendências ALTA {esc(curr.get("pending_high_count"))} · Alertas {esc(alerts.get("population"))} · 32 bibliotecas={esc(libmap.get("claimed_32_libraries") or "EVIDENCE_PENDING")}</p>
     </header>
+    <section class="panel">
+      <h2>Mapa L60 observado vs 32 reivindicadas ({esc(libmap.get("business_key") or "MD-LIB-API-MAP-001")})</h2>
+      <p>Contagens COMPARE do Drive. 32 APIs permanecem EVIDENCE_PENDING. Sem promover CAL-VAC nem nanda-00046.json.</p>
+      {_table(["conjunto", "n", "tipo", "API", "nota"], set_rows or [["—", "—", "—", "—", "mapa ainda não gerado"]])}
+      {_table(["camada", "adapter", "HTTP", "estado", "nota"], layer_api_rows or [["—", "—", "—", "HOLD", "—"]])}
+    </section>
     <section class="panel">
       <h2>Legislação federal</h2>
       {_table(["id", "norma", "tipo", "status", "MD", "REG"], law_rows or [["—", "rode extract", "—", "—", "—", "—"]])}
@@ -686,11 +729,25 @@ def page_design(ctx: dict, **kwargs) -> str:
 
 
 def page_renderer(ctx: dict, **kwargs) -> str:
+    concept = load_json(ROOT / "cko_md" / "concept_renderer.json")
+    proj_rows = [
+        [
+            esc(item.get("id")),
+            esc(item.get("layer")),
+            esc((item.get("source") or "")[:220]),
+        ]
+        for item in (concept.get("projections") or [])
+    ]
     inner = f"""
     <header class="page-hero">
       <h1>Renderer.</h1>
       <p class="lede">O renderer já existe em <code>engine.generate.build</code>. Este módulo dispara a execução local. Dual-render é medido no <code>audit</code> depois das duas árvores existirem — o status não é embutido nesta página para não quebrar a paridade fetch/inline.</p>
     </header>
+    <section class="panel">
+      <h2>Guia por conceito único ({esc(concept.get("business_key") or "MD-CONCEPT-RENDER-001")})</h2>
+      <p>{esc(concept.get("rule") or "Um conceito → uma identidade → projeções.")} LLM canónico={esc((concept.get("renderer") or {}).get("llm_canonical") or "FORBIDDEN")}. Publicação {esc(concept.get("publication") or "HOLD")}.</p>
+      {_table(["projeção", "camada", "fonte"], proj_rows or [["—", "—", "arquitectura ainda não gerada"]])}
+    </section>
     <section class="panel">
       <h2>Ação prática</h2>
       <p>Gera <code>render/fetch</code> e <code>render/inline</code> a partir dos JSON. Não publica. Não altera fórmula.</p>

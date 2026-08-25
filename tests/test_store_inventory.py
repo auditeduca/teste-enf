@@ -51,6 +51,10 @@ def test_inventory_agents_keep_schema_pending_and_plan_hold():
     assert plan["front_count"] == 14
     assert "F2" in plan["blocked"]
     assert "F12" in plan["hold"]
+    fronts = json.loads((ROOT / "cko_md" / "fronts_plan.json").read_text(encoding="utf-8"))
+    assert fronts["owner_unblock_ref"] == "MD-OWNER-UNBLOCK-001"
+    assert fronts["library_api_map_ref"] == "MD-LIB-API-MAP-001"
+    assert fronts["concept_renderer_ref"] == "MD-CONCEPT-RENDER-001"
     vaccines = json.loads((ROOT / "cko_inbox" / "extracted" / "vaccines_zip_inventory.json").read_text(encoding="utf-8"))
     assert vaccines["tool_id_count"] == 15
     assert vaccines["claimed_library_count_32"] == "EVIDENCE_PENDING"

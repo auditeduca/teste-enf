@@ -98,6 +98,15 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
     assert "AG-INVENTORY-DRIVE" in agents_html
     assert "AG-PLAN-FRONTS" in agents_html
     assert "F9" in agents_html or "L30" in agents_html
+    assert "UNBLOCK-SUPABASE-SQL" in agents_html
+    assert "desbloqueia" in agents_html
+    library_html = (ROOT / "render" / "fetch" / "admin" / "library.html").read_text(encoding="utf-8")
+    assert "MD-LIB-API-MAP-001" in library_html
+    assert "EVIDENCE_PENDING" in library_html
+    renderer_html = (ROOT / "render" / "fetch" / "admin" / "renderer.html").read_text(encoding="utf-8")
+    assert "MD-CONCEPT-RENDER-001" in renderer_html
+    fetch_biblioteca = (ROOT / "render" / "fetch" / "biblioteca.html").read_text(encoding="utf-8")
+    assert "SET-VAC-15" in fetch_biblioteca
     assert "cdn.jsdelivr" not in fetch_admin.lower()
     parity = check_parity()
     assert parity["status"] == "PASS"

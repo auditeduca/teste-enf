@@ -948,7 +948,7 @@ def agent_records() -> list[dict]:
             "implemented": True,
             "writes_to": "cko_md/fronts_plan.json",
             "promotes_to_md": False,
-            "note": "Plano vivo F1–F14. layer_intent + NNN rights-safe. Não é waterfall. LLM não é autoridade.",
+            "note": "Plano vivo F1–F14. layer_intent + NNN rights-safe + owner unblock. Não é waterfall. LLM não é autoridade.",
         },
         {
             "agent_id": "AG-CONTENT-CURRICULUM",
