@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin — CKO</title>
-  <meta name="description" content="Superfície administrativa read-only sobre registries GitHub.">
+  <title>Painel · CKO Studio</title>
+  <meta name="description" content="Painel administrativo integrado CKO.">
   <meta name="theme-color" content="#1A3E74">
   <link rel="stylesheet" href="assets/app.css">
-  <script type="application/json" id="admin-contract">{
+  <meta name="robots" content="noindex,nofollow"><script type="application/json" id="admin-contract">{
   "business_key": "CONTRACT-ADMIN-FRONTEND-001",
   "version": "1.0.0",
   "status": "DOCUMENTADO",
@@ -75,62 +75,39 @@
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-  <header class="site-header">
-    <div class="wrap header-row">
-      <div>
-        <a class="brand" href="index.html">CKO</a>
-        <p class="brand-sub">Calculadoras de Enfermagem</p>
-      </div>
-      <nav class="nav" aria-label="Principal">
-        <a href="index.html">Início</a>
-        <a href="inspector.html">Inspector</a>
-        <a href="admin.html">Admin</a>
-      </nav>
-    </div>
-  </header>
-  <main id="conteudo" class="wrap wrap-wide">
-    <header class="page-hero">
-      <p class="eyebrow">Admin · GitHub Day Zero</p>
-      <h1>Projeção dos contratos governados.</h1>
-      <p class="lede">Admin e frontend compartilham os mesmos JSON. Esta página não grava verdade clínica. Store: GitHub (Day Zero). Nenhuma API admin autenticada observada neste repositório.</p>
-      <p class="hold-banner" role="status">Modo SHARED_GITHUB_CONTRACTS · UUID HOLD · Clinical completeness HOLD</p>
+  <div class="admin-app">
+  <aside class="admin-side" aria-label="Módulos do Studio">
+    <p class="admin-brand">CKO Studio</p>
+    <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
+    <nav class="admin-nav"><a href="admin.html" aria-current="page">Painel</a><a href="admin/database.html">Banco GitHub</a><a href="admin/catalog.html">Catálogo</a><a href="admin/pipeline.html">Pipeline</a><a href="admin/layers.html">44 camadas</a><a href="admin/validations.html">Validações</a><a href="admin/agents.html">Agentes</a><a href="admin/monitoring.html">Monitoramento</a><a href="admin/backlog.html">Backlog</a><a href="admin/design-system.html">Design System</a><a href="admin/renderer.html">Renderer</a><a href="admin/deploy.html">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="index.html">Site público</a></p>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-top">
+      <p class="eyebrow">Painel · CKO Studio</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE</p>
     </header>
-    <section class="panel">
-      <h2>Contrato admin ↔ frontend</h2>
-      <ul>
-        <li>Admin: orchestration / preview / status / exceptions / publication control</li>
-        <li>Frontend: PRESENTATION_ONLY</li>
-        <li>Privacidade: PRIV-NO-SENSITIVE-CAPTURE</li>
-        <li>Segregação: MAKER ≠ CHECKER ≠ AUDITOR</li>
-        <li>JSON projetado: <code>admin/contract.json</code> e <code>admin/layer_registry.json</code></li>
-      </ul>
+    <main id="conteudo" class="admin-content">
+      
+    <header class="page-hero">
+      <h1>Área administrativa integrada.</h1>
+      <p class="lede">CKO-MD e CKO-REG são a espinha dorsal. Clinical Calculators e as demais camadas já existem no registry. Banco Day Zero = JSON no GitHub. Mapa Studio (Braden 98%, Ativo, Concluído) está em quarentena.</p>
+      <p class="hold-banner">Release clínica: HOLD · Completude: HOLD · Layer Registry (44) · MD LAYER-010-MD · REG LAYER-010-REG · SHARED_GITHUB_CONTRACTS · PRIV-NO-SENSITIVE-CAPTURE</p>
+    </header>
+    <section class="catalog admin-cards" aria-label="Módulos">
+      <a class="tool-card" href="admin/database.html"><p class="eyebrow">MD/REG</p><h2>Banco GitHub</h2><p>Tabelas JSON versionadas. Sem Postgres live neste repo.</p></a>
+      <a class="tool-card" href="admin/catalog.html"><p class="eyebrow">Domínio</p><h2>Catálogo</h2><p>5 candidatos piloto + itens Studio em QUARANTINED.</p></a>
+      <a class="tool-card" href="admin/renderer.html"><p class="eyebrow">L400</p><h2>Renderer</h2><p>Botão local gera fetch + inline. PRESENTATION_ONLY.</p></a>
+      <a class="tool-card" href="admin/deploy.html"><p class="eyebrow">Git</p><h2>Deploy</h2><p>Prepara changeset. git push é FORBIDDEN no botão.</p></a>
     </section>
     <section class="panel">
-      <h2>Candidatos de domínio (5)</h2>
-      <div class="table-wrap">
-        <table class="inspect">
-          <thead><tr><th>slug</th><th>nome</th><th>status</th><th>kind</th></tr></thead>
-          <tbody><tr><td><a href="tools/cinco-ts-pcr.html">cinco-ts-pcr</a></td><td>5 Ts da PCR</td><td>review</td><td>guide</td></tr><tr><td><a href="tools/dimensionamento.html">dimensionamento</a></td><td>Dimensionamento de enfermagem</td><td>hold</td><td>guide</td></tr><tr><td><a href="tools/gotejamento.html">gotejamento</a></td><td>Gotejamento de soro</td><td>review</td><td>calculator</td></tr><tr><td><a href="tools/meows.html">meows</a></td><td>MEOWS</td><td>review</td><td>scale</td></tr><tr><td><a href="tools/simulado-tecnico.html">simulado-tecnico</a></td><td>Simulado técnico (piloto)</td><td>review</td><td>exam</td></tr></tbody>
-        </table>
-      </div>
+      <h2>Imagens do mapa Studio</h2>
+      <p>Nenhuma imagem do Mapa de Controles foi encontrada neste workspace. Tabelas reconstruídas do texto colado pelo usuário, não de pixels.</p>
     </section>
-    <section class="panel">
-      <h2>Layer Registry (44)</h2>
-      <p>EXISTS ≠ POPULATED ≠ IMPLEMENTED ≠ ASSURED. Maturidade inicial: M0_REGISTERED.</p>
-      <div class="table-wrap">
-        <table class="inspect">
-          <thead><tr><th>code</th><th>nome</th><th>maturidade</th><th>MD profile</th><th>REG profile</th></tr></thead>
-          <tbody><tr><td>L10</td><td>CKO-MD</td><td>M0_REGISTERED</td><td>LAYER-010-MD</td><td>LAYER-010-REG</td></tr><tr><td>L20</td><td>CKO-REG</td><td>M0_REGISTERED</td><td>LAYER-020-MD</td><td>LAYER-020-REG</td></tr><tr><td>L30</td><td>Clinical Calculators</td><td>M0_REGISTERED</td><td>LAYER-030-MD</td><td>LAYER-030-REG</td></tr><tr><td>L40</td><td>Scales &amp; Scores</td><td>M0_REGISTERED</td><td>LAYER-040-MD</td><td>LAYER-040-REG</td></tr><tr><td>L50</td><td>Clinical Rules</td><td>M0_REGISTERED</td><td>LAYER-050-MD</td><td>LAYER-050-REG</td></tr><tr><td>L60</td><td>Library Objects</td><td>M0_REGISTERED</td><td>LAYER-060-MD</td><td>LAYER-060-REG</td></tr><tr><td>L70</td><td>Medications &amp; Solutions</td><td>M0_REGISTERED</td><td>LAYER-070-MD</td><td>LAYER-070-REG</td></tr><tr><td>L80</td><td>Laboratory Exams</td><td>M0_REGISTERED</td><td>LAYER-080-MD</td><td>LAYER-080-REG</td></tr><tr><td>L90</td><td>Anatomy</td><td>M0_REGISTERED</td><td>LAYER-090-MD</td><td>LAYER-090-REG</td></tr><tr><td>L100</td><td>Diseases / Conditions</td><td>M0_REGISTERED</td><td>LAYER-100-MD</td><td>LAYER-100-REG</td></tr><tr><td>L110</td><td>Procedures / Protocols</td><td>M0_REGISTERED</td><td>LAYER-110-MD</td><td>LAYER-110-REG</td></tr><tr><td>L120</td><td>Terminologies</td><td>M0_REGISTERED</td><td>LAYER-120-MD</td><td>LAYER-120-REG</td></tr><tr><td>L130</td><td>Educational / Contest</td><td>M0_REGISTERED</td><td>LAYER-130-MD</td><td>LAYER-130-REG</td></tr><tr><td>L140</td><td>References / Bibliography / Glossary</td><td>M0_REGISTERED</td><td>LAYER-140-MD</td><td>LAYER-140-REG</td></tr><tr><td>L150</td><td>Articles / Guides / Summaries</td><td>M0_REGISTERED</td><td>LAYER-150-MD</td><td>LAYER-150-REG</td></tr><tr><td>L160</td><td>Flashcards / Questions / Quizzes</td><td>M0_REGISTERED</td><td>LAYER-160-MD</td><td>LAYER-160-REG</td></tr><tr><td>L170</td><td>Page Templates</td><td>M0_REGISTERED</td><td>LAYER-170-MD</td><td>LAYER-170-REG</td></tr><tr><td>L180</td><td>Document Templates</td><td>M0_REGISTERED</td><td>LAYER-180-MD</td><td>LAYER-180-REG</td></tr><tr><td>L190</td><td>Images / Media / Icons</td><td>M0_REGISTERED</td><td>LAYER-190-MD</td><td>LAYER-190-REG</td></tr><tr><td>L200</td><td>Asset Derivation</td><td>M0_REGISTERED</td><td>LAYER-200-MD</td><td>LAYER-200-REG</td></tr><tr><td>L210</td><td>HCD / Usability</td><td>M0_REGISTERED</td><td>LAYER-210-MD</td><td>LAYER-210-REG</td></tr><tr><td>L220</td><td>Accessibility</td><td>M0_REGISTERED</td><td>LAYER-220-MD</td><td>LAYER-220-REG</td></tr><tr><td>L230</td><td>Design System</td><td>M0_REGISTERED</td><td>LAYER-230-MD</td><td>LAYER-230-REG</td></tr><tr><td>L240</td><td>UI Components &amp; Interaction</td><td>M0_REGISTERED</td><td>LAYER-240-MD</td><td>LAYER-240-REG</td></tr><tr><td>L250</td><td>Privacy / LGPD</td><td>M0_REGISTERED</td><td>LAYER-250-MD</td><td>LAYER-250-REG</td></tr><tr><td>L260</td><td>Security / Cybersecurity</td><td>M0_REGISTERED</td><td>LAYER-260-MD</td><td>LAYER-260-REG</td></tr><tr><td>L270</td><td>Routes / URLs</td><td>M0_REGISTERED</td><td>LAYER-270-MD</td><td>LAYER-270-REG</td></tr><tr><td>L280</td><td>SEO</td><td>M0_REGISTERED</td><td>LAYER-280-MD</td><td>LAYER-280-REG</td></tr><tr><td>L290</td><td>Open Graph / Social</td><td>M0_REGISTERED</td><td>LAYER-290-MD</td><td>LAYER-290-REG</td></tr><tr><td>L300</td><td>Structured Data</td><td>M0_REGISTERED</td><td>LAYER-300-MD</td><td>LAYER-300-REG</td></tr><tr><td>L310</td><td>i18n / l10n</td><td>M0_REGISTERED</td><td>LAYER-310-MD</td><td>LAYER-310-REG</td></tr><tr><td>L320</td><td>Internal Search</td><td>M0_REGISTERED</td><td>LAYER-320-MD</td><td>LAYER-320-REG</td></tr><tr><td>L330</td><td>Recommendations</td><td>M0_REGISTERED</td><td>LAYER-330-MD</td><td>LAYER-330-REG</td></tr><tr><td>L340</td><td>User State / Favorites / Collections</td><td>M0_REGISTERED</td><td>LAYER-340-MD</td><td>LAYER-340-REG</td></tr><tr><td>L350</td><td>Analytics / Telemetry</td><td>M0_REGISTERED</td><td>LAYER-350-MD</td><td>LAYER-350-REG</td></tr><tr><td>L360</td><td>Performance</td><td>M0_REGISTERED</td><td>LAYER-360-MD</td><td>LAYER-360-REG</td></tr><tr><td>L370</td><td>Reliability / Resilience</td><td>M0_REGISTERED</td><td>LAYER-370-MD</td><td>LAYER-370-REG</td></tr><tr><td>L380</td><td>Observability</td><td>M0_REGISTERED</td><td>LAYER-380-MD</td><td>LAYER-380-REG</td></tr><tr><td>L390</td><td>Sustainability</td><td>M0_REGISTERED</td><td>LAYER-390-MD</td><td>LAYER-390-REG</td></tr><tr><td>L400</td><td>Renderer</td><td>M0_REGISTERED</td><td>LAYER-400-MD</td><td>LAYER-400-REG</td></tr><tr><td>L410</td><td>Runtime / E2E</td><td>M0_REGISTERED</td><td>LAYER-410-MD</td><td>LAYER-410-REG</td></tr><tr><td>L420</td><td>PDF / Export Profiles</td><td>M0_REGISTERED</td><td>LAYER-420-MD</td><td>LAYER-420-REG</td></tr><tr><td>L430</td><td>Publication / Release</td><td>M0_REGISTERED</td><td>LAYER-430-MD</td><td>LAYER-430-REG</td></tr><tr><td>L440</td><td>Monitoring</td><td>M0_REGISTERED</td><td>LAYER-440-MD</td><td>LAYER-440-REG</td></tr></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer">
-    <div class="wrap">
-      <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
-      <p>Audit Educa · CKO · Constituição CKO-INS-AI-PROJECT-001</p>
-    </div>
-  </footer>
-  
+    
+    </main>
+  </div>
+</div>
+  <script data-admin-root="" src="assets/admin-control.js"></script>
 </body>
 </html>

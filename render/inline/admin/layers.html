@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Painel · CKO Studio</title>
-  <meta name="description" content="Painel administrativo integrado CKO.">
+  <title>Camadas · CKO Studio</title>
+  <meta name="description" content="Layer Registry 44.">
   <meta name="theme-color" content="#1A3E74">
   <style>
 :root {
@@ -277,71 +277,7 @@ summary { cursor: pointer; font-weight: 650; }
 }
 
 </style>
-  <meta name="robots" content="noindex,nofollow"><script type="application/json" id="admin-contract">{
-  "business_key": "CONTRACT-ADMIN-FRONTEND-001",
-  "version": "1.0.0",
-  "status": "DOCUMENTADO",
-  "implemented_runtime": "PARTIAL",
-  "store": "GitHub (Day Zero). Nenhuma API admin autenticada observada neste repositório.",
-  "principle": "Studio/Admin projeta objetos governados. Não reescreve verdade clínica.",
-  "communication": {
-    "mode": "SHARED_GITHUB_CONTRACTS",
-    "description": "Admin e frontend leem os mesmos JSON versionados. O renderer gera ambas as superfícies. Não há CMS paralelo nem escrita canônica no browser.",
-    "admin_surface": "admin.html",
-    "frontend_surface": "index.html + tools/*.html",
-    "runtime_json_projection": [
-      "admin/contract.json",
-      "admin/layer_registry.json"
-    ]
-  },
-  "frontend": {
-    "role": "PRESENTATION_ONLY",
-    "reads": [
-      "render projections",
-      "status badges",
-      "HOLD banners"
-    ],
-    "writes_canonical": false
-  },
-  "admin": {
-    "role": "orchestration / preview / status / exceptions / publication control",
-    "reads": [
-      "cko_core",
-      "cko_md",
-      "cko_reg",
-      "cko_assurance",
-      "data/tools"
-    ],
-    "allowed_write_when_implemented": [
-      "changeset",
-      "new version",
-      "finding",
-      "exception"
-    ],
-    "forbidden_write": [
-      "silent UPDATE of formula",
-      "dose",
-      "threshold",
-      "canonical identity"
-    ]
-  },
-  "events": {
-    "allowed": [
-      "ADMIN_READ_LAYERS",
-      "ADMIN_READ_CATALOG",
-      "ADMIN_READ_FINDINGS",
-      "ADMIN_REQUEST_PREVIEW",
-      "FRONTEND_RENDER_PROJECTION"
-    ],
-    "forbidden": [
-      "ADMIN_WRITE_FORMULA",
-      "FRONTEND_WRITE_CANONICAL",
-      "LLM_PROMOTE_IDENTITY"
-    ]
-  },
-  "privacy": "PRIV-NO-SENSITIVE-CAPTURE",
-  "segregation": "MAKER ≠ CHECKER ≠ AUDITOR"
-}</script>
+  <meta name="robots" content="noindex,nofollow">
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
@@ -349,36 +285,26 @@ summary { cursor: pointer; font-weight: 650; }
   <aside class="admin-side" aria-label="Módulos do Studio">
     <p class="admin-brand">CKO Studio</p>
     <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
-    <nav class="admin-nav"><a href="admin.html" aria-current="page">Painel</a><a href="admin/database.html">Banco GitHub</a><a href="admin/catalog.html">Catálogo</a><a href="admin/pipeline.html">Pipeline</a><a href="admin/layers.html">44 camadas</a><a href="admin/validations.html">Validações</a><a href="admin/agents.html">Agentes</a><a href="admin/monitoring.html">Monitoramento</a><a href="admin/backlog.html">Backlog</a><a href="admin/design-system.html">Design System</a><a href="admin/renderer.html">Renderer</a><a href="admin/deploy.html">Deploy Git</a></nav>
-    <p class="admin-side-note"><a href="index.html">Site público</a></p>
+    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html">Pipeline</a><a href="layers.html" aria-current="page">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html">Agentes</a><a href="monitoring.html">Monitoramento</a><a href="backlog.html">Backlog</a><a href="design-system.html">Design System</a><a href="renderer.html">Renderer</a><a href="deploy.html">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="../index.html">Site público</a></p>
   </aside>
   <div class="admin-main">
     <header class="admin-top">
-      <p class="eyebrow">Painel · CKO Studio</p>
+      <p class="eyebrow">Camadas · CKO Studio</p>
       <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE</p>
     </header>
     <main id="conteudo" class="admin-content">
       
     <header class="page-hero">
-      <h1>Área administrativa integrada.</h1>
-      <p class="lede">CKO-MD e CKO-REG são a espinha dorsal. Clinical Calculators e as demais camadas já existem no registry. Banco Day Zero = JSON no GitHub. Mapa Studio (Braden 98%, Ativo, Concluído) está em quarentena.</p>
-      <p class="hold-banner">Release clínica: HOLD · Completude: HOLD · Layer Registry (44) · MD LAYER-010-MD · REG LAYER-010-REG · SHARED_GITHUB_CONTRACTS · PRIV-NO-SENSITIVE-CAPTURE</p>
+      <h1>44 camadas governadas.</h1>
+      <p class="lede">EXISTS ≠ POPULATED ≠ IMPLEMENTADO ≠ ASSURED. Cada camada já nasceu com MD + REG.</p>
     </header>
-    <section class="catalog admin-cards" aria-label="Módulos">
-      <a class="tool-card" href="admin/database.html"><p class="eyebrow">MD/REG</p><h2>Banco GitHub</h2><p>Tabelas JSON versionadas. Sem Postgres live neste repo.</p></a>
-      <a class="tool-card" href="admin/catalog.html"><p class="eyebrow">Domínio</p><h2>Catálogo</h2><p>5 candidatos piloto + itens Studio em QUARANTINED.</p></a>
-      <a class="tool-card" href="admin/renderer.html"><p class="eyebrow">L400</p><h2>Renderer</h2><p>Botão local gera fetch + inline. PRESENTATION_ONLY.</p></a>
-      <a class="tool-card" href="admin/deploy.html"><p class="eyebrow">Git</p><h2>Deploy</h2><p>Prepara changeset. git push é FORBIDDEN no botão.</p></a>
-    </section>
-    <section class="panel">
-      <h2>Imagens do mapa Studio</h2>
-      <p>Nenhuma imagem do Mapa de Controles foi encontrada neste workspace. Tabelas reconstruídas do texto colado pelo usuário, não de pixels.</p>
-    </section>
+    <section class="panel"><div class="table-wrap"><table class="inspect"><thead><tr><th>code</th><th>nome</th><th>maturidade</th><th>MD</th><th>REG</th></tr></thead><tbody><tr><td>L10</td><td>CKO-MD</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-010-MD</code></td><td><code>LAYER-010-REG</code></td></tr><tr><td>L20</td><td>CKO-REG</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-020-MD</code></td><td><code>LAYER-020-REG</code></td></tr><tr><td>L30</td><td>Clinical Calculators</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-030-MD</code></td><td><code>LAYER-030-REG</code></td></tr><tr><td>L40</td><td>Scales &amp; Scores</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-040-MD</code></td><td><code>LAYER-040-REG</code></td></tr><tr><td>L50</td><td>Clinical Rules</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-050-MD</code></td><td><code>LAYER-050-REG</code></td></tr><tr><td>L60</td><td>Library Objects</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-060-MD</code></td><td><code>LAYER-060-REG</code></td></tr><tr><td>L70</td><td>Medications &amp; Solutions</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-070-MD</code></td><td><code>LAYER-070-REG</code></td></tr><tr><td>L80</td><td>Laboratory Exams</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-080-MD</code></td><td><code>LAYER-080-REG</code></td></tr><tr><td>L90</td><td>Anatomy</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-090-MD</code></td><td><code>LAYER-090-REG</code></td></tr><tr><td>L100</td><td>Diseases / Conditions</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-100-MD</code></td><td><code>LAYER-100-REG</code></td></tr><tr><td>L110</td><td>Procedures / Protocols</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-110-MD</code></td><td><code>LAYER-110-REG</code></td></tr><tr><td>L120</td><td>Terminologies</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-120-MD</code></td><td><code>LAYER-120-REG</code></td></tr><tr><td>L130</td><td>Educational / Contest</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-130-MD</code></td><td><code>LAYER-130-REG</code></td></tr><tr><td>L140</td><td>References / Bibliography / Glossary</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-140-MD</code></td><td><code>LAYER-140-REG</code></td></tr><tr><td>L150</td><td>Articles / Guides / Summaries</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-150-MD</code></td><td><code>LAYER-150-REG</code></td></tr><tr><td>L160</td><td>Flashcards / Questions / Quizzes</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-160-MD</code></td><td><code>LAYER-160-REG</code></td></tr><tr><td>L170</td><td>Page Templates</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-170-MD</code></td><td><code>LAYER-170-REG</code></td></tr><tr><td>L180</td><td>Document Templates</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-180-MD</code></td><td><code>LAYER-180-REG</code></td></tr><tr><td>L190</td><td>Images / Media / Icons</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-190-MD</code></td><td><code>LAYER-190-REG</code></td></tr><tr><td>L200</td><td>Asset Derivation</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-200-MD</code></td><td><code>LAYER-200-REG</code></td></tr><tr><td>L210</td><td>HCD / Usability</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-210-MD</code></td><td><code>LAYER-210-REG</code></td></tr><tr><td>L220</td><td>Accessibility</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-220-MD</code></td><td><code>LAYER-220-REG</code></td></tr><tr><td>L230</td><td>Design System</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-230-MD</code></td><td><code>LAYER-230-REG</code></td></tr><tr><td>L240</td><td>UI Components &amp; Interaction</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-240-MD</code></td><td><code>LAYER-240-REG</code></td></tr><tr><td>L250</td><td>Privacy / LGPD</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-250-MD</code></td><td><code>LAYER-250-REG</code></td></tr><tr><td>L260</td><td>Security / Cybersecurity</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-260-MD</code></td><td><code>LAYER-260-REG</code></td></tr><tr><td>L270</td><td>Routes / URLs</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-270-MD</code></td><td><code>LAYER-270-REG</code></td></tr><tr><td>L280</td><td>SEO</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-280-MD</code></td><td><code>LAYER-280-REG</code></td></tr><tr><td>L290</td><td>Open Graph / Social</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-290-MD</code></td><td><code>LAYER-290-REG</code></td></tr><tr><td>L300</td><td>Structured Data</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-300-MD</code></td><td><code>LAYER-300-REG</code></td></tr><tr><td>L310</td><td>i18n / l10n</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-310-MD</code></td><td><code>LAYER-310-REG</code></td></tr><tr><td>L320</td><td>Internal Search</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-320-MD</code></td><td><code>LAYER-320-REG</code></td></tr><tr><td>L330</td><td>Recommendations</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-330-MD</code></td><td><code>LAYER-330-REG</code></td></tr><tr><td>L340</td><td>User State / Favorites / Collections</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-340-MD</code></td><td><code>LAYER-340-REG</code></td></tr><tr><td>L350</td><td>Analytics / Telemetry</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-350-MD</code></td><td><code>LAYER-350-REG</code></td></tr><tr><td>L360</td><td>Performance</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-360-MD</code></td><td><code>LAYER-360-REG</code></td></tr><tr><td>L370</td><td>Reliability / Resilience</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-370-MD</code></td><td><code>LAYER-370-REG</code></td></tr><tr><td>L380</td><td>Observability</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-380-MD</code></td><td><code>LAYER-380-REG</code></td></tr><tr><td>L390</td><td>Sustainability</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-390-MD</code></td><td><code>LAYER-390-REG</code></td></tr><tr><td>L400</td><td>Renderer</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-400-MD</code></td><td><code>LAYER-400-REG</code></td></tr><tr><td>L410</td><td>Runtime / E2E</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-410-MD</code></td><td><code>LAYER-410-REG</code></td></tr><tr><td>L420</td><td>PDF / Export Profiles</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-420-MD</code></td><td><code>LAYER-420-REG</code></td></tr><tr><td>L430</td><td>Publication / Release</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-430-MD</code></td><td><code>LAYER-430-REG</code></td></tr><tr><td>L440</td><td>Monitoring</td><td><span class="chip">M0_REGISTERED</span></td><td><code>LAYER-440-MD</code></td><td><code>LAYER-440-REG</code></td></tr></tbody></table></div></section>
     
     </main>
   </div>
 </div>
-  <script data-admin-root="">
+  <script data-admin-root="../">
 /* CKO admin control plane client. First-party. No canonical writes. */
 (function () {
   "use strict";

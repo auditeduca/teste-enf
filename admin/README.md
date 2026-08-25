@@ -1,11 +1,13 @@
 # Admin
 
-Contrato: `admin/contract.json`.
+Contrato: `admin/contract.json`. Mapa Studio (quarentena): `admin/studio_cms_map.v1.json`.
 
-Superfícies geradas:
+Superfícies geradas em `render/fetch` e `render/inline`:
 
-- `render/fetch/admin.html` e `render/inline/admin.html` — Layer Registry + contrato
-- `render/fetch/inspector.html` e `render/inline/inspector.html` — candidatos piloto
-- `render/*/admin/contract.json` e `layer_registry.json` — JSON projetado para o frontend
+- `/admin.html` — painel
+- `/admin/*.html` — banco, catálogo, pipeline, camadas, validações, agentes, monitoramento, backlog, design system, renderer, deploy
+- JSON projetado em `/admin/*.json`
 
-Admin e frontend comunicam-se pelos mesmos arquivos GitHub. Não há autenticação, POST, CMS de escrita nem telemetria neste lote.
+Control plane local (loopback): `GET /__admin/git-status`, `POST /__admin/render`, `POST /__admin/deploy-prepare`.
+
+Não há autenticação, telemetria nem `git push` a partir do browser.

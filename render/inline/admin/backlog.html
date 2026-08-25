@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backlog · CKO Studio</title>
+  <meta name="description" content="Backlog de revisão humana.">
+  <meta name="theme-color" content="#1A3E74">
+  <style>
 :root {
   --navy-primary: #1A3E74;
   --navy-medium: #1E4D8C;
@@ -266,3 +275,91 @@ summary { cursor: pointer; font-weight: 650; }
   .admin-app { grid-template-columns: 1fr; }
   .admin-nav { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
 }
+
+</style>
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <div class="admin-app">
+  <aside class="admin-side" aria-label="Módulos do Studio">
+    <p class="admin-brand">CKO Studio</p>
+    <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
+    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html">Pipeline</a><a href="layers.html">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html">Agentes</a><a href="monitoring.html">Monitoramento</a><a href="backlog.html" aria-current="page">Backlog</a><a href="design-system.html">Design System</a><a href="renderer.html">Renderer</a><a href="deploy.html">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="../index.html">Site público</a></p>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-top">
+      <p class="eyebrow">Backlog · CKO Studio</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE</p>
+    </header>
+    <main id="conteudo" class="admin-content">
+      
+    <header class="page-hero">
+      <h1>Backlog humano.</h1>
+      <p class="lede">Itens SOURCE_DERIVED do mapa. Interpretação Braden 9-12 em CONFLICT com o claim de validação Aprovado.</p>
+    </header>
+    <section class="panel"><div class="table-wrap"><table class="inspect"><thead><tr><th>severidade</th><th>item</th><th>ação</th><th>data</th></tr></thead><tbody><tr><td><span class="chip">ALTA</span></td><td>Interpretação clínica - Braden</td><td>Sugerir revisão da interpretação para escore 9-12</td><td>18/05/2026</td></tr><tr><td><span class="chip">MÉDIA</span></td><td>Padronização de termos - Insulina</td><td>Unificar termo UI e Unidades Internacionais</td><td>17/05/2026</td></tr><tr><td><span class="chip">BAIXA</span></td><td>Imagem Ilustrativa - Punção</td><td>Atualizar imagem conforme nova diretriz</td><td>16/05/2026</td></tr><tr><td><span class="chip">MÉDIA</span></td><td>Referência bibliográfica - Glasgow</td><td>Incluir referência adicional 2024</td><td>15/05/2026</td></tr></tbody></table></div></section>
+    
+    </main>
+  </div>
+</div>
+  <script data-admin-root="../">
+/* CKO admin control plane client. First-party. No canonical writes. */
+(function () {
+  "use strict";
+
+  function outEl() {
+    return document.getElementById("admin-action-out");
+  }
+
+  function show(data) {
+    var el = outEl();
+    if (!el) return;
+    el.hidden = false;
+    el.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
+  }
+
+  function rootPrefix() {
+    var script = document.querySelector("[data-admin-root]");
+    return script ? script.getAttribute("data-admin-root") || "" : "";
+  }
+
+  async function call(method, path) {
+    var url = rootPrefix() + path;
+    var res;
+    try {
+      res = await fetch(url, {
+        method: method,
+        headers: { Accept: "application/json" }
+      });
+    } catch (err) {
+      show({
+        status: "HOLD",
+        reason: "Control plane indisponível. Sirva com python3 -m engine.cli serve — não abra o HTML como arquivo.",
+        error: String(err)
+      });
+      return;
+    }
+    var body = await res.text();
+    try {
+      show(JSON.parse(body));
+    } catch (err) {
+      show({ http: res.status, body: body.slice(0, 2000) });
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest("[data-admin-action]");
+    if (!btn) return;
+    event.preventDefault();
+    var action = btn.getAttribute("data-admin-action");
+    if (action === "git-status") call("GET", "/__admin/git-status");
+    if (action === "render") call("POST", "/__admin/render");
+    if (action === "deploy-prepare") call("POST", "/__admin/deploy-prepare");
+  });
+})();
+
+</script>
+</body>
+</html>

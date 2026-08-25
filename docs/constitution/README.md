@@ -6,6 +6,7 @@ Autoridade operacional deste repositório:
 2. [Avaliação de adequação](FITNESS.md) — o que a constituição cobre e o que permanece HOLD
 3. [Recovery / Compare](../bootstrap/RECOVERY-COMPARE.md)
 4. [Admin ↔ frontend](../bootstrap/ADMIN-FRONTEND.md)
-5. [Waves](../bootstrap/WAVES.md)
+5. [Admin Studio integrado](../bootstrap/ADMIN-STUDIO.md)
+6. [Waves](../bootstrap/WAVES.md)
 
 GitHub é o store Day Zero. Nenhum banco live foi verificado nesta árvore.

@@ -12,7 +12,12 @@ Tokens v0.1 em `assets/css/app.css`.
 | `--gray-bg` | `#f4f7fb` | fundo |
 | `--gray-text` | `#475569` | secundário |
 
-Tipografia: stack do sistema (sem CDN de fontes).
+Tipografia: stack `Inter, Segoe UI, ...` **sem carregar woff2**. Os arquivos `/fonts/inter` do anexo **não existem** neste tree. CDN é proibido.
+
+Comparação anexo vs runtime: `cko_core/design_token_registry.json` e `/admin/design-system.html`.
+
+Header público deste lote permanece navy (`CONFLICT` com o header branco do anexo). Admin usa topbar branca + sidebar navy.
+
 
 ## Shell
 

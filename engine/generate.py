@@ -462,78 +462,25 @@ def generate_admin(
     home_href: str,
     inline_css: bool,
 ) -> str:
-    layer_rows = []
-    for layer in layers:
-        layer_rows.append(
-            "<tr>"
-            f"<td>{esc(layer.get('layer_code'))}</td>"
-            f"<td>{esc(layer.get('canonical_name'))}</td>"
-            f"<td>{esc(layer.get('maturity'))}</td>"
-            f"<td>{esc(layer.get('md_profile_ref'))}</td>"
-            f"<td>{esc(layer.get('reg_profile_ref'))}</td>"
-            "</tr>"
-        )
-    tool_rows = []
-    for tool in tools:
-        overview = tool.get("overview") or {}
-        tool_rows.append(
-            "<tr>"
-            f"<td><a href=\"tools/{attr(tool['slug'])}.html\">{esc(tool.get('slug'))}</a></td>"
-            f"<td>{esc(overview.get('name'))}</td>"
-            f"<td>{esc(tool.get('status'))}</td>"
-            f"<td>{esc(tool.get('kind'))}</td>"
-            "</tr>"
-        )
-    comm = contract.get("communication") or {}
-    header, footer = _header_footer(home_href)
-    body = f"""{header}
-  <main id="conteudo" class="wrap wrap-wide">
-    <header class="page-hero">
-      <p class="eyebrow">Admin · GitHub Day Zero</p>
-      <h1>Projeção dos contratos governados.</h1>
-      <p class="lede">Admin e frontend compartilham os mesmos JSON. Esta página não grava verdade clínica. Store: {esc(contract.get("store"))}</p>
-      <p class="hold-banner" role="status">Modo {esc(comm.get("mode") or "SHARED_GITHUB_CONTRACTS")} · UUID HOLD · Clinical completeness {esc(completeness.get("status"))}</p>
-    </header>
-    <section class="panel">
-      <h2>Contrato admin ↔ frontend</h2>
-      <ul>
-        <li>Admin: {esc((contract.get("admin") or {}).get("role"))}</li>
-        <li>Frontend: {esc((contract.get("frontend") or {}).get("role"))}</li>
-        <li>Privacidade: {esc(contract.get("privacy"))}</li>
-        <li>Segregação: {esc(contract.get("segregation"))}</li>
-        <li>JSON projetado: <code>admin/contract.json</code> e <code>admin/layer_registry.json</code></li>
-      </ul>
-    </section>
-    <section class="panel">
-      <h2>Candidatos de domínio ({len(tools)})</h2>
-      <div class="table-wrap">
-        <table class="inspect">
-          <thead><tr><th>slug</th><th>nome</th><th>status</th><th>kind</th></tr></thead>
-          <tbody>{"".join(tool_rows)}</tbody>
-        </table>
-      </div>
-    </section>
-    <section class="panel">
-      <h2>Layer Registry ({len(layers)})</h2>
-      <p>EXISTS ≠ POPULATED ≠ IMPLEMENTED ≠ ASSURED. Maturidade inicial: M0_REGISTERED.</p>
-      <div class="table-wrap">
-        <table class="inspect">
-          <thead><tr><th>code</th><th>nome</th><th>maturidade</th><th>MD profile</th><th>REG profile</th></tr></thead>
-          <tbody>{"".join(layer_rows)}</tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-  {footer}"""
-    extra_head = f'<script type="application/json" id="admin-contract">{dumps_json(contract)}</script>'
-    return _shell(
-        "Admin — CKO",
-        "Superfície administrativa read-only sobre registries GitHub.",
-        body,
-        css_href=None if inline_css else css_href,
-        css_inline="file" if inline_css else None,
-        extra_head=extra_head,
-    )
+    from validators.dual_render import check_parity
+    from validators.release_gate import evaluate_release
+
+    from .admin_site import page_dashboard, studio_map, token_registry
+    from .bootstrap import evaluate_layer_registry
+
+    parity = check_parity()
+    ctx = {
+        "tools": tools,
+        "completeness": completeness,
+        "layers": layers,
+        "contract": contract,
+        "parity": parity,
+        "release": evaluate_release(completeness, parity),
+        "layer_caat": evaluate_layer_registry(),
+        "studio": studio_map(),
+        "tokens": token_registry(),
+    }
+    return page_dashboard(ctx, css_href=css_href, home_href=home_href, inline_css=inline_css, nested=False)
 
 
 def _emit_tree(dest: Path, tools: list[dict], *, inline_css: bool) -> list[Path]:
@@ -545,7 +492,8 @@ def _emit_tree(dest: Path, tools: list[dict], *, inline_css: bool) -> list[Path]
         assets.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ASSETS_DIR / "css" / "app.css", assets / "app.css")
         shutil.copy2(ASSETS_DIR / "js" / "calc-engine.js", assets / "calc-engine.js")
-        written.extend([assets / "app.css", assets / "calc-engine.js"])
+        shutil.copy2(ASSETS_DIR / "js" / "admin-control.js", assets / "admin-control.js")
+        written.extend([assets / "app.css", assets / "calc-engine.js", assets / "admin-control.js"])
         css_href = "assets/app.css"
         page_css = "../assets/app.css"
         script_href = "../assets/calc-engine.js"
@@ -600,32 +548,32 @@ def _emit_tree(dest: Path, tools: list[dict], *, inline_css: bool) -> list[Path]
     )
     written.append(inspector)
 
+    from .admin_site import emit_admin_pages, studio_map, token_registry
+    from .bootstrap import evaluate_layer_registry
+
     contract_path = ADMIN_DIR / "contract.json"
     contract = json.loads(contract_path.read_text(encoding="utf-8")) if contract_path.exists() else {}
-    layers = layer_records()
-    admin = dest / "admin.html"
-    admin.write_text(
-        generate_admin(
-            tools,
-            completeness,
-            layers,
-            contract,
+    completeness = evaluate_catalog()
+    ctx = {
+        "tools": tools,
+        "completeness": completeness,
+        "layers": layer_records(),
+        "contract": contract,
+        "parity": {"status": "SEE_AUDIT", "pagesCompared": None},
+        "release": {"status": completeness.get("status")},
+        "layer_caat": evaluate_layer_registry(),
+        "studio": studio_map(),
+        "tokens": token_registry(),
+    }
+    written.extend(
+        emit_admin_pages(
+            dest,
+            ctx,
             css_href=css_href,
             home_href=home_from_home,
             inline_css=inline_css,
-        ),
-        encoding="utf-8",
+        )
     )
-    written.append(admin)
-
-    admin_dir = dest / "admin"
-    admin_dir.mkdir(parents=True, exist_ok=True)
-    if contract_path.exists():
-        shutil.copy2(contract_path, admin_dir / "contract.json")
-        written.append(admin_dir / "contract.json")
-    if LAYER_REGISTRY_PATH.exists():
-        shutil.copy2(LAYER_REGISTRY_PATH, admin_dir / "layer_registry.json")
-        written.append(admin_dir / "layer_registry.json")
     return written
 
 

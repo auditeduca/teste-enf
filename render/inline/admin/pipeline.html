@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pipeline · CKO Studio</title>
+  <meta name="description" content="Pipeline Studio vs CKO.">
+  <meta name="theme-color" content="#1A3E74">
+  <style>
 :root {
   --navy-primary: #1A3E74;
   --navy-medium: #1E4D8C;
@@ -266,3 +275,93 @@ summary { cursor: pointer; font-weight: 650; }
   .admin-app { grid-template-columns: 1fr; }
   .admin-nav { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
 }
+
+</style>
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <div class="admin-app">
+  <aside class="admin-side" aria-label="Módulos do Studio">
+    <p class="admin-brand">CKO Studio</p>
+    <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
+    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html" aria-current="page">Pipeline</a><a href="layers.html">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html">Agentes</a><a href="monitoring.html">Monitoramento</a><a href="backlog.html">Backlog</a><a href="design-system.html">Design System</a><a href="renderer.html">Renderer</a><a href="deploy.html">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="../index.html">Site público</a></p>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-top">
+      <p class="eyebrow">Pipeline · CKO Studio</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE</p>
+    </header>
+    <main id="conteudo" class="admin-content">
+      
+    <header class="page-hero">
+      <h1>Pipeline de conteúdo.</h1>
+      <p class="lede">O mural Studio marca tudo Concluído. Este repositório mede o lote piloto. DOCUMENTADO ≠ PUBLICADO.</p>
+    </header>
+    <section class="panel">
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>etapa</th><th>claim Studio</th><th>status CKO observado</th><th>epistemic</th></tr></thead><tbody><tr><td>Dados Estruturados</td><td><span class="chip">Concluído / Validado</span></td><td><span class="chip">PARTIAL</span></td><td>DOCUMENT_CLAIM</td></tr><tr><td>Conteúdo</td><td><span class="chip">Concluído / Completo</span></td><td><span class="chip">PARTIAL</span></td><td>DOCUMENT_CLAIM</td></tr><tr><td>Renderer</td><td><span class="chip">Concluído / Gerado</span></td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>DOCUMENT_CLAIM</td></tr><tr><td>Validações</td><td><span class="chip">Concluído / Aprovadas</span></td><td><span class="chip chip-hold">HOLD</span></td><td>DOCUMENT_CLAIM</td></tr><tr><td>SEO &amp; A11y</td><td><span class="chip">Concluído / Conforme</span></td><td><span class="chip">PARTIAL</span></td><td>DOCUMENT_CLAIM</td></tr><tr><td>Publicação</td><td><span class="chip">Concluído / Pronto</span></td><td><span class="chip chip-hold">HOLD</span></td><td>DOCUMENT_CLAIM</td></tr></tbody></table></div>
+    </section>
+    
+    </main>
+  </div>
+</div>
+  <script data-admin-root="../">
+/* CKO admin control plane client. First-party. No canonical writes. */
+(function () {
+  "use strict";
+
+  function outEl() {
+    return document.getElementById("admin-action-out");
+  }
+
+  function show(data) {
+    var el = outEl();
+    if (!el) return;
+    el.hidden = false;
+    el.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
+  }
+
+  function rootPrefix() {
+    var script = document.querySelector("[data-admin-root]");
+    return script ? script.getAttribute("data-admin-root") || "" : "";
+  }
+
+  async function call(method, path) {
+    var url = rootPrefix() + path;
+    var res;
+    try {
+      res = await fetch(url, {
+        method: method,
+        headers: { Accept: "application/json" }
+      });
+    } catch (err) {
+      show({
+        status: "HOLD",
+        reason: "Control plane indisponível. Sirva com python3 -m engine.cli serve — não abra o HTML como arquivo.",
+        error: String(err)
+      });
+      return;
+    }
+    var body = await res.text();
+    try {
+      show(JSON.parse(body));
+    } catch (err) {
+      show({ http: res.status, body: body.slice(0, 2000) });
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest("[data-admin-action]");
+    if (!btn) return;
+    event.preventDefault();
+    var action = btn.getAttribute("data-admin-action");
+    if (action === "git-status") call("GET", "/__admin/git-status");
+    if (action === "render") call("POST", "/__admin/render");
+    if (action === "deploy-prepare") call("POST", "/__admin/deploy-prepare");
+  });
+})();
+
+</script>
+</body>
+</html>

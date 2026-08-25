@@ -64,7 +64,7 @@ python3 -m engine.cli serve --port 8081
 Abra `http://127.0.0.1:8081`.
 
 - Frontend: `/` e `/tools/{slug}.html`
-- Admin: `/admin.html` (Layer Registry + contrato)
+- Admin: `/admin.html` (Studio integrado: banco, catálogo, renderer, deploy Git)
 - Inspector: `/inspector.html` (candidatos piloto)
 - Preview inline: `render/inline/`
 

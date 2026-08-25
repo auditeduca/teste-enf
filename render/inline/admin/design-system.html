@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design System · CKO Studio</title>
+  <meta name="description" content="Comparação anexo vs runtime.">
+  <meta name="theme-color" content="#1A3E74">
+  <style>
 :root {
   --navy-primary: #1A3E74;
   --navy-medium: #1E4D8C;
@@ -266,3 +275,102 @@ summary { cursor: pointer; font-weight: 650; }
   .admin-app { grid-template-columns: 1fr; }
   .admin-nav { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
 }
+
+</style>
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <div class="admin-app">
+  <aside class="admin-side" aria-label="Módulos do Studio">
+    <p class="admin-brand">CKO Studio</p>
+    <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
+    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html">Pipeline</a><a href="layers.html">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html">Agentes</a><a href="monitoring.html">Monitoramento</a><a href="backlog.html">Backlog</a><a href="design-system.html" aria-current="page">Design System</a><a href="renderer.html">Renderer</a><a href="deploy.html">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="../index.html">Site público</a></p>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-top">
+      <p class="eyebrow">Design System · CKO Studio</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE</p>
+    </header>
+    <main id="conteudo" class="admin-content">
+      
+    <header class="page-hero">
+      <h1>Design System — recuperação.</h1>
+      <p class="lede">Tokens abaixo são SOURCE_DERIVED do anexo de documentação v4. Não promover o anexo a Design System oficial sem confirmação de stewardship. Inter/Nunito woff2 NÃO ENCONTRADOS neste repositório; CDN é proibido.</p>
+      <p class="hold-banner">Status oficial do DS: EVIDENCE_PENDING. Inter/Nunito: arquivos ausentes. Sem CDN.</p>
+    </header>
+    <section class="panel">
+      <div class="ds-swatches" aria-label="Swatches navy">
+        <span class="swatch" style="background:#1A3E74"></span>
+        <span class="swatch" style="background:#1E4D8C"></span>
+        <span class="swatch" style="background:#163269"></span>
+        <span class="swatch" style="background:#4A90E2"></span>
+        <span class="swatch" style="background:#122C54"></span>
+        <span class="swatch" style="background:#003366"></span>
+      </div>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>token</th><th>css</th><th>anexo</th><th>runtime</th><th>compare</th><th>epistemic</th></tr></thead><tbody><tr><td>TOK-COLOR-NAVY-PRIMARY</td><td><code>--navy-primary</code></td><td>#1A3E74</td><td>#1A3E74</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-NAVY-MEDIUM</td><td><code>--navy-medium</code></td><td>#1E4D8C</td><td>#1E4D8C</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-NAVY-DARK</td><td><code>--navy-dark</code></td><td>#163269</td><td>#163269</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-BLUE-LIGHT</td><td><code>--blue-light</code></td><td>#4A90E2</td><td>#4A90E2</td><td><span class="chip chip-ok">MATCH</span></td><td>OBSERVED</td></tr><tr><td>TOK-COLOR-BTN-HOVER</td><td><code>--navy-hover</code></td><td>#122C54</td><td>#122C54</td><td><span class="chip">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-COLOR-BTN-SECONDARY</td><td><code>--navy-secondary</code></td><td>#003366</td><td>#003366</td><td><span class="chip">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-RADIUS-CONTROL</td><td><code>--radius-control</code></td><td>8px</td><td>8px</td><td><span class="chip">RESTORED</span></td><td>SOURCE_DERIVED</td></tr><tr><td>TOK-FONT-SANS</td><td><code>--font</code></td><td>Inter / Nunito Sans (woff2 first-party)</td><td>Inter, Segoe UI, Helvetica Neue, Arial, sans-serif</td><td><span class="chip">GAP</span></td><td>EVIDENCE_PENDING</td></tr><tr><td>TOK-SHELL-HEADER-BG</td><td><code>--header-bg</code></td><td>#ffffff (header público do anexo)</td><td>público: #1A3E74 · admin: #ffffff</td><td><span class="chip chip-hold">CONFLICT</span></td><td>OBSERVED</td></tr></tbody></table></div>
+    </section>
+    
+    </main>
+  </div>
+</div>
+  <script data-admin-root="../">
+/* CKO admin control plane client. First-party. No canonical writes. */
+(function () {
+  "use strict";
+
+  function outEl() {
+    return document.getElementById("admin-action-out");
+  }
+
+  function show(data) {
+    var el = outEl();
+    if (!el) return;
+    el.hidden = false;
+    el.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
+  }
+
+  function rootPrefix() {
+    var script = document.querySelector("[data-admin-root]");
+    return script ? script.getAttribute("data-admin-root") || "" : "";
+  }
+
+  async function call(method, path) {
+    var url = rootPrefix() + path;
+    var res;
+    try {
+      res = await fetch(url, {
+        method: method,
+        headers: { Accept: "application/json" }
+      });
+    } catch (err) {
+      show({
+        status: "HOLD",
+        reason: "Control plane indisponível. Sirva com python3 -m engine.cli serve — não abra o HTML como arquivo.",
+        error: String(err)
+      });
+      return;
+    }
+    var body = await res.text();
+    try {
+      show(JSON.parse(body));
+    } catch (err) {
+      show({ http: res.status, body: body.slice(0, 2000) });
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest("[data-admin-action]");
+    if (!btn) return;
+    event.preventDefault();
+    var action = btn.getAttribute("data-admin-action");
+    if (action === "git-status") call("GET", "/__admin/git-status");
+    if (action === "render") call("POST", "/__admin/render");
+    if (action === "deploy-prepare") call("POST", "/__admin/deploy-prepare");
+  });
+})();
+
+</script>
+</body>
+</html>

@@ -57,4 +57,4 @@ python3 -m engine.cli serve --port 8081
 
 - Install: `python3 -m pip install -e ".[dev]"`
 - Testes: `python3 -m pytest -q`
-- Manual: `python3 -m engine.cli serve --port 8081`, abrir `/`, `/admin.html`, `/tools/gotejamento.html`, `/tools/meows.html`, `/inspector.html`
+- Manual: `python3 -m engine.cli serve --port 8081`, abrir `/`, `/admin.html`, `/admin/database.html`, `/admin/renderer.html`, `/admin/deploy.html`, `/tools/gotejamento.html`

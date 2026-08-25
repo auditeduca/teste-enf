@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 import argparse
-import http.server
 import json
 import os
 import socketserver
 import sys
 from functools import partial
 
+from .admin_http import AdminFetchHandler
 from .bootstrap import evaluate_layer_registry, write_registries
 from .generate import build
 from .paths import FETCH_DIR, ROOT
@@ -98,7 +98,7 @@ def cmd_serve(args: argparse.Namespace) -> int:
     if status != 0:
         return status
     cmd_audit(args)
-    handler = partial(http.server.SimpleHTTPRequestHandler, directory=str(FETCH_DIR))
+    handler = partial(AdminFetchHandler, directory=str(FETCH_DIR))
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("0.0.0.0", args.port), handler) as httpd:
         print(f"serving {FETCH_DIR} on http://127.0.0.1:{args.port}")
@@ -112,6 +112,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("validate").set_defaults(func=cmd_validate)
     sub.add_parser("bootstrap").set_defaults(func=cmd_bootstrap)
     sub.add_parser("build").set_defaults(func=cmd_build)
+    sub.add_parser("render").set_defaults(func=cmd_build)
     sub.add_parser("audit").set_defaults(func=cmd_audit)
     serve = sub.add_parser("serve")
     serve.add_argument("--port", type=int, default=int(os.environ.get("PORT", "8081")))

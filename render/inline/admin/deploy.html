@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deploy Git · CKO Studio</title>
+  <meta name="description" content="Preparar deploy Git. Sem push automático.">
+  <meta name="theme-color" content="#1A3E74">
+  <style>
 :root {
   --navy-primary: #1A3E74;
   --navy-medium: #1E4D8C;
@@ -266,3 +275,105 @@ summary { cursor: pointer; font-weight: 650; }
   .admin-app { grid-template-columns: 1fr; }
   .admin-nav { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
 }
+
+</style>
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <div class="admin-app">
+  <aside class="admin-side" aria-label="Módulos do Studio">
+    <p class="admin-brand">CKO Studio</p>
+    <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
+    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html">Pipeline</a><a href="layers.html">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html">Agentes</a><a href="monitoring.html">Monitoramento</a><a href="backlog.html">Backlog</a><a href="design-system.html">Design System</a><a href="renderer.html">Renderer</a><a href="deploy.html" aria-current="page">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="../index.html">Site público</a></p>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-top">
+      <p class="eyebrow">Deploy Git · CKO Studio</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE</p>
+    </header>
+    <main id="conteudo" class="admin-content">
+      
+    <header class="page-hero">
+      <h1>Deploy via Git.</h1>
+      <p class="lede">O botão prepara um changeset versionado. <strong>git push é FORBIDDEN</strong> a partir do browser. Publicação clínica permanece HOLD.</p>
+    </header>
+    <section class="panel">
+      <h2>Ações</h2>
+      <p class="actions">
+        <button type="button" class="btn-secondary" data-admin-action="git-status">Ver git status</button>
+        <button type="button" class="btn-primary" data-admin-action="render">Renderizar</button>
+        <button type="button" class="btn-primary" data-admin-action="deploy-prepare">Preparar changeset Git</button>
+      </p>
+      <pre id="admin-action-out" class="admin-out" hidden></pre>
+      <ol>
+        <li>Renderizar projeções</li>
+        <li>Preparar changeset em <code>cko_assurance/deploy_requests/</code></li>
+        <li>Revisão humana ou agente</li>
+        <li><code>git add</code> seletivo · <code>git commit</code> · <code>git push</code> do branch</li>
+      </ol>
+    </section>
+    
+    </main>
+  </div>
+</div>
+  <script data-admin-root="../">
+/* CKO admin control plane client. First-party. No canonical writes. */
+(function () {
+  "use strict";
+
+  function outEl() {
+    return document.getElementById("admin-action-out");
+  }
+
+  function show(data) {
+    var el = outEl();
+    if (!el) return;
+    el.hidden = false;
+    el.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
+  }
+
+  function rootPrefix() {
+    var script = document.querySelector("[data-admin-root]");
+    return script ? script.getAttribute("data-admin-root") || "" : "";
+  }
+
+  async function call(method, path) {
+    var url = rootPrefix() + path;
+    var res;
+    try {
+      res = await fetch(url, {
+        method: method,
+        headers: { Accept: "application/json" }
+      });
+    } catch (err) {
+      show({
+        status: "HOLD",
+        reason: "Control plane indisponível. Sirva com python3 -m engine.cli serve — não abra o HTML como arquivo.",
+        error: String(err)
+      });
+      return;
+    }
+    var body = await res.text();
+    try {
+      show(JSON.parse(body));
+    } catch (err) {
+      show({ http: res.status, body: body.slice(0, 2000) });
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest("[data-admin-action]");
+    if (!btn) return;
+    event.preventDefault();
+    var action = btn.getAttribute("data-admin-action");
+    if (action === "git-status") call("GET", "/__admin/git-status");
+    if (action === "render") call("POST", "/__admin/render");
+    if (action === "deploy-prepare") call("POST", "/__admin/deploy-prepare");
+  });
+})();
+
+</script>
+</body>
+</html>

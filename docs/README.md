@@ -9,6 +9,7 @@ Tudo o que o CKO afirma neste lote está nestes arquivos. Não há apêndice ext
 | [Constituição](constitution/CKO-INS-AI-PROJECT-001.md) | Regras operacionais da IA e do sistema |
 | [Adequação](constitution/FITNESS.md) | Avaliação da constituição como Day Zero |
 | [Admin ↔ frontend](bootstrap/ADMIN-FRONTEND.md) | Comunicação direta via contratos GitHub |
+| [Admin Studio](bootstrap/ADMIN-STUDIO.md) | Módulos, banco, renderer, deploy Git |
 | [Recovery](bootstrap/RECOVERY-COMPARE.md) | RECOVER → COMPARE → GAP |
 | [Waves](bootstrap/WAVES.md) | Materialização, não criação tardia |
 | [00 — Visão geral](00-visao-geral.md) | Objetivo, princípios, escopo |
