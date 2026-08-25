@@ -844,20 +844,45 @@ def page_mdm(ctx: dict, **kwargs) -> str:
     fields = load_json(ROOT / "cko_md" / "field_dictionary.json")
     works = load_json(ROOT / "cko_md" / "work_registry.json")
     iso = load_json(ROOT / "cko_md" / "iso8000_profile.json")
+    binding = load_json(ROOT / "cko_md" / "iso8000_pgdados_binding.json")
     lineage = load_json(ROOT / "cko_md" / "lineage_registry.json")
-    field_rows = [[esc(f.get("business_key")), esc(f.get("name")), esc(f.get("purpose"))] for f in (fields.get("fields") or [])]
+    field_rows = [
+        [
+            esc(f.get("business_key")),
+            esc(f.get("name")),
+            esc(f.get("iso_test_id")),
+            esc(f.get("pgdados_term")),
+            esc(f.get("pgdados_instrument")),
+        ]
+        for f in (fields.get("fields") or [])
+    ]
     work_rows = [[esc(w.get("slug")), esc(w.get("work_class")), _status_chip(w.get("rights_status")), esc(w.get("cko_copyright_claim"))] for w in (works.get("works") or [])]
-    iso_rows = [[esc(t.get("id")), _status_chip(t.get("status")), esc(t.get("principle"))] for t in (iso.get("tests") or [])]
+    iso_rows = [[esc(t.get("id")), _status_chip(t.get("status")), esc(t.get("principle")), esc(t.get("pgdados_term"))] for t in (iso.get("tests") or [])]
+    bind_rows = [
+        [esc(item.get("field_ref")), esc(item.get("iso_test_id")), esc(item.get("pgdados_term")), esc(item.get("pgdados_instrument"))]
+        for item in (binding.get("links") or [])
+    ]
+    dim_rows = [[esc(d.get("name")), esc(d.get("source")), _status_chip(d.get("clause_text"))] for d in (binding.get("data_quality_dimensions") or [])]
+    instr_rows = [[esc(i.get("business_key")), esc(i.get("name")), esc(i.get("guia_ref"))] for i in (binding.get("instruments") or [])]
     lin_rows = [[esc(item.get("slug")), _status_chip(item.get("status")), esc((item.get("md_vault_sha256") or "")[:12] or "—"), esc(item.get("frontend_href"))] for item in (lineage.get("links") or [])]
     inner = f"""
     <header class="page-hero">
       <h1>Master Data.</h1>
-      <p class="lede">CKO-MD first. ISO 8000 no CKO é perfil de unicidade/proveniência/WORM/lineage — não certificação. Referência operacional BR explícita: <a href="https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados">PGDADOS /pgdados</a> (SGD/MGI). Lei 9.610 vincula obras originais candidatas; escalas de terceiros HOLD.</p>
-      <p class="hold-banner">ISO implemented={esc(iso.get("iso_implemented"))} · certified={esc(iso.get("certified"))} · clause={esc(iso.get("clause_text"))} · PGDADOS={esc(iso.get("pgdados_hub_url"))} · campos={esc(fields.get("population"))} · lineage completa={esc(lineage.get("complete_count"))}</p>
+      <p class="lede">CKO-MD first. ISO 8000 no CKO é perfil de unicidade/proveniência/WORM/lineage — não certificação. Cada campo do perfil aponta a um termo ou instrumento PGDADOS. Referência operacional BR: <a href="https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados">PGDADOS /pgdados</a> e <a href="https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/glossario-de-termos-de-dados">glossário</a>. Lei 9.610 vincula obras originais candidatas; escalas de terceiros HOLD.</p>
+      <p class="hold-banner">ISO implemented={esc(iso.get("iso_implemented"))} · certified={esc(iso.get("certified"))} · clause={esc(iso.get("clause_text"))} · bindings={esc(binding.get("population"))} · campos={esc(fields.get("population"))} · lineage completa={esc(lineage.get("complete_count"))}</p>
     </header>
     <section class="panel">
       <h2>Field dictionary ({esc(fields.get("population"))})</h2>
-      {_table(["business_key", "campo", "propósito"], field_rows)}
+      {_table(["business_key", "campo", "teste ISO CKO", "termo PGDADOS", "instrumento"], field_rows)}
+    </section>
+    <section class="panel">
+      <h2>Vínculo ISO 8000 CKO → PGDADOS</h2>
+      <p>Todo campo do dicionário ISO 8000 CKO tem termo/instrumento PGDADOS. Texto de cláusula ISO = CLAUSE_TEXT_UNAVAILABLE. PGDADOS não substitui a norma licenciada.</p>
+      {_table(["campo", "teste ISO CKO", "termo PGDADOS", "instrumento"], bind_rows)}
+      <h3>Instrumentos PGDADOS</h3>
+      {_table(["id", "nome", "guia"], instr_rows)}
+      <h3>Dimensões de qualidade (glossário)</h3>
+      {_table(["dimensão", "fonte", "cláusula"], dim_rows)}
     </section>
     <section class="panel">
       <h2>Obras e direitos</h2>
@@ -870,7 +895,7 @@ def page_mdm(ctx: dict, **kwargs) -> str:
     <section class="panel">
       <h2>Perfil ISO 8000 CKO</h2>
       <p>Catálogo ISO: <code>{esc(iso.get("official_catalog_url"))}</code>. Referência BR: <a href="{attr(iso.get("pgdados_hub_url") or "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados")}">{esc(iso.get("pgdados_hub_url") or "PGDADOS /pgdados")}</a>. {esc(iso.get("government_reference") or "")}</p>
-      {_table(["teste", "status", "princípio"], iso_rows)}
+      {_table(["teste", "status", "princípio", "termo PGDADOS"], iso_rows)}
     </section>
     <section class="panel">
       <h2>Entity types ({len(types)})</h2>

@@ -415,6 +415,35 @@ def catalog_pgdados(pages: list[dict]) -> dict:
         "cartilhas": cartilhas,
         "quality_dimensions": quality_dims,
         "quality_dimension_count": len(quality_dims),
+        "glossary_url": (
+            "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/"
+            "governancadedados/glossario-de-termos-de-dados"
+        ),
+        "data_quality_dimensions": [
+            {
+                "name": name,
+                "source_url": (
+                    "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/"
+                    "governancadedados/glossario-de-termos-de-dados"
+                ),
+                "source": "Cartilha Governança de Dados Volume I (nome no glossário)",
+                "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+            }
+            for name in (
+                "integridade",
+                "padronização",
+                "precisão",
+                "acurácia",
+                "atualização",
+                "acessibilidade",
+                "confiabilidade",
+            )
+        ],
+        "implementation_instruments": [
+            "Política Interna de Governança de Dados",
+            "Estratégia de Dados",
+            "Plano de Implementação do Programa de Governança de Dados",
+        ],
         "third_party_pdf_ignored": ignored_third_party > 0,
         "third_party_note": "PDF ABNT/mwpt no chrome do portal não entra no catálogo CKO.",
         "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",

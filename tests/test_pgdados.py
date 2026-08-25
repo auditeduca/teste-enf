@@ -38,6 +38,28 @@ def test_pgdados_catalog_and_coren_has_no_rest_api():
     dims = pgd.get("quality_dimensions") or []
     assert len(dims) == 7
     assert all(item.get("clause_text") == "NOT_COPIED_AS_PRODUCT_RULE" for item in dims)
+    dq = pgd.get("data_quality_dimensions") or []
+    assert [item["name"] for item in dq] == [
+        "integridade",
+        "padronização",
+        "precisão",
+        "acurácia",
+        "atualização",
+        "acessibilidade",
+        "confiabilidade",
+    ]
+    assert pgd["glossary_url"].endswith("glossario-de-termos-de-dados")
+    assert len(pgd.get("implementation_instruments") or []) == 3
+    iso = json.loads((ROOT / "cko_md" / "iso8000_profile.json").read_text(encoding="utf-8"))
+    bind = json.loads((ROOT / "cko_md" / "iso8000_pgdados_binding.json").read_text(encoding="utf-8"))
+    assert iso["iso_implemented"] is False
+    assert iso["certified"] is False
+    assert bind["pgdados_ref"] == "MD-PGDADOS-001"
+    assert all(item.get("replaces_iso_clause") is False for item in bind["links"])
+    mdm = (ROOT / "render" / "fetch" / "admin" / "mdm.html").read_text(encoding="utf-8")
+    assert "Vínculo ISO 8000 CKO → PGDADOS" in mdm
+    assert "FLD-PGDADOS-QD-INTEGRIDADE" in mdm
+    assert "glossario-de-termos-de-dados" in mdm
 
     html = (ROOT / "render" / "fetch" / "biblioteca.html").read_text(encoding="utf-8")
     assert "PGDADOS" in html

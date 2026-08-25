@@ -96,49 +96,9 @@ def layer_records() -> list[dict]:
 
 
 def field_dictionary_payload() -> dict:
-    fields = [
-        {"business_key": "FLD-PROVENANCE-SHA256", "name": "provenance.sha256", "purpose": "hash da cópia original", "layer": "L10"},
-        {"business_key": "FLD-PROVENANCE-URL", "name": "provenance.url", "purpose": "URL da fonte observada", "layer": "L10"},
-        {"business_key": "FLD-PROVENANCE-CAPTURED-AT", "name": "provenance.captured_at", "purpose": "instante da primeira captura", "layer": "L10"},
-        {"business_key": "FLD-VAULT-IMMUTABLE", "name": "vault.immutable", "purpose": "WORM: cópia inalterável", "layer": "L10"},
-        {"business_key": "FLD-LINEAGE-PROJECTION", "name": "lineage.projection", "purpose": "caminho da projeção frontend", "layer": "L270"},
-        {"business_key": "FLD-WORK-CLASS", "name": "work.work_class", "purpose": "ORIGINAL_CKO_CANDIDATE | THIRD_PARTY_SCALE | HOLD_OBJECT", "layer": "L140"},
-        {"business_key": "FLD-RIGHTS-STATUS", "name": "rights.status", "purpose": "DOCUMENTADO ≠ ASSURED", "layer": "L20"},
-        {"business_key": "FLD-MASK-ID", "name": "mask.mask_id", "purpose": "máscara de norma aplicada na execução simples", "layer": "L20"},
-        {
-            "business_key": "FLD-A11Y-WCAG-EMAG",
-            "name": "a11y.wcag_emag",
-            "purpose": "WCAG nomeada; equivalente BR eMAG/LBI. Texto de cláusula W3C NÃO ingerido. Barra a11y = apresentação.",
-            "layer": "L220",
-            "w3c_standard_ingested": False,
-            "br_equivalent": "eMAG 3.1 / LBI",
-            "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
-        },
-        {
-            "business_key": "FLD-SEO-OG-IMAGE",
-            "name": "seo.og_image",
-            "purpose": "Open Graph 1200×630 first-party para LinkedIn. 151 cartões Drive COMPARE, não copiados.",
-            "layer": "L290",
-        },
-        {
-            "business_key": "FLD-JSONLD-TYPE",
-            "name": "seo.jsonld_type",
-            "purpose": "JSON-LD WebSite/Organization. NUNCA MedicalOrganization. health-lifesci só se clinico=true e REG fechar.",
-            "layer": "L300",
-        },
-    ]
-    return {
-        "business_key": "MD-FIELD-DICT-001",
-        "uuid": None,
-        "status": "POPULATED",
-        "maturity": "M2_CONFIGURED",
-        "population": len(fields),
-        "fields": fields,
-        "note": (
-            "Campos de proveniência/lineage/direitos realmente usados, mais ligações a11y/SEO/JSON-LD. "
-            "W3C não foi baixado como norma. Não é dicionário clínico completo."
-        ),
-    }
+    from .iso8000 import compose_field_dictionary
+
+    return compose_field_dictionary()
 
 
 def dump(path: Path, payload: dict) -> Path:
@@ -225,6 +185,11 @@ def write_registries() -> list[Path]:
                     "governancadedados/pgdados"
                 ),
                 "pgdados_ref": "MD-PGDADOS-001",
+                "glossary_url": (
+                    "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/"
+                    "governancadedados/glossario-de-termos-de-dados"
+                ),
+                "binding_ref": "MD-ISO8000-PGDADOS-BIND-001",
                 "certified": False,
                 "iso_implemented": False,
                 "cko_profile_ref": "MD-ISO8000-PROFILE-001",
