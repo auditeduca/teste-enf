@@ -120,7 +120,7 @@ def parse_site_shell() -> dict:
         "do_not_copy": list(FORBIDDEN_TOKENS),
         "rule": "Cópia inalterada para vault/comparação. Ads, email, cookie modal e CDN OpenDyslexic NÃO entram no renderer CKO.",
         "promoted_to_frontend": False,
-        "chrome_projection": "PARTIAL_PLACEHOLDERS_AND_SELECTOR",
+        "chrome_projection": "A11Y_PWA_KEYBOARD_BACKTOTOP_NO_ADS",
         "extracted_at": _now(),
     }
     _dump(dest, payload)
@@ -135,6 +135,6 @@ def parse_site_shell() -> dict:
         "chrome_ids_present": dict(chrome_hits),
         "promotes_to_md": False,
         "promoted_to_frontend": False,
-        "chrome_projection": "PARTIAL_PLACEHOLDERS_AND_SELECTOR",
+        "chrome_projection": "A11Y_PWA_KEYBOARD_BACKTOTOP_NO_ADS",
         "path": str(dest.relative_to(ROOT)),
     }

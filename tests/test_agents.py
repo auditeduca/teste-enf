@@ -56,6 +56,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     assert all(page.get("api_base_url") is None for page in regulated["pages"])
     shell_step = next(step for step in run["steps"] if step["agent_id"] == "AG-PARSE-SITE-SHELL")
     assert shell_step.get("promoted_to_frontend") is False
+    assert shell_step.get("chrome_projection") == "A11Y_PWA_KEYBOARD_BACKTOTOP_NO_ADS"
     assert "adsbygoogle" in (shell_step.get("forbidden_token_hits") or {})
     assert all(step.get("promotes_to_md") is not True for step in run["steps"])
 
@@ -79,14 +80,26 @@ def test_public_chrome_matches_production_contract_without_ads():
         assert token in html
     assert "braden.html" not in html
     assert "cookie-modal" not in html
+    assert "cookieConsentBanner" not in html
+    assert "granularCookieModal" not in html
     assert "adsbygoogle" not in html
+    assert 'id="pwaAcessibilidadeBar"' in html
+    assert 'id="keyboardShortcutsModal"' in html
+    assert 'id="backToTopBtn"' in html
+    assert 'id="btnResetarAcessibilidade"' in html
     assert "--header-height: 96px" in css
     assert "--lang-height: 46px" in css
+    assert "--cor-foco-acessibilidade" in css
     assert "cdn.jsdelivr" not in html.lower()
     assert "googleapis" not in html.lower()
     assert "adsbygoogle" not in html
     assert 'type="email"' not in html
     assert "opendyslexic" not in html.lower()
+    js = (ROOT / "assets" / "js" / "a11y.js").read_text(encoding="utf-8")
+    assert "cdn.jsdelivr" not in js.lower()
+    assert "opendyslexic" not in js.lower()
+    assert "adsbygoogle" not in js
+    assert "localStorage.clear" not in js
     assert (ROOT / "assets" / "fonts" / "inter" / "inter-regular.woff2").exists()
     assert (ROOT / "assets" / "fonts" / "nunito" / "nunito-700.woff2").exists()
     parity = check_parity()

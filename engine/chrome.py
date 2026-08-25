@@ -34,6 +34,11 @@ def _icon(name: str) -> str:
         "font": '<path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/>',
         "reset": '<path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/>',
         "access": '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/>',
+        "gauge": '<path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/>',
+        "play": '<polygon points="5 3 19 12 5 21 5 3"/>',
+        "restart": '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/>',
+        "volume": '<path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/>',
+        "keyboard": '<rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/>',
     }
     return (
         f'<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" '
@@ -71,30 +76,75 @@ def _locale_codes() -> list[str]:
     return list(codes)
 
 
+def _a11y_btn(btn_id: str, label: str, icon: str, *, span_id: str = "", span_text: str = "", sr_only: bool = False) -> str:
+    text = span_text or label
+    if sr_only:
+        inner = f'<span class="sr-only">{esc(label)}</span>'
+    elif span_id:
+        inner = f'<span id="{attr(span_id)}">{esc(text)}</span>'
+    else:
+        inner = f"<span>{esc(text)}</span>"
+    return (
+        f'<button type="button" id="{attr(btn_id)}" aria-label="{attr(label)}">'
+        f"{_icon(icon)}{inner}</button>"
+    )
+
+
 def ds_a11y_bar() -> str:
+    """GAP ONLY from Drive global-body-elements.html. No cookie wall, SW, or Font Awesome CDN."""
+    colors = """
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>"""
     return f"""<div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
-    <div class="a11y-bar-inner wrap">
-      <p class="a11y-kicker">Acessibilidade</p>
-      <div class="a11y-actions">
-        <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte">{_icon("type")}<span id="fontSizeText">Fonte</span></button>
-        <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha">{_icon("line")}<span id="lineHeightText">Linha</span></button>
-        <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra">{_icon("letter")}<span id="letterSpacingText">Letra</span></button>
-        <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste">{_icon("contrast")}<span>Contraste</span></button>
-        <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro">{_icon("moon")}<span>Escuro</span></button>
-        <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia">{_icon("font")}<span>Dislexia</span></button>
-        <span class="a11y-sep" aria-hidden="true"></span>
-        <span class="color-options" role="radiogroup" aria-label="Cor de foco">
-          <button type="button" class="color-option" data-color="yellow" style="background:#ffd400" aria-label="Foco amarelo"></button>
-          <button type="button" class="color-option" data-color="lime" style="background:#32cd32" aria-label="Foco verde-limão"></button>
-          <button type="button" class="color-option" data-color="cyan" style="background:#00e5ff" aria-label="Foco ciano"></button>
-          <button type="button" class="color-option" data-color="magenta" style="background:#ff00aa" aria-label="Foco magenta"></button>
-        </span>
-        <button type="button" id="btnResetAcessibilidade" aria-label="Redefinir acessibilidade">{_icon("reset")}<span>Reset</span></button>
-      </div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false">{_icon("access")}</button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    {_a11y_btn("btnAlternarTamanhoFontePWA", "Alterar tamanho da fonte", "type", span_id="fontSizeTextPWA", span_text="Tamanho da Fonte")}
+    {_a11y_btn("btnAlternarEspacamentoLinhaPWA", "Alterar espaçamento de linha", "line", span_id="lineHeightTextPWA", span_text="Espaçamento Linha")}
+    {_a11y_btn("btnAlternarEspacamentoLetraPWA", "Alterar espaçamento de letra", "letter", span_id="letterSpacingTextPWA", span_text="Espaçamento Letra")}
+    {_a11y_btn("btnAlternarContrastePWA", "Alternar alto contraste", "contrast", span_text="Alto Contraste")}
+    {_a11y_btn("btnAlternarModoEscuroPWA", "Alternar modo escuro", "moon", span_text="Modo Escuro")}
+    {_a11y_btn("btnAlternarFonteDislexiaPWA", "Alternar fonte para dislexia", "font", span_text="Fonte Dislexia")}
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">{colors}
+    </div>
+    {_a11y_btn("btnKeyboardShortcutsPWA", "Atalhos de Teclado", "keyboard", span_text="Atalhos")}
+    {_a11y_btn("btnResetarAcessibilidadePWA", "Redefinir configurações", "reset", span_text="Redefinir Tudo")}
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    {_a11y_btn("btnAlternarTamanhoFonte", "Alterar tamanho da fonte", "type", span_id="fontSizeText", span_text="Normal")}
+    {_a11y_btn("btnAlternarEspacamentoLinha", "Alterar espaçamento de linha", "line", span_id="lineHeightText", span_text="Médio")}
+    {_a11y_btn("btnAlternarEspacamentoLetra", "Alterar espaçamento de letra", "letter", span_id="letterSpacingText", span_text="Normal")}
+    {_a11y_btn("btnAlternarVelocidadeLeitura", "Alterar velocidade de leitura", "gauge", span_id="readingSpeedText", span_text="Normal")}
+    {_a11y_btn("btnToggleLeitura", "Reproduzir/Pausar leitura do conteúdo principal", "play", sr_only=True)}
+    {_a11y_btn("btnReiniciarLeitura", "Reiniciar leitura do conteúdo principal", "restart", sr_only=True)}
+    {_a11y_btn("btnReadFocused", "Ler elemento focado", "volume", sr_only=True)}
+    {_a11y_btn("btnAlternarContraste", "Alternar alto contraste", "contrast", sr_only=True)}
+    {_a11y_btn("btnAlternarModoEscuro", "Alternar modo escuro", "moon", sr_only=True)}
+    {_a11y_btn("btnAlternarFonteDislexia", "Alternar fonte para dislexia", "font", sr_only=True)}
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">{colors}
+    </div>
+    {_a11y_btn("btnKeyboardShortcuts", "Atalhos de Teclado", "keyboard", sr_only=True)}
+    {_a11y_btn("btnResetarAcessibilidade", "Redefinir configurações de acessibilidade", "reset", sr_only=True)}
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false">{_icon("access")}</button>"""
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button>"""
 
 
 def ds_header(home_href: str, prefix: str) -> str:

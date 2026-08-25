@@ -10,30 +10,63 @@
   
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
   <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
-    <div class="a11y-bar-inner wrap">
-      <p class="a11y-kicker">Acessibilidade</p>
-      <div class="a11y-actions">
-        <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Fonte</span></button>
-        <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Linha</span></button>
-        <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Letra</span></button>
-        <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Contraste</span></button>
-        <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Escuro</span></button>
-        <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Dislexia</span></button>
-        <span class="a11y-sep" aria-hidden="true"></span>
-        <span class="color-options" role="radiogroup" aria-label="Cor de foco">
-          <button type="button" class="color-option" data-color="yellow" style="background:#ffd400" aria-label="Foco amarelo"></button>
-          <button type="button" class="color-option" data-color="lime" style="background:#32cd32" aria-label="Foco verde-limão"></button>
-          <button type="button" class="color-option" data-color="cyan" style="background:#00e5ff" aria-label="Foco ciano"></button>
-          <button type="button" class="color-option" data-color="magenta" style="background:#ff00aa" aria-label="Foco magenta"></button>
-        </span>
-        <button type="button" id="btnResetAcessibilidade" aria-label="Redefinir acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Reset</span></button>
-      </div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    <button type="button" id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeTextPWA">Tamanho da Fonte</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightTextPWA">Espaçamento Linha</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingTextPWA">Espaçamento Letra</span></button>
+    <button type="button" id="btnAlternarContrastePWA" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Alto Contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Modo Escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Fonte Dislexia</span></button>
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span>Atalhos</span></button>
+    <button type="button" id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Redefinir Tudo</span></button>
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Normal</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Médio</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Normal</span></button>
+    <button type="button" id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/></svg><span id="readingSpeedText">Normal</span></button>
+    <button type="button" id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span class="sr-only">Reproduzir/Pausar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/></svg><span class="sr-only">Reiniciar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReadFocused" aria-label="Ler elemento focado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/></svg><span class="sr-only">Ler elemento focado</span></button>
+    <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span class="sr-only">Alternar alto contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="sr-only">Alternar modo escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span class="sr-only">Alternar fonte para dislexia</span></button>
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="sr-only">Atalhos de Teclado</span></button>
+    <button type="button" id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="sr-only">Redefinir configurações de acessibilidade</span></button>
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button><div id="global-header-container">
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button><div id="global-header-container">
     <header class="site-header" role="banner">
     <div class="wrap header-row">
       <button type="button" id="hamburgerButton" class="hamburger-button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="primary-nav">

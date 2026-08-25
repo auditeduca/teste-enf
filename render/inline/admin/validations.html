@@ -24,6 +24,9 @@
   --hold-bg: #fff7ed;
   --header-bg: #ffffff;
   --a11y-focus: #ffd400;
+  --cor-foco-acessibilidade: #ff0;
+  --espacamento-linha: 1.5;
+  --espacamento-letra: 0em;
   --header-height: 96px;
   --a11y-height: 36px;
   --lang-height: 46px;
@@ -51,8 +54,13 @@ body {
   background: var(--gray-bg);
   color: var(--ink);
   font-family: var(--font);
-  line-height: 1.55;
+  line-height: var(--espacamento-linha);
+  letter-spacing: var(--espacamento-letra);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+main { flex-grow: 1; }
 
 h1, h2, h3, h4, .brand, .result-value {
   font-family: var(--font-display);
@@ -74,65 +82,67 @@ a { color: var(--navy-medium); }
 }
 .skip-link:focus { top: 0.6rem; }
 
+:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-foco-acessibilidade, #ff0);
+  outline-offset: 2px;
+}
+
 #barraAcessibilidade {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 8px;
   height: var(--a11y-height);
+  padding: 4px 20px;
   background: var(--navy-primary);
   color: var(--white);
   z-index: 30;
-}
-.a11y-bar-inner {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-.a11y-kicker {
-  margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #c5d7ee;
-}
-.a11y-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
 }
 #barraAcessibilidade button {
   appearance: none;
-  border: 0;
-  background: transparent;
-  color: var(--white);
-  min-height: 32px;
-  padding: 0 0.4rem;
-  display: inline-flex;
+  position: relative;
+  display: flex;
   align-items: center;
-  gap: 0.28rem;
+  justify-content: center;
+  gap: 4px;
+  height: 28px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid hsla(0,0%,100%,.4);
+  color: var(--white);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: 12px;
   cursor: pointer;
-  border-radius: 6px;
+  flex-shrink: 0;
 }
 #barraAcessibilidade button:hover,
 #barraAcessibilidade button:focus-visible {
-  background: rgba(255,255,255,.12);
-  outline: 3px solid var(--a11y-focus);
-  outline-offset: 2px;
+  background: hsla(0,0%,100%,.15);
+  border-color: #fff;
 }
-#barraAcessibilidade svg { width: 14px; height: 14px; }
-.a11y-sep { width: 1px; height: 16px; background: rgba(255,255,255,.28); display: inline-block; }
+#barraAcessibilidade svg { width: 16px; height: 16px; }
 .color-options { display: inline-flex; gap: 0.2rem; }
 .color-option {
-  width: 14px !important;
-  height: 14px !important;
-  min-height: 14px !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-height: 28px !important;
   padding: 0 !important;
-  border-radius: 99px !important;
-  border: 1px solid rgba(255,255,255,.7) !important;
+  border-radius: 5px !important;
+  border: 2px solid hsla(0,0%,100%,.5) !important;
 }
-.color-option[aria-checked="true"] { outline: 2px solid var(--white); }
+.color-option.selected,
+.color-option[aria-checked="true"] {
+  border-color: var(--cor-foco-acessibilidade, #ff0) !important;
+}
 #accessibilityToggleButton {
   display: none;
   position: fixed;
@@ -141,13 +151,128 @@ a { color: var(--navy-medium); }
   z-index: 40;
   width: 48px;
   height: 48px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 0;
   background: var(--navy-primary);
   color: var(--white);
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
 }
 #accessibilityToggleButton svg { width: 22px; height: 22px; }
+#pwaAcessibilidadeBar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 85%;
+  max-width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  transition: transform .3s ease-in-out;
+  background: var(--navy-primary);
+  color: var(--white);
+  z-index: 45;
+  padding: 20px;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0,0,0,.2);
+}
+#pwaAcessibilidadeBar.is-open { transform: translateX(0); }
+.pwa-acessibilidade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid hsla(0,0%,100%,.2);
+}
+.pwa-acessibilidade-header h3 { margin: 0; font-size: 1.25rem; color: var(--white); }
+.pwa-acessibilidade-close-btn {
+  background: transparent;
+  border: 0;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+#pwaAcessibilidadeBar button {
+  width: 100%;
+  padding: 10px 15px;
+  background: hsla(0,0%,100%,.1);
+  border: 1px solid hsla(0,0%,100%,.3);
+  border-radius: 5px;
+  color: var(--white);
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+#pwaAcessibilidadeBar button:hover { background: hsla(0,0%,100%,.2); }
+#pwaAcessibilidadeBar .pwa-acessibilidade-close-btn { width: auto; padding: 0 0.4rem; border: 0; background: transparent; }
+#pwaAcessibilidadeBar svg { width: 18px; height: 18px; }
+.color-options-pwa {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+  padding: 10px;
+  background: hsla(0,0%,100%,.1);
+  border-radius: 5px;
+}
+.color-options-pwa .color-option { width: 38px !important; height: 38px !important; }
+.menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 44;
+}
+.menu-overlay.is-open { display: block; }
+#keyboardShortcutsModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+}
+#keyboardShortcutsModal.show { display: flex; }
+.keyboard-modal-content {
+  background: var(--white);
+  color: var(--ink);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 32rem;
+  width: calc(100% - 2rem);
+  position: relative;
+}
+.keyboard-modal-content h3 { margin-top: 0; }
+.modal-close-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  border: 0;
+  background: transparent;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+#backToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(26,62,116,.8);
+  color: var(--white);
+  font-size: .875rem;
+  padding: .5rem 1rem;
+  border-radius: 9999px;
+  border: 0;
+  cursor: pointer;
+  z-index: 35;
+}
+#backToTopBtn:hover { background: rgba(18,42,80,.9); }
 
 .wrap {
   width: min(1100px, calc(100% - 2rem));
@@ -358,39 +483,60 @@ html.a11y-font-lg { font-size: 112.5%; }
 html.a11y-font-xl { font-size: 125%; }
 html.a11y-line-lg body { line-height: 1.85; }
 html.a11y-letter-lg body { letter-spacing: 0.06em; }
-html.fonte-dislexia body, html.fonte-dislexia button, html.fonte-dislexia input, html.fonte-dislexia select {
+html.fonte-dislexia body,
+html.fonte-dislexia button,
+html.fonte-dislexia input,
+html.fonte-dislexia select,
+.fonte-dislexia,
+.fonte-dislexia body,
+.fonte-dislexia button,
+.fonte-dislexia input,
+.fonte-dislexia select {
   font-family: Arial, Verdana, sans-serif !important;
 }
-html.contraste-alto body { background: #000 !important; color: #ffe600 !important; }
+html.contraste-alto body,
+body.contraste-alto { background: #000 !important; color: #ffe600 !important; }
 html.contraste-alto .site-header,
 html.contraste-alto #barraAcessibilidade,
 html.contraste-alto .site-footer,
 html.contraste-alto .admin-side,
 html.contraste-alto .tool-card,
-html.contraste-alto .panel {
+html.contraste-alto .panel,
+.contraste-alto .site-header,
+.contraste-alto #barraAcessibilidade,
+.contraste-alto .site-footer,
+.contraste-alto .admin-side,
+.contraste-alto .tool-card,
+.contraste-alto .panel {
   background: #000 !important;
   color: #ffe600 !important;
   border-color: #ffe600 !important;
 }
-html.contraste-alto a, html.contraste-alto .brand, html.contraste-alto .nav a { color: #4dd2ff !important; }
-html.rd-dark body { background: #0b1220; color: #e7ecf5; }
-html.rd-dark .site-header { background: #121a2b; border-color: #223049; }
-html.rd-dark .tool-card, html.rd-dark .panel, html.rd-dark .calc-card { background: #121a2b; border-color: #223049; color: #e7ecf5; }
+html.contraste-alto a, html.contraste-alto .brand, html.contraste-alto .nav a,
+.contraste-alto a, .contraste-alto .brand, .contraste-alto .nav a { color: #4dd2ff !important; }
+html.rd-dark body, html.dark-mode body, body.dark-mode { background: #0b1220; color: #e7ecf5; }
+html.rd-dark .site-header, html.dark-mode .site-header, .dark-mode .site-header { background: #121a2b; border-color: #223049; }
+html.rd-dark .tool-card, html.rd-dark .panel, html.rd-dark .calc-card,
+html.dark-mode .tool-card, html.dark-mode .panel, html.dark-mode .calc-card,
+.dark-mode .tool-card, .dark-mode .panel, .dark-mode .calc-card { background: #121a2b; border-color: #223049; color: #e7ecf5; }
 
 @media (max-width: 768px) {
   #global-header-container { min-height: 60px; }
   .site-header, .header-row { min-height: 60px; }
   #footer-placeholder { min-height: 520px; }
-  #barraAcessibilidade { height: auto; display: none; }
-  #barraAcessibilidade.is-open { display: block; padding: 0.5rem 0; }
+  #barraAcessibilidade { display: none; }
   #accessibilityToggleButton { display: inline-flex; align-items: center; justify-content: center; }
+  #pwaAcessibilidadeBar { display: flex; }
+  #backToTopBtn { display: none !important; }
   .hamburger-button { display: inline-flex; align-items: center; justify-content: center; }
   .desktop-nav { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 0.35rem; padding: 0.5rem 0 0.8rem; }
   .desktop-nav.is-open { display: flex; }
   .footer-grid { grid-template-columns: 1fr; }
   .brand-name { font-size: 0.92rem; }
 }
-@media (min-width: 768px) {
+@media (min-width: 769px) {
+  #accessibilityToggleButton,
+  #pwaAcessibilidadeBar { display: none !important; }
   #footer-placeholder { min-height: 277px; }
 }
 
@@ -591,30 +737,63 @@ summary { cursor: pointer; font-weight: 650; }
   <meta name="robots" content="noindex,nofollow">
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
   <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
-    <div class="a11y-bar-inner wrap">
-      <p class="a11y-kicker">Acessibilidade</p>
-      <div class="a11y-actions">
-        <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Fonte</span></button>
-        <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Linha</span></button>
-        <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Letra</span></button>
-        <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Contraste</span></button>
-        <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Escuro</span></button>
-        <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Dislexia</span></button>
-        <span class="a11y-sep" aria-hidden="true"></span>
-        <span class="color-options" role="radiogroup" aria-label="Cor de foco">
-          <button type="button" class="color-option" data-color="yellow" style="background:#ffd400" aria-label="Foco amarelo"></button>
-          <button type="button" class="color-option" data-color="lime" style="background:#32cd32" aria-label="Foco verde-limão"></button>
-          <button type="button" class="color-option" data-color="cyan" style="background:#00e5ff" aria-label="Foco ciano"></button>
-          <button type="button" class="color-option" data-color="magenta" style="background:#ff00aa" aria-label="Foco magenta"></button>
-        </span>
-        <button type="button" id="btnResetAcessibilidade" aria-label="Redefinir acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Reset</span></button>
-      </div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    <button type="button" id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeTextPWA">Tamanho da Fonte</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightTextPWA">Espaçamento Linha</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingTextPWA">Espaçamento Letra</span></button>
+    <button type="button" id="btnAlternarContrastePWA" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Alto Contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Modo Escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Fonte Dislexia</span></button>
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span>Atalhos</span></button>
+    <button type="button" id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Redefinir Tudo</span></button>
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Normal</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Médio</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Normal</span></button>
+    <button type="button" id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/></svg><span id="readingSpeedText">Normal</span></button>
+    <button type="button" id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span class="sr-only">Reproduzir/Pausar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/></svg><span class="sr-only">Reiniciar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReadFocused" aria-label="Ler elemento focado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/></svg><span class="sr-only">Ler elemento focado</span></button>
+    <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span class="sr-only">Alternar alto contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="sr-only">Alternar modo escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span class="sr-only">Alternar fonte para dislexia</span></button>
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="sr-only">Atalhos de Teclado</span></button>
+    <button type="button" id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="sr-only">Redefinir configurações de acessibilidade</span></button>
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
     </div>
   </div>
-  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="barraAcessibilidade" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button>
 <div class="admin-app">
   <aside class="admin-side" aria-label="Módulos do Studio">
     <p class="admin-brand">CKO Studio</p>
@@ -710,125 +889,360 @@ summary { cursor: pointer; font-weight: 650; }
 <script>
 (function () {
   "use strict";
-  try {
-    var prodFont = localStorage.getItem("fontSize");
-    if (prodFont && prodFont !== "1") {
-      var sizes = ["1em", "1.15em", "1.3em", "1.5em", "2em"];
-      var idx = Math.min(Math.max(parseInt(prodFont, 10), 1), sizes.length);
-      document.documentElement.style.fontSize = sizes[idx - 1];
-    }
-    if (localStorage.getItem("darkMode") === "true") {
-      document.documentElement.classList.add("rd-dark");
-    }
-  } catch (ignore) {}
-  var KEY = "cko-a11y";
-  var FONT = ["Fonte", "Grande", "Maior"];
-  var LINE = ["Linha", "Ampla"];
-  var LETTER = ["Letra", "Ampla"];
-  var defaults = {
-    font: 0,
-    line: 0,
-    letter: 0,
-    contrast: false,
-    dark: false,
-    dyslexia: false,
-    focus: "yellow"
+  var FONT_SIZES = ["1em", "1.15em", "1.3em", "1.5em", "2em"];
+  var FONT_LABELS = ["Normal", "Médio", "Grande", "Extra Grande", "Máximo"];
+  var LINE_VALUES = ["1.5", "1.8", "2.2"];
+  var LINE_LABELS = ["Médio", "Grande", "Extra Grande"];
+  var LETTER_VALUES = ["0em", ".05em", ".1em"];
+  var LETTER_LABELS = ["Normal", "Médio", "Grande"];
+  var SPEEDS = [
+    { rate: 0.8, label: "Lenta" },
+    { rate: 1, label: "Normal" },
+    { rate: 1.5, label: "Rápida" }
+  ];
+  var KEYS = {
+    font: "fontSize",
+    line: "lineHeight",
+    letter: "letterSpacing",
+    speed: "readingSpeed",
+    contrast: "highContrast",
+    dark: "darkMode",
+    dyslexia: "dyslexiaFont",
+    focus: "focusColor"
   };
 
-  function load() {
+  var fontLevel = 1;
+  var lineLevel = 1;
+  var letterLevel = 1;
+  var speedLevel = 1;
+  var lastFocus = null;
+  var speaking = false;
+  var paused = false;
+  var synth = window.speechSynthesis || null;
+
+  function readInt(key, fallback) {
     try {
-      return Object.assign({}, defaults, JSON.parse(localStorage.getItem(KEY) || "{}"));
-    } catch (err) {
-      return Object.assign({}, defaults);
+      var raw = parseInt(localStorage.getItem(key) || String(fallback), 10);
+      return isNaN(raw) ? fallback : raw;
+    } catch (ignore) {
+      return fallback;
     }
   }
 
-  function save(state) {
+  function readFlag(key) {
     try {
-      localStorage.setItem(KEY, JSON.stringify(state));
-    } catch (err) {
-      /* ignore quota / private mode */
+      return localStorage.getItem(key) === "true";
+    } catch (ignore) {
+      return false;
     }
   }
 
-  function apply(state) {
-    var html = document.documentElement;
-    html.classList.toggle("a11y-font-lg", state.font === 1);
-    html.classList.toggle("a11y-font-xl", state.font === 2);
-    html.classList.toggle("a11y-line-lg", state.line === 1);
-    html.classList.toggle("a11y-letter-lg", state.letter === 1);
-    html.classList.toggle("contraste-alto", !!state.contrast);
-    html.classList.toggle("rd-dark", !!state.dark);
-    html.classList.toggle("fonte-dislexia", !!state.dyslexia);
-    html.style.setProperty("--a11y-focus", state.focus || "yellow");
-    var font = document.getElementById("fontSizeText");
-    var line = document.getElementById("lineHeightText");
-    var letter = document.getElementById("letterSpacingText");
-    if (font) font.textContent = FONT[state.font] || FONT[0];
-    if (line) line.textContent = LINE[state.line] || LINE[0];
-    if (letter) letter.textContent = LETTER[state.letter] || LETTER[0];
+  function write(key, value) {
+    try {
+      localStorage.setItem(key, String(value));
+    } catch (ignore) {
+      /* quota / private mode */
+    }
+  }
+
+  function removeKey(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (ignore) {}
+  }
+
+  function announce(message) {
+    var status = document.getElementById("statusMessage");
+    if (status) {
+      status.textContent = message;
+      window.setTimeout(function () {
+        if (status.textContent === message) status.textContent = "";
+      }, 3000);
+    }
+  }
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function clamp(level, max) {
+    var n = parseInt(level, 10);
+    if (isNaN(n) || n < 1) return 1;
+    return n > max ? max : n;
+  }
+
+  function applyFont(level, speak) {
+    fontLevel = clamp(level, FONT_SIZES.length);
+    var idx = fontLevel - 1;
+    document.documentElement.style.fontSize = FONT_SIZES[idx];
+    setText("fontSizeText", FONT_LABELS[idx]);
+    setText("fontSizeTextPWA", FONT_LABELS[idx]);
+    write(KEYS.font, fontLevel);
+    if (speak) announce("Tamanho da fonte: " + FONT_LABELS[idx]);
+  }
+
+  function applyLine(level, speak) {
+    lineLevel = clamp(level, LINE_VALUES.length);
+    var idx = lineLevel - 1;
+    document.documentElement.style.setProperty("--espacamento-linha", LINE_VALUES[idx]);
+    setText("lineHeightText", LINE_LABELS[idx]);
+    setText("lineHeightTextPWA", LINE_LABELS[idx]);
+    write(KEYS.line, lineLevel);
+    if (speak) announce("Espaçamento de linha: " + LINE_LABELS[idx]);
+  }
+
+  function applyLetter(level, speak) {
+    letterLevel = clamp(level, LETTER_VALUES.length);
+    var idx = letterLevel - 1;
+    document.documentElement.style.setProperty("--espacamento-letra", LETTER_VALUES[idx]);
+    setText("letterSpacingText", LETTER_LABELS[idx]);
+    setText("letterSpacingTextPWA", LETTER_LABELS[idx]);
+    write(KEYS.letter, letterLevel);
+    if (speak) announce("Espaçamento de letra: " + LETTER_LABELS[idx]);
+  }
+
+  function applySpeed(level, speak) {
+    speedLevel = clamp(level, SPEEDS.length);
+    var sp = SPEEDS[speedLevel - 1];
+    setText("readingSpeedText", sp.label);
+    write(KEYS.speed, speedLevel);
+    if (speak) announce("Velocidade de leitura: " + sp.label);
+  }
+
+  function applyFocus(color, speak) {
+    var value = color || "yellow";
+    document.documentElement.style.setProperty("--cor-foco-acessibilidade", value);
+    document.documentElement.style.setProperty("--a11y-focus", value);
+    write(KEYS.focus, value);
     document.querySelectorAll(".color-option").forEach(function (btn) {
-      btn.setAttribute("aria-checked", btn.getAttribute("data-color") === state.focus ? "true" : "false");
+      var on = btn.getAttribute("data-color") === value;
+      btn.classList.toggle("selected", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
     });
+    if (speak) announce("Cor de foco alterada.");
+  }
+
+  function setBodyClass(name, on) {
+    document.body.classList.toggle(name, !!on);
+    document.documentElement.classList.toggle(name, !!on);
+    if (name === "dark-mode") {
+      document.documentElement.classList.toggle("rd-dark", !!on);
+    }
+  }
+
+  function speakText(text) {
+    if (!text || !synth) {
+      announce("Leitura HOLD neste navegador.");
+      return;
+    }
+    synth.cancel();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "pt-BR";
+    utter.rate = (SPEEDS[speedLevel - 1] || SPEEDS[1]).rate;
+    utter.onstart = function () {
+      speaking = true;
+      paused = false;
+    };
+    utter.onend = function () {
+      speaking = false;
+      paused = false;
+    };
+    utter.onerror = function () {
+      speaking = false;
+      paused = false;
+    };
+    synth.speak(utter);
+  }
+
+  function toggleReadMain() {
+    if (!synth) {
+      announce("Leitura HOLD neste navegador.");
+      return;
+    }
+    if (speaking) {
+      if (paused) {
+        synth.resume();
+        paused = false;
+      } else {
+        synth.pause();
+        paused = true;
+      }
+      return;
+    }
+    var main = document.querySelector("main");
+    speakText(main ? main.innerText : document.body.innerText);
+  }
+
+  function restartRead() {
+    if (synth) synth.cancel();
+    speaking = false;
+    paused = false;
+    window.setTimeout(function () {
+      var main = document.querySelector("main");
+      speakText(main ? main.innerText : document.body.innerText);
+    }, 80);
+  }
+
+  function readFocused() {
+    if (!lastFocus) return;
+    var text = (lastFocus.textContent || lastFocus.getAttribute("aria-label") || lastFocus.alt || lastFocus.value || "").trim();
+    speakText(text);
+  }
+
+  function restore() {
+    applyFont(readInt(KEYS.font, 1), false);
+    applyLine(readInt(KEYS.line, 1), false);
+    applyLetter(readInt(KEYS.letter, 1), false);
+    applySpeed(readInt(KEYS.speed, 1), false);
+    setBodyClass("contraste-alto", readFlag(KEYS.contrast));
+    setBodyClass("dark-mode", readFlag(KEYS.dark));
+    setBodyClass("fonte-dislexia", readFlag(KEYS.dyslexia));
+    var focus = "yellow";
+    try {
+      focus = localStorage.getItem(KEYS.focus) || "yellow";
+    } catch (ignore) {}
+    applyFocus(focus, false);
+  }
+
+  function resetAll() {
+    if (synth) synth.cancel();
+    speaking = false;
+    paused = false;
+    applyFont(1, false);
+    applyLine(1, false);
+    applyLetter(1, false);
+    applySpeed(1, false);
+    setBodyClass("contraste-alto", false);
+    setBodyClass("dark-mode", false);
+    setBodyClass("fonte-dislexia", false);
+    applyFocus("yellow", false);
+    Object.keys(KEYS).forEach(function (k) {
+      removeKey(KEYS[k]);
+    });
+    try {
+      localStorage.removeItem("cko-a11y");
+    } catch (ignore) {}
+    announce("Configurações redefinidas para o padrão");
+  }
+
+  function bindIds(ids, fn) {
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener("click", fn);
+    });
+  }
+
+  function closePwa() {
+    var bar = document.getElementById("pwaAcessibilidadeBar");
+    var overlay = document.getElementById("menuOverlay");
+    var toggle = document.getElementById("accessibilityToggleButton");
+    if (bar) bar.classList.remove("is-open");
+    if (overlay) overlay.classList.remove("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function openPwa() {
+    var bar = document.getElementById("pwaAcessibilidadeBar");
+    var overlay = document.getElementById("menuOverlay");
+    var toggle = document.getElementById("accessibilityToggleButton");
+    if (bar) bar.classList.add("is-open");
+    if (overlay) overlay.classList.add("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
   }
 
   function onReady() {
-    var state = load();
-    apply(state);
-    function bind(id, fn) {
-      var el = document.getElementById(id);
-      if (el) el.addEventListener("click", fn);
-    }
-    bind("btnAlternarTamanhoFonte", function () {
-      state.font = (state.font + 1) % 3;
-      save(state);
-      apply(state);
+    restore();
+    document.addEventListener("focusin", function (ev) {
+      lastFocus = ev.target;
     });
-    bind("btnAlternarEspacamentoLinha", function () {
-      state.line = state.line ? 0 : 1;
-      save(state);
-      apply(state);
+    bindIds(["btnAlternarTamanhoFonte", "btnAlternarTamanhoFontePWA"], function () {
+      applyFont(fontLevel % FONT_SIZES.length + 1, true);
     });
-    bind("btnAlternarEspacamentoLetra", function () {
-      state.letter = state.letter ? 0 : 1;
-      save(state);
-      apply(state);
+    bindIds(["btnAlternarEspacamentoLinha", "btnAlternarEspacamentoLinhaPWA"], function () {
+      applyLine(lineLevel % LINE_VALUES.length + 1, true);
     });
-    bind("btnAlternarContraste", function () {
-      state.contrast = !state.contrast;
-      save(state);
-      apply(state);
+    bindIds(["btnAlternarEspacamentoLetra", "btnAlternarEspacamentoLetraPWA"], function () {
+      applyLetter(letterLevel % LETTER_VALUES.length + 1, true);
     });
-    bind("btnAlternarModoEscuro", function () {
-      state.dark = !state.dark;
-      save(state);
-      apply(state);
+    bindIds(["btnAlternarContraste", "btnAlternarContrastePWA"], function () {
+      var on = !document.body.classList.contains("contraste-alto");
+      setBodyClass("contraste-alto", on);
+      write(KEYS.contrast, on);
+      announce("Alto contraste " + (on ? "ativado" : "desativado"));
     });
-    bind("btnAlternarFonteDislexia", function () {
-      state.dyslexia = !state.dyslexia;
-      save(state);
-      apply(state);
+    bindIds(["btnAlternarModoEscuro", "btnAlternarModoEscuroPWA"], function () {
+      var on = !document.body.classList.contains("dark-mode");
+      setBodyClass("dark-mode", on);
+      write(KEYS.dark, on);
+      announce("Modo escuro " + (on ? "ativado" : "desativado"));
     });
-    bind("btnResetAcessibilidade", function () {
-      state = Object.assign({}, defaults);
-      save(state);
-      apply(state);
+    bindIds(["btnAlternarFonteDislexia", "btnAlternarFonteDislexiaPWA"], function () {
+      var on = !document.body.classList.contains("fonte-dislexia");
+      setBodyClass("fonte-dislexia", on);
+      write(KEYS.dyslexia, on);
+      announce("Fonte para dislexia " + (on ? "ativada" : "desativada"));
     });
+    bindIds(["btnResetarAcessibilidade", "btnResetarAcessibilidadePWA"], resetAll);
+    bindIds(["btnToggleLeitura"], toggleReadMain);
+    bindIds(["btnReiniciarLeitura"], restartRead);
+    bindIds(["btnAlternarVelocidadeLeitura"], function () {
+      applySpeed(speedLevel % SPEEDS.length + 1, true);
+    });
+    bindIds(["btnReadFocused"], readFocused);
     document.querySelectorAll(".color-option").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        state.focus = btn.getAttribute("data-color") || "yellow";
-        save(state);
-        apply(state);
+        applyFocus(btn.getAttribute("data-color") || "yellow", true);
       });
     });
+
+    var modal = document.getElementById("keyboardShortcutsModal");
+    function openModal() {
+      if (modal) modal.classList.add("show");
+    }
+    function closeModal() {
+      if (modal) modal.classList.remove("show");
+    }
+    bindIds(["btnKeyboardShortcuts", "btnKeyboardShortcutsPWA"], openModal);
+    bindIds(["keyboardModalCloseButton"], closeModal);
+
     var toggle = document.getElementById("accessibilityToggleButton");
-    var bar = document.getElementById("barraAcessibilidade");
-    if (toggle && bar) {
-      toggle.addEventListener("click", function () {
-        var open = bar.classList.toggle("is-open");
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    var closeBtn = document.getElementById("pwaAcessibilidadeCloseBtn");
+    var overlay = document.getElementById("menuOverlay");
+    if (toggle) toggle.addEventListener("click", function () {
+      var bar = document.getElementById("pwaAcessibilidadeBar");
+      if (bar && bar.classList.contains("is-open")) closePwa();
+      else openPwa();
+    });
+    if (closeBtn) closeBtn.addEventListener("click", closePwa);
+    if (overlay) overlay.addEventListener("click", closePwa);
+
+    window.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      closeModal();
+      closePwa();
+    });
+
+    var topBtn = document.getElementById("backToTopBtn");
+    if (topBtn) {
+      var ticking = false;
+      var lastY = 0;
+      window.addEventListener("scroll", function () {
+        lastY = window.scrollY;
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          var mobile = window.innerWidth <= 768;
+          var show = !mobile && lastY > 200;
+          topBtn.style.display = show ? "block" : "none";
+          ticking = false;
+        });
+      }, { passive: true });
+      topBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
       });
     }
+
     var hamburger = document.getElementById("hamburgerButton");
     var nav = document.getElementById("primary-nav");
     if (hamburger && nav) {
@@ -837,10 +1251,10 @@ summary { cursor: pointer; font-weight: 650; }
         hamburger.setAttribute("aria-expanded", open ? "true" : "false");
       });
     }
+
     var langButton = document.getElementById("langButton");
     var langMenu = document.getElementById("langMenu");
     var langText = document.getElementById("langText");
-    var status = document.getElementById("statusMessage");
     if (langButton && langMenu) {
       langButton.addEventListener("click", function (ev) {
         ev.stopPropagation();
@@ -858,11 +1272,22 @@ summary { cursor: pointer; font-weight: 650; }
           if (langText) langText.textContent = item.querySelector("span") ? item.querySelector("span").textContent : item.textContent;
           langMenu.classList.add("hidden");
           langButton.setAttribute("aria-expanded", "false");
-          if (status) status.textContent = "Tradução HOLD. Runtime permanece pt-BR.";
+          announce("Tradução HOLD. Runtime permanece pt-BR.");
         });
       });
     }
   }
+
+  try {
+    var prodFont = localStorage.getItem("fontSize");
+    if (prodFont && prodFont !== "1") {
+      var idx = Math.min(Math.max(parseInt(prodFont, 10), 1), FONT_SIZES.length);
+      document.documentElement.style.fontSize = FONT_SIZES[idx - 1];
+    }
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("rd-dark", "dark-mode");
+    }
+  } catch (ignore) {}
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", onReady);

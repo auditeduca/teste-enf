@@ -60,7 +60,7 @@ def _shell(
   {extra_head}
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
   {body}
   {combined}
 </body>
