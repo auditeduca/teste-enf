@@ -1,10 +1,10 @@
 {
   "business_key": "IPE-AGENT-RUN-001",
-  "run_id": "RUN-EXTRACT-20260825T191644Z",
+  "run_id": "RUN-EXTRACT-20260825T235129Z",
   "uuid": null,
   "status": "HOLD",
   "network": false,
-  "started_at": "2026-08-25T19:16:44Z",
+  "started_at": "2026-08-25T23:51:29Z",
   "chain": "vault → CKO-MD → CKO-REG → projection → renderer → frontend",
   "rule": "DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO. Extração ≠ promoção. LLM não é checker.",
   "publication": "HOLD",
@@ -764,6 +764,20 @@
       "wired_to_frontend": true
     },
     {
+      "agent_id": "AG-CLIN-DICT",
+      "class": "MD",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "publication": "HOLD",
+      "wired_to_frontend": false,
+      "promotes_to_md": false,
+      "promoted_to_data_tools": false,
+      "braden_in_data_tools": false,
+      "dictionary_field_count": 163,
+      "new_tool_name_count": 77,
+      "llm_used": false
+    },
+    {
       "agent_id": "AG-ISO8000-PROFILE",
       "class": "MD",
       "role": "CHECKER",
@@ -772,6 +786,8 @@
       "iso_implemented": false,
       "cko_profile_applied": true,
       "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+      "binding_ref": "MD-ISO8000-PGDADOS-BIND-001",
+      "fields": 49,
       "llm_used": false,
       "promotes_to_md": false,
       "tests": [
@@ -796,14 +812,84 @@
           "status": "PASS"
         },
         {
+          "id": "ISO8000-CKO-NO-SILENT-OVERWRITE",
+          "status": "PASS"
+        },
+        {
           "id": "ISO8000-CKO-NO-CERT-CLAIM",
           "status": "PASS"
         },
         {
           "id": "ISO8000-CKO-PGDADOS-EXPLICIT",
           "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PGDADOS-INSTRUMENTS",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PGDADOS-QUALITY-DIMS",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PGDADOS-BINDING",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-WHO-I18N",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-CLIN-DICT",
+          "status": "PASS"
         }
       ]
+    },
+    {
+      "agent_id": "AG-WHO-I18N",
+      "class": "MD",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "owner_decision": "APPROVED",
+      "translation_gate": "HOLD",
+      "wired_to_frontend": false,
+      "who_official_count": 6,
+      "drive_intersection": [
+        "ar",
+        "en",
+        "es",
+        "fr",
+        "ru",
+        "zh"
+      ],
+      "runtime_who_local_key": "who.en+local.pt-BR",
+      "lusophone_hold": [
+        "pt-PT",
+        "pt-AO",
+        "pt-CV",
+        "pt-MZ",
+        "pt-GW",
+        "pt-ST",
+        "pt-TL",
+        "pt-GQ"
+      ],
+      "llm_used": false,
+      "promotes_to_md": false,
+      "publication": "HOLD"
+    },
+    {
+      "agent_id": "AG-LAYER-PHASE",
+      "class": "MD",
+      "role": "CHECKER",
+      "status": "DOCUMENTADO",
+      "envelope_complete": 44,
+      "md_populated": 27,
+      "md_implemented": 23,
+      "assured": false,
+      "publication": "HOLD",
+      "llm_used": false,
+      "promotes_to_md": false,
+      "writes_to": "cko_md/layer_md_reg_phase.json"
     },
     {
       "agent_id": "AG-MASK-APPLY",
@@ -915,12 +1001,12 @@
       "status": "OBSERVED",
       "promotes_to_md": false,
       "writes_to": "cko_inbox/extracted/drive_inventory.json",
-      "population": 117,
+      "population": 118,
       "counts": {
+        "CANDIDATE_GAP": 4,
         "DISCOVERY_QUARANTINE": 76,
         "ALREADY_IN_CKO": 4,
         "SKIP_BINARY_DUMP": 21,
-        "CANDIDATE_GAP": 3,
         "FOLDER_OBSERVED": 12,
         "SKIP_PII": 1
       },
@@ -935,7 +1021,7 @@
       "promotes_to_md": false,
       "writes_to": "cko_inbox/extracted/supabase_inventory.json",
       "schema": "EVIDENCE_PENDING",
-      "projects_observed": 2,
+      "projects_observed": 3,
       "edge_functions_observed": 7,
       "sql_blocked": true,
       "llm_gateway": "HOLD"
@@ -947,9 +1033,23 @@
       "status": "OBSERVED",
       "promotes_to_md": false,
       "writes_to": "cko_inbox/extracted/compare_stores.json",
-      "gap_count": 23,
+      "gap_count": 27,
       "braden_in_data_tools": false,
       "supabase_schema": "EVIDENCE_PENDING"
+    },
+    {
+      "agent_id": "AG-UCP-V2-COMPARE",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "COMPARE_ONLY",
+      "promotes_to_md": false,
+      "copied_into_schemas": false,
+      "publication": "HOLD",
+      "assured": false,
+      "writes_to": "cko_md/ucp_v2_compare.json",
+      "schema_count": 11,
+      "missing_register_count": 10,
+      "business_key": "MD-UCP-V2-COMPARE-001"
     },
     {
       "agent_id": "AG-PLAN-FRONTS",
@@ -958,16 +1058,14 @@
       "status": "DOCUMENTADO",
       "promotes_to_md": false,
       "writes_to": "cko_md/fronts_plan.json",
-      "front_count": 19,
+      "front_count": 23,
       "publication": "HOLD",
-      "blocked": [
-        "F2"
-      ],
+      "blocked": [],
       "hold": [
+        "F2",
         "F5",
         "F7",
-        "F8",
-        "F12"
+        "F8"
       ]
     },
     {

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-cko-policy": "POL-CKO-UCP-001-v2.0",
+  "x-cko-authority-chain": [
+    "CKO-MD",
+    "CKO-REG",
+    "EVIDENCE"
+  ],
+  "x-source-attachment-sha256": "78414fda55bb6391bd51e50ae9aeca9d9ad36cc713c4d52ba8f78dcfb6bfeeb1",
+  "$id": "urn:cko:schema:library-object:2.0",
+  "title": "CKO Library Object v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "library_type",
+    "allowed_object_profiles",
+    "membership_policy",
+    "renderer_recipe_ref",
+    "md_ref"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^LIB-[A-Z0-9-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "library_type": {
+      "type": "string"
+    },
+    "md_ref": {
+      "type": "string"
+    },
+    "parent_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "allowed_object_profiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "taxonomy_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "membership_policy": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "EXPLICIT",
+            "RULE_DERIVED",
+            "HYBRID"
+          ]
+        },
+        "rule_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+    "renderer_recipe_ref": {
+      "type": "string"
+    },
+    "filter_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "status": {
+      "enum": [
+        "CONTROLLED_CANDIDATE",
+        "VALIDATED",
+        "RELEASED",
+        "HOLD",
+        "SUPERSEDED"
+      ]
+    }
+  }
+}

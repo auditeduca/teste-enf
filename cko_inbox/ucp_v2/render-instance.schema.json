@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-cko-policy": "POL-CKO-UCP-001-v2.0",
+  "x-cko-authority-chain": [
+    "CKO-MD",
+    "CKO-REG",
+    "EVIDENCE"
+  ],
+  "x-source-attachment-sha256": "78414fda55bb6391bd51e50ae9aeca9d9ad36cc713c4d52ba8f78dcfb6bfeeb1",
+  "$id": "urn:cko:schema:render-instance:2.0",
+  "title": "CKO Render Instance v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "content_object_ref",
+    "recipe_ref",
+    "audience_ref",
+    "depth",
+    "locale",
+    "channel",
+    "content_version_ref",
+    "release_status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^RINST-[A-Z0-9-]+$"
+    },
+    "content_object_ref": {
+      "type": "string"
+    },
+    "recipe_ref": {
+      "type": "string"
+    },
+    "audience_ref": {
+      "type": "string"
+    },
+    "depth": {
+      "enum": [
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ]
+    },
+    "locale": {
+      "type": "string"
+    },
+    "jurisdiction_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "channel": {
+      "type": "string"
+    },
+    "content_version_ref": {
+      "type": "string"
+    },
+    "render_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "release_status": {
+      "enum": [
+        "PREVIEW",
+        "VALIDATED",
+        "RELEASED",
+        "HOLD",
+        "SUPERSEDED"
+      ]
+    }
+  }
+}

@@ -1040,7 +1040,15 @@ def agent_records() -> list[dict]:
             "implemented": True,
             "writes_to": "cko_md/fronts_plan.json",
             "promotes_to_md": False,
-            "note": "Plano vivo F1–F14. layer_intent + NNN rights-safe + owner unblock. Não é waterfall. LLM não é autoridade.",
+            "note": "Plano vivo F1–F23. layer_intent + NNN rights-safe + owner unblock. Não é waterfall. LLM não é autoridade.",
+        },
+        {
+            "agent_id": "AG-UCP-V2-COMPARE",
+            "class": "MONITORING",
+            "implemented": True,
+            "writes_to": "cko_md/ucp_v2_compare.json",
+            "promotes_to_md": False,
+            "note": "COMPARE contratos UCP v2.0. Não copiar para schemas/. CONTROLLED_CANDIDATE ≠ ASSURED.",
         },
         {
             "agent_id": "AG-CONTENT-CURRICULUM",
@@ -1113,6 +1121,7 @@ def run_extraction(*, network: bool = True) -> dict:
     from .rights import bind_rights
     from .site_shell import parse_site_shell
     from .store_inventory import compare_stores, inventory_drive, inventory_supabase, plan_fronts
+    from .ucp_v2 import compare_ucp_v2
     from .vault import put_known_sources
 
     run_id = "RUN-EXTRACT-" + _now().replace(":", "").replace("-", "")
@@ -1143,6 +1152,7 @@ def run_extraction(*, network: bool = True) -> dict:
         inventory_drive(),
         inventory_supabase(),
         compare_stores(),
+        compare_ucp_v2(),
         plan_fronts(),
         content_curriculum(),
         compare_source(network=network, fetch_fn=_http_get),

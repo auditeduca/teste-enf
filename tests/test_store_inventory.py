@@ -48,15 +48,16 @@ def test_inventory_agents_keep_schema_pending_and_plan_hold():
     assert supabase["schema"] == "EVIDENCE_PENDING"
     assert supabase["sql_blocked"] is True
     assert plan["publication"] == "HOLD"
-    assert plan["front_count"] == 22
+    assert plan["front_count"] == 23
     assert "F2" in plan["hold"]
     assert "F2" not in plan["blocked"]
     assert "F12" not in plan["hold"]
     assert "F20" not in plan["hold"]
     assert "F21" not in plan["hold"]
     assert "F22" not in plan["hold"]
+    assert "F23" not in plan["hold"]
     fronts = json.loads((ROOT / "cko_md" / "fronts_plan.json").read_text(encoding="utf-8"))
-    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 23)}
+    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 24)}
     assert fronts["owner_unblock_ref"] == "MD-OWNER-UNBLOCK-001"
     assert fronts["library_api_map_ref"] == "MD-LIB-API-MAP-001"
     assert fronts["concept_renderer_ref"] == "MD-CONCEPT-RENDER-001"

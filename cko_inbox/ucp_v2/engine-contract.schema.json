@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-cko-policy": "POL-CKO-UCP-001-v2.0",
+  "x-cko-authority-chain": [
+    "CKO-MD",
+    "CKO-REG",
+    "EVIDENCE"
+  ],
+  "x-source-attachment-sha256": "78414fda55bb6391bd51e50ae9aeca9d9ad36cc713c4d52ba8f78dcfb6bfeeb1",
+  "$id": "urn:cko:schema:engine-contract:2.0",
+  "title": "CKO Engine Contract v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "engine_id",
+    "engine_type",
+    "authority_mode",
+    "input_contract_refs",
+    "output_contract_refs",
+    "validator_refs"
+  ],
+  "properties": {
+    "engine_id": {
+      "type": "string"
+    },
+    "engine_type": {
+      "type": "string"
+    },
+    "authority_mode": {
+      "const": "DERIVED_NOT_AUTHORITY"
+    },
+    "input_contract_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "output_contract_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validator_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fail_closed_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  }
+}

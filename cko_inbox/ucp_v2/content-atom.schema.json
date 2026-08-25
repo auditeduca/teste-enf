@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-cko-policy": "POL-CKO-UCP-001-v2.0",
+  "x-cko-authority-chain": [
+    "CKO-MD",
+    "CKO-REG",
+    "EVIDENCE"
+  ],
+  "x-source-attachment-sha256": "78414fda55bb6391bd51e50ae9aeca9d9ad36cc713c4d52ba8f78dcfb6bfeeb1",
+  "$id": "urn:cko:schema:content-atom:2.0",
+  "title": "CKO Content Atom v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "atom_type",
+    "subject_ref",
+    "value",
+    "evidence_refs",
+    "provenance",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(CLAIM|FACT|DEF|RULE|FORMULA|THRESHOLD|WARN|STEP|INTERP|REC|EXAMPLE|REF)-[A-Z0-9-]+$"
+    },
+    "atom_type": {
+      "enum": [
+        "CLAIM",
+        "FACT",
+        "DEFINITION",
+        "RULE",
+        "FORMULA",
+        "THRESHOLD",
+        "WARNING",
+        "PROCEDURE_STEP",
+        "INTERPRETATION",
+        "RECOMMENDATION",
+        "EXAMPLE",
+        "REFERENCE"
+      ]
+    },
+    "subject_ref": {
+      "type": "string"
+    },
+    "value": {},
+    "unit_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "population_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "jurisdiction_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "valid_from": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "valid_to": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "confidence": {
+      "type": "string",
+      "default": "UNASSESSED"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "regulatory_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source_refs",
+        "hash"
+      ],
+      "properties": {
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hash": {
+          "type": "string"
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "CONTROLLED_CANDIDATE",
+        "VALIDATED",
+        "RELEASED",
+        "HOLD",
+        "SUPERSEDED"
+      ]
+    }
+  }
+}

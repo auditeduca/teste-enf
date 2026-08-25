@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-cko-policy": "POL-CKO-UCP-001-v2.0",
+  "x-cko-authority-chain": [
+    "CKO-MD",
+    "CKO-REG",
+    "EVIDENCE"
+  ],
+  "x-source-attachment-sha256": "78414fda55bb6391bd51e50ae9aeca9d9ad36cc713c4d52ba8f78dcfb6bfeeb1",
+  "$id": "urn:cko:schema:publishing-contract:2.0",
+  "title": "CKO Publishing Contract v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "publication_id",
+    "render_instance_ref",
+    "surface",
+    "classification_ref",
+    "rights_ref",
+    "deployment_ref",
+    "evidence_refs",
+    "status"
+  ],
+  "properties": {
+    "publication_id": {
+      "type": "string"
+    },
+    "render_instance_ref": {
+      "type": "string"
+    },
+    "surface": {
+      "type": "string"
+    },
+    "classification_ref": {
+      "type": "string"
+    },
+    "rights_ref": {
+      "type": "string"
+    },
+    "deployment_ref": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "locale": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "jurisdiction_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "READY",
+        "RELEASED",
+        "HOLD",
+        "WITHDRAWN",
+        "SUPERSEDED"
+      ]
+    }
+  }
+}

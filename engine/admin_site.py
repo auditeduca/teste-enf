@@ -537,6 +537,7 @@ def page_library(ctx: dict, **kwargs) -> str:
     pages_pend = load_json(ROOT / "cko_md" / "pages_full_reg_pendencies.json")
     clin = load_json(ROOT / "cko_md" / "clinical_dictionary_catalog.json")
     nnn_id = load_json(ROOT / "cko_md" / "nnn_identity_catalog.json")
+    ucp = load_json(ROOT / "cko_md" / "ucp_v2_compare.json")
     alerts = load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
     laws = load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
     res_rows = [
@@ -624,6 +625,20 @@ def page_library(ctx: dict, **kwargs) -> str:
         ]
         for item in (nnn_id.get("identities") or [])
     ]
+    ucp_rows = [
+        [
+            esc(item.get("file")),
+            esc(item.get("schema_id") or "—"),
+            esc((item.get("draft") or "").replace("https://json-schema.org/", "").replace("http://json-schema.org/", "")),
+            esc((item.get("sha256") or "")[:12] or "—"),
+            esc(item.get("copied_into_schemas")),
+        ]
+        for item in (ucp.get("schemas") or [])
+    ]
+    ucp_missing_rows = [
+        [esc(item.get("artifact_id")), esc(item.get("artifact_class")), esc(item.get("file"))]
+        for item in (ucp.get("missing_from_register") or [])
+    ]
     inner = f"""
     <header class="page-hero">
       <h1>Biblioteca de recursos.</h1>
@@ -648,6 +663,14 @@ def page_library(ctx: dict, **kwargs) -> str:
       <h2>NANDA / NIC / NOC identidade OPT-B ({esc(nnn_id.get("business_key") or "MD-NNN-IDENTITY-001")})</h2>
       <p>Dono F12 = B. Códigos a partir dos nomes de ficheiro Drive. canonical_label=null. Deep-link ao titular. Sem texto licenciado. Publicação {_status_chip(nnn_id.get("publication") or "HOLD")}.</p>
       {_table(["sistema", "código", "label canônico", "exibição", "deep-link", "Drive"], nnn_rows or [["rode extract", "—", "—", "texto indisponível (licença)", "—", "QUARANTINE"]])}
+    </section>
+    <section class="panel">
+      <h2>UCP v2.0 COMPARE ({esc(ucp.get("business_key") or "MD-UCP-V2-COMPARE-001")})</h2>
+      <p>Política {esc(ucp.get("policy") or "POL-CKO-UCP-001-v2.0")} · schemas recebidos={esc(ucp.get("schema_count"))} · artefatos no registo={esc(ucp.get("register_artifact_count"))} · ausentes={esc(ucp.get("missing_register_count"))} · copiado para schemas/={esc(ucp.get("copied_into_schemas"))} · publicação {_status_chip(ucp.get("publication") or "HOLD")} · assured={esc(ucp.get("assured"))}.</p>
+      <p class="hold-banner">COMPARE only. Draft 2020-12 ≠ draft-07 vigente. CONTROLLED_CANDIDATE não é ASSURED. authority_mode DERIVED_NOT_AUTHORITY alinhado. Sem substituir tool.schema.json. Sem inventar MODEL/PILOT ausentes.</p>
+      {_table(["ficheiro", "$id", "draft", "sha256", "em schemas/"], ucp_rows or [["rode extract", "—", "—", "—", "false"]])}
+      <p>Ausentes do lote (registo CSV):</p>
+      {_table(["id", "classe", "ficheiro"], ucp_missing_rows or [["—", "—", "nenhum"]])}
     </section>
     <section class="panel">
       <h2>Legislação federal</h2>
@@ -1109,6 +1132,7 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
         ROOT / "cko_md" / "who_i18n_modulation.json",
         ROOT / "cko_md" / "translation_envelopes.json",
         ROOT / "cko_md" / "nnn_identity_catalog.json",
+        ROOT / "cko_md" / "ucp_v2_compare.json",
         ROOT / "cko_md" / "layer_md_reg_phase.json",
     ):
         if source.exists():

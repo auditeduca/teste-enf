@@ -589,6 +589,14 @@ def plan_fronts() -> dict:
             "gap": "GAP-LAYER-MD-REG",
             "action": "Envelope MD+REG completo nas 44 (P0–P5). EXISTS≠POPULATED≠ASSURED. Sem certificação. Sem Braden.",
         },
+        {
+            "id": "F23",
+            "name": "UCP v2.0 COMPARE",
+            "status": "COMPARE_ONLY",
+            "agents": ["AG-UCP-V2-COMPARE", "AG-PLAN-FRONTS"],
+            "gap": "GAP-UCP-V2",
+            "action": "11 schemas 2020-12 + 2 CSV COMPARE. Não copiar para schemas/. CONTROLLED_CANDIDATE ≠ ASSURED. Modelos/piloto do registo EVIDENCE_PENDING.",
+        },
     ]
     for front in fronts:
         living = gap_by_id.get(front["gap"]) or {}
@@ -623,6 +631,7 @@ def plan_fronts() -> dict:
             "F20 chave who.en+local.pt-BR APPROVED; seletor HOLD; sem dump",
             "F21 zip recebido COMPARE; sheets Content_Schemas/Meta_Schemas MISSING",
             "F22 envelope MD+REG das 44 camadas P0–P5; sem claim 100% completo",
+            "F23 UCP v2 COMPARE; sem promover schemas 2020-12",
             "F3/F4 só com evidência HTTP/Congress já no tubo",
         ],
         "updated_at": _now(),
@@ -719,6 +728,11 @@ def plan_fronts() -> dict:
             "id": "GAP-LAYER-MD-REG",
             "status": "REGISTERED",
             "reason": "Envelope MD+REG das 44 faseado. EXISTS≠POPULATED≠ASSURED. publication HOLD. Sem Braden.",
+        },
+        {
+            "id": "GAP-UCP-V2",
+            "status": "COMPARE_ONLY",
+            "reason": "UCP v2.0 CONTROLLED_CANDIDATE. 11 schemas hashed. Não copiar para schemas/. Modelos/piloto ausentes EVIDENCE_PENDING.",
         },
     ]
     living_gaps = list(method.get("living_gaps") or [])
