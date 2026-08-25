@@ -187,6 +187,7 @@ def write_registries() -> list[Path]:
             {"business_key": "ETYPE-SCALE", "name": "Scale"},
             {"business_key": "ETYPE-CONTENT_OBJECT", "name": "Content Object"},
             {"business_key": "ETYPE-AGENT", "name": "Agent"},
+            {"business_key": "ETYPE-LOCALE", "name": "Locale"},
             {"business_key": "ETYPE-ENGINE", "name": "Engine"},
             {"business_key": "ETYPE-VALIDATOR", "name": "Validator"},
             {"business_key": "ETYPE-CAAT", "name": "CAAT"},
@@ -196,7 +197,7 @@ def write_registries() -> list[Path]:
             {"business_key": "ETYPE-ROUTE", "name": "Route"},
             {"business_key": "ETYPE-ADMIN_SURFACE", "name": "Admin Surface"},
         ],
-        "note": "Tipos mínimos do bootstrap. Não é o universo live de 25 tipos alegado em anexo.",
+        "note": "Tipos mínimos do bootstrap. Locale Drive (MD-LOCALE-REG-001) é RELATED_TAXONOMY a MD-LANG-LOC-001, não substitui pt-BR runtime.",
     }))
     written.append(dump(REG_DIR / "authority_classes.json", {
         "business_key": "REG-AUTH-CLASS-001",
@@ -375,6 +376,9 @@ def write_registries() -> list[Path]:
                 "status": "APPLICABILITY_UNVERIFIED",
             }
         ],
+        "related_drive_catalog": "MD-LOCALE-REG-001",
+        "relation_type": "RELATED_TAXONOMY",
+        "note": "pt-BR é o locale de runtime observado. Os 19 códigos de locales.zip não substituem este registry.",
     }))
     written.append(dump(MD_DIR / "field_dictionary.json", {
         "business_key": "MD-FIELD-DICT-001",

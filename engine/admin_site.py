@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .html import attr, dumps_json, esc
 from .paths import ADMIN_DIR, ASSETS_DIR, ROOT
+from .chrome import ds_a11y_bar
 
 MODULES = [
     ("dashboard", "Painel", "admin.html"),
@@ -19,6 +20,10 @@ MODULES = [
     ("monitoring", "Monitoramento", "admin/monitoring.html"),
     ("backlog", "Backlog", "admin/backlog.html"),
     ("design", "Design System", "admin/design-system.html"),
+    ("locales", "Locales / Drive", "admin/locales.html"),
+    ("mdm", "Master Data", "admin/mdm.html"),
+    ("frameworks", "COSO / COBIT", "admin/frameworks.html"),
+    ("maturity", "Maturidade", "admin/maturity.html"),
     ("renderer", "Renderer", "admin/renderer.html"),
     ("deploy", "Deploy Git", "admin/deploy.html"),
 ]
@@ -47,6 +52,7 @@ def inventory_tables() -> list[dict]:
         ("cko_assurance", "assurance"),
         ("data/tools", "domain_candidate"),
         ("admin", "admin_contract"),
+        ("cko_inbox/drive", "drive_inbox_quarantine"),
     ):
         directory = ROOT / folder
         if not directory.exists():
@@ -90,7 +96,8 @@ def admin_shell(
         items.append(f'<a href="{attr(href)}"{current_cls}>{esc(label)}</a>')
     root_prefix = "../" if nested else ""
     script_src = f"{root_prefix}assets/admin-control.js"
-    body = f"""<div class="admin-app">
+    body = f"""{ds_a11y_bar()}
+<div class="admin-app">
   <aside class="admin-side" aria-label="Módulos do Studio">
     <p class="admin-brand">CKO Studio</p>
     <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
@@ -100,7 +107,7 @@ def admin_shell(
   <div class="admin-main">
     <header class="admin-top">
       <p class="eyebrow">{esc(title)}</p>
-      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE · chrome DS na barra de acessibilidade</p>
     </header>
     <main id="conteudo" class="admin-content">
       {inner}
@@ -120,6 +127,7 @@ def admin_shell(
         css_inline="file" if inline_css else None,
         extra_head='<meta name="robots" content="noindex,nofollow">' + extra_head,
         scripts=scripts,
+        home_href=home_href,
     )
 
 
@@ -140,7 +148,7 @@ def _status_chip(text: str) -> str:
     upper = value.upper()
     if any(token in upper for token in ("HOLD", "QUARANT", "CONFLICT", "PENDING", "UNKNOWN", "FORBIDDEN")):
         cls = "chip chip-hold"
-    elif any(token in upper for token in ("PASS", "MATCH", "IMPLEMENTED", "OBSERVED")):
+    elif any(token in upper for token in ("PASS", "MATCH", "IMPLEMENTED", "OBSERVED", "RESTORED")):
         cls = "chip chip-ok"
     return f'<span class="{cls}">{esc(value)}</span>'
 
@@ -162,9 +170,17 @@ def page_dashboard(ctx: dict, *, css_href: str, home_href: str, inline_css: bool
       <a class="tool-card" href="{attr(_module_href('admin/catalog.html', nested))}"><p class="eyebrow">Domínio</p><h2>Catálogo</h2><p>5 candidatos piloto + itens Studio em QUARANTINED.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/renderer.html', nested))}"><p class="eyebrow">L400</p><h2>Renderer</h2><p>Botão local gera fetch + inline. PRESENTATION_ONLY.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/deploy.html', nested))}"><p class="eyebrow">Git</p><h2>Deploy</h2><p>Prepara changeset. git push é FORBIDDEN no botão.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/maturity.html', nested))}"><p class="eyebrow">M0–M7</p><h2>Maturidade</h2><p>Panorama observado de MD, REG, agentes, CAAT, IPE, Drive e DS.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/locales.html', nested))}"><p class="eyebrow">L310</p><h2>Locales / Drive</h2><p>19 códigos extraídos. Tradução HOLD. HTML Drive não promovido.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/mdm.html', nested))}"><p class="eyebrow">L10</p><h2>Master Data</h2><p>Entity types e locale registry. Mockup MDM = linguagem de layout.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/frameworks.html', nested))}"><p class="eyebrow">COSO/COBIT</p><h2>Frameworks</h2><p>Registry only. CLAUSE_TEXT_UNAVAILABLE. Sem IDs inventados.</p></a>
     </section>
     <section class="panel">
-      <h2>Imagens do mapa Studio</h2>
+      <h2>Mockups enviados nesta sessão</h2>
+      <p>Studio CMS, Renderer, Validadores, MDM, Gestão de IAs, COSO, COBIT e Arquitetura de Dados são <strong>LAYOUT_LANGUAGE_ONLY</strong>. KPIs 98%/Produção/SHA dos murais = DOCUMENT_CLAIM. Mapa: <code>admin/mockup_reference_map.v1.json</code>.</p>
+    </section>
+    <section class="panel">
+      <h2>Imagens do mapa Studio (lote anterior)</h2>
       <p>{esc((studio.get("images_in_conversation") or {}).get("note"))}</p>
     </section>
     """
@@ -465,6 +481,143 @@ def page_deploy(ctx: dict, **kwargs) -> str:
     return admin_shell( title="Deploy Git · CKO Studio", description="Preparar deploy Git. Sem push automático.", current="deploy", inner=inner, **kwargs)
 
 
+def page_locales(ctx: dict, **kwargs) -> str:
+    locales = load_json(ROOT / "cko_md" / "locale_registry.json")
+    i18n = load_json(ROOT / "cko_reg" / "i18n_profile.json")
+    drive = load_json(ROOT / "cko_inbox" / "drive" / "INVENTORY.json")
+    rows = []
+    for item in locales.get("locales") or []:
+        rows.append([
+            esc(item.get("business_key")),
+            esc(item.get("bcp47")),
+            esc(", ".join(item.get("stems_observed") or [])),
+            _status_chip("HOLD" if not item.get("wired_to_frontend") else "WIRED"),
+            str(len(item.get("files") or [])),
+        ])
+    drive_in = [[esc(a.get("title")), esc(a.get("action") or a.get("reason")), esc(a.get("id"))] for a in (drive.get("ingested") or [])]
+    drive_out = [[esc(a.get("title")), esc(a.get("reason")), esc(a.get("id"))] for a in (drive.get("not_ingested") or [])]
+    inner = f"""
+    <header class="page-hero">
+      <h1>Locales e Drive.</h1>
+      <p class="lede">MD-LOCALE-REG-001 registra {esc(locales.get("population"))} códigos extraídos de locales.zip ({esc(locales.get("epistemic_status"))}). REG-I18N-001 mantém tradução em HOLD. Runtime permanece pt-BR.</p>
+      <p class="hold-banner">Stems observados: cookies, footer. Sem strings de calculadora. Banner de cookies do zip NÃO implantado (NO_SENSITIVE_CAPTURE).</p>
+    </header>
+    <section class="panel">
+      <h2>Registry MD ({esc(locales.get("file_count"))} arquivos)</h2>
+      {_table(["business_key", "código zip", "stems", "frontend", "arquivos"], rows)}
+    </section>
+    <section class="panel">
+      <h2>Perfil REG</h2>
+      <p>Gate: {_status_chip(i18n.get("translation_gate"))} · revisão humana: {esc(i18n.get("human_review_required"))} · {esc(i18n.get("rule"))}</p>
+    </section>
+    <section class="panel">
+      <h2>Drive ingerido neste ciclo</h2>
+      {_table(["artefato", "ação", "fileId"], drive_in)}
+    </section>
+    <section class="panel">
+      <h2>Drive observado e não promovido</h2>
+      {_table(["artefato", "motivo", "fileId"], drive_out)}
+    </section>
+    """
+    return admin_shell(title="Locales / Drive · CKO Studio", description="Locales Drive em quarentena.", current="locales", inner=inner, **kwargs)
+
+
+def page_mdm(ctx: dict, **kwargs) -> str:
+    types = (load_json(ROOT / "cko_md" / "entity_type_registry.json").get("types") or [])
+    type_rows = [[esc(t.get("business_key")), esc(t.get("name")), _status_chip("M0_REGISTERED")] for t in types]
+    locales = load_json(ROOT / "cko_md" / "locale_registry.json")
+    inner = f"""
+    <header class="page-hero">
+      <h1>Master Data.</h1>
+      <p class="lede">CKO-MD first. O mural de MDM (Cliente/Produto/Fornecedor) é linguagem de layout corporativa — não cria domínios clínicos. Neste lote as entidades observadas são Layer, Calculator, Locale e demais types do registry.</p>
+    </header>
+    <section class="panel">
+      <h2>Entity types ({len(types)})</h2>
+      {_table(["business_key", "nome", "maturidade"], type_rows)}
+    </section>
+    <section class="panel">
+      <h2>Linha MD → consumo</h2>
+      <p>Fonte Drive/GitHub → quarentena <code>cko_inbox</code> → MD registry → REG profile → renderer → frontend. Locales: {esc(locales.get("population"))} códigos SOURCE_DERIVED, wired={esc(False)}.</p>
+    </section>
+    """
+    return admin_shell(title="Master Data · CKO Studio", description="MDM observado do registry.", current="mdm", inner=inner, **kwargs)
+
+
+def page_frameworks(ctx: dict, **kwargs) -> str:
+    registry = load_json(ROOT / "cko_core" / "framework_registry.json")
+    mockups = load_json(ADMIN_DIR / "mockup_reference_map.v1.json")
+    rows = []
+    for item in registry.get("frameworks") or []:
+        rows.append([
+            esc(item.get("business_key")),
+            esc(item.get("name")),
+            esc(item.get("role")),
+            _status_chip(item.get("clause_text")),
+            _status_chip(item.get("epistemic_status")),
+        ])
+    mock_rows = [[esc(r.get("id")), esc(r.get("title")), esc(r.get("maps_to"))] for r in (mockups.get("references") or [])]
+    inner = f"""
+    <header class="page-hero">
+      <h1>COSO e COBIT.</h1>
+      <p class="lede">{esc(registry.get("note"))} Mockups COSO/COBIT (88,7%, APO12.01, 184/214 objetivos) são DOCUMENT_CLAIM. Não copiar cláusula licenciada.</p>
+    </header>
+    <section class="panel">
+      {_table(["business_key", "nome", "papel", "cláusula", "epistemic"], rows)}
+    </section>
+    <section class="panel">
+      <h2>Mockups mapeados (quarentena)</h2>
+      {_table(["id", "título", "módulo CKO"], mock_rows)}
+    </section>
+    """
+    return admin_shell(title="COSO / COBIT · CKO Studio", description="Framework registry only.", current="frameworks", inner=inner, **kwargs)
+
+
+def page_maturity(ctx: dict, **kwargs) -> str:
+    from .maturity import evaluate_maturity
+
+    panorama = evaluate_maturity()
+    layers = panorama.get("layers") or {}
+    by_m = layers.get("by_maturity") or {}
+    mat_rows = [[esc(k), str(v)] for k, v in sorted(by_m.items())]
+    agents = panorama.get("agents") or {}
+    caat = panorama.get("caat") or {}
+    layer_caat = caat.get("layer_count_44") or {}
+    ipe = panorama.get("ipe") or {}
+    locales = panorama.get("locales") or {}
+    ds = panorama.get("design_system") or {}
+    nxt = "".join(f"<li>{esc(item)}</li>" for item in (panorama.get("next_gate") or []))
+    inner = f"""
+    <header class="page-hero">
+      <h1>Panorama de maturidade.</h1>
+      <p class="lede">Gerado dos registries (MD → REG → assurance → projeção). {esc(panorama.get("rule"))}</p>
+      <p class="hold-banner">Release: {esc(panorama.get("release"))} · Cadeia: {esc(panorama.get("chain"))} · IPE dashboard: candidato, sem reliance.</p>
+    </header>
+    <section class="catalog admin-cards" aria-label="KPIs observados">
+      <article class="tool-card"><p class="eyebrow">Camadas</p><h2>{esc(layers.get("population"))}</h2><p>44 no registry. Nenhuma ASSURED.</p></article>
+      <article class="tool-card"><p class="eyebrow">Pilotos</p><h2>{esc((panorama.get("domain_candidates") or {}).get("tools"))}</h2><p>HOLD internos: {esc((panorama.get("domain_candidates") or {}).get("hold"))}. Braden em data/tools: {esc((panorama.get("domain_candidates") or {}).get("braden_in_data_tools"))}.</p></article>
+      <article class="tool-card"><p class="eyebrow">Agentes</p><h2>{esc(agents.get("population"))}</h2><p>Classes {esc(agents.get("classes"))}. Runtime: {_status_chip("NOT_IMPLEMENTED")}.</p></article>
+      <article class="tool-card"><p class="eyebrow">CAAT 44</p><h2>{esc(layer_caat.get("status"))}</h2><p>Só a população do Layer Registry. Não é PASS do projeto.</p></article>
+      <article class="tool-card"><p class="eyebrow">Locales Drive</p><h2>{esc(locales.get("population"))}</h2><p>Stems {esc(", ".join(locales.get("stems_only") or []))} · wired={esc(locales.get("wired_to_frontend"))}.</p></article>
+      <article class="tool-card"><p class="eyebrow">DS header</p><h2>{esc(ds.get("header_compare"))}</h2><p>{esc(ds.get("fonts"))}</p></article>
+    </section>
+    <section class="panel">
+      <h2>Camadas por código de maturidade</h2>
+      {_table(["maturidade", "n"], mat_rows)}
+    </section>
+    <section class="panel">
+      <h2>CAAT / IPE</h2>
+      <p>CAATs registrados: {esc(caat.get("registered_caats"))} · registry implemented={esc(caat.get("registry_implemented"))}.</p>
+      <p>IPEs registrados: {esc(ipe.get("ipes"))} · implemented={esc(ipe.get("registry_implemented"))}. {esc(ipe.get("rule"))}</p>
+      <p>CARR: {esc(", ".join(ipe.get("carr") or []))}.</p>
+    </section>
+    <section class="panel">
+      <h2>Próximo gate</h2>
+      <ol>{nxt}</ol>
+    </section>
+    """
+    return admin_shell(title="Maturidade · CKO Studio", description="Panorama observado M0–M7.", current="maturity", inner=inner, **kwargs)
+
+
 def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, inline_css: bool) -> list[Path]:
     written: list[Path] = []
     (dest / "admin").mkdir(parents=True, exist_ok=True)
@@ -487,6 +640,10 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
         "design-system.html": page_design,
         "renderer.html": page_renderer,
         "deploy.html": page_deploy,
+        "locales.html": page_locales,
+        "mdm.html": page_mdm,
+        "frameworks.html": page_frameworks,
+        "maturity.html": page_maturity,
     }
     for name, fn in nested.items():
         pages[dest / "admin" / name] = fn(ctx, **common_nested)
@@ -496,8 +653,10 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
     for source in (
         ADMIN_DIR / "contract.json",
         ADMIN_DIR / "studio_cms_map.v1.json",
+        ADMIN_DIR / "mockup_reference_map.v1.json",
         ROOT / "cko_core" / "layer_registry.json",
         ROOT / "cko_core" / "design_token_registry.json",
+        ROOT / "cko_md" / "locale_registry.json",
     ):
         if source.exists():
             target = dest / "admin" / source.name

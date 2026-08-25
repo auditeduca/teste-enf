@@ -7,6 +7,7 @@ import shutil
 from pathlib import Path
 
 from .bootstrap import layer_records, write_registries
+from .chrome import asset_prefix, ds_a11y_script, ds_header_footer
 from .html import attr, dumps_json, esc
 from .paths import (
     ADMIN_DIR,
@@ -24,21 +25,29 @@ from .validate import iter_tool_files, load_tool
 
 SITE_NAME = "CKO"
 SITE_SUB = "Calculadoras de Enfermagem"
-DISCLAIMER = (
-    "Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, "
-    "protocolo institucional nem prescrição."
-)
 
 
 def _read_css() -> str:
     return (ASSETS_DIR / "css" / "app.css").read_text(encoding="utf-8")
 
 
-def _shell(title: str, description: str, body: str, *, css_href: str | None, css_inline: str | None, extra_head: str = "", scripts: str = "") -> str:
+def _shell(
+    title: str,
+    description: str,
+    body: str,
+    *,
+    css_href: str | None,
+    css_inline: str | None,
+    extra_head: str = "",
+    scripts: str = "",
+    home_href: str = "index.html",
+) -> str:
     if css_inline:
         style = f"<style>\n{_read_css() if css_inline == 'file' else css_inline}\n</style>"
     else:
         style = f'<link rel="stylesheet" href="{attr(css_href)}">'
+    a11y = ds_a11y_script(inline=bool(css_inline), prefix=asset_prefix(home_href))
+    combined = "\n".join(part for part in (scripts, a11y) if part)
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -53,33 +62,14 @@ def _shell(title: str, description: str, body: str, *, css_href: str | None, css
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
   {body}
-  {scripts}
+  {combined}
 </body>
 </html>
 """
 
 
 def _header_footer(home_href: str) -> tuple[str, str]:
-    header = f"""<header class="site-header">
-    <div class="wrap header-row">
-      <div>
-        <a class="brand" href="{attr(home_href)}">{SITE_NAME}</a>
-        <p class="brand-sub">{SITE_SUB}</p>
-      </div>
-      <nav class="nav" aria-label="Principal">
-        <a href="{attr(home_href)}">Início</a>
-        <a href="{attr(home_href.replace('index.html', 'inspector.html') if home_href.endswith('index.html') else 'inspector.html')}">Inspector</a>
-        <a href="{attr(home_href.replace('index.html', 'admin.html') if home_href.endswith('index.html') else 'admin.html')}">Admin</a>
-      </nav>
-    </div>
-  </header>"""
-    footer = f"""<footer class="site-footer">
-    <div class="wrap">
-      <p>{esc(DISCLAIMER)}</p>
-      <p>Audit Educa · CKO · Constituição CKO-INS-AI-PROJECT-001</p>
-    </div>
-  </footer>"""
-    return header, footer
+    return ds_header_footer(home_href)
 
 
 def _options_html(inp: dict) -> str:
@@ -368,6 +358,7 @@ def generate_tool_page(tool: dict, *, css_href: str, script_href: str, home_href
         css_href=None if inline_css else css_href,
         css_inline="file" if inline_css else None,
         scripts=scripts,
+        home_href=home_href,
     )
 
 
@@ -408,6 +399,7 @@ def generate_index(tools: list[dict], *, css_href: str, home_href: str, inline_c
         body,
         css_href=None if inline_css else css_href,
         css_inline="file" if inline_css else None,
+        home_href=home_href,
     )
 
 
@@ -449,6 +441,7 @@ def generate_inspector(tools: list[dict], completeness: dict, *, css_href: str, 
         body,
         css_href=None if inline_css else css_href,
         css_inline="file" if inline_css else None,
+        home_href=home_href,
     )
 
 
@@ -487,13 +480,21 @@ def _emit_tree(dest: Path, tools: list[dict], *, inline_css: bool) -> list[Path]
     dest.mkdir(parents=True, exist_ok=True)
     (dest / "tools").mkdir(parents=True, exist_ok=True)
     written: list[Path] = []
+    img_dest = dest / "assets" / "img"
+    img_dest.mkdir(parents=True, exist_ok=True)
+    for name in ("logotipo-calculadoras-de-enfermagem.webp", "logotipo-footer.png"):
+        src = ASSETS_DIR / "img" / name
+        if src.exists():
+            shutil.copy2(src, img_dest / name)
+            written.append(img_dest / name)
     if not inline_css:
         assets = dest / "assets"
         assets.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ASSETS_DIR / "css" / "app.css", assets / "app.css")
         shutil.copy2(ASSETS_DIR / "js" / "calc-engine.js", assets / "calc-engine.js")
         shutil.copy2(ASSETS_DIR / "js" / "admin-control.js", assets / "admin-control.js")
-        written.extend([assets / "app.css", assets / "calc-engine.js", assets / "admin-control.js"])
+        shutil.copy2(ASSETS_DIR / "js" / "a11y.js", assets / "a11y.js")
+        written.extend([assets / "app.css", assets / "calc-engine.js", assets / "admin-control.js", assets / "a11y.js"])
         css_href = "assets/app.css"
         page_css = "../assets/app.css"
         script_href = "../assets/calc-engine.js"

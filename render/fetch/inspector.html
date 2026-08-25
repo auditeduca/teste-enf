@@ -11,16 +11,41 @@
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-  <header class="site-header">
-    <div class="wrap header-row">
-      <div>
-        <a class="brand" href="index.html">CKO</a>
-        <p class="brand-sub">Calculadoras de Enfermagem</p>
+  <div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade">
+    <div class="a11y-bar-inner wrap">
+      <p class="a11y-kicker">Acessibilidade</p>
+      <div class="a11y-actions">
+        <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Fonte</span></button>
+        <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Linha</span></button>
+        <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Letra</span></button>
+        <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Contraste</span></button>
+        <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Escuro</span></button>
+        <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Dislexia</span></button>
+        <span class="a11y-sep" aria-hidden="true"></span>
+        <span class="color-options" role="radiogroup" aria-label="Cor de foco">
+          <button type="button" class="color-option" data-color="yellow" style="background:#ffd400" aria-label="Foco amarelo"></button>
+          <button type="button" class="color-option" data-color="lime" style="background:#32cd32" aria-label="Foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background:#00e5ff" aria-label="Foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background:#ff00aa" aria-label="Foco magenta"></button>
+        </span>
+        <button type="button" id="btnResetAcessibilidade" aria-label="Redefinir acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Reset</span></button>
       </div>
+    </div>
+  </div>
+  <button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button><header class="site-header" role="banner">
+    <div class="wrap header-row">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/img/logotipo-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
+        <span class="brand-text">
+          <span class="brand-name">Calculadoras de Enfermagem</span>
+          <span class="brand-sub">CKO · lote piloto</span>
+        </span>
+      </a>
       <nav class="nav" aria-label="Principal">
-        <a href="index.html">Início</a>
+        <a href="index.html" accesskey="I">Início</a>
         <a href="inspector.html">Inspector</a>
         <a href="admin.html">Admin</a>
+        <a class="lang-chip" href="admin/locales.html" title="19 códigos observados no Drive; tradução HOLD">pt-BR · i18n HOLD</a>
       </nav>
     </div>
   </header>
@@ -42,12 +67,46 @@
       <ul><li>SAE_REQUIRED_NANDA: NANDA candidato interno, sem fonte canônica/licenciada: 00195.</li><li>SAE_REQUIRED_NIC: NIC candidato interno, sem fonte canônica/licenciada: 2314.</li><li>SAE_REQUIRED_NOC: NOC candidato interno, sem fonte canônica/licenciada: 0413.</li><li>OBJECT_HOLD: tool:gotejamento permanece HOLD.</li><li>SAE_REQUIRED_NANDA: NANDA candidato interno, sem fonte canônica/licenciada: 00205.</li><li>SAE_REQUIRED_NIC: NIC candidato interno, sem fonte canônica/licenciada: 6680.</li><li>SAE_REQUIRED_NOC: NOC candidato interno, sem fonte canônica/licenciada: 0802.</li><li>OBJECT_HOLD: tool:meows permanece HOLD.</li></ul>
     </section>
   </main>
-  <footer class="site-footer">
-    <div class="wrap">
+  <footer class="site-footer" id="institucional" role="contentinfo" aria-label="Rodapé do site">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <img class="footer-mark" src="assets/img/logotipo-footer.png" width="220" height="52" alt="Calculadoras de Enfermagem" decoding="async">
+        <p>Tecnologia e conhecimento para uma enfermagem mais eficiente, com domínio e sustentável.</p>
+        <p class="footer-commitment">Padrões de acessibilidade, sustentabilidade digital, segurança da informação e proteção de dados. Sem captura de e-mail neste lote (NO_SENSITIVE_CAPTURE).</p>
+      </div>
+      <div class="footer-col">
+        <h2>Institucional</h2>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="inspector.html">Inspector</a></li>
+          <li><a href="admin.html">Admin Studio</a></li>
+          <li><a href="admin/maturity.html">Panorama de maturidade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Acessibilidade</h2>
+        <ul>
+          <li>Barra de acessibilidade (36px)</li>
+          <li>Skip link · teclado</li>
+          <li>Contraste, fonte, espaçamento</li>
+          <li>Fonte dislexia: fallback Arial (woff2 GAP)</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Governança</h2>
+        <ul>
+          <li>CKO-MD → CKO-REG → front-end</li>
+          <li>Constituição CKO-INS-AI-PROJECT-001</li>
+          <li>Renderer PRESENTATION_ONLY</li>
+          <li>Release clínica HOLD</li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
       <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
-      <p>Audit Educa · CKO · Constituição CKO-INS-AI-PROJECT-001</p>
+      <p>© 2026 Calculadoras de Enfermagem. Audit Educa · CKO. Newsletter/e-mail não implantados.</p>
     </div>
   </footer>
-  
+  <script src="assets/a11y.js"></script>
 </body>
 </html>

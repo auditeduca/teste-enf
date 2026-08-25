@@ -1,0 +1,94 @@
+{
+  "business_key": "DRV-INVENTORY-001",
+  "uuid": null,
+  "status": "SOURCE_DERIVED",
+  "maturity": "M0_REGISTERED",
+  "epistemic_status": "OBSERVED",
+  "quarantine": true,
+  "rule": "Drive é fonte de aquisição. Não é CKO-MD. HTML/JSON do Drive não entram em data/tools sem changeset MD→REG.",
+  "parent_id": "0AFNnC8Uinv0BUk9PVA",
+  "folders_observed": [
+    {
+      "id": "1c9vErI_It3XwzAcAFOnbxw9V0Mn6xfB9",
+      "title": "Calculadoras-de-Enfermagem",
+      "note": "Pasta do site histórico: HTML de calculadoras/escalas/institucional + assets. NÃO promovida a catálogo CKO."
+    },
+    {
+      "id": "1BqFCAzHSRzQJV30DTuIwiO_shGARKBin",
+      "title": "Gestão de IAs e Studio CMS - Artefatos",
+      "note": "Mockups/docs de Studio. LAYOUT_LANGUAGE only."
+    }
+  ],
+  "ingested": [
+    {
+      "id": "1LmEcVDsi2-MTUObRr7SIsSLgWWXeftEO",
+      "title": "locales.zip",
+      "sha256": "fd18e423f9e8d71db2d0959d6b51b7f0e692f234466ad07b0f281da8bfaeaece",
+      "bytes": 30341,
+      "action": "extracted to cko_inbox/drive/locales; MD-LOCALE-REG-001 registered",
+      "promoted_to_md": false
+    },
+    {
+      "id": "1BlJcgdqn93-JyVkPTw9-QmHnpjTpUH0x",
+      "title": "logotipo-calculadoras-de-enfermagem.webp",
+      "sha256": "4f74760fdb8a61236d752159a92a5f5fd264186641da32aedb49a28ca55d6ac3",
+      "bytes": 38834,
+      "action": "copied to assets/img for DS header (L190 candidate rendition)"
+    },
+    {
+      "id": "1Tez0sazlumxO8EeapH30Xw6bF4KpGGnh",
+      "title": "logotipo-footer.png",
+      "sha256": "05e965f7077605e904e9c8a23c318747e6d41ad2ffb82ffdaa07e295f5912848",
+      "bytes": 37779,
+      "action": "copied to assets/img for DS footer"
+    }
+  ],
+  "not_ingested": [
+    {
+      "id": "1tJ-AEv3_KpEQxNa3lMuY7A80skFtw4IK",
+      "title": "pages_full.zip",
+      "bytes": 9141800,
+      "reason": "Payload grande; HTML histórico. Extração dirigida pendente. Não copiar para data/tools."
+    },
+    {
+      "id": "1trKwnonT4t6Mf-gN-y7lojTJGeF6XwYX",
+      "title": "CKO-Project-Final-v1.0 (4).zip",
+      "bytes": 7730014,
+      "reason": "Pacote legado. RECOVER → COMPARE → GAP ONLY antes de rebuild."
+    },
+    {
+      "id": "1VwN7LjxR30GbPctX6-Uq6IH7A-eh7idA",
+      "title": "fH1ew2tMuINgm9Yt-grok-workspace.zip",
+      "bytes": 140316423,
+      "reason": "Workspace snapshot. Fora do lote de ingestão deste ciclo."
+    },
+    {
+      "id": "1QS84_ws1yhCLCbHdPWyQDdbZoqI2Mo6Z",
+      "title": "Design e arquivos das imagens (7).zip",
+      "bytes": 121704396,
+      "reason": "Binários de design. Direitos/IPE pendentes."
+    },
+    {
+      "id": "1JQEfMVlnlN1llmbAnvJOUb4WTs5U9skw",
+      "title": "braden.html",
+      "parent_id": "1c9vErI_It3XwzAcAFOnbxw9V0Mn6xfB9",
+      "reason": "HTML Drive ≠ objeto MD. BRADEN permanece QUARANTINED neste repo."
+    }
+  ],
+  "extraction_procedure": [
+    "1. INTERNAL_FIRST: registries CKO-MD/CKO-REG deste tree.",
+    "2. Drive search por business_key / título; registrar fileId observado (não inventar).",
+    "3. Download com SHA-256 e bytes; quarentena em cko_inbox/drive.",
+    "4. COMPARE com registry; GAP ONLY.",
+    "5. Promoção a MD exige changeset + REG + CAAT + IPE. Agente não auto-PASS.",
+    "6. Frontend só projeta o que já é MD aprovado."
+  ],
+  "artifacts": [
+    "locales.zip",
+    "logotipo-calculadoras-de-enfermagem.webp",
+    "logotipo-footer.png",
+    "Calculadoras-de-Enfermagem (folder)",
+    "pages_full.zip",
+    "CKO-Project-Final-v1.0 (4).zip"
+  ]
+}

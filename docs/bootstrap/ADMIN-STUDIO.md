@@ -24,6 +24,10 @@ GitHub JSON (banco Day Zero)
 | Monitoramento | `/admin/monitoring.html` | KPIs Studio = UNKNOWN (sem IPE) |
 | Backlog | `/admin/backlog.html` | Revisão humana SOURCE_DERIVED |
 | Design System | `/admin/design-system.html` | Anexo vs runtime |
+| Locales / Drive | `/admin/locales.html` | 19 códigos SOURCE_DERIVED; HTML Drive não promovido |
+| Master Data | `/admin/mdm.html` | Entity types + cadeia MD→REG→front |
+| COSO / COBIT | `/admin/frameworks.html` | Registry only; cláusula UNAVAILABLE |
+| Maturidade | `/admin/maturity.html` | Panorama observado M0–M7; release HOLD |
 | Renderer | `/admin/renderer.html` | Botão `POST /__admin/render` |
 | Deploy Git | `/admin/deploy.html` | Status + preparar changeset. **push FORBIDDEN** |
 
@@ -43,4 +47,9 @@ Sirva com `python3 -m engine.cli serve --port 8081` (control plane só em loopba
 
 Arquivo: `admin/studio_cms_map.v1.json`.
 
-Imagens da conversa: **NÃO ENCONTRADAS**. Tabelas reconstruídas do texto colado. BRADEN e demais IDs lógicos **não** foram promovidos a `data/tools`. Claims 98%/Ativo/Concluído = `DOCUMENT_CLAIM`.
+Imagens da conversa (lote anterior): **NÃO ENCONTRADAS**. Tabelas reconstruídas do texto colado. BRADEN e demais IDs lógicos **não** foram promovidos a `data/tools`. Claims 98%/Ativo/Concluído = `DOCUMENT_CLAIM`.
+
+Mockups de Studio/CMS/IA/COSO/COBIT/MDM desta sessão: `admin/mockup_reference_map.v1.json` (`LAYOUT_LANGUAGE_ONLY`). Não copiar KPIs, hashes, pessoas ou “Produção”.
+
+Drive: `cko_inbox/drive/INVENTORY.json`. `locales.zip` extraído; `pages_full.zip` e HTML histórico (ex.: `braden.html`) **não** promovidos.
+

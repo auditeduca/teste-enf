@@ -39,11 +39,19 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
         "monitoring.html",
         "backlog.html",
         "design-system.html",
+        "locales.html",
+        "mdm.html",
+        "frameworks.html",
+        "maturity.html",
         "renderer.html",
         "deploy.html",
         "studio_cms_map.v1.json",
+        "mockup_reference_map.v1.json",
+        "locale_registry.json",
         "design_token_registry.json",
         "admin-control.js",
+        "a11y.js",
+        "logotipo-calculadoras-de-enfermagem.webp",
     ):
         assert name in names
     fetch_admin = (ROOT / "render" / "fetch" / "admin.html").read_text(encoding="utf-8")
@@ -51,18 +59,62 @@ def test_build_emits_admin_modules_and_keeps_release_hold():
     design = (ROOT / "render" / "fetch" / "admin" / "design-system.html").read_text(encoding="utf-8")
     deploy = (ROOT / "render" / "fetch" / "admin" / "deploy.html").read_text(encoding="utf-8")
     database = (ROOT / "render" / "fetch" / "admin" / "database.html").read_text(encoding="utf-8")
+    locales = (ROOT / "render" / "fetch" / "admin" / "locales.html").read_text(encoding="utf-8")
+    maturity = (ROOT / "render" / "fetch" / "admin" / "maturity.html").read_text(encoding="utf-8")
+    frameworks = (ROOT / "render" / "fetch" / "admin" / "frameworks.html").read_text(encoding="utf-8")
+    fetch_index = (ROOT / "render" / "fetch" / "index.html").read_text(encoding="utf-8")
     assert "CKO Studio" in fetch_admin
+    assert 'id="barraAcessibilidade"' in fetch_admin
+    assert 'id="barraAcessibilidade"' in fetch_index
+    assert 'type="email"' not in fetch_index
+    assert "--header-bg: #ffffff" in (ROOT / "assets" / "css" / "app.css").read_text(encoding="utf-8")
+    assert "cdn.jsdelivr" not in fetch_index.lower()
+    assert "googleapis" not in fetch_index.lower()
     assert "Layer Registry (44)" in fetch_admin
     assert "QUARANTINED" in catalog
     assert "STUDIO-CAND-BRADEN" in catalog
     assert "EVIDENCE_PENDING" in design
     assert "git push é FORBIDDEN" in deploy
     assert "Nenhuma alteração de RLS" in database
+    assert "MD-LOCALE-REG-001" in locales or "19" in locales
+    assert "SOURCE_DERIVED" in locales
+    assert "HOLD" in maturity
+    assert "CLAUSE_TEXT_UNAVAILABLE" in frameworks
     assert "cdn.jsdelivr" not in fetch_admin.lower()
     parity = check_parity()
     assert parity["status"] == "PASS"
     release = evaluate_release(evaluate_catalog(), parity)
     assert release["status"] == "HOLD"
+
+
+def test_drive_locales_are_source_derived_not_wired():
+    locales = json.loads((ROOT / "cko_md" / "locale_registry.json").read_text(encoding="utf-8"))
+    assert locales["business_key"] == "MD-LOCALE-REG-001"
+    assert locales["population"] == 19
+    assert locales["stems_only"] == ["cookies", "footer"]
+    assert locales["related_to"] == "MD-LANG-LOC-001"
+    assert all(item["wired_to_frontend"] is False for item in locales["locales"])
+    assert (ROOT / "cko_inbox" / "drive" / "locales" / "pt" / "footer.json").exists()
+    assert not (ROOT / "data" / "tools" / "braden.json").exists()
+
+
+def test_maturity_panorama_is_hold_without_fake_pass():
+    from engine.maturity import evaluate_maturity
+
+    panorama = evaluate_maturity()
+    assert panorama["release"] == "HOLD"
+    assert panorama["layers"]["population"] == 44
+    assert panorama["agents"]["population"] == 0
+    assert panorama["ipe"]["registry_implemented"] is False
+    assert panorama["domain_candidates"]["braden_in_data_tools"] is False
+    assert "APO12.01" not in json.dumps(panorama)
+
+
+def test_mockups_are_layout_language_only():
+    mockups = json.loads((ROOT / "admin" / "mockup_reference_map.v1.json").read_text(encoding="utf-8"))
+    assert mockups["quarantine"] is True
+    assert mockups["use"] == "LAYOUT_LANGUAGE_ONLY"
+    assert "98%" in mockups["forbidden_to_copy"][0]
 
 
 def test_control_plane_git_status_and_prepare_does_not_push():
@@ -84,6 +136,7 @@ def test_github_json_inventory_is_non_empty():
     rows = inventory_tables()
     paths = {item["path"] for item in rows}
     assert "cko_core/layer_registry.json" in paths
+    assert "cko_md/locale_registry.json" in paths
     assert "cko_md/entity_type_registry.json" in paths
     assert "cko_reg/authority_classes.json" in paths
     assert any(item["schema"] == "domain_candidate" for item in rows)
