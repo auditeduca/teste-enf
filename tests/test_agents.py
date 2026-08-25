@@ -33,6 +33,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
         "AG-CLIN-DICT",
         "AG-ISO8000-PROFILE",
         "AG-WHO-I18N",
+        "AG-LAYER-PHASE",
         "AG-MASK-APPLY",
         "AG-CAAT-EXTRACT",
         "AG-IPE-EXTRACT",
@@ -67,7 +68,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     slugs = {path.stem for path in TOOLS_DIR.glob("*.json")}
     assert slugs == {"gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico", "dimensionamento"}
     agents = json.loads((ROOT / "cko_assurance" / "agent_registry.json").read_text(encoding="utf-8"))
-    assert agents["population"] == 33
+    assert agents["population"] == 34
     assert agents["implemented"] is True
     assert agents["publication_implemented"] is False
     ipe = json.loads((ROOT / "cko_inbox" / "extracted" / "ipe_extract.json").read_text(encoding="utf-8"))
@@ -93,7 +94,7 @@ def test_extract_offline_inventories_pages_full_without_promoting_braden():
     fronts = json.loads((ROOT / "cko_md" / "fronts_plan.json").read_text(encoding="utf-8"))
     assert fronts["business_key"] == "MD-FRONTS-PLAN-001"
     assert fronts["publication"] == "HOLD"
-    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 22)}
+    assert {item["id"] for item in fronts["fronts"]} == {f"F{i}" for i in range(1, 23)}
     intent = json.loads((ROOT / "cko_md" / "layer_intent.json").read_text(encoding="utf-8"))
     assert intent["business_key"] == "MD-LAYER-INTENT-001"
     assert intent["claimed_32_libraries"] == "EVIDENCE_PENDING"

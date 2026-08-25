@@ -551,6 +551,14 @@ def plan_fronts() -> dict:
             "gap": "GAP-CLIN-DICT",
             "action": "Namelist COMPARE. Pilotos CALC-/SCALE-/GUIDE-/EXAM-*. Sem Braden em data/tools. UUIDv4 não adotado. ABNT/ISO cláusula HOLD.",
         },
+        {
+            "id": "F22",
+            "name": "MD+REG 44 camadas faseadas",
+            "status": "REGISTERED",
+            "agents": ["AG-LAYER-PHASE", "AG-ISO8000-PROFILE"],
+            "gap": "GAP-LAYER-MD-REG",
+            "action": "Envelope MD+REG completo nas 44 (P0–P5). EXISTS≠POPULATED≠ASSURED. Sem certificação. Sem Braden.",
+        },
     ]
     for front in fronts:
         living = gap_by_id.get(front["gap"]) or {}
@@ -584,6 +592,7 @@ def plan_fronts() -> dict:
             "F18 OG first-party LinkedIn; 151 cards Drive não copiados",
             "F20 WHO/OMS i18n envelopes; translation HOLD; sem dump",
             "F21 Dicionario clinico.zip COMPARE; códigos piloto; sem escalas de terceiros",
+            "F22 envelope MD+REG das 44 camadas P0–P5; sem claim 100% completo",
             "F3/F4 só com evidência HTTP/Congress já no tubo",
         ],
         "updated_at": _now(),
@@ -675,6 +684,11 @@ def plan_fronts() -> dict:
             "id": "GAP-CLIN-DICT",
             "status": "HOLD",
             "reason": "Dicionario clinico.zip COMPARE. Campos Foundation/Knowledge + códigos piloto. Sem promover Braden. UUIDv4 não adotado.",
+        },
+        {
+            "id": "GAP-LAYER-MD-REG",
+            "status": "REGISTERED",
+            "reason": "Envelope MD+REG das 44 faseado. EXISTS≠POPULATED≠ASSURED. publication HOLD. Sem Braden.",
         },
     ]
     living_gaps = list(method.get("living_gaps") or [])

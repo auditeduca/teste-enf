@@ -923,6 +923,15 @@ def agent_records() -> list[dict]:
             "note": "OMS who.int seletor (en ar zh fr ru es). Chave who.en+local.pt-BR. Variantes lusófonas HOLD. Sem dump ICD/ICNP/GHO.",
         },
         {
+            "agent_id": "AG-LAYER-PHASE",
+            "class": "MD",
+            "implemented": True,
+            "writes_to": "cko_md/layer_md_reg_phase.json",
+            "promotes_to_md": False,
+            "wired_to_frontend": False,
+            "note": "Envelope MD+REG das 44 camadas faseado P0–P5. Envelope completo ≠ assured. publication HOLD.",
+        },
+        {
             "agent_id": "AG-CLIN-DICT",
             "class": "MD",
             "implemented": True,
@@ -1098,6 +1107,7 @@ def run_extraction(*, network: bool = True) -> dict:
     from .clinical_dict import evaluate_clinical_dict
     from .iso8000 import evaluate_profile
     from .lineage import bind_lineage
+    from .layer_phase import evaluate_layer_md_reg
     from .who_i18n import evaluate_who_i18n
     from .monitor import compare_internal, compare_source, monitor_drift
     from .rights import bind_rights
@@ -1124,6 +1134,7 @@ def run_extraction(*, network: bool = True) -> dict:
         evaluate_clinical_dict(),
         evaluate_profile(),
         evaluate_who_i18n(),
+        evaluate_layer_md_reg(),
         apply_norm_masks(),
         caat_extracted_population(),
         ipe_carr(),

@@ -315,23 +315,48 @@ def page_pipeline(ctx: dict, **kwargs) -> str:
 
 
 def page_layers(ctx: dict, **kwargs) -> str:
+    phase = load_json(ROOT / "cko_md" / "layer_md_reg_phase.json")
     rows = []
-    for layer in ctx["layers"]:
+    for layer in (phase.get("layers") or ctx["layers"]):
         rows.append([
-            esc(layer.get("layer_code")),
+            esc(layer.get("layer_code") or layer.get("layer_code")),
             esc(layer.get("canonical_name")),
-            _status_chip(layer.get("maturity")),
-            f"<code>{esc(layer.get('md_profile_ref'))}</code>",
-            f"<code>{esc(layer.get('reg_profile_ref'))}</code>",
+            esc(layer.get("phase") or layer.get("maturity")),
+            _status_chip((layer.get("md") or {}).get("population") or layer.get("maturity")),
+            _status_chip((layer.get("reg") or {}).get("population") or "M0"),
+            esc((layer.get("md") or {}).get("populated")),
+            esc(layer.get("gap") or ""),
         ])
+    if not phase.get("layers"):
+        rows = []
+        for layer in ctx["layers"]:
+            rows.append([
+                esc(layer.get("layer_code")),
+                esc(layer.get("canonical_name")),
+                _status_chip(layer.get("maturity")),
+                f"<code>{esc(layer.get('md_profile_ref'))}</code>",
+                f"<code>{esc(layer.get('reg_profile_ref'))}</code>",
+                "",
+                "",
+            ])
+    phase_rows = [
+        [esc(item.get("id")), esc(item.get("name")), esc(", ".join(item.get("layers") or [])), esc(item.get("md_populated")), esc(item.get("owner_secret"))]
+        for item in (phase.get("phases") or [])
+    ]
+    counts = phase.get("counts") or {}
     inner = f"""
     <header class="page-hero">
-      <h1>44 camadas governadas.</h1>
-      <p class="lede">EXISTS ≠ POPULATED ≠ IMPLEMENTADO ≠ ASSURED. Cada camada já nasceu com MD + REG.</p>
+      <h1>44 camadas — MD + REG faseados.</h1>
+      <p class="lede">Envelope completo nas 44 ≠ população completa ≠ IMPLEMENTADO ≠ ASSURED. Registry permanece M0 EXISTS. Publicação HOLD.</p>
+      <p class="hold-banner">MD populated={esc(counts.get("md_populated"))} · MD implemented={esc(counts.get("md_implemented"))} · REG populated={esc(counts.get("reg_populated"))} · assured={esc(counts.get("assured"))} · Braden em data/tools={esc(phase.get("braden_in_data_tools"))}.</p>
     </header>
-    <section class="panel">{_table(["code", "nome", "maturidade", "MD", "REG"], rows)}</section>
+    <section class="panel">
+      <h2>Fases P0–P5 ({esc(phase.get("business_key") or "MD-LAYER-PHASE-001")})</h2>
+      {_table(["fase", "nome", "camadas", "MD populated", "exige segredo"], phase_rows)}
+    </section>
+    <section class="panel">{_table(["code", "nome", "fase", "MD pop.", "REG pop.", "MD populated", "gap"], rows)}</section>
     """
-    return admin_shell( title="Camadas · CKO Studio", description="Layer Registry 44.", current="layers", inner=inner, **kwargs)
+    return admin_shell( title="Camadas · CKO Studio", description="Layer Registry 44 com envelopes MD+REG faseados.", current="layers", inner=inner, **kwargs)
 
 
 def page_validations(ctx: dict, **kwargs) -> str:
@@ -1064,6 +1089,7 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
         ROOT / "cko_core" / "design_token_registry.json",
         ROOT / "cko_md" / "locale_registry.json",
         ROOT / "cko_md" / "who_i18n_modulation.json",
+        ROOT / "cko_md" / "layer_md_reg_phase.json",
     ):
         if source.exists():
             target = dest / "admin" / source.name
