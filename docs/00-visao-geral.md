@@ -2,7 +2,9 @@
 
 ## Objetivo
 
-O CKO é o engine declarativo de conteúdo clínico e educacional de enfermagem: objetos canônicos, Regulatory Core, Design System, Site Shell, validadores, auditoria 360 e dois modos de renderização.
+O CKO é a plataforma governada Calculadoras de Enfermagem: Master Data, Regulatory Core, camadas governadas, objetos canônicos, Design System, Site Shell, validadores, auditoria 360 e dois modos de renderização.
+
+A constituição operacional é `docs/constitution/CKO-INS-AI-PROJECT-001.md`. GitHub é o store Day Zero.
 
 ## Princípios invariantes
 
@@ -25,11 +27,11 @@ O CKO é o engine declarativo de conteúdo clínico e educacional de enfermagem:
 - validators;
 - fábrica de provas anteriores (especificada);
 - monitor regulatório (especificado);
-- CMS/Inspector read-only;
+- Admin e Inspector read-only sobre os mesmos JSON;
 - auditoria 360;
 - render inline para preview;
 - render fetch para produção sem CDN.
 
 ## Regra de ouro
 
-Conhecimento canônico validado não é regenerado. Novos usos são projeções do conhecimento existente.
+CKO-MD FIRST, CKO-REG SECOND. Conhecimento canônico validado não é regenerado. Novos usos são projeções do conhecimento existente.

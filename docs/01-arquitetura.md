@@ -28,14 +28,17 @@ HTML ASSETS
    └── fetch production
 ```
 
-No v0.1 o caminho materializado é:
+No v0.1.1 o caminho materializado é:
 
 ```text
-data/tools/{slug}.json
+cko_core/layer_registry.json     44 camadas M0 (MD profile + REG profile)
+admin/contract.json              admin ↔ frontend
+data/tools/{slug}.json           candidatos de domínio
+   → engine.bootstrap
    → engine.validate (Draft-07)
    → engine.score (sum | expression)
-   → validators (completude, paridade, release)
-   → render/fetch + render/inline
+   → validators (completude, paridade, release, layer CAAT)
+   → render/fetch + render/inline  (inclui admin.html)
    → audit/*.json
 ```
 

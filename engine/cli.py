@@ -10,6 +10,7 @@ import socketserver
 import sys
 from functools import partial
 
+from .bootstrap import evaluate_layer_registry, write_registries
 from .generate import build
 from .paths import FETCH_DIR, ROOT
 from .validate import validate_tools_dir
@@ -21,14 +22,41 @@ from validators.release_gate import evaluate_release
 
 def cmd_validate(_: argparse.Namespace) -> int:
     failures = validate_tools_dir()
-    if not failures:
-        print("ok: all objects valid against tool.schema.json")
-        return 0
-    for name, errors in failures.items():
-        print(f"FAIL {name}")
-        for error in errors:
-            print(f"  - {error}")
-    return 1
+    if failures:
+        for name, errors in failures.items():
+            print(f"FAIL {name}")
+            for error in errors:
+                print(f"  - {error}")
+        return 1
+    print("ok: all objects valid against tool.schema.json")
+    layer = evaluate_layer_registry()
+    print(json.dumps({
+        "caat": layer["id"],
+        "status": layer["status"],
+        "population": layer.get("population"),
+        "tested": layer.get("tested"),
+        "failed": layer.get("failed"),
+        "note": layer.get("note") or layer.get("reason"),
+    }, ensure_ascii=False))
+    return 0 if layer["status"] in {"PASS", "HOLD"} else 1
+
+
+def cmd_bootstrap(_: argparse.Namespace) -> int:
+    written = write_registries()
+    for path in written:
+        try:
+            print(f"wrote {path.relative_to(ROOT)}")
+        except ValueError:
+            print(f"wrote {path}")
+    layer = evaluate_layer_registry()
+    print(json.dumps({
+        "caat": layer["id"],
+        "status": layer["status"],
+        "population": layer.get("population"),
+        "tested": layer.get("tested"),
+        "failed": layer.get("failed"),
+    }, ensure_ascii=False, indent=2))
+    return 0 if layer["status"] == "PASS" else 1
 
 
 def cmd_build(_: argparse.Namespace) -> int:
@@ -82,6 +110,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="cko", description="CKO canonical toolchain")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("validate").set_defaults(func=cmd_validate)
+    sub.add_parser("bootstrap").set_defaults(func=cmd_bootstrap)
     sub.add_parser("build").set_defaults(func=cmd_build)
     sub.add_parser("audit").set_defaults(func=cmd_audit)
     serve = sub.add_parser("serve")

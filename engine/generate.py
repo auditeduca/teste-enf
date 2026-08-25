@@ -6,11 +6,14 @@ import json
 import shutil
 from pathlib import Path
 
+from .bootstrap import layer_records, write_registries
 from .html import attr, dumps_json, esc
 from .paths import (
+    ADMIN_DIR,
     ASSETS_DIR,
     FETCH_DIR,
     INLINE_DIR,
+    LAYER_REGISTRY_PATH,
     PUBLIC_DIR,
     ROOT,
     TEMPLATES_DIR,
@@ -66,13 +69,14 @@ def _header_footer(home_href: str) -> tuple[str, str]:
       <nav class="nav" aria-label="Principal">
         <a href="{attr(home_href)}">Início</a>
         <a href="{attr(home_href.replace('index.html', 'inspector.html') if home_href.endswith('index.html') else 'inspector.html')}">Inspector</a>
+        <a href="{attr(home_href.replace('index.html', 'admin.html') if home_href.endswith('index.html') else 'admin.html')}">Admin</a>
       </nav>
     </div>
   </header>"""
     footer = f"""<footer class="site-footer">
     <div class="wrap">
       <p>{esc(DISCLAIMER)}</p>
-      <p>Audit Educa · CKO v0.1</p>
+      <p>Audit Educa · CKO · Constituição CKO-INS-AI-PROJECT-001</p>
     </div>
   </footer>"""
     return header, footer
@@ -383,17 +387,18 @@ def generate_index(tools: list[dict], *, css_href: str, home_href: str, inline_c
     body = f"""{header}
   <main id="conteudo" class="wrap">
     <header class="page-hero">
-      <p class="eyebrow">Lote piloto v0.1</p>
+      <p class="eyebrow">Constituição CKO-INS-AI-PROJECT-001 · lote piloto</p>
       <h1>Conhecimento canônico, projetado em HTML.</h1>
-      <p class="lede">JSON validado → motor determinístico → Site Shell e Design System. Primeira entrega: cinco pilotos.</p>
+      <p class="lede">CKO-MD e CKO-REG nascem no GitHub. Cinco objetos piloto são candidatos de domínio, não golden records. Admin e frontend leem os mesmos contratos.</p>
+      <p class="meta"><a href="admin.html">Abrir Admin</a> · <a href="{attr(inspector_href)}">Abrir Inspector</a></p>
     </header>
     <section class="catalog" aria-label="Pilotos">
       {"".join(cards)}
     </section>
     <section class="panel">
       <h2>Como este aplicativo funciona</h2>
-      <p>Cada objeto vive em <code>data/tools</code>. O motor valida o contrato, calcula quando há fórmula, e gera duas projeções HTML semanticamente equivalentes: preview inline e produção fetch, ambas first-party, sem CDN.</p>
-      <p><a href="{attr(inspector_href)}">Abrir o Inspector read-only</a></p>
+      <p>Registries Day Zero vivem em <code>cko_core</code>, <code>cko_md</code>, <code>cko_reg</code> e <code>cko_assurance</code>. Candidatos de domínio vivem em <code>data/tools</code>. O motor valida o contrato, calcula quando há fórmula, e gera duas projeções HTML semanticamente equivalentes: preview inline e produção fetch, ambas first-party, sem CDN.</p>
+      <p>O Admin não grava fórmula. O frontend não grava objeto canônico.</p>
     </section>
   </main>
   {footer}"""
@@ -421,9 +426,9 @@ def generate_inspector(tools: list[dict], completeness: dict, *, css_href: str, 
     body = f"""{header}
   <main id="conteudo" class="wrap">
     <header class="page-hero">
-      <p class="eyebrow">CMS / Inspector</p>
-      <h1>Inspeção read-only do catálogo.</h1>
-      <p class="lede">Este inspector não edita objetos. Completude clínica do lote: <strong>{esc(completeness.get('status'))}</strong>.</p>
+      <p class="eyebrow">Inspector de candidatos</p>
+      <h1>Inspeção read-only do catálogo piloto.</h1>
+      <p class="lede">Este inspector não edita objetos e não é o Layer Registry. Completude clínica do lote: <strong>{esc(completeness.get('status'))}</strong>. Governança das 44 camadas está em <a href="admin.html">Admin</a>.</p>
     </header>
     <section class="panel">
       <h2>Objetos</h2>
@@ -444,6 +449,90 @@ def generate_inspector(tools: list[dict], completeness: dict, *, css_href: str, 
         body,
         css_href=None if inline_css else css_href,
         css_inline="file" if inline_css else None,
+    )
+
+
+def generate_admin(
+    tools: list[dict],
+    completeness: dict,
+    layers: list[dict],
+    contract: dict,
+    *,
+    css_href: str,
+    home_href: str,
+    inline_css: bool,
+) -> str:
+    layer_rows = []
+    for layer in layers:
+        layer_rows.append(
+            "<tr>"
+            f"<td>{esc(layer.get('layer_code'))}</td>"
+            f"<td>{esc(layer.get('canonical_name'))}</td>"
+            f"<td>{esc(layer.get('maturity'))}</td>"
+            f"<td>{esc(layer.get('md_profile_ref'))}</td>"
+            f"<td>{esc(layer.get('reg_profile_ref'))}</td>"
+            "</tr>"
+        )
+    tool_rows = []
+    for tool in tools:
+        overview = tool.get("overview") or {}
+        tool_rows.append(
+            "<tr>"
+            f"<td><a href=\"tools/{attr(tool['slug'])}.html\">{esc(tool.get('slug'))}</a></td>"
+            f"<td>{esc(overview.get('name'))}</td>"
+            f"<td>{esc(tool.get('status'))}</td>"
+            f"<td>{esc(tool.get('kind'))}</td>"
+            "</tr>"
+        )
+    comm = contract.get("communication") or {}
+    header, footer = _header_footer(home_href)
+    body = f"""{header}
+  <main id="conteudo" class="wrap wrap-wide">
+    <header class="page-hero">
+      <p class="eyebrow">Admin · GitHub Day Zero</p>
+      <h1>Projeção dos contratos governados.</h1>
+      <p class="lede">Admin e frontend compartilham os mesmos JSON. Esta página não grava verdade clínica. Store: {esc(contract.get("store"))}</p>
+      <p class="hold-banner" role="status">Modo {esc(comm.get("mode") or "SHARED_GITHUB_CONTRACTS")} · UUID HOLD · Clinical completeness {esc(completeness.get("status"))}</p>
+    </header>
+    <section class="panel">
+      <h2>Contrato admin ↔ frontend</h2>
+      <ul>
+        <li>Admin: {esc((contract.get("admin") or {}).get("role"))}</li>
+        <li>Frontend: {esc((contract.get("frontend") or {}).get("role"))}</li>
+        <li>Privacidade: {esc(contract.get("privacy"))}</li>
+        <li>Segregação: {esc(contract.get("segregation"))}</li>
+        <li>JSON projetado: <code>admin/contract.json</code> e <code>admin/layer_registry.json</code></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2>Candidatos de domínio ({len(tools)})</h2>
+      <div class="table-wrap">
+        <table class="inspect">
+          <thead><tr><th>slug</th><th>nome</th><th>status</th><th>kind</th></tr></thead>
+          <tbody>{"".join(tool_rows)}</tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>Layer Registry ({len(layers)})</h2>
+      <p>EXISTS ≠ POPULATED ≠ IMPLEMENTED ≠ ASSURED. Maturidade inicial: M0_REGISTERED.</p>
+      <div class="table-wrap">
+        <table class="inspect">
+          <thead><tr><th>code</th><th>nome</th><th>maturidade</th><th>MD profile</th><th>REG profile</th></tr></thead>
+          <tbody>{"".join(layer_rows)}</tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  {footer}"""
+    extra_head = f'<script type="application/json" id="admin-contract">{dumps_json(contract)}</script>'
+    return _shell(
+        "Admin — CKO",
+        "Superfície administrativa read-only sobre registries GitHub.",
+        body,
+        css_href=None if inline_css else css_href,
+        css_inline="file" if inline_css else None,
+        extra_head=extra_head,
     )
 
 
@@ -510,11 +599,39 @@ def _emit_tree(dest: Path, tools: list[dict], *, inline_css: bool) -> list[Path]
         encoding="utf-8",
     )
     written.append(inspector)
+
+    contract_path = ADMIN_DIR / "contract.json"
+    contract = json.loads(contract_path.read_text(encoding="utf-8")) if contract_path.exists() else {}
+    layers = layer_records()
+    admin = dest / "admin.html"
+    admin.write_text(
+        generate_admin(
+            tools,
+            completeness,
+            layers,
+            contract,
+            css_href=css_href,
+            home_href=home_from_home,
+            inline_css=inline_css,
+        ),
+        encoding="utf-8",
+    )
+    written.append(admin)
+
+    admin_dir = dest / "admin"
+    admin_dir.mkdir(parents=True, exist_ok=True)
+    if contract_path.exists():
+        shutil.copy2(contract_path, admin_dir / "contract.json")
+        written.append(admin_dir / "contract.json")
+    if LAYER_REGISTRY_PATH.exists():
+        shutil.copy2(LAYER_REGISTRY_PATH, admin_dir / "layer_registry.json")
+        written.append(admin_dir / "layer_registry.json")
     return written
 
 
 def build(tools_dir: Path | None = None) -> list[Path]:
     tools_dir = tools_dir or TOOLS_DIR
+    written = list(write_registries())
     tools = [load_tool(path) for path in iter_tool_files(tools_dir)]
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     TEMPLATES_DIR.mkdir(parents=True, exist_ok=True)
@@ -537,7 +654,7 @@ def build(tools_dir: Path | None = None) -> list[Path]:
     (ROOT / "data" / "catalog.json").write_text(
         json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    written = [PUBLIC_DIR / "output.css", ROOT / "data" / "catalog.json"]
+    written.extend([PUBLIC_DIR / "output.css", ROOT / "data" / "catalog.json"])
     written.extend(_emit_tree(FETCH_DIR, tools, inline_css=False))
     written.extend(_emit_tree(INLINE_DIR, tools, inline_css=True))
     return written

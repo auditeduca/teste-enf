@@ -8,7 +8,8 @@
 - Motor `sum` e `expression` com avaliação aritmética segura.
 - Cinco objetos piloto, um deles em HOLD explícito.
 - Geração de HTML fetch e inline.
-- Inspector read-only.
+- Inspector read-only e Admin read-only (`/admin.html`) sobre o Layer Registry.
+- Constituição CKO-INS-AI-PROJECT-001 (`CONTROLLED_DRAFT`) e 44 camadas registradas (44/44 business keys; uuid null).
 - pytest do motor e dos validadores.
 - Audit trail com SHA-256 dos JSON.
 
@@ -22,7 +23,8 @@
 - NIC/NOC com fonte canônica/licenciada (permanecem HOLD).
 - Cálculo COFEN de dimensionamento.
 - Fábrica de provas anteriores.
-- Ontologia formal, grafo, Library OS, Studio de edição, PWA, APIs.
+- Ontologia formal, grafo, Library OS, Studio de edição, PWA, APIs autenticadas.
+- Golden records MD, bindings REG populados, UUIDv7, COSO/COBIT com cláusula licenciada, digital twin sincronizado, SAE com busca interna.
 
 ## Redação permitida
 

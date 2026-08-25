@@ -2,7 +2,9 @@
 
 Modelo interno desta aplicação. Não é nível ISO.
 
-A tabela mestra e o status **deste** v0.1 estão em `data/layers-21.json`.
+A tabela mestra constitucional de **44 camadas** está em `cko_core/layer_registry.json` (M0_REGISTERED).
+
+O corte de produto de 21 camadas abaixo permanece em `data/layers-21.json` como `RELATED_TAXONOMY` — não é substituição 1:1 nem apagamento silencioso.
 
 | Código | Nome | Função | Status v0.1 |
 |---|---|---|---|
