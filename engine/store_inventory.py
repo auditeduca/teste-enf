@@ -488,7 +488,12 @@ def plan_fronts() -> dict:
             "status": "COMPARE_ONLY",
             "agents": ["AG-INVENTORY-DRIVE", "AG-LIBRARY-CATALOG"],
             "gap": "GAP-L60-LIBRARIES",
-            "action": "15 CAL-VAC observados (PATTERN_CANDIDATE). 11+24 tipos no zip de templates. 32 APIs EVIDENCE_PENDING. Sem promover CAL-VAC.",
+            "owner_decision": "COMPARE_ACCEPTED",
+            "action": (
+                "COMPARE_ACCEPTED: persistir 11 device + 24 objetos clínicos + 15 CAL-VAC. "
+                "Claimed 32 permanece EVIDENCE_PENDING. Sem inventar 32 adapters; "
+                "sem promover CAL-VAC/Braden/NNN; sem somar conjuntos heterogéneos."
+            ),
         },
         {
             "id": "F11",
@@ -624,7 +629,7 @@ def plan_fronts() -> dict:
             "F1 replay offline a cada extract",
             "F2 HOLD: MCP read_only DOCUMENTADO; schema SQL EVIDENCE_PENDING; sem senha neste ciclo",
             "F9 COMPARE pages_full vs pilotos; catálogo de pendências REG; sem unzip",
-            "F10 vacinas 15 CAL-VAC PATTERN_CANDIDATE; 32 EVIDENCE_PENDING",
+            "F10 COMPARE_ACCEPTED 11+24+15; claimed 32 EVIDENCE_PENDING; sem promover CAL-VAC",
             "F12 NNN OPT-B REGISTERED: códigos+deep-link; texto licenciado withheld",
             "F15 PGDADOS /pgdados explícito no perfil ISO (não certificação)",
             "F18 OG first-party LinkedIn; 151 cards Drive não copiados",
@@ -667,7 +672,10 @@ def plan_fronts() -> dict:
         {
             "id": "GAP-L60-LIBRARIES",
             "status": "COMPARE_ONLY",
-            "reason": "15 CAL-VAC no zip de vacinas. 11 dispositivos + 24 tipos clínicos no zip de templates. 32 APIs EVIDENCE_PENDING.",
+            "reason": (
+                "Owner COMPARE_ACCEPTED. Observados 11 device + 24 tipos clínicos + 15 CAL-VAC. "
+                "Claimed 32 APIs permanece EVIDENCE_PENDING. Sem promover CAL-VAC/Braden/NNN."
+            ),
         },
         {
             "id": "GAP-L80-L120-API",

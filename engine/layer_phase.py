@@ -131,7 +131,11 @@ def _layer_spec() -> dict[str, dict]:
             ],
             "identities": ["MD-PGDADOS-001", "INS-LEI-9610-1998"],
             "reg_instruments": ["INS-LEI-9610-1998", "PGD-INSTR-PLANO"],
-            "gap": "PGDADOS Parte 3 PDF EVIDENCE_PENDING. Cláusula ISO CLAUSE_TEXT_UNAVAILABLE.",
+            "gap": (
+                "Reprobe HTML ao vivo: hub+guia HTTP 200; Parte 3 ainda só rótulo (sem href PDF); "
+                "cartilhas vol. 4 e 5 mencionadas no hub sem href volume-4/volume-5. "
+                "Cláusula ISO CLAUSE_TEXT_UNAVAILABLE. mwpt/ABNT não copiados."
+            ),
             "do_not": "Substituir cláusula ISO licenciada por PGDADOS.",
             "unblock": None,
         },
@@ -179,11 +183,18 @@ def _layer_spec() -> dict[str, dict]:
             "evidence": [
                 "cko_inbox/extracted/vaccines_zip_inventory.json",
                 "cko_inbox/extracted/templates_bibliotecas_compare.json",
+                "cko_md/library_api_map.json",
+                "cko_md/library_32_compare.json",
             ],
             "identities": ["SET-VAC-15", "SET-DEVICE-11", "SET-CLINICAL-24"],
             "reg_instruments": [],
-            "gap": "32 bibliotecas EVIDENCE_PENDING. CAL-VAC não promovido.",
-            "do_not": "Inventar 32 adapters. Promover CAL-VAC.",
+            "gap": (
+                "Owner COMPARE_ACCEPTED para UNBLOCK-32-LIST: evidência observada persistida "
+                "(11 PAHO/device + 24 objetos clínicos + 15 CAL-VAC). "
+                "Claimed 32 permanece EVIDENCE_PENDING. "
+                "Não inventar 32 adapters; não promover CAL-VAC/Braden/NNN."
+            ),
+            "do_not": "Inventar 32 adapters. Promover CAL-VAC. Somar conjuntos heterogéneos até dar 32.",
             "unblock": "UNBLOCK-32-LIST",
         },
         "L70": {
@@ -806,6 +817,9 @@ def _enrich_profiles(catalog: dict) -> None:
 
 
 def evaluate_layer_md_reg() -> dict:
+    from .govlib import compare_claimed_32
+
+    compare_claimed_32()
     catalog = compose_layer_md_reg_phase()
     _dump(CATALOG_PATH, catalog)
     _enrich_profiles(catalog)

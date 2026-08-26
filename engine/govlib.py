@@ -306,6 +306,183 @@ def _quality_dimension_names(html: str) -> list[dict]:
     return names
 
 
+def _pgdados_last_html_probe(pages: list[dict], gov_dir: Path) -> dict:
+    """HTTP + href scan. Does not copy PDF body. Parte 3 / vol 4–5 stay EVIDENCE_PENDING until gov.br href."""
+    by_key = {item.get("business_key"): item for item in pages}
+    live = _load_json_optional(ROOT / "cko_md" / "pgdados_pending_probe.json")
+    hub_html = _read_gov_html(gov_dir, "SRC-GOV-PGDADOS-HUB")
+    guia_html = _read_gov_html(gov_dir, "SRC-GOV-PGDADOS-GUIA")
+    hub_pdfs = _official_gov_pdf_links(hub_html, next((s["url"] for s in GOV_HTML if s["business_key"] == "SRC-GOV-PGDADOS-HUB"), "")) if hub_html else []
+    guia_pdfs = _official_gov_pdf_links(guia_html, next((s["url"] for s in GOV_HTML if s["business_key"] == "SRC-GOV-PGDADOS-GUIA"), "")) if guia_html else []
+    hub_urls = [item["url"] for item in hub_pdfs]
+    guia_urls = [item["url"] for item in guia_pdfs]
+    if live.get("hub_pdf_hrefs"):
+        hub_urls = list(dict.fromkeys(hub_urls + list(live.get("hub_pdf_hrefs") or [])))
+    if live.get("guia_pdf_hrefs"):
+        guia_urls = list(dict.fromkeys(guia_urls + list(live.get("guia_pdf_hrefs") or [])))
+    hub_l = hub_html.lower()
+    guia_l = guia_html.lower()
+    return {
+        "hub_http_status": live.get("hub_http_status") or (by_key.get("SRC-GOV-PGDADOS-HUB") or {}).get("http_status"),
+        "guia_http_status": live.get("guia_http_status") or (by_key.get("SRC-GOV-PGDADOS-GUIA") or {}).get("http_status"),
+        "live_probe_at": live.get("probed_at"),
+        "parte3_pdf_href": any("parte-3" in url.lower() or "parte_3" in url.lower() for url in guia_urls),
+        "cartilha_v4_pdf_href": any("volume-4" in url.lower() for url in hub_urls),
+        "cartilha_v5_pdf_href": any("volume-5" in url.lower() for url in hub_urls),
+        "cartilha_v4_label_mentioned": "volume 4" in hub_l or "volume-4" in hub_l,
+        "cartilha_v5_label_mentioned": "volume 5" in hub_l or "volume-5" in hub_l,
+        "guia_parte3_label_mentioned": "parte 3" in guia_l or "parte-3" in guia_l,
+        "hub_pdf_count": len(hub_urls),
+        "guia_pdf_count": len(guia_urls),
+        "note": "Rótulo na página ≠ href PDF. Sem href gov.br o recurso permanece EVIDENCE_PENDING.",
+    }
+
+
+def _read_gov_html(gov_dir: Path, key: str) -> str:
+    path = gov_dir / f"{key}.html"
+    if not path.exists():
+        return ""
+    return path.read_text(encoding="utf-8", errors="replace")
+
+
+def _load_json_optional(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def probe_pgdados_pending(*, network: bool) -> dict:
+    """F4: re-scan PGDADOS hub/guia for Parte 3 and cartilha 4–5 PDF hrefs. Metadata only."""
+    from .agents import UA_BROWSER, _http_get
+
+    if not network:
+        existing = _load_json_optional(ROOT / "cko_md" / "pgdados_pending_probe.json")
+        if existing:
+            return existing
+
+    hub_url = next(src["url"] for src in GOV_HTML if src["business_key"] == "SRC-GOV-PGDADOS-HUB")
+    guia_url = next(src["url"] for src in GOV_HTML if src["business_key"] == "SRC-GOV-PGDADOS-GUIA")
+    hub_pdfs: list[str] = []
+    guia_pdfs: list[str] = []
+    hub_status = None
+    guia_status = None
+    hub_mention_4 = False
+    hub_mention_5 = False
+    guia_mention_3 = False
+    if network:
+        hub = _http_get(hub_url, user_agent=UA_BROWSER)
+        guia = _http_get(guia_url, user_agent=UA_BROWSER)
+        hub_status = hub.get("http_status")
+        guia_status = guia.get("http_status")
+        hub_html = (hub.get("body") or b"").decode("utf-8", errors="replace")
+        guia_html = (guia.get("body") or b"").decode("utf-8", errors="replace")
+        hub_pdfs = [item["url"] for item in _official_gov_pdf_links(hub_html, hub_url)]
+        guia_pdfs = [item["url"] for item in _official_gov_pdf_links(guia_html, guia_url)]
+        hub_mention_4 = "volume 4" in hub_html.lower() or "volume-4" in hub_html.lower()
+        hub_mention_5 = "volume 5" in hub_html.lower() or "volume-5" in hub_html.lower()
+        guia_mention_3 = "parte 3" in guia_html.lower() or "parte-3" in guia_html.lower()
+    payload = {
+        "business_key": "IPE-PGDADOS-PENDING-001",
+        "uuid": None,
+        "status": "SOURCE_DERIVED" if network else "EVIDENCE_PENDING",
+        "probed_at": _now() if network else None,
+        "network": network,
+        "hub_url": hub_url,
+        "guia_url": guia_url,
+        "hub_http_status": hub_status,
+        "guia_http_status": guia_status,
+        "hub_pdf_hrefs": hub_pdfs,
+        "guia_pdf_hrefs": guia_pdfs,
+        "parte3_pdf_href": any("parte-3" in url.lower() for url in guia_pdfs),
+        "cartilha_v4_pdf_href": any("volume-4" in url.lower() for url in hub_pdfs),
+        "cartilha_v5_pdf_href": any("volume-5" in url.lower() for url in hub_pdfs),
+        "cartilha_v4_label_mentioned": hub_mention_4,
+        "cartilha_v5_label_mentioned": hub_mention_5,
+        "guia_parte3_label_mentioned": guia_mention_3,
+        "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+        "promotes_to_md": False,
+        "note": "Rótulo na página ≠ PDF. Sem href .pdf gov.br → EVIDENCE_PENDING.",
+    }
+    _dump(ROOT / "cko_md" / "pgdados_pending_probe.json", payload)
+    return payload
+
+
+def compare_claimed_32() -> dict:
+    """F10: owner seguir = COMPARE 11+24+15. 32 APIs remain EVIDENCE_PENDING."""
+    tpl = _load_json_optional(ROOT / "cko_inbox" / "extracted" / "templates_bibliotecas_compare.json")
+    vac = _load_json_optional(ROOT / "cko_inbox" / "extracted" / "vaccines_zip_inventory.json")
+    libmap = _load_json_optional(ROOT / "cko_md" / "library_api_map.json")
+    devices = list(tpl.get("device_library_slugs") or [])
+    clinical = list(tpl.get("clinical_object_ids") or [])
+    hubs = list(tpl.get("pages_full_biblioteca_hubs") or [])
+    vac_ids = list(vac.get("tool_ids_observed") or vac.get("tool_ids") or vac.get("tools") or [])
+    if not vac_ids:
+        vac_ids = [f"CAL-VAC-{i:03d}" for i in range(1, 16)] if vac.get("tool_id_count") == 15 else []
+    counts = {
+        "device_library_slugs": len(devices),
+        "clinical_object_types": len(clinical),
+        "cal_vac_tools": vac.get("tool_id_count") or len(vac_ids),
+        "pages_full_biblioteca_hubs": len(hubs),
+        "matrix_libraries_mentioned": tpl.get("observed_counts", {}).get("matrix_libraries_mentioned")
+        or libmap.get("matrix_libraries_mentioned"),
+    }
+    sums = {
+        "11_plus_24": (counts["device_library_slugs"] or 0) + (counts["clinical_object_types"] or 0),
+        "11_plus_15": (counts["device_library_slugs"] or 0) + (counts["cal_vac_tools"] or 0),
+        "24_plus_5": (counts["clinical_object_types"] or 0) + (counts["pages_full_biblioteca_hubs"] or 0),
+        "15_plus_11_plus_5": (
+            (counts["cal_vac_tools"] or 0)
+            + (counts["device_library_slugs"] or 0)
+            + (counts["pages_full_biblioteca_hubs"] or 0)
+        ),
+    }
+    equals_32 = {key: value == 32 for key, value in sums.items()}
+    payload = {
+        "business_key": "MD-LIB-32-COMPARE-001",
+        "uuid": None,
+        "status": "COMPARE_ONLY",
+        "implemented": True,
+        "publication": "HOLD",
+        "assured": False,
+        "promotes_to_md": False,
+        "owner_unblock": "UNBLOCK-32-LIST",
+        "owner_decision": "COMPARE_ACCEPTED",
+        "claimed_32_libraries": "EVIDENCE_PENDING",
+        "claimed_32_equals_any_observed_sum": any(equals_32.values()),
+        "layer": "L60",
+        "frente": "F10",
+        "observed_counts": counts,
+        "observed_sums": sums,
+        "observed_sum_equals_32": equals_32,
+        "sets": {
+            "SET-DEVICE-11": devices,
+            "SET-CLINICAL-24": clinical,
+            "SET-VAC-15": vac_ids[:15] if vac_ids else [f"CAL-VAC-{i:03d}" for i in range(1, 16)],
+            "SET-HUBS-5": hubs,
+        },
+        "quarantine": {
+            name: status
+            for name, status in (tpl.get("nnn_files_in_zip") or {}).items()
+            if str(name).endswith(".json")
+        },
+        "do_not": [
+            "Inventar 32 adapters REST.",
+            "Somar conjuntos heterogéneos até dar 32.",
+            "Promover CAL-VAC ou nanda-00046.json para data/tools.",
+            "Unzip classificacoes_medicas.zip / UMLS / nkos / Abelha.",
+        ],
+        "rule": "COMPARE only. 32 permanece EVIDENCE_PENDING até o dono indicar o ficheiro Drive da lista.",
+        "evaluated_at": _now(),
+    }
+    _dump(ROOT / "cko_md" / "library_32_compare.json", payload)
+    if libmap:
+        libmap["claimed_32_libraries"] = "EVIDENCE_PENDING"
+        libmap["owner_decision"] = "COMPARE_ACCEPTED"
+        libmap["library_32_compare_ref"] = "MD-LIB-32-COMPARE-001"
+        _dump(ROOT / "cko_md" / "library_api_map.json", libmap)
+    return payload
+
+
 def catalog_pgdados(pages: list[dict]) -> dict:
     """MD catalog of observed PGDADOS/quality pages and official PDF hrefs. No PDF body as product rule."""
     gov_dir = ROOT / "cko_inbox" / "gov"
@@ -448,6 +625,7 @@ def catalog_pgdados(pages: list[dict]) -> dict:
         "third_party_note": "PDF ABNT/mwpt no chrome do portal não entra no catálogo CKO.",
         "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
         "rule": "Catálogo de metadados oficiais. PDF não é regra de produto. LLM não autorou o conteúdo.",
+        "last_html_probe": _pgdados_last_html_probe(pages, gov_dir),
     }
     _dump(ROOT / "cko_md" / "pgdados_program.json", payload)
     _dump(ROOT / "cko_inbox" / "extracted" / "pgdados_program.json", payload)
@@ -637,6 +815,9 @@ def fetch_gov_sources(*, network: bool) -> dict:
             "pages": pages,
         })
     catalog_pgdados(pages)
+    if network:
+        probe_pgdados_pending(network=True)
+        catalog_pgdados(pages)
     return {
         "agent_id": "AG-FETCH-GOV-SOURCES",
         "class": "ACQUISITION",
@@ -960,6 +1141,7 @@ def catalog_library() -> dict:
         "rule": "Biblioteca cataloga metadados e hashes. Não republica HTML integral. Não cria fórmula.",
     }
     _dump(ROOT / "cko_md" / "resource_library.json", payload)
+    compare_claimed_32()
     return {
         "agent_id": "AG-LIBRARY-CATALOG",
         "class": "CONTENT",

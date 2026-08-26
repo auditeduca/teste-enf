@@ -534,6 +534,9 @@ def page_library(ctx: dict, **kwargs) -> str:
     lib = load_json(ROOT / "cko_md" / "resource_library.json")
     curr = load_json(ROOT / "cko_md" / "content_curriculum.json")
     libmap = load_json(ROOT / "cko_md" / "library_api_map.json")
+    cmp32 = load_json(ROOT / "cko_md" / "library_32_compare.json")
+    pgd = load_json(ROOT / "cko_md" / "pgdados_program.json")
+    pgd_probe = load_json(ROOT / "cko_md" / "pgdados_pending_probe.json")
     pages_pend = load_json(ROOT / "cko_md" / "pages_full_reg_pendencies.json")
     clin = load_json(ROOT / "cko_md" / "clinical_dictionary_catalog.json")
     nnn_id = load_json(ROOT / "cko_md" / "nnn_identity_catalog.json")
@@ -639,15 +642,68 @@ def page_library(ctx: dict, **kwargs) -> str:
         [esc(item.get("artifact_id")), esc(item.get("artifact_class")), esc(item.get("file"))]
         for item in (ucp.get("missing_from_register") or [])
     ]
+    observed = cmp32.get("observed_counts") or {}
+    sums = cmp32.get("observed_sums") or {}
+    equals = cmp32.get("observed_sum_equals_32") or {}
+    cmp_count_rows = [
+        [esc(key), esc(value), "EVIDENCE_PENDING", "conjunto observado; não é as 32 APIs"]
+        for key, value in observed.items()
+    ]
+    cmp_sum_rows = [
+        [
+            esc(key),
+            esc(value),
+            esc(equals.get(key)),
+            "nenhuma soma observada equivale a 32" if not equals.get(key) else "FALHA: soma = 32",
+        ]
+        for key, value in sums.items()
+    ]
+    guia_parts = {item.get("part"): item for item in (pgd.get("guia_parts") or [])}
+    cartilhas = {item.get("volume"): item for item in (pgd.get("cartilhas") or [])}
+    last_probe = pgd.get("last_html_probe") or {}
+    pgd_rows = [
+        [
+            "Guia Parte 3",
+            esc((guia_parts.get(3) or {}).get("status") or "EVIDENCE_PENDING"),
+            esc((guia_parts.get(3) or {}).get("url") or "null"),
+            esc(last_probe.get("parte3_pdf_href") if last_probe else pgd_probe.get("parte3_pdf_href")),
+            "rótulo ≠ href PDF gov.br",
+        ],
+        [
+            "Cartilha vol. 4",
+            esc((cartilhas.get(4) or {}).get("status") or "EVIDENCE_PENDING"),
+            esc((cartilhas.get(4) or {}).get("url") or "null"),
+            esc(last_probe.get("cartilha_v4_pdf_href") if last_probe else pgd_probe.get("cartilha_v4_pdf_href")),
+            "mencionada no hub; sem href volume-4",
+        ],
+        [
+            "Cartilha vol. 5",
+            esc((cartilhas.get(5) or {}).get("status") or "EVIDENCE_PENDING"),
+            esc((cartilhas.get(5) or {}).get("url") or "null"),
+            esc(last_probe.get("cartilha_v5_pdf_href") if last_probe else pgd_probe.get("cartilha_v5_pdf_href")),
+            "mencionada no hub; sem href volume-5",
+        ],
+    ]
     inner = f"""
     <header class="page-hero">
       <h1>Biblioteca de recursos.</h1>
       <p class="lede">Catálogo MD + currículo documental + legislação federal do Congresso + PGDADOS (SGD). Sem HTML/PDF integral. Sem LLM. Publicação HOLD. PLP bloqueado. COREN sem API REST.</p>
-      <p class="hold-banner">Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Pendências ALTA {esc(curr.get("pending_high_count"))} · Alertas {esc(alerts.get("population"))} · 32 bibliotecas={esc(libmap.get("claimed_32_libraries") or "EVIDENCE_PENDING")}</p>
+      <p class="hold-banner">Recursos {esc(lib.get("population"))} · Unidades {esc(curr.get("population"))} · Leis {esc(laws.get("population"))} · Pendências ALTA {esc(curr.get("pending_high_count"))} · Alertas {esc(alerts.get("population"))} · 32 bibliotecas={esc(libmap.get("claimed_32_libraries") or cmp32.get("claimed_32_libraries") or "EVIDENCE_PENDING")} · F10={esc(cmp32.get("owner_decision") or libmap.get("owner_decision") or "HOLD")}</p>
     </header>
     <section class="panel">
+      <h2>32 APIs COMPARE ({esc(cmp32.get("business_key") or "MD-LIB-32-COMPARE-001")})</h2>
+      <p>Dono UNBLOCK-32-LIST={esc(cmp32.get("owner_decision") or "COMPARE_ACCEPTED")}. Claimed 32={esc(cmp32.get("claimed_32_libraries") or "EVIDENCE_PENDING")}. Soma observada = 32? {esc(cmp32.get("claimed_32_equals_any_observed_sum"))}. Sem inventar adapters. Sem promover CAL-VAC, Braden ou NNN.</p>
+      {_table(["conjunto", "n observado", "claimed 32", "nota"], cmp_count_rows or [["rode extract", "—", "EVIDENCE_PENDING", "—"]])}
+      {_table(["soma heterogénea", "n", "equals 32", "nota"], cmp_sum_rows or [["—", "—", "false", "—"]])}
+    </section>
+    <section class="panel">
+      <h2>PGDADOS Parte 3 / cartilhas 4–5 ({esc(pgd.get("business_key") or "MD-PGDADOS-001")})</h2>
+      <p>Probe ao vivo hub HTTP {esc(pgd_probe.get("hub_http_status") or last_probe.get("hub_http_status") or "—")} · guia HTTP {esc(pgd_probe.get("guia_http_status") or last_probe.get("guia_http_status") or "—")} · probed_at {esc(pgd_probe.get("probed_at") or last_probe.get("live_probe_at") or "offline")}. Rótulo na página ≠ href PDF. Sem copiar corpo PDF. mwpt/ABNT ignorados.</p>
+      {_table(["recurso", "status", "url", "href PDF", "nota"], pgd_rows)}
+    </section>
+    <section class="panel">
       <h2>Mapa L60 observado vs 32 reivindicadas ({esc(libmap.get("business_key") or "MD-LIB-API-MAP-001")})</h2>
-      <p>Contagens COMPARE do Drive. 32 APIs permanecem EVIDENCE_PENDING. Sem promover CAL-VAC nem nanda-00046.json.</p>
+      <p>Contagens COMPARE do Drive. 32 APIs permanecem EVIDENCE_PENDING. Sem promover CAL-VAC nem nanda-00046.json. Decisão dono={esc(libmap.get("owner_decision") or "COMPARE_ACCEPTED")}.</p>
       {_table(["conjunto", "n", "tipo", "API", "nota"], set_rows or [["—", "—", "—", "—", "mapa ainda não gerado"]])}
       {_table(["camada", "adapter", "HTTP", "estado", "nota"], layer_api_rows or [["—", "—", "—", "HOLD", "—"]])}
     </section>
@@ -1133,6 +1189,8 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
         ROOT / "cko_md" / "translation_envelopes.json",
         ROOT / "cko_md" / "nnn_identity_catalog.json",
         ROOT / "cko_md" / "ucp_v2_compare.json",
+        ROOT / "cko_md" / "library_32_compare.json",
+        ROOT / "cko_md" / "pgdados_pending_probe.json",
         ROOT / "cko_md" / "layer_md_reg_phase.json",
     ):
         if source.exists():
