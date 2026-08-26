@@ -1,0 +1,56 @@
+{
+  "business_key": "MD-CONCEPT-RENDER-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": false,
+  "publication": "HOLD",
+  "assured": false,
+  "layers": ["L150", "L160"],
+  "curriculum_ref": "MD-CONTENT-CURR-001",
+  "nnn_rights_ref": "MD-NNN-RIGHTS-001",
+  "title": "Guia e questão por conceito único via renderer",
+  "rule": "Um conceito → uma identidade MD → projeções. Renderer PRESENTATION_ONLY. LLM não é autor canónico.",
+  "identity": {
+    "business_key_pattern": "CKO-CONCEPT-{slug}",
+    "uuid": null,
+    "uuid_policy": "HOLD até UUIDv7 no bootstrap",
+    "reg_required": true
+  },
+  "projections": [
+    {
+      "id": "PROJ-L150-GUIDE",
+      "layer": "L150",
+      "levels": ["BASICO", "FUNDAMENTOS", "PROCEDIMENTO", "INTERPRETACAO", "AVANCADO"],
+      "source": "Envelope já existente em content_curriculum / data/tools. Sem texto novo inventado."
+    },
+    {
+      "id": "PROJ-L160-FLASHCARD",
+      "layer": "L160",
+      "source": "O mesmo conceito. Frente/verso = campos MD, não geração LLM."
+    },
+    {
+      "id": "PROJ-L160-QUIZ",
+      "layer": "L160",
+      "source": "Itens originais Audit Educa (piloto simulado-tecnico). Edge Function extrair-questoes-enfermagem = slug only, não invocar."
+    }
+  ],
+  "renderer": {
+    "engine": "engine.generate.build",
+    "mode": "PRESENTATION_ONLY",
+    "llm_canonical": "FORBIDDEN",
+    "nnn_label": "Só com license_token no sidecar privado. Sem token → código + texto indisponível (licença)."
+  },
+  "do_not": [
+    "Gerar banco de questões com LLM",
+    "Copiar provas de terceiros sem rights",
+    "Copiar rótulo NANDA/NIC/NOC do Drive para o GitHub",
+    "Tratar HTML pages_full como guia canónico"
+  ],
+  "pilot_concepts": [
+    "gotejamento",
+    "meows",
+    "cinco-ts-pcr",
+    "simulado-tecnico"
+  ],
+  "hold": ["dimensionamento"]
+}

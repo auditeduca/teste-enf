@@ -1,0 +1,218 @@
+{
+  "id": "2a7f0c44-1d8b-4c55-b9e0-7e4d2a91c3f1",
+  "code": "SCALE-MEOWS-001",
+  "slug": "meows",
+  "kind": "scale",
+  "version": "0.1.0",
+  "status": "review",
+  "seo": {
+    "title": "MEOWS — alerta precoce obstétrico",
+    "description": "Some os oito parâmetros fisiológicos do MEOWS e classifique o risco de deterioração materna."
+  },
+  "breadcrumb": { "category": "Obstetrícia" },
+  "overview": {
+    "name": "MEOWS",
+    "acronym": "MEOWS",
+    "categoryBadge": "Obstetrícia",
+    "objective": "Estratificar o risco de deterioração clínica em gestantes e puérperas a partir de oito parâmetros fisiológicos.",
+    "indication": "Monitorização de alerta precoce em internamento obstétrico. Não substitui avaliação clínica completa nem decisão médica.",
+    "targetPopulation": "Gestantes e puérperas em ambiente hospitalar.",
+    "specialty": ["Enfermagem obstétrica", "Urgência"],
+    "averageTime": "2 minutos",
+    "evidenceLevel": "II",
+    "originalAuthors": ["CEMACH / sistemas de alerta precoce obstétrico"],
+    "organizations": ["Ministério da Saúde"],
+    "complexity": "intermediate"
+  },
+  "calculator": {
+    "inputs": [
+      {
+        "id": "temperatura",
+        "type": "select",
+        "label": "Temperatura (°C)",
+        "description": "Aferição térmica materna.",
+        "defaultValue": 0,
+        "options": [
+          { "value": "t2l", "label": "≤ 35.0 (2 pts)", "score": 2 },
+          { "value": "t1", "label": "35.1 a 36.0 (1 pt)", "score": 1 },
+          { "value": "t0", "label": "36.1 a 37.9 (0 pts)", "score": 0 },
+          { "value": "t2h", "label": "≥ 38.0 (2 pts)", "score": 2 }
+        ]
+      },
+      {
+        "id": "pas",
+        "type": "select",
+        "label": "PA sistólica (mmHg)",
+        "description": "Pressão arterial sistólica atual.",
+        "defaultValue": 0,
+        "options": [
+          { "value": "s2l", "label": "≤ 90 (2 pts)", "score": 2 },
+          { "value": "s1l", "label": "91 a 100 (1 pt)", "score": 1 },
+          { "value": "s0", "label": "101 a 149 (0 pts)", "score": 0 },
+          { "value": "s1h", "label": "150 a 159 (1 pt)", "score": 1 },
+          { "value": "s2h", "label": "≥ 160 (2 pts)", "score": 2 }
+        ]
+      },
+      {
+        "id": "pad",
+        "type": "select",
+        "label": "PA diastólica (mmHg)",
+        "description": "Pressão arterial diastólica atual.",
+        "defaultValue": 0,
+        "options": [
+          { "value": "d0", "label": "≤ 89 (0 pts)", "score": 0 },
+          { "value": "d1", "label": "90 a 99 (1 pt)", "score": 1 },
+          { "value": "d2", "label": "≥ 100 (2 pts)", "score": 2 }
+        ]
+      },
+      {
+        "id": "fc",
+        "type": "select",
+        "label": "Frequência cardíaca (bpm)",
+        "description": "Batimentos cardíacos maternos.",
+        "defaultValue": 0,
+        "options": [
+          { "value": "fc2l", "label": "≤ 40 (2 pts)", "score": 2 },
+          { "value": "fc1l", "label": "41 a 50 (1 pt)", "score": 1 },
+          { "value": "fc0", "label": "51 a 99 (0 pts)", "score": 0 },
+          { "value": "fc1h", "label": "100 a 119 (1 pt)", "score": 1 },
+          { "value": "fc2h", "label": "≥ 120 (2 pts)", "score": 2 }
+        ]
+      },
+      {
+        "id": "fr",
+        "type": "select",
+        "label": "Frequência respiratória (irpm)",
+        "description": "Incursões respiratórias por minuto.",
+        "defaultValue": 0,
+        "options": [
+          { "value": "fr2l", "label": "≤ 10 (2 pts)", "score": 2 },
+          { "value": "fr0", "label": "11 a 20 (0 pts)", "score": 0 },
+          { "value": "fr1", "label": "21 a 29 (1 pt)", "score": 1 },
+          { "value": "fr2h", "label": "≥ 30 (2 pts)", "score": 2 }
+        ]
+      },
+      {
+        "id": "satO2",
+        "type": "select",
+        "label": "Saturação de O₂ (%)",
+        "description": "Saturação periférica de oxigênio.",
+        "defaultValue": 0,
+        "options": [
+          { "value": "sat2", "label": "≤ 95% (2 pts)", "score": 2 },
+          { "value": "sat0", "label": "96 a 100% (0 pts)", "score": 0 }
+        ]
+      },
+      {
+        "id": "dor",
+        "type": "select",
+        "label": "Dor pélvica/abdominal",
+        "description": "Escore subjetivo 0–3 agrupado.",
+        "defaultValue": 0,
+        "options": [
+          { "value": "dor0", "label": "Normal (0 a 1) (0 pts)", "score": 0 },
+          { "value": "dor1", "label": "Anormal (2 a 3) (1 pt)", "score": 1 }
+        ]
+      },
+      {
+        "id": "consciencia",
+        "type": "select",
+        "label": "Nível de consciência (AVDI)",
+        "description": "Estado neurológico materno.",
+        "defaultValue": 0,
+        "options": [
+          { "value": "c0", "label": "Alerta (A) (0 pts)", "score": 0 },
+          { "value": "c1", "label": "Verbal (V) (1 pt)", "score": 1 },
+          { "value": "c2", "label": "Dor ou inconsciente (D, I) (2 pts)", "score": 2 }
+        ]
+      }
+    ],
+    "formula": {
+      "type": "sum",
+      "resultLabel": "Escore MEOWS",
+      "resultUnit": "pontos",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {
+        "min": 0, "max": 2,
+        "label": "Baixo risco",
+        "riskLevel": "low",
+        "color": "#15803d",
+        "clinicalImplications": "Escore baixo. Manter monitoramento de rotina materno-fetal conforme protocolo institucional.",
+        "recommendations": "• Continuar sinais vitais de rotina\n• Reavaliar se houver queixa nova\n• Registrar o escore e o horário"
+      },
+      {
+        "min": 3, "max": 4,
+        "label": "Risco moderado",
+        "riskLevel": "moderate",
+        "color": "#ca8a04",
+        "clinicalImplications": "Deterioração possível. Intensificar a vigilância e considerar acionamento da equipe médica.",
+        "recommendations": "• Monitorar a cada 30–60 minutos\n• Avaliação clínica detalhada\n• Comunicar a equipe obstétrica"
+      },
+      {
+        "min": 5, "max": 15,
+        "label": "Risco elevado",
+        "riskLevel": "critical",
+        "color": "#b91c1c",
+        "clinicalImplications": "Alerta alto de deterioração obstétrica. Acionamento imediato e monitoramento contínuo.",
+        "recommendations": "• Acionar a equipe obstétrica imediatamente\n• Monitoramento contínuo (5–15 min)\n• Iniciar intervenções do protocolo local"
+      }
+    ]
+  },
+  "sae": {
+    "status": "HOLD",
+    "nanda": [
+      {
+        "code": "00205",
+        "status": "CANDIDATE",
+        "diagnosis": "Risco de choque",
+        "definition": "Candidato após avaliação. O escore não fecha diagnóstico de enfermagem."
+      }
+    ],
+    "nic": [
+      {
+        "code": "6680",
+        "status": "HOLD",
+        "intervention": "Monitoração dos sinais vitais",
+        "activities": ["Repetir o escore", "Escalar conforme faixa de risco", "Registrar tendência"]
+      }
+    ],
+    "noc": [
+      {
+        "code": "0802",
+        "status": "HOLD",
+        "outcome": "Sinais vitais",
+        "indicators": ["Temperatura", "Pressão arterial", "Frequência cardíaca e respiratória"]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "O MEOWS soma parâmetros fisiológicos maternos para detectar deterioração precoce. Este objeto usa oito itens e três faixas de conduta educacional.",
+    "limitations": "Limiares e condutas devem seguir o protocolo da instituição. Este lote não afirma equivalência a uma edição licenciada específica da escala.",
+    "references": [
+      { "text": "BRASIL. Ministério da Saúde. Manual de gestação de alto risco. Brasília: MS." },
+      { "text": "SINGH, S. et al. A validation study of the CEMACH recommended modified early obstetric warning system (MEOWS)." }
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Um único parâmetro em 2 pontos já exige atenção, mesmo com escore total baixo.",
+      "Dor e consciência entram no escore; não avalie só números de monitor.",
+      "Trate a tendência: escore que sobe entre aferições é tão importante quanto o valor absoluto."
+    ],
+    "examples": [
+      { "label": "Estável", "sublabel": "todos 0", "emoji": "✅", "values": { "temperatura": "t0", "pas": "s0", "pad": "d0", "fc": "fc0", "fr": "fr0", "satO2": "sat0", "dor": "dor0", "consciencia": "c0" } },
+      { "label": "Alerta", "sublabel": "escore 6", "emoji": "🚨", "values": { "temperatura": "t2h", "pas": "s2h", "pad": "d0", "fc": "fc1h", "fr": "fr0", "satO2": "sat0", "dor": "dor1", "consciencia": "c0" } }
+    ]
+  },
+  "faq": [
+    { "q": "MEOWS substitui o exame obstétrico?", "a": "Não. É ferramenta de alerta. A conduta segue avaliação clínica e protocolo local." }
+  ],
+  "about": {
+    "title": "Como o escore é somado",
+    "html": "<p>Cada parâmetro contribui com 0, 1 ou 2 pontos. O total vai de 0 a 15. Faixas: 0–2 baixo, 3–4 moderado, ≥ 5 elevado.</p>"
+  }
+}

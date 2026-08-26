@@ -1,0 +1,211 @@
+{
+  "business_key": "MD-ISO8000-PROFILE-001",
+  "uuid": null,
+  "framework_ref": "FWK-ISO-8000-001",
+  "mask_id": "MASK-TECH-STD",
+  "name": "ISO 8000 — Data quality / master data (CKO profile)",
+  "official_catalog_url": "https://www.iso.org/standard/80766.html",
+  "pgdados_hub_url": "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados",
+  "pgdados_ref": "MD-PGDADOS-001",
+  "glossary_url": "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/glossario-de-termos-de-dados",
+  "binding_ref": "MD-ISO8000-PGDADOS-BIND-001",
+  "government_reference": "Referência operacional BR explícita: PGDADOS (SGD/MGI), https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados. Glossário: https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/glossario-de-termos-de-dados. Não substitui texto de cláusula ISO licenciada. Não é certificação ISO 8000.",
+  "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+  "licensed_body": false,
+  "certified": false,
+  "iso_implemented": false,
+  "cko_profile_applied": true,
+  "status": "PASS_PROFILE_ONLY",
+  "epistemic_status": "PROPOSED",
+  "note": "Perfil CKO de unicidade, proveniência, WORM, lineage e dicionário, vinculado aos instrumentos e dimensões PGDADOS. Envelopes i18n WHO/OMS (L310) não ligam o seletor de idioma. NÃO é implantação certificada da ISO 8000.",
+  "tests": [
+    {
+      "id": "ISO8000-CKO-UNIQUENESS",
+      "principle": "unique identification of master records",
+      "pgdados_term": "Dados Mestres",
+      "status": "PASS",
+      "observed": {
+        "pilot_slugs": [
+          "cinco-ts-pcr",
+          "dimensionamento",
+          "gotejamento",
+          "meows",
+          "simulado-tecnico"
+        ],
+        "uuid_generator": "HOLD"
+      }
+    },
+    {
+      "id": "ISO8000-CKO-PROVENANCE",
+      "principle": "provenance of source bytes (url, captured_at, sha256)",
+      "pgdados_term": "Metadados",
+      "status": "PASS",
+      "observed": {
+        "vault_objects": 54,
+        "pointers": 39
+      }
+    },
+    {
+      "id": "ISO8000-CKO-WORM",
+      "principle": "unaltered source copy retained",
+      "pgdados_term": "Integridade",
+      "status": "PASS",
+      "observed": {
+        "worm": true,
+        "population": 54
+      }
+    },
+    {
+      "id": "ISO8000-CKO-LINEAGE",
+      "principle": "source → master → projection completeness",
+      "pgdados_term": "Metadados",
+      "status": "PASS",
+      "observed": {
+        "links": 5,
+        "complete_count": 5
+      }
+    },
+    {
+      "id": "ISO8000-CKO-FIELD-DICT",
+      "principle": "data dictionary for master attributes",
+      "pgdados_term": "Atributos de referência",
+      "status": "PASS",
+      "observed": {
+        "fields": 49
+      }
+    },
+    {
+      "id": "ISO8000-CKO-NO-SILENT-OVERWRITE",
+      "principle": "no silent master-data overwrite",
+      "pgdados_term": "Integridade",
+      "status": "PASS",
+      "observed": {
+        "identity_scheme": "CKO-BK-1"
+      }
+    },
+    {
+      "id": "ISO8000-CKO-NO-CERT-CLAIM",
+      "principle": "do not claim ISO certification without licensed evidence",
+      "pgdados_term": "confiabilidade",
+      "status": "PASS",
+      "observed": {
+        "certified": false,
+        "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+        "iso_implemented": false
+      }
+    },
+    {
+      "id": "ISO8000-CKO-PGDADOS-EXPLICIT",
+      "principle": "Brazilian government operational reference is PGDADOS (SGD/MGI)",
+      "pgdados_term": "Programa de Governança de Dados",
+      "status": "PASS",
+      "observed": {
+        "pgdados_hub_url": "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados",
+        "pgdados_ref": "MD-PGDADOS-001",
+        "replaces_iso_clause_text": false
+      }
+    },
+    {
+      "id": "ISO8000-CKO-PGDADOS-INSTRUMENTS",
+      "principle": "bind CKO profile to the three PGDADOS implementation instruments",
+      "pgdados_term": "Programa de Governança de Dados",
+      "status": "PASS",
+      "observed": {
+        "instruments": [
+          "PGD-INSTR-POLITICA",
+          "PGD-INSTR-ESTRATEGIA",
+          "PGD-INSTR-PLANO"
+        ],
+        "guia_p3": "EVIDENCE_PENDING"
+      }
+    },
+    {
+      "id": "ISO8000-CKO-PGDADOS-QUALITY-DIMS",
+      "principle": "name PGDADOS data-quality dimensions from the official glossary",
+      "pgdados_term": "Qualidade dos Dados",
+      "status": "PASS",
+      "observed": {
+        "count": 7,
+        "names": [
+          "integridade",
+          "padronização",
+          "precisão",
+          "acurácia",
+          "atualização",
+          "acessibilidade",
+          "confiabilidade"
+        ],
+        "glossary_url": "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/glossario-de-termos-de-dados"
+      }
+    },
+    {
+      "id": "ISO8000-CKO-PGDADOS-BINDING",
+      "principle": "every ISO 8000 CKO field has a PGDADOS term/instrument binding",
+      "pgdados_term": "Atributos de referência",
+      "status": "PASS",
+      "observed": {
+        "fields": 49,
+        "links": 49,
+        "binding_ref": "MD-ISO8000-PGDADOS-BIND-001"
+      }
+    },
+    {
+      "id": "ISO8000-CKO-WHO-I18N",
+      "principle": "WHO/OMS official selector modulates international i18n envelopes",
+      "pgdados_term": "Interoperabilidade",
+      "status": "PASS",
+      "observed": {
+        "who_fields": [
+          "FLD-I18N-BCP47",
+          "FLD-I18N-GHO-INDICATOR",
+          "FLD-I18N-ICD-CODE",
+          "FLD-I18N-ICNP-CANDIDATE",
+          "FLD-I18N-LOCAL-VARIANT",
+          "FLD-I18N-PAHO-PT",
+          "FLD-I18N-TRANSLATION-OBJECT",
+          "FLD-I18N-WHO-LOCAL-KEY",
+          "FLD-I18N-WHO-OFFICIAL",
+          "FLD-I18N-WHO-REGION"
+        ],
+        "who_official": [
+          "en",
+          "ar",
+          "zh",
+          "fr",
+          "ru",
+          "es"
+        ],
+        "translation_gate": "HOLD",
+        "icd_icnp_dump": "FORBIDDEN",
+        "pt_br_in_who_selector": false
+      }
+    },
+    {
+      "id": "ISO8000-CKO-CLIN-DICT",
+      "principle": "Drive clinical dictionary modulates field/code envelopes without promoting scales",
+      "pgdados_term": "Atributos de referência",
+      "status": "PASS",
+      "observed": {
+        "clin_fields": [
+          "FLD-CLIN-DICT-CAMPO",
+          "FLD-ID-SCHEME",
+          "FLD-REF-ACCESSED",
+          "FLD-REF-TITLE",
+          "FLD-REF-URI",
+          "FLD-REF-VERSION",
+          "FLD-RND-CALCPREC",
+          "FLD-RND-DISPPREC",
+          "FLD-RND-MODE",
+          "FLD-RND-STAGE",
+          "FLD-TOOL-CODE",
+          "FLD-TOOL-SLUG"
+        ],
+        "braden_in_data_tools": false,
+        "adopt_uuid_v4": false,
+        "abnt_clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+        "catalog_ref": "MD-CLIN-DICT-001"
+      }
+    }
+  ],
+  "evaluated_at": "2026-08-25T21:50:45Z"
+}

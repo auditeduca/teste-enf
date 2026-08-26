@@ -1,0 +1,327 @@
+{
+  "business_key": "MD-FRONTS-PLAN-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": true,
+  "publication": "HOLD",
+  "assured": false,
+  "method_ref": "MD-OPS-METHOD-001",
+  "layer_intent_ref": "MD-LAYER-INTENT-001",
+  "nnn_rights_ref": "MD-NNN-RIGHTS-001",
+  "owner_unblock_ref": "MD-OWNER-UNBLOCK-001",
+  "library_api_map_ref": "MD-LIB-API-MAP-001",
+  "concept_renderer_ref": "MD-CONCEPT-RENDER-001",
+  "method": "RECOVER → COMPARE → GAP ONLY → REPERFORM → CLOSE",
+  "plan_policy": "Plano vivo em JSON. Agentes atuam nas frentes; não criam autoridade nem identidade REG.",
+  "maker_neq_checker": true,
+  "llm_authority": false,
+  "fronts": [
+    {
+      "id": "F1",
+      "name": "Inventário Drive",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-INVENTORY-DRIVE",
+        "AG-COMPARE-STORES"
+      ],
+      "gap": "GAP-DRIVE-INVENTORY",
+      "action": "Classificar listing persistido. Não unzip Abelha/grok/pages_full/nkos.",
+      "population": 118,
+      "pagination_complete": false,
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F2",
+      "name": "Leitura Supabase",
+      "status": "HOLD",
+      "agents": [
+        "AG-INVENTORY-SUPABASE"
+      ],
+      "gap": "GAP-SUPABASE-READ",
+      "action": "Dono HOLD. MCP .cursor/mcp.json read_only DOCUMENTADO. Schema SQL EVIDENCE_PENDING. Sem coletar SUPABASE_DB_PASSWORD. Sem list_tables. Sem inventar 172 entidades.",
+      "schema": "EVIDENCE_PENDING",
+      "owner_decision": "HOLD",
+      "gap_status": "BLOCKED"
+    },
+    {
+      "id": "F3",
+      "name": "Catálogo federal incremental",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-PROBE-CONGRESS-API",
+        "AG-FETCH-FEDERAL-LEGISLATION",
+        "AG-LIBRARY-CATALOG"
+      ],
+      "gap": "GAP-DEC-7508",
+      "action": "Só LCP/lei/DEC-n. Não misturar portaria de órgão neste tubo.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F4",
+      "name": "PGDADOS restante",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-FETCH-GOV-SOURCES",
+        "AG-LIBRARY-CATALOG"
+      ],
+      "gap": "GAP-PGDADOS",
+      "action": "Parte 3 PDF e cartilhas 4–5 EVIDENCE_PENDING. ABNT/mwpt ignorado.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F5",
+      "name": "Atos de órgão",
+      "status": "HOLD",
+      "agents": [
+        "AG-FETCH-REGULATED"
+      ],
+      "gap": "GAP-ORGAN-ACTS",
+      "action": "Portaria MS / Resolução COFEN = segundo tubo. Não ingestão em massa via Congresso.",
+      "gap_status": "HOLD"
+    },
+    {
+      "id": "F6",
+      "name": "COFEN REST",
+      "status": "EVIDENCE_PENDING",
+      "agents": [
+        "AG-API-PROBE",
+        "AG-FETCH-REGULATED"
+      ],
+      "gap": "GAP-COFEN-REST",
+      "action": "HTML observado. REST sem HTTP 200. Não inventar adapter. COREN CLOSED_NOT_OBSERVED.",
+      "gap_status": "EVIDENCE_PENDING"
+    },
+    {
+      "id": "F7",
+      "name": "Dimensionamento",
+      "status": "HOLD",
+      "agents": [
+        "AG-LINK-MD"
+      ],
+      "gap": "GAP-DIMENSIONAMENTO",
+      "action": "Cinco pilotos. Dimensionamento permanece HOLD.",
+      "gap_status": "HOLD"
+    },
+    {
+      "id": "F8",
+      "name": "Parecer 360",
+      "status": "QUARANTINE",
+      "agents": [
+        "AG-INVENTORY-DRIVE",
+        "AG-COMPARE-STORES"
+      ],
+      "gap": "GAP-PARECER-360",
+      "action": "Não promover workbook a golden MD.",
+      "gap_status": "QUARANTINE"
+    },
+    {
+      "id": "F9",
+      "name": "L30/L40 pages_full + institucionais",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-PARSE-PAGES-FULL",
+        "AG-COMPARE-STORES"
+      ],
+      "gap": "GAP-L30-L40-PAGES-FULL",
+      "action": "COMPARE stems (index/missão/política/termos + calculadoras) vs 5 pilotos. Catálogo de pendências REG (MD-PAGES-REG-PEND-001). Sem unzip em data/tools.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F10",
+      "name": "L60 bibliotecas + vacinas",
+      "status": "COMPARE_ONLY",
+      "agents": [
+        "AG-INVENTORY-DRIVE",
+        "AG-LIBRARY-CATALOG"
+      ],
+      "gap": "GAP-L60-LIBRARIES",
+      "owner_decision": "COMPARE_ACCEPTED",
+      "action": "COMPARE_ACCEPTED: persistir 11 device + 24 objetos clínicos + 15 CAL-VAC. Claimed 32 permanece EVIDENCE_PENDING. Sem inventar 32 adapters; sem promover CAL-VAC/Braden/NNN; sem somar conjuntos heterogéneos.",
+      "gap_status": "COMPARE_ONLY"
+    },
+    {
+      "id": "F11",
+      "name": "L80/L90/L100 API onde possível",
+      "status": "EVIDENCE_PENDING",
+      "agents": [
+        "AG-API-PROBE"
+      ],
+      "gap": "GAP-L80-L120-API",
+      "action": "Probe só HTTP 200. Sem dump LOINC/UMLS/classificacoes_medicas.zip.",
+      "gap_status": "EVIDENCE_PENDING"
+    },
+    {
+      "id": "F12",
+      "name": "NANDA/NIC/NOC rights-safe",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-PLAN-FRONTS",
+        "AG-RIGHTS-BIND"
+      ],
+      "gap": "GAP-NNN-RIGHTS",
+      "action": "Dono B: identidade+código+deep-link. Sem texto NANDA/NIC/NOC. nanda-00046.json permanece QUARANTINE.",
+      "owner_decision": "B",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F13",
+      "name": "L140/L150 API + pesquisa",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-API-PROBE",
+        "AG-LIBRARY-CATALOG"
+      ],
+      "gap": "GAP-L140-L150-API-RESEARCH",
+      "action": "Crossref/NCBI observados como busca. Resposta API ≠ canônico sem snapshot/hash/MD/REG.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F14",
+      "name": "L150/L160 guia por conceito",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-CONTENT-CURRICULUM"
+      ],
+      "gap": "GAP-L150-L160-CONCEPT-RENDERER",
+      "action": "Um conceito → uma identidade → renderer. LLM FORBIDDEN no canônico.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F15",
+      "name": "ISO 8000 + PGDADOS explícito",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-ISO8000-PROFILE",
+        "AG-LIBRARY-CATALOG"
+      ],
+      "gap": "GAP-ISO8000-PGDADOS",
+      "action": "URL PGDADOS /pgdados persistida no perfil ISO. Não substitui cláusula licenciada. Sem certificação.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F16",
+      "name": "Escalas: busca PubMed/COFEN/OMS",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-API-PROBE",
+        "AG-RIGHTS-BIND"
+      ],
+      "gap": "GAP-SCALE-LITERATURE",
+      "action": "Busca bibliográfica HTTP. SciELO 403 EVIDENCE_PENDING. Não republicar Braden/Norton/Glasgow.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F17",
+      "name": "pages_full catálogo de pendências REG",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-PARSE-PAGES-FULL",
+        "AG-CONTENT-CURRICULUM"
+      ],
+      "gap": "GAP-PAGES-REG-PEND",
+      "action": "Owner override: inventário demonstra gaps MD+REG+rights. Extração clínica em massa FORBIDDEN.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F18",
+      "name": "L280/L290/L300 OG+SEO+JSON-LD",
+      "status": "COMPARE_ONLY",
+      "agents": [
+        "AG-INVENTORY-DRIVE"
+      ],
+      "gap": "GAP-OG-SEO-JSONLD",
+      "action": "Drive 151 cards COMPARE. OG first-party 1200×630 no site piloto. JSON-LD WebSite/Organization. Sem MedicalOrganization.",
+      "gap_status": "COMPARE_ONLY"
+    },
+    {
+      "id": "F19",
+      "name": "Menu Drive COMPARE",
+      "status": "COMPARE_ONLY",
+      "agents": [
+        "AG-INVENTORY-DRIVE"
+      ],
+      "gap": "GAP-MENU-DRIVE",
+      "action": "151 destinos no menu.json Drive. Não promover mega-menu/Braden ao chrome público.",
+      "gap_status": "COMPARE_ONLY"
+    },
+    {
+      "id": "F20",
+      "name": "L310 i18n WHO/OMS",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-WHO-I18N",
+        "AG-ISO8000-PROFILE"
+      ],
+      "gap": "GAP-WHO-I18N",
+      "action": "Dono APPROVED chave who.en+local.pt-BR nos 5 pilotos. translation_gate HOLD. Seletor não ligado. Sem dump ICD/ICNP/GHO. Sem inventar strings EN.",
+      "owner_decision": "APPROVED",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F21",
+      "name": "Dicionário clínico Drive + códigos piloto",
+      "status": "COMPARE_ONLY",
+      "agents": [
+        "AG-CLIN-DICT",
+        "AG-ISO8000-PROFILE"
+      ],
+      "gap": "GAP-CLIN-DICT",
+      "action": "Dono enviou Dicionario clinico.zip (já observado). Sheets Content_Schemas/Meta_Schemas MISSING. Só FLD-* existentes. Sem Braden. UUIDv4 não adotado.",
+      "owner_decision": "RECEIVED",
+      "gap_status": "COMPARE_ONLY"
+    },
+    {
+      "id": "F22",
+      "name": "MD+REG 44 camadas faseadas",
+      "status": "REGISTERED",
+      "agents": [
+        "AG-LAYER-PHASE",
+        "AG-ISO8000-PROFILE"
+      ],
+      "gap": "GAP-LAYER-MD-REG",
+      "action": "Envelope MD+REG completo nas 44 (P0–P5). EXISTS≠POPULATED≠ASSURED. Sem certificação. Sem Braden.",
+      "gap_status": "REGISTERED"
+    },
+    {
+      "id": "F23",
+      "name": "UCP v2.0 COMPARE",
+      "status": "COMPARE_ONLY",
+      "agents": [
+        "AG-UCP-V2-COMPARE",
+        "AG-PLAN-FRONTS"
+      ],
+      "gap": "GAP-UCP-V2",
+      "action": "11 schemas 2020-12 + 2 CSV COMPARE. Não copiar para schemas/. CONTROLLED_CANDIDATE ≠ ASSURED. Modelos/piloto do registo EVIDENCE_PENDING.",
+      "gap_status": "COMPARE_ONLY"
+    },
+    {
+      "id": "F24",
+      "name": "L70 API ANVISA + dump Drive",
+      "status": "COMPARE_ONLY",
+      "agents": [
+        "AG-L70-ANVISA-COMPARE",
+        "AG-API-PROBE",
+        "AG-INVENTORY-DRIVE"
+      ],
+      "gap": "GAP-L70-ANVISA",
+      "action": "Usar Portal APIs ANVISA. SPA HTML 200 ≠ REST JSON de produto. Zip Drive 59.8 MB SKIP_BINARY_DUMP; 17231 não verificado. openFDA não substitui bula. Sem data/tools/insulina.json.",
+      "gap_status": "COMPARE_ONLY"
+    }
+  ],
+  "next_executable": [
+    "F1 replay offline a cada extract",
+    "F2 HOLD: MCP read_only DOCUMENTADO; schema SQL EVIDENCE_PENDING; sem senha neste ciclo",
+    "F9 COMPARE pages_full vs pilotos; catálogo de pendências REG; sem unzip",
+    "F10 COMPARE_ACCEPTED 11+24+15; claimed 32 EVIDENCE_PENDING; sem promover CAL-VAC",
+    "F12 NNN OPT-B REGISTERED: códigos+deep-link; texto licenciado withheld",
+    "F15 PGDADOS /pgdados explícito no perfil ISO (não certificação)",
+    "F18 OG first-party LinkedIn; 151 cards Drive não copiados",
+    "F20 chave who.en+local.pt-BR APPROVED; seletor HOLD; sem dump",
+    "F21 zip recebido COMPARE; sheets Content_Schemas/Meta_Schemas MISSING",
+    "F22 envelope MD+REG das 44 camadas P0–P5; sem claim 100% completo",
+    "F23 UCP v2 COMPARE; sem promover schemas 2020-12",
+    "F24 L70 Portal APIs ANVISA COMPARE; dump Drive não unzip; REST JSON HOLD até credencial",
+    "F3/F4 só com evidência HTTP/Congress já no tubo"
+  ],
+  "updated_at": "2026-08-26T01:54:16Z"
+}

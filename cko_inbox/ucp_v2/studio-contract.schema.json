@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-cko-policy": "POL-CKO-UCP-001-v2.0",
+  "x-cko-authority-chain": [
+    "CKO-MD",
+    "CKO-REG",
+    "EVIDENCE"
+  ],
+  "x-source-attachment-sha256": "78414fda55bb6391bd51e50ae9aeca9d9ad36cc713c4d52ba8f78dcfb6bfeeb1",
+  "$id": "urn:cko:schema:studio-contract:2.0",
+  "title": "CKO Studio Contract v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "mode",
+    "editable_surfaces",
+    "immutable_authority_surfaces",
+    "change_control",
+    "release_control"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "mode": {
+      "const": "CONTROL_PLANE_NOT_HTML_EDITOR"
+    },
+    "editable_surfaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "immutable_authority_surfaces": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "MD",
+          "REG",
+          "VALIDATED_EVIDENCE",
+          "RELEASE_HASH"
+        ]
+      }
+    },
+    "change_control": {
+      "type": "object",
+      "required": [
+        "required_for_validated_claim_change"
+      ],
+      "properties": {
+        "required_for_validated_claim_change": {
+          "const": true
+        }
+      }
+    },
+    "release_control": {
+      "type": "object",
+      "required": [
+        "preview",
+        "qa",
+        "release_gate"
+      ],
+      "properties": {
+        "preview": {
+          "const": true
+        },
+        "qa": {
+          "const": true
+        },
+        "release_gate": {
+          "const": true
+        }
+      }
+    },
+    "human_review_backlog": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

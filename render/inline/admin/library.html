@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca · CKO Studio</title>
+  <meta name="description" content="Biblioteca canônica e currículo.">
+  <meta name="theme-color" content="#1A3E74">
+  
+  <style>
+:root {
+  --navy-primary: #1A3E74;
+  --navy-medium: #1E4D8C;
+  --navy-dark: #163269;
+  --navy-hover: #122C54;
+  --navy-secondary: #003366;
+  --blue-light: #4A90E2;
+  --white: #ffffff;
+  --gray-bg: #f4f7fb;
+  --gray-text: #475569;
+  --ink: #12233a;
+  --line: #d7e1ee;
+  --risk: #1A3E74;
+  --hold: #92400e;
+  --hold-bg: #fff7ed;
+  --header-bg: #ffffff;
+  --a11y-focus: #ffd400;
+  --cor-foco-acessibilidade: #ff0;
+  --espacamento-linha: 1.5;
+  --espacamento-letra: 0em;
+  --header-height: 96px;
+  --a11y-height: 36px;
+  --lang-height: 46px;
+  --radius-control: 8px;
+  --font: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Nunito Sans", "Inter", "Segoe UI", sans-serif;
+}
+
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-600.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-900.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-900.woff2") format("woff2");font-weight:900;font-display:swap}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { color-scheme: light; }
+
+body {
+  margin: 0;
+  background: var(--gray-bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: var(--espacamento-linha);
+  letter-spacing: var(--espacamento-letra);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main { flex-grow: 1; }
+
+h1, h2, h3, h4, .brand, .result-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy-primary);
+}
+
+a { color: var(--navy-medium); }
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3.2rem;
+  background: var(--navy-dark);
+  color: var(--white);
+  padding: 0.55rem 0.9rem;
+  z-index: 20;
+}
+.skip-link:focus { top: 0.6rem; }
+
+:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-foco-acessibilidade, #ff0);
+  outline-offset: 2px;
+}
+
+#barraAcessibilidade {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 8px;
+  height: var(--a11y-height);
+  padding: 4px 20px;
+  background: var(--navy-primary);
+  color: var(--white);
+  z-index: 30;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+#barraAcessibilidade button {
+  appearance: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 28px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid hsla(0,0%,100%,.4);
+  color: var(--white);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+#barraAcessibilidade button:hover,
+#barraAcessibilidade button:focus-visible {
+  background: hsla(0,0%,100%,.15);
+  border-color: #fff;
+}
+#barraAcessibilidade svg { width: 16px; height: 16px; }
+.color-options { display: inline-flex; gap: 0.2rem; }
+.color-option {
+  width: 28px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 !important;
+  border-radius: 5px !important;
+  border: 2px solid hsla(0,0%,100%,.5) !important;
+}
+.color-option.selected,
+.color-option[aria-checked="true"] {
+  border-color: var(--cor-foco-acessibilidade, #ff0) !important;
+}
+#accessibilityToggleButton {
+  display: none;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--navy-primary);
+  color: var(--white);
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+#accessibilityToggleButton svg { width: 22px; height: 22px; }
+#pwaAcessibilidadeBar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 85%;
+  max-width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  transition: transform .3s ease-in-out;
+  background: var(--navy-primary);
+  color: var(--white);
+  z-index: 45;
+  padding: 20px;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0,0,0,.2);
+}
+#pwaAcessibilidadeBar.is-open { transform: translateX(0); }
+.pwa-acessibilidade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid hsla(0,0%,100%,.2);
+}
+.pwa-acessibilidade-header h3 { margin: 0; font-size: 1.25rem; color: var(--white); }
+.pwa-acessibilidade-close-btn {
+  background: transparent;
+  border: 0;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+#pwaAcessibilidadeBar button {
+  width: 100%;
+  padding: 10px 15px;
+  background: hsla(0,0%,100%,.1);
+  border: 1px solid hsla(0,0%,100%,.3);
+  border-radius: 5px;
+  color: var(--white);
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+#pwaAcessibilidadeBar button:hover { background: hsla(0,0%,100%,.2); }
+#pwaAcessibilidadeBar .pwa-acessibilidade-close-btn { width: auto; padding: 0 0.4rem; border: 0; background: transparent; }
+#pwaAcessibilidadeBar svg { width: 18px; height: 18px; }
+.color-options-pwa {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+  padding: 10px;
+  background: hsla(0,0%,100%,.1);
+  border-radius: 5px;
+}
+.color-options-pwa .color-option { width: 38px !important; height: 38px !important; }
+.menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 44;
+}
+.menu-overlay.is-open { display: block; }
+#keyboardShortcutsModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+}
+#keyboardShortcutsModal.show { display: flex; }
+.keyboard-modal-content {
+  background: var(--white);
+  color: var(--ink);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 32rem;
+  width: calc(100% - 2rem);
+  position: relative;
+}
+.keyboard-modal-content h3 { margin-top: 0; }
+.modal-close-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  border: 0;
+  background: transparent;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+#backToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(26,62,116,.8);
+  color: var(--white);
+  font-size: .875rem;
+  padding: .5rem 1rem;
+  border-radius: 9999px;
+  border: 0;
+  cursor: pointer;
+  z-index: 35;
+}
+#backToTopBtn:hover { background: rgba(18,42,80,.9); }
+
+.wrap {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+#global-header-container {
+  display: block;
+  width: 100%;
+  min-height: var(--header-height);
+  background-color: transparent;
+}
+.site-header {
+  background: var(--header-bg);
+  color: var(--navy-primary);
+  min-height: var(--header-height);
+  border-bottom: 1px solid var(--line);
+}
+#language-selector-placeholder {
+  display: block;
+  width: 100%;
+  min-height: var(--lang-height);
+  background: #f9fafb;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 20;
+}
+.lang-bar {
+  min-height: var(--lang-height);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.35rem 0;
+}
+.lang-runtime { margin: 0 auto 0 0; font-size: 0.78rem; color: var(--gray-text); }
+#language-dropdown-wrapper { position: relative; z-index: 21; }
+#langButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--line);
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 0.25rem 0.7rem;
+  min-height: 32px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--ink);
+}
+#langButton[aria-expanded="true"] { outline: 3px solid var(--a11y-focus); }
+.lang-caret { width: 1rem; height: 1rem; }
+#langMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  width: 16rem;
+  max-height: 18rem;
+  overflow: auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(18, 35, 58, 0.12);
+  z-index: 30;
+  padding: 0.25rem;
+}
+#langMenu.hidden { display: none; }
+.lang-option {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0.4rem 0.55rem;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.lang-option:hover, .lang-option:focus-visible { background: #eef3f9; }
+.hamburger-button {
+  display: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--navy-primary);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+}
+.hamburger-button svg { width: 24px; height: 24px; }
+#footer-placeholder {
+  display: block;
+  min-height: 520px;
+  background-color: transparent;
+}
+.footer-logo-row { padding-top: 0.4rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.35); margin-bottom: 1.2rem; }
+.footer-mark-80 { display: block; width: 80px; height: 80px; object-fit: contain; }
+.footer-hold { color: #dbe7f6; opacity: 0.85; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+.prod-hero {
+  background: linear-gradient(135deg, #1A3E74 0%, #1E4D8C 60%, #163269 100%);
+  color: var(--white);
+  border-radius: 16px;
+  padding: 2.2rem 1.6rem;
+  box-shadow: 0 12px 34px rgba(0,0,0,.18);
+  margin-bottom: 1.4rem;
+}
+.prod-hero h1, .prod-hero p, .prod-hero .eyebrow { color: var(--white); }
+.prod-hero .eyebrow { color: #93c5fd; }
+.prod-hero .lede { color: #dbeafe; }
+.prod-hero .meta a { color: #fff; }
+.observed-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 1.6rem;
+}
+.observed-strip article {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 8px 24px rgba(26,62,116,.08);
+}
+.observed-strip h2 { margin: 0; font-size: 1.4rem; }
+.observed-strip p { margin: 0.2rem 0 0; font-size: 0.78rem; color: var(--gray-text); }
+.site-footer {
+  background: var(--navy-primary);
+  color: var(--white);
+  margin-top: 3rem;
+  padding: 2rem 0 1.2rem;
+  font-size: 0.92rem;
+}
+.site-footer a { color: #dbe7f6; }
+.site-footer h2 {
+  color: var(--white);
+  font-size: 0.92rem;
+  margin: 0 0 0.6rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1.4fr) repeat(3, minmax(10rem, 1fr));
+  gap: 1.4rem;
+}
+.footer-brand p, .footer-col li { color: #dbe7f6; }
+.footer-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.35rem; }
+.footer-mark { display: block; max-width: 220px; height: auto; margin-bottom: 0.7rem; }
+.footer-bottom {
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.18);
+}
+.footer-bottom p { margin: 0.2rem 0; color: #dbe7f6; }
+
+.header-row {
+  min-height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  color: var(--navy-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.brand-mark { width: 48px; height: 32px; object-fit: contain; }
+.brand-text { display: grid; line-height: 1.15; }
+.brand-name { font-size: 1.05rem; font-weight: 800; }
+.brand-sub { margin: 0; color: var(--gray-text); font-size: 0.75rem; font-weight: 500; letter-spacing: 0; }
+
+.nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.nav a {
+  color: var(--navy-primary);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.55rem;
+  text-decoration: none;
+  font-weight: 650;
+}
+.nav a:hover { color: var(--navy-hover); }
+.lang-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.78rem !important;
+  color: var(--hold) !important;
+  background: var(--hold-bg);
+}
+
+html.a11y-font-lg { font-size: 112.5%; }
+html.a11y-font-xl { font-size: 125%; }
+html.a11y-line-lg body { line-height: 1.85; }
+html.a11y-letter-lg body { letter-spacing: 0.06em; }
+html.fonte-dislexia body,
+html.fonte-dislexia button,
+html.fonte-dislexia input,
+html.fonte-dislexia select,
+.fonte-dislexia,
+.fonte-dislexia body,
+.fonte-dislexia button,
+.fonte-dislexia input,
+.fonte-dislexia select {
+  font-family: Arial, Verdana, sans-serif !important;
+}
+html.contraste-alto body,
+body.contraste-alto { background: #000 !important; color: #ffe600 !important; }
+html.contraste-alto .site-header,
+html.contraste-alto #barraAcessibilidade,
+html.contraste-alto .site-footer,
+html.contraste-alto .admin-side,
+html.contraste-alto .tool-card,
+html.contraste-alto .panel,
+.contraste-alto .site-header,
+.contraste-alto #barraAcessibilidade,
+.contraste-alto .site-footer,
+.contraste-alto .admin-side,
+.contraste-alto .tool-card,
+.contraste-alto .panel {
+  background: #000 !important;
+  color: #ffe600 !important;
+  border-color: #ffe600 !important;
+}
+html.contraste-alto a, html.contraste-alto .brand, html.contraste-alto .nav a,
+.contraste-alto a, .contraste-alto .brand, .contraste-alto .nav a { color: #4dd2ff !important; }
+html.rd-dark body, html.dark-mode body, body.dark-mode { background: #0b1220; color: #e7ecf5; }
+html.rd-dark .site-header, html.dark-mode .site-header, .dark-mode .site-header { background: #121a2b; border-color: #223049; }
+html.rd-dark .tool-card, html.rd-dark .panel, html.rd-dark .calc-card,
+html.dark-mode .tool-card, html.dark-mode .panel, html.dark-mode .calc-card,
+.dark-mode .tool-card, .dark-mode .panel, .dark-mode .calc-card { background: #121a2b; border-color: #223049; color: #e7ecf5; }
+
+@media (max-width: 768px) {
+  #global-header-container { min-height: 60px; }
+  .site-header, .header-row { min-height: 60px; }
+  #footer-placeholder { min-height: 520px; }
+  #barraAcessibilidade { display: none; }
+  #accessibilityToggleButton { display: inline-flex; align-items: center; justify-content: center; }
+  #pwaAcessibilidadeBar { display: flex; }
+  #backToTopBtn { display: none !important; }
+  .hamburger-button { display: inline-flex; align-items: center; justify-content: center; }
+  .desktop-nav { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 0.35rem; padding: 0.5rem 0 0.8rem; }
+  .desktop-nav.is-open { display: flex; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .brand-name { font-size: 0.92rem; }
+}
+@media (min-width: 769px) {
+  #accessibilityToggleButton,
+  #pwaAcessibilidadeBar { display: none !important; }
+  #footer-placeholder { min-height: 277px; }
+}
+
+.page-hero, .tool-hero { padding: 2.2rem 0 1.2rem; }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--navy-medium);
+  margin: 0 0 0.55rem;
+}
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15; margin: 0 0 0.7rem; }
+.lede { font-size: 1.12rem; max-width: 42rem; color: var(--gray-text); }
+.meta { color: var(--gray-text); }
+
+.breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1.3rem;
+  font-size: 0.92rem;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding-bottom: 1.4rem;
+}
+
+.tool-card, .calc-card, .panel, .clinical-step, .content-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.2rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(26, 62, 116, 0.06);
+}
+
+.tool-card, .content-card { text-decoration: none; color: inherit; display: block; }
+.tool-card:hover, .content-card:hover { border-color: var(--blue-light); }
+
+.calc-card { display: grid; gap: 1.1rem; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+legend { font-size: 1.15rem; color: var(--navy-primary); margin-bottom: 0.15rem; }
+.hint { margin: 0; color: var(--gray-text); }
+
+.field { display: grid; gap: 0.25rem; }
+.field-label { font-weight: 650; }
+.field-unit { margin-left: 0.35rem; color: var(--gray-text); font-weight: 500; }
+.field-help { font-size: 0.88rem; color: var(--gray-text); }
+
+select, input[type="number"], .btn-primary, .btn-secondary, .example-btn, .quiz-opt {
+  font: inherit;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 12px 24px;
+  min-height: 44px;
+}
+
+select, input[type="number"] { width: 100%; }
+
+.result-block {
+  border-left: 8px solid var(--risk);
+  background: #f8fbff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+.result-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--gray-text); }
+.result-value { font-size: 2.6rem; margin: 0.2rem 0; line-height: 1; }
+.result-unit { font-size: 1rem; color: var(--gray-text); margin-left: 0.3rem; }
+.result-label { font-weight: 700; margin: 0.2rem 0; }
+.result-note { margin: 0; color: var(--gray-text); }
+
+.btn-primary {
+  background: var(--navy-primary);
+  color: var(--white);
+  border-color: var(--navy-primary);
+  cursor: pointer;
+  font-weight: 650;
+}
+.btn-primary:hover { background: var(--navy-hover); }
+.btn-secondary {
+  background: var(--navy-secondary);
+  color: var(--white);
+  border-color: var(--navy-secondary);
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-secondary:hover { background: #002244; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+.clinical-step, .panel { margin-top: 1rem; }
+.sae-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+.sae-col { background: #f4f8fd; border-radius: 12px; padding: 0.8rem; }
+.code { font-size: 0.8rem; color: var(--navy-medium); margin: 0; }
+.action-list { padding-left: 1.1rem; }
+.examples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.example-btn, .quiz-opt { cursor: pointer; }
+.quiz-card { margin: 0.8rem 0; }
+.quiz-opts { display: grid; gap: 0.4rem; }
+.quiz-opt { text-align: left; }
+.quiz-opt.is-correct { background: #dcfce7; border-color: #15803d; }
+.quiz-opt.is-wrong { background: #fee2e2; border-color: #b91c1c; }
+.quiz-expl { color: var(--gray-text); }
+
+.hold-banner {
+  background: var(--hold-bg);
+  color: var(--hold);
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-weight: 650;
+}
+
+.lineage-panel { margin-top: 1.5rem; }
+.lineage-dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 0.8rem 0;
+}
+.lineage-dl dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gray-text); }
+.lineage-dl dd { margin: 0.15rem 0 0; font-weight: 650; overflow-wrap: anywhere; word-break: break-word; }
+.lineage-dl code { font-size: 0.85rem; }
+
+.inspect { width: 100%; border-collapse: collapse; }
+.inspect th, .inspect td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); }
+.table-wrap { overflow-x: auto; }
+.wrap-wide { width: min(1120px, calc(100% - 2rem)); }
+
+details { margin: 0.45rem 0; }
+summary { cursor: pointer; font-weight: 650; }
+
+.admin-app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+.admin-side {
+  background: var(--navy-primary);
+  color: var(--white);
+  padding: 1.2rem 1rem 2rem;
+}
+.admin-brand { margin: 0; font-weight: 800; font-size: 1.15rem; }
+.admin-brand-sub { margin: 0.2rem 0 1rem; color: #c5d7ee; font-size: 0.82rem; }
+.admin-nav { display: grid; gap: 0.15rem; }
+.admin-nav a {
+  color: #e8f0fb;
+  text-decoration: none;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.6rem;
+  border-radius: var(--radius-control);
+}
+.admin-nav a:hover, .admin-nav a[aria-current="page"] { background: rgba(255,255,255,.12); color: var(--white); }
+.admin-side-note { margin-top: 1.5rem; font-size: 0.85rem; }
+.admin-side-note a { color: #c5d7ee; }
+.admin-top {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  padding: 0.85rem 1.4rem;
+}
+.admin-kicker { margin: 0; color: var(--gray-text); font-size: 0.88rem; }
+.admin-content { padding: 0 1.4rem 2.5rem; }
+.admin-out {
+  background: #0F2A50;
+  color: #e8f0fb;
+  padding: 1rem;
+  border-radius: var(--radius-control);
+  overflow-x: auto;
+  font-size: 0.82rem;
+}
+.chip {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  background: #e8f0fb;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+.chip-hold { background: var(--hold-bg); color: var(--hold); }
+.chip-ok { background: #dcfce7; color: #166534; }
+.ds-swatches { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+.swatch { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); }
+.admin-cards { padding-top: 0.4rem; }
+
+@media (max-width: 860px) {
+  .admin-app { grid-template-columns: 1fr; }
+  .admin-nav { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+}
+
+</style>
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    <button type="button" id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeTextPWA">Tamanho da Fonte</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightTextPWA">Espaçamento Linha</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingTextPWA">Espaçamento Letra</span></button>
+    <button type="button" id="btnAlternarContrastePWA" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Alto Contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Modo Escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Fonte Dislexia</span></button>
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span>Atalhos</span></button>
+    <button type="button" id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Redefinir Tudo</span></button>
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Normal</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Médio</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Normal</span></button>
+    <button type="button" id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/></svg><span id="readingSpeedText">Normal</span></button>
+    <button type="button" id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span class="sr-only">Reproduzir/Pausar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/></svg><span class="sr-only">Reiniciar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReadFocused" aria-label="Ler elemento focado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/></svg><span class="sr-only">Ler elemento focado</span></button>
+    <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span class="sr-only">Alternar alto contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="sr-only">Alternar modo escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span class="sr-only">Alternar fonte para dislexia</span></button>
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="sr-only">Atalhos de Teclado</span></button>
+    <button type="button" id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="sr-only">Redefinir configurações de acessibilidade</span></button>
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
+    </div>
+  </div>
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button>
+<div class="admin-app">
+  <aside class="admin-side" aria-label="Módulos do Studio">
+    <p class="admin-brand">CKO Studio</p>
+    <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
+    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html">Pipeline</a><a href="layers.html">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html">Agentes</a><a href="monitoring.html">Monitoramento</a><a href="library.html" aria-current="page">Biblioteca</a><a href="apis.html">APIs / órgãos</a><a href="backlog.html">Backlog</a><a href="design-system.html">Design System</a><a href="locales.html">Locales / Drive</a><a href="mdm.html">Master Data</a><a href="frameworks.html">Frameworks</a><a href="maturity.html">Maturidade</a><a href="renderer.html">Renderer</a><a href="deploy.html">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="../index.html">Site público</a></p>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-top">
+      <p class="eyebrow">Biblioteca · CKO Studio</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE · chrome DS na barra de acessibilidade</p>
+    </header>
+    <main id="conteudo" class="admin-content">
+      
+    <header class="page-hero">
+      <h1>Biblioteca de recursos.</h1>
+      <p class="lede">Catálogo MD + currículo documental + legislação federal do Congresso + PGDADOS (SGD). Sem HTML/PDF integral. Sem LLM. Publicação HOLD. PLP bloqueado. COREN sem API REST.</p>
+      <p class="hold-banner">Recursos 33 · Unidades 25 · Leis 8 · Pendências ALTA 7 · Alertas 15 · 32 bibliotecas=EVIDENCE_PENDING · F10=COMPARE_ACCEPTED</p>
+    </header>
+    <section class="panel">
+      <h2>32 APIs COMPARE (MD-LIB-32-COMPARE-001)</h2>
+      <p>Dono UNBLOCK-32-LIST=COMPARE_ACCEPTED. Claimed 32=EVIDENCE_PENDING. Soma observada = 32? False. Sem inventar adapters. Sem promover CAL-VAC, Braden ou NNN.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>conjunto</th><th>n observado</th><th>claimed 32</th><th>nota</th></tr></thead><tbody><tr><td>device_library_slugs</td><td>11</td><td>EVIDENCE_PENDING</td><td>conjunto observado; não é as 32 APIs</td></tr><tr><td>clinical_object_types</td><td>24</td><td>EVIDENCE_PENDING</td><td>conjunto observado; não é as 32 APIs</td></tr><tr><td>cal_vac_tools</td><td>15</td><td>EVIDENCE_PENDING</td><td>conjunto observado; não é as 32 APIs</td></tr><tr><td>pages_full_biblioteca_hubs</td><td>5</td><td>EVIDENCE_PENDING</td><td>conjunto observado; não é as 32 APIs</td></tr><tr><td>matrix_libraries_mentioned</td><td>22</td><td>EVIDENCE_PENDING</td><td>conjunto observado; não é as 32 APIs</td></tr></tbody></table></div>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>soma heterogénea</th><th>n</th><th>equals 32</th><th>nota</th></tr></thead><tbody><tr><td>11_plus_24</td><td>35</td><td>False</td><td>nenhuma soma observada equivale a 32</td></tr><tr><td>11_plus_15</td><td>26</td><td>False</td><td>nenhuma soma observada equivale a 32</td></tr><tr><td>24_plus_5</td><td>29</td><td>False</td><td>nenhuma soma observada equivale a 32</td></tr><tr><td>15_plus_11_plus_5</td><td>31</td><td>False</td><td>nenhuma soma observada equivale a 32</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>PGDADOS Parte 3 / cartilhas 4–5 (MD-PGDADOS-001)</h2>
+      <p>Probe ao vivo hub HTTP 200 · guia HTTP 200 · probed_at 2026-08-26T01:21:49Z. Rótulo na página ≠ href PDF. Sem copiar corpo PDF. mwpt/ABNT ignorados.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>recurso</th><th>status</th><th>url</th><th>href PDF</th><th>nota</th></tr></thead><tbody><tr><td>Guia Parte 3</td><td>EVIDENCE_PENDING</td><td>null</td><td>False</td><td>rótulo ≠ href PDF gov.br</td></tr><tr><td>Cartilha vol. 4</td><td>EVIDENCE_PENDING</td><td>null</td><td>False</td><td>mencionada no hub; sem href volume-4</td></tr><tr><td>Cartilha vol. 5</td><td>EVIDENCE_PENDING</td><td>null</td><td>False</td><td>mencionada no hub; sem href volume-5</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Mapa L60 observado vs 32 reivindicadas (MD-LIB-API-MAP-001)</h2>
+      <p>Contagens COMPARE do Drive. 32 APIs permanecem EVIDENCE_PENDING. Sem promover CAL-VAC nem nanda-00046.json. Decisão dono=COMPARE_ACCEPTED.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>conjunto</th><th>n</th><th>tipo</th><th>API</th><th>nota</th></tr></thead><tbody><tr><td>SET-DEVICE-11</td><td>11</td><td>device_library_slugs</td><td>NOT_OBSERVED</td><td>Candidato natural seria consulta de produto ANVISA. REST pública estável não observada neste ciclo.</td></tr><tr><td>SET-CLINICAL-24</td><td>24</td><td>clinical_object_types</td><td>MIXED_NOT_A_LIBRARY_API</td><td>24 tipos no gerador Drive. Não são 24 APIs. Três ficheiros NNN = QUARANTINE (texto licenciado).</td></tr><tr><td>SET-VAC-15</td><td>15</td><td>cal_vac_tools</td><td>API-CKAN-OPENDATASUS-VACINA</td><td>package_search q=vacina = HTTP 302 HTML. Não promover CAL-VAC para data/tools.</td></tr><tr><td>SET-HUBS-5</td><td>5</td><td>pages_full_biblioteca_hubs</td><td>NOT_AN_API</td><td>Hubs HTML. COMPARE only.</td></tr><tr><td>SET-CLIN-DICT-DRIVE</td><td>77</td><td>drive_new_tool_names</td><td>NOT_AN_API</td><td>Nomes na matriz de novas ferramentas. Códigos piloto CKO permanecem CALC-/SCALE-/GUIDE-/EXAM-*. Sem promover Braden.</td></tr></tbody></table></div>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>camada</th><th>adapter</th><th>HTTP</th><th>estado</th><th>nota</th></tr></thead><tbody><tr><td>L70</td><td>API-ANVISA-PORTAL</td><td>200</td><td><span class="chip chip-ok">OBSERVED_HTML</span></td><td>Portal APIs ANVISA HTML 200 (SPA Gov.br). REST JSON de produto NOT_OBSERVED (consultas HTTP 403; CKAN anvisa HTTP 401). Zip Drive 59.8 MB SKIP_BINARY_DUMP. Claimed 17231 = descriçã</td></tr><tr><td>L60</td><td>API-CKAN-OPENDATASUS-VACINA</td><td>302</td><td><span class="chip chip-hold">EVIDENCE_PENDING</span></td><td>Vacinas: CKAN OpenDataSUS não devolveu JSON neste ciclo. 11 dispositivos sem REST ANVISA observada.</td></tr><tr><td>L80</td><td>API-NLM-CLINICALTABLES-ICD10CM</td><td>200</td><td><span class="chip chip-ok">OBSERVED</span></td><td>Probe NLM é busca ICD-10-CM, não banco LOINC. Dump LOINC do Drive = FORBIDDEN.</td></tr><tr><td>L90</td><td>null</td><td>null</td><td><span class="chip chip-hold">EVIDENCE_PENDING</span></td><td>Pasta Anatomia no Drive. Sem REST oficial observada neste ciclo. UMLS = SKIP.</td></tr><tr><td>L100</td><td>API-NLM-CLINICALTABLES-ICD10CM</td><td>200</td><td><span class="chip chip-ok">OBSERVED</span></td><td>Busca, não dump CID-10/11 DATASUS. classificacoes_medicas.zip 99 MB = SKIP_BINARY_DUMP.</td></tr><tr><td>L120</td><td>null</td><td>null</td><td><span class="chip chip-hold">HOLD</span></td><td>NANDA/NIC/NOC = MD-NNN-RIGHTS-001. Sem copiar banco de termos.</td></tr><tr><td>L140</td><td>API-CROSSREF-WORKS</td><td>200</td><td><span class="chip chip-ok">OBSERVED</span></td><td>Busca bibliográfica. Resposta ≠ canónico sem snapshot+hash+MD+REG. Não republicar abstract.</td></tr><tr><td>L150</td><td>API-NCBI-EUTILS-ESEARCH</td><td>200</td><td><span class="chip chip-ok">OBSERVED</span></td><td>Busca PubMed. Não é full-text. Guia por conceito via MD-CONCEPT-RENDER-001.</td></tr><tr><td>L160</td><td>null</td><td>null</td><td><span class="chip">REGISTERED</span></td><td>Sem API de banco de provas de terceiros. Conteúdo original Audit Educa + renderer PRESENTATION_ONLY.</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Dicionário clínico Drive (MD-CLIN-DICT-001)</h2>
+      <p>Zip Dicionario clinico.zip · dono UNBLOCK-DICT-SHEETS enviado=True · sheets Content_Schemas/Meta_Schemas=MISSING · FLD policy=ONLY_EXISTING_FLD · campos Foundation/Knowledge=163 · nomes de ferramenta=77 · publicação <span class="chip chip-hold">HOLD</span> · UUIDv4 adotado=False · data/tools promovido=False.</p>
+      <p class="hold-banner">COMPARE only. F21 RECEIVED no zip já observado. Sem dump de cláusula ABNT/ISO. Sem dump dos 163 Foundation para FLD-*. Escalas de terceiros (Braden/Norton/Glasgow) não entram em data/tools. Content_Schemas/Meta_Schemas reivindicados no índice e ausentes no xlsx.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>slug piloto</th><th>código</th><th>kind</th><th>relação Drive</th><th>nomes no zip</th></tr></thead><tbody><tr><td>gotejamento</td><td>CALC-GOTEJAMENTO-001</td><td>calculator</td><td><span class="chip chip-ok">MATCH_NAME</span></td><td>Gotejamento</td></tr><tr><td>meows</td><td>SCALE-MEOWS-001</td><td>scale</td><td><span class="chip chip-ok">MATCH_NAME</span></td><td>MEOWS, Escala MEOWS</td></tr><tr><td>cinco-ts-pcr</td><td>GUIDE-5TS-PCR-001</td><td>guide</td><td><span class="chip">COMPARE_NOT_1TO1</span></td><td>Simulado PCR</td></tr><tr><td>dimensionamento</td><td>CALC-DIMENSIONAMENTO-001</td><td>guide</td><td><span class="chip chip-ok">MATCH_NAME</span></td><td>Dimensionamento, Dimensionamento de Enfermagem</td></tr><tr><td>simulado-tecnico</td><td>EXAM-SIMULADO-TEC-001</td><td>exam</td><td><span class="chip">COMPARE_NOT_1TO1</span></td><td>Simulado Tecnicos 1, Simulado Tecnicos 2</td></tr></tbody></table></div>
+      <p>Primeiros nomes da matriz de novas ferramentas:</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>ferramenta (Drive)</th></tr></thead><tbody><tr><td>Calculadora de Exames Laboratoriais</td></tr><tr><td>Dimensionamento de Enfermagem</td></tr><tr><td>Idade Gestacional e DPP</td></tr><tr><td>Calculo de Medicamentos</td></tr><tr><td>Vacinas da Crianca</td></tr><tr><td>Doencas de Notificacao Compulsoria</td></tr><tr><td>Diagnosticos NANDA</td></tr><tr><td>Formulario SAEP</td></tr><tr><td>SBAR Passagem de Plantao</td></tr><tr><td>Calculadora de Ferias</td></tr><tr><td>Calculadora Adicional Noturno</td></tr><tr><td>Calculadora Horas Extras</td></tr><tr><td>Calculadora Rescisao</td></tr><tr><td>Simulado Tecnicos 1</td></tr><tr><td>Simulado Tecnicos 2</td></tr><tr><td>Simulado Enfermeiros 1</td></tr><tr><td>Simulado Enfermeiros 2</td></tr><tr><td>Simulado Seguranca Paciente</td></tr><tr><td>Simulado DNC</td></tr><tr><td>Simulado Vacinas</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>NANDA / NIC / NOC identidade OPT-B (MD-NNN-IDENTITY-001)</h2>
+      <p>Dono F12 = B. Códigos a partir dos nomes de ficheiro Drive. canonical_label=null. Deep-link ao titular. Sem texto licenciado. Publicação <span class="chip chip-hold">HOLD</span>.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>sistema</th><th>código</th><th>label canônico</th><th>exibição</th><th>deep-link</th><th>Drive</th></tr></thead><tbody><tr><td>NANDA</td><td>00046</td><td>—</td><td>texto indisponível (licença)</td><td><a href="https://nanda.org/">https://nanda.org/</a></td><td><span class="chip chip-hold">QUARANTINE</span></td></tr><tr><td>NIC</td><td>2312</td><td>—</td><td>texto indisponível (licença)</td><td><a href="https://www.elsevier.com/">https://www.elsevier.com/</a></td><td><span class="chip chip-hold">QUARANTINE</span></td></tr><tr><td>NOC</td><td>0401</td><td>—</td><td>texto indisponível (licença)</td><td><a href="https://www.elsevier.com/">https://www.elsevier.com/</a></td><td><span class="chip chip-hold">QUARANTINE</span></td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>UCP v2.0 COMPARE (MD-UCP-V2-COMPARE-001)</h2>
+      <p>Política POL-CKO-UCP-001-v2.0 · schemas recebidos=11 · artefatos no registo=21 · ausentes=10 · copiado para schemas/=False · publicação <span class="chip chip-hold">HOLD</span> · assured=False.</p>
+      <p class="hold-banner">COMPARE only. Draft 2020-12 ≠ draft-07 vigente. CONTROLLED_CANDIDATE não é ASSURED. authority_mode DERIVED_NOT_AUTHORITY alinhado. Sem substituir tool.schema.json. Sem inventar MODEL/PILOT ausentes.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>ficheiro</th><th>$id</th><th>draft</th><th>sha256</th><th>em schemas/</th></tr></thead><tbody><tr><td>agent-contract.schema.json</td><td>urn:cko:schema:agent-contract:2.0</td><td>draft/2020-12/schema</td><td>d4add4749439</td><td>False</td></tr><tr><td>content-atom.schema.json</td><td>urn:cko:schema:content-atom:2.0</td><td>draft/2020-12/schema</td><td>4fb5141db5b7</td><td>False</td></tr><tr><td>content-object.schema.json</td><td>urn:cko:schema:content-object:2.0</td><td>draft/2020-12/schema</td><td>8821ec7befae</td><td>False</td></tr><tr><td>engine-contract.schema.json</td><td>urn:cko:schema:engine-contract:2.0</td><td>draft/2020-12/schema</td><td>ae0c39a7d381</td><td>False</td></tr><tr><td>knowledge-object.schema.json</td><td>urn:cko:schema:knowledge-object:2.0</td><td>draft/2020-12/schema</td><td>7e2d0e799a76</td><td>False</td></tr><tr><td>library-object.schema.json</td><td>urn:cko:schema:library-object:2.0</td><td>draft/2020-12/schema</td><td>0570442b186e</td><td>False</td></tr><tr><td>publishing-contract.schema.json</td><td>urn:cko:schema:publishing-contract:2.0</td><td>draft/2020-12/schema</td><td>d7a6ccbe5657</td><td>False</td></tr><tr><td>render-contract.schema.json</td><td>urn:cko:schema:render-contract:2.0</td><td>draft/2020-12/schema</td><td>f78e899c32f8</td><td>False</td></tr><tr><td>render-instance.schema.json</td><td>urn:cko:schema:render-instance:2.0</td><td>draft/2020-12/schema</td><td>a76806c3adf9</td><td>False</td></tr><tr><td>studio-contract.schema.json</td><td>urn:cko:schema:studio-contract:2.0</td><td>draft/2020-12/schema</td><td>8b184ea7f8d3</td><td>False</td></tr><tr><td>validator-contract.schema.json</td><td>urn:cko:schema:validator-contract:2.0</td><td>draft/2020-12/schema</td><td>b73fca3ade9a</td><td>False</td></tr></tbody></table></div>
+      <p>Ausentes do lote (registo CSV):</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>classe</th><th>ficheiro</th></tr></thead><tbody><tr><td>agent-engine-validator-matrix</td><td>MODEL</td><td>agent-engine-validator-matrix.json</td></tr><tr><td>audience-model</td><td>MODEL</td><td>audience-model.json</td></tr><tr><td>content-depth-model</td><td>MODEL</td><td>content-depth-model.json</td></tr><tr><td>content-relationships</td><td>MODEL</td><td>content-relationships.json</td></tr><tr><td>domain-profiles</td><td>MODEL</td><td>domain-profiles.json</td></tr><tr><td>release-gates</td><td>MODEL</td><td>release-gates.json</td></tr><tr><td>render-recipes</td><td>MODEL</td><td>render-recipes.json</td></tr><tr><td>studio-model</td><td>MODEL</td><td>studio-model.json</td></tr><tr><td>validation-matrix</td><td>MODEL</td><td>validation-matrix.json</td></tr><tr><td>PILOT-UCP-v2.0</td><td>PILOT_CATALOG</td><td>pilot-catalog.json</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>L70 Medicamentos — API ANVISA COMPARE (MD-L70-ANVISA-001)</h2>
+      <p>Frente F24 · product REST=NOT_OBSERVED · unzip=False · data/tools=False · claimed Drive=17231 · verified=EVIDENCE_PENDING · publicação <span class="chip chip-hold">HOLD</span> · assured=False.</p>
+      <p class="hold-banner">API oficial primeiro. Portal HTML 200 ≠ JSON de produto. Dump CKO_Medicamentos_ANVISA_Completo.zip = SKIP_BINARY_DUMP. 17231 é descrição Drive, não população hashed. openFDA não substitui bula ANVISA. Sem insulina.json.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>adapter</th><th>URL</th><th>HTTP</th><th>estado</th><th>base_url</th><th>REST JSON</th></tr></thead><tbody><tr><td>API-ANVISA-PORTAL</td><td>https://api.anvisa.gov.br/</td><td>200</td><td><span class="chip chip-ok">OBSERVED_HTML</span></td><td>null</td><td>não</td></tr><tr><td>API-ANVISA-CONSULTAS-MEDICAMENTOS</td><td>https://consultas.anvisa.gov.br/api/consulta/medicamentos</td><td>403</td><td><span class="chip">AUTH_REQUIRED</span></td><td>null</td><td>não</td></tr></tbody></table></div>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>gap</th><th>estado</th><th>razão</th></tr></thead><tbody><tr><td>GAP-L70-ANVISA-REST-JSON</td><td><span class="chip chip-hold">EVIDENCE_PENDING</span></td><td>Portal APIs ANVISA é SPA HTML. REST JSON de produto não observado sem Gov.br Client ID/Secret.</td></tr><tr><td>GAP-L70-DRIVE-DUMP</td><td><span class="chip">COMPARE_ONLY</span></td><td>CKO_Medicamentos_ANVISA_Completo.zip 59.8 MB = SKIP_BINARY_DUMP. Claimed 17231 é descrição Drive, não população hashed.</td></tr><tr><td>GAP-L70-INSULINA-TOOL</td><td><span class="chip chip-hold">HOLD</span></td><td>Sem data/tools/insulina.json. PNG/HTML Drive não ligam no chrome.</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Legislação federal</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>norma</th><th>tipo</th><th>status</th><th>MD</th><th>REG</th></tr></thead><tbody><tr><td>INS-CF-1988</td><td>Constituição da República Federativa do Brasil</td><td>CON-v</td><td>REGISTERED</td><td><code>MD-INS-CF-1988</code></td><td><code>REG-INS-CF-1988</code></td></tr><tr><td>INS-LEI-8080-1990</td><td>Lei nº 8.080 de 19/09/1990</td><td>LEI-n</td><td>REGISTERED</td><td><code>MD-INS-LEI-8080-1990</code></td><td><code>REG-INS-LEI-8080-1990</code></td></tr><tr><td>INS-LEI-8142-1990</td><td>Lei nº 8.142 de 28/12/1990</td><td>LEI-n</td><td>REGISTERED</td><td><code>MD-INS-LEI-8142-1990</code></td><td><code>REG-INS-LEI-8142-1990</code></td></tr><tr><td>INS-LEI-7498-1986</td><td>Lei nº 7.498 de 25/06/1986</td><td>LEI-n</td><td>REGISTERED</td><td><code>MD-INS-LEI-7498-1986</code></td><td><code>REG-INS-LEI-7498-1986</code></td></tr><tr><td>INS-LEI-9610-1998</td><td>Lei nº 9.610 de 19/02/1998</td><td>LEI-n</td><td>REGISTERED</td><td><code>MD-INS-LEI-9610-1998</code></td><td><code>REG-INS-LEI-9610-1998</code></td></tr><tr><td>INS-LEI-2312-1954</td><td>Lei nº 2.312 de 03/09/1954</td><td>LEI-n</td><td>REVOKED</td><td><code>MD-INS-LEI-2312-1954</code></td><td><code>REG-INS-LEI-2312-1954</code></td></tr><tr><td>INS-DEC-7508-2011</td><td>Decreto nº 7.508 de 28/06/2011</td><td>DEC-n</td><td>REGISTERED</td><td><code>MD-INS-DEC-7508-2011</code></td><td><code>REG-INS-DEC-7508-2011</code></td></tr><tr><td>INS-DEC-10046-2019</td><td>Decreto nº 10.046 de 09/10/2019</td><td>DEC-n</td><td>REGISTERED</td><td><code>MD-INS-DEC-10046-2019</code></td><td><code>REG-INS-DEC-10046-2019</code></td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Recursos</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>título</th><th>status</th><th>MD</th><th>REG</th></tr></thead><tbody><tr><td>RES-SRC-GOV-ANVISA-PORTAL</td><td>Português (Brasil)</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-ANVISA</code></td><td><code>REG-SRC-ANVISA</code></td></tr><tr><td>RES-SRC-GOV-MS-PORTAL</td><td>Ministério da Saúde</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-MS</code></td><td><code>REG-SRC-MS</code></td></tr><tr><td>RES-SRC-GOV-BVSMS</td><td>Ministério da Saúde / BVSMS</td><td>EVIDENCE_PENDING</td><td><code>MD-AGY-MS</code></td><td><code>REG-SRC-MS</code></td></tr><tr><td>RES-SRC-GOV-COFEN-PORTAL</td><td>Início - Cofen</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-COFEN</code></td><td><code>REG-SRC-COFEN</code></td></tr><tr><td>RES-SRC-GOV-COREN-SP-PORTAL</td><td>COREN-SP</td><td>EVIDENCE_PENDING</td><td><code>MD-AGY-COREN-SP</code></td><td><code>REG-SRC-COREN-SP</code></td></tr><tr><td>RES-SRC-GOV-PGDADOS-HUB</td><td>Governança de Dados — Governo Digital</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-HUB</code></td></tr><tr><td>RES-SRC-GOV-PGDADOS-GUIA</td><td>Guia de Implementação dos Programas de Governança de Dados — Governo Digital</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-GUIA</code></td></tr><tr><td>RES-SRC-GOV-QUALIDADE-DIGIT</td><td>Padrões de Qualidade para Serviços Públicos Digitais — Governo Digital</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-QUALIDADE-DIGIT</code></td></tr><tr><td>RES-INS-CF-1988</td><td>Constituição da República Federativa do Brasil</td><td>SOURCE_DERIVED</td><td><code>MD-INS-CF-1988</code></td><td><code>REG-INS-CF-1988</code></td></tr><tr><td>RES-INS-LEI-8080-1990</td><td>Lei nº 8.080 de 19/09/1990</td><td>SOURCE_DERIVED</td><td><code>MD-INS-LEI-8080-1990</code></td><td><code>REG-INS-LEI-8080-1990</code></td></tr><tr><td>RES-INS-LEI-8142-1990</td><td>Lei nº 8.142 de 28/12/1990</td><td>SOURCE_DERIVED</td><td><code>MD-INS-LEI-8142-1990</code></td><td><code>REG-INS-LEI-8142-1990</code></td></tr><tr><td>RES-INS-LEI-7498-1986</td><td>Lei nº 7.498 de 25/06/1986</td><td>SOURCE_DERIVED</td><td><code>MD-INS-LEI-7498-1986</code></td><td><code>REG-INS-LEI-7498-1986</code></td></tr><tr><td>RES-INS-LEI-9610-1998</td><td>Lei nº 9.610 de 19/02/1998</td><td>SOURCE_DERIVED</td><td><code>MD-INS-LEI-9610-1998</code></td><td><code>REG-INS-LEI-9610-1998</code></td></tr><tr><td>RES-INS-LEI-2312-1954</td><td>Lei nº 2.312 de 03/09/1954</td><td>REVOKED_TOOL_OK</td><td><code>MD-INS-LEI-2312-1954</code></td><td><code>REG-INS-LEI-2312-1954</code></td></tr><tr><td>RES-INS-DEC-7508-2011</td><td>Decreto nº 7.508 de 28/06/2011</td><td>SOURCE_DERIVED</td><td><code>MD-INS-DEC-7508-2011</code></td><td><code>REG-INS-DEC-7508-2011</code></td></tr><tr><td>RES-INS-DEC-10046-2019</td><td>Decreto nº 10.046 de 09/10/2019</td><td>SOURCE_DERIVED</td><td><code>MD-INS-DEC-10046-2019</code></td><td><code>REG-INS-DEC-10046-2019</code></td></tr><tr><td>RES-PGDADOS-GUIA-P1</td><td>Parte 1 - Políticas Internas de Governança de Dados</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-GUIA</code></td></tr><tr><td>RES-PGDADOS-GUIA-P2</td><td>Parte 2 - Passo a Passo para formular uma Estratégia de Dados</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-GUIA</code></td></tr><tr><td>RES-PGDADOS-GUIA-P3</td><td>Parte 3 — PDF gov.br não observado</td><td>EVIDENCE_PENDING</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-GUIA</code></td></tr><tr><td>RES-PGDADOS-CARTILHA-V1</td><td>Cartilha volume 1 - Conceitos Iniciais</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-HUB</code></td></tr><tr><td>RES-PGDADOS-CARTILHA-V2</td><td>Cartilha volume 2 - Ecossistema de Governança de Dados do Poder Executivo Federal</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-HUB</code></td></tr><tr><td>RES-PGDADOS-CARTILHA-V3</td><td>Cartilha volume 3 - Papéis e responsabilidades de Governança de Dados do Poder Executivo Federal</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-HUB</code></td></tr><tr><td>RES-PGDADOS-CARTILHA-V4</td><td>Volume 4 — PDF gov.br não observado</td><td>EVIDENCE_PENDING</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-HUB</code></td></tr><tr><td>RES-PGDADOS-CARTILHA-V5</td><td>Volume 5 — PDF gov.br não observado</td><td>EVIDENCE_PENDING</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-PGDADOS-HUB</code></td></tr><tr><td>RES-QUALIDADE-DIGIT-DIM</td><td>Padrões de Qualidade — 7 dimensões (SGD)</td><td>SOURCE_DERIVED</td><td><code>MD-AGY-SGD</code></td><td><code>REG-SRC-QUALIDADE-DIGIT</code></td></tr><tr><td>LIB-L60-DISPOSITIVOS</td><td>Dispositivos e materiais</td><td>DOCUMENTADO</td><td><code>MD-LIB-L60-DISPOSITIVOS</code></td><td><code>REG-LIB-L60-DISPOSITIVOS</code></td></tr><tr><td>LIB-L70-MEDICAMENTOS</td><td>Medicamentos e soluções</td><td>DOCUMENTADO</td><td><code>MD-LIB-L70-MEDICAMENTOS</code></td><td><code>REG-LIB-L70-MEDICAMENTOS</code></td></tr><tr><td>LIB-L80-EXAMES</td><td>Exames laboratoriais</td><td>DOCUMENTADO</td><td><code>MD-LIB-L80-EXAMES</code></td><td><code>REG-LIB-L80-EXAMES</code></td></tr><tr><td>LIB-L110-PROTOCOLOS</td><td>Procedimentos e protocolos</td><td>DOCUMENTADO</td><td><code>MD-LIB-L110-PROTOCOLOS</code></td><td><code>REG-LIB-L110-PROTOCOLOS</code></td></tr><tr><td>LIB-L130-CONCURSO</td><td>Educação / concurso</td><td>DOCUMENTADO</td><td><code>MD-LIB-L130-CONCURSO</code></td><td><code>REG-LIB-L130-CONCURSO</code></td></tr><tr><td>LIB-L140-LEGISLACAO-FEDERAL</td><td>Legislação federal (Congresso)</td><td>DOCUMENTADO</td><td><code>MD-LIB-L140-LEGISLACAO-FEDERAL</code></td><td><code>REG-LIB-L140-LEGISLACAO-FEDERAL</code></td></tr><tr><td>LIB-L150-GUIAS</td><td>Artigos / guias / resumos</td><td>DOCUMENTADO</td><td><code>MD-LIB-L150-GUIAS</code></td><td><code>REG-LIB-L150-GUIAS</code></td></tr><tr><td>LIB-L150-PGDADOS</td><td>PGDADOS / governança de dados (SGD)</td><td>DOCUMENTADO</td><td><code>MD-LIB-L150-PGDADOS</code></td><td><code>REG-LIB-L150-PGDADOS</code></td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Currículo básico → avançado</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>ferramenta</th><th>nível</th><th>status</th><th>MD</th><th>REG</th></tr></thead><tbody><tr><td>cinco-ts-pcr</td><td>BASICO</td><td>DOCUMENTADO</td><td><code>MD-TOOL-cinco-ts-pcr</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>cinco-ts-pcr</td><td>FUNDAMENTOS</td><td>DOCUMENTADO</td><td><code>MD-TOOL-cinco-ts-pcr</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>cinco-ts-pcr</td><td>PROCEDIMENTO</td><td>HOLD</td><td><code>MD-TOOL-cinco-ts-pcr</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>cinco-ts-pcr</td><td>INTERPRETACAO</td><td>HOLD</td><td><code>MD-TOOL-cinco-ts-pcr</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>cinco-ts-pcr</td><td>AVANCADO</td><td>DOCUMENTADO</td><td><code>MD-TOOL-cinco-ts-pcr</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>dimensionamento</td><td>BASICO</td><td>DOCUMENTADO</td><td><code>MD-TOOL-dimensionamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>dimensionamento</td><td>FUNDAMENTOS</td><td>DOCUMENTADO</td><td><code>MD-TOOL-dimensionamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>dimensionamento</td><td>PROCEDIMENTO</td><td>HOLD</td><td><code>MD-TOOL-dimensionamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>dimensionamento</td><td>INTERPRETACAO</td><td>HOLD</td><td><code>MD-TOOL-dimensionamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>dimensionamento</td><td>AVANCADO</td><td>HOLD</td><td><code>MD-TOOL-dimensionamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>gotejamento</td><td>BASICO</td><td>DOCUMENTADO</td><td><code>MD-TOOL-gotejamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>gotejamento</td><td>FUNDAMENTOS</td><td>DOCUMENTADO</td><td><code>MD-TOOL-gotejamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>gotejamento</td><td>PROCEDIMENTO</td><td>DOCUMENTADO</td><td><code>MD-TOOL-gotejamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>gotejamento</td><td>INTERPRETACAO</td><td>HOLD</td><td><code>MD-TOOL-gotejamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>gotejamento</td><td>AVANCADO</td><td>HOLD</td><td><code>MD-TOOL-gotejamento</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>meows</td><td>BASICO</td><td>DOCUMENTADO</td><td><code>MD-TOOL-meows</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>meows</td><td>FUNDAMENTOS</td><td>DOCUMENTADO</td><td><code>MD-TOOL-meows</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>meows</td><td>PROCEDIMENTO</td><td>HOLD</td><td><code>MD-TOOL-meows</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>meows</td><td>INTERPRETACAO</td><td>HOLD</td><td><code>MD-TOOL-meows</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>meows</td><td>AVANCADO</td><td>HOLD</td><td><code>MD-TOOL-meows</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>simulado-tecnico</td><td>BASICO</td><td>DOCUMENTADO</td><td><code>MD-TOOL-simulado-tecnico</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>simulado-tecnico</td><td>FUNDAMENTOS</td><td>DOCUMENTADO</td><td><code>MD-TOOL-simulado-tecnico</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>simulado-tecnico</td><td>PROCEDIMENTO</td><td>HOLD</td><td><code>MD-TOOL-simulado-tecnico</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>simulado-tecnico</td><td>INTERPRETACAO</td><td>HOLD</td><td><code>MD-TOOL-simulado-tecnico</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr><tr><td>simulado-tecnico</td><td>AVANCADO</td><td>DOCUMENTADO</td><td><code>MD-TOOL-simulado-tecnico</code></td><td><code>REG-RIGHTS-LEI-9610</code></td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Pendências ALTA</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>severidade</th><th>razão</th></tr></thead><tbody><tr><td>PEND-COREN-DEMAIS-UFS</td><td>ALTA</td><td>Apenas COREN-SP tem portal HTML candidato. REST API de COREN não observada. Não inventar adapter. Demais Conselhos Regionais não observados.</td></tr><tr><td>PEND-COFEN-REST-NOT-OBSERVED</td><td>ALTA</td><td>COFEN: portal HTML observado. REST/dados abertos sem HTTP 200 neste lote. Não inventar base_url.</td></tr><tr><td>PEND-ISO-CLAUSE-TEXT</td><td>ALTA</td><td>Texto de cláusula ISO licenciada indisponível. Government alternative NÃO substitui ISO 8000 clause text.</td></tr><tr><td>PEND-THIRD-PARTY-SCALES</td><td>ALTA</td><td>Braden/Norton/Glasgow: obra de terceiros. Busca bibliográfica permitida (PubMed/COFEN/ANVISA HTML/OMS). Republicar o instrumento continua FORBIDDEN.</td></tr><tr><td>PEND-PAGES-FULL-1516</td><td>ALTA</td><td>1516 HTML = catálogo de pendências REG (1 stem → 1 gap MD+REG+rights). Inventário demonstra as pendências. Extração em massa de fórmula clínica para data/tools permanece FORBIDDEN.</td></tr><tr><td>PEND-ANVISA-REST-PRODUCT</td><td>ALTA</td><td>API oficial de produtos ANVISA: portal https://api.anvisa.gov.br/ é SPA HTML. REST JSON de medicamento NOT_OBSERVED sem Gov.br Client ID/Secret. consultas.anvisa.gov.br/api/consulta/medicamentos = HTTP 403 neste ambiente.</td></tr><tr><td>PEND-SUPABASE-LEGISLATION</td><td>ALTA</td><td>Supabase legislation/tables: autenticação MCP falhou. Nada inventado. Extração federal usa API do Congresso.</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>pages_full — catálogo de pendências REG (MD-PAGES-REG-PEND-001)</h2>
+      <p>Inventário demonstra pendências REG do projeto. Extração em massa de fórmula clínica para data/tools permanece FORBIDDEN. HTML=1516 · extração clínica em massa=FORBIDDEN.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>stem</th><th>gap</th><th>em data/tools</th></tr></thead><tbody><tr><td>braden</td><td>PEND-THIRD-PARTY-SCALES</td><td>False</td></tr><tr><td>norton</td><td>PEND-THIRD-PARTY-SCALES</td><td>False</td></tr><tr><td>glasgow</td><td>PEND-THIRD-PARTY-SCALES</td><td>False</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Alertas</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>severidade</th><th>tipo</th><th>mensagem</th></tr></thead><tbody><tr><td>ALTA</td><td>SOURCE_OFFLINE</td><td>Ministério da Saúde / BVSMS HTTP None — extração periódica 24h. API/portal pode estar offline.</td></tr><tr><td>MEDIA</td><td>SOURCE_OFFLINE</td><td>COREN-SP HTTP 500 — extração periódica 24h. API/portal pode estar offline.</td></tr><tr><td>ALTA</td><td>API_AUTH_REQUIRED</td><td>dados.gov.br HTTP 401. Credencial/OAuth necessária. base_url null. Reprobe a cada 24h.</td></tr><tr><td>ALTA</td><td>API_AUTH_REQUIRED</td><td>ANVISA via dados.gov.br HTTP 401. Credencial/OAuth necessária. base_url null. Reprobe a cada 24h.</td></tr><tr><td>ALTA</td><td>API_HTML_NOT_JSON</td><td>ANVISA Portal de APIs HTTP 200 HTML. REST JSON NOT_OBSERVED. base_url null. Reprobe a cada 24h.</td></tr><tr><td>ALTA</td><td>API_AUTH_REQUIRED</td><td>ANVISA Consultas medicamentos HTTP 403. Credencial/OAuth necessária. base_url null. Reprobe a cada 24h.</td></tr><tr><td>ALTA</td><td>API_HTML_NOT_JSON</td><td>OpenDataSUS HTTP 200 HTML. REST JSON NOT_OBSERVED. base_url null. Reprobe a cada 24h.</td></tr><tr><td>ALTA</td><td>API_HTML_NOT_JSON</td><td>OpenDataSUS busca vacina HTTP 200 HTML. REST JSON NOT_OBSERVED. base_url null. Reprobe a cada 24h.</td></tr><tr><td>ALTA</td><td>COPYRIGHT_OR_EVIDENCE</td><td>Apenas COREN-SP tem portal HTML candidato. REST API de COREN não observada. Não inventar adapter. Demais Conselhos Regionais não observados.</td></tr><tr><td>ALTA</td><td>COPYRIGHT_OR_EVIDENCE</td><td>COFEN: portal HTML observado. REST/dados abertos sem HTTP 200 neste lote. Não inventar base_url.</td></tr><tr><td>ALTA</td><td>COPYRIGHT_OR_EVIDENCE</td><td>Texto de cláusula ISO licenciada indisponível. Government alternative NÃO substitui ISO 8000 clause text.</td></tr><tr><td>ALTA</td><td>COPYRIGHT_OR_EVIDENCE</td><td>Braden/Norton/Glasgow: obra de terceiros. Busca bibliográfica permitida (PubMed/COFEN/ANVISA HTML/OMS). Republicar o instrumento continua FORBIDDEN.</td></tr><tr><td>ALTA</td><td>COPYRIGHT_OR_EVIDENCE</td><td>1516 HTML = catálogo de pendências REG (1 stem → 1 gap MD+REG+rights). Inventário demonstra as pendências. Extração em massa de fórmula clínica para data/tools permanece FORBIDDEN.</td></tr><tr><td>ALTA</td><td>COPYRIGHT_OR_EVIDENCE</td><td>API oficial de produtos ANVISA: portal https://api.anvisa.gov.br/ é SPA HTML. REST JSON de medicamento NOT_OBSERVED sem Gov.br Client ID/Secret. consultas.anvisa.gov.br/api/consult</td></tr><tr><td>ALTA</td><td>COPYRIGHT_OR_EVIDENCE</td><td>Supabase legislation/tables: autenticação MCP falhou. Nada inventado. Extração federal usa API do Congresso.</td></tr></tbody></table></div>
+      <p>Sem dispatch de e-mail (NO_SENSITIVE_CAPTURE). Frequência 24h.</p>
+    </section>
+    
+    </main>
+  </div>
+</div>
+  <script data-admin-root="../">
+/* CKO admin control plane client. First-party. No canonical writes. */
+(function () {
+  "use strict";
+
+  function outEl() {
+    return document.getElementById("admin-action-out");
+  }
+
+  function show(data) {
+    var el = outEl();
+    if (!el) return;
+    el.hidden = false;
+    el.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
+  }
+
+  function rootPrefix() {
+    var script = document.querySelector("[data-admin-root]");
+    return script ? script.getAttribute("data-admin-root") || "" : "";
+  }
+
+  async function call(method, path) {
+    var url = rootPrefix() + path;
+    var res;
+    try {
+      res = await fetch(url, {
+        method: method,
+        headers: { Accept: "application/json" }
+      });
+    } catch (err) {
+      show({
+        status: "HOLD",
+        reason: "Control plane indisponível. Sirva com python3 -m engine.cli serve — não abra o HTML como arquivo.",
+        error: String(err)
+      });
+      return;
+    }
+    var body = await res.text();
+    try {
+      show(JSON.parse(body));
+    } catch (err) {
+      show({ http: res.status, body: body.slice(0, 2000) });
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest("[data-admin-action]");
+    if (!btn) return;
+    event.preventDefault();
+    var action = btn.getAttribute("data-admin-action");
+    if (action === "git-status") call("GET", "/__admin/git-status");
+    if (action === "render") call("POST", "/__admin/render");
+    if (action === "deploy-prepare") call("POST", "/__admin/deploy-prepare");
+  });
+})();
+
+</script>
+<script>
+(function () {
+  "use strict";
+  var FONT_SIZES = ["1em", "1.15em", "1.3em", "1.5em", "2em"];
+  var FONT_LABELS = ["Normal", "Médio", "Grande", "Extra Grande", "Máximo"];
+  var LINE_VALUES = ["1.5", "1.8", "2.2"];
+  var LINE_LABELS = ["Médio", "Grande", "Extra Grande"];
+  var LETTER_VALUES = ["0em", ".05em", ".1em"];
+  var LETTER_LABELS = ["Normal", "Médio", "Grande"];
+  var SPEEDS = [
+    { rate: 0.8, label: "Lenta" },
+    { rate: 1, label: "Normal" },
+    { rate: 1.5, label: "Rápida" }
+  ];
+  var KEYS = {
+    font: "fontSize",
+    line: "lineHeight",
+    letter: "letterSpacing",
+    speed: "readingSpeed",
+    contrast: "highContrast",
+    dark: "darkMode",
+    dyslexia: "dyslexiaFont",
+    focus: "focusColor"
+  };
+
+  var fontLevel = 1;
+  var lineLevel = 1;
+  var letterLevel = 1;
+  var speedLevel = 1;
+  var lastFocus = null;
+  var speaking = false;
+  var paused = false;
+  var synth = window.speechSynthesis || null;
+
+  function readInt(key, fallback) {
+    try {
+      var raw = parseInt(localStorage.getItem(key) || String(fallback), 10);
+      return isNaN(raw) ? fallback : raw;
+    } catch (ignore) {
+      return fallback;
+    }
+  }
+
+  function readFlag(key) {
+    try {
+      return localStorage.getItem(key) === "true";
+    } catch (ignore) {
+      return false;
+    }
+  }
+
+  function write(key, value) {
+    try {
+      localStorage.setItem(key, String(value));
+    } catch (ignore) {
+      /* quota / private mode */
+    }
+  }
+
+  function removeKey(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (ignore) {}
+  }
+
+  function announce(message) {
+    var status = document.getElementById("statusMessage");
+    if (status) {
+      status.textContent = message;
+      window.setTimeout(function () {
+        if (status.textContent === message) status.textContent = "";
+      }, 3000);
+    }
+  }
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function clamp(level, max) {
+    var n = parseInt(level, 10);
+    if (isNaN(n) || n < 1) return 1;
+    return n > max ? max : n;
+  }
+
+  function applyFont(level, speak) {
+    fontLevel = clamp(level, FONT_SIZES.length);
+    var idx = fontLevel - 1;
+    document.documentElement.style.fontSize = FONT_SIZES[idx];
+    setText("fontSizeText", FONT_LABELS[idx]);
+    setText("fontSizeTextPWA", FONT_LABELS[idx]);
+    write(KEYS.font, fontLevel);
+    if (speak) announce("Tamanho da fonte: " + FONT_LABELS[idx]);
+  }
+
+  function applyLine(level, speak) {
+    lineLevel = clamp(level, LINE_VALUES.length);
+    var idx = lineLevel - 1;
+    document.documentElement.style.setProperty("--espacamento-linha", LINE_VALUES[idx]);
+    setText("lineHeightText", LINE_LABELS[idx]);
+    setText("lineHeightTextPWA", LINE_LABELS[idx]);
+    write(KEYS.line, lineLevel);
+    if (speak) announce("Espaçamento de linha: " + LINE_LABELS[idx]);
+  }
+
+  function applyLetter(level, speak) {
+    letterLevel = clamp(level, LETTER_VALUES.length);
+    var idx = letterLevel - 1;
+    document.documentElement.style.setProperty("--espacamento-letra", LETTER_VALUES[idx]);
+    setText("letterSpacingText", LETTER_LABELS[idx]);
+    setText("letterSpacingTextPWA", LETTER_LABELS[idx]);
+    write(KEYS.letter, letterLevel);
+    if (speak) announce("Espaçamento de letra: " + LETTER_LABELS[idx]);
+  }
+
+  function applySpeed(level, speak) {
+    speedLevel = clamp(level, SPEEDS.length);
+    var sp = SPEEDS[speedLevel - 1];
+    setText("readingSpeedText", sp.label);
+    write(KEYS.speed, speedLevel);
+    if (speak) announce("Velocidade de leitura: " + sp.label);
+  }
+
+  function applyFocus(color, speak) {
+    var value = color || "yellow";
+    document.documentElement.style.setProperty("--cor-foco-acessibilidade", value);
+    document.documentElement.style.setProperty("--a11y-focus", value);
+    write(KEYS.focus, value);
+    document.querySelectorAll(".color-option").forEach(function (btn) {
+      var on = btn.getAttribute("data-color") === value;
+      btn.classList.toggle("selected", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    if (speak) announce("Cor de foco alterada.");
+  }
+
+  function setBodyClass(name, on) {
+    document.body.classList.toggle(name, !!on);
+    document.documentElement.classList.toggle(name, !!on);
+    if (name === "dark-mode") {
+      document.documentElement.classList.toggle("rd-dark", !!on);
+    }
+  }
+
+  function speakText(text) {
+    if (!text || !synth) {
+      announce("Leitura HOLD neste navegador.");
+      return;
+    }
+    synth.cancel();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "pt-BR";
+    utter.rate = (SPEEDS[speedLevel - 1] || SPEEDS[1]).rate;
+    utter.onstart = function () {
+      speaking = true;
+      paused = false;
+    };
+    utter.onend = function () {
+      speaking = false;
+      paused = false;
+    };
+    utter.onerror = function () {
+      speaking = false;
+      paused = false;
+    };
+    synth.speak(utter);
+  }
+
+  function toggleReadMain() {
+    if (!synth) {
+      announce("Leitura HOLD neste navegador.");
+      return;
+    }
+    if (speaking) {
+      if (paused) {
+        synth.resume();
+        paused = false;
+      } else {
+        synth.pause();
+        paused = true;
+      }
+      return;
+    }
+    var main = document.querySelector("main");
+    speakText(main ? main.innerText : document.body.innerText);
+  }
+
+  function restartRead() {
+    if (synth) synth.cancel();
+    speaking = false;
+    paused = false;
+    window.setTimeout(function () {
+      var main = document.querySelector("main");
+      speakText(main ? main.innerText : document.body.innerText);
+    }, 80);
+  }
+
+  function readFocused() {
+    if (!lastFocus) return;
+    var text = (lastFocus.textContent || lastFocus.getAttribute("aria-label") || lastFocus.alt || lastFocus.value || "").trim();
+    speakText(text);
+  }
+
+  function restore() {
+    applyFont(readInt(KEYS.font, 1), false);
+    applyLine(readInt(KEYS.line, 1), false);
+    applyLetter(readInt(KEYS.letter, 1), false);
+    applySpeed(readInt(KEYS.speed, 1), false);
+    setBodyClass("contraste-alto", readFlag(KEYS.contrast));
+    setBodyClass("dark-mode", readFlag(KEYS.dark));
+    setBodyClass("fonte-dislexia", readFlag(KEYS.dyslexia));
+    var focus = "yellow";
+    try {
+      focus = localStorage.getItem(KEYS.focus) || "yellow";
+    } catch (ignore) {}
+    applyFocus(focus, false);
+  }
+
+  function resetAll() {
+    if (synth) synth.cancel();
+    speaking = false;
+    paused = false;
+    applyFont(1, false);
+    applyLine(1, false);
+    applyLetter(1, false);
+    applySpeed(1, false);
+    setBodyClass("contraste-alto", false);
+    setBodyClass("dark-mode", false);
+    setBodyClass("fonte-dislexia", false);
+    applyFocus("yellow", false);
+    Object.keys(KEYS).forEach(function (k) {
+      removeKey(KEYS[k]);
+    });
+    try {
+      localStorage.removeItem("cko-a11y");
+    } catch (ignore) {}
+    announce("Configurações redefinidas para o padrão");
+  }
+
+  function bindIds(ids, fn) {
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener("click", fn);
+    });
+  }
+
+  function closePwa() {
+    var bar = document.getElementById("pwaAcessibilidadeBar");
+    var overlay = document.getElementById("menuOverlay");
+    var toggle = document.getElementById("accessibilityToggleButton");
+    if (bar) bar.classList.remove("is-open");
+    if (overlay) overlay.classList.remove("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function openPwa() {
+    var bar = document.getElementById("pwaAcessibilidadeBar");
+    var overlay = document.getElementById("menuOverlay");
+    var toggle = document.getElementById("accessibilityToggleButton");
+    if (bar) bar.classList.add("is-open");
+    if (overlay) overlay.classList.add("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+  }
+
+  function onReady() {
+    restore();
+    document.addEventListener("focusin", function (ev) {
+      lastFocus = ev.target;
+    });
+    bindIds(["btnAlternarTamanhoFonte", "btnAlternarTamanhoFontePWA"], function () {
+      applyFont(fontLevel % FONT_SIZES.length + 1, true);
+    });
+    bindIds(["btnAlternarEspacamentoLinha", "btnAlternarEspacamentoLinhaPWA"], function () {
+      applyLine(lineLevel % LINE_VALUES.length + 1, true);
+    });
+    bindIds(["btnAlternarEspacamentoLetra", "btnAlternarEspacamentoLetraPWA"], function () {
+      applyLetter(letterLevel % LETTER_VALUES.length + 1, true);
+    });
+    bindIds(["btnAlternarContraste", "btnAlternarContrastePWA"], function () {
+      var on = !document.body.classList.contains("contraste-alto");
+      setBodyClass("contraste-alto", on);
+      write(KEYS.contrast, on);
+      announce("Alto contraste " + (on ? "ativado" : "desativado"));
+    });
+    bindIds(["btnAlternarModoEscuro", "btnAlternarModoEscuroPWA"], function () {
+      var on = !document.body.classList.contains("dark-mode");
+      setBodyClass("dark-mode", on);
+      write(KEYS.dark, on);
+      announce("Modo escuro " + (on ? "ativado" : "desativado"));
+    });
+    bindIds(["btnAlternarFonteDislexia", "btnAlternarFonteDislexiaPWA"], function () {
+      var on = !document.body.classList.contains("fonte-dislexia");
+      setBodyClass("fonte-dislexia", on);
+      write(KEYS.dyslexia, on);
+      announce("Fonte para dislexia " + (on ? "ativada" : "desativada"));
+    });
+    bindIds(["btnResetarAcessibilidade", "btnResetarAcessibilidadePWA"], resetAll);
+    bindIds(["btnToggleLeitura"], toggleReadMain);
+    bindIds(["btnReiniciarLeitura"], restartRead);
+    bindIds(["btnAlternarVelocidadeLeitura"], function () {
+      applySpeed(speedLevel % SPEEDS.length + 1, true);
+    });
+    bindIds(["btnReadFocused"], readFocused);
+    document.querySelectorAll(".color-option").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        applyFocus(btn.getAttribute("data-color") || "yellow", true);
+      });
+    });
+
+    var modal = document.getElementById("keyboardShortcutsModal");
+    function openModal() {
+      if (modal) modal.classList.add("show");
+    }
+    function closeModal() {
+      if (modal) modal.classList.remove("show");
+    }
+    bindIds(["btnKeyboardShortcuts", "btnKeyboardShortcutsPWA"], openModal);
+    bindIds(["keyboardModalCloseButton"], closeModal);
+
+    var toggle = document.getElementById("accessibilityToggleButton");
+    var closeBtn = document.getElementById("pwaAcessibilidadeCloseBtn");
+    var overlay = document.getElementById("menuOverlay");
+    if (toggle) toggle.addEventListener("click", function () {
+      var bar = document.getElementById("pwaAcessibilidadeBar");
+      if (bar && bar.classList.contains("is-open")) closePwa();
+      else openPwa();
+    });
+    if (closeBtn) closeBtn.addEventListener("click", closePwa);
+    if (overlay) overlay.addEventListener("click", closePwa);
+
+    window.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      closeModal();
+      closePwa();
+    });
+
+    var topBtn = document.getElementById("backToTopBtn");
+    if (topBtn) {
+      var ticking = false;
+      var lastY = 0;
+      window.addEventListener("scroll", function () {
+        lastY = window.scrollY;
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          var mobile = window.innerWidth <= 768;
+          var show = !mobile && lastY > 200;
+          topBtn.style.display = show ? "block" : "none";
+          ticking = false;
+        });
+      }, { passive: true });
+      topBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+
+    var hamburger = document.getElementById("hamburgerButton");
+    var nav = document.getElementById("primary-nav");
+    if (hamburger && nav) {
+      hamburger.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        hamburger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+
+    var langButton = document.getElementById("langButton");
+    var langMenu = document.getElementById("langMenu");
+    var langText = document.getElementById("langText");
+    if (langButton && langMenu) {
+      langButton.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        var hidden = langMenu.classList.toggle("hidden");
+        langButton.setAttribute("aria-expanded", hidden ? "false" : "true");
+      });
+      document.addEventListener("click", function (ev) {
+        if (!langButton.contains(ev.target) && !langMenu.contains(ev.target)) {
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+        }
+      });
+      langMenu.querySelectorAll(".lang-option").forEach(function (item) {
+        item.addEventListener("click", function () {
+          if (langText) langText.textContent = item.querySelector("span") ? item.querySelector("span").textContent : item.textContent;
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+          announce("Tradução HOLD. Runtime permanece pt-BR.");
+        });
+      });
+    }
+  }
+
+  try {
+    var prodFont = localStorage.getItem("fontSize");
+    if (prodFont && prodFont !== "1") {
+      var idx = Math.min(Math.max(parseInt(prodFont, 10), 1), FONT_SIZES.length);
+      document.documentElement.style.fontSize = FONT_SIZES[idx - 1];
+    }
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("rd-dark", "dark-mode");
+    }
+  } catch (ignore) {}
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+})();
+
+</script>
+</body>
+</html>

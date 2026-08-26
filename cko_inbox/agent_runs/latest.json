@@ -1,0 +1,1218 @@
+{
+  "business_key": "IPE-AGENT-RUN-001",
+  "run_id": "RUN-EXTRACT-20260826T015415Z",
+  "uuid": null,
+  "status": "HOLD",
+  "network": false,
+  "started_at": "2026-08-26T01:54:15Z",
+  "chain": "vault → CKO-MD → CKO-REG → projection → renderer → frontend",
+  "rule": "DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO. Extração ≠ promoção. LLM não é checker.",
+  "publication": "HOLD",
+  "ipe_reliance": false,
+  "caat_status": "PASS_WITH_FINDINGS",
+  "ipe_status": "HOLD",
+  "llm_used": false,
+  "steps": [
+    {
+      "agent_id": "AG-FETCH-ORIGIN",
+      "class": "ACQUISITION",
+      "role": "MAKER",
+      "network": false,
+      "origin": "https://www.calculadorasdeenfermagem.com.br/",
+      "live_fetches": [],
+      "inbox_manifest_files": 12,
+      "promotes_to_md": false,
+      "status": "OBSERVED"
+    },
+    {
+      "agent_id": "AG-FETCH-REGULATED",
+      "class": "ACQUISITION",
+      "role": "MAKER",
+      "network": false,
+      "pages": [
+        {
+          "business_key": "API-CAND-COFEN",
+          "name": "COFEN",
+          "url": "https://www.cofen.gov.br/",
+          "kind": "REGULATED_HTML_PAGE",
+          "api_base_url": null,
+          "http_status": 200,
+          "bytes": 407680,
+          "sha256": "1326957a75f7a183806ef2b14587c9baf49788b5f117155a5a16d0de9a9c1967",
+          "title": "Início - Cofen",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "note": "Página HTML pública observada. Não é API REST. base_url de API permanece null."
+        },
+        {
+          "business_key": "API-CAND-ANVISA",
+          "name": "ANVISA",
+          "url": "https://www.gov.br/anvisa/pt-br",
+          "kind": "REGULATED_HTML_PAGE",
+          "api_base_url": null,
+          "http_status": 200,
+          "bytes": 574833,
+          "sha256": "443cc12d71d69b77fd955859ac9a24b63a39b70c44f1f31a874e21f9dd4a54f7",
+          "title": "Português (Brasil)",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "note": "Página HTML pública observada. Não é API REST. base_url de API permanece null."
+        },
+        {
+          "business_key": "API-CAND-MS",
+          "name": "Ministério da Saúde",
+          "url": "https://www.gov.br/saude/pt-br",
+          "kind": "REGULATED_HTML_PAGE",
+          "api_base_url": null,
+          "http_status": 200,
+          "bytes": 154507,
+          "sha256": "848aedc41a0300e20fbbd4871c33eba5e6bc1c484699c572cbfb22abc5773f8d",
+          "title": "Ministério da Saúde",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "note": "Página HTML pública observada. Não é API REST. base_url de API permanece null."
+        }
+      ],
+      "api_base_url_set": false,
+      "promotes_to_md": false,
+      "status": "OBSERVED"
+    },
+    {
+      "agent_id": "AG-FETCH-GOV-SOURCES",
+      "class": "ACQUISITION",
+      "role": "MAKER",
+      "network": false,
+      "pages": [
+        {
+          "business_key": "SRC-GOV-ANVISA-PORTAL",
+          "agency_key": "AGY-ANVISA",
+          "agency": "ANVISA",
+          "url": "https://www.gov.br/anvisa/pt-br",
+          "kind": "REGULATED_HTML_PAGE",
+          "frequency_hours": 24,
+          "md_ref": "MD-AGY-ANVISA",
+          "reg_ref": "REG-SRC-ANVISA",
+          "layer": "L60",
+          "http_status": 200,
+          "bytes": 574831,
+          "sha256": "fe34e1be30a502e35e1e8711402ef36d3c862a541f7f9bb27f295851e2aa1162",
+          "title": "Português (Brasil)",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "captured_at": "2026-08-25T14:34:50Z",
+          "api_base_url": null,
+          "inbox_path": "cko_inbox/gov/SRC-GOV-ANVISA-PORTAL.html"
+        },
+        {
+          "business_key": "SRC-GOV-MS-PORTAL",
+          "agency_key": "AGY-MS",
+          "agency": "Ministério da Saúde",
+          "url": "https://www.gov.br/saude/pt-br",
+          "kind": "REGULATED_HTML_PAGE",
+          "frequency_hours": 24,
+          "md_ref": "MD-AGY-MS",
+          "reg_ref": "REG-SRC-MS",
+          "layer": "L110",
+          "http_status": 200,
+          "bytes": 154507,
+          "sha256": "848aedc41a0300e20fbbd4871c33eba5e6bc1c484699c572cbfb22abc5773f8d",
+          "title": "Ministério da Saúde",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "captured_at": "2026-08-25T14:34:52Z",
+          "api_base_url": null,
+          "inbox_path": "cko_inbox/gov/SRC-GOV-MS-PORTAL.html"
+        },
+        {
+          "business_key": "SRC-GOV-BVSMS",
+          "agency_key": "AGY-MS",
+          "agency": "Ministério da Saúde / BVSMS",
+          "url": "https://bvsms.saude.gov.br/",
+          "kind": "REGULATED_HTML_PAGE",
+          "frequency_hours": 24,
+          "md_ref": "MD-AGY-MS",
+          "reg_ref": "REG-SRC-MS",
+          "layer": "L140",
+          "note": "Biblioteca Virtual em Saúde. Candidato de referência pública, não API REST.",
+          "http_status": null,
+          "bytes": 0,
+          "sha256": null,
+          "title": null,
+          "error": "RemoteDisconnected: Remote end closed connection without response",
+          "epistemic_status": "EVIDENCE_PENDING",
+          "captured_at": "2026-08-25T14:34:53Z",
+          "api_base_url": null,
+          "inbox_path": null
+        },
+        {
+          "business_key": "SRC-GOV-COFEN-PORTAL",
+          "agency_key": "AGY-COFEN",
+          "agency": "COFEN",
+          "url": "https://www.cofen.gov.br/",
+          "kind": "REGULATED_HTML_PAGE",
+          "frequency_hours": 24,
+          "md_ref": "MD-AGY-COFEN",
+          "reg_ref": "REG-SRC-COFEN",
+          "layer": "L110",
+          "note": "Portal HTML. REST API não observada. Não inventar adapter COFEN.",
+          "http_status": 200,
+          "bytes": 407680,
+          "sha256": "1326957a75f7a183806ef2b14587c9baf49788b5f117155a5a16d0de9a9c1967",
+          "title": "Início - Cofen",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "captured_at": "2026-08-25T14:34:55Z",
+          "api_base_url": null,
+          "inbox_path": "cko_inbox/gov/SRC-GOV-COFEN-PORTAL.html"
+        },
+        {
+          "business_key": "SRC-GOV-COREN-SP-PORTAL",
+          "agency_key": "AGY-COREN-SP",
+          "agency": "COREN-SP",
+          "url": "https://www.coren-sp.gov.br/",
+          "kind": "REGULATED_HTML_PAGE",
+          "frequency_hours": 24,
+          "md_ref": "MD-AGY-COREN-SP",
+          "reg_ref": "REG-SRC-COREN-SP",
+          "layer": "L110",
+          "note": "Portal HTML estadual. REST API não observada. Não inventar adapter COREN.",
+          "http_status": 500,
+          "bytes": 0,
+          "sha256": null,
+          "title": null,
+          "error": "HTTPError 500",
+          "epistemic_status": "EVIDENCE_PENDING",
+          "captured_at": "2026-08-25T14:34:57Z",
+          "api_base_url": null,
+          "inbox_path": null
+        },
+        {
+          "business_key": "SRC-GOV-PGDADOS-HUB",
+          "agency_key": "AGY-SGD",
+          "agency": "Secretaria de Governo Digital / MGI",
+          "url": "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados",
+          "kind": "REGULATED_HTML_PAGE",
+          "frequency_hours": 24,
+          "md_ref": "MD-AGY-SGD",
+          "reg_ref": "REG-SRC-PGDADOS-HUB",
+          "layer": "L150",
+          "note": "Hub PGDADOS / Trilha de Governança de Dados. Metadados; PDF integral não vira regra de produto.",
+          "http_status": 200,
+          "bytes": 165628,
+          "sha256": "16f5d1f47dd30e03457e452d8d4cceb27c555d120fc2ab70601e5ad56229e206",
+          "title": "Governança de Dados — Governo Digital",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "captured_at": "2026-08-25T14:34:58Z",
+          "api_base_url": null,
+          "inbox_path": "cko_inbox/gov/SRC-GOV-PGDADOS-HUB.html"
+        },
+        {
+          "business_key": "SRC-GOV-PGDADOS-GUIA",
+          "agency_key": "AGY-SGD",
+          "agency": "Secretaria de Governo Digital / MGI",
+          "url": "https://www.gov.br/governodigital/pt-br/infraestrutura-nacional-de-dados/governancadedados/pgdados",
+          "kind": "REGULATED_HTML_PAGE",
+          "frequency_hours": 24,
+          "md_ref": "MD-AGY-SGD",
+          "reg_ref": "REG-SRC-PGDADOS-GUIA",
+          "layer": "L150",
+          "note": "Guia de Implementação PGDADOS. Parte 3 PDF só entra se href.gov.br for observado.",
+          "http_status": 200,
+          "bytes": 131152,
+          "sha256": "a65d136d2127bcac25217c112d945dd63fb8c0da5fdce88b1b533e315cc744dc",
+          "title": "Guia de Implementação dos Programas de Governança de Dados — Governo Digital",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "captured_at": "2026-08-25T14:34:59Z",
+          "api_base_url": null,
+          "inbox_path": "cko_inbox/gov/SRC-GOV-PGDADOS-GUIA.html"
+        },
+        {
+          "business_key": "SRC-GOV-QUALIDADE-DIGIT",
+          "agency_key": "AGY-SGD",
+          "agency": "Secretaria de Governo Digital / MGI",
+          "url": "https://www.gov.br/governodigital/pt-br/estrategias-e-governanca-digital/transformacao-digital/central-de-qualidade/padroes-de-qualidade/padroes-de-qualidade-para-servicos-publicos-digitais",
+          "kind": "REGULATED_HTML_PAGE",
+          "frequency_hours": 24,
+          "md_ref": "MD-AGY-SGD",
+          "reg_ref": "REG-SRC-QUALIDADE-DIGIT",
+          "layer": "L150",
+          "note": "Padrões de Qualidade (7 dimensões). Texto de atributo não copiado como regra CKO.",
+          "http_status": 200,
+          "bytes": 309820,
+          "sha256": "0c89d4735b0ad784750a890efe019bed9f2cbbf342317041eaff926b3f6fc06c",
+          "title": "Padrões de Qualidade para Serviços Públicos Digitais — Governo Digital",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "captured_at": "2026-08-25T14:35:01Z",
+          "api_base_url": null,
+          "inbox_path": "cko_inbox/gov/SRC-GOV-QUALIDADE-DIGIT.html"
+        }
+      ],
+      "api_base_url_set": false,
+      "promotes_to_md": false,
+      "status": "OBSERVED"
+    },
+    {
+      "agent_id": "AG-API-PROBE",
+      "class": "ACQUISITION",
+      "role": "MAKER",
+      "network": false,
+      "adapters": [
+        {
+          "business_key": "API-CKAN-DADOSGOV-STATUS",
+          "agency_key": "AGY-DADOSGOV",
+          "agency": "dados.gov.br",
+          "url": "https://dados.gov.br/api/3/action/status_show",
+          "kind": "CKAN_ACTION",
+          "md_ref": "MD-API-DADOSGOV",
+          "reg_ref": "REG-API-DADOSGOV",
+          "uuid": null,
+          "http_status": 401,
+          "bytes": 0,
+          "sha256": null,
+          "error": "HTTPError 401",
+          "epistemic_status": "AUTH_REQUIRED",
+          "rest_json": false,
+          "base_url": null,
+          "online": false,
+          "note": "API observada só se HTTP 200 JSON. Sem JSON, base_url permanece null. API pode ficar offline; extração é periódica.",
+          "probed_at": "2026-08-26T01:53:52Z"
+        },
+        {
+          "business_key": "API-CKAN-DADOSGOV-ANVISA",
+          "agency_key": "AGY-ANVISA",
+          "agency": "ANVISA via dados.gov.br",
+          "url": "https://dados.gov.br/api/3/action/package_search?q=anvisa&rows=5",
+          "kind": "CKAN_ACTION",
+          "md_ref": "MD-API-ANVISA-CKAN",
+          "reg_ref": "REG-API-ANVISA",
+          "uuid": null,
+          "http_status": 401,
+          "bytes": 0,
+          "sha256": null,
+          "error": "HTTPError 401",
+          "epistemic_status": "AUTH_REQUIRED",
+          "rest_json": false,
+          "base_url": null,
+          "online": false,
+          "note": "API observada só se HTTP 200 JSON. Sem JSON, base_url permanece null. API pode ficar offline; extração é periódica.",
+          "probed_at": "2026-08-26T01:53:52Z"
+        },
+        {
+          "business_key": "API-ANVISA-PORTAL",
+          "agency_key": "AGY-ANVISA",
+          "agency": "ANVISA Portal de APIs",
+          "url": "https://api.anvisa.gov.br/",
+          "kind": "PORTAL_SPA",
+          "md_ref": "MD-API-ANVISA-PORTAL",
+          "reg_ref": "REG-API-ANVISA-PORTAL",
+          "layer": "L70",
+          "note": "Portal APIs ANVISA (Gov.br). HTTP 200 HTML SPA. REST JSON de produto NOT_OBSERVED sem Client ID/Secret. Não inventar base_url. Não substitui bula.",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 44729,
+          "sha256": "dd3655e1da8b4018f2f6b1037c0b400ab6d1ff9fd86b075e564c6399c6d2bded",
+          "error": null,
+          "epistemic_status": "OBSERVED_HTML",
+          "rest_json": false,
+          "base_url": null,
+          "online": false,
+          "probed_at": "2026-08-26T01:53:53Z"
+        },
+        {
+          "business_key": "API-ANVISA-CONSULTAS-MEDICAMENTOS",
+          "agency_key": "AGY-ANVISA",
+          "agency": "ANVISA Consultas medicamentos",
+          "url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos",
+          "kind": "PRODUCT_CONSULTA",
+          "md_ref": "MD-API-ANVISA-CONSULTAS",
+          "reg_ref": "REG-API-ANVISA-CONSULTAS",
+          "layer": "L70",
+          "note": "Consulta de medicamentos. HTTP 403 sem credencial neste ambiente. Não extrair token do JavaScript do portal. Não inventar dose.",
+          "uuid": null,
+          "http_status": 403,
+          "bytes": 0,
+          "sha256": null,
+          "error": "HTTPError 403",
+          "epistemic_status": "AUTH_REQUIRED",
+          "rest_json": false,
+          "base_url": null,
+          "online": false,
+          "probed_at": "2026-08-26T01:53:53Z"
+        },
+        {
+          "business_key": "API-CKAN-OPENDATASUS-STATUS",
+          "agency_key": "AGY-MS",
+          "agency": "OpenDataSUS",
+          "url": "https://opendatasus.saude.gov.br/api/3/action/status_show",
+          "kind": "CKAN_ACTION",
+          "md_ref": "MD-API-OPENDATASUS",
+          "reg_ref": "REG-API-MS",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 34065,
+          "sha256": "d6924a105cc944a5cf27163ff7cd8a4b002d0e7741560e82bff719da75f5dea2",
+          "error": null,
+          "epistemic_status": "OBSERVED_HTML",
+          "rest_json": false,
+          "base_url": null,
+          "online": false,
+          "note": "API observada só se HTTP 200 JSON. Sem JSON, base_url permanece null. API pode ficar offline; extração é periódica.",
+          "probed_at": "2026-08-26T01:53:55Z"
+        },
+        {
+          "business_key": "API-CKAN-OPENDATASUS-VACINA",
+          "agency_key": "AGY-MS",
+          "agency": "OpenDataSUS busca vacina",
+          "url": "https://opendatasus.saude.gov.br/api/3/action/package_search?q=vacina&rows=5",
+          "kind": "CKAN_ACTION",
+          "md_ref": "MD-API-OPENDATASUS-VACINA",
+          "reg_ref": "REG-API-MS",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 34065,
+          "sha256": "d6924a105cc944a5cf27163ff7cd8a4b002d0e7741560e82bff719da75f5dea2",
+          "error": null,
+          "epistemic_status": "OBSERVED_HTML",
+          "rest_json": false,
+          "base_url": null,
+          "online": false,
+          "note": "API observada só se HTTP 200 JSON. Sem JSON, base_url permanece null. API pode ficar offline; extração é periódica.",
+          "probed_at": "2026-08-26T01:53:57Z"
+        },
+        {
+          "business_key": "API-CROSSREF-WORKS",
+          "agency_key": "AGY-CROSSREF",
+          "agency": "Crossref REST",
+          "url": "https://api.crossref.org/works?query=enfermagem&rows=1",
+          "kind": "BIBLIOGRAPHIC_SEARCH",
+          "md_ref": "MD-API-CROSSREF",
+          "reg_ref": "REG-API-CROSSREF",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 1652,
+          "sha256": "a48a9288c46d504af8fb8ed80699803f48e77a735e4160245e64bf6f1432caec",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "rest_json": true,
+          "base_url": "https://api.crossref.org/",
+          "online": true,
+          "note": "API observada só se HTTP 200 JSON. Sem JSON, base_url permanece null. API pode ficar offline; extração é periódica.",
+          "probed_at": "2026-08-26T01:53:57Z"
+        },
+        {
+          "business_key": "API-NCBI-EUTILS-ESEARCH",
+          "agency_key": "AGY-NCBI",
+          "agency": "NCBI E-utilities",
+          "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=nursing&retmax=1&retmode=json",
+          "kind": "LITERATURE_SEARCH",
+          "md_ref": "MD-API-NCBI-EUTILS",
+          "reg_ref": "REG-API-NCBI",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 473,
+          "sha256": "d775af8bd0c705a8c533937bf495b1d62877ea3aa35fc9cc1900f3a7fe4bcd5d",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "rest_json": true,
+          "base_url": "https://eutils.ncbi.nlm.nih.gov/",
+          "online": true,
+          "note": "API observada só se HTTP 200 JSON. Sem JSON, base_url permanece null. API pode ficar offline; extração é periódica.",
+          "probed_at": "2026-08-26T01:53:57Z"
+        },
+        {
+          "business_key": "API-NLM-CLINICALTABLES-ICD10CM",
+          "agency_key": "AGY-NLM",
+          "agency": "NLM Clinical Tables ICD-10-CM",
+          "url": "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?terms=sepsis&maxList=1",
+          "kind": "TERMINOLOGY_SEARCH",
+          "md_ref": "MD-API-NLM-ICD10CM",
+          "reg_ref": "REG-API-NLM",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 14,
+          "sha256": "4036e0ad866f2db061b81e8f91ce8f953e85ea7e87580a5d787219941b7a093a",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "rest_json": true,
+          "base_url": "https://clinicaltables.nlm.nih.gov/",
+          "online": true,
+          "note": "API observada só se HTTP 200 JSON. Sem JSON, base_url permanece null. API pode ficar offline; extração é periódica.",
+          "probed_at": "2026-08-26T01:53:58Z"
+        },
+        {
+          "business_key": "API-OPENFDA-DRUGLABEL",
+          "agency_key": "AGY-FDA",
+          "agency": "openFDA (FDA / governo dos EUA)",
+          "url": "https://api.fda.gov/drug/label.json?limit=1",
+          "kind": "PRODUCT_LABEL_SEARCH",
+          "md_ref": "MD-API-OPENFDA",
+          "reg_ref": "REG-API-FDA",
+          "note": "Fallback US gov quando a API ANVISA de produto não devolve JSON. Não substitui bula ANVISA.",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 3933,
+          "sha256": "36182a46837b94129b1c81d411bb99f994563718d82ca0e24448afd313a99b36",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "rest_json": true,
+          "base_url": "https://api.fda.gov/",
+          "online": true,
+          "probed_at": "2026-08-26T01:53:58Z"
+        },
+        {
+          "business_key": "API-WHO-GHO-INDICATOR",
+          "agency_key": "AGY-WHO",
+          "agency": "OMS GHO OData",
+          "url": "https://ghoapi.azureedge.net/api/Indicator?$top=1",
+          "kind": "INDICATOR_SEARCH",
+          "md_ref": "MD-API-WHO-GHO",
+          "reg_ref": "REG-API-WHO",
+          "note": "Indicadores OMS. Não republica instrumento clínico.",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 212,
+          "sha256": "3a062ff604aafc33e026bc10c8ad698fa907e8588a3feaf66e63a3a7af44b9db",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "rest_json": true,
+          "base_url": "https://ghoapi.azureedge.net/",
+          "online": true,
+          "probed_at": "2026-08-26T01:53:59Z"
+        },
+        {
+          "business_key": "API-RXNAV-VERSION",
+          "agency_key": "AGY-NLM",
+          "agency": "NLM RxNav",
+          "url": "https://rxnav.nlm.nih.gov/REST/version.json",
+          "kind": "TERMINOLOGY_VERSION",
+          "md_ref": "MD-API-RXNAV",
+          "reg_ref": "REG-API-NLM",
+          "note": "Versão RxNorm. Sem dump de termos.",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 48,
+          "sha256": "516616aad5e54620da22cefa7ee9cc980bb315b212f350f8b1016ccad32b2633",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "rest_json": true,
+          "base_url": "https://rxnav.nlm.nih.gov/",
+          "online": true,
+          "probed_at": "2026-08-26T01:54:00Z"
+        }
+      ],
+      "online_count": 6,
+      "promotes_to_md": false,
+      "status": "OBSERVED"
+    },
+    {
+      "agent_id": "AG-PROBE-CONGRESS-API",
+      "class": "ACQUISITION",
+      "role": "MAKER",
+      "network": false,
+      "adapters": [
+        {
+          "business_key": "API-CONGRESSO-SENADO-OPENAPI",
+          "agency_key": "AGY-CONGRESSO",
+          "agency": "Congresso Nacional / Senado Dados Abertos",
+          "url": "https://legis.senado.leg.br/dadosabertos/v3/api-docs",
+          "kind": "CONGRESSO_OPENAPI",
+          "md_ref": "MD-API-CONGRESSO-SENADO",
+          "reg_ref": "REG-API-CONGRESSO-SENADO",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 172752,
+          "sha256": "70a156d0604a31eacdff9e6424248764081e777db01dbc856e9e6d831982d6bf",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "base_url": "https://legis.senado.leg.br/dadosabertos/",
+          "online": true,
+          "final_url": "https://legis.senado.leg.br/dadosabertos/v3/api-docs",
+          "note": "API do Congresso. base_url só se HTTP 200. Extração periódica 24h.",
+          "probed_at": "2026-08-25T14:35:08Z"
+        },
+        {
+          "business_key": "API-CONGRESSO-SENADO-TIPOS-NORMA",
+          "agency_key": "AGY-CONGRESSO",
+          "agency": "Congresso Nacional / legislação federal",
+          "url": "https://legis.senado.leg.br/dadosabertos/legislacao/tiposNorma",
+          "kind": "LEGISLACAO_TIPOS_NORMA",
+          "md_ref": "MD-API-CONGRESSO-LEGISLACAO",
+          "reg_ref": "REG-API-CONGRESSO-LEGISLACAO",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 26457,
+          "sha256": "58c6cef35419ba51d39d027adf5e5b9854761eda27a020aced05891e6494a032",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "base_url": "https://legis.senado.leg.br/dadosabertos/",
+          "online": true,
+          "final_url": "https://legis.senado.leg.br/dadosabertos/dados/ListaTiposDocumento.json",
+          "note": "API do Congresso. base_url só se HTTP 200. Extração periódica 24h.",
+          "probed_at": "2026-08-25T14:35:10Z"
+        },
+        {
+          "business_key": "API-CONGRESSO-CAMARA-TIPOS",
+          "agency_key": "AGY-CONGRESSO",
+          "agency": "Câmara dos Deputados Dados Abertos",
+          "url": "https://dadosabertos.camara.leg.br/api/v2/referencias/proposicoes/siglaTipo",
+          "kind": "CAMARA_SIGLA_TIPO",
+          "md_ref": "MD-API-CONGRESSO-CAMARA",
+          "reg_ref": "REG-API-CONGRESSO-CAMARA",
+          "uuid": null,
+          "http_status": 200,
+          "bytes": 62073,
+          "sha256": "4880a6409c7af0985ca5d80f5ee791a7280cece80ea6d5c6d5bcf01c92a247d7",
+          "error": null,
+          "epistemic_status": "OBSERVED",
+          "base_url": "https://dadosabertos.camara.leg.br/api/v2/",
+          "online": true,
+          "final_url": "https://dadosabertos.camara.leg.br/api/v2/referencias/proposicoes/siglaTipo",
+          "note": "API do Congresso. base_url só se HTTP 200. Extração periódica 24h.",
+          "probed_at": "2026-08-25T14:35:13Z"
+        }
+      ],
+      "online_count": 3,
+      "promotes_to_md": false,
+      "status": "OBSERVED"
+    },
+    {
+      "agent_id": "AG-FETCH-FEDERAL-LEGISLATION",
+      "class": "ACQUISITION",
+      "role": "MAKER",
+      "network": false,
+      "allowed": 8,
+      "blocked": 1,
+      "revoked_tool_ok": 1,
+      "senado_allow_types": 35,
+      "senado_block_types": 117,
+      "camara_block_types": 544,
+      "promotes_to_md": false,
+      "publication": "HOLD",
+      "status": "OBSERVED",
+      "gate_note": "Catálogo federal da República (legis.senado / normas.leg.br): entra o que tem efeito jurídico federal observável. Órgão emite; a casa legislativa publica o corpus. PLP / projeto = BLOCK. LCP promulgada = ALLOW (força de lei, CF/88 art. 59, II). Decreto numerado/regulamentar (DEC, DEC-n) = ALLOW como efeito REGULATORY (CF/88 art. 84, IV) — não é lei do Congresso. DEC-sn e DEC-cl permanecem BLOCK. Portaria MS / Resolução COFEN não entram neste tubo. Norma revogada entra só como ferramenta (REVOKED), nunca como aplicabilidade vigente."
+    },
+    {
+      "agent_id": "AG-PARSE-PAGES-FULL",
+      "class": "EXTRACTION",
+      "role": "MAKER",
+      "status": "SOURCE_DERIVED",
+      "replay": false,
+      "html_count": 1516,
+      "unique_stems": 1507,
+      "duplicate_stems": [
+        "balancohidrico",
+        "genogramaeecomapa",
+        "index",
+        "medicamentos",
+        "notificacao-compulsoria",
+        "nr1",
+        "teorias-de-enfermagem",
+        "time-de-resposta-rapida"
+      ],
+      "hash_match": true,
+      "path": "cko_inbox/drive/pages_full/INVENTORY.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-SITEMAP",
+      "class": "EXTRACTION",
+      "role": "MAKER",
+      "status": "SOURCE_DERIVED",
+      "loc_count": 1552,
+      "unique_slugs": 1544,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-CHROME",
+      "class": "EXTRACTION",
+      "role": "MAKER",
+      "status": "SOURCE_DERIVED",
+      "contract_path": "cko_inbox/extracted/chrome_contract.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-SITE-SHELL",
+      "class": "EXTRACTION",
+      "role": "MAKER",
+      "status": "SOURCE_DERIVED",
+      "file_count": 12,
+      "hash_match": true,
+      "forbidden_token_hits": {
+        "cookie-modal": 2,
+        "adsbygoogle": 3,
+        "cdn.jsdelivr": 1,
+        "ca-pub-6472730056006847": 2,
+        "opendyslexic": 1,
+        "googleads": 1,
+        "doubleclick": 1
+      },
+      "chrome_ids_present": {
+        "barraAcessibilidade": 3,
+        "global-header-container": 3,
+        "language-selector-placeholder": 3,
+        "footer-placeholder": 2
+      },
+      "promotes_to_md": false,
+      "promoted_to_frontend": false,
+      "chrome_projection": "A11Y_PWA_KEYBOARD_BACKTOTOP_NO_ADS",
+      "path": "cko_inbox/drive/site_shell/INVENTORY.json"
+    },
+    {
+      "agent_id": "AG-INTEGRITY",
+      "class": "EVIDENCE",
+      "role": "CHECKER",
+      "status": "OBSERVED",
+      "items": 9,
+      "missing": 0
+    },
+    {
+      "agent_id": "AG-VAULT-PUT",
+      "class": "EVIDENCE",
+      "role": "MAKER",
+      "status": "OBSERVED",
+      "stored": 22,
+      "changed_from_first": 1,
+      "objects": [
+        {
+          "logical_id": "SRC-ORIGIN-FOOTER",
+          "sha256": "cfc46bee5c4ba36c889290fc49a679cb5f9b6c91cbc11b3aab60f7668aafbed5",
+          "bytes": 10361
+        },
+        {
+          "logical_id": "SRC-ORIGIN-MENU",
+          "sha256": "ea322114d11856ec74bb0eeb09fdf4d64bcd499722bc49554af686669c58abd2",
+          "bytes": 87265
+        },
+        {
+          "logical_id": "SRC-ORIGIN-BODY",
+          "sha256": "6388911a157667def973163f8b72b9594983775a8ee8628d7c4e89f569dde6b9",
+          "bytes": 14032
+        },
+        {
+          "logical_id": "SRC-SITE-SHELL",
+          "sha256": "40795badc53e113a1f93f411a4a3a8299067352e7ed62fdc041b36fac1ae3d44",
+          "bytes": 82453
+        },
+        {
+          "logical_id": "SRC-SHELL-FOOTER",
+          "sha256": "cfc46bee5c4ba36c889290fc49a679cb5f9b6c91cbc11b3aab60f7668aafbed5",
+          "bytes": 10361
+        },
+        {
+          "logical_id": "SRC-SHELL-MENU",
+          "sha256": "ea322114d11856ec74bb0eeb09fdf4d64bcd499722bc49554af686669c58abd2",
+          "bytes": 87265
+        },
+        {
+          "logical_id": "SRC-SHELL-BODY",
+          "sha256": "6388911a157667def973163f8b72b9594983775a8ee8628d7c4e89f569dde6b9",
+          "bytes": 14032
+        },
+        {
+          "logical_id": "SRC-SHELL-HOME",
+          "sha256": "6d80305abf9622146daa4a21865c03d1532f0223a777441ec9cd62909df8c1a8",
+          "bytes": 103007
+        },
+        {
+          "logical_id": "SRC-SHELL-JS",
+          "sha256": "60617671986a6f88a94a92788b030f546ab0f801c6d75a8d2fa2aada4edca583",
+          "bytes": 41562
+        },
+        {
+          "logical_id": "SRC-SHELL-CSS",
+          "sha256": "5e8b97a5f132ea6e03d894b5b5e481899696ec019a4d53832f46bffbb773c93e",
+          "bytes": 31856
+        },
+        {
+          "logical_id": "SRC-LEI-9610-1998",
+          "sha256": "a0820742d18f4b5b0ff0f32f80fd3d9590493246c1ee84ca5dd5c677c1f4469d",
+          "bytes": 148434
+        },
+        {
+          "logical_id": "MD-TOOL-gotejamento",
+          "sha256": "3ab7da25c85091e6af442c13ef9a9296abaded6d2e70fd64f10bfda1abb07914",
+          "bytes": 7193
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-gotejamento",
+          "sha256": "8e635e5f46737d035bb0c7c7174e3fece4a04b445b83f6e63d376f2a6a7906e0",
+          "bytes": 48473
+        },
+        {
+          "logical_id": "MD-TOOL-meows",
+          "sha256": "446743a9c18f8cf02b11e6cfd322c4d20fffa8ca72e8df3285890fabcb4ac184",
+          "bytes": 8935
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-meows",
+          "sha256": "d76d691ee30f40d0817d69afb1aa9106a2fecd760e76e41a36eaab9692ca3f45",
+          "bytes": 60910
+        },
+        {
+          "logical_id": "MD-TOOL-cinco-ts-pcr",
+          "sha256": "a6283994623d3270f9071bab15d3943aefad549e9d3a2dd68392f38bb30fe16b",
+          "bytes": 4549
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-cinco-ts-pcr",
+          "sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+          "bytes": 9379
+        },
+        {
+          "logical_id": "MD-TOOL-simulado-tecnico",
+          "sha256": "6447a2611fe94e1d97e0446661578fcc4ea6050bc774d7c196dfd599378b28eb",
+          "bytes": 3999
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-simulado-tecnico",
+          "sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+          "bytes": 9379
+        },
+        {
+          "logical_id": "MD-TOOL-dimensionamento",
+          "sha256": "79289a49a02cd5ef29c0ee9d34ce9a6eaa9882789a62ea3414f55028ed18b3c8",
+          "bytes": 3613
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-dimensionamento",
+          "sha256": "1efad97ceb60d4a9c6894bbd9d0f9ed5997ae008ddacba8c8726e058d2a976e2",
+          "bytes": 76622
+        },
+        {
+          "logical_id": "SRC-ORIGIN-TOOL-braden",
+          "sha256": "a4cb7fef4e8ebf83c320956dcfb635e489e29420c746fc0382f0c342f7a9f53c",
+          "bytes": 63685
+        }
+      ],
+      "live_fetches": [],
+      "worm": true,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-RIGHTS-BIND",
+      "class": "REGULATORY",
+      "role": "CHECKER",
+      "status": "DOCUMENTADO",
+      "instrument": "INS-LEI-9610-1998",
+      "works": 8,
+      "third_party_claimed": false,
+      "assured": false,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-LINEAGE-BIND",
+      "class": "ENTITY_RESOLUTION",
+      "role": "CHECKER",
+      "status": "IMPLEMENTED",
+      "population": 5,
+      "complete_count": 5,
+      "llm_used": false,
+      "promotes_to_md": false,
+      "wired_to_frontend": true
+    },
+    {
+      "agent_id": "AG-CLIN-DICT",
+      "class": "MD",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "publication": "HOLD",
+      "wired_to_frontend": false,
+      "promotes_to_md": false,
+      "promoted_to_data_tools": false,
+      "braden_in_data_tools": false,
+      "dictionary_field_count": 163,
+      "new_tool_name_count": 77,
+      "llm_used": false
+    },
+    {
+      "agent_id": "AG-ISO8000-PROFILE",
+      "class": "MD",
+      "role": "CHECKER",
+      "status": "PASS_PROFILE_ONLY",
+      "certified": false,
+      "iso_implemented": false,
+      "cko_profile_applied": true,
+      "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+      "binding_ref": "MD-ISO8000-PGDADOS-BIND-001",
+      "fields": 49,
+      "llm_used": false,
+      "promotes_to_md": false,
+      "tests": [
+        {
+          "id": "ISO8000-CKO-UNIQUENESS",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PROVENANCE",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-WORM",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-LINEAGE",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-FIELD-DICT",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-NO-SILENT-OVERWRITE",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-NO-CERT-CLAIM",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PGDADOS-EXPLICIT",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PGDADOS-INSTRUMENTS",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PGDADOS-QUALITY-DIMS",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-PGDADOS-BINDING",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-WHO-I18N",
+          "status": "PASS"
+        },
+        {
+          "id": "ISO8000-CKO-CLIN-DICT",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "agent_id": "AG-WHO-I18N",
+      "class": "MD",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "owner_decision": "APPROVED",
+      "translation_gate": "HOLD",
+      "wired_to_frontend": false,
+      "who_official_count": 6,
+      "drive_intersection": [
+        "ar",
+        "en",
+        "es",
+        "fr",
+        "ru",
+        "zh"
+      ],
+      "runtime_who_local_key": "who.en+local.pt-BR",
+      "lusophone_hold": [
+        "pt-PT",
+        "pt-AO",
+        "pt-CV",
+        "pt-MZ",
+        "pt-GW",
+        "pt-ST",
+        "pt-TL",
+        "pt-GQ"
+      ],
+      "llm_used": false,
+      "promotes_to_md": false,
+      "publication": "HOLD"
+    },
+    {
+      "agent_id": "AG-LAYER-PHASE",
+      "class": "MD",
+      "role": "CHECKER",
+      "status": "DOCUMENTADO",
+      "envelope_complete": 44,
+      "md_populated": 28,
+      "md_implemented": 23,
+      "assured": false,
+      "publication": "HOLD",
+      "llm_used": false,
+      "promotes_to_md": false,
+      "writes_to": "cko_md/layer_md_reg_phase.json"
+    },
+    {
+      "agent_id": "AG-MASK-APPLY",
+      "class": "REGULATORY",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "population": 12,
+      "llm_used": false,
+      "execution_policy": "SIMPLE_DETERMINISTIC_ONLY",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-CAAT-EXTRACT",
+      "class": "CAAT",
+      "role": "CHECKER",
+      "status": "PASS_WITH_FINDINGS",
+      "findings": [
+        {
+          "id": "CAAT-STEM-COLLISION",
+          "status": "FINDING",
+          "detail": [
+            "balancohidrico",
+            "genogramaeecomapa",
+            "index",
+            "medicamentos",
+            "notificacao-compulsoria",
+            "nr1",
+            "teorias-de-enfermagem",
+            "time-de-resposta-rapida"
+          ],
+          "note": "Stems repetidos entre buckets. Não auto-merge."
+        },
+        {
+          "id": "CAAT-PAGE-POPULATION",
+          "status": "PASS",
+          "tested": 1516,
+          "unique": 1507,
+          "note": "População do zip. Não é PASS clínico."
+        },
+        {
+          "id": "CAAT-SITEMAP-POPULATION",
+          "status": "PASS",
+          "loc_count": 1552,
+          "unique_slugs": 1544,
+          "note": "População do sitemap. Não é PASS clínico."
+        },
+        {
+          "id": "CAAT-PILOT-SET",
+          "status": "PASS",
+          "tested": 5,
+          "note": "Cinco pilotos inalterados. Braden fora de data/tools."
+        },
+        {
+          "id": "CAAT-BRADEN-NOT-PROMOTED",
+          "status": "PASS",
+          "note": "braden.html permanece quarentena."
+        }
+      ],
+      "html_count": 1516,
+      "unique_stems": 1507
+    },
+    {
+      "agent_id": "AG-IPE-EXTRACT",
+      "class": "IPE",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "reliance": false,
+      "carr": {
+        "COMPLETE": "PASS",
+        "ACCURATE": "UNKNOWN",
+        "RELEVANT": "PASS",
+        "RELIABLE": "FAIL",
+        "REPRODUCIBLE": "PASS"
+      }
+    },
+    {
+      "agent_id": "AG-LINK-MD",
+      "class": "ENTITY_RESOLUTION",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "bound_pilots": [
+        "dimensionamento",
+        "gotejamento",
+        "meows"
+      ],
+      "quarantined_examples": [
+        "braden",
+        "gasometria",
+        "glasgow",
+        "imc",
+        "insulina",
+        "norton"
+      ],
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-LIBRARY-CATALOG",
+      "class": "CONTENT",
+      "role": "MAKER",
+      "population": 33,
+      "promotes_to_md": false,
+      "status": "DOCUMENTADO",
+      "publication": "HOLD"
+    },
+    {
+      "agent_id": "AG-INVENTORY-DRIVE",
+      "class": "DISCOVERY",
+      "role": "MAKER",
+      "status": "OBSERVED",
+      "promotes_to_md": false,
+      "writes_to": "cko_inbox/extracted/drive_inventory.json",
+      "population": 118,
+      "counts": {
+        "CANDIDATE_GAP": 4,
+        "DISCOVERY_QUARANTINE": 76,
+        "ALREADY_IN_CKO": 4,
+        "SKIP_BINARY_DUMP": 21,
+        "FOLDER_OBSERVED": 12,
+        "SKIP_PII": 1
+      },
+      "pagination_complete": false,
+      "do_not_unzip": true
+    },
+    {
+      "agent_id": "AG-INVENTORY-SUPABASE",
+      "class": "DISCOVERY",
+      "role": "MAKER",
+      "status": "EVIDENCE_PENDING",
+      "promotes_to_md": false,
+      "writes_to": "cko_inbox/extracted/supabase_inventory.json",
+      "schema": "EVIDENCE_PENDING",
+      "projects_observed": 3,
+      "edge_functions_observed": 7,
+      "sql_blocked": true,
+      "llm_gateway": "HOLD"
+    },
+    {
+      "agent_id": "AG-COMPARE-STORES",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "OBSERVED",
+      "promotes_to_md": false,
+      "writes_to": "cko_inbox/extracted/compare_stores.json",
+      "gap_count": 28,
+      "braden_in_data_tools": false,
+      "supabase_schema": "EVIDENCE_PENDING"
+    },
+    {
+      "agent_id": "AG-UCP-V2-COMPARE",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "COMPARE_ONLY",
+      "promotes_to_md": false,
+      "copied_into_schemas": false,
+      "publication": "HOLD",
+      "assured": false,
+      "writes_to": "cko_md/ucp_v2_compare.json",
+      "schema_count": 11,
+      "missing_register_count": 10,
+      "business_key": "MD-UCP-V2-COMPARE-001"
+    },
+    {
+      "agent_id": "AG-L70-ANVISA-COMPARE",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "COMPARE_ONLY",
+      "promotes_to_md": false,
+      "copied_into_data_tools": false,
+      "unzipped": false,
+      "publication": "HOLD",
+      "assured": false,
+      "writes_to": "cko_md/l70_anvisa_compare.json",
+      "business_key": "MD-L70-ANVISA-001",
+      "product_rest": "NOT_OBSERVED",
+      "verified_population": "EVIDENCE_PENDING"
+    },
+    {
+      "agent_id": "AG-PLAN-FRONTS",
+      "class": "ORCHESTRATOR",
+      "role": "MD",
+      "status": "DOCUMENTADO",
+      "promotes_to_md": false,
+      "writes_to": "cko_md/fronts_plan.json",
+      "front_count": 24,
+      "publication": "HOLD",
+      "blocked": [],
+      "hold": [
+        "F2",
+        "F5",
+        "F7",
+        "F8"
+      ]
+    },
+    {
+      "agent_id": "AG-CONTENT-CURRICULUM",
+      "class": "CONTENT",
+      "role": "MAKER",
+      "population": 25,
+      "pending_high_count": 7,
+      "llm_used": false,
+      "promotes_to_md": false,
+      "status": "DOCUMENTADO",
+      "publication": "HOLD"
+    },
+    {
+      "agent_id": "AG-COMPARE-SOURCE",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "SOURCE_DRIFT",
+      "drift_count": 1,
+      "compared": 5,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-COMPARE-INTERNAL",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "OBSERVED",
+      "internal_drift_count": 0,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-MONITOR-DRIFT",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "status": "HOLD",
+      "population": 100,
+      "open_source_drift": 100,
+      "open_internal_drift": 0,
+      "wired_to_frontend": true,
+      "llm_used": false,
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-ALERT-FRESHNESS",
+      "class": "MONITORING",
+      "role": "CHECKER",
+      "population": 15,
+      "alta_count": 14,
+      "email_dispatch": false,
+      "promotes_to_md": false,
+      "wired_to_frontend": true,
+      "status": "HOLD"
+    },
+    {
+      "agent_id": "AG-OPS-DB-SYNC",
+      "class": "MD",
+      "role": "MAKER",
+      "path": "cko_inbox/cko_ops.sqlite",
+      "counts": {
+        "sources": 8,
+        "resources": 33,
+        "content_units": 25,
+        "alerts": 15,
+        "legislation": 8
+      },
+      "rows_missing_md_or_reg": 0,
+      "production_postgres": false,
+      "rls_changed": false,
+      "promotes_to_md": false,
+      "status": "IMPLEMENTED_INBOX_ONLY"
+    }
+  ],
+  "forbidden_copied": [
+    "adsbygoogle",
+    "googleads",
+    "doubleclick",
+    "type=\"email\"",
+    "cdn.jsdelivr",
+    "opendyslexic"
+  ]
+}

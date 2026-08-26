@@ -1,0 +1,166 @@
+{
+  "business_key": "MD-OWNER-UNBLOCK-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": false,
+  "publication": "HOLD",
+  "assured": false,
+  "method_ref": "MD-OPS-METHOD-001",
+  "fronts_plan_ref": "MD-FRONTS-PLAN-001",
+  "rule": "O dono desbloqueia agentes com segredo, decisão de licença ou confirmação de evidência. Agente não inventa senha, schema, 32 APIs nem texto NANDA/NIC/NOC.",
+  "actions": [
+    {
+      "id": "UNBLOCK-SUPABASE-SQL",
+      "priority": 1,
+      "frente": "F2",
+      "kind": "SECRET",
+      "status": "HOLD",
+      "owner_decision": "HOLD",
+      "title": "SQL read-only no Supabase ativo",
+      "project_ref_observed": "aevqrmkdhffmursdtcmo",
+      "project_ref_owner_mcp": "yskgekcjzndptzmnjfke",
+      "mcp_config": "DOCUMENTADO",
+      "secrets": [
+        {"name": "SUPABASE_DB_PASSWORD", "optional": false},
+        {"name": "SUPABASE_PROJECT_REF", "optional": true}
+      ],
+      "how": "Dono: F2 permanece HOLD neste ciclo. Não coletar SUPABASE_DB_PASSWORD. Schema SQL EVIDENCE_PENDING. Sem list_tables. MCP OAuth já SKIPPED_BY_OWNER.",
+      "current_fail": "28P01 no ref aevqrmkdhffmursdtcmo; MCP -32600 permission denied no ref yskgekcjzndptzmnjfke para o OAuth deste Cloud Agent.",
+      "do_not": "Não enviar service_role. Não pedir ao agente para inventar 172 entidades. Não commitar chave publishable/secret."
+    },
+    {
+      "id": "UNBLOCK-SUPABASE-MCP-OAUTH",
+      "priority": 1,
+      "frente": "F2",
+      "kind": "SECRET",
+      "status": "SKIPPED_BY_OWNER",
+      "title": "OAuth MCP no projeto yskgekcjzndptzmnjfke",
+      "project_ref_owner_mcp": "yskgekcjzndptzmnjfke",
+      "how": "Dono pulou a ação externa de autenticar MCP neste ciclo. Ambiente Cloud segue sem list_tables nesse ref. Reabrir com OAuth no Cursor Desktop se quiser schema.",
+      "current_fail": "get_project/list_tables/list_edge_functions = MCP error -32600 permission denied. Owner skipped env-setup OAuth.",
+      "do_not": "Não enviar service_role. Auth/settings HTTP 200 com publishable não é list_tables."
+    },
+    {
+      "id": "UNBLOCK-NNN-LICENSE",
+      "priority": 2,
+      "frente": "F12",
+      "kind": "DECISION",
+      "status": "DECIDED_B",
+      "owner_decision": "B",
+      "chosen": ["OPT-B-IDENTIFIERS", "OPT-D-DEEPLINK"],
+      "title": "Decisão NANDA / NIC / NOC",
+      "options": [
+        "A — contrato NANDA-I + Elsevier NIC/NOC e sidecar privado (fora do GitHub público)",
+        "B — só códigos + mapeamento CID/CIPE (recomendado agora)",
+        "C — HOLD de exibição para sempre"
+      ],
+      "how": "Dono escolheu B. Catálogo de identidade (códigos + URI + deep-link). Sem texto NANDA/NIC/NOC. nanda-00046.json / nic-2312.json / noc-0401.json permanecem QUARANTINE.",
+      "recommended_now": "B + deep-link ao titular (OPT-B + OPT-D em MD-NNN-RIGHTS-001)"
+    },
+    {
+      "id": "UNBLOCK-32-LIST",
+      "priority": 3,
+      "frente": "F10",
+      "kind": "EVIDENCE",
+      "status": "COMPARE_ACCEPTED",
+      "owner_decision": "COMPARE_ACCEPTED",
+      "title": "Confirmar o que são as 32 bibliotecas",
+      "observed": {
+        "device_library_slugs": 11,
+        "clinical_object_types": 24,
+        "matrix_libraries_mentioned": 22,
+        "cal_vac_tools": 15,
+        "pages_full_biblioteca_hubs": 5
+      },
+      "how": "Dono seguiu sem a lista Drive. COMPARE 11+24+15 persistido em MD-LIB-32-COMPARE-001. Claimed 32 permanece EVIDENCE_PENDING. Sem inventar adapters.",
+      "do_not": "Não enviar classificacoes_medicas.zip (99 MB), UMLS, nkos, Abelha ou grok-workspace para o GitHub. Não somar conjuntos heterogéneos até dar 32. Não promover CAL-VAC/Braden/NNN."
+    },
+    {
+      "id": "UNBLOCK-PAGES-FULL-COMPARE",
+      "priority": 4,
+      "frente": "F9",
+      "kind": "CONFIRM",
+      "status": "REGISTERED",
+      "title": "pages_full e locales já partilhados",
+      "how": "Nada a enviar de novo. Agentes fazem COMPARE de stems (index/missão/política/termos + calculadoras) vs 5 pilotos. HTML Drive ≠ MD.",
+      "do_not": "Não pedir unzip de pages_full.zip em data/tools."
+    },
+    {
+      "id": "HOLD-ORGAN-ACTS",
+      "priority": 5,
+      "frente": "F5",
+      "kind": "HOLD",
+      "status": "HOLD",
+      "title": "Atos de órgão (portaria MS / resolução COFEN)",
+      "how": "Só desbloqueia com ordem explícita para o segundo tubo. Não misturar com API do Congresso."
+    },
+    {
+      "id": "HOLD-DIMENSIONAMENTO",
+      "priority": 6,
+      "frente": "F7",
+      "kind": "HOLD",
+      "status": "HOLD",
+      "title": "Dimensionamento permanece HOLD",
+      "how": "Constituição: cinco pilotos. Não pedir número de dimensionamento neste ciclo."
+    },
+    {
+      "id": "UNBLOCK-I18N-TRANSLATION",
+      "priority": 8,
+      "frente": "F20",
+      "kind": "EVIDENCE",
+      "status": "APPROVED",
+      "owner_decision": "APPROVED",
+      "approved_key": "who.en+local.pt-BR",
+      "title": "Objeto MD de tradução por ferramenta + revisão humana",
+      "how": "Dono aprovou a chave composta who.en+local.pt-BR para os 5 pilotos. Envelopes MD existem. translation_gate HOLD. Seletor não ligado. Sem inventar strings EN. pt ≠ pt-BR ≠ pt-PT.",
+      "do_not": "Não inferir pt → pt-BR. Não dump ICD/ICNP/GHO. Não ligar o seletor."
+    },
+    {
+      "id": "UNBLOCK-DICT-SHEETS",
+      "priority": 9,
+      "frente": "F21",
+      "kind": "EVIDENCE",
+      "status": "RECEIVED",
+      "owner_decision": "RECEIVED",
+      "drive_file_id": "152MrVMQHG76G8nVN0wMMqedvTpHzfEB-",
+      "title": "Completar Content_Schemas/Meta_Schemas do dicionário Drive",
+      "how": "Dono enviou o zip já observado (Dicionario clinico.zip). Sheets Content_Schemas/Meta_Schemas ainda MISSING. Só FLD-* existentes. Sem dump dos 163 Foundation. Sem novo ficheiro Drive.",
+      "do_not": "Não promover Braden. Não adotar UUIDv4 do Drive. Não unzip de mega-zips Vila_do_Cuidado."
+    },
+    {
+      "id": "QUARANTINE-PARECER-360",
+      "priority": 7,
+      "frente": "F8",
+      "kind": "QUARANTINE",
+      "status": "QUARANTINE",
+      "title": "Parecer 360 não é golden MD",
+      "how": "Não promover o workbook Drive a identidade canónica."
+    },
+    {
+      "id": "UNBLOCK-ANVISA-API-CREDENTIALS",
+      "priority": 10,
+      "frente": "F24",
+      "kind": "SECRET",
+      "status": "HOLD",
+      "owner_decision": "HOLD",
+      "title": "Credenciais Gov.br do Portal APIs ANVISA",
+      "secrets": [
+        {"name": "ANVISA_CLIENT_ID", "optional": false},
+        {"name": "ANVISA_CLIENT_SECRET", "optional": false}
+      ],
+      "how": "Dono: L70 usa https://api.anvisa.gov.br/ (SPA HTML 200 já observada). REST JSON de produto continua NOT_OBSERVED até Client ID/Secret Gov.br. Não colar o segredo no GitHub. Dump Drive 59.8 MB permanece SKIP_BINARY_DUMP.",
+      "current_fail": "consultas.anvisa.gov.br/api/consulta/medicamentos = HTTP 403; CKAN dados.gov.br q=anvisa = HTTP 401; openapi.json do portal devolve HTML SPA.",
+      "do_not": "Não unzip CKO_Medicamentos_ANVISA_Completo.zip. Não tratar 17231 como população hashed. Não extrair token do JavaScript. Não usar openFDA como bula ANVISA. Não inventar dose."
+    }
+  ],
+  "agents_executable_without_owner": [
+    "F1 replay Drive listing",
+    "F3/F4 catálogo federal e PGDADOS com evidência HTTP já no tubo",
+    "F9 COMPARE pages_full vs pilotos",
+    "F10 COMPARE vacinas/templates sem promover CAL-VAC",
+    "F11/F13 probe de API só HTTP 200 JSON",
+    "F14 currículo por conceito nos 5 pilotos",
+    "F22 envelope MD+REG 44 camadas P0–P5 (sem claim 100% / sem Braden)",
+    "F24 L70 COMPARE Portal APIs ANVISA + listing Drive; sem unzip dump; REST JSON HOLD até credencial"
+  ]
+}

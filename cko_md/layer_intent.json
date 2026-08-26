@@ -1,0 +1,125 @@
+{
+  "business_key": "MD-LAYER-INTENT-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": false,
+  "publication": "HOLD",
+  "assured": false,
+  "method_ref": "MD-OPS-METHOD-001",
+  "fronts_plan_ref": "MD-FRONTS-PLAN-001",
+  "nnn_rights_ref": "MD-NNN-RIGHTS-001",
+  "owner_unblock_ref": "MD-OWNER-UNBLOCK-001",
+  "library_api_map_ref": "MD-LIB-API-MAP-001",
+  "concept_renderer_ref": "MD-CONCEPT-RENDER-001",
+  "rule": "Intenção do dono persistida. DOCUMENTADO ≠ IMPLEMENTADO. HTML Drive e zip ≠ golden MD. API só com HTTP 200 + snapshot + hash + MD + REG.",
+  "claimed_32_libraries": "EVIDENCE_PENDING",
+  "layers": [
+    {
+      "layer": "L30",
+      "name": "Clinical Calculators",
+      "intent": "Fonte já compartilhada: pages_full.zip + locales.zip no Drive.",
+      "mode": "COMPARE_GAP_ONLY",
+      "status": "REGISTERED",
+      "do_not": "Unzip HTML em data/tools; copiar ads; promover Braden.",
+      "observed": "Pilotos gotejamento e cinco-ts-pcr. Stems root em pages_full incluem gotejamento, imc, calculadoravacina, index."
+    },
+    {
+      "layer": "L40",
+      "name": "Scales & Scores",
+      "intent": "Mesma fonte pages_full/locales, inclusive páginas institucionais e homes.",
+      "mode": "COMPARE_GAP_ONLY",
+      "status": "REGISTERED",
+      "do_not": "Copiar mega-menu de escalas não publicadas para o header público.",
+      "observed": "Piloto meows. braden.html observado e QUARANTINE. Institucionais root: index, missao, politica, termos."
+    },
+    {
+      "layer": "L60",
+      "name": "Library Objects",
+      "intent": "API para as bibliotecas onde existir API oficial. Pasta de vacinas no Drive é amostra.",
+      "mode": "API_WHERE_OBSERVED",
+      "status": "COMPARE_ONLY",
+      "do_not": "Inventar 32 adapters. Copiar CAL-VAC para data/tools neste ciclo.",
+      "observed": "15 CAL-VAC no zip de vacinas. 11 objetos de dispositivo + 24 tipos de objeto clínico no zip de templates. 5 hubs biblioteca-* em pages_full. 32 não observado."
+    },
+    {
+      "layer": "L80",
+      "name": "Laboratory Exams",
+      "intent": "API onde for possível.",
+      "mode": "API_WHERE_OBSERVED",
+      "status": "EVIDENCE_PENDING",
+      "do_not": "Despejar pasta LOINC do Drive.",
+      "observed": "NLM Clinical Tables ICD-10-CM search HTTP 200 (busca, não banco completo). LOINC Drive = pasta + licença."
+    },
+    {
+      "layer": "L90",
+      "name": "Anatomy",
+      "intent": "API onde for possível.",
+      "mode": "API_WHERE_OBSERVED",
+      "status": "EVIDENCE_PENDING",
+      "do_not": "Despejar UMLS.",
+      "observed": "Pasta Anatomia em Classificações Médicas. Sem API REST oficial observada neste ciclo."
+    },
+    {
+      "layer": "L100",
+      "name": "Diseases / Conditions",
+      "intent": "API onde for possível.",
+      "mode": "API_WHERE_OBSERVED",
+      "status": "EVIDENCE_PENDING",
+      "do_not": "Unzip classificacoes_medicas.zip (99 MB).",
+      "observed": "Pasta Doenças no Drive. Busca NLM ICD-10-CM HTTP 200 ≠ CID-10/11 completo DATASUS."
+    },
+    {
+      "layer": "L120",
+      "name": "Terminologies",
+      "intent": "API onde for possível. NANDA/NIC/NOC: arquitectura rights-safe (MD-NNN-RIGHTS-001).",
+      "mode": "IDENTIFIERS_ONLY",
+      "status": "REGISTERED",
+      "do_not": "Copiar banco de termos NANDA-I / NIC / NOC. Não promover nanda-00046.json do Drive.",
+      "observed": "Dono OPT-B. Códigos 00046/2312/0401 a partir dos nomes de ficheiro Drive. Labels canônicos withheld. Arquivos nanda-00046, nic-2312, noc-0401 = QUARANTINE."
+    },
+    {
+      "layer": "L140",
+      "name": "References / Bibliography / Glossary",
+      "intent": "API + pesquisa.",
+      "mode": "API_PLUS_RESEARCH",
+      "status": "REGISTERED",
+      "do_not": "Republicar abstract integral como canônico sem snapshot/hash/MD/REG.",
+      "observed": "Crossref works HTTP 200. BVSMS portal EVIDENCE_PENDING."
+    },
+    {
+      "layer": "L150",
+      "name": "Articles / Guides / Summaries",
+      "intent": "API + pesquisa. Guia por conceito único via renderer.",
+      "mode": "API_PLUS_RESEARCH_RENDERER",
+      "status": "REGISTERED",
+      "do_not": "LLM autor de conteúdo canônico.",
+      "observed": "NCBI E-utilities esearch HTTP 200. Currículo MD-CONTENT-CURR-001 já liga piloto → níveis BASICO→AVANCADO. Renderer PRESENTATION_ONLY."
+    },
+    {
+      "layer": "L160",
+      "name": "Flashcards / Questions / Quizzes",
+      "intent": "Guia/questão por conceito único via renderer (um conceito → uma identidade → projeções).",
+      "mode": "CONCEPT_RENDERER",
+      "status": "REGISTERED",
+      "do_not": "Gerar banco de questões com LLM. Copiar provas de terceiros sem rights.",
+      "observed": "Piloto simulado-tecnico. Edge Function extrair-questoes-enfermagem = slug only, não invocar."
+    }
+  ],
+  "unblock_agents": [
+    {
+      "id": "UNBLOCK-SUPABASE-SQL",
+      "frente": "F2",
+      "action": "Dono HOLD. MCP .cursor/mcp.json read_only DOCUMENTADO. Schema SQL EVIDENCE_PENDING. Sem coletar SUPABASE_DB_PASSWORD neste ciclo. Sem GRANT de escrita/DDL. Sem commitar chave."
+    },
+    {
+      "id": "UNBLOCK-NNN-LICENSE",
+      "frente": "F12",
+      "action": "Dono escolheu B. Identidade+código+deep-link. Sem texto licenciado. OPT-A só após contrato."
+    },
+    {
+      "id": "UNBLOCK-32-LIST",
+      "frente": "F10",
+      "action": "Dono COMPARE_ACCEPTED. Persistido 11+24+15. Claimed 32 permanece EVIDENCE_PENDING. Não inventar adapters nem enviar mega-zips (UMLS, nkos, Abelha)."
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "business_key": "MD-OPS-METHOD-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": true,
+  "publication": "HOLD",
+  "assured": false,
+  "canonical_store": "GitHub JSON MD/REG (branch). Chat não é fonte de verdade.",
+  "method": "RECOVER → COMPARE → GAP ONLY → REPERFORM → CLOSE",
+  "plan_policy": "Não escrever plano waterfall isolado nem executar Drive/Supabase à cega. Recuperar inventário observável, comparar com MD/REG no GitHub, planejar só o gap, executar um gap com evidência.",
+  "anti_loss": [
+    "Toda decisão persistida em MD/REG versionado, não só no chat.",
+    "Um conceito → uma business_key CKO → projeções.",
+    "Drive/NIFS/Supabase = descoberta/quarentena. Não promovem identidade."
+  ],
+  "anti_hallucination": [
+    "SEM EVIDÊNCIA → UNKNOWN / EVIDENCE_PENDING / HOLD. Nunca PASS por inferência.",
+    "Não inventar UUID, hash, texto de cláusula, DOI, URL, PASS ou claim de produção.",
+    "Resposta de API não é canônica sem snapshot + hash + MD + REG + validação.",
+    "LLM não é autoridade clínica nem regulatória."
+  ],
+  "stores": {
+    "github_md_reg": {
+      "role": "CANONICAL",
+      "status": "OBSERVED"
+    },
+    "drive": {
+      "role": "DISCOVERY_QUARANTINE",
+      "status": "OBSERVED",
+      "do_not_promote": [
+        "CKO-MasterData-Parecer-360-v1.0.md (1OUlaOO-hvxKk7IHoiBoKWuJRg26hP3uC) — documental FAIL; 0/24 implementação evidenciada",
+        "lei8080-sus.html com ads",
+        "pages_full HTML de escalas não publicadas",
+        "IDs NIFS LEG.BR.*"
+      ],
+      "inventory_ref": "IPE-DRIVE-INV-001"
+    },
+    "nifs": {
+      "role": "DISCOVERY_ONLY",
+      "status": "OBSERVED"
+    },
+    "supabase": {
+      "role": "DISCOVERY",
+      "status": "EVIDENCE_PENDING",
+      "projects_observed": [
+        {
+          "ref": "aevqrmkdhffmursdtcmo",
+          "name": "auditeduca's Project",
+          "status": "ACTIVE_HEALTHY",
+          "sql": "password authentication failed for supabase_read_only_user"
+        },
+        {
+          "ref": "bsawvgyideporzailnys",
+          "name": "simulados-para-enfermagem",
+          "status": "INACTIVE",
+          "sql": "not queried — inactive"
+        },
+        {
+          "ref": "yskgekcjzndptzmnjfke",
+          "name": "UNKNOWN",
+          "status": "OBSERVED_GATEWAY",
+          "sql": "MCP OAuth deste agente: permission denied. Auth/settings HTTP 200 com publishable."
+        }
+      ],
+      "mcp": {
+        "config": "DOCUMENTADO",
+        "read_only": true,
+        "paths": [
+          ".cursor/mcp.json",
+          ".mcp.json"
+        ],
+        "skills": [
+          ".agents/skills/supabase",
+          ".agents/skills/supabase-postgres-best-practices"
+        ]
+      },
+      "note": "Não inventar schema nem 172 entidades. MCP JSON ≠ list_tables. Não commitar chave publishable.",
+      "inventory_ref": "IPE-SUPABASE-INV-001",
+      "schema": "EVIDENCE_PENDING",
+      "edge_functions_observed": [
+        "extrair-questoes-enfermagem",
+        "recover-cko-artifact",
+        "invoke-recover-cko-artifact-once",
+        "santos-study-renderer",
+        "santos-study-export-once",
+        "cko-deepseek-gateway",
+        "calculadoras-smart-deepseek-gateway"
+      ]
+    }
+  },
+  "federal_catalog_rule": {
+    "publication_house": "Congresso Nacional / normas.leg.br",
+    "emitting_organ_is_not_catalog_identity": true,
+    "allow": [
+      "CF",
+      "LEI",
+      "LCP promulgada",
+      "DEC-n regulamentar"
+    ],
+    "block": [
+      "PL",
+      "PLP",
+      "PEC",
+      "REQ",
+      "parecer",
+      "DEC-sn",
+      "DEC-cl",
+      "portaria de órgão neste tubo",
+      "resolução COFEN neste tubo"
+    ]
+  },
+  "living_gaps": [
+    {
+      "id": "GAP-DEC-7508",
+      "status": "REGISTERED",
+      "publication": "HOLD",
+      "business_key": "INS-DEC-7508-2011",
+      "evidence": "Congress API legis.senado legislacao/412353 tipo DEC-n. Identidade CKO, não LEG.BR.DEC.7508.2011."
+    },
+    {
+      "id": "GAP-SUPABASE-READ",
+      "status": "BLOCKED",
+      "reason": "MCP Cursor JSON read_only DOCUMENTADO (yskgekcjzndptzmnjfke). OAuth deste agente: permission denied. 28P01 no ref aevqrmkdhffmursdtcmo. Schema EVIDENCE_PENDING."
+    },
+    {
+      "id": "GAP-ORGAN-ACTS",
+      "status": "HOLD",
+      "reason": "Portaria MS / Resolução COFEN = segundo tubo (portal do órgão), não misturar no catálogo de legislação federal."
+    },
+    {
+      "id": "GAP-PARECER-360",
+      "status": "QUARANTINE",
+      "reason": "Workbook documental. Não promover a golden MD."
+    },
+    {
+      "id": "GAP-PGDADOS",
+      "status": "REGISTERED",
+      "publication": "HOLD",
+      "business_key": "MD-PGDADOS-001",
+      "evidence": "Páginas SGD HTTP 200. Guia partes 1–2 e cartilhas 1–3 com PDF gov.br. Parte 3 PDF e volumes 4–5 EVIDENCE_PENDING. ABNT/mwpt ignorado."
+    },
+    {
+      "id": "GAP-DEC-10046",
+      "status": "REGISTERED",
+      "publication": "HOLD",
+      "business_key": "INS-DEC-10046-2019",
+      "evidence": "Congress API lista DEC 10046/2019 tipo DEC-n. Descoberta via página PGDADOS."
+    },
+    {
+      "id": "GAP-COREN-REST",
+      "status": "CLOSED_NOT_OBSERVED",
+      "reason": "COREN não possui API REST observada. Portal HTML COREN-SP apenas. Não inventar adapter."
+    },
+    {
+      "id": "GAP-COFEN-REST",
+      "status": "EVIDENCE_PENDING",
+      "reason": "COFEN: HTML observado. REST/dados abertos sem HTTP 200. Pedido do usuário (só COFEN teria API) não confirmado."
+    },
+    {
+      "id": "GAP-DIMENSIONAMENTO",
+      "status": "HOLD",
+      "reason": "Constituição: cinco pilotos; dimensionamento permanece HOLD."
+    },
+    {
+      "id": "GAP-DRIVE-INVENTORY",
+      "status": "REGISTERED",
+      "reason": "Listing Drive classificado. Paginação de imagens ChatGPT incompleta. Não promover HTML."
+    },
+    {
+      "id": "GAP-DRIVE-SHELL-COMPLETO",
+      "status": "COMPARE_ONLY",
+      "reason": "site-shell-completo.zip maior que o zip já ingerido. COMPARE_ONLY; sem unzip em data/tools."
+    },
+    {
+      "id": "GAP-L30-L40-PAGES-FULL",
+      "status": "REGISTERED",
+      "reason": "pages_full+locales já inventariados. COMPARE stems institucionais e calculadoras vs 5 pilotos. HTML ≠ MD."
+    },
+    {
+      "id": "GAP-L60-LIBRARIES",
+      "status": "COMPARE_ONLY",
+      "reason": "Owner COMPARE_ACCEPTED. Observados 11 device + 24 tipos clínicos + 15 CAL-VAC. Claimed 32 APIs permanece EVIDENCE_PENDING. Sem promover CAL-VAC/Braden/NNN."
+    },
+    {
+      "id": "GAP-L80-L120-API",
+      "status": "EVIDENCE_PENDING",
+      "reason": "API só com HTTP 200 JSON. LOINC/UMLS/classificacoes_medicas.zip não entram no GitHub."
+    },
+    {
+      "id": "GAP-NNN-RIGHTS",
+      "status": "REGISTERED",
+      "reason": "Owner B: identity catalog codes+URI+deep-link. Labels withheld. nanda-00046.json Drive QUARANTINE."
+    },
+    {
+      "id": "GAP-L140-L150-API-RESEARCH",
+      "status": "REGISTERED",
+      "reason": "Crossref e NCBI E-utilities como busca. Não republicar abstract como canônico."
+    },
+    {
+      "id": "GAP-L150-L160-CONCEPT-RENDERER",
+      "status": "REGISTERED",
+      "reason": "Guia/questão por conceito único via renderer. LLM FORBIDDEN. Currículo já DOCUMENTADO."
+    },
+    {
+      "id": "GAP-ISO8000-PGDADOS",
+      "status": "REGISTERED",
+      "reason": "PGDADOS /pgdados é a referência BR explícita do perfil ISO 8000 CKO. Não substitui cláusula ISO."
+    },
+    {
+      "id": "GAP-SCALE-LITERATURE",
+      "status": "REGISTERED",
+      "reason": "PubMed/COFEN/OMS busca. SciELO EVIDENCE_PENDING. Instrumento de terceiros não republicado."
+    },
+    {
+      "id": "GAP-PAGES-REG-PEND",
+      "status": "REGISTERED",
+      "reason": "1516 HTML demonstram pendências REG. Extração em massa de fórmula clínica FORBIDDEN."
+    },
+    {
+      "id": "GAP-OG-SEO-JSONLD",
+      "status": "COMPARE_ONLY",
+      "reason": "W3C não ingerido. eMAG/LBI nomeados. OG default first-party. 151 cards Drive não copiados."
+    },
+    {
+      "id": "GAP-MENU-DRIVE",
+      "status": "COMPARE_ONLY",
+      "reason": "Menu Drive 151 destinos. Chrome público permanece 5 pilotos. Sem Braden no header."
+    },
+    {
+      "id": "GAP-WHO-I18N",
+      "status": "REGISTERED",
+      "reason": "Owner APPROVED who.en+local.pt-BR. Seletor não ligado. Variantes pt-PT/pt-AO HOLD. Sem dump ICD/ICNP/GHO. translation_gate HOLD."
+    },
+    {
+      "id": "GAP-CLIN-DICT",
+      "status": "COMPARE_ONLY",
+      "reason": "Owner sent Dicionario clinico.zip. Sheets Content_Schemas/Meta_Schemas MISSING. Só FLD existentes. Sem promover Braden. UUIDv4 não adotado."
+    },
+    {
+      "id": "GAP-LAYER-MD-REG",
+      "status": "REGISTERED",
+      "reason": "Envelope MD+REG das 44 faseado. EXISTS≠POPULATED≠ASSURED. publication HOLD. Sem Braden."
+    },
+    {
+      "id": "GAP-UCP-V2",
+      "status": "COMPARE_ONLY",
+      "reason": "UCP v2.0 CONTROLLED_CANDIDATE. 11 schemas hashed. Não copiar para schemas/. Modelos/piloto ausentes EVIDENCE_PENDING."
+    },
+    {
+      "id": "GAP-L70-ANVISA",
+      "status": "COMPARE_ONLY",
+      "reason": "Portal APIs ANVISA HTML 200. REST JSON de produto NOT_OBSERVED sem Gov.br Client ID/Secret. Dump Drive 59.8 MB SKIP_BINARY_DUMP. Claimed 17231 EVIDENCE_PENDING. openFDA ≠ bula ANVISA."
+    }
+  ],
+  "rule": "O plano vivo é este JSON. Gap só fecha com evidência. Reconstrução é último recurso.",
+  "fronts_plan_ref": "MD-FRONTS-PLAN-001",
+  "layer_intent_ref": "MD-LAYER-INTENT-001",
+  "nnn_rights_ref": "MD-NNN-RIGHTS-001",
+  "owner_unblock_ref": "MD-OWNER-UNBLOCK-001",
+  "library_api_map_ref": "MD-LIB-API-MAP-001",
+  "concept_renderer_ref": "MD-CONCEPT-RENDER-001"
+}

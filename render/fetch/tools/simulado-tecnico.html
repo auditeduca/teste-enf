@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulado técnico — lote piloto</title>
+  <meta name="description" content="Itens originais de estudo ligados aos pilotos deste aplicativo. Não é prova de banca.">
+  <meta name="theme-color" content="#1A3E74">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Calculadoras de Enfermagem">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Simulado técnico — lote piloto">
+  <meta property="og:description" content="Itens originais de estudo ligados aos pilotos deste aplicativo. Não é prova de banca.">
+  <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/assets/img/og-default.png">
+  <meta property="og:image:alt" content="Calculadoras de Enfermagem">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Simulado técnico — lote piloto">
+  <meta name="twitter:description" content="Itens originais de estudo ligados aos pilotos deste aplicativo. Não é prova de banca.">
+  <meta name="twitter:image" content="https://www.calculadorasdeenfermagem.com.br/assets/img/og-default.png">
+  <link rel="image_src" href="../assets/img/og-default.png">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.calculadorasdeenfermagem.com.br/#organization",
+      "name": "Audit Educa"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.calculadorasdeenfermagem.com.br/#website",
+      "name": "Calculadoras de Enfermagem",
+      "url": "https://www.calculadorasdeenfermagem.com.br/",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@id": "https://www.calculadorasdeenfermagem.com.br/#organization"
+      }
+    }
+  ]
+}</script>
+  <link rel="stylesheet" href="../assets/app.css">
+  
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    <button type="button" id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeTextPWA">Tamanho da Fonte</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightTextPWA">Espaçamento Linha</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingTextPWA">Espaçamento Letra</span></button>
+    <button type="button" id="btnAlternarContrastePWA" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Alto Contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Modo Escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Fonte Dislexia</span></button>
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span>Atalhos</span></button>
+    <button type="button" id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Redefinir Tudo</span></button>
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Normal</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Médio</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Normal</span></button>
+    <button type="button" id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/></svg><span id="readingSpeedText">Normal</span></button>
+    <button type="button" id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span class="sr-only">Reproduzir/Pausar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/></svg><span class="sr-only">Reiniciar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReadFocused" aria-label="Ler elemento focado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/></svg><span class="sr-only">Ler elemento focado</span></button>
+    <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span class="sr-only">Alternar alto contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="sr-only">Alternar modo escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span class="sr-only">Alternar fonte para dislexia</span></button>
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="sr-only">Atalhos de Teclado</span></button>
+    <button type="button" id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="sr-only">Redefinir configurações de acessibilidade</span></button>
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
+    </div>
+  </div>
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button><div id="global-header-container">
+    <header class="site-header" role="banner">
+    <div class="wrap header-row">
+      <button type="button" id="hamburgerButton" class="hamburger-button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="primary-nav">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+      <a class="brand" href="../index.html">
+        <img class="brand-mark" src="../assets/img/icontopbar1-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
+        <span class="brand-text">
+          <span class="brand-name">Calculadoras de Enfermagem</span>
+          <span class="brand-sub">CKO · lote piloto</span>
+        </span>
+      </a>
+      <nav id="primary-nav" class="nav desktop-nav" aria-label="Navegação Principal">
+        <a href="../index.html" accesskey="I">Início</a>
+        <a href="../biblioteca.html">Biblioteca</a>
+        <a href="../inspector.html">Sobre Nós</a>
+        <a href="gotejamento.html">Calculadoras</a>
+        <a href="../biblioteca.html#curriculo">Conteúdos</a>
+        <a href="../admin.html">Admin</a>
+      </nav>
+    </div>
+  </header>
+  </div><div id="language-selector-placeholder" data-i18n-gate="HOLD" data-owner-i18n="APPROVED" data-who-official="en,ar,zh,fr,ru,es" data-who-local-key="who.en+local.pt-BR" data-local-bcp47="pt-BR" data-pt-variants="HOLD">
+    <div class="wrap lang-bar">
+      <p class="lang-runtime">who.en+local.pt-BR · i18n HOLD. Variantes lusófonas catalogadas, não ligadas. Candidatos WHO HQ (en ar zh fr ru es) não ligam o seletor. PAHO pt-br observado. Bandeiras EVIDENCE_PENDING. Tradução não redireciona.</p>
+      <div id="language-dropdown-wrapper">
+        <button type="button" id="langButton" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu">
+          <span id="langText">Português</span>
+          <svg class="lang-caret" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div id="langMenu" class="hidden" role="listbox" aria-label="Idiomas observados no site-shell">
+        <button type="button" class="lang-option" data-value="pt" lang="pt"><span>Português</span> <code>pt</code></button>
+        <button type="button" class="lang-option" data-value="en" lang="en"><span>English</span> <code>en</code></button>
+        <button type="button" class="lang-option" data-value="es" lang="es"><span>Español</span> <code>es</code></button>
+        <button type="button" class="lang-option" data-value="de" lang="de"><span>Deutsch</span> <code>de</code></button>
+        <button type="button" class="lang-option" data-value="it" lang="it"><span>Italiano</span> <code>it</code></button>
+        <button type="button" class="lang-option" data-value="fr" lang="fr"><span>Français</span> <code>fr</code></button>
+        <button type="button" class="lang-option" data-value="hi" lang="hi"><span>हिन्दी</span> <code>hi</code></button>
+        <button type="button" class="lang-option" data-value="zh" lang="zh"><span>中文</span> <code>zh</code></button>
+        <button type="button" class="lang-option" data-value="ar" lang="ar"><span>العربية</span> <code>ar</code></button>
+        <button type="button" class="lang-option" data-value="ja" lang="ja"><span>日本語</span> <code>ja</code></button>
+        <button type="button" class="lang-option" data-value="ru" lang="ru"><span>Русский</span> <code>ru</code></button>
+        <button type="button" class="lang-option" data-value="ko" lang="ko"><span>한국어</span> <code>ko</code></button>
+        <button type="button" class="lang-option" data-value="tr" lang="tr"><span>Türkçe</span> <code>tr</code></button>
+        <button type="button" class="lang-option" data-value="nl" lang="nl"><span>Nederlands</span> <code>nl</code></button>
+        <button type="button" class="lang-option" data-value="pl" lang="pl"><span>Polski</span> <code>pl</code></button>
+        <button type="button" class="lang-option" data-value="sv" lang="sv"><span>Svenska</span> <code>sv</code></button>
+        <button type="button" class="lang-option" data-value="id" lang="id"><span>Bahasa Indonesia</span> <code>id</code></button>
+        <button type="button" class="lang-option" data-value="vi" lang="vi"><span>Tiếng Việt</span> <code>vi</code></button>
+        <button type="button" class="lang-option" data-value="uk" lang="uk"><span>Українська</span> <code>uk</code></button>
+        </div>
+      </div>
+      <a class="lang-chip" href="../admin/locales.html">Locales / Drive</a>
+    </div>
+  </div>
+  <main id="conteudo" class="wrap tool-page">
+    <nav class="breadcrumb" aria-label="Trilha">
+      <a href="../index.html">Início</a>
+      <span aria-hidden="true">/</span>
+      <span>Aprendizado</span>
+    </nav>
+    
+    <header class="tool-hero">
+      <p class="eyebrow">Aprendizado</p>
+      <h1>Simulado técnico (piloto)</h1>
+      <p class="lede">Exercitar o runtime de prova com itens originais ligados a gotejamento, MEOWS, PCR e dimensionamento.</p>
+      <p class="meta">Educação em enfermagem</p>
+    </header>
+    
+    
+      <section class="panel"><h2>O que este simulado é — e o que não é</h2><p>Seis itens originais para validar o tipo exam. Não há banco de 50 questões, gabarito de concurso nem aquisição de prova anterior neste lote. A fábrica de provas permanece especificada, não implementada.</p></section>
+      <section class="panel">
+        <h2>Runtime de prova</h2>
+        <p>O tipo <code>exam</code> reutiliza o bloco de quiz do renderer. Cada item tem enunciado, alternativas, índice correto e explicação.</p>
+        <p>Itens escritos para o lote piloto, com gabarito derivado das fórmulas e contratos deste repositório.</p><p><strong>Limitações:</strong> Não é exame oficial. Não usa questões de provas anteriores.</p>
+        
+      </section>
+      
+      <section class="panel"><h2>Questões</h2><article class="quiz-card" data-quiz-card="0" data-correct="1">
+            <p class="quiz-q">500 mL em 8 horas em equipo de macrogotas (20 gts/mL) resultam em aproximadamente:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">10 gotas/min</button><button type="button" class="quiz-opt" data-opt="1">21 gotas/min</button><button type="button" class="quiz-opt" data-opt="2">60 gotas/min</button><button type="button" class="quiz-opt" data-opt="3">125 gotas/min</button></div>
+            <p class="quiz-expl" hidden>(500 × 20) ÷ 480 minutos ≈ 20,8 → 21 gotas/min.</p>
+          </article><article class="quiz-card" data-quiz-card="1" data-correct="2">
+            <p class="quiz-q">No MEOWS educacional deste aplicativo, escore 6 classifica:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">Baixo risco</button><button type="button" class="quiz-opt" data-opt="1">Risco moderado</button><button type="button" class="quiz-opt" data-opt="2">Risco elevado</button><button type="button" class="quiz-opt" data-opt="3">Escore inválido</button></div>
+            <p class="quiz-expl" hidden>Faixa ≥ 5 é risco elevado neste objeto.</p>
+          </article><article class="quiz-card" data-quiz-card="2" data-correct="1">
+            <p class="quiz-q">Tamponamento cardíaco é uma causa reversível da PCR do grupo:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">5 Hs</button><button type="button" class="quiz-opt" data-opt="1">5 Ts</button><button type="button" class="quiz-opt" data-opt="2">Cadeia de sobrevivência</button><button type="button" class="quiz-opt" data-opt="3">Escala de coma</button></div>
+            <p class="quiz-expl" hidden>Tamponamento é um dos 5 Ts.</p>
+          </article><article class="quiz-card" data-quiz-card="3" data-correct="1">
+            <p class="quiz-q">Dimensionamento de enfermagem por carga de trabalho (THE/HPPD) neste aplicativo está:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">Implementado e aprovado pelo COFEN no motor</button><button type="button" class="quiz-opt" data-opt="1">Em HOLD, sem fórmula canônica no v0.1</button><button type="button" class="quiz-opt" data-opt="2">Irrelevante para gestão</button><button type="button" class="quiz-opt" data-opt="3">Substituído pelo MEOWS</button></div>
+            <p class="quiz-expl" hidden>O piloto de dimensionamento permanece HOLD até o cálculo COFEN ser especificado, testado e aprovado.</p>
+          </article><article class="quiz-card" data-quiz-card="4" data-correct="1">
+            <p class="quiz-q">Conhecimento canônico validado, neste aplicativo, deve ser:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">Regenerado por LLM a cada página</button><button type="button" class="quiz-opt" data-opt="1">Projetado em novos usos, sem regeneração silenciosa</button><button type="button" class="quiz-opt" data-opt="2">Sobrescrito por snapshot externo</button><button type="button" class="quiz-opt" data-opt="3">Publicado sem hash</button></div>
+            <p class="quiz-expl" hidden>Princípio: não regenerar o canônico; projetar.</p>
+          </article><article class="quiz-card" data-quiz-card="5" data-correct="1">
+            <p class="quiz-q">O modo de renderização de produção deste aplicativo carrega CSS:</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">De CDN pública</button><button type="button" class="quiz-opt" data-opt="1">First-party via fetch/link local</button><button type="button" class="quiz-opt" data-opt="2">Apenas inline, nunca separado</button><button type="button" class="quiz-opt" data-opt="3">De e-mail</button></div>
+            <p class="quiz-expl" hidden>Produção fetch usa CSS local; preview inline embute o mesmo CSS.</p>
+          </article></section>
+      <section class="panel"><h2>Perguntas frequentes</h2><details><summary>Haverá 50 questões?</summary><p>Sim, quando a fábrica de provas e o banco canônico existirem. Neste v0.1 o objetivo é o runtime.</p></details></section>
+      <section class="panel"><h2>Referências</h2><ul><li>CKO. data/tools/gotejamento.json — fórmula de gotejamento.</li>
+<li>CKO. data/tools/meows.json — faixas de risco.</li></ul></section>
+    
+    <section class="panel lineage-panel" id="rastreio" data-lineage-slug="simulado-tecnico">
+      <h2>Rastreio da fonte</h2>
+      <p class="hint">Cópia original inalterada no vault → CKO-MD → CKO-REG → esta página. Monitoramento informa drift para ajuste.</p>
+      <dl class="lineage-dl">
+        <div><dt>Obra</dt><dd>ORIGINAL_CKO_CANDIDATE</dd></div>
+        <div><dt>Direitos</dt><dd>DOCUMENTADO · CANDIDATE_ORIGINAL — não ASSURED</dd></div>
+        <div><dt>Instrumento</dt><dd>INS-LEI-9610-1998</dd></div>
+        <div><dt>Máscara</dt><dd>MASK-TOOL-WORK</dd></div>
+        <div><dt>Vault MD</dt><dd><code>6447a2611fe94e1d</code></dd></div>
+        <div><dt>Vault origem</dt><dd><code>b620507312c5e975</code></dd></div>
+        <div><dt>URL origem</dt><dd>https://www.calculadorasdeenfermagem.com.br/simulado-tecnico.html</dd></div>
+        <div><dt>Linha</dt><dd>LINKED</dd></div>
+      </dl>
+      <p class="meta"><a href="../inspector.html">Inspector</a> · <a href="../admin/monitoring.html">Monitoramento</a></p>
+    </section>
+  </main>
+  <div id="footer-placeholder">
+  <footer class="site-footer" id="institucional" role="contentinfo" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">Rodapé do site</h2>
+    <div class="wrap footer-logo-row">
+      <a href="../index.html" aria-label="Ir para a página inicial">
+        <img class="footer-mark-80" src="../assets/img/iconrodape1-80-calculadoras-de-enfermagem.webp" width="80" height="80" alt="Calculadoras de Enfermagem" decoding="async">
+      </a>
+    </div>
+    <div class="wrap footer-grid">
+      <nav class="footer-col" aria-label="Institucional">
+        <h2>Institucional</h2>
+        <ul>
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="../inspector.html">Sobre Nós</a></li>
+          <li><a href="../inspector.html">Mapa do Site</a></li>
+          <li><span class="footer-hold">Central de Privacidade · HOLD</span></li>
+          <li><span class="footer-hold">Termos e Condições de Uso · HOLD</span></li>
+          <li><span class="footer-hold">Política de Acessibilidade · HOLD</span></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Sustentabilidade Digital">
+        <h2>Sustentabilidade Digital</h2>
+        <ul>
+          <li><a href="../admin/maturity.html">Nosso Compromisso</a></li>
+          <li><span class="footer-hold">Relatório de Impacto · HOLD</span></li>
+          <li><span class="footer-hold">Tecnologia Verde · HOLD</span></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Nosso Compromisso</h2>
+        <p>Nosso site adota elevados padrões de acessibilidade digital, sustentabilidade digital, segurança da informação e proteção de dados, promovendo uma experiência inclusiva, eficiente e responsável para todos os usuários.</p>
+        <p class="footer-commitment">WCAG nomeada; equivalente BR eMAG/LBI. Texto de cláusula W3C não ingerido. Sem captura de e-mail e sem mural de cookies neste lote (NO_SENSITIVE_CAPTURE).</p>
+      </div>
+      <div class="footer-col">
+        <h2>Siga-nos</h2>
+        <ul>
+          <li><a href="https://linkedin.com/company/calculadoras-de-enfermagem" rel="noopener noreferrer me">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/calculadorasdeenfermagem/" rel="noopener noreferrer me">Instagram</a></li>
+          <li><a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" rel="noopener noreferrer me">YouTube</a></li>
+          <li><a href="../admin.html">Admin Studio</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
+      <p>© 2026 Calculadoras de Enfermagem. Todos os direitos reservados. Audit Educa · CKO. Newsletter/e-mail não implantados.</p>
+    </div>
+  </footer>
+  </div>
+  <script type="application/json" id="tool-config">{
+  "id": "c0e91b33-8a76-4d12-9f04-2bb71e5a0d88",
+  "code": "EXAM-SIMULADO-TEC-001",
+  "slug": "simulado-tecnico",
+  "kind": "exam",
+  "version": "0.1.0",
+  "status": "review",
+  "seo": {
+    "title": "Simulado técnico — lote piloto",
+    "description": "Itens originais de estudo ligados aos pilotos deste aplicativo. Não é prova de banca."
+  },
+  "breadcrumb": {
+    "category": "Aprendizado"
+  },
+  "overview": {
+    "name": "Simulado técnico (piloto)",
+    "acronym": "Simulado",
+    "categoryBadge": "Aprendizado",
+    "objective": "Exercitar o runtime de prova com itens originais ligados a gotejamento, MEOWS, PCR e dimensionamento.",
+    "indication": "Estudo. Não reproduz edital, banca ou prova anterior.",
+    "targetPopulation": "Estudantes de técnico de enfermagem.",
+    "specialty": [
+      "Educação em enfermagem"
+    ],
+    "averageTime": "8 minutos",
+    "evidenceLevel": "V",
+    "complexity": "basic"
+  },
+  "content": {
+    "sections": [
+      {
+        "title": "O que este simulado é — e o que não é",
+        "body": "Seis itens originais para validar o tipo exam. Não há banco de 50 questões, gabarito de concurso nem aquisição de prova anterior neste lote. A fábrica de provas permanece especificada, não implementada."
+      }
+    ]
+  },
+  "learning": {
+    "quiz": [
+      {
+        "q": "500 mL em 8 horas em equipo de macrogotas (20 gts/mL) resultam em aproximadamente:",
+        "opts": [
+          "10 gotas/min",
+          "21 gotas/min",
+          "60 gotas/min",
+          "125 gotas/min"
+        ],
+        "correct": 1,
+        "expl": "(500 × 20) ÷ 480 minutos ≈ 20,8 → 21 gotas/min."
+      },
+      {
+        "q": "No MEOWS educacional deste aplicativo, escore 6 classifica:",
+        "opts": [
+          "Baixo risco",
+          "Risco moderado",
+          "Risco elevado",
+          "Escore inválido"
+        ],
+        "correct": 2,
+        "expl": "Faixa ≥ 5 é risco elevado neste objeto."
+      },
+      {
+        "q": "Tamponamento cardíaco é uma causa reversível da PCR do grupo:",
+        "opts": [
+          "5 Hs",
+          "5 Ts",
+          "Cadeia de sobrevivência",
+          "Escala de coma"
+        ],
+        "correct": 1,
+        "expl": "Tamponamento é um dos 5 Ts."
+      },
+      {
+        "q": "Dimensionamento de enfermagem por carga de trabalho (THE/HPPD) neste aplicativo está:",
+        "opts": [
+          "Implementado e aprovado pelo COFEN no motor",
+          "Em HOLD, sem fórmula canônica no v0.1",
+          "Irrelevante para gestão",
+          "Substituído pelo MEOWS"
+        ],
+        "correct": 1,
+        "expl": "O piloto de dimensionamento permanece HOLD até o cálculo COFEN ser especificado, testado e aprovado."
+      },
+      {
+        "q": "Conhecimento canônico validado, neste aplicativo, deve ser:",
+        "opts": [
+          "Regenerado por LLM a cada página",
+          "Projetado em novos usos, sem regeneração silenciosa",
+          "Sobrescrito por snapshot externo",
+          "Publicado sem hash"
+        ],
+        "correct": 1,
+        "expl": "Princípio: não regenerar o canônico; projetar."
+      },
+      {
+        "q": "O modo de renderização de produção deste aplicativo carrega CSS:",
+        "opts": [
+          "De CDN pública",
+          "First-party via fetch/link local",
+          "Apenas inline, nunca separado",
+          "De e-mail"
+        ],
+        "correct": 1,
+        "expl": "Produção fetch usa CSS local; preview inline embute o mesmo CSS."
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "Itens escritos para o lote piloto, com gabarito derivado das fórmulas e contratos deste repositório.",
+    "limitations": "Não é exame oficial. Não usa questões de provas anteriores.",
+    "references": [
+      {
+        "text": "CKO. data/tools/gotejamento.json — fórmula de gotejamento."
+      },
+      {
+        "text": "CKO. data/tools/meows.json — faixas de risco."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Haverá 50 questões?",
+      "a": "Sim, quando a fábrica de provas e o banco canônico existirem. Neste v0.1 o objetivo é o runtime."
+    }
+  ],
+  "about": {
+    "title": "Runtime de prova",
+    "html": "<p>O tipo <code>exam</code> reutiliza o bloco de quiz do renderer. Cada item tem enunciado, alternativas, índice correto e explicação.</p>"
+  }
+}</script>
+<script src="../assets/calc-engine.js"></script>
+<script src="../assets/a11y.js"></script>
+</body>
+</html>

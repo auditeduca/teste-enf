@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-cko-policy": "POL-CKO-UCP-001-v2.0",
+  "x-cko-authority-chain": [
+    "CKO-MD",
+    "CKO-REG",
+    "EVIDENCE"
+  ],
+  "x-source-attachment-sha256": "78414fda55bb6391bd51e50ae9aeca9d9ad36cc713c4d52ba8f78dcfb6bfeeb1",
+  "$id": "urn:cko:schema:agent-contract:2.0",
+  "title": "CKO Agent Contract v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "agent_ref",
+    "role",
+    "md_bindings",
+    "reg_bindings",
+    "execution",
+    "validation",
+    "assurance",
+    "provenance"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "agent_ref": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "md_bindings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reg_bindings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": [
+        "engine_refs",
+        "input_contract_refs",
+        "output_contract_refs"
+      ],
+      "properties": {
+        "engine_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "input_contract_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "output_contract_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "validator_refs"
+      ],
+      "properties": {
+        "validator_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "assurance": {
+      "type": "object",
+      "properties": {
+        "caat_profile_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ipe_profile_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "audit_profile_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "allowed_recipe_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "execution_id_required",
+        "model_version_required",
+        "hash_required"
+      ],
+      "properties": {
+        "execution_id_required": {
+          "const": true
+        },
+        "model_version_required": {
+          "const": true
+        },
+        "hash_required": {
+          "const": true
+        }
+      }
+    }
+  }
+}

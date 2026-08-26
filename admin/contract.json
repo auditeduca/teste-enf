@@ -1,0 +1,65 @@
+{
+  "business_key": "CONTRACT-ADMIN-FRONTEND-001",
+  "version": "1.0.0",
+  "status": "DOCUMENTADO",
+  "implemented_runtime": "PARTIAL",
+  "store": "GitHub (Day Zero). Nenhuma API admin autenticada observada neste repositório.",
+  "principle": "Studio/Admin projeta objetos governados. Não reescreve verdade clínica.",
+  "communication": {
+    "mode": "SHARED_GITHUB_CONTRACTS",
+    "description": "Admin e frontend leem os mesmos JSON versionados. O renderer gera ambas as superfícies. Não há CMS paralelo nem escrita canônica no browser.",
+    "admin_surface": "admin.html",
+    "frontend_surface": "index.html + tools/*.html",
+    "runtime_json_projection": [
+      "admin/contract.json",
+      "admin/layer_registry.json"
+    ]
+  },
+  "frontend": {
+    "role": "PRESENTATION_ONLY",
+    "reads": [
+      "render projections",
+      "status badges",
+      "HOLD banners"
+    ],
+    "writes_canonical": false
+  },
+  "admin": {
+    "role": "orchestration / preview / status / exceptions / publication control",
+    "reads": [
+      "cko_core",
+      "cko_md",
+      "cko_reg",
+      "cko_assurance",
+      "data/tools"
+    ],
+    "allowed_write_when_implemented": [
+      "changeset",
+      "new version",
+      "finding",
+      "exception"
+    ],
+    "forbidden_write": [
+      "silent UPDATE of formula",
+      "dose",
+      "threshold",
+      "canonical identity"
+    ]
+  },
+  "events": {
+    "allowed": [
+      "ADMIN_READ_LAYERS",
+      "ADMIN_READ_CATALOG",
+      "ADMIN_READ_FINDINGS",
+      "ADMIN_REQUEST_PREVIEW",
+      "FRONTEND_RENDER_PROJECTION"
+    ],
+    "forbidden": [
+      "ADMIN_WRITE_FORMULA",
+      "FRONTEND_WRITE_CANONICAL",
+      "LLM_PROMOTE_IDENTITY"
+    ]
+  },
+  "privacy": "PRIV-NO-SENSITIVE-CAPTURE",
+  "segregation": "MAKER ≠ CHECKER ≠ AUDITOR"
+}

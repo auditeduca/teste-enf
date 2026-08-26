@@ -1,0 +1,88 @@
+{
+  "business_key": "IPE-SUPABASE-MCP-001",
+  "uuid": null,
+  "status": "SOURCE_DERIVED",
+  "epistemic_status": "OBSERVED",
+  "promotes_to_md": false,
+  "read_only": true,
+  "project_ref": "yskgekcjzndptzmnjfke",
+  "project_name": "UNKNOWN",
+  "project_status": "OBSERVED_GATEWAY",
+  "region": "UNKNOWN",
+  "mcp_url": "https://mcp.supabase.com/mcp?project_ref=yskgekcjzndptzmnjfke&read_only=true&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching",
+  "mcp_config_paths": [
+    ".cursor/mcp.json",
+    ".mcp.json"
+  ],
+  "agent_skills": {
+    "source": "supabase/agent-skills",
+    "command": "npx skills add supabase/agent-skills",
+    "installed": [
+      ".agents/skills/supabase",
+      ".agents/skills/supabase-postgres-best-practices"
+    ],
+    "lockfile": "skills-lock.json"
+  },
+  "probes": {
+    "mcp_host_no_token": {
+      "url": "https://mcp.supabase.com/mcp",
+      "http_status": 401,
+      "body": "{\"message\":\"Unauthorized\"}",
+      "note": "401 sem token = servidor no ar (esperado)."
+    },
+    "get_project": {
+      "tool": "get_project",
+      "project_id": "yskgekcjzndptzmnjfke",
+      "error": "MCP error -32600: You do not have permission to perform this action"
+    },
+    "list_tables": {
+      "tool": "list_tables",
+      "project_id": "yskgekcjzndptzmnjfke",
+      "error": "MCP error -32600: You do not have permission to perform this action"
+    },
+    "list_tables_previous_project": {
+      "tool": "list_tables",
+      "project_id": "aevqrmkdhffmursdtcmo",
+      "error": "FATAL: 28P01: password authentication failed for user \"supabase_read_only_user\""
+    },
+    "list_projects_this_oauth": {
+      "refs_observed": [
+        "aevqrmkdhffmursdtcmo",
+        "bsawvgyideporzailnys"
+      ],
+      "yskgekcjzndptzmnjfke_in_list": false
+    },
+    "rest_v1_publishable": {
+      "url": "https://yskgekcjzndptzmnjfke.supabase.co/rest/v1/",
+      "http_status": 401,
+      "sb_error_code": "UNAUTHORIZED_INVALID_API_KEY_TYPE",
+      "sb_project_ref": "yskgekcjzndptzmnjfke",
+      "hint": "Only secret API keys can be used for this endpoint.",
+      "publishable_key_committed": false
+    },
+    "auth_v1_settings_publishable": {
+      "url": "https://yskgekcjzndptzmnjfke.supabase.co/auth/v1/settings",
+      "http_status": 200,
+      "email": true,
+      "phone": false,
+      "anonymous_users": false,
+      "disable_signup": false
+    }
+  },
+  "publishable_key": {
+    "format": "sb_publishable_*",
+    "provided_by_owner": true,
+    "committed": false,
+    "do_not": "Não gravar a chave no GitHub. Não usar service_role."
+  },
+  "schema": "EVIDENCE_PENDING",
+  "sql_status": "MCP OAuth deste agente: permission denied no ref yskgekcjzndptzmnjfke. 28P01 no ref aevqrmkdhffmursdtcmo.",
+  "do_not_invent": [
+    "table names",
+    "column lists",
+    "172 entities",
+    "row counts"
+  ],
+  "rule": "Config MCP DOCUMENTADO ≠ schema IMPLEMENTADO. list_tables continua sem evidência.",
+  "probed_at": "2026-08-25T23:17:00Z"
+}

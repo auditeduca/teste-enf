@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-cko-policy": "POL-CKO-UCP-001-v2.0",
+  "x-cko-authority-chain": [
+    "CKO-MD",
+    "CKO-REG",
+    "EVIDENCE"
+  ],
+  "x-source-attachment-sha256": "78414fda55bb6391bd51e50ae9aeca9d9ad36cc713c4d52ba8f78dcfb6bfeeb1",
+  "$id": "urn:cko:schema:render-contract:2.0",
+  "title": "CKO Render Contract v2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "renderer_ref",
+    "accepted_input_types",
+    "recipe_ref",
+    "output_channel",
+    "preconditions"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "renderer_ref": {
+      "type": "string"
+    },
+    "accepted_input_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recipe_ref": {
+      "type": "string"
+    },
+    "output_channel": {
+      "enum": [
+        "WEB",
+        "CMS_PREVIEW",
+        "SAE",
+        "PDF",
+        "FLASHCARDS",
+        "QUIZ",
+        "OG",
+        "SOCIAL",
+        "API",
+        "EXPORT"
+      ]
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "renderer_authority": {
+      "const": "PRESENTATION_ONLY"
+    },
+    "must_preserve_refs": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "md_ref",
+          "regulatory_refs",
+          "evidence_refs",
+          "content_version",
+          "hash",
+          "locale",
+          "jurisdiction"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "business_key": "REG-NORM-MASK-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": true,
+  "authoring_policy": "ROBUST_AI_ALLOWED",
+  "execution_policy": "SIMPLE_DETERMINISTIC_ONLY",
+  "llm_as_checker": "FORBIDDEN",
+  "llm_as_authority": "FORBIDDEN",
+  "note": "Máscaras desenhadas para cada tipo de norma. Execução é hash/regex/presença — sem LLM interpretando cláusula.",
+  "masks": [
+    {
+      "mask_id": "MASK-LAW-BR",
+      "norm_type": "PUBLIC_LAW_BR",
+      "applies_to": ["INS-LEI-9610-1998", "INS-LEI-9609-1998"],
+      "authority_class": "AUTH-OFFICIAL-BR",
+      "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
+      "execution": [
+        {"kind": "http_ok_or_inbox", "field": "source_url"},
+        {"kind": "vault_first_copy", "required": true},
+        {"kind": "regex_present", "pattern": "Lei\\s+n[oº]?\\s*9\\.610", "flags": "I"},
+        {"kind": "no_clause_invention"}
+      ]
+    },
+    {
+      "mask_id": "MASK-TECH-STD",
+      "norm_type": "LICENSED_TECHNICAL_STANDARD",
+      "applies_to": ["FWK-ISO-8000-001", "FWK-COSO-001", "FWK-COBIT-001"],
+      "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
+      "certified_claim": "FORBIDDEN",
+      "execution": [
+        {"kind": "clause_unavailable"},
+        {"kind": "metadata_only"},
+        {"kind": "no_pdf_ingest"},
+        {"kind": "cko_profile_not_certification"}
+      ]
+    },
+    {
+      "mask_id": "MASK-ORIGIN-HTML",
+      "norm_type": "OWN_PRODUCTION_HTML",
+      "applies_to": ["SRC-ORIGIN-CHROME-001", "SRC-SITE-SHELL-001"],
+      "expected_rewrite": ["adsbygoogle", "googleads", "type=\"email\"", "cookie-modal", "cdn.jsdelivr", "opendyslexic"],
+      "execution": [
+        {"kind": "vault_first_copy", "required": true},
+        {"kind": "internal_absent", "tokens": ["adsbygoogle", "googleads", "type=\"email\"", "cdn.jsdelivr", "opendyslexic"]}
+      ]
+    },
+    {
+      "mask_id": "MASK-REGULATED-HTML",
+      "norm_type": "OFFICIAL_HTML_PAGE",
+      "applies_to": ["API-CAND-COFEN", "API-CAND-ANVISA", "API-CAND-MS"],
+      "execution": [
+        {"kind": "vault_first_copy", "required": false},
+        {"kind": "api_base_url_null"},
+        {"kind": "no_rest_invention"}
+      ]
+    },
+    {
+      "mask_id": "MASK-TOOL-WORK",
+      "norm_type": "ORIGINAL_CKO_WORK",
+      "applies_to": ["gotejamento", "meows", "cinco-ts-pcr", "simulado-tecnico"],
+      "rights_class": "ORIGINAL_CKO_CANDIDATE",
+      "instrument": "INS-LEI-9610-1998",
+      "execution": [
+        {"kind": "pilot_in_data_tools"},
+        {"kind": "lineage_complete"},
+        {"kind": "rights_not_assured"}
+      ]
+    },
+    {
+      "mask_id": "MASK-SCALE-THIRD-PARTY",
+      "norm_type": "THIRD_PARTY_SCALE",
+      "applies_to": ["braden", "norton", "glasgow"],
+      "rights_class": "THIRD_PARTY_HOLD",
+      "cko_copyright_claim": "FORBIDDEN",
+      "execution": [
+        {"kind": "not_in_data_tools"},
+        {"kind": "quarantined"}
+      ]
+    },
+    {
+      "mask_id": "MASK-HOLD-WORK",
+      "norm_type": "HOLD_OBJECT",
+      "applies_to": ["dimensionamento"],
+      "execution": [
+        {"kind": "status_hold"},
+        {"kind": "no_formula"}
+      ]
+    }
+  ]
+}

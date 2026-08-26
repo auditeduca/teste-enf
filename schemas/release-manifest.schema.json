@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReleaseManifest",
+  "type": "object",
+  "required": ["releaseId", "status", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "type": "string" },
+    "artifact": { "type": "string" },
+    "releaseId": { "type": "string" },
+    "status": { "type": "string", "enum": ["PASS", "HOLD", "FAIL", "ERROR"] },
+    "generatedAt": { "type": "string" },
+    "promotionAllowed": { "type": "boolean" },
+    "gates": { "type": "array" },
+    "objects": { "type": "array" }
+  }
+}

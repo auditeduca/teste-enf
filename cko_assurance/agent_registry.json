@@ -1,0 +1,321 @@
+{
+  "business_key": "REG-AGENT-001",
+  "status": "IMPLEMENTED_INBOX_ONLY",
+  "implemented": true,
+  "publication_implemented": false,
+  "rule": "Agente executa processo. Agente não cria autoridade. MAKER ≠ CHECKER ≠ AUDITOR.",
+  "classes": [
+    "ORCHESTRATOR",
+    "DISCOVERY",
+    "ACQUISITION",
+    "EXTRACTION",
+    "NORMALIZATION",
+    "ENTITY_RESOLUTION",
+    "MD",
+    "REGULATORY",
+    "KNOWLEDGE",
+    "EVIDENCE",
+    "CONTENT",
+    "SEO",
+    "A11Y",
+    "PRIVACY",
+    "SECURITY",
+    "SUSTAINABILITY",
+    "RENDERER",
+    "PUBLICATION",
+    "VALIDATION",
+    "CAAT",
+    "IPE",
+    "RISK",
+    "AUDIT",
+    "SEARCH",
+    "SAE",
+    "MONITORING"
+  ],
+  "agents": [
+    {
+      "agent_id": "AG-ORCHESTRATOR",
+      "class": "ORCHESTRATOR",
+      "implemented": true,
+      "writes_to": "cko_inbox/agent_runs",
+      "promotes_to_md": false,
+      "note": "Orquestra MAKER then CHECKER. Não publica."
+    },
+    {
+      "agent_id": "AG-FETCH-ORIGIN",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_inbox/origin",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-FETCH-REGULATED",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/regulated_pages.json",
+      "promotes_to_md": false,
+      "note": "HTML oficial. API REST base_url null."
+    },
+    {
+      "agent_id": "AG-PARSE-PAGES-FULL",
+      "class": "EXTRACTION",
+      "implemented": true,
+      "writes_to": "cko_inbox/drive/pages_full/INVENTORY.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-SITEMAP",
+      "class": "EXTRACTION",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/sitemap_slugs.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-CHROME",
+      "class": "A11Y",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/chrome_contract.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-INTEGRITY",
+      "class": "EVIDENCE",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/hash_chain.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-CAAT-EXTRACT",
+      "class": "CAAT",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/caat_extract.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-IPE-EXTRACT",
+      "class": "IPE",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/ipe_extract.json",
+      "promotes_to_md": false,
+      "reliance": false
+    },
+    {
+      "agent_id": "AG-LINK-MD",
+      "class": "ENTITY_RESOLUTION",
+      "implemented": true,
+      "writes_to": "cko_reg/extraction_profile.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-PARSE-SITE-SHELL",
+      "class": "EXTRACTION",
+      "implemented": true,
+      "writes_to": "cko_inbox/drive/site_shell/INVENTORY.json",
+      "promotes_to_md": false,
+      "note": "Drive site-shell zip. Ads/CDN não copiados para o renderer."
+    },
+    {
+      "agent_id": "AG-VAULT-PUT",
+      "class": "EVIDENCE",
+      "implemented": true,
+      "writes_to": "cko_inbox/vault",
+      "promotes_to_md": false,
+      "note": "WORM: primeira cópia inalterada. Hash novo = objeto novo + evento."
+    },
+    {
+      "agent_id": "AG-RIGHTS-BIND",
+      "class": "REGULATORY",
+      "implemented": true,
+      "writes_to": "cko_reg/rights_profile.json",
+      "promotes_to_md": false,
+      "note": "Lei 9.610 como instrumento. Escalas de terceiros HOLD."
+    },
+    {
+      "agent_id": "AG-LINEAGE-BIND",
+      "class": "ENTITY_RESOLUTION",
+      "implemented": true,
+      "writes_to": "cko_md/lineage_registry.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": true
+    },
+    {
+      "agent_id": "AG-ISO8000-PROFILE",
+      "class": "MD",
+      "implemented": true,
+      "writes_to": "cko_md/iso8000_profile.json",
+      "promotes_to_md": false,
+      "note": "Perfil CKO. clause_text CLAUSE_TEXT_UNAVAILABLE. certified=false."
+    },
+    {
+      "agent_id": "AG-WHO-I18N",
+      "class": "MD",
+      "implemented": true,
+      "writes_to": "cko_md/who_i18n_modulation.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": false,
+      "note": "OMS who.int seletor (en ar zh fr ru es). Chave who.en+local.pt-BR. Variantes lusófonas HOLD. Sem dump ICD/ICNP/GHO."
+    },
+    {
+      "agent_id": "AG-LAYER-PHASE",
+      "class": "MD",
+      "implemented": true,
+      "writes_to": "cko_md/layer_md_reg_phase.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": false,
+      "note": "Envelope MD+REG das 44 camadas faseado P0–P5. Envelope completo ≠ assured. publication HOLD."
+    },
+    {
+      "agent_id": "AG-CLIN-DICT",
+      "class": "MD",
+      "implemented": true,
+      "writes_to": "cko_md/clinical_dictionary_catalog.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": false,
+      "note": "Dicionario clinico.zip COMPARE. Códigos piloto CALC-/SCALE-/GUIDE-/EXAM-*. Sem Braden em data/tools. UUIDv4 não adotado."
+    },
+    {
+      "agent_id": "AG-MASK-APPLY",
+      "class": "REGULATORY",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/mask_run.json",
+      "promotes_to_md": false,
+      "note": "Máscaras desenhadas (IA robusta). Execução determinística simples. LLM checker FORBIDDEN."
+    },
+    {
+      "agent_id": "AG-COMPARE-SOURCE",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/compare_source.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-COMPARE-INTERNAL",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/compare_internal.json",
+      "promotes_to_md": false
+    },
+    {
+      "agent_id": "AG-MONITOR-DRIFT",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_assurance/monitoring_events.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": true
+    },
+    {
+      "agent_id": "AG-FETCH-GOV-SOURCES",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/gov_pages.json",
+      "promotes_to_md": false,
+      "note": "ANVISA, MS, COFEN, COREN-SP HTML, SGD PGDADOS. Sem inventar API REST."
+    },
+    {
+      "agent_id": "AG-API-PROBE",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_md/api_adapter_registry.json",
+      "promotes_to_md": false,
+      "note": "CKAN dados.gov.br / OpenDataSUS / Portal APIs ANVISA. base_url só se HTTP 200 JSON. HTML SPA ≠ REST."
+    },
+    {
+      "agent_id": "AG-PROBE-CONGRESS-API",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/congress_probe.json",
+      "promotes_to_md": false,
+      "note": "Câmara + Senado/Congresso. base_url só se HTTP 200."
+    },
+    {
+      "agent_id": "AG-FETCH-FEDERAL-LEGISLATION",
+      "class": "ACQUISITION",
+      "implemented": true,
+      "writes_to": "cko_md/legislation_instrument_registry.json",
+      "promotes_to_md": false,
+      "note": "Catálogo federal: LCP/lei ALLOW; PLP BLOCK; decreto numerado REGULATORY; norma revogada para ferramenta."
+    },
+    {
+      "agent_id": "AG-LIBRARY-CATALOG",
+      "class": "CONTENT",
+      "implemented": true,
+      "writes_to": "cko_md/resource_library.json",
+      "promotes_to_md": false,
+      "note": "Catálogo de metadados. Não republica HTML integral."
+    },
+    {
+      "agent_id": "AG-INVENTORY-DRIVE",
+      "class": "DISCOVERY",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/drive_inventory.json",
+      "promotes_to_md": false,
+      "note": "Replay do listing Drive persistido. Não unzip mega-zip nem promove HTML."
+    },
+    {
+      "agent_id": "AG-INVENTORY-SUPABASE",
+      "class": "DISCOVERY",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/supabase_inventory.json",
+      "promotes_to_md": false,
+      "note": "Projetos e slugs de Edge Function observados. MCP Cursor JSON read_only DOCUMENTADO. Schema SQL EVIDENCE_PENDING (28P01 / MCP -32600)."
+    },
+    {
+      "agent_id": "AG-COMPARE-STORES",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_inbox/extracted/compare_stores.json",
+      "promotes_to_md": false,
+      "note": "CHECKER: Drive/Supabase vs GitHub MD/REG. Só gaps."
+    },
+    {
+      "agent_id": "AG-PLAN-FRONTS",
+      "class": "ORCHESTRATOR",
+      "implemented": true,
+      "writes_to": "cko_md/fronts_plan.json",
+      "promotes_to_md": false,
+      "note": "Plano vivo F1–F24. layer_intent + NNN rights-safe + owner unblock + L70 ANVISA. Não é waterfall. LLM não é autoridade."
+    },
+    {
+      "agent_id": "AG-UCP-V2-COMPARE",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_md/ucp_v2_compare.json",
+      "promotes_to_md": false,
+      "note": "COMPARE contratos UCP v2.0. Não copiar para schemas/. CONTROLLED_CANDIDATE ≠ ASSURED."
+    },
+    {
+      "agent_id": "AG-L70-ANVISA-COMPARE",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_md/l70_anvisa_compare.json",
+      "promotes_to_md": false,
+      "note": "L70: Portal APIs ANVISA + listing Drive. Sem unzip dump. Sem inventar dose. openFDA ≠ bula."
+    },
+    {
+      "agent_id": "AG-CONTENT-CURRICULUM",
+      "class": "CONTENT",
+      "implemented": true,
+      "writes_to": "cko_md/content_curriculum.json",
+      "promotes_to_md": false,
+      "note": "Básico→avançado a partir do MD da ferramenta. LLM FORBIDDEN."
+    },
+    {
+      "agent_id": "AG-OPS-DB-SYNC",
+      "class": "MD",
+      "implemented": true,
+      "writes_to": "cko_inbox/cko_ops.sqlite",
+      "promotes_to_md": false,
+      "note": "Espelho SQLite inbox. Não é Postgres de produção. Sem RLS."
+    },
+    {
+      "agent_id": "AG-ALERT-FRESHNESS",
+      "class": "MONITORING",
+      "implemented": true,
+      "writes_to": "cko_assurance/freshness_alerts.json",
+      "promotes_to_md": false,
+      "wired_to_frontend": true,
+      "note": "Alerta JSON/Admin. Sem e-mail. Pendência ALTA se norma indisponível."
+    }
+  ],
+  "population": 36
+}

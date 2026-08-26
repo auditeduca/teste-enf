@@ -1,0 +1,231 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CKO Object",
+  "description": "Contrato canônico de objeto do CKO: calculadora, escala, guia ou simulado.",
+  "type": "object",
+  "required": ["id", "slug", "code", "kind", "version", "status", "overview"],
+  "properties": {
+    "id": { "type": "string", "description": "UUID v4 estável." },
+    "code": { "type": "string" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "kind": { "type": "string", "enum": ["calculator", "scale", "guide", "exam"] },
+    "version": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "review", "hold", "published", "archived"] },
+    "hold": {
+      "type": "object",
+      "properties": {
+        "reason": { "type": "string" },
+        "owner": { "type": "string" }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "canonical": { "type": "string" }
+      }
+    },
+    "breadcrumb": {
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "categoryHref": { "type": "string" }
+      }
+    },
+    "overview": {
+      "type": "object",
+      "required": ["name", "objective"],
+      "properties": {
+        "name": { "type": "string" },
+        "acronym": { "type": "string" },
+        "categoryBadge": { "type": "string" },
+        "objective": { "type": "string" },
+        "indication": { "type": "string" },
+        "targetPopulation": { "type": "string" },
+        "specialty": { "type": "array", "items": { "type": "string" } },
+        "averageTime": { "type": "string" },
+        "evidenceLevel": { "type": "string", "enum": ["I", "II", "III", "IV", "V"] },
+        "originalAuthors": { "type": "array", "items": { "type": "string" } },
+        "organizations": { "type": "array", "items": { "type": "string" } },
+        "complexity": { "type": "string", "enum": ["basic", "intermediate", "advanced", "expert"] }
+      }
+    },
+    "calculator": {
+      "type": "object",
+      "required": ["inputs", "formula"],
+      "properties": {
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "type", "label"],
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string", "enum": ["number", "select"] },
+              "label": { "type": "string" },
+              "description": { "type": "string" },
+              "unit": { "type": "string" },
+              "defaultValue": {},
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "step": { "type": "number" },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": {},
+                    "label": { "type": "string" },
+                    "score": { "type": "number" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "formula": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "type": "string", "enum": ["sum", "expression", "none"] },
+            "expression": { "type": "string" },
+            "resultLabel": { "type": "string" },
+            "resultUnit": { "type": "string" },
+            "decimals": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "interpretation": {
+      "type": "object",
+      "properties": {
+        "ranges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "label": { "type": "string" },
+              "riskLevel": { "type": "string", "enum": ["none", "low", "moderate", "high", "critical"] },
+              "color": { "type": "string" },
+              "clinicalImplications": { "type": "string" },
+              "recommendations": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "sae": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "enum": ["HOLD", "RESOLVED", "NOT_APPLICABLE"] },
+        "nanda": { "type": "array", "items": { "$ref": "#/definitions/saeEntry" } },
+        "nic": { "type": "array", "items": { "$ref": "#/definitions/saeEntry" } },
+        "noc": { "type": "array", "items": { "$ref": "#/definitions/saeEntry" } }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "foundation": { "type": "string" },
+        "limitations": { "type": "string" },
+        "references": {
+          "type": "array",
+          "items": { "type": "object", "properties": { "text": { "type": "string" } } }
+        }
+      }
+    },
+    "learning": {
+      "type": "object",
+      "properties": {
+        "tips": { "type": "array", "items": { "type": "string" } },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "sublabel": { "type": "string" },
+              "emoji": { "type": "string" },
+              "values": { "type": "object" }
+            }
+          }
+        },
+        "quiz": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "q": { "type": "string" },
+              "opts": { "type": "array", "items": { "type": "string" } },
+              "correct": { "type": "integer" },
+              "expl": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "body": { "type": "string" },
+              "html": { "type": "string" },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kicker": { "type": "string" },
+                    "title": { "type": "string" },
+                    "body": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "faq": {
+      "type": "array",
+      "items": { "type": "object", "properties": { "q": { "type": "string" }, "a": { "type": "string" } } }
+    },
+    "about": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "html": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "saeEntry": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "status": { "type": "string", "enum": ["CANDIDATE", "RESOLVED", "HOLD"] },
+        "diagnosis": { "type": "string" },
+        "definition": { "type": "string" },
+        "intervention": { "type": "string" },
+        "activities": { "type": "array", "items": { "type": "string" } },
+        "outcome": { "type": "string" },
+        "indicators": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "enum": ["calculator", "scale"] } } },
+      "then": { "required": ["calculator", "interpretation"] }
+    }
+  ]
+}

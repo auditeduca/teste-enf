@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel · CKO Studio</title>
+  <meta name="description" content="Painel administrativo integrado CKO.">
+  <meta name="theme-color" content="#1A3E74">
+  
+  <link rel="stylesheet" href="assets/app.css">
+  <meta name="robots" content="noindex,nofollow"><script type="application/json" id="admin-contract">{
+  "business_key": "CONTRACT-ADMIN-FRONTEND-001",
+  "version": "1.0.0",
+  "status": "DOCUMENTADO",
+  "implemented_runtime": "PARTIAL",
+  "store": "GitHub (Day Zero). Nenhuma API admin autenticada observada neste repositório.",
+  "principle": "Studio/Admin projeta objetos governados. Não reescreve verdade clínica.",
+  "communication": {
+    "mode": "SHARED_GITHUB_CONTRACTS",
+    "description": "Admin e frontend leem os mesmos JSON versionados. O renderer gera ambas as superfícies. Não há CMS paralelo nem escrita canônica no browser.",
+    "admin_surface": "admin.html",
+    "frontend_surface": "index.html + tools/*.html",
+    "runtime_json_projection": [
+      "admin/contract.json",
+      "admin/layer_registry.json"
+    ]
+  },
+  "frontend": {
+    "role": "PRESENTATION_ONLY",
+    "reads": [
+      "render projections",
+      "status badges",
+      "HOLD banners"
+    ],
+    "writes_canonical": false
+  },
+  "admin": {
+    "role": "orchestration / preview / status / exceptions / publication control",
+    "reads": [
+      "cko_core",
+      "cko_md",
+      "cko_reg",
+      "cko_assurance",
+      "data/tools"
+    ],
+    "allowed_write_when_implemented": [
+      "changeset",
+      "new version",
+      "finding",
+      "exception"
+    ],
+    "forbidden_write": [
+      "silent UPDATE of formula",
+      "dose",
+      "threshold",
+      "canonical identity"
+    ]
+  },
+  "events": {
+    "allowed": [
+      "ADMIN_READ_LAYERS",
+      "ADMIN_READ_CATALOG",
+      "ADMIN_READ_FINDINGS",
+      "ADMIN_REQUEST_PREVIEW",
+      "FRONTEND_RENDER_PROJECTION"
+    ],
+    "forbidden": [
+      "ADMIN_WRITE_FORMULA",
+      "FRONTEND_WRITE_CANONICAL",
+      "LLM_PROMOTE_IDENTITY"
+    ]
+  },
+  "privacy": "PRIV-NO-SENSITIVE-CAPTURE",
+  "segregation": "MAKER ≠ CHECKER ≠ AUDITOR"
+}</script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    <button type="button" id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeTextPWA">Tamanho da Fonte</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightTextPWA">Espaçamento Linha</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingTextPWA">Espaçamento Letra</span></button>
+    <button type="button" id="btnAlternarContrastePWA" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Alto Contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Modo Escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Fonte Dislexia</span></button>
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span>Atalhos</span></button>
+    <button type="button" id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Redefinir Tudo</span></button>
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Normal</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Médio</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Normal</span></button>
+    <button type="button" id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/></svg><span id="readingSpeedText">Normal</span></button>
+    <button type="button" id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span class="sr-only">Reproduzir/Pausar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/></svg><span class="sr-only">Reiniciar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReadFocused" aria-label="Ler elemento focado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/></svg><span class="sr-only">Ler elemento focado</span></button>
+    <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span class="sr-only">Alternar alto contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="sr-only">Alternar modo escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span class="sr-only">Alternar fonte para dislexia</span></button>
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="sr-only">Atalhos de Teclado</span></button>
+    <button type="button" id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="sr-only">Redefinir configurações de acessibilidade</span></button>
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
+    </div>
+  </div>
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button>
+<div class="admin-app">
+  <aside class="admin-side" aria-label="Módulos do Studio">
+    <p class="admin-brand">CKO Studio</p>
+    <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
+    <nav class="admin-nav"><a href="admin.html" aria-current="page">Painel</a><a href="admin/database.html">Banco GitHub</a><a href="admin/catalog.html">Catálogo</a><a href="admin/pipeline.html">Pipeline</a><a href="admin/layers.html">44 camadas</a><a href="admin/validations.html">Validações</a><a href="admin/agents.html">Agentes</a><a href="admin/monitoring.html">Monitoramento</a><a href="admin/library.html">Biblioteca</a><a href="admin/apis.html">APIs / órgãos</a><a href="admin/backlog.html">Backlog</a><a href="admin/design-system.html">Design System</a><a href="admin/locales.html">Locales / Drive</a><a href="admin/mdm.html">Master Data</a><a href="admin/frameworks.html">Frameworks</a><a href="admin/maturity.html">Maturidade</a><a href="admin/renderer.html">Renderer</a><a href="admin/deploy.html">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="index.html">Site público</a></p>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-top">
+      <p class="eyebrow">Painel · CKO Studio</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE · chrome DS na barra de acessibilidade</p>
+    </header>
+    <main id="conteudo" class="admin-content">
+      
+    <header class="page-hero">
+      <h1>Área administrativa integrada.</h1>
+      <p class="lede">CKO-MD e CKO-REG são a espinha dorsal. Clinical Calculators e as demais camadas já existem no registry. Banco Day Zero = JSON no GitHub. Mapa Studio (Braden 98%, Ativo, Concluído) está em quarentena.</p>
+      <p class="hold-banner">Release clínica: HOLD · Completude: HOLD · Layer Registry (44) · MD LAYER-010-MD · REG LAYER-010-REG · SHARED_GITHUB_CONTRACTS · PRIV-NO-SENSITIVE-CAPTURE</p>
+    </header>
+    <section class="catalog admin-cards" aria-label="Módulos">
+      <a class="tool-card" href="admin/database.html"><p class="eyebrow">MD/REG</p><h2>Banco GitHub</h2><p>Tabelas JSON versionadas. Sem Postgres live neste repo.</p></a>
+      <a class="tool-card" href="admin/catalog.html"><p class="eyebrow">Domínio</p><h2>Catálogo</h2><p>5 candidatos piloto + itens Studio em QUARANTINED.</p></a>
+      <a class="tool-card" href="admin/renderer.html"><p class="eyebrow">L400</p><h2>Renderer</h2><p>Botão local gera fetch + inline. PRESENTATION_ONLY.</p></a>
+      <a class="tool-card" href="admin/deploy.html"><p class="eyebrow">Git</p><h2>Deploy</h2><p>Prepara changeset. git push é FORBIDDEN no botão.</p></a>
+      <a class="tool-card" href="admin/maturity.html"><p class="eyebrow">M0–M7</p><h2>Maturidade</h2><p>Panorama observado de MD, REG, agentes, CAAT, IPE, Drive e DS.</p></a>
+      <a class="tool-card" href="admin/library.html"><p class="eyebrow">L60</p><h2>Biblioteca</h2><p>Recursos ANVISA/MS/COFEN + currículo básico→avançado. Publicação HOLD.</p></a>
+      <a class="tool-card" href="admin/apis.html"><p class="eyebrow">APIs</p><h2>Órgãos / APIs</h2><p>Portal ANVISA HTML ≠ JSON. CKAN + Congresso. base_url null até HTTP 200 JSON. PLP bloqueado. SQLite inbox.</p></a>
+      <a class="tool-card" href="admin/mdm.html"><p class="eyebrow">L10</p><h2>Master Data</h2><p>Entity types e locale registry. Mockup MDM = linguagem de layout.</p></a>
+      <a class="tool-card" href="admin/frameworks.html"><p class="eyebrow">COSO/COBIT/ISO</p><h2>Frameworks</h2><p>Registry only. CLAUSE_TEXT_UNAVAILABLE. ISO 8000 = perfil CKO, não certificação.</p></a>
+    </section>
+    <section class="panel">
+      <h2>Mockups enviados nesta sessão</h2>
+      <p>Studio CMS, Renderer, Validadores, MDM, Gestão de IAs, COSO, COBIT e Arquitetura de Dados são <strong>LAYOUT_LANGUAGE_ONLY</strong>. KPIs 98%/Produção/SHA dos murais = DOCUMENT_CLAIM. Mapa: <code>admin/mockup_reference_map.v1.json</code>.</p>
+    </section>
+    <section class="panel">
+      <h2>Imagens do mapa Studio (lote anterior)</h2>
+      <p>Nenhuma imagem do Mapa de Controles foi encontrada neste workspace. Tabelas reconstruídas do texto colado pelo usuário, não de pixels.</p>
+    </section>
+    
+    </main>
+  </div>
+</div>
+  <script data-admin-root="" src="assets/admin-control.js"></script>
+<script src="assets/a11y.js"></script>
+</body>
+</html>

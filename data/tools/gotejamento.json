@@ -1,0 +1,170 @@
+{
+  "id": "6c1e8a12-9b44-4d3a-9e71-0c2a8f4b91aa",
+  "code": "CALC-GOTEJAMENTO-001",
+  "slug": "gotejamento",
+  "kind": "calculator",
+  "version": "0.1.0",
+  "status": "review",
+  "seo": {
+    "title": "Gotejamento de soro — macrogotas e microgotas",
+    "description": "Calcule gotas ou microgotas por minuto a partir do volume, do tempo e do tipo de equipo."
+  },
+  "breadcrumb": { "category": "Terapia intravenosa" },
+  "overview": {
+    "name": "Gotejamento de soro",
+    "acronym": "Gotejamento",
+    "categoryBadge": "Cálculo",
+    "objective": "Calcular a velocidade de infusão em gotas ou microgotas por minuto para completar o volume no tempo prescrito.",
+    "indication": "Soroterapia e infusões contínuas quando o equipo é regulado em gotas. Não substitui bomba de infusão quando esta é o dispositivo indicado.",
+    "targetPopulation": "Pacientes em infusão intravenosa com equipo de macrogotas (20 gts/mL) ou microgotas (60 gts/mL).",
+    "specialty": ["Enfermagem", "Terapia intravenosa"],
+    "averageTime": "45 segundos",
+    "evidenceLevel": "I",
+    "organizations": ["Ministério da Saúde"],
+    "complexity": "basic"
+  },
+  "calculator": {
+    "inputs": [
+      {
+        "id": "volume",
+        "type": "number",
+        "label": "Volume",
+        "description": "Volume total a infundir.",
+        "unit": "mL",
+        "defaultValue": 500,
+        "min": 1,
+        "max": 5000,
+        "step": 1
+      },
+      {
+        "id": "tempo",
+        "type": "number",
+        "label": "Tempo",
+        "description": "Duração prescrita da infusão.",
+        "defaultValue": 8,
+        "min": 0.1,
+        "max": 9999,
+        "step": 0.1
+      },
+      {
+        "id": "unidade",
+        "type": "select",
+        "label": "Unidade de tempo",
+        "description": "Horas são convertidas para minutos (× 60) antes da fórmula.",
+        "defaultValue": 60,
+        "options": [
+          { "value": 60, "label": "Horas", "description": "Multiplicador 60." },
+          { "value": 1, "label": "Minutos", "description": "Tempo já está em minutos." }
+        ]
+      },
+      {
+        "id": "fator",
+        "type": "select",
+        "label": "Equipo",
+        "description": "Fator de gotejamento do equipo.",
+        "defaultValue": 20,
+        "options": [
+          { "value": 20, "label": "Macrogotas (20 gts/mL)" },
+          { "value": 60, "label": "Microgotas (60 gts/mL)" }
+        ]
+      }
+    ],
+    "formula": {
+      "type": "expression",
+      "expression": "(volume * fator) / (tempo * unidade)",
+      "resultLabel": "Velocidade de infusão",
+      "resultUnit": "gotas/min",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {
+        "min": 0, "max": 20,
+        "label": "Infusão lenta a usual",
+        "riskLevel": "low",
+        "color": "#0f766e",
+        "clinicalImplications": "Velocidade compatível com infusões de manutenção em muitos contextos. Confira o dispositivo, a via e a prescrição.",
+        "recommendations": "• Conferir volume, tempo e tipo de equipo\n• Avaliar necessidade de bomba de infusão\n• Monitorar o sítio de punção e a tolerância hídrica"
+      },
+      {
+        "min": 21, "max": 60,
+        "label": "Infusão intermediária",
+        "riskLevel": "moderate",
+        "color": "#ca8a04",
+        "clinicalImplications": "Gotejamento mais rápido. Reavaliar se o equipo e o acesso suportam o fluxo e se há risco de sobrecarga.",
+        "recommendations": "• Recalcular se o tempo estiver em horas ou minutos\n• Preferir bomba quando o fármaco for de alta vigilância\n• Reavaliar sinais vitais e balanço hídrico"
+      },
+      {
+        "min": 61, "max": 10000,
+        "label": "Infusão rápida — conferir prescrição",
+        "riskLevel": "high",
+        "color": "#b91c1c",
+        "clinicalImplications": "Fluxo elevado. Confirme a prescrição, o equipo e a indicação clínica antes de iniciar.",
+        "recommendations": "• Conferir prescrição e via\n• Discutir uso de bomba de infusão\n• Monitorar sobrecarga volêmica e sítio de acesso"
+      }
+    ]
+  },
+  "sae": {
+    "status": "HOLD",
+    "nanda": [
+      {
+        "code": "00195",
+        "status": "CANDIDATE",
+        "diagnosis": "Risco de desequilíbrio eletrolítico",
+        "definition": "Candidato após avaliação de enfermagem. A calculadora não estabelece o diagnóstico."
+      }
+    ],
+    "nic": [
+      {
+        "code": "2314",
+        "status": "HOLD",
+        "intervention": "Administração de medicação: intravenosa",
+        "activities": ["Conferir prescrição e equipo", "Regular o gotejamento", "Monitorar o acesso venoso"]
+      }
+    ],
+    "noc": [
+      {
+        "code": "0413",
+        "status": "HOLD",
+        "outcome": "Estado de hidratação",
+        "indicators": ["Balanço hídrico", "Sinais de sobrecarga ou desidratação"]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "A fórmula canônica é G = (volume em mL × fator do equipo) ÷ tempo em minutos. Macrogotas usam fator 20; microgotas, fator 60. O resultado é arredondado para inteiro porque a gota não se fraciona na regulagem clínica usual.",
+    "limitations": "Não substitui bomba de infusão, não calcula dose de fármaco e não valida compatibilidade. O arredondamento pode deslocar o tempo total em infusões longas.",
+    "references": [
+      { "text": "BRASIL. Ministério da Saúde. Protocolos de enfermagem para administração de medicamentos e soluções. Brasília: MS." },
+      { "text": "ISMP BRASIL. Medicamentos potencialmente perigosos. Orientações para prevenção de erros de infusão." }
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Se o tempo está em horas, converta para minutos antes de dividir.",
+      "Equipo de microgotas: o número de microgotas/min coincide com mL/h.",
+      "Medicamentos de alta vigilância exigem bomba, não apenas gotejamento manual."
+    ],
+    "examples": [
+      { "label": "Manutenção", "sublabel": "500 mL em 8 h, macro", "emoji": "💧", "values": { "volume": 500, "tempo": 8, "unidade": 60, "fator": 20 } },
+      { "label": "Microgotas", "sublabel": "100 mL em 1 h", "emoji": "🩺", "values": { "volume": 100, "tempo": 1, "unidade": 60, "fator": 60 } }
+    ],
+    "quiz": [
+      {
+        "q": "Qual é a fórmula do gotejamento em gotas por minuto?",
+        "opts": ["Volume ÷ tempo em horas", "(Volume × fator) ÷ tempo em minutos", "Fator × tempo ÷ volume", "Volume × 60 ÷ fator"],
+        "correct": 1,
+        "expl": "G = (volume × fator do equipo) ÷ tempo em minutos."
+      }
+    ]
+  },
+  "faq": [
+    { "q": "Quando usar microgotas?", "a": "Em volumes pequenos, pediatria ou quando se deseja equivalência direta com mL/h." },
+    { "q": "Posso arredondar 20,4 gotas para 20?", "a": "Sim. A gota não se fraciona; use o inteiro mais próximo e reavalie o tempo restante." }
+  ],
+  "about": {
+    "title": "Como o motor calcula",
+    "html": "<p>O objeto declara a expressão <code>(volume * fator) / (tempo * unidade)</code>. <code>unidade</code> vale 60 para horas e 1 para minutos. O renderer e o motor Python avaliam apenas aritmética segura.</p>"
+  }
+}

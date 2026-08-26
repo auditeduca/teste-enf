@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gotejamento de soro — macrogotas e microgotas</title>
+  <meta name="description" content="Calcule gotas ou microgotas por minuto a partir do volume, do tempo e do tipo de equipo.">
+  <meta name="theme-color" content="#1A3E74">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Calculadoras de Enfermagem">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Gotejamento de soro — macrogotas e microgotas">
+  <meta property="og:description" content="Calcule gotas ou microgotas por minuto a partir do volume, do tempo e do tipo de equipo.">
+  <meta property="og:image" content="https://www.calculadorasdeenfermagem.com.br/assets/img/og-default.png">
+  <meta property="og:image:alt" content="Calculadoras de Enfermagem">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gotejamento de soro — macrogotas e microgotas">
+  <meta name="twitter:description" content="Calcule gotas ou microgotas por minuto a partir do volume, do tempo e do tipo de equipo.">
+  <meta name="twitter:image" content="https://www.calculadorasdeenfermagem.com.br/assets/img/og-default.png">
+  <link rel="image_src" href="../assets/img/og-default.png">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.calculadorasdeenfermagem.com.br/#organization",
+      "name": "Audit Educa"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.calculadorasdeenfermagem.com.br/#website",
+      "name": "Calculadoras de Enfermagem",
+      "url": "https://www.calculadorasdeenfermagem.com.br/",
+      "inLanguage": "pt-BR",
+      "publisher": {
+        "@id": "https://www.calculadorasdeenfermagem.com.br/#organization"
+      }
+    }
+  ]
+}</script>
+  <link rel="stylesheet" href="../assets/app.css">
+  
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    <button type="button" id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeTextPWA">Tamanho da Fonte</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightTextPWA">Espaçamento Linha</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingTextPWA">Espaçamento Letra</span></button>
+    <button type="button" id="btnAlternarContrastePWA" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Alto Contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Modo Escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Fonte Dislexia</span></button>
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span>Atalhos</span></button>
+    <button type="button" id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Redefinir Tudo</span></button>
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Normal</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Médio</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Normal</span></button>
+    <button type="button" id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/></svg><span id="readingSpeedText">Normal</span></button>
+    <button type="button" id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span class="sr-only">Reproduzir/Pausar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/></svg><span class="sr-only">Reiniciar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReadFocused" aria-label="Ler elemento focado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/></svg><span class="sr-only">Ler elemento focado</span></button>
+    <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span class="sr-only">Alternar alto contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="sr-only">Alternar modo escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span class="sr-only">Alternar fonte para dislexia</span></button>
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="sr-only">Atalhos de Teclado</span></button>
+    <button type="button" id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="sr-only">Redefinir configurações de acessibilidade</span></button>
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
+    </div>
+  </div>
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button><div id="global-header-container">
+    <header class="site-header" role="banner">
+    <div class="wrap header-row">
+      <button type="button" id="hamburgerButton" class="hamburger-button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="primary-nav">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+      <a class="brand" href="../index.html">
+        <img class="brand-mark" src="../assets/img/icontopbar1-calculadoras-de-enfermagem.webp" width="48" height="32" alt="Calculadoras de Enfermagem" decoding="async">
+        <span class="brand-text">
+          <span class="brand-name">Calculadoras de Enfermagem</span>
+          <span class="brand-sub">CKO · lote piloto</span>
+        </span>
+      </a>
+      <nav id="primary-nav" class="nav desktop-nav" aria-label="Navegação Principal">
+        <a href="../index.html" accesskey="I">Início</a>
+        <a href="../biblioteca.html">Biblioteca</a>
+        <a href="../inspector.html">Sobre Nós</a>
+        <a href="gotejamento.html">Calculadoras</a>
+        <a href="../biblioteca.html#curriculo">Conteúdos</a>
+        <a href="../admin.html">Admin</a>
+      </nav>
+    </div>
+  </header>
+  </div><div id="language-selector-placeholder" data-i18n-gate="HOLD" data-owner-i18n="APPROVED" data-who-official="en,ar,zh,fr,ru,es" data-who-local-key="who.en+local.pt-BR" data-local-bcp47="pt-BR" data-pt-variants="HOLD">
+    <div class="wrap lang-bar">
+      <p class="lang-runtime">who.en+local.pt-BR · i18n HOLD. Variantes lusófonas catalogadas, não ligadas. Candidatos WHO HQ (en ar zh fr ru es) não ligam o seletor. PAHO pt-br observado. Bandeiras EVIDENCE_PENDING. Tradução não redireciona.</p>
+      <div id="language-dropdown-wrapper">
+        <button type="button" id="langButton" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu">
+          <span id="langText">Português</span>
+          <svg class="lang-caret" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div id="langMenu" class="hidden" role="listbox" aria-label="Idiomas observados no site-shell">
+        <button type="button" class="lang-option" data-value="pt" lang="pt"><span>Português</span> <code>pt</code></button>
+        <button type="button" class="lang-option" data-value="en" lang="en"><span>English</span> <code>en</code></button>
+        <button type="button" class="lang-option" data-value="es" lang="es"><span>Español</span> <code>es</code></button>
+        <button type="button" class="lang-option" data-value="de" lang="de"><span>Deutsch</span> <code>de</code></button>
+        <button type="button" class="lang-option" data-value="it" lang="it"><span>Italiano</span> <code>it</code></button>
+        <button type="button" class="lang-option" data-value="fr" lang="fr"><span>Français</span> <code>fr</code></button>
+        <button type="button" class="lang-option" data-value="hi" lang="hi"><span>हिन्दी</span> <code>hi</code></button>
+        <button type="button" class="lang-option" data-value="zh" lang="zh"><span>中文</span> <code>zh</code></button>
+        <button type="button" class="lang-option" data-value="ar" lang="ar"><span>العربية</span> <code>ar</code></button>
+        <button type="button" class="lang-option" data-value="ja" lang="ja"><span>日本語</span> <code>ja</code></button>
+        <button type="button" class="lang-option" data-value="ru" lang="ru"><span>Русский</span> <code>ru</code></button>
+        <button type="button" class="lang-option" data-value="ko" lang="ko"><span>한국어</span> <code>ko</code></button>
+        <button type="button" class="lang-option" data-value="tr" lang="tr"><span>Türkçe</span> <code>tr</code></button>
+        <button type="button" class="lang-option" data-value="nl" lang="nl"><span>Nederlands</span> <code>nl</code></button>
+        <button type="button" class="lang-option" data-value="pl" lang="pl"><span>Polski</span> <code>pl</code></button>
+        <button type="button" class="lang-option" data-value="sv" lang="sv"><span>Svenska</span> <code>sv</code></button>
+        <button type="button" class="lang-option" data-value="id" lang="id"><span>Bahasa Indonesia</span> <code>id</code></button>
+        <button type="button" class="lang-option" data-value="vi" lang="vi"><span>Tiếng Việt</span> <code>vi</code></button>
+        <button type="button" class="lang-option" data-value="uk" lang="uk"><span>Українська</span> <code>uk</code></button>
+        </div>
+      </div>
+      <a class="lang-chip" href="../admin/locales.html">Locales / Drive</a>
+    </div>
+  </div>
+  <main id="conteudo" class="wrap tool-page">
+    <nav class="breadcrumb" aria-label="Trilha">
+      <a href="../index.html">Início</a>
+      <span aria-hidden="true">/</span>
+      <span>Terapia intravenosa</span>
+    </nav>
+    
+    <header class="tool-hero">
+      <p class="eyebrow">Cálculo</p>
+      <h1>Gotejamento de soro</h1>
+      <p class="lede">Calcular a velocidade de infusão em gotas ou microgotas por minuto para completar o volume no tempo prescrito.</p>
+      <p class="meta">Enfermagem · Terapia intravenosa</p>
+    </header>
+    
+    <form id="calcForm" class="calc-card">
+      <input type="hidden" name="slug" value="gotejamento">
+      <fieldset>
+        <legend>Avaliação</legend>
+        <p class="hint">Soroterapia e infusões contínuas quando o equipo é regulado em gotas. Não substitui bomba de infusão quando esta é o dispositivo indicado.</p>
+        
+          <label class="field">
+            <span class="field-label">Volume<span class="field-unit">mL</span></span>
+            <span class="field-help">Volume total a infundir.</span>
+            <input id="input-volume" name="volume" type="number" data-calc-input="volume" value="500" min="1" max="5000" step="1">
+          </label>
+
+          <label class="field">
+            <span class="field-label">Tempo</span>
+            <span class="field-help">Duração prescrita da infusão.</span>
+            <input id="input-tempo" name="tempo" type="number" data-calc-input="tempo" value="8" min="0.1" max="9999" step="0.1">
+          </label>
+
+          <label class="field">
+            <span class="field-label">Unidade de tempo</span>
+            <span class="field-help">Horas são convertidas para minutos (× 60) antes da fórmula.</span>
+            <select id="input-unidade" name="unidade" data-calc-input="unidade">
+              <option value="60" title="Multiplicador 60." selected>Horas</option>
+              <option value="1" title="Tempo já está em minutos.">Minutos</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Equipo</span>
+            <span class="field-help">Fator de gotejamento do equipo.</span>
+            <select id="input-fator" name="fator" data-calc-input="fator">
+              <option value="20" selected>Macrogotas (20 gts/mL)</option>
+              <option value="60">Microgotas (60 gts/mL)</option>
+            </select>
+          </label>
+      </fieldset>
+      <div class="result-block" id="resultBlock" style="--risk:#1A3E74">
+        <p class="result-kicker">Velocidade de infusão</p>
+        <p class="result-value"><span id="calcResultValue">21</span>
+          <span id="calcResultUnit" class="result-unit">gotas/min</span></p>
+        <p id="calcStatusTitle" class="result-label"></p>
+        <p id="calcStatusText" class="result-note"></p>
+      </div>
+      <p class="actions">
+        <button type="submit" class="btn-primary" id="calcSubmit">Calcular e ver raciocínio</button>
+      </p>
+    </form>
+    
+      <section class="clinical-step" id="step-sae" hidden>
+        <h2>Raciocínio NANDA · NIC · NOC</h2>
+        <p class="hold-banner">SAE em HOLD: códigos NIC/NOC são candidatos internos até fonte canônica/licenciada.</p>
+        <div class="sae-grid">
+          <section class="sae-col"><h3>NANDA</h3><article><p class="code">00195</p><h4>Risco de desequilíbrio eletrolítico</h4><p>Candidato após avaliação de enfermagem. A calculadora não estabelece o diagnóstico.</p></article></section>
+          <section class="sae-col"><h3>NIC</h3><article><p class="code">2314</p><h4>Administração de medicação: intravenosa</h4><ul><li>Conferir prescrição e equipo</li>
+<li>Regular o gotejamento</li>
+<li>Monitorar o acesso venoso</li></ul></article></section>
+          <section class="sae-col"><h3>NOC</h3><article><p class="code">0413</p><h4>Estado de hidratação</h4><ul><li>Balanço hídrico</li>
+<li>Sinais de sobrecarga ou desidratação</li></ul></article></section>
+        </div>
+      </section>
+    
+    
+      
+      <section class="panel">
+        <h2>Como o motor calcula</h2>
+        <p>O objeto declara a expressão <code>(volume * fator) / (tempo * unidade)</code>. <code>unidade</code> vale 60 para horas e 1 para minutos. O renderer e o motor Python avaliam apenas aritmética segura.</p>
+        <p>A fórmula canônica é G = (volume em mL × fator do equipo) ÷ tempo em minutos. Macrogotas usam fator 20; microgotas, fator 60. O resultado é arredondado para inteiro porque a gota não se fraciona na regulagem clínica usual.</p><p><strong>Limitações:</strong> Não substitui bomba de infusão, não calcula dose de fármaco e não valida compatibilidade. O arredondamento pode deslocar o tempo total em infusões longas.</p>
+        <div class="examples"><button type="button" class="example-btn" data-example data-values="{&quot;volume&quot;: 500, &quot;tempo&quot;: 8, &quot;unidade&quot;: 60, &quot;fator&quot;: 20}">💧 Manutenção — 500 mL em 8 h, macro</button><button type="button" class="example-btn" data-example data-values="{&quot;volume&quot;: 100, &quot;tempo&quot;: 1, &quot;unidade&quot;: 60, &quot;fator&quot;: 60}">🩺 Microgotas — 100 mL em 1 h</button></div>
+      </section>
+      <section class="panel"><h2>Dicas clínicas</h2><ul><li>Se o tempo está em horas, converta para minutos antes de dividir.</li>
+<li>Equipo de microgotas: o número de microgotas/min coincide com mL/h.</li>
+<li>Medicamentos de alta vigilância exigem bomba, não apenas gotejamento manual.</li></ul></section>
+      <section class="panel"><h2>Questões</h2><article class="quiz-card" data-quiz-card="0" data-correct="1">
+            <p class="quiz-q">Qual é a fórmula do gotejamento em gotas por minuto?</p>
+            <div class="quiz-opts"><button type="button" class="quiz-opt" data-opt="0">Volume ÷ tempo em horas</button><button type="button" class="quiz-opt" data-opt="1">(Volume × fator) ÷ tempo em minutos</button><button type="button" class="quiz-opt" data-opt="2">Fator × tempo ÷ volume</button><button type="button" class="quiz-opt" data-opt="3">Volume × 60 ÷ fator</button></div>
+            <p class="quiz-expl" hidden>G = (volume × fator do equipo) ÷ tempo em minutos.</p>
+          </article></section>
+      <section class="panel"><h2>Perguntas frequentes</h2><details><summary>Quando usar microgotas?</summary><p>Em volumes pequenos, pediatria ou quando se deseja equivalência direta com mL/h.</p></details><details><summary>Posso arredondar 20,4 gotas para 20?</summary><p>Sim. A gota não se fraciona; use o inteiro mais próximo e reavalie o tempo restante.</p></details></section>
+      <section class="panel"><h2>Referências</h2><ul><li>BRASIL. Ministério da Saúde. Protocolos de enfermagem para administração de medicamentos e soluções. Brasília: MS.</li>
+<li>ISMP BRASIL. Medicamentos potencialmente perigosos. Orientações para prevenção de erros de infusão.</li></ul></section>
+    
+    <section class="panel lineage-panel" id="rastreio" data-lineage-slug="gotejamento">
+      <h2>Rastreio da fonte</h2>
+      <p class="hint">Cópia original inalterada no vault → CKO-MD → CKO-REG → esta página. Monitoramento informa drift para ajuste.</p>
+      <dl class="lineage-dl">
+        <div><dt>Obra</dt><dd>ORIGINAL_CKO_CANDIDATE</dd></div>
+        <div><dt>Direitos</dt><dd>DOCUMENTADO · CANDIDATE_ORIGINAL — não ASSURED</dd></div>
+        <div><dt>Instrumento</dt><dd>INS-LEI-9610-1998</dd></div>
+        <div><dt>Máscara</dt><dd>MASK-TOOL-WORK</dd></div>
+        <div><dt>Vault MD</dt><dd><code>3ab7da25c85091e6</code></dd></div>
+        <div><dt>Vault origem</dt><dd><code>8e635e5f46737d03</code></dd></div>
+        <div><dt>URL origem</dt><dd>https://www.calculadorasdeenfermagem.com.br/gotejamento.html</dd></div>
+        <div><dt>Linha</dt><dd>LINKED</dd></div>
+      </dl>
+      <p class="meta"><a href="../inspector.html">Inspector</a> · <a href="../admin/monitoring.html">Monitoramento</a></p>
+    </section>
+  </main>
+  <div id="footer-placeholder">
+  <footer class="site-footer" id="institucional" role="contentinfo" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">Rodapé do site</h2>
+    <div class="wrap footer-logo-row">
+      <a href="../index.html" aria-label="Ir para a página inicial">
+        <img class="footer-mark-80" src="../assets/img/iconrodape1-80-calculadoras-de-enfermagem.webp" width="80" height="80" alt="Calculadoras de Enfermagem" decoding="async">
+      </a>
+    </div>
+    <div class="wrap footer-grid">
+      <nav class="footer-col" aria-label="Institucional">
+        <h2>Institucional</h2>
+        <ul>
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="../inspector.html">Sobre Nós</a></li>
+          <li><a href="../inspector.html">Mapa do Site</a></li>
+          <li><span class="footer-hold">Central de Privacidade · HOLD</span></li>
+          <li><span class="footer-hold">Termos e Condições de Uso · HOLD</span></li>
+          <li><span class="footer-hold">Política de Acessibilidade · HOLD</span></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Sustentabilidade Digital">
+        <h2>Sustentabilidade Digital</h2>
+        <ul>
+          <li><a href="../admin/maturity.html">Nosso Compromisso</a></li>
+          <li><span class="footer-hold">Relatório de Impacto · HOLD</span></li>
+          <li><span class="footer-hold">Tecnologia Verde · HOLD</span></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Nosso Compromisso</h2>
+        <p>Nosso site adota elevados padrões de acessibilidade digital, sustentabilidade digital, segurança da informação e proteção de dados, promovendo uma experiência inclusiva, eficiente e responsável para todos os usuários.</p>
+        <p class="footer-commitment">WCAG nomeada; equivalente BR eMAG/LBI. Texto de cláusula W3C não ingerido. Sem captura de e-mail e sem mural de cookies neste lote (NO_SENSITIVE_CAPTURE).</p>
+      </div>
+      <div class="footer-col">
+        <h2>Siga-nos</h2>
+        <ul>
+          <li><a href="https://linkedin.com/company/calculadoras-de-enfermagem" rel="noopener noreferrer me">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/calculadorasdeenfermagem/" rel="noopener noreferrer me">Instagram</a></li>
+          <li><a href="https://www.youtube.com/channel/UC_6runTDHz8u5S1Yab842pg" rel="noopener noreferrer me">YouTube</a></li>
+          <li><a href="../admin.html">Admin Studio</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p>Apoio à decisão clínica e ao estudo. Não substitui julgamento profissional, protocolo institucional nem prescrição.</p>
+      <p>© 2026 Calculadoras de Enfermagem. Todos os direitos reservados. Audit Educa · CKO. Newsletter/e-mail não implantados.</p>
+    </div>
+  </footer>
+  </div>
+  <script type="application/json" id="tool-config">{
+  "id": "6c1e8a12-9b44-4d3a-9e71-0c2a8f4b91aa",
+  "code": "CALC-GOTEJAMENTO-001",
+  "slug": "gotejamento",
+  "kind": "calculator",
+  "version": "0.1.0",
+  "status": "review",
+  "seo": {
+    "title": "Gotejamento de soro — macrogotas e microgotas",
+    "description": "Calcule gotas ou microgotas por minuto a partir do volume, do tempo e do tipo de equipo."
+  },
+  "breadcrumb": {
+    "category": "Terapia intravenosa"
+  },
+  "overview": {
+    "name": "Gotejamento de soro",
+    "acronym": "Gotejamento",
+    "categoryBadge": "Cálculo",
+    "objective": "Calcular a velocidade de infusão em gotas ou microgotas por minuto para completar o volume no tempo prescrito.",
+    "indication": "Soroterapia e infusões contínuas quando o equipo é regulado em gotas. Não substitui bomba de infusão quando esta é o dispositivo indicado.",
+    "targetPopulation": "Pacientes em infusão intravenosa com equipo de macrogotas (20 gts/mL) ou microgotas (60 gts/mL).",
+    "specialty": [
+      "Enfermagem",
+      "Terapia intravenosa"
+    ],
+    "averageTime": "45 segundos",
+    "evidenceLevel": "I",
+    "organizations": [
+      "Ministério da Saúde"
+    ],
+    "complexity": "basic"
+  },
+  "calculator": {
+    "inputs": [
+      {
+        "id": "volume",
+        "type": "number",
+        "label": "Volume",
+        "description": "Volume total a infundir.",
+        "unit": "mL",
+        "defaultValue": 500,
+        "min": 1,
+        "max": 5000,
+        "step": 1
+      },
+      {
+        "id": "tempo",
+        "type": "number",
+        "label": "Tempo",
+        "description": "Duração prescrita da infusão.",
+        "defaultValue": 8,
+        "min": 0.1,
+        "max": 9999,
+        "step": 0.1
+      },
+      {
+        "id": "unidade",
+        "type": "select",
+        "label": "Unidade de tempo",
+        "description": "Horas são convertidas para minutos (× 60) antes da fórmula.",
+        "defaultValue": 60,
+        "options": [
+          {
+            "value": 60,
+            "label": "Horas",
+            "description": "Multiplicador 60."
+          },
+          {
+            "value": 1,
+            "label": "Minutos",
+            "description": "Tempo já está em minutos."
+          }
+        ]
+      },
+      {
+        "id": "fator",
+        "type": "select",
+        "label": "Equipo",
+        "description": "Fator de gotejamento do equipo.",
+        "defaultValue": 20,
+        "options": [
+          {
+            "value": 20,
+            "label": "Macrogotas (20 gts/mL)"
+          },
+          {
+            "value": 60,
+            "label": "Microgotas (60 gts/mL)"
+          }
+        ]
+      }
+    ],
+    "formula": {
+      "type": "expression",
+      "expression": "(volume * fator) / (tempo * unidade)",
+      "resultLabel": "Velocidade de infusão",
+      "resultUnit": "gotas/min",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {
+        "min": 0,
+        "max": 20,
+        "label": "Infusão lenta a usual",
+        "riskLevel": "low",
+        "color": "#0f766e",
+        "clinicalImplications": "Velocidade compatível com infusões de manutenção em muitos contextos. Confira o dispositivo, a via e a prescrição.",
+        "recommendations": "• Conferir volume, tempo e tipo de equipo\n• Avaliar necessidade de bomba de infusão\n• Monitorar o sítio de punção e a tolerância hídrica"
+      },
+      {
+        "min": 21,
+        "max": 60,
+        "label": "Infusão intermediária",
+        "riskLevel": "moderate",
+        "color": "#ca8a04",
+        "clinicalImplications": "Gotejamento mais rápido. Reavaliar se o equipo e o acesso suportam o fluxo e se há risco de sobrecarga.",
+        "recommendations": "• Recalcular se o tempo estiver em horas ou minutos\n• Preferir bomba quando o fármaco for de alta vigilância\n• Reavaliar sinais vitais e balanço hídrico"
+      },
+      {
+        "min": 61,
+        "max": 10000,
+        "label": "Infusão rápida — conferir prescrição",
+        "riskLevel": "high",
+        "color": "#b91c1c",
+        "clinicalImplications": "Fluxo elevado. Confirme a prescrição, o equipo e a indicação clínica antes de iniciar.",
+        "recommendations": "• Conferir prescrição e via\n• Discutir uso de bomba de infusão\n• Monitorar sobrecarga volêmica e sítio de acesso"
+      }
+    ]
+  },
+  "sae": {
+    "status": "HOLD",
+    "nanda": [
+      {
+        "code": "00195",
+        "status": "CANDIDATE",
+        "diagnosis": "Risco de desequilíbrio eletrolítico",
+        "definition": "Candidato após avaliação de enfermagem. A calculadora não estabelece o diagnóstico."
+      }
+    ],
+    "nic": [
+      {
+        "code": "2314",
+        "status": "HOLD",
+        "intervention": "Administração de medicação: intravenosa",
+        "activities": [
+          "Conferir prescrição e equipo",
+          "Regular o gotejamento",
+          "Monitorar o acesso venoso"
+        ]
+      }
+    ],
+    "noc": [
+      {
+        "code": "0413",
+        "status": "HOLD",
+        "outcome": "Estado de hidratação",
+        "indicators": [
+          "Balanço hídrico",
+          "Sinais de sobrecarga ou desidratação"
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "A fórmula canônica é G = (volume em mL × fator do equipo) ÷ tempo em minutos. Macrogotas usam fator 20; microgotas, fator 60. O resultado é arredondado para inteiro porque a gota não se fraciona na regulagem clínica usual.",
+    "limitations": "Não substitui bomba de infusão, não calcula dose de fármaco e não valida compatibilidade. O arredondamento pode deslocar o tempo total em infusões longas.",
+    "references": [
+      {
+        "text": "BRASIL. Ministério da Saúde. Protocolos de enfermagem para administração de medicamentos e soluções. Brasília: MS."
+      },
+      {
+        "text": "ISMP BRASIL. Medicamentos potencialmente perigosos. Orientações para prevenção de erros de infusão."
+      }
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Se o tempo está em horas, converta para minutos antes de dividir.",
+      "Equipo de microgotas: o número de microgotas/min coincide com mL/h.",
+      "Medicamentos de alta vigilância exigem bomba, não apenas gotejamento manual."
+    ],
+    "examples": [
+      {
+        "label": "Manutenção",
+        "sublabel": "500 mL em 8 h, macro",
+        "emoji": "💧",
+        "values": {
+          "volume": 500,
+          "tempo": 8,
+          "unidade": 60,
+          "fator": 20
+        }
+      },
+      {
+        "label": "Microgotas",
+        "sublabel": "100 mL em 1 h",
+        "emoji": "🩺",
+        "values": {
+          "volume": 100,
+          "tempo": 1,
+          "unidade": 60,
+          "fator": 60
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Qual é a fórmula do gotejamento em gotas por minuto?",
+        "opts": [
+          "Volume ÷ tempo em horas",
+          "(Volume × fator) ÷ tempo em minutos",
+          "Fator × tempo ÷ volume",
+          "Volume × 60 ÷ fator"
+        ],
+        "correct": 1,
+        "expl": "G = (volume × fator do equipo) ÷ tempo em minutos."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Quando usar microgotas?",
+      "a": "Em volumes pequenos, pediatria ou quando se deseja equivalência direta com mL/h."
+    },
+    {
+      "q": "Posso arredondar 20,4 gotas para 20?",
+      "a": "Sim. A gota não se fraciona; use o inteiro mais próximo e reavalie o tempo restante."
+    }
+  ],
+  "about": {
+    "title": "Como o motor calcula",
+    "html": "<p>O objeto declara a expressão <code>(volume * fator) / (tempo * unidade)</code>. <code>unidade</code> vale 60 para horas e 1 para minutos. O renderer e o motor Python avaliam apenas aritmética segura.</p>"
+  }
+}</script>
+<script src="../assets/calc-engine.js"></script>
+<script src="../assets/a11y.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "business_key": "MD-NNN-RIGHTS-001",
+  "uuid": null,
+  "status": "DOCUMENTADO",
+  "implemented": true,
+  "publication": "HOLD",
+  "assured": false,
+  "layer": "L120",
+  "title": "NANDA / NIC / NOC sem violar direitos autorais",
+  "honest_limit": "Não é lícito ter 100% do texto do banco NANDA-I, NIC ou NOC sem licença do titular. O que é possível a 100% sem republicar nomenclatura é a camada de identidade CKO.",
+  "do_not": [
+    "Copiar diagnósticos, características definidoras, fatores relacionados, intervenções NIC ou resultados NOC a partir de HTML Drive, PDF ou JSON nanda-00046 / nic-2312 / noc-0401.",
+    "Scraping de nanda.org / Elsevier.",
+    "LLM a gerar termos 'equivalentes' ao banco licenciado."
+  ],
+  "possible_100_percent_cko": {
+    "identity": "Um conceito → uma business_key (ex. CKO-NNN-DIAG-00046) com uuid HOLD até UUIDv7.",
+    "slot": "Código do titular (00046 / 2312 / 0401) como identificador, sem label canônico no GitHub público.",
+    "mapping": "Arestas para CID-10/11, procedimento, dispositivo, protocolo — sem copiar o termo NNN.",
+    "sae_workflow": "Slots PES / diagnóstico / intervenção / resultado vazios ou com texto original Audit Educa.",
+    "hash_gate": "Se o sidecar licenciado existir localmente, gravar só sha256 + versão + license_id.",
+    "renderer": "Exibe rótulo NNN somente se license_token válido no sidecar privado. Sem token → código + 'texto indisponível (licença)'."
+  },
+  "options_for_owner": [
+    {
+      "id": "OPT-A-LICENSE",
+      "name": "Licença oficial + sidecar privado",
+      "coverage": "Até 100% do release licenciado, fora do GitHub público.",
+      "status": "HOLD_UNTIL_CONTRACT"
+    },
+    {
+      "id": "OPT-B-IDENTIFIERS",
+      "name": "Só códigos + mapeamentos públicos",
+      "coverage": "100% da malha CKO; 0% do texto NNN.",
+      "status": "CHOSEN"
+    },
+    {
+      "id": "OPT-C-CIPE",
+      "name": "CIPE/ICNP (OMS) como via pública de processo de enfermagem",
+      "coverage": "Substitui NNN no produto se a licença OMS vigente permitir. Não é NANDA/NIC/NOC.",
+      "status": "EVIDENCE_PENDING"
+    },
+    {
+      "id": "OPT-D-DEEPLINK",
+      "name": "Deep-link ao titular",
+      "coverage": "Nenhuma republicação.",
+      "status": "CHOSEN"
+    }
+  ],
+  "recommended_now": "OPT-B-IDENTIFIERS + OPT-D-DEEPLINK chosen by owner. OPT-A só após contrato.",
+  "drive_quarantine": {
+    "nanda-00046.json": "QUARANTINE",
+    "nic-2312.json": "QUARANTINE",
+    "noc-0401.json": "QUARANTINE"
+  },
+  "owner_decision": "B",
+  "chosen": [
+    "OPT-B-IDENTIFIERS",
+    "OPT-D-DEEPLINK"
+  ],
+  "identity_catalog_ref": "MD-NNN-IDENTITY-001",
+  "gap": "UNBLOCK-NNN-LICENSE OPT-B CHOSEN: identity catalog (codes+URI+deep-link); canonical labels withheld; no NANDA/NIC/NOC dump"
+}

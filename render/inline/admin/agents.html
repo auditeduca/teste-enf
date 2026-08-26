@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agentes · CKO Studio</title>
+  <meta name="description" content="Agent registry e extração inbox.">
+  <meta name="theme-color" content="#1A3E74">
+  
+  <style>
+:root {
+  --navy-primary: #1A3E74;
+  --navy-medium: #1E4D8C;
+  --navy-dark: #163269;
+  --navy-hover: #122C54;
+  --navy-secondary: #003366;
+  --blue-light: #4A90E2;
+  --white: #ffffff;
+  --gray-bg: #f4f7fb;
+  --gray-text: #475569;
+  --ink: #12233a;
+  --line: #d7e1ee;
+  --risk: #1A3E74;
+  --hold: #92400e;
+  --hold-bg: #fff7ed;
+  --header-bg: #ffffff;
+  --a11y-focus: #ffd400;
+  --cor-foco-acessibilidade: #ff0;
+  --espacamento-linha: 1.5;
+  --espacamento-letra: 0em;
+  --header-height: 96px;
+  --a11y-height: 36px;
+  --lang-height: 46px;
+  --radius-control: 8px;
+  --font: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Nunito Sans", "Inter", "Segoe UI", sans-serif;
+}
+
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-600.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Inter";src:url("fonts/inter/inter-900.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-700.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Nunito Sans";src:url("fonts/nunito/nunito-900.woff2") format("woff2");font-weight:900;font-display:swap}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { color-scheme: light; }
+
+body {
+  margin: 0;
+  background: var(--gray-bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: var(--espacamento-linha);
+  letter-spacing: var(--espacamento-letra);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main { flex-grow: 1; }
+
+h1, h2, h3, h4, .brand, .result-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy-primary);
+}
+
+a { color: var(--navy-medium); }
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3.2rem;
+  background: var(--navy-dark);
+  color: var(--white);
+  padding: 0.55rem 0.9rem;
+  z-index: 20;
+}
+.skip-link:focus { top: 0.6rem; }
+
+:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-foco-acessibilidade, #ff0);
+  outline-offset: 2px;
+}
+
+#barraAcessibilidade {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 8px;
+  height: var(--a11y-height);
+  padding: 4px 20px;
+  background: var(--navy-primary);
+  color: var(--white);
+  z-index: 30;
+  overflow-x: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+#barraAcessibilidade button {
+  appearance: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 28px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid hsla(0,0%,100%,.4);
+  color: var(--white);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+#barraAcessibilidade button:hover,
+#barraAcessibilidade button:focus-visible {
+  background: hsla(0,0%,100%,.15);
+  border-color: #fff;
+}
+#barraAcessibilidade svg { width: 16px; height: 16px; }
+.color-options { display: inline-flex; gap: 0.2rem; }
+.color-option {
+  width: 28px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 !important;
+  border-radius: 5px !important;
+  border: 2px solid hsla(0,0%,100%,.5) !important;
+}
+.color-option.selected,
+.color-option[aria-checked="true"] {
+  border-color: var(--cor-foco-acessibilidade, #ff0) !important;
+}
+#accessibilityToggleButton {
+  display: none;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--navy-primary);
+  color: var(--white);
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+#accessibilityToggleButton svg { width: 22px; height: 22px; }
+#pwaAcessibilidadeBar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 85%;
+  max-width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  transition: transform .3s ease-in-out;
+  background: var(--navy-primary);
+  color: var(--white);
+  z-index: 45;
+  padding: 20px;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0,0,0,.2);
+}
+#pwaAcessibilidadeBar.is-open { transform: translateX(0); }
+.pwa-acessibilidade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid hsla(0,0%,100%,.2);
+}
+.pwa-acessibilidade-header h3 { margin: 0; font-size: 1.25rem; color: var(--white); }
+.pwa-acessibilidade-close-btn {
+  background: transparent;
+  border: 0;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+#pwaAcessibilidadeBar button {
+  width: 100%;
+  padding: 10px 15px;
+  background: hsla(0,0%,100%,.1);
+  border: 1px solid hsla(0,0%,100%,.3);
+  border-radius: 5px;
+  color: var(--white);
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+#pwaAcessibilidadeBar button:hover { background: hsla(0,0%,100%,.2); }
+#pwaAcessibilidadeBar .pwa-acessibilidade-close-btn { width: auto; padding: 0 0.4rem; border: 0; background: transparent; }
+#pwaAcessibilidadeBar svg { width: 18px; height: 18px; }
+.color-options-pwa {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+  padding: 10px;
+  background: hsla(0,0%,100%,.1);
+  border-radius: 5px;
+}
+.color-options-pwa .color-option { width: 38px !important; height: 38px !important; }
+.menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 44;
+}
+.menu-overlay.is-open { display: block; }
+#keyboardShortcutsModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+}
+#keyboardShortcutsModal.show { display: flex; }
+.keyboard-modal-content {
+  background: var(--white);
+  color: var(--ink);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 32rem;
+  width: calc(100% - 2rem);
+  position: relative;
+}
+.keyboard-modal-content h3 { margin-top: 0; }
+.modal-close-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  border: 0;
+  background: transparent;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+#backToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(26,62,116,.8);
+  color: var(--white);
+  font-size: .875rem;
+  padding: .5rem 1rem;
+  border-radius: 9999px;
+  border: 0;
+  cursor: pointer;
+  z-index: 35;
+}
+#backToTopBtn:hover { background: rgba(18,42,80,.9); }
+
+.wrap {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+#global-header-container {
+  display: block;
+  width: 100%;
+  min-height: var(--header-height);
+  background-color: transparent;
+}
+.site-header {
+  background: var(--header-bg);
+  color: var(--navy-primary);
+  min-height: var(--header-height);
+  border-bottom: 1px solid var(--line);
+}
+#language-selector-placeholder {
+  display: block;
+  width: 100%;
+  min-height: var(--lang-height);
+  background: #f9fafb;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 20;
+}
+.lang-bar {
+  min-height: var(--lang-height);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.35rem 0;
+}
+.lang-runtime { margin: 0 auto 0 0; font-size: 0.78rem; color: var(--gray-text); }
+#language-dropdown-wrapper { position: relative; z-index: 21; }
+#langButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--line);
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 0.25rem 0.7rem;
+  min-height: 32px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--ink);
+}
+#langButton[aria-expanded="true"] { outline: 3px solid var(--a11y-focus); }
+.lang-caret { width: 1rem; height: 1rem; }
+#langMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  width: 16rem;
+  max-height: 18rem;
+  overflow: auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(18, 35, 58, 0.12);
+  z-index: 30;
+  padding: 0.25rem;
+}
+#langMenu.hidden { display: none; }
+.lang-option {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0.4rem 0.55rem;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.lang-option:hover, .lang-option:focus-visible { background: #eef3f9; }
+.hamburger-button {
+  display: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--navy-primary);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+}
+.hamburger-button svg { width: 24px; height: 24px; }
+#footer-placeholder {
+  display: block;
+  min-height: 520px;
+  background-color: transparent;
+}
+.footer-logo-row { padding-top: 0.4rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.35); margin-bottom: 1.2rem; }
+.footer-mark-80 { display: block; width: 80px; height: 80px; object-fit: contain; }
+.footer-hold { color: #dbe7f6; opacity: 0.85; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+.prod-hero {
+  background: linear-gradient(135deg, #1A3E74 0%, #1E4D8C 60%, #163269 100%);
+  color: var(--white);
+  border-radius: 16px;
+  padding: 2.2rem 1.6rem;
+  box-shadow: 0 12px 34px rgba(0,0,0,.18);
+  margin-bottom: 1.4rem;
+}
+.prod-hero h1, .prod-hero p, .prod-hero .eyebrow { color: var(--white); }
+.prod-hero .eyebrow { color: #93c5fd; }
+.prod-hero .lede { color: #dbeafe; }
+.prod-hero .meta a { color: #fff; }
+.observed-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 1.6rem;
+}
+.observed-strip article {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 8px 24px rgba(26,62,116,.08);
+}
+.observed-strip h2 { margin: 0; font-size: 1.4rem; }
+.observed-strip p { margin: 0.2rem 0 0; font-size: 0.78rem; color: var(--gray-text); }
+.site-footer {
+  background: var(--navy-primary);
+  color: var(--white);
+  margin-top: 3rem;
+  padding: 2rem 0 1.2rem;
+  font-size: 0.92rem;
+}
+.site-footer a { color: #dbe7f6; }
+.site-footer h2 {
+  color: var(--white);
+  font-size: 0.92rem;
+  margin: 0 0 0.6rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1.4fr) repeat(3, minmax(10rem, 1fr));
+  gap: 1.4rem;
+}
+.footer-brand p, .footer-col li { color: #dbe7f6; }
+.footer-col ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.35rem; }
+.footer-mark { display: block; max-width: 220px; height: auto; margin-bottom: 0.7rem; }
+.footer-bottom {
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.18);
+}
+.footer-bottom p { margin: 0.2rem 0; color: #dbe7f6; }
+
+.header-row {
+  min-height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  color: var(--navy-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.brand-mark { width: 48px; height: 32px; object-fit: contain; }
+.brand-text { display: grid; line-height: 1.15; }
+.brand-name { font-size: 1.05rem; font-weight: 800; }
+.brand-sub { margin: 0; color: var(--gray-text); font-size: 0.75rem; font-weight: 500; letter-spacing: 0; }
+
+.nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.nav a {
+  color: var(--navy-primary);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.55rem;
+  text-decoration: none;
+  font-weight: 650;
+}
+.nav a:hover { color: var(--navy-hover); }
+.lang-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.78rem !important;
+  color: var(--hold) !important;
+  background: var(--hold-bg);
+}
+
+html.a11y-font-lg { font-size: 112.5%; }
+html.a11y-font-xl { font-size: 125%; }
+html.a11y-line-lg body { line-height: 1.85; }
+html.a11y-letter-lg body { letter-spacing: 0.06em; }
+html.fonte-dislexia body,
+html.fonte-dislexia button,
+html.fonte-dislexia input,
+html.fonte-dislexia select,
+.fonte-dislexia,
+.fonte-dislexia body,
+.fonte-dislexia button,
+.fonte-dislexia input,
+.fonte-dislexia select {
+  font-family: Arial, Verdana, sans-serif !important;
+}
+html.contraste-alto body,
+body.contraste-alto { background: #000 !important; color: #ffe600 !important; }
+html.contraste-alto .site-header,
+html.contraste-alto #barraAcessibilidade,
+html.contraste-alto .site-footer,
+html.contraste-alto .admin-side,
+html.contraste-alto .tool-card,
+html.contraste-alto .panel,
+.contraste-alto .site-header,
+.contraste-alto #barraAcessibilidade,
+.contraste-alto .site-footer,
+.contraste-alto .admin-side,
+.contraste-alto .tool-card,
+.contraste-alto .panel {
+  background: #000 !important;
+  color: #ffe600 !important;
+  border-color: #ffe600 !important;
+}
+html.contraste-alto a, html.contraste-alto .brand, html.contraste-alto .nav a,
+.contraste-alto a, .contraste-alto .brand, .contraste-alto .nav a { color: #4dd2ff !important; }
+html.rd-dark body, html.dark-mode body, body.dark-mode { background: #0b1220; color: #e7ecf5; }
+html.rd-dark .site-header, html.dark-mode .site-header, .dark-mode .site-header { background: #121a2b; border-color: #223049; }
+html.rd-dark .tool-card, html.rd-dark .panel, html.rd-dark .calc-card,
+html.dark-mode .tool-card, html.dark-mode .panel, html.dark-mode .calc-card,
+.dark-mode .tool-card, .dark-mode .panel, .dark-mode .calc-card { background: #121a2b; border-color: #223049; color: #e7ecf5; }
+
+@media (max-width: 768px) {
+  #global-header-container { min-height: 60px; }
+  .site-header, .header-row { min-height: 60px; }
+  #footer-placeholder { min-height: 520px; }
+  #barraAcessibilidade { display: none; }
+  #accessibilityToggleButton { display: inline-flex; align-items: center; justify-content: center; }
+  #pwaAcessibilidadeBar { display: flex; }
+  #backToTopBtn { display: none !important; }
+  .hamburger-button { display: inline-flex; align-items: center; justify-content: center; }
+  .desktop-nav { display: none; width: 100%; flex-direction: column; align-items: flex-start; gap: 0.35rem; padding: 0.5rem 0 0.8rem; }
+  .desktop-nav.is-open { display: flex; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .brand-name { font-size: 0.92rem; }
+}
+@media (min-width: 769px) {
+  #accessibilityToggleButton,
+  #pwaAcessibilidadeBar { display: none !important; }
+  #footer-placeholder { min-height: 277px; }
+}
+
+.page-hero, .tool-hero { padding: 2.2rem 0 1.2rem; }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--navy-medium);
+  margin: 0 0 0.55rem;
+}
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15; margin: 0 0 0.7rem; }
+.lede { font-size: 1.12rem; max-width: 42rem; color: var(--gray-text); }
+.meta { color: var(--gray-text); }
+
+.breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1.3rem;
+  font-size: 0.92rem;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding-bottom: 1.4rem;
+}
+
+.tool-card, .calc-card, .panel, .clinical-step, .content-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.2rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(26, 62, 116, 0.06);
+}
+
+.tool-card, .content-card { text-decoration: none; color: inherit; display: block; }
+.tool-card:hover, .content-card:hover { border-color: var(--blue-light); }
+
+.calc-card { display: grid; gap: 1.1rem; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+legend { font-size: 1.15rem; color: var(--navy-primary); margin-bottom: 0.15rem; }
+.hint { margin: 0; color: var(--gray-text); }
+
+.field { display: grid; gap: 0.25rem; }
+.field-label { font-weight: 650; }
+.field-unit { margin-left: 0.35rem; color: var(--gray-text); font-weight: 500; }
+.field-help { font-size: 0.88rem; color: var(--gray-text); }
+
+select, input[type="number"], .btn-primary, .btn-secondary, .example-btn, .quiz-opt {
+  font: inherit;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 12px 24px;
+  min-height: 44px;
+}
+
+select, input[type="number"] { width: 100%; }
+
+.result-block {
+  border-left: 8px solid var(--risk);
+  background: #f8fbff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+.result-kicker { margin: 0; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; color: var(--gray-text); }
+.result-value { font-size: 2.6rem; margin: 0.2rem 0; line-height: 1; }
+.result-unit { font-size: 1rem; color: var(--gray-text); margin-left: 0.3rem; }
+.result-label { font-weight: 700; margin: 0.2rem 0; }
+.result-note { margin: 0; color: var(--gray-text); }
+
+.btn-primary {
+  background: var(--navy-primary);
+  color: var(--white);
+  border-color: var(--navy-primary);
+  cursor: pointer;
+  font-weight: 650;
+}
+.btn-primary:hover { background: var(--navy-hover); }
+.btn-secondary {
+  background: var(--navy-secondary);
+  color: var(--white);
+  border-color: var(--navy-secondary);
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-secondary:hover { background: #002244; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+.clinical-step, .panel { margin-top: 1rem; }
+.sae-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+.sae-col { background: #f4f8fd; border-radius: 12px; padding: 0.8rem; }
+.code { font-size: 0.8rem; color: var(--navy-medium); margin: 0; }
+.action-list { padding-left: 1.1rem; }
+.examples { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.example-btn, .quiz-opt { cursor: pointer; }
+.quiz-card { margin: 0.8rem 0; }
+.quiz-opts { display: grid; gap: 0.4rem; }
+.quiz-opt { text-align: left; }
+.quiz-opt.is-correct { background: #dcfce7; border-color: #15803d; }
+.quiz-opt.is-wrong { background: #fee2e2; border-color: #b91c1c; }
+.quiz-expl { color: var(--gray-text); }
+
+.hold-banner {
+  background: var(--hold-bg);
+  color: var(--hold);
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-weight: 650;
+}
+
+.lineage-panel { margin-top: 1.5rem; }
+.lineage-dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 0.8rem 0;
+}
+.lineage-dl dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gray-text); }
+.lineage-dl dd { margin: 0.15rem 0 0; font-weight: 650; overflow-wrap: anywhere; word-break: break-word; }
+.lineage-dl code { font-size: 0.85rem; }
+
+.inspect { width: 100%; border-collapse: collapse; }
+.inspect th, .inspect td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); }
+.table-wrap { overflow-x: auto; }
+.wrap-wide { width: min(1120px, calc(100% - 2rem)); }
+
+details { margin: 0.45rem 0; }
+summary { cursor: pointer; font-weight: 650; }
+
+.admin-app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+.admin-side {
+  background: var(--navy-primary);
+  color: var(--white);
+  padding: 1.2rem 1rem 2rem;
+}
+.admin-brand { margin: 0; font-weight: 800; font-size: 1.15rem; }
+.admin-brand-sub { margin: 0.2rem 0 1rem; color: #c5d7ee; font-size: 0.82rem; }
+.admin-nav { display: grid; gap: 0.15rem; }
+.admin-nav a {
+  color: #e8f0fb;
+  text-decoration: none;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.6rem;
+  border-radius: var(--radius-control);
+}
+.admin-nav a:hover, .admin-nav a[aria-current="page"] { background: rgba(255,255,255,.12); color: var(--white); }
+.admin-side-note { margin-top: 1.5rem; font-size: 0.85rem; }
+.admin-side-note a { color: #c5d7ee; }
+.admin-top {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  padding: 0.85rem 1.4rem;
+}
+.admin-kicker { margin: 0; color: var(--gray-text); font-size: 0.88rem; }
+.admin-content { padding: 0 1.4rem 2.5rem; }
+.admin-out {
+  background: #0F2A50;
+  color: #e8f0fb;
+  padding: 1rem;
+  border-radius: var(--radius-control);
+  overflow-x: auto;
+  font-size: 0.82rem;
+}
+.chip {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  background: #e8f0fb;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+.chip-hold { background: var(--hold-bg); color: var(--hold); }
+.chip-ok { background: #dcfce7; color: #166534; }
+.ds-swatches { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+.swatch { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); }
+.admin-cards { padding-top: 0.4rem; }
+
+@media (max-width: 860px) {
+  .admin-app { grid-template-columns: 1fr; }
+  .admin-nav { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+}
+
+</style>
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo" accesskey="C">Ir para o conteúdo</a>
+  <div id="statusMessage" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<button type="button" id="accessibilityToggleButton" aria-label="Abrir menu de acessibilidade" aria-controls="pwaAcessibilidadeBar" aria-expanded="false"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M9 21v-6h6v6"/><path d="M8 11h8l-1 4H9z"/></svg></button>
+<div id="pwaAcessibilidadeBar" role="dialog" aria-label="Acessibilidade">
+    <div class="pwa-acessibilidade-header">
+      <h3>Acessibilidade</h3>
+      <button type="button" id="pwaAcessibilidadeCloseBtn" class="pwa-acessibilidade-close-btn" aria-label="Fechar menu de acessibilidade">&times;</button>
+    </div>
+    <button type="button" id="btnAlternarTamanhoFontePWA" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeTextPWA">Tamanho da Fonte</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinhaPWA" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightTextPWA">Espaçamento Linha</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetraPWA" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingTextPWA">Espaçamento Letra</span></button>
+    <button type="button" id="btnAlternarContrastePWA" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span>Alto Contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuroPWA" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Modo Escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexiaPWA" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span>Fonte Dislexia</span></button>
+    <div class="color-options-pwa" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcutsPWA" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span>Atalhos</span></button>
+    <button type="button" id="btnResetarAcessibilidadePWA" aria-label="Redefinir configurações"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span>Redefinir Tudo</span></button>
+  </div>
+<div id="menuOverlay" class="menu-overlay"></div>
+<div id="barraAcessibilidade" role="region" aria-label="Barra de acessibilidade" accesskey="A">
+    <button type="button" id="btnAlternarTamanhoFonte" aria-label="Alterar tamanho da fonte"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg><span id="fontSizeText">Normal</span></button>
+    <button type="button" id="btnAlternarEspacamentoLinha" aria-label="Alterar espaçamento de linha"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg><span id="lineHeightText">Médio</span></button>
+    <button type="button" id="btnAlternarEspacamentoLetra" aria-label="Alterar espaçamento de letra"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12H3"/><path d="M21 12h-7"/><path d="M12 20V4"/></svg><span id="letterSpacingText">Normal</span></button>
+    <button type="button" id="btnAlternarVelocidadeLeitura" aria-label="Alterar velocidade de leitura"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14v4"/><path d="M12 2a10 10 0 0 0-9.8 12.3 4 4 0 0 0 5.7 5.7A10 10 0 0 0 22 12Z"/></svg><span id="readingSpeedText">Normal</span></button>
+    <button type="button" id="btnToggleLeitura" aria-label="Reproduzir/Pausar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span class="sr-only">Reproduzir/Pausar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReiniciarLeitura" aria-label="Reiniciar leitura do conteúdo principal"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.76 2.75L3 8"/><path d="M3 3v5h5"/></svg><span class="sr-only">Reiniciar leitura do conteúdo principal</span></button>
+    <button type="button" id="btnReadFocused" aria-label="Ler elemento focado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M22.42 1.42a15 15 0 0 1 0 21.16"/></svg><span class="sr-only">Ler elemento focado</span></button>
+    <button type="button" id="btnAlternarContraste" aria-label="Alternar alto contraste"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg><span class="sr-only">Alternar alto contraste</span></button>
+    <button type="button" id="btnAlternarModoEscuro" aria-label="Alternar modo escuro"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="sr-only">Alternar modo escuro</span></button>
+    <button type="button" id="btnAlternarFonteDislexia" aria-label="Alternar fonte para dislexia"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4h7"/><path d="M4 12h5"/><path d="M15 20V9h5"/><path d="M15 14h3"/></svg><span class="sr-only">Alternar fonte para dislexia</span></button>
+    <div class="color-options" role="radiogroup" aria-label="Cor de foco de acessibilidade">
+          <button type="button" class="color-option" data-color="yellow" style="background-color: yellow" aria-label="Cor de foco amarela"></button>
+          <button type="button" class="color-option" data-color="lime" style="background-color: lime" aria-label="Cor de foco verde-limão"></button>
+          <button type="button" class="color-option" data-color="cyan" style="background-color: cyan" aria-label="Cor de foco ciano"></button>
+          <button type="button" class="color-option" data-color="magenta" style="background-color: magenta" aria-label="Cor de foco magenta"></button>
+    </div>
+    <button type="button" id="btnKeyboardShortcuts" aria-label="Atalhos de Teclado"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="sr-only">Atalhos de Teclado</span></button>
+    <button type="button" id="btnResetarAcessibilidade" aria-label="Redefinir configurações de acessibilidade"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/></svg><span class="sr-only">Redefinir configurações de acessibilidade</span></button>
+  </div>
+<div id="keyboardShortcutsModal" role="dialog" aria-modal="true" aria-labelledby="keyboardModalTitle">
+    <div class="keyboard-modal-content">
+      <button type="button" id="keyboardModalCloseButton" class="modal-close-btn" aria-label="Fechar atalhos de teclado">&times;</button>
+      <h3 id="keyboardModalTitle">Atalhos de Teclado e Navegação</h3>
+      <ul>
+        <li><strong>Alt + Shift + I:</strong> Ir para o Início</li>
+        <li><strong>Alt + Shift + C:</strong> Ir para o Conteúdo Principal</li>
+        <li><strong>Alt + Shift + A:</strong> Ir para a Barra de Acessibilidade</li>
+        <li><strong>Alt + Shift + T:</strong> Voltar ao Topo da Página</li>
+      </ul>
+    </div>
+  </div>
+<button type="button" id="backToTopBtn" aria-label="Voltar ao topo da página" accesskey="T">Voltar ao Topo</button>
+<div class="admin-app">
+  <aside class="admin-side" aria-label="Módulos do Studio">
+    <p class="admin-brand">CKO Studio</p>
+    <p class="admin-brand-sub">Admin ↔ frontend · GitHub</p>
+    <nav class="admin-nav"><a href="../admin.html">Painel</a><a href="database.html">Banco GitHub</a><a href="catalog.html">Catálogo</a><a href="pipeline.html">Pipeline</a><a href="layers.html">44 camadas</a><a href="validations.html">Validações</a><a href="agents.html" aria-current="page">Agentes</a><a href="monitoring.html">Monitoramento</a><a href="library.html">Biblioteca</a><a href="apis.html">APIs / órgãos</a><a href="backlog.html">Backlog</a><a href="design-system.html">Design System</a><a href="locales.html">Locales / Drive</a><a href="mdm.html">Master Data</a><a href="frameworks.html">Frameworks</a><a href="maturity.html">Maturidade</a><a href="renderer.html">Renderer</a><a href="deploy.html">Deploy Git</a></nav>
+    <p class="admin-side-note"><a href="../index.html">Site público</a></p>
+  </aside>
+  <div class="admin-main">
+    <header class="admin-top">
+      <p class="eyebrow">Agentes · CKO Studio</p>
+      <p class="admin-kicker">Não grava fórmula · uuid HOLD · NO_SENSITIVE_CAPTURE · chrome DS na barra de acessibilidade</p>
+    </header>
+    <main id="conteudo" class="admin-content">
+      
+    <header class="page-hero">
+      <h1>Agentes.</h1>
+      <p class="lede">Runner de extração IMPLEMENTADO (inbox). Publicação clínica HOLD. MAKER ≠ CHECKER ≠ AUDITOR. CLI: <code>python3 -m engine.cli extract</code>.</p>
+      <p class="hold-banner">Último run: RUN-EXTRACT-20260826T015415Z · status HOLD · publicação HOLD · IPE reliance=False.</p>
+    </header>
+    <section class="panel">
+      <h2>Frentes do plano vivo (MD-FRONTS-PLAN-001)</h2>
+      <p>Método RECOVER → COMPARE → GAP ONLY → REPERFORM → CLOSE. Publicação HOLD. LLM autoridade=False.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>frente</th><th>nome</th><th>status</th><th>agentes</th><th>gap</th><th>ação</th></tr></thead><tbody><tr><td>F1</td><td>Inventário Drive</td><td><span class="chip">REGISTERED</span></td><td>AG-INVENTORY-DRIVE, AG-COMPARE-STORES</td><td>GAP-DRIVE-INVENTORY</td><td>Classificar listing persistido. Não unzip Abelha/grok/pages_full/nkos.</td></tr><tr><td>F2</td><td>Leitura Supabase</td><td><span class="chip chip-hold">HOLD</span></td><td>AG-INVENTORY-SUPABASE</td><td>GAP-SUPABASE-READ</td><td>Dono HOLD. MCP .cursor/mcp.json read_only DOCUMENTADO. Schema SQL EVIDENCE_PENDING. Sem coletar SUPABASE_DB_PASSWORD. Sem list_tables. Sem inventar 172 entidade</td></tr><tr><td>F3</td><td>Catálogo federal incremental</td><td><span class="chip">REGISTERED</span></td><td>AG-PROBE-CONGRESS-API, AG-FETCH-FEDERAL-LEGISLATION, AG-LIBRARY-CATALOG</td><td>GAP-DEC-7508</td><td>Só LCP/lei/DEC-n. Não misturar portaria de órgão neste tubo.</td></tr><tr><td>F4</td><td>PGDADOS restante</td><td><span class="chip">REGISTERED</span></td><td>AG-FETCH-GOV-SOURCES, AG-LIBRARY-CATALOG</td><td>GAP-PGDADOS</td><td>Parte 3 PDF e cartilhas 4–5 EVIDENCE_PENDING. ABNT/mwpt ignorado.</td></tr><tr><td>F5</td><td>Atos de órgão</td><td><span class="chip chip-hold">HOLD</span></td><td>AG-FETCH-REGULATED</td><td>GAP-ORGAN-ACTS</td><td>Portaria MS / Resolução COFEN = segundo tubo. Não ingestão em massa via Congresso.</td></tr><tr><td>F6</td><td>COFEN REST</td><td><span class="chip chip-hold">EVIDENCE_PENDING</span></td><td>AG-API-PROBE, AG-FETCH-REGULATED</td><td>GAP-COFEN-REST</td><td>HTML observado. REST sem HTTP 200. Não inventar adapter. COREN CLOSED_NOT_OBSERVED.</td></tr><tr><td>F7</td><td>Dimensionamento</td><td><span class="chip chip-hold">HOLD</span></td><td>AG-LINK-MD</td><td>GAP-DIMENSIONAMENTO</td><td>Cinco pilotos. Dimensionamento permanece HOLD.</td></tr><tr><td>F8</td><td>Parecer 360</td><td><span class="chip chip-hold">QUARANTINE</span></td><td>AG-INVENTORY-DRIVE, AG-COMPARE-STORES</td><td>GAP-PARECER-360</td><td>Não promover workbook a golden MD.</td></tr><tr><td>F9</td><td>L30/L40 pages_full + institucionais</td><td><span class="chip">REGISTERED</span></td><td>AG-PARSE-PAGES-FULL, AG-COMPARE-STORES</td><td>GAP-L30-L40-PAGES-FULL</td><td>COMPARE stems (index/missão/política/termos + calculadoras) vs 5 pilotos. Catálogo de pendências REG (MD-PAGES-REG-PEND-001). Sem unzip em data/tools.</td></tr><tr><td>F10</td><td>L60 bibliotecas + vacinas</td><td><span class="chip">COMPARE_ONLY</span></td><td>AG-INVENTORY-DRIVE, AG-LIBRARY-CATALOG</td><td>GAP-L60-LIBRARIES</td><td>COMPARE_ACCEPTED: persistir 11 device + 24 objetos clínicos + 15 CAL-VAC. Claimed 32 permanece EVIDENCE_PENDING. Sem inventar 32 adapters; sem promover CAL-VAC/</td></tr><tr><td>F11</td><td>L80/L90/L100 API onde possível</td><td><span class="chip chip-hold">EVIDENCE_PENDING</span></td><td>AG-API-PROBE</td><td>GAP-L80-L120-API</td><td>Probe só HTTP 200. Sem dump LOINC/UMLS/classificacoes_medicas.zip.</td></tr><tr><td>F12</td><td>NANDA/NIC/NOC rights-safe</td><td><span class="chip">REGISTERED</span></td><td>AG-PLAN-FRONTS, AG-RIGHTS-BIND</td><td>GAP-NNN-RIGHTS</td><td>Dono B: identidade+código+deep-link. Sem texto NANDA/NIC/NOC. nanda-00046.json permanece QUARANTINE.</td></tr><tr><td>F13</td><td>L140/L150 API + pesquisa</td><td><span class="chip">REGISTERED</span></td><td>AG-API-PROBE, AG-LIBRARY-CATALOG</td><td>GAP-L140-L150-API-RESEARCH</td><td>Crossref/NCBI observados como busca. Resposta API ≠ canônico sem snapshot/hash/MD/REG.</td></tr><tr><td>F14</td><td>L150/L160 guia por conceito</td><td><span class="chip">REGISTERED</span></td><td>AG-CONTENT-CURRICULUM</td><td>GAP-L150-L160-CONCEPT-RENDERER</td><td>Um conceito → uma identidade → renderer. LLM FORBIDDEN no canônico.</td></tr><tr><td>F15</td><td>ISO 8000 + PGDADOS explícito</td><td><span class="chip">REGISTERED</span></td><td>AG-ISO8000-PROFILE, AG-LIBRARY-CATALOG</td><td>GAP-ISO8000-PGDADOS</td><td>URL PGDADOS /pgdados persistida no perfil ISO. Não substitui cláusula licenciada. Sem certificação.</td></tr><tr><td>F16</td><td>Escalas: busca PubMed/COFEN/OMS</td><td><span class="chip">REGISTERED</span></td><td>AG-API-PROBE, AG-RIGHTS-BIND</td><td>GAP-SCALE-LITERATURE</td><td>Busca bibliográfica HTTP. SciELO 403 EVIDENCE_PENDING. Não republicar Braden/Norton/Glasgow.</td></tr><tr><td>F17</td><td>pages_full catálogo de pendências REG</td><td><span class="chip">REGISTERED</span></td><td>AG-PARSE-PAGES-FULL, AG-CONTENT-CURRICULUM</td><td>GAP-PAGES-REG-PEND</td><td>Owner override: inventário demonstra gaps MD+REG+rights. Extração clínica em massa FORBIDDEN.</td></tr><tr><td>F18</td><td>L280/L290/L300 OG+SEO+JSON-LD</td><td><span class="chip">COMPARE_ONLY</span></td><td>AG-INVENTORY-DRIVE</td><td>GAP-OG-SEO-JSONLD</td><td>Drive 151 cards COMPARE. OG first-party 1200×630 no site piloto. JSON-LD WebSite/Organization. Sem MedicalOrganization.</td></tr><tr><td>F19</td><td>Menu Drive COMPARE</td><td><span class="chip">COMPARE_ONLY</span></td><td>AG-INVENTORY-DRIVE</td><td>GAP-MENU-DRIVE</td><td>151 destinos no menu.json Drive. Não promover mega-menu/Braden ao chrome público.</td></tr><tr><td>F20</td><td>L310 i18n WHO/OMS</td><td><span class="chip">REGISTERED</span></td><td>AG-WHO-I18N, AG-ISO8000-PROFILE</td><td>GAP-WHO-I18N</td><td>Dono APPROVED chave who.en+local.pt-BR nos 5 pilotos. translation_gate HOLD. Seletor não ligado. Sem dump ICD/ICNP/GHO. Sem inventar strings EN.</td></tr><tr><td>F21</td><td>Dicionário clínico Drive + códigos piloto</td><td><span class="chip">COMPARE_ONLY</span></td><td>AG-CLIN-DICT, AG-ISO8000-PROFILE</td><td>GAP-CLIN-DICT</td><td>Dono enviou Dicionario clinico.zip (já observado). Sheets Content_Schemas/Meta_Schemas MISSING. Só FLD-* existentes. Sem Braden. UUIDv4 não adotado.</td></tr><tr><td>F22</td><td>MD+REG 44 camadas faseadas</td><td><span class="chip">REGISTERED</span></td><td>AG-LAYER-PHASE, AG-ISO8000-PROFILE</td><td>GAP-LAYER-MD-REG</td><td>Envelope MD+REG completo nas 44 (P0–P5). EXISTS≠POPULATED≠ASSURED. Sem certificação. Sem Braden.</td></tr><tr><td>F23</td><td>UCP v2.0 COMPARE</td><td><span class="chip">COMPARE_ONLY</span></td><td>AG-UCP-V2-COMPARE, AG-PLAN-FRONTS</td><td>GAP-UCP-V2</td><td>11 schemas 2020-12 + 2 CSV COMPARE. Não copiar para schemas/. CONTROLLED_CANDIDATE ≠ ASSURED. Modelos/piloto do registo EVIDENCE_PENDING.</td></tr><tr><td>F24</td><td>L70 API ANVISA + dump Drive</td><td><span class="chip">COMPARE_ONLY</span></td><td>AG-L70-ANVISA-COMPARE, AG-API-PROBE, AG-INVENTORY-DRIVE</td><td>GAP-L70-ANVISA</td><td>Usar Portal APIs ANVISA. SPA HTML 200 ≠ REST JSON de produto. Zip Drive 59.8 MB SKIP_BINARY_DUMP; 17231 não verificado. openFDA não substitui bula. Sem data/too</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Como o dono desbloqueia agentes (MD-OWNER-UNBLOCK-001)</h2>
+      <p>Segredo, decisão de licença ou confirmação de evidência. Agente não inventa senha, 32 APIs nem texto NANDA/NIC/NOC.</p>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>id</th><th>frente</th><th>status</th><th>pedido</th><th>como apoiar</th></tr></thead><tbody><tr><td>UNBLOCK-SUPABASE-SQL</td><td>F2</td><td><span class="chip chip-hold">HOLD</span></td><td>SQL read-only no Supabase ativo</td><td>Dono: F2 permanece HOLD neste ciclo. Não coletar SUPABASE_DB_PASSWORD. Schema SQL EVIDENCE_PENDING. Sem list_tables. MCP OAuth já SKIPPED_BY_OWNER.</td></tr><tr><td>UNBLOCK-SUPABASE-MCP-OAUTH</td><td>F2</td><td><span class="chip">SKIPPED_BY_OWNER</span></td><td>OAuth MCP no projeto yskgekcjzndptzmnjfke</td><td>Dono pulou a ação externa de autenticar MCP neste ciclo. Ambiente Cloud segue sem list_tables nesse ref. Reabrir com OAuth no Cursor Desktop se quiser schema.</td></tr><tr><td>UNBLOCK-NNN-LICENSE</td><td>F12</td><td><span class="chip">DECIDED_B</span></td><td>Decisão NANDA / NIC / NOC</td><td>Dono escolheu B. Catálogo de identidade (códigos + URI + deep-link). Sem texto NANDA/NIC/NOC. nanda-00046.json / nic-2312.json / noc-0401.json permanecem QUARANTINE.</td></tr><tr><td>UNBLOCK-32-LIST</td><td>F10</td><td><span class="chip">COMPARE_ACCEPTED</span></td><td>Confirmar o que são as 32 bibliotecas</td><td>Dono seguiu sem a lista Drive. COMPARE 11+24+15 persistido em MD-LIB-32-COMPARE-001. Claimed 32 permanece EVIDENCE_PENDING. Sem inventar adapters.</td></tr><tr><td>UNBLOCK-PAGES-FULL-COMPARE</td><td>F9</td><td><span class="chip">REGISTERED</span></td><td>pages_full e locales já partilhados</td><td>Nada a enviar de novo. Agentes fazem COMPARE de stems (index/missão/política/termos + calculadoras) vs 5 pilotos. HTML Drive ≠ MD.</td></tr><tr><td>HOLD-ORGAN-ACTS</td><td>F5</td><td><span class="chip chip-hold">HOLD</span></td><td>Atos de órgão (portaria MS / resolução COFEN)</td><td>Só desbloqueia com ordem explícita para o segundo tubo. Não misturar com API do Congresso.</td></tr><tr><td>HOLD-DIMENSIONAMENTO</td><td>F7</td><td><span class="chip chip-hold">HOLD</span></td><td>Dimensionamento permanece HOLD</td><td>Constituição: cinco pilotos. Não pedir número de dimensionamento neste ciclo.</td></tr><tr><td>UNBLOCK-I18N-TRANSLATION</td><td>F20</td><td><span class="chip">APPROVED</span></td><td>Objeto MD de tradução por ferramenta + revisão humana</td><td>Dono aprovou a chave composta who.en+local.pt-BR para os 5 pilotos. Envelopes MD existem. translation_gate HOLD. Seletor não ligado. Sem inventar strings EN. pt ≠ pt-BR ≠ pt-PT.</td></tr><tr><td>UNBLOCK-DICT-SHEETS</td><td>F21</td><td><span class="chip">RECEIVED</span></td><td>Completar Content_Schemas/Meta_Schemas do dicionário Drive</td><td>Dono enviou o zip já observado (Dicionario clinico.zip). Sheets Content_Schemas/Meta_Schemas ainda MISSING. Só FLD-* existentes. Sem dump dos 163 Foundation. Sem novo ficheiro Drive.</td></tr><tr><td>QUARANTINE-PARECER-360</td><td>F8</td><td><span class="chip chip-hold">QUARANTINE</span></td><td>Parecer 360 não é golden MD</td><td>Não promover o workbook Drive a identidade canónica.</td></tr><tr><td>UNBLOCK-ANVISA-API-CREDENTIALS</td><td>F24</td><td><span class="chip chip-hold">HOLD</span></td><td>Credenciais Gov.br do Portal APIs ANVISA</td><td>Dono: L70 usa https://api.anvisa.gov.br/ (SPA HTML 200 já observada). REST JSON de produto continua NOT_OBSERVED até Client ID/Secret Gov.br. Não colar o segredo no GitHub. Dump Drive 59.8 MB permanece SKIP_BINARY_DUMP.</td></tr></tbody></table></div>
+    </section>
+    <section class="panel">
+      <h2>Inventário Drive classificado</h2>
+      <p>População 118 · ALREADY_IN_CKO=4 · QUARANTINE=76 · SKIP=21 · GAP=4. HTML de escalas não entra no header público.</p>
+    </section>
+    <section class="panel">
+      <h2>Registry CKO (36 agentes)</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>agent_id</th><th>classe</th><th>runtime</th><th>escreve em</th><th>MD</th></tr></thead><tbody><tr><td>AG-ORCHESTRATOR</td><td>ORCHESTRATOR</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/agent_runs</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-FETCH-ORIGIN</td><td>ACQUISITION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/origin</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-FETCH-REGULATED</td><td>ACQUISITION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/regulated_pages.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PARSE-PAGES-FULL</td><td>EXTRACTION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/drive/pages_full/INVENTORY.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PARSE-SITEMAP</td><td>EXTRACTION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/sitemap_slugs.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PARSE-CHROME</td><td>A11Y</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/chrome_contract.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-INTEGRITY</td><td>EVIDENCE</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/hash_chain.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-CAAT-EXTRACT</td><td>CAAT</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/caat_extract.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-IPE-EXTRACT</td><td>IPE</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/ipe_extract.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-LINK-MD</td><td>ENTITY_RESOLUTION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_reg/extraction_profile.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PARSE-SITE-SHELL</td><td>EXTRACTION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/drive/site_shell/INVENTORY.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-VAULT-PUT</td><td>EVIDENCE</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/vault</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-RIGHTS-BIND</td><td>REGULATORY</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_reg/rights_profile.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-LINEAGE-BIND</td><td>ENTITY_RESOLUTION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/lineage_registry.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-ISO8000-PROFILE</td><td>MD</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/iso8000_profile.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-WHO-I18N</td><td>MD</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/who_i18n_modulation.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-LAYER-PHASE</td><td>MD</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/layer_md_reg_phase.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-CLIN-DICT</td><td>MD</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/clinical_dictionary_catalog.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-MASK-APPLY</td><td>REGULATORY</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/mask_run.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-COMPARE-SOURCE</td><td>MONITORING</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/compare_source.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-COMPARE-INTERNAL</td><td>MONITORING</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/compare_internal.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-MONITOR-DRIFT</td><td>MONITORING</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_assurance/monitoring_events.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-FETCH-GOV-SOURCES</td><td>ACQUISITION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/gov_pages.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-API-PROBE</td><td>ACQUISITION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/api_adapter_registry.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PROBE-CONGRESS-API</td><td>ACQUISITION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/congress_probe.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-FETCH-FEDERAL-LEGISLATION</td><td>ACQUISITION</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/legislation_instrument_registry.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-LIBRARY-CATALOG</td><td>CONTENT</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/resource_library.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-INVENTORY-DRIVE</td><td>DISCOVERY</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/drive_inventory.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-INVENTORY-SUPABASE</td><td>DISCOVERY</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/supabase_inventory.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-COMPARE-STORES</td><td>MONITORING</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/extracted/compare_stores.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-PLAN-FRONTS</td><td>ORCHESTRATOR</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/fronts_plan.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-UCP-V2-COMPARE</td><td>MONITORING</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/ucp_v2_compare.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-L70-ANVISA-COMPARE</td><td>MONITORING</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/l70_anvisa_compare.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-CONTENT-CURRICULUM</td><td>CONTENT</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_md/content_curriculum.json</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-OPS-DB-SYNC</td><td>MD</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_inbox/cko_ops.sqlite</td><td><span class="chip chip-hold">HOLD</span></td></tr><tr><td>AG-ALERT-FRESHNESS</td><td>MONITORING</td><td><span class="chip chip-ok">IMPLEMENTED</span></td><td>cko_assurance/freshness_alerts.json</td><td><span class="chip chip-hold">HOLD</span></td></tr></tbody></table></div>
+      <p>Publication implemented=False. Lista completa no JSON.</p>
+    </section>
+    <section class="panel">
+      <h2>Pipeline do último run</h2>
+      <ol><li>AG-FETCH-ORIGIN · OBSERVED</li><li>AG-FETCH-REGULATED · OBSERVED</li><li>AG-FETCH-GOV-SOURCES · OBSERVED</li><li>AG-API-PROBE · OBSERVED</li><li>AG-PROBE-CONGRESS-API · OBSERVED</li><li>AG-FETCH-FEDERAL-LEGISLATION · OBSERVED</li><li>AG-PARSE-PAGES-FULL · SOURCE_DERIVED</li><li>AG-PARSE-SITEMAP · SOURCE_DERIVED</li><li>AG-PARSE-CHROME · SOURCE_DERIVED</li><li>AG-PARSE-SITE-SHELL · SOURCE_DERIVED</li><li>AG-INTEGRITY · OBSERVED</li><li>AG-VAULT-PUT · OBSERVED</li><li>AG-RIGHTS-BIND · DOCUMENTADO</li><li>AG-LINEAGE-BIND · IMPLEMENTED</li><li>AG-CLIN-DICT · HOLD</li><li>AG-ISO8000-PROFILE · PASS_PROFILE_ONLY</li><li>AG-WHO-I18N · HOLD</li><li>AG-LAYER-PHASE · DOCUMENTADO</li><li>AG-MASK-APPLY · HOLD</li><li>AG-CAAT-EXTRACT · PASS_WITH_FINDINGS</li><li>AG-IPE-EXTRACT · HOLD</li><li>AG-LINK-MD · HOLD</li><li>AG-LIBRARY-CATALOG · DOCUMENTADO</li><li>AG-INVENTORY-DRIVE · OBSERVED</li><li>AG-INVENTORY-SUPABASE · EVIDENCE_PENDING</li><li>AG-COMPARE-STORES · OBSERVED</li><li>AG-UCP-V2-COMPARE · COMPARE_ONLY</li><li>AG-L70-ANVISA-COMPARE · COMPARE_ONLY</li><li>AG-PLAN-FRONTS · DOCUMENTADO</li><li>AG-CONTENT-CURRICULUM · DOCUMENTADO</li><li>AG-COMPARE-SOURCE · SOURCE_DRIFT</li><li>AG-COMPARE-INTERNAL · OBSERVED</li><li>AG-MONITOR-DRIFT · HOLD</li><li>AG-ALERT-FRESHNESS · HOLD</li><li>AG-OPS-DB-SYNC · IMPLEMENTED_INBOX_ONLY</li></ol>
+    </section>
+    <section class="panel">
+      <h2>Execução alegada no mapa Braden</h2>
+      <div class="table-wrap"><table class="inspect"><thead><tr><th>agente</th><th>Studio</th><th>data</th><th>CKO</th></tr></thead><tbody><tr><td>Agente de Extração</td><td><span class="chip">Concluído</span></td><td>18/05 10:15</td><td><span class="chip chip-ok">NOT_IMPLEMENTED</span></td></tr><tr><td>Agente de Normalização</td><td><span class="chip">Concluído</span></td><td>18/05 10:28</td><td><span class="chip chip-ok">NOT_IMPLEMENTED</span></td></tr><tr><td>Agente de Validação</td><td><span class="chip">Concluído</span></td><td>18/05 10:35</td><td><span class="chip chip-ok">NOT_IMPLEMENTED</span></td></tr><tr><td>Agente de Renderização</td><td><span class="chip">Concluído</span></td><td>18/05 10:42</td><td><span class="chip">PARTIAL</span></td></tr><tr><td>Agente de SEO &amp; A11y</td><td><span class="chip">Concluído</span></td><td>18/05 10:47</td><td><span class="chip chip-ok">NOT_IMPLEMENTED</span></td></tr><tr><td>Agente de Publicação</td><td><span class="chip">Concluído</span></td><td>18/05 15:00</td><td><span class="chip chip-ok">NOT_IMPLEMENTED</span></td></tr></tbody></table></div>
+    </section>
+    
+    </main>
+  </div>
+</div>
+  <script data-admin-root="../">
+/* CKO admin control plane client. First-party. No canonical writes. */
+(function () {
+  "use strict";
+
+  function outEl() {
+    return document.getElementById("admin-action-out");
+  }
+
+  function show(data) {
+    var el = outEl();
+    if (!el) return;
+    el.hidden = false;
+    el.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
+  }
+
+  function rootPrefix() {
+    var script = document.querySelector("[data-admin-root]");
+    return script ? script.getAttribute("data-admin-root") || "" : "";
+  }
+
+  async function call(method, path) {
+    var url = rootPrefix() + path;
+    var res;
+    try {
+      res = await fetch(url, {
+        method: method,
+        headers: { Accept: "application/json" }
+      });
+    } catch (err) {
+      show({
+        status: "HOLD",
+        reason: "Control plane indisponível. Sirva com python3 -m engine.cli serve — não abra o HTML como arquivo.",
+        error: String(err)
+      });
+      return;
+    }
+    var body = await res.text();
+    try {
+      show(JSON.parse(body));
+    } catch (err) {
+      show({ http: res.status, body: body.slice(0, 2000) });
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest("[data-admin-action]");
+    if (!btn) return;
+    event.preventDefault();
+    var action = btn.getAttribute("data-admin-action");
+    if (action === "git-status") call("GET", "/__admin/git-status");
+    if (action === "render") call("POST", "/__admin/render");
+    if (action === "deploy-prepare") call("POST", "/__admin/deploy-prepare");
+  });
+})();
+
+</script>
+<script>
+(function () {
+  "use strict";
+  var FONT_SIZES = ["1em", "1.15em", "1.3em", "1.5em", "2em"];
+  var FONT_LABELS = ["Normal", "Médio", "Grande", "Extra Grande", "Máximo"];
+  var LINE_VALUES = ["1.5", "1.8", "2.2"];
+  var LINE_LABELS = ["Médio", "Grande", "Extra Grande"];
+  var LETTER_VALUES = ["0em", ".05em", ".1em"];
+  var LETTER_LABELS = ["Normal", "Médio", "Grande"];
+  var SPEEDS = [
+    { rate: 0.8, label: "Lenta" },
+    { rate: 1, label: "Normal" },
+    { rate: 1.5, label: "Rápida" }
+  ];
+  var KEYS = {
+    font: "fontSize",
+    line: "lineHeight",
+    letter: "letterSpacing",
+    speed: "readingSpeed",
+    contrast: "highContrast",
+    dark: "darkMode",
+    dyslexia: "dyslexiaFont",
+    focus: "focusColor"
+  };
+
+  var fontLevel = 1;
+  var lineLevel = 1;
+  var letterLevel = 1;
+  var speedLevel = 1;
+  var lastFocus = null;
+  var speaking = false;
+  var paused = false;
+  var synth = window.speechSynthesis || null;
+
+  function readInt(key, fallback) {
+    try {
+      var raw = parseInt(localStorage.getItem(key) || String(fallback), 10);
+      return isNaN(raw) ? fallback : raw;
+    } catch (ignore) {
+      return fallback;
+    }
+  }
+
+  function readFlag(key) {
+    try {
+      return localStorage.getItem(key) === "true";
+    } catch (ignore) {
+      return false;
+    }
+  }
+
+  function write(key, value) {
+    try {
+      localStorage.setItem(key, String(value));
+    } catch (ignore) {
+      /* quota / private mode */
+    }
+  }
+
+  function removeKey(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (ignore) {}
+  }
+
+  function announce(message) {
+    var status = document.getElementById("statusMessage");
+    if (status) {
+      status.textContent = message;
+      window.setTimeout(function () {
+        if (status.textContent === message) status.textContent = "";
+      }, 3000);
+    }
+  }
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function clamp(level, max) {
+    var n = parseInt(level, 10);
+    if (isNaN(n) || n < 1) return 1;
+    return n > max ? max : n;
+  }
+
+  function applyFont(level, speak) {
+    fontLevel = clamp(level, FONT_SIZES.length);
+    var idx = fontLevel - 1;
+    document.documentElement.style.fontSize = FONT_SIZES[idx];
+    setText("fontSizeText", FONT_LABELS[idx]);
+    setText("fontSizeTextPWA", FONT_LABELS[idx]);
+    write(KEYS.font, fontLevel);
+    if (speak) announce("Tamanho da fonte: " + FONT_LABELS[idx]);
+  }
+
+  function applyLine(level, speak) {
+    lineLevel = clamp(level, LINE_VALUES.length);
+    var idx = lineLevel - 1;
+    document.documentElement.style.setProperty("--espacamento-linha", LINE_VALUES[idx]);
+    setText("lineHeightText", LINE_LABELS[idx]);
+    setText("lineHeightTextPWA", LINE_LABELS[idx]);
+    write(KEYS.line, lineLevel);
+    if (speak) announce("Espaçamento de linha: " + LINE_LABELS[idx]);
+  }
+
+  function applyLetter(level, speak) {
+    letterLevel = clamp(level, LETTER_VALUES.length);
+    var idx = letterLevel - 1;
+    document.documentElement.style.setProperty("--espacamento-letra", LETTER_VALUES[idx]);
+    setText("letterSpacingText", LETTER_LABELS[idx]);
+    setText("letterSpacingTextPWA", LETTER_LABELS[idx]);
+    write(KEYS.letter, letterLevel);
+    if (speak) announce("Espaçamento de letra: " + LETTER_LABELS[idx]);
+  }
+
+  function applySpeed(level, speak) {
+    speedLevel = clamp(level, SPEEDS.length);
+    var sp = SPEEDS[speedLevel - 1];
+    setText("readingSpeedText", sp.label);
+    write(KEYS.speed, speedLevel);
+    if (speak) announce("Velocidade de leitura: " + sp.label);
+  }
+
+  function applyFocus(color, speak) {
+    var value = color || "yellow";
+    document.documentElement.style.setProperty("--cor-foco-acessibilidade", value);
+    document.documentElement.style.setProperty("--a11y-focus", value);
+    write(KEYS.focus, value);
+    document.querySelectorAll(".color-option").forEach(function (btn) {
+      var on = btn.getAttribute("data-color") === value;
+      btn.classList.toggle("selected", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    if (speak) announce("Cor de foco alterada.");
+  }
+
+  function setBodyClass(name, on) {
+    document.body.classList.toggle(name, !!on);
+    document.documentElement.classList.toggle(name, !!on);
+    if (name === "dark-mode") {
+      document.documentElement.classList.toggle("rd-dark", !!on);
+    }
+  }
+
+  function speakText(text) {
+    if (!text || !synth) {
+      announce("Leitura HOLD neste navegador.");
+      return;
+    }
+    synth.cancel();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "pt-BR";
+    utter.rate = (SPEEDS[speedLevel - 1] || SPEEDS[1]).rate;
+    utter.onstart = function () {
+      speaking = true;
+      paused = false;
+    };
+    utter.onend = function () {
+      speaking = false;
+      paused = false;
+    };
+    utter.onerror = function () {
+      speaking = false;
+      paused = false;
+    };
+    synth.speak(utter);
+  }
+
+  function toggleReadMain() {
+    if (!synth) {
+      announce("Leitura HOLD neste navegador.");
+      return;
+    }
+    if (speaking) {
+      if (paused) {
+        synth.resume();
+        paused = false;
+      } else {
+        synth.pause();
+        paused = true;
+      }
+      return;
+    }
+    var main = document.querySelector("main");
+    speakText(main ? main.innerText : document.body.innerText);
+  }
+
+  function restartRead() {
+    if (synth) synth.cancel();
+    speaking = false;
+    paused = false;
+    window.setTimeout(function () {
+      var main = document.querySelector("main");
+      speakText(main ? main.innerText : document.body.innerText);
+    }, 80);
+  }
+
+  function readFocused() {
+    if (!lastFocus) return;
+    var text = (lastFocus.textContent || lastFocus.getAttribute("aria-label") || lastFocus.alt || lastFocus.value || "").trim();
+    speakText(text);
+  }
+
+  function restore() {
+    applyFont(readInt(KEYS.font, 1), false);
+    applyLine(readInt(KEYS.line, 1), false);
+    applyLetter(readInt(KEYS.letter, 1), false);
+    applySpeed(readInt(KEYS.speed, 1), false);
+    setBodyClass("contraste-alto", readFlag(KEYS.contrast));
+    setBodyClass("dark-mode", readFlag(KEYS.dark));
+    setBodyClass("fonte-dislexia", readFlag(KEYS.dyslexia));
+    var focus = "yellow";
+    try {
+      focus = localStorage.getItem(KEYS.focus) || "yellow";
+    } catch (ignore) {}
+    applyFocus(focus, false);
+  }
+
+  function resetAll() {
+    if (synth) synth.cancel();
+    speaking = false;
+    paused = false;
+    applyFont(1, false);
+    applyLine(1, false);
+    applyLetter(1, false);
+    applySpeed(1, false);
+    setBodyClass("contraste-alto", false);
+    setBodyClass("dark-mode", false);
+    setBodyClass("fonte-dislexia", false);
+    applyFocus("yellow", false);
+    Object.keys(KEYS).forEach(function (k) {
+      removeKey(KEYS[k]);
+    });
+    try {
+      localStorage.removeItem("cko-a11y");
+    } catch (ignore) {}
+    announce("Configurações redefinidas para o padrão");
+  }
+
+  function bindIds(ids, fn) {
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener("click", fn);
+    });
+  }
+
+  function closePwa() {
+    var bar = document.getElementById("pwaAcessibilidadeBar");
+    var overlay = document.getElementById("menuOverlay");
+    var toggle = document.getElementById("accessibilityToggleButton");
+    if (bar) bar.classList.remove("is-open");
+    if (overlay) overlay.classList.remove("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function openPwa() {
+    var bar = document.getElementById("pwaAcessibilidadeBar");
+    var overlay = document.getElementById("menuOverlay");
+    var toggle = document.getElementById("accessibilityToggleButton");
+    if (bar) bar.classList.add("is-open");
+    if (overlay) overlay.classList.add("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+  }
+
+  function onReady() {
+    restore();
+    document.addEventListener("focusin", function (ev) {
+      lastFocus = ev.target;
+    });
+    bindIds(["btnAlternarTamanhoFonte", "btnAlternarTamanhoFontePWA"], function () {
+      applyFont(fontLevel % FONT_SIZES.length + 1, true);
+    });
+    bindIds(["btnAlternarEspacamentoLinha", "btnAlternarEspacamentoLinhaPWA"], function () {
+      applyLine(lineLevel % LINE_VALUES.length + 1, true);
+    });
+    bindIds(["btnAlternarEspacamentoLetra", "btnAlternarEspacamentoLetraPWA"], function () {
+      applyLetter(letterLevel % LETTER_VALUES.length + 1, true);
+    });
+    bindIds(["btnAlternarContraste", "btnAlternarContrastePWA"], function () {
+      var on = !document.body.classList.contains("contraste-alto");
+      setBodyClass("contraste-alto", on);
+      write(KEYS.contrast, on);
+      announce("Alto contraste " + (on ? "ativado" : "desativado"));
+    });
+    bindIds(["btnAlternarModoEscuro", "btnAlternarModoEscuroPWA"], function () {
+      var on = !document.body.classList.contains("dark-mode");
+      setBodyClass("dark-mode", on);
+      write(KEYS.dark, on);
+      announce("Modo escuro " + (on ? "ativado" : "desativado"));
+    });
+    bindIds(["btnAlternarFonteDislexia", "btnAlternarFonteDislexiaPWA"], function () {
+      var on = !document.body.classList.contains("fonte-dislexia");
+      setBodyClass("fonte-dislexia", on);
+      write(KEYS.dyslexia, on);
+      announce("Fonte para dislexia " + (on ? "ativada" : "desativada"));
+    });
+    bindIds(["btnResetarAcessibilidade", "btnResetarAcessibilidadePWA"], resetAll);
+    bindIds(["btnToggleLeitura"], toggleReadMain);
+    bindIds(["btnReiniciarLeitura"], restartRead);
+    bindIds(["btnAlternarVelocidadeLeitura"], function () {
+      applySpeed(speedLevel % SPEEDS.length + 1, true);
+    });
+    bindIds(["btnReadFocused"], readFocused);
+    document.querySelectorAll(".color-option").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        applyFocus(btn.getAttribute("data-color") || "yellow", true);
+      });
+    });
+
+    var modal = document.getElementById("keyboardShortcutsModal");
+    function openModal() {
+      if (modal) modal.classList.add("show");
+    }
+    function closeModal() {
+      if (modal) modal.classList.remove("show");
+    }
+    bindIds(["btnKeyboardShortcuts", "btnKeyboardShortcutsPWA"], openModal);
+    bindIds(["keyboardModalCloseButton"], closeModal);
+
+    var toggle = document.getElementById("accessibilityToggleButton");
+    var closeBtn = document.getElementById("pwaAcessibilidadeCloseBtn");
+    var overlay = document.getElementById("menuOverlay");
+    if (toggle) toggle.addEventListener("click", function () {
+      var bar = document.getElementById("pwaAcessibilidadeBar");
+      if (bar && bar.classList.contains("is-open")) closePwa();
+      else openPwa();
+    });
+    if (closeBtn) closeBtn.addEventListener("click", closePwa);
+    if (overlay) overlay.addEventListener("click", closePwa);
+
+    window.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      closeModal();
+      closePwa();
+    });
+
+    var topBtn = document.getElementById("backToTopBtn");
+    if (topBtn) {
+      var ticking = false;
+      var lastY = 0;
+      window.addEventListener("scroll", function () {
+        lastY = window.scrollY;
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          var mobile = window.innerWidth <= 768;
+          var show = !mobile && lastY > 200;
+          topBtn.style.display = show ? "block" : "none";
+          ticking = false;
+        });
+      }, { passive: true });
+      topBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+
+    var hamburger = document.getElementById("hamburgerButton");
+    var nav = document.getElementById("primary-nav");
+    if (hamburger && nav) {
+      hamburger.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        hamburger.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+
+    var langButton = document.getElementById("langButton");
+    var langMenu = document.getElementById("langMenu");
+    var langText = document.getElementById("langText");
+    if (langButton && langMenu) {
+      langButton.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        var hidden = langMenu.classList.toggle("hidden");
+        langButton.setAttribute("aria-expanded", hidden ? "false" : "true");
+      });
+      document.addEventListener("click", function (ev) {
+        if (!langButton.contains(ev.target) && !langMenu.contains(ev.target)) {
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+        }
+      });
+      langMenu.querySelectorAll(".lang-option").forEach(function (item) {
+        item.addEventListener("click", function () {
+          if (langText) langText.textContent = item.querySelector("span") ? item.querySelector("span").textContent : item.textContent;
+          langMenu.classList.add("hidden");
+          langButton.setAttribute("aria-expanded", "false");
+          announce("Tradução HOLD. Runtime permanece pt-BR.");
+        });
+      });
+    }
+  }
+
+  try {
+    var prodFont = localStorage.getItem("fontSize");
+    if (prodFont && prodFont !== "1") {
+      var idx = Math.min(Math.max(parseInt(prodFont, 10), 1), FONT_SIZES.length);
+      document.documentElement.style.fontSize = FONT_SIZES[idx - 1];
+    }
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("rd-dark", "dark-mode");
+    }
+  } catch (ignore) {}
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+})();
+
+</script>
+</body>
+</html>
