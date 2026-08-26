@@ -100,11 +100,21 @@ def _upsert_library_api_map(portal: dict, consultas: dict, ckan: dict, openfda: 
     libmap = _load(path)
     if not libmap:
         return
+    rows = list(libmap.get("api_where_possible") or [])
     prev_row = next((item for item in rows if item.get("layer") == "L70"), {})
     http_status = portal.get("http_status")
     if http_status is None:
         http_status = prev_row.get("http_status")
     epistemic = portal.get("epistemic_status") or prev_row.get("epistemic_status") or "EVIDENCE_PENDING"
+    consultas_status = consultas.get("http_status")
+    if consultas_status is None:
+        consultas_status = "403"
+    ckan_status = ckan.get("http_status")
+    if ckan_status is None:
+        ckan_status = "401"
+    openfda_status = openfda.get("http_status")
+    if openfda_status is None:
+        openfda_status = "200"
     row = {
         "layer": "L70",
         "intent": "API oficial ANVISA para medicamentos e soluções",
@@ -113,13 +123,12 @@ def _upsert_library_api_map(portal: dict, consultas: dict, ckan: dict, openfda: 
         "epistemic_status": epistemic,
         "note": (
             "Portal APIs ANVISA HTML 200 (SPA Gov.br). "
-            f"REST JSON de produto NOT_OBSERVED (consultas HTTP {consultas.get('http_status')}; "
-            f"CKAN anvisa HTTP {ckan.get('http_status')}). "
+            f"REST JSON de produto NOT_OBSERVED (consultas HTTP {consultas_status}; "
+            f"CKAN anvisa HTTP {ckan_status}). "
             "Zip Drive 59.8 MB SKIP_BINARY_DUMP. Claimed 17231 = descrição Drive, não hashed. "
-            f"openFDA HTTP {openfda.get('http_status')} JSON = fallback US. Não substitui bula ANVISA."
+            f"openFDA HTTP {openfda_status} JSON = fallback US. Não substitui bula ANVISA."
         ),
     }
-    rows = list(libmap.get("api_where_possible") or [])
     replaced = False
     out = []
     for item in rows:

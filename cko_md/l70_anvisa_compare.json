@@ -1,0 +1,177 @@
+{
+  "business_key": "MD-L70-ANVISA-001",
+  "uuid": null,
+  "status": "SOURCE_DERIVED",
+  "implemented": false,
+  "publication": "HOLD",
+  "assured": false,
+  "promotes_to_md": false,
+  "copied_into_data_tools": false,
+  "unzipped": false,
+  "layer": "L70",
+  "frente": "F24",
+  "method": "RECOVER → COMPARE → GAP ONLY",
+  "rule": "L70 usa a API oficial da ANVISA. Resposta HTML do portal ≠ REST JSON de produto. Dump Drive não entra em data/tools. openFDA não substitui bula ANVISA. DOCUMENTADO ≠ IMPLEMENTADO ≠ VALIDADO ≠ ASSURED ≠ PUBLICADO.",
+  "official_api": {
+    "portal": {
+      "business_key": "API-ANVISA-PORTAL",
+      "url": "https://api.anvisa.gov.br/",
+      "kind": "PORTAL_SPA",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED_HTML",
+      "rest_json": false,
+      "base_url": null,
+      "online": false,
+      "auth": "Gov.br OAuth Client ID + Client Secret",
+      "note": "SPA HTML 200 observado. Product REST NOT_OBSERVED sem credencial."
+    },
+    "consultas_medicamentos": {
+      "business_key": "API-ANVISA-CONSULTAS-MEDICAMENTOS",
+      "url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos",
+      "kind": "PRODUCT_CONSULTA",
+      "http_status": 403,
+      "epistemic_status": "AUTH_REQUIRED",
+      "rest_json": false,
+      "base_url": null,
+      "note": "HTTP 403 neste ambiente. Não extrair token do JavaScript do portal."
+    },
+    "ckan_dadosgov": {
+      "business_key": "API-CKAN-DADOSGOV-ANVISA",
+      "url": "https://dados.gov.br/api/3/action/package_search?q=anvisa&rows=5",
+      "http_status": 401,
+      "epistemic_status": "AUTH_REQUIRED",
+      "note": "CKAN package_search q=anvisa. HTTP 401 neste lote."
+    },
+    "openfda_fallback": {
+      "business_key": "API-OPENFDA-DRUGLABEL",
+      "url": "https://api.fda.gov/drug/label.json?limit=1",
+      "http_status": 200,
+      "epistemic_status": "OBSERVED",
+      "rest_json": true,
+      "replaces_anvisa_leaflet": false,
+      "note": "Fallback US gov. Não substitui bula ANVISA."
+    },
+    "product_rest": "NOT_OBSERVED",
+    "production_api": false
+  },
+  "drive": {
+    "parent_id": "0AFNnC8Uinv0BUk9PVA",
+    "zip": {
+      "id": "1TPmIPtXeMbsjJEiG_19W5bt8JZPJMhDF",
+      "title": "CKO_Medicamentos_ANVISA_Completo.zip",
+      "bytes": 59854232,
+      "mimeType": "application/zip",
+      "classification": "SKIP_BINARY_DUMP",
+      "promotes_to_md": false,
+      "description_claim": "Base completa de medicamentos ANVISA enriquecida — 17.231 medicamentos ativos com conhecimento clínico, rastreabilidade e schema CKO v1.0.0",
+      "claimed_count_drive_description": 17231,
+      "verified_population": "EVIDENCE_PENDING",
+      "unzipped": false,
+      "copied_into_data_tools": false,
+      "source": "DRIVE_LISTING_PLUS_MCP_METADATA"
+    },
+    "folders_mcp_this_cycle": [
+      {
+        "id": "1UpgQAuPUvF_8iGY31-k2W7EXGcY1S7eQ",
+        "title": "anvisa",
+        "classification": "FOLDER_OBSERVED",
+        "children_listing": "NOT_OBSERVED",
+        "note": "search_files parentId devolveu vazio neste ciclo. Sem unzip."
+      },
+      {
+        "id": "1_SQqd5Xx_6seeOklBPqfWTW2juEnwQJw",
+        "title": "anvisa-open-data",
+        "classification": "FOLDER_OBSERVED",
+        "children_listing": "NOT_OBSERVED",
+        "note": "search_files parentId devolveu vazio neste ciclo. Sem dump."
+      },
+      {
+        "id": "1PC-6ZLimaugUTvgBj7tEDWvmf5oGvmMc",
+        "title": "anvisa_open_data_agents",
+        "classification": "FOLDER_OBSERVED",
+        "children_listing": "NOT_OBSERVED",
+        "note": "search_files parentId devolveu vazio neste ciclo. Sem promover agentes Drive."
+      }
+    ],
+    "insulina_compare": [
+      {
+        "id": "1h4Lu0dDFoNNwJ-Q0e3FUCUYOksUhvIli",
+        "title": "recuperado_insulina_consolidado.zip",
+        "bytes": 7486,
+        "classification": "CANDIDATE_GAP",
+        "action": "COMPARE_ONLY",
+        "note": "Zip pequeno no mesmo parent. Não unzip para data/tools."
+      },
+      {
+        "id": "1Iucn9BiW9HQNOnyn5zpxyx5dSFupu-TR",
+        "title": "recuperado_insulina_package.zip",
+        "bytes": 5338,
+        "classification": "CANDIDATE_GAP",
+        "action": "COMPARE_ONLY",
+        "note": "Zip pequeno no mesmo parent. Não unzip para data/tools."
+      }
+    ],
+    "insulina_skip": [
+      {
+        "id": "1613nwK_tve_ti4wECkvSPojeNUOOv_cN",
+        "title": "insulina.webp",
+        "classification": "SKIP_BINARY"
+      },
+      {
+        "id": "1cp_z87Y24ZNpGRfxnwe195gZl2UflKrg",
+        "title": "insulina.html",
+        "classification": "DISCOVERY_QUARANTINE"
+      },
+      {
+        "id": "1dfMMfHAbatE2zEWtaJ01H3SNA_DuKPjv",
+        "title": "insulina.html",
+        "classification": "DISCOVERY_QUARANTINE"
+      },
+      {
+        "id": "1vHSZmqWylbn7jLr1KI_Yc3IIB7ChujIa",
+        "title": "insulina.html",
+        "classification": "DISCOVERY_QUARANTINE"
+      },
+      {
+        "id": "1QsVr8UrpktVwQHKWdz0Rut3h3-_l06sz",
+        "title": "insulina.html",
+        "classification": "DISCOVERY_QUARANTINE"
+      }
+    ]
+  },
+  "pilot": {
+    "identity": "PILOT-CKO-INSULINA",
+    "data_tools_insulina_json": false,
+    "status": "HOLD"
+  },
+  "dump_extracted_into_data_tools": false,
+  "claimed_count_drive_description": 17231,
+  "verified_population": "EVIDENCE_PENDING",
+  "owner_unblock": "UNBLOCK-ANVISA-API-CREDENTIALS",
+  "gaps": [
+    {
+      "id": "GAP-L70-ANVISA-REST-JSON",
+      "status": "EVIDENCE_PENDING",
+      "reason": "Portal APIs ANVISA é SPA HTML. REST JSON de produto não observado sem Gov.br Client ID/Secret."
+    },
+    {
+      "id": "GAP-L70-DRIVE-DUMP",
+      "status": "COMPARE_ONLY",
+      "reason": "CKO_Medicamentos_ANVISA_Completo.zip 59.8 MB = SKIP_BINARY_DUMP. Claimed 17231 é descrição Drive, não população hashed."
+    },
+    {
+      "id": "GAP-L70-INSULINA-TOOL",
+      "status": "HOLD",
+      "reason": "Sem data/tools/insulina.json. PNG/HTML Drive não ligam no chrome."
+    }
+  ],
+  "do_not": [
+    "Unzip CKO_Medicamentos_ANVISA_Completo.zip em data/tools.",
+    "Tratar 17231 como população verificada.",
+    "Copiar insulina.html / insulina.webp / medicamentos.html para o chrome.",
+    "Inventar dose, bula ou adapter REST.",
+    "Usar openFDA como substituto de bula ANVISA.",
+    "Extrair token/segredo do JavaScript de consultas.anvisa.gov.br."
+  ],
+  "evaluated_at": "2026-08-26T01:54:15Z"
+}

@@ -17,9 +17,9 @@
   "braden_in_data_tools": false,
   "counts": {
     "envelope_complete": 44,
-    "md_populated": 27,
+    "md_populated": 28,
     "md_implemented": 23,
-    "reg_populated": 19,
+    "reg_populated": 20,
     "assured": 0
   },
   "phases": [
@@ -51,8 +51,8 @@
         "P0"
       ],
       "owner_secret": false,
-      "goal": "Pilotos em data/tools. Dimensionamento e insulina HOLD. Sem Braden.",
-      "md_populated": 5,
+      "goal": "Pilotos em data/tools. Dimensionamento HOLD. L70 ANVISA API COMPARE; dump Drive não unzip. Sem Braden.",
+      "md_populated": 6,
       "layer_count": 6
     },
     {
@@ -429,14 +429,17 @@
       "md": {
         "profile_ref": "LAYER-070-MD",
         "registers": "substance, presentation, concentration, route",
-        "population": "HOLD",
-        "populated": false,
+        "population": "COMPARE_ONLY",
+        "populated": true,
         "implemented": false,
         "assured": false,
         "identities": [
-          "PILOT-CKO-INSULINA"
+          "PILOT-CKO-INSULINA",
+          "MD-L70-ANVISA-001",
+          "API-ANVISA-PORTAL"
         ],
         "evidence_ok": [
+          "cko_md/l70_anvisa_compare.json",
           "cko_md/clinical_dictionary_catalog.json"
         ],
         "evidence_missing": []
@@ -444,17 +447,19 @@
       "reg": {
         "profile_ref": "LAYER-070-REG",
         "governs": "ANVISA, medicamento, dose, safety",
-        "population": "HOLD",
-        "populated": false,
+        "population": "PARTIAL",
+        "populated": true,
         "implemented": false,
         "assured": false,
         "clause_text": "CLAUSE_TEXT_UNAVAILABLE",
         "applicability": "APPLICABILITY_UNVERIFIED",
-        "instruments": []
+        "instruments": [
+          "REG-API-ANVISA-PORTAL"
+        ]
       },
-      "gap": "PNGs insulina SKIP_BINARY. Sem data/tools/insulina.json.",
-      "do_not": "Ligar PNG de insulina no chrome. Inventar dose.",
-      "owner_unblock": null,
+      "gap": "Portal APIs ANVISA HTML 200 (SPA Gov.br). REST JSON de produto NOT_OBSERVED sem Client ID/Secret. Zip Drive 59.8 MB SKIP_BINARY_DUMP; claimed 17231 = descrição Drive, não hashed. Sem data/tools/insulina.json.",
+      "do_not": "Unzip dump ANVISA. Inventar 17231. Copiar PNG/HTML de insulina. Inventar dose. Tratar openFDA como bula ANVISA.",
+      "owner_unblock": "UNBLOCK-ANVISA-API-CREDENTIALS",
       "publication": "HOLD"
     },
     {
@@ -1929,5 +1934,5 @@
   ],
   "layer_records_remain_m0": true,
   "note": "cko_core/layer_registry.json permanece M0_REGISTERED (EXISTS). Este catálogo qualifica evidência por camada sem promover maturidade M5.",
-  "evaluated_at": "2026-08-26T01:22:10Z"
+  "evaluated_at": "2026-08-26T01:54:16Z"
 }
