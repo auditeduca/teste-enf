@@ -70,6 +70,7 @@ def test_ops_sqlite_mirrors_md_reg_and_biblioteca_renders():
     assert "Nenhuma alteração de RLS" in (ROOT / "render" / "fetch" / "admin" / "database.html").read_text(encoding="utf-8")
     assert "Currículo" in admin_lib or "currículo" in admin_lib.lower()
     assert "UCP v2.0 COMPARE" in admin_lib
+    assert "MD-L70-ANVISA-001" in admin_lib or "L70 Medicamentos" in admin_lib
     assert "urn:cko:schema:agent-contract:2.0" in admin_lib
     assert "copied_into_schemas" not in admin_lib or "false" in admin_lib.lower()
     assert "base_url" in admin_api

@@ -135,6 +135,22 @@
       "status": "QUARANTINE",
       "title": "Parecer 360 não é golden MD",
       "how": "Não promover o workbook Drive a identidade canónica."
+    },
+    {
+      "id": "UNBLOCK-ANVISA-API-CREDENTIALS",
+      "priority": 10,
+      "frente": "F24",
+      "kind": "SECRET",
+      "status": "HOLD",
+      "owner_decision": "HOLD",
+      "title": "Credenciais Gov.br do Portal APIs ANVISA",
+      "secrets": [
+        {"name": "ANVISA_CLIENT_ID", "optional": false},
+        {"name": "ANVISA_CLIENT_SECRET", "optional": false}
+      ],
+      "how": "Dono: L70 usa https://api.anvisa.gov.br/ (SPA HTML 200 já observada). REST JSON de produto continua NOT_OBSERVED até Client ID/Secret Gov.br. Não colar o segredo no GitHub. Dump Drive 59.8 MB permanece SKIP_BINARY_DUMP.",
+      "current_fail": "consultas.anvisa.gov.br/api/consulta/medicamentos = HTTP 403; CKAN dados.gov.br q=anvisa = HTTP 401; openapi.json do portal devolve HTML SPA.",
+      "do_not": "Não unzip CKO_Medicamentos_ANVISA_Completo.zip. Não tratar 17231 como população hashed. Não extrair token do JavaScript. Não usar openFDA como bula ANVISA. Não inventar dose."
     }
   ],
   "agents_executable_without_owner": [
@@ -142,8 +158,9 @@
     "F3/F4 catálogo federal e PGDADOS com evidência HTTP já no tubo",
     "F9 COMPARE pages_full vs pilotos",
     "F10 COMPARE vacinas/templates sem promover CAL-VAC",
-    "F11/F13 probe de API só HTTP 200",
+    "F11/F13 probe de API só HTTP 200 JSON",
     "F14 currículo por conceito nos 5 pilotos",
-    "F22 envelope MD+REG 44 camadas P0–P5 (sem claim 100% / sem Braden)"
+    "F22 envelope MD+REG 44 camadas P0–P5 (sem claim 100% / sem Braden)",
+    "F24 L70 COMPARE Portal APIs ANVISA + listing Drive; sem unzip dump; REST JSON HOLD até credencial"
   ]
 }

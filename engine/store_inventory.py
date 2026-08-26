@@ -38,6 +38,12 @@ CANDIDATE_GAP_IDS = {
     "1E9OB0AKR0m2Hbeknf43Htwo-fXob6cP9": (
         "Vacinas zip PATTERN_CANDIDATE COMPARE. 15 CAL-VAC observados. Não copiar para data/tools."
     ),
+    "1h4Lu0dDFoNNwJ-Q0e3FUCUYOksUhvIli": (
+        "recuperado_insulina_consolidado.zip COMPARE_ONLY. Não unzip para data/tools. Sem inventar dose."
+    ),
+    "1Iucn9BiW9HQNOnyn5zpxyx5dSFupu-TR": (
+        "recuperado_insulina_package.zip COMPARE_ONLY. Não unzip para data/tools. Sem inventar dose."
+    ),
     "1mTJ0LQh2azuI3Nm0nnYbC6PUCXQIDG7D": (
         "guia-metadados-avancado HTML COMPARE. 32 critérios SEO ≠ 32 bibliotecas. CDN fonts FORBIDDEN; não copiar HTML para render/."
     ),
@@ -61,10 +67,26 @@ FOLDER_NOTES = {
     "1ZcE8AK0hVnrmMuuKISJ9t02t0w5QcJ0x": (
         "Classificações Médicas COMPARE. Pastas ICPC-2/UMLS/UCUM/LOINC/RxNorm/MeSH. Zip 99 MB SKIP. Sem dump licenciado."
     ),
+    "1UpgQAuPUvF_8iGY31-k2W7EXGcY1S7eQ": (
+        "Pasta anvisa FOLDER_OBSERVED. Filhos listing vazio neste ciclo. Sem unzip dump de medicamentos."
+    ),
+    "1_SQqd5Xx_6seeOklBPqfWTW2juEnwQJw": (
+        "Pasta anvisa-open-data FOLDER_OBSERVED. Filhos listing vazio neste ciclo. Sem dump."
+    ),
+    "1PC-6ZLimaugUTvgBj7tEDWvmf5oGvmMc": (
+        "Pasta anvisa_open_data_agents FOLDER_OBSERVED. Filhos listing vazio neste ciclo. Sem promover agentes Drive."
+    ),
 }
 
 PII_IDS = {
     "1hGjFWE2ZuX0roApGgL-qoyNRNb8KLTLkuT6Zh1l28AU": "spreadsheet title is an email; do not project",
+}
+
+SKIP_UNZIP_IDS = {
+    "1TPmIPtXeMbsjJEiG_19W5bt8JZPJMhDF": (
+        "CKO_Medicamentos_ANVISA_Completo.zip listing COMPARE. Não unzip. "
+        "Claimed 17231 na descrição Drive = SOURCE_DERIVED, não população hashed."
+    ),
 }
 
 
@@ -126,6 +148,13 @@ def classify_drive_file(item: dict) -> dict:
         record.update({
             "classification": "CANDIDATE_GAP",
             "reason": CANDIDATE_GAP_IDS[file_id],
+            "action": "COMPARE_ONLY",
+        })
+        return record
+    if file_id in SKIP_UNZIP_IDS:
+        record.update({
+            "classification": "SKIP_BINARY_DUMP",
+            "reason": SKIP_UNZIP_IDS[file_id],
             "action": "COMPARE_ONLY",
         })
         return record
@@ -602,6 +631,18 @@ def plan_fronts() -> dict:
             "gap": "GAP-UCP-V2",
             "action": "11 schemas 2020-12 + 2 CSV COMPARE. Não copiar para schemas/. CONTROLLED_CANDIDATE ≠ ASSURED. Modelos/piloto do registo EVIDENCE_PENDING.",
         },
+        {
+            "id": "F24",
+            "name": "L70 API ANVISA + dump Drive",
+            "status": "COMPARE_ONLY",
+            "agents": ["AG-L70-ANVISA-COMPARE", "AG-API-PROBE", "AG-INVENTORY-DRIVE"],
+            "gap": "GAP-L70-ANVISA",
+            "action": (
+                "Usar Portal APIs ANVISA. SPA HTML 200 ≠ REST JSON de produto. "
+                "Zip Drive 59.8 MB SKIP_BINARY_DUMP; 17231 não verificado. "
+                "openFDA não substitui bula. Sem data/tools/insulina.json."
+            ),
+        },
     ]
     for front in fronts:
         living = gap_by_id.get(front["gap"]) or {}
@@ -637,6 +678,7 @@ def plan_fronts() -> dict:
             "F21 zip recebido COMPARE; sheets Content_Schemas/Meta_Schemas MISSING",
             "F22 envelope MD+REG das 44 camadas P0–P5; sem claim 100% completo",
             "F23 UCP v2 COMPARE; sem promover schemas 2020-12",
+            "F24 L70 Portal APIs ANVISA COMPARE; dump Drive não unzip; REST JSON HOLD até credencial",
             "F3/F4 só com evidência HTTP/Congress já no tubo",
         ],
         "updated_at": _now(),
@@ -741,6 +783,14 @@ def plan_fronts() -> dict:
             "id": "GAP-UCP-V2",
             "status": "COMPARE_ONLY",
             "reason": "UCP v2.0 CONTROLLED_CANDIDATE. 11 schemas hashed. Não copiar para schemas/. Modelos/piloto ausentes EVIDENCE_PENDING.",
+        },
+        {
+            "id": "GAP-L70-ANVISA",
+            "status": "COMPARE_ONLY",
+            "reason": (
+                "Portal APIs ANVISA HTML 200. REST JSON de produto NOT_OBSERVED sem Gov.br Client ID/Secret. "
+                "Dump Drive 59.8 MB SKIP_BINARY_DUMP. Claimed 17231 EVIDENCE_PENDING. openFDA ≠ bula ANVISA."
+            ),
         },
     ]
     living_gaps = list(method.get("living_gaps") or [])

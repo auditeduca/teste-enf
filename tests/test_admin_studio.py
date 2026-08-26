@@ -136,7 +136,7 @@ def test_maturity_panorama_is_hold_without_fake_pass():
     panorama = evaluate_maturity()
     assert panorama["release"] == "HOLD"
     assert panorama["layers"]["population"] == 44
-    assert panorama["agents"]["population"] == 35
+    assert panorama["agents"]["population"] == 36
     assert panorama["agents"]["implemented"] is True
     assert panorama["agents"]["publication_implemented"] is False
     assert panorama["ipe"]["registry_implemented"] is False

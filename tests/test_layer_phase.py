@@ -45,6 +45,9 @@ def test_all_44_envelopes_complete_none_assured():
     assert by_code["L30"]["md"]["implemented"] is True
     assert by_code["L40"]["do_not"].startswith("Copiar braden")
     assert by_code["L120"]["owner_unblock"] == "UNBLOCK-NNN-LICENSE"
+    assert by_code["L70"]["md"]["population"] == "COMPARE_ONLY"
+    assert by_code["L70"]["owner_unblock"] == "UNBLOCK-ANVISA-API-CREDENTIALS"
+    assert not (TOOLS_DIR / "insulina.json").exists()
     assert by_code["L310"]["md"]["identities"][0] == "who.en+local.pt-BR"
     assert by_code["L430"]["reg"]["population"] == "HOLD"
     assert not (TOOLS_DIR / "braden.json").exists()

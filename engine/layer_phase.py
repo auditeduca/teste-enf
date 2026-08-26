@@ -33,7 +33,7 @@ PHASES = (
         "layers": ["L30", "L40", "L50", "L70", "L110", "L130"],
         "depends_on": ["P0"],
         "owner_secret": False,
-        "goal": "Pilotos em data/tools. Dimensionamento e insulina HOLD. Sem Braden.",
+        "goal": "Pilotos em data/tools. Dimensionamento HOLD. L70 ANVISA API COMPARE; dump Drive não unzip. Sem Braden.",
     },
     {
         "id": "P2",
@@ -199,15 +199,25 @@ def _layer_spec() -> dict[str, dict]:
         },
         "L70": {
             "phase": "P1",
-            "md_population": "HOLD",
+            "md_population": "COMPARE_ONLY",
             "md_implemented": False,
-            "reg_population": "HOLD",
-            "evidence": ["cko_md/clinical_dictionary_catalog.json"],
-            "identities": ["PILOT-CKO-INSULINA"],
-            "reg_instruments": [],
-            "gap": "PNGs insulina SKIP_BINARY. Sem data/tools/insulina.json.",
-            "do_not": "Ligar PNG de insulina no chrome. Inventar dose.",
-            "unblock": None,
+            "reg_population": "PARTIAL",
+            "evidence": [
+                "cko_md/l70_anvisa_compare.json",
+                "cko_md/clinical_dictionary_catalog.json",
+            ],
+            "identities": ["PILOT-CKO-INSULINA", "MD-L70-ANVISA-001", "API-ANVISA-PORTAL"],
+            "reg_instruments": ["REG-API-ANVISA-PORTAL"],
+            "gap": (
+                "Portal APIs ANVISA HTML 200 (SPA Gov.br). REST JSON de produto NOT_OBSERVED "
+                "sem Client ID/Secret. Zip Drive 59.8 MB SKIP_BINARY_DUMP; claimed 17231 = "
+                "descrição Drive, não hashed. Sem data/tools/insulina.json."
+            ),
+            "do_not": (
+                "Unzip dump ANVISA. Inventar 17231. Copiar PNG/HTML de insulina. "
+                "Inventar dose. Tratar openFDA como bula ANVISA."
+            ),
+            "unblock": "UNBLOCK-ANVISA-API-CREDENTIALS",
         },
         "L80": {
             "phase": "P2",

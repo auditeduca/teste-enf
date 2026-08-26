@@ -175,7 +175,7 @@ def page_dashboard(ctx: dict, *, css_href: str, home_href: str, inline_css: bool
       <a class="tool-card" href="{attr(_module_href('admin/deploy.html', nested))}"><p class="eyebrow">Git</p><h2>Deploy</h2><p>Prepara changeset. git push é FORBIDDEN no botão.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/maturity.html', nested))}"><p class="eyebrow">M0–M7</p><h2>Maturidade</h2><p>Panorama observado de MD, REG, agentes, CAAT, IPE, Drive e DS.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/library.html', nested))}"><p class="eyebrow">L60</p><h2>Biblioteca</h2><p>Recursos ANVISA/MS/COFEN + currículo básico→avançado. Publicação HOLD.</p></a>
-      <a class="tool-card" href="{attr(_module_href('admin/apis.html', nested))}"><p class="eyebrow">APIs</p><h2>Órgãos / APIs</h2><p>CKAN + Congresso. base_url null até HTTP 200. PLP bloqueado. SQLite inbox.</p></a>
+      <a class="tool-card" href="{attr(_module_href('admin/apis.html', nested))}"><p class="eyebrow">APIs</p><h2>Órgãos / APIs</h2><p>Portal ANVISA HTML ≠ JSON. CKAN + Congresso. base_url null até HTTP 200 JSON. PLP bloqueado. SQLite inbox.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/mdm.html', nested))}"><p class="eyebrow">L10</p><h2>Master Data</h2><p>Entity types e locale registry. Mockup MDM = linguagem de layout.</p></a>
       <a class="tool-card" href="{attr(_module_href('admin/frameworks.html', nested))}"><p class="eyebrow">COSO/COBIT/ISO</p><h2>Frameworks</h2><p>Registry only. CLAUSE_TEXT_UNAVAILABLE. ISO 8000 = perfil CKO, não certificação.</p></a>
     </section>
@@ -541,6 +541,7 @@ def page_library(ctx: dict, **kwargs) -> str:
     clin = load_json(ROOT / "cko_md" / "clinical_dictionary_catalog.json")
     nnn_id = load_json(ROOT / "cko_md" / "nnn_identity_catalog.json")
     ucp = load_json(ROOT / "cko_md" / "ucp_v2_compare.json")
+    l70 = load_json(ROOT / "cko_md" / "l70_anvisa_compare.json")
     alerts = load_json(ROOT / "cko_assurance" / "freshness_alerts.json")
     laws = load_json(ROOT / "cko_md" / "legislation_instrument_registry.json")
     res_rows = [
@@ -642,6 +643,32 @@ def page_library(ctx: dict, **kwargs) -> str:
         [esc(item.get("artifact_id")), esc(item.get("artifact_class")), esc(item.get("file"))]
         for item in (ucp.get("missing_from_register") or [])
     ]
+    l70_api = (l70.get("official_api") or {})
+    l70_portal = l70_api.get("portal") or {}
+    l70_consultas = l70_api.get("consultas_medicamentos") or {}
+    l70_zip = (l70.get("drive") or {}).get("zip") or {}
+    l70_rows = [
+        [
+            esc(l70_portal.get("business_key") or "API-ANVISA-PORTAL"),
+            esc(l70_portal.get("url") or "https://api.anvisa.gov.br/"),
+            esc(l70_portal.get("http_status") if l70_portal.get("http_status") is not None else "—"),
+            _status_chip(l70_portal.get("epistemic_status") or "EVIDENCE_PENDING"),
+            esc("null" if not l70_portal.get("base_url") else l70_portal.get("base_url")),
+            esc("não" if not l70_portal.get("rest_json") else "sim"),
+        ],
+        [
+            esc(l70_consultas.get("business_key") or "API-ANVISA-CONSULTAS-MEDICAMENTOS"),
+            esc(l70_consultas.get("url") or "https://consultas.anvisa.gov.br/api/consulta/medicamentos"),
+            esc(l70_consultas.get("http_status") if l70_consultas.get("http_status") is not None else "—"),
+            _status_chip(l70_consultas.get("epistemic_status") or "EVIDENCE_PENDING"),
+            "null",
+            "não",
+        ],
+    ]
+    l70_gap_rows = [
+        [esc(item.get("id")), _status_chip(item.get("status")), esc(item.get("reason"))]
+        for item in (l70.get("gaps") or [])
+    ]
     observed = cmp32.get("observed_counts") or {}
     sums = cmp32.get("observed_sums") or {}
     equals = cmp32.get("observed_sum_equals_32") or {}
@@ -729,6 +756,13 @@ def page_library(ctx: dict, **kwargs) -> str:
       {_table(["id", "classe", "ficheiro"], ucp_missing_rows or [["—", "—", "nenhum"]])}
     </section>
     <section class="panel">
+      <h2>L70 Medicamentos — API ANVISA COMPARE ({esc(l70.get("business_key") or "MD-L70-ANVISA-001")})</h2>
+      <p>Frente {esc(l70.get("frente") or "F24")} · product REST={esc(l70_api.get("product_rest") or "NOT_OBSERVED")} · unzip={esc(l70.get("unzipped"))} · data/tools={esc(l70.get("copied_into_data_tools"))} · claimed Drive={esc(l70.get("claimed_count_drive_description") or l70_zip.get("claimed_count_drive_description"))} · verified={esc(l70.get("verified_population") or "EVIDENCE_PENDING")} · publicação {_status_chip(l70.get("publication") or "HOLD")} · assured={esc(l70.get("assured"))}.</p>
+      <p class="hold-banner">API oficial primeiro. Portal HTML 200 ≠ JSON de produto. Dump {esc(l70_zip.get("title") or "CKO_Medicamentos_ANVISA_Completo.zip")} = SKIP_BINARY_DUMP. 17231 é descrição Drive, não população hashed. openFDA não substitui bula ANVISA. Sem insulina.json.</p>
+      {_table(["adapter", "URL", "HTTP", "estado", "base_url", "REST JSON"], l70_rows or [["rode extract", "https://api.anvisa.gov.br/", "—", "EVIDENCE_PENDING", "null", "não"]])}
+      {_table(["gap", "estado", "razão"], l70_gap_rows or [["GAP-L70-ANVISA-REST-JSON", "EVIDENCE_PENDING", "rode extract"]])}
+    </section>
+    <section class="panel">
       <h2>Legislação federal</h2>
       {_table(["id", "norma", "tipo", "status", "MD", "REG"], law_rows or [["—", "rode extract", "—", "—", "—", "—"]])}
     </section>
@@ -801,7 +835,7 @@ def page_apis(ctx: dict, **kwargs) -> str:
     inner = f"""
     <header class="page-hero">
       <h1>APIs e órgãos.</h1>
-      <p class="lede">ANVISA, MS, COFEN, COREN-SP (HTML; sem REST), SGD/PGDADOS e Congresso Nacional. <code>base_url</code> só após HTTP 200. Catálogo federal bloqueia proposição sem efeito jurídico (ex.: PLP). Decreto numerado entra como regulamentar. Norma revogada pode ser ferramenta.</p>
+      <p class="lede">ANVISA (Portal de APIs + gov.br), MS, COFEN, COREN-SP (HTML; sem REST), SGD/PGDADOS e Congresso Nacional. <code>base_url</code> só após HTTP 200 JSON. HTML SPA ≠ adapter REST. Catálogo federal bloqueia proposição sem efeito jurídico (ex.: PLP). Decreto numerado entra como regulamentar. Norma revogada pode ser ferramenta.</p>
       <p class="hold-banner">Adapters {esc(adapters.get("population"))} · produção API={esc(adapters.get("production_api"))} · tipos Senado ALLOW {esc(types.get("senado_allow"))} / BLOCK {esc(types.get("senado_block"))} · leis {esc(laws.get("population"))} · SQLite inbox {esc("presente" if db_path.exists() else "ausente")} · Postgres produção=NÃO · RLS inalterado</p>
     </header>
     <section class="panel">
@@ -1189,6 +1223,7 @@ def emit_admin_pages(dest: Path, ctx: dict, *, css_href: str, home_href: str, in
         ROOT / "cko_md" / "translation_envelopes.json",
         ROOT / "cko_md" / "nnn_identity_catalog.json",
         ROOT / "cko_md" / "ucp_v2_compare.json",
+        ROOT / "cko_md" / "l70_anvisa_compare.json",
         ROOT / "cko_md" / "library_32_compare.json",
         ROOT / "cko_md" / "pgdados_pending_probe.json",
         ROOT / "cko_md" / "layer_md_reg_phase.json",

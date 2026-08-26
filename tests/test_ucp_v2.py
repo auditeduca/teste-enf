@@ -48,7 +48,7 @@ def test_ucp_v2_compare_does_not_promote_into_schemas():
     gap_ids = {item["id"] for item in catalog["gaps"]}
     assert {"GAP-UCP-DRAFT", "GAP-UCP-NOT-PROMOTED", "GAP-UCP-MODELS-MISSING"} <= gap_ids
     plan = plan_fronts()
-    assert plan["front_count"] == 23
+    assert plan["front_count"] == 24
     fronts = json.loads((ROOT / "cko_md" / "fronts_plan.json").read_text(encoding="utf-8"))
     f23 = next(item for item in fronts["fronts"] if item["id"] == "F23")
     assert f23["status"] == "COMPARE_ONLY"

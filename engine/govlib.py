@@ -140,6 +140,35 @@ API_CANDIDATES = (
         "reg_ref": "REG-API-ANVISA",
     },
     {
+        "business_key": "API-ANVISA-PORTAL",
+        "agency_key": "AGY-ANVISA",
+        "agency": "ANVISA Portal de APIs",
+        "url": "https://api.anvisa.gov.br/",
+        "kind": "PORTAL_SPA",
+        "md_ref": "MD-API-ANVISA-PORTAL",
+        "reg_ref": "REG-API-ANVISA-PORTAL",
+        "layer": "L70",
+        "note": (
+            "Portal APIs ANVISA (Gov.br). HTTP 200 HTML SPA. "
+            "REST JSON de produto NOT_OBSERVED sem Client ID/Secret. "
+            "Não inventar base_url. Não substitui bula."
+        ),
+    },
+    {
+        "business_key": "API-ANVISA-CONSULTAS-MEDICAMENTOS",
+        "agency_key": "AGY-ANVISA",
+        "agency": "ANVISA Consultas medicamentos",
+        "url": "https://consultas.anvisa.gov.br/api/consulta/medicamentos",
+        "kind": "PRODUCT_CONSULTA",
+        "md_ref": "MD-API-ANVISA-CONSULTAS",
+        "reg_ref": "REG-API-ANVISA-CONSULTAS",
+        "layer": "L70",
+        "note": (
+            "Consulta de medicamentos. HTTP 403 sem credencial neste ambiente. "
+            "Não extrair token do JavaScript do portal. Não inventar dose."
+        ),
+    },
+    {
         "business_key": "API-CKAN-OPENDATASUS-STATUS",
         "agency_key": "AGY-MS",
         "agency": "OpenDataSUS",
@@ -192,7 +221,7 @@ API_CANDIDATES = (
         "kind": "PRODUCT_LABEL_SEARCH",
         "md_ref": "MD-API-OPENFDA",
         "reg_ref": "REG-API-FDA",
-        "note": "Fallback US gov quando CKAN dados.gov.br/ANVISA REST falha. Não substitui bula ANVISA.",
+        "note": "Fallback US gov quando a API ANVISA de produto não devolve JSON. Não substitui bula ANVISA.",
     },
     {
         "business_key": "API-WHO-GHO-INDICATOR",
@@ -234,6 +263,50 @@ LIBRARY_TOPICS = (
     ("LIB-L150-GUIAS", "L150", "Artigos / guias / resumos", "AGY-MS", "PENDENCIA_ALTA"),
     ("LIB-L150-PGDADOS", "L150", "PGDADOS / governança de dados (SGD)", "AGY-SGD", "PENDENCIA_ALTA"),
 )
+
+
+def _looks_like_json(body: bytes) -> bool:
+    raw = (body or b"").lstrip()
+    if not raw or raw[:1] not in (b"{", b"["):
+        return False
+    try:
+        json.loads(body)
+        return True
+    except (json.JSONDecodeError, UnicodeDecodeError, ValueError, TypeError):
+        return False
+
+
+def _classify_api_probe(cand: dict, rec: dict, body: bytes) -> dict:
+    """HTTP 200 HTML is not a REST adapter. base_url only after JSON 200."""
+    status = rec.get("http_status")
+    portal = cand.get("kind") in {"PORTAL_SPA", "REGULATED_HTML_PAGE", "HTML_SEARCH"}
+    json_ok = status == 200 and _looks_like_json(body) and not portal
+    if json_ok:
+        epistemic = "OBSERVED"
+    elif status == 200 and (portal or not _looks_like_json(body)):
+        epistemic = "OBSERVED_HTML"
+    elif status in {401, 403}:
+        epistemic = "AUTH_REQUIRED"
+    else:
+        epistemic = "EVIDENCE_PENDING"
+    host = urlparse(cand["url"]).netloc
+    return {
+        **cand,
+        "uuid": None,
+        "http_status": status,
+        "bytes": rec.get("bytes") or len(body or b""),
+        "sha256": rec.get("sha256"),
+        "error": rec.get("error"),
+        "epistemic_status": epistemic,
+        "rest_json": json_ok,
+        "base_url": f"https://{host}/" if json_ok else None,
+        "online": bool(json_ok),
+        "note": cand.get("note") or (
+            "API observada só se HTTP 200 JSON. Sem JSON, base_url permanece null. "
+            "API pode ficar offline; extração é periódica."
+        ),
+        "probed_at": _now(),
+    }
 
 
 def _now() -> str:
@@ -663,7 +736,8 @@ def write_agency_md() -> dict:
         api_payload = json.loads(api_path.read_text(encoding="utf-8")) if api_path.exists() else {}
     except json.JSONDecodeError:
         api_payload = {}
-    apis = [item for item in (api_payload.get("apis") or []) if item.get("business_key") not in {"API-CAND-COFEN", "API-CAND-COREN"}]
+    skip_keys = {"API-CAND-COFEN", "API-CAND-COREN", "API-CAND-ANVISA-PORTAL"}
+    apis = [item for item in (api_payload.get("apis") or []) if item.get("business_key") not in skip_keys]
     apis = [
         {
             "business_key": "API-CAND-COFEN",
@@ -684,6 +758,16 @@ def write_agency_md() -> dict:
             "rest_api": "NOT_OBSERVED",
             "status": "SOURCE_DERIVED",
             "note": "COREN não possui API REST observada. Apenas portal HTML estadual.",
+        },
+        {
+            "business_key": "API-CAND-ANVISA-PORTAL",
+            "name": "Portal APIs ANVISA",
+            "base_url": None,
+            "html_page": "https://api.anvisa.gov.br/",
+            "kind": "PORTAL_SPA",
+            "rest_api": "NOT_OBSERVED",
+            "status": "SOURCE_DERIVED",
+            "note": "SPA Gov.br HTTP 200 HTML. REST JSON de produto NOT_OBSERVED sem Client ID/Secret. Não substitui bula.",
         },
     ] + apis
     _dump(api_path, {
@@ -724,7 +808,11 @@ def write_source_reg() -> dict:
             "reg_ref": api["reg_ref"],
             "agency_key": api["agency_key"],
             "issuer": api["agency"],
-            "jurisdiction": "JUR-INTL" if api["agency_key"] in {"AGY-CROSSREF", "AGY-NCBI", "AGY-NLM"} else "JUR-BR",
+            "jurisdiction": (
+                "JUR-INTL"
+                if api["agency_key"] in {"AGY-CROSSREF", "AGY-NCBI", "AGY-NLM", "AGY-FDA", "AGY-WHO"}
+                else "JUR-BR"
+            ),
             "instrument_class": "OPEN_DATA_API_CANDIDATE",
             "rights": "OPEN_DATA_IF_OBSERVED",
             "clause_text": "NOT_COPIED_AS_PRODUCT_RULE",
@@ -937,21 +1025,7 @@ def probe_apis(*, network: bool) -> dict:
         for cand in API_CANDIDATES:
             rec = _http_get(cand["url"], timeout=25, user_agent=UA_BROWSER)
             body = rec.pop("body", b"") or b""
-            observed_ok = rec.get("http_status") == 200
-            host = urlparse(cand["url"]).netloc
-            adapters.append({
-                **cand,
-                "uuid": None,
-                "http_status": rec.get("http_status"),
-                "bytes": rec.get("bytes") or len(body),
-                "sha256": rec.get("sha256"),
-                "error": rec.get("error"),
-                "epistemic_status": "OBSERVED" if observed_ok else "EVIDENCE_PENDING",
-                "base_url": f"https://{host}/" if observed_ok else None,
-                "online": bool(observed_ok),
-                "note": cand.get("note") or "API observada só se HTTP 200. Sem 200, base_url permanece null. API pode ficar offline; extração é periódica.",
-                "probed_at": _now(),
-            })
+            adapters.append(_classify_api_probe(cand, rec, body))
         _dump(dest, {
             "business_key": "IPE-API-PROBE-001",
             "uuid": None,
@@ -964,7 +1038,25 @@ def probe_apis(*, network: bool) -> dict:
         for cand in API_CANDIDATES:
             prev = persisted.get(cand["business_key"]) or {}
             if prev:
-                adapters.append({**cand, **prev, "business_key": cand["business_key"], "url": cand["url"]})
+                merged = {
+                    **cand,
+                    **prev,
+                    "business_key": cand["business_key"],
+                    "url": cand["url"],
+                    "kind": cand["kind"],
+                    "md_ref": cand["md_ref"],
+                    "reg_ref": cand["reg_ref"],
+                    "note": cand.get("note") or prev.get("note"),
+                }
+                if cand.get("layer"):
+                    merged["layer"] = cand["layer"]
+                if cand.get("kind") in {"PORTAL_SPA", "REGULATED_HTML_PAGE", "HTML_SEARCH"}:
+                    merged["online"] = False
+                    merged["base_url"] = None
+                    merged["rest_json"] = False
+                    if merged.get("http_status") == 200:
+                        merged["epistemic_status"] = "OBSERVED_HTML"
+                adapters.append(merged)
             else:
                 adapters.append({
                     **cand,
@@ -976,7 +1068,8 @@ def probe_apis(*, network: bool) -> dict:
                     "epistemic_status": "EVIDENCE_PENDING",
                     "base_url": None,
                     "online": False,
-                    "note": cand.get("note") or "Probe não executado. base_url null até HTTP 200 observado.",
+                    "rest_json": False,
+                    "note": cand.get("note") or "Probe não executado. base_url null até HTTP 200 JSON observado.",
                     "probed_at": None,
                 })
         _dump(dest, {
@@ -997,7 +1090,7 @@ def probe_apis(*, network: bool) -> dict:
         "frequency_hours": FREQ_HOURS,
         "adapters": adapters,
         "population": len(adapters),
-        "rule": "Resposta de API não vira verdade canônica sem snapshot, hash, MD, REG e validação.",
+        "rule": "Resposta de API não vira verdade canônica sem HTTP 200 JSON, snapshot, hash, MD, REG e validação. HTML SPA ≠ REST.",
     }
     _dump(ROOT / "cko_md" / "api_adapter_registry.json", md)
     return {
@@ -1292,11 +1385,17 @@ def content_curriculum() -> dict:
         {
             "business_key": "PEND-ANVISA-REST-PRODUCT",
             "severity": "ALTA",
-            "reason": "API de produtos ANVISA autenticada/consulta não observada como REST pública estável neste ambiente.",
+            "reason": (
+                "API oficial de produtos ANVISA: portal https://api.anvisa.gov.br/ é SPA HTML. "
+                "REST JSON de medicamento NOT_OBSERVED sem Gov.br Client ID/Secret. "
+                "consultas.anvisa.gov.br/api/consulta/medicamentos = HTTP 403 neste ambiente."
+            ),
             "government_alternative_sought": True,
             "alternative": (
+                "Usar Portal APIs ANVISA com credencial do dono (UNBLOCK-ANVISA-API-CREDENTIALS). "
                 "CKAN dados.gov.br package_search q=anvisa = HTTP 401 neste lote. "
-                "Fallback US gov: API-OPENFDA-DRUGLABEL (HTTP 200 JSON). Não substitui bula ANVISA."
+                "Fallback US gov: API-OPENFDA-DRUGLABEL (HTTP 200 JSON). Não substitui bula ANVISA. "
+                "Dump Drive CKO_Medicamentos_ANVISA_Completo.zip = SKIP_BINARY_DUMP; 17231 não verificado."
             ),
             "status": "PENDENCIA_ALTA",
         },
@@ -1498,16 +1597,48 @@ def alert_freshness() -> dict:
                 "created_at": _now(),
             })
     for adapter in (probe.get("adapters") or []) + (congress.get("adapters") or []):
-        if not adapter.get("online"):
+        if adapter.get("online"):
+            continue
+        status = adapter.get("http_status")
+        kind = adapter.get("kind")
+        epistemic = adapter.get("epistemic_status")
+        if epistemic == "OBSERVED_HTML" or (kind in {"PORTAL_SPA", "REGULATED_HTML_PAGE"} and status == 200):
             alerts.append({
                 "business_key": f"ALRT-API-{adapter['business_key']}",
                 "severity": "ALTA",
-                "kind": "API_OFFLINE",
-                "message": f"{adapter.get('agency')} não observou HTTP 200. base_url null. Reprobe a cada {FREQ_HOURS}h.",
+                "kind": "API_HTML_NOT_JSON",
+                "message": (
+                    f"{adapter.get('agency')} HTTP 200 HTML. REST JSON NOT_OBSERVED. "
+                    f"base_url null. Reprobe a cada {FREQ_HOURS}h."
+                ),
                 "source_ref": adapter.get("business_key"),
                 "status": "OPEN",
                 "created_at": _now(),
             })
+            continue
+        if epistemic == "AUTH_REQUIRED" or status in {401, 403}:
+            alerts.append({
+                "business_key": f"ALRT-API-{adapter['business_key']}",
+                "severity": "ALTA",
+                "kind": "API_AUTH_REQUIRED",
+                "message": (
+                    f"{adapter.get('agency')} HTTP {status}. Credencial/OAuth necessária. "
+                    f"base_url null. Reprobe a cada {FREQ_HOURS}h."
+                ),
+                "source_ref": adapter.get("business_key"),
+                "status": "OPEN",
+                "created_at": _now(),
+            })
+            continue
+        alerts.append({
+            "business_key": f"ALRT-API-{adapter['business_key']}",
+            "severity": "ALTA",
+            "kind": "API_OFFLINE",
+            "message": f"{adapter.get('agency')} não observou HTTP 200 JSON. base_url null. Reprobe a cada {FREQ_HOURS}h.",
+            "source_ref": adapter.get("business_key"),
+            "status": "OPEN",
+            "created_at": _now(),
+        })
     for pending in curr.get("pending_high") or []:
         alerts.append({
             "business_key": f"ALRT-{pending['business_key']}",
