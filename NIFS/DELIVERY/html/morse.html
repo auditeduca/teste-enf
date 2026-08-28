@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="escala-de-morse">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -225,8 +235,7 @@
                     <span class="formula-cap">Escore de Morse</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -254,10 +263,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -424,12 +501,13 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;historico&quot;: 0, &quot;diagnostico&quot;: 0, &quot;deambulacao&quot;: 0, &quot;terapia_ev&quot;: 0, &quot;marcha&quot;: 0, &quot;estado_mental&quot;: 0}'>Paciente estável <span class="p-sub">Sem fatores de risco</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;historico&quot;: 0, &quot;diagnostico&quot;: 15, &quot;deambulacao&quot;: 15, &quot;terapia_ev&quot;: 20, &quot;marcha&quot;: 10, &quot;estado_mental&quot;: 0}'>Idoso com múltiplas comorbidades <span class="p-sub">Risco médio</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;historico&quot;: 25, &quot;diagnostico&quot;: 15, &quot;deambulacao&quot;: 30, &quot;terapia_ev&quot;: 20, &quot;marcha&quot;: 20, &quot;estado_mental&quot;: 15}'>Pós-queda recente <span class="p-sub">Alto risco</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Histórico de Quedas</label>
-              <select class="field-select" data-calc-input="historico" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="25">Sim</option></select></div><div class="urg-field"><label>Diagnóstico Secundário</label>
-              <select class="field-select" data-calc-input="diagnostico" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="15">Sim</option></select></div><div class="urg-field"><label>Auxílio para Deambulação</label>
-              <select class="field-select" data-calc-input="deambulacao" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Nenhum / Repouso / Auxílio da Enfermagem</option><option value="15">Muletas / Bengala / Andador</option><option value="30">Apoia-se em Móveis</option></select></div><div class="urg-field"><label>Terapia Endovenosa / Heparina</label>
-              <select class="field-select" data-calc-input="terapia_ev" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="20">Sim</option></select></div><div class="urg-field"><label>Marcha</label>
-              <select class="field-select" data-calc-input="marcha" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Normal / Repouso / Cadeira de Rodas</option><option value="10">Fraca</option><option value="20">Comprometida</option></select></div><div class="urg-field"><label>Estado Mental</label>
-              <select class="field-select" data-calc-input="estado_mental" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Orientado quanto à Própria Capacidade</option><option value="15">Superestima Capacidade / Esquece Limitações</option></select></div></div>
+              <select class="field-select" data-calc-input="historico"><option value="0" selected>Não</option><option value="25">Sim</option></select></div><div class="urg-field"><label>Diagnóstico Secundário</label>
+              <select class="field-select" data-calc-input="diagnostico"><option value="0" selected>Não</option><option value="15">Sim</option></select></div><div class="urg-field"><label>Auxílio para Deambulação</label>
+              <select class="field-select" data-calc-input="deambulacao"><option value="0" selected>Nenhum / Repouso / Auxílio da Enfermagem</option><option value="15">Muletas / Bengala / Andador</option><option value="30">Apoia-se em Móveis</option></select></div><div class="urg-field"><label>Terapia Endovenosa / Heparina</label>
+              <select class="field-select" data-calc-input="terapia_ev"><option value="0" selected>Não</option><option value="20">Sim</option></select></div><div class="urg-field"><label>Marcha</label>
+              <select class="field-select" data-calc-input="marcha"><option value="0" selected>Normal / Repouso / Cadeira de Rodas</option><option value="10">Fraca</option><option value="20">Comprometida</option></select></div><div class="urg-field"><label>Estado Mental</label>
+              <select class="field-select" data-calc-input="estado_mental"><option value="0" selected>Orientado quanto à Própria Capacidade</option><option value="15">Superestima Capacidade / Esquece Limitações</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco</span>
@@ -470,14 +548,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -486,43 +564,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Baixo Risco</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:50%; background:#2563eb"></div></div>
-              <span class="dist-pct">50%</span></div><div class="dist-row"><span class="dist-label">Médio Risco</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#ca8a04"></div></div>
-              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Alto Risco</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:17%; background:#dc2626"></div></div>
-              <span class="dist-pct">17%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escala de Morse</td><td>0 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escala de Morse</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escala de Morse</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a Escala de Morse</h2>
           <p>A Escala de Morse (Morse Fall Scale) avalia 6 fatores de risco de queda: histórico de quedas, diagnóstico secundário, auxílio para deambulação, terapia endovenosa, marcha e estado mental. A soma dos pontos de cada item classifica o paciente em baixo, médio ou alto risco de queda.</p><p><strong>Guia rápido:</strong> 0-24 = Baixo risco | 25-50 = Médio risco | ≥51 = Alto risco.</p>
@@ -534,45 +609,22 @@
               <p>Não. O escore numérico deve ser combinado com a avaliação do ambiente físico (iluminação, piso, mobiliário) e o julgamento clínico da equipe de enfermagem.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="berg.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Escala de Equilíbrio de Berg</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cam.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>Método de Avaliação de Confusão</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="cornell.html"><div class="icon-wrap"><svg class="icon"><use href="#i-notes-medical"/></svg></div><div><h3>Escala de Cornell para Depressão em Demência</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="downton.html"><div class="icon-wrap"><svg class="icon"><use href="#i-access"/></svg></div><div><h3>Índice de Downton</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="escala-de-braden.html"><div class="icon-wrap"><svg class="icon"><use href="#i-shieldcheck"/></svg></div><div><h3>Escala de Braden</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -630,14 +682,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "7a2b3c4d-5e6f-4708-9a1b-2c3d4e5f6072", "code": "SCALE-MORSE-001", "slug": "escala-de-morse", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Morse - Risco de Queda", "description": "Calcule o risco de queda de pacientes hospitalizados com a Escala de Morse (Morse Fall Scale). Inclui interpretação, SAE, segurança do paciente e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/morse.html"}, "breadcrumb": {"category": "Segurança do Paciente", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Morse", "acronym": "MFS", "categoryBadge": "Segurança do paciente", "icon": "i-access", "objective": "Avaliar o risco de queda de pacientes adultos hospitalizados, orientando medidas preventivas proporcionais ao nível de risco.", "indication": "Indicada na admissão, após qualquer queda, na transferência de setor e periodicamente conforme protocolo institucional (geralmente a cada 24h ou a cada turno em pacientes de risco).", "targetPopulation": "Pacientes adultos em ambiente hospitalar.", "specialty": ["Enfermagem Médico-Cirúrgica", "Geriatria", "Segurança do Paciente"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Janice Morse"], "organizations": ["The Joint Commission", "ANVISA"], "complexity": "basic", "rating": 4.8, "ratingCount": 640}, "calculator": {"inputs": [{"id": "historico", "type": "select", "label": "Histórico de Quedas", "description": "Queda imediata anterior ou nos últimos 3 meses.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Sem histórico de queda recente."}, {"value": 25, "label": "Sim", "score": 25, "description": "Queda imediata ou nos últimos 3 meses."}]}, {"id": "diagnostico", "type": "select", "label": "Diagnóstico Secundário", "description": "Presença de mais de um diagnóstico médico registrado no prontuário.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Apenas um diagnóstico médico ativo."}, {"value": 15, "label": "Sim", "score": 15, "description": "Dois ou mais diagnósticos médicos ativos."}]}, {"id": "deambulacao", "type": "select", "label": "Auxílio para Deambulação", "description": "Tipo de apoio usado para caminhar.", "defaultValue": 0, "options": [{"value": 0, "label": "Nenhum / Repouso / Auxílio da Enfermagem", "score": 0, "description": "Caminha sem apoio, está em repouso no leito ou é auxiliado pela equipe."}, {"value": 15, "label": "Muletas / Bengala / Andador", "score": 15, "description": "Usa dispositivo de apoio para deambular."}, {"value": 30, "label": "Apoia-se em Móveis", "score": 30, "description": "Usa mobiliário do quarto como apoio para caminhar."}]}, {"id": "terapia_ev", "type": "select", "label": "Terapia Endovenosa / Heparina", "description": "Uso de acesso venoso contínuo ou dispositivo salinizado.", "defaultValue": 0, "options": [{"value": 0, "label": "Não", "score": 0, "description": "Sem acesso venoso ou dispositivo de infusão."}, {"value": 20, "label": "Sim", "score": 20, "description": "Em uso de terapia endovenosa contínua ou dispositivo salinizado."}]}, {"id": "marcha", "type": "select", "label": "Marcha", "description": "Padrão de marcha observado.", "defaultValue": 0, "options": [{"value": 0, "label": "Normal / Repouso / Cadeira de Rodas", "score": 0, "description": "Marcha normal, com passos firmes; ou paciente restrito ao leito/cadeira de rodas."}, {"value": 10, "label": "Fraca", "score": 10, "description": "Passos curtos, incertos, mas consegue levantar-se sozinho."}, {"value": 20, "label": "Comprometida", "score": 20, "description": "Dificuldade significativa para levantar-se da cadeira, marcha arrastada, desequilibrada."}]}, {"id": "estado_mental", "type": "select", "label": "Estado Mental", "description": "Percepção do paciente sobre suas próprias limitações.", "defaultValue": 0, "options": [{"value": 0, "label": "Orientado quanto à Própria Capacidade", "score": 0, "description": "Reconhece corretamente suas limitações físicas."}, {"value": 15, "label": "Superestima Capacidade / Esquece Limitações", "score": 15, "description": "Superestima sua capacidade física ou esquece as restrições impostas."}]}], "formula": {"type": "sum", "resultLabel": "Escore de Morse", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 24, "label": "Baixo Risco", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Risco baixo de queda. Manter cuidados padrão de segurança e reavaliação conforme protocolo.", "recommendations": "• Orientação sobre segurança\n• Reavaliação periódica\n• Ambiente livre de obstáculos"}, {"min": 25, "max": 50, "label": "Médio Risco", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Risco moderado. Implementar precauções padrão de prevenção de quedas e sinalização visual.", "recommendations": "• Sinalização de risco de queda\n• Grades elevadas\n• Campainha ao alcance\n• Auxílio na deambulação"}, {"min": 51, "max": 200, "label": "Alto Risco", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alto risco de queda. Implementar protocolo intensivo de prevenção, com supervisão frequente e medidas ambientais reforçadas.", "recommendations": "• Protocolo intensivo de prevenção\n• Supervisão frequente\n• Leito em posição baixa\n• Reavaliação a cada turno"}]}, "sae": {"nanda": [{"diagnosis": "Risco de quedas", "definition": "Vulnerabilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde."}], "noc": [{"outcome": "Comportamento de prevenção de quedas", "indicators": ["Uso correto de dispositivos de apoio", "Solicita auxílio quando necessário", "Ambiente livre de riscos"]}], "nic": [{"intervention": "Prevenção de quedas", "activities": ["Identificar déficits cognitivos/físicos", "Sinalizar risco de queda", "Orientar paciente e família", "Manter grades elevadas e leito baixo"]}]}, "evidence": {"foundation": "A Escala de Morse foi desenvolvida por Janice Morse em 1989 para prever o risco de queda em pacientes hospitalizados, avaliando 6 fatores: histórico de quedas, diagnóstico secundário, auxílio para deambulação, terapia endovenosa, marcha e estado mental.", "history": "Amplamente adotada em protocolos de segurança do paciente no mundo todo, incluindo recomendações da ANVISA e do Ministério da Saúde no Brasil, sendo uma das escalas de risco de queda mais utilizadas globalmente.", "validation": "Estudos de validação relatam sensibilidade entre 78% e 83% e especificidade entre 40% e 55%, variando conforme a população estudada.", "sensitivity": 0.8, "specificity": 0.48, "limitations": "A especificidade relativamente baixa pode gerar classificação de muitos pacientes em risco moderado/alto, exigindo julgamento clínico complementar. Não substitui a avaliação individualizada do ambiente e da condição clínica.", "references": [{"text": "MORSE, J. M.; MORSE, R. M.; TYLKO, S. J. Development of a scale to identify the fall-prone patient. Canadian Journal on Aging, v. 8, n. 4, p. 366-377, 1989."}, {"text": "BRASIL. Agência Nacional de Vigilância Sanitária (ANVISA). Protocolo de Prevenção de Quedas. Brasília: ANVISA, 2013."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}, {"text": "POTTER, P. A.; PERRY, A. G. Fundamentos de enfermagem. 9ª ed. Rio de Janeiro: Elsevier, 2018."}, {"text": "COFEN. Resolução COFEN nº 564/2017 — Código de Ética dos Profissionais de Enfermagem. Brasília: COFEN, 2017."}]}, "learning": {"tips": ["Reavalie o escore a cada turno em pacientes de risco moderado/alto.", "Considere o ambiente físico do quarto, não apenas o escore numérico.", "Envolva o paciente e a família nas orientações de prevenção.", "Documente as intervenções realizadas, não apenas o escore."], "examples": [{"label": "Paciente estável", "sublabel": "Sem fatores de risco", "emoji": "✅", "values": {"historico": 0, "diagnostico": 0, "deambulacao": 0, "terapia_ev": 0, "marcha": 0, "estado_mental": 0}}, {"label": "Idoso com múltiplas comorbidades", "sublabel": "Risco médio", "emoji": "⚠️", "values": {"historico": 0, "diagnostico": 15, "deambulacao": 15, "terapia_ev": 20, "marcha": 10, "estado_mental": 0}}, {"label": "Pós-queda recente", "sublabel": "Alto risco", "emoji": "🚨", "values": {"historico": 25, "diagnostico": 15, "deambulacao": 30, "terapia_ev": 20, "marcha": 20, "estado_mental": 15}}], "quiz": [{"q": "Qual a pontuação máxima possível na Escala de Morse?", "opts": ["100 pontos", "125 pontos", "150 pontos", "80 pontos"], "correct": 1, "expl": "A soma máxima é 125 pontos (25+15+30+20+20+15)."}, {"q": "Um escore de 45 pontos corresponde a qual classificação de risco?", "opts": ["Baixo risco", "Médio risco", "Alto risco", "Sem risco"], "correct": 1, "expl": "Escores entre 25 e 50 são classificados como Médio Risco."}, {"q": "O item 'Terapia Endovenosa' soma quantos pontos quando presente?", "opts": ["10", "15", "20", "25"], "correct": 2, "expl": "A presença de terapia endovenosa/dispositivo salinizado soma 20 pontos."}]}, "faq": [{"q": "Com que frequência devo reavaliar a Escala de Morse?", "a": "Recomenda-se reavaliação a cada turno para pacientes de risco moderado/alto, na admissão, após qualquer queda e em qualquer mudança significativa do estado clínico."}, {"q": "A Escala de Morse substitui a avaliação clínica do ambiente?", "a": "Não. O escore numérico deve ser combinado com a avaliação do ambiente físico (iluminação, piso, mobiliário) e o julgamento clínico da equipe de enfermagem."}], "about": {"title": "Como funciona a Escala de Morse", "html": "<p>A Escala de Morse (Morse Fall Scale) avalia 6 fatores de risco de queda: histórico de quedas, diagnóstico secundário, auxílio para deambulação, terapia endovenosa, marcha e estado mental. A soma dos pontos de cada item classifica o paciente em baixo, médio ou alto risco de queda.</p><p><strong>Guia rápido:</strong> 0-24 = Baixo risco | 25-50 = Médio risco | ≥51 = Alto risco.</p>"}}</script>
+</body></html>

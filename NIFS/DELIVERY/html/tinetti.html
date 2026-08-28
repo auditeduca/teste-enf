@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="tinetti">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -407,8 +417,7 @@
                     <span class="formula-cap">Escala de Tinetti (POMA)</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -436,10 +445,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -844,26 +921,27 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;equilibrio_sentado&quot;: 1, &quot;levanta_se&quot;: 2, &quot;tentativas_levantar&quot;: 2, &quot;equilibrio_imediato&quot;: 2, &quot;equilibrio_em_pe&quot;: 2, &quot;prova_nudge&quot;: 2, &quot;olhos_fechados&quot;: 1, &quot;giro_passos&quot;: 1, &quot;giro_estabilidade&quot;: 1, &quot;sentar_se&quot;: 2, &quot;inicio_marcha&quot;: 1, &quot;passo_direito&quot;: 1, &quot;passo_esquerdo&quot;: 1, &quot;elevacao_pe_direito&quot;: 1, &quot;elevacao_pe_esquerdo&quot;: 1, &quot;simetria_passo&quot;: 1, &quot;continuidade_passo&quot;: 1, &quot;trajetoria&quot;: 2, &quot;tronco&quot;: 2, &quot;postura_marcha&quot;: 1}'>Idoso com boa mobilidade <span class="p-sub">POMA 28</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;equilibrio_sentado&quot;: 1, &quot;levanta_se&quot;: 1, &quot;tentativas_levantar&quot;: 1, &quot;equilibrio_imediato&quot;: 1, &quot;equilibrio_em_pe&quot;: 1, &quot;prova_nudge&quot;: 1, &quot;olhos_fechados&quot;: 1, &quot;giro_passos&quot;: 1, &quot;giro_estabilidade&quot;: 1, &quot;sentar_se&quot;: 1, &quot;inicio_marcha&quot;: 1, &quot;passo_direito&quot;: 1, &quot;passo_esquerdo&quot;: 1, &quot;elevacao_pe_direito&quot;: 1, &quot;elevacao_pe_esquerdo&quot;: 1, &quot;simetria_passo&quot;: 1, &quot;continuidade_passo&quot;: 1, &quot;trajetoria&quot;: 2, &quot;tronco&quot;: 2, &quot;postura_marcha&quot;: 1}'>Risco moderado de quedas <span class="p-sub">POMA 22</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;equilibrio_sentado&quot;: 0, &quot;levanta_se&quot;: 0, &quot;tentativas_levantar&quot;: 1, &quot;equilibrio_imediato&quot;: 1, &quot;equilibrio_em_pe&quot;: 1, &quot;prova_nudge&quot;: 1, &quot;olhos_fechados&quot;: 0, &quot;giro_passos&quot;: 0, &quot;giro_estabilidade&quot;: 0, &quot;sentar_se&quot;: 1, &quot;inicio_marcha&quot;: 0, &quot;passo_direito&quot;: 1, &quot;passo_esquerdo&quot;: 0, &quot;elevacao_pe_direito&quot;: 0, &quot;elevacao_pe_esquerdo&quot;: 0, &quot;simetria_passo&quot;: 0, &quot;continuidade_passo&quot;: 1, &quot;trajetoria&quot;: 1, &quot;tronco&quot;: 1, &quot;postura_marcha&quot;: 0}'>Alto risco de quedas <span class="p-sub">POMA 9</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Equilíbrio Sentado</label>
-              <select class="field-select" data-calc-input="equilibrio_sentado" style="background:rgba(255,255,255,.07);border-"><option value="0">Inclina-se ou escorrega na cadeira</option><option value="1" selected>Estável e seguro</option></select></div><div class="urg-field"><label>Levanta-se da Cadeira</label>
-              <select class="field-select" data-calc-input="levanta_se" style="background:rgba(255,255,255,.07);border-"><option value="0">Incapaz sem ajuda</option><option value="1">Capaz, usando os braços para ajudar</option><option value="2" selected>Capaz sem usar os braços</option></select></div><div class="urg-field"><label>Tentativas para Levantar-se</label>
-              <select class="field-select" data-calc-input="tentativas_levantar" style="background:rgba(255,255,255,.07);border-"><option value="0">Incapaz sem ajuda</option><option value="1">Capaz, necessita de mais de uma tentativa</option><option value="2" selected>Capaz de levantar em uma única tentativa</option></select></div><div class="urg-field"><label>Equilíbrio Imediato ao Ficar em Pé (primeiros 5 segundos)</label>
-              <select class="field-select" data-calc-input="equilibrio_imediato" style="background:rgba(255,255,255,.07);border-"><option value="0">Instável (cambaleia, move os pés, balança o tronco)</option><option value="1">Estável, mas usa andador ou outro apoio</option><option value="2" selected>Estável sem andador ou outro apoio</option></select></div><div class="urg-field"><label>Equilíbrio em Pé</label>
-              <select class="field-select" data-calc-input="equilibrio_em_pe" style="background:rgba(255,255,255,.07);border-"><option value="0">Instável</option><option value="1">Estável, mas com base alargada e uso de apoio</option><option value="2" selected>Base estreita sem apoio</option></select></div><div class="urg-field"><label>Prova do Nudge (Empurrão Leve no Esterno, 3x)</label>
-              <select class="field-select" data-calc-input="prova_nudge" style="background:rgba(255,255,255,.07);border-"><option value="0">Começa a cair</option><option value="1">Cambaleia, agarra-se, mas se recupera</option><option value="2" selected>Estável</option></select></div><div class="urg-field"><label>Equilíbrio em Pé com Olhos Fechados</label>
-              <select class="field-select" data-calc-input="olhos_fechados" style="background:rgba(255,255,255,.07);border-"><option value="0">Instável</option><option value="1" selected>Estável</option></select></div><div class="urg-field"><label>Girar 360° — Continuidade dos Passos</label>
-              <select class="field-select" data-calc-input="giro_passos" style="background:rgba(255,255,255,.07);border-"><option value="0">Passos descontínuos</option><option value="1" selected>Passos contínuos</option></select></div><div class="urg-field"><label>Girar 360° — Estabilidade</label>
-              <select class="field-select" data-calc-input="giro_estabilidade" style="background:rgba(255,255,255,.07);border-"><option value="0">Instável (cambaleia, agarra-se)</option><option value="1" selected>Estável</option></select></div><div class="urg-field"><label>Sentar-se</label>
-              <select class="field-select" data-calc-input="sentar_se" style="background:rgba(255,255,255,.07);border-"><option value="0">Inseguro (calcula mal a distância, cai na cadeira)</option><option value="1">Usa os braços ou movimento não suave</option><option value="2" selected>Seguro, movimento suave</option></select></div><div class="urg-field"><label>Início da Marcha</label>
-              <select class="field-select" data-calc-input="inicio_marcha" style="background:rgba(255,255,255,.07);border-"><option value="0">Qualquer hesitação ou múltiplas tentativas</option><option value="1" selected>Sem hesitação</option></select></div><div class="urg-field"><label>Comprimento e Altura do Passo — Pé Direito</label>
-              <select class="field-select" data-calc-input="passo_direito" style="background:rgba(255,255,255,.07);border-"><option value="0">Não ultrapassa o pé esquerdo parado</option><option value="1" selected>Ultrapassa o pé esquerdo parado</option></select></div><div class="urg-field"><label>Comprimento e Altura do Passo — Pé Esquerdo</label>
-              <select class="field-select" data-calc-input="passo_esquerdo" style="background:rgba(255,255,255,.07);border-"><option value="0">Não ultrapassa o pé direito parado</option><option value="1" selected>Ultrapassa o pé direito parado</option></select></div><div class="urg-field"><label>Elevação do Passo — Pé Direito</label>
-              <select class="field-select" data-calc-input="elevacao_pe_direito" style="background:rgba(255,255,255,.07);border-"><option value="0">Não sai completamente do chão (arrasta)</option><option value="1" selected>Sai completamente do chão</option></select></div><div class="urg-field"><label>Elevação do Passo — Pé Esquerdo</label>
-              <select class="field-select" data-calc-input="elevacao_pe_esquerdo" style="background:rgba(255,255,255,.07);border-"><option value="0">Não sai completamente do chão (arrasta)</option><option value="1" selected>Sai completamente do chão</option></select></div><div class="urg-field"><label>Simetria do Passo</label>
-              <select class="field-select" data-calc-input="simetria_passo" style="background:rgba(255,255,255,.07);border-"><option value="0">Comprimento desigual entre os passos</option><option value="1" selected>Comprimento aparentemente igual</option></select></div><div class="urg-field"><label>Continuidade dos Passos</label>
-              <select class="field-select" data-calc-input="continuidade_passo" style="background:rgba(255,255,255,.07);border-"><option value="0">Parada ou descontinuidade entre os passos</option><option value="1" selected>Passos parecem contínuos</option></select></div><div class="urg-field"><label>Trajetória (desvio observado)</label>
-              <select class="field-select" data-calc-input="trajetoria" style="background:rgba(255,255,255,.07);border-"><option value="0">Desvio marcado</option><option value="1">Desvio leve/moderado ou uso de dispositivo de auxílio à marcha</option><option value="2" selected>Trajetória reta sem dispositivo de auxílio</option></select></div><div class="urg-field"><label>Tronco</label>
-              <select class="field-select" data-calc-input="tronco" style="background:rgba(255,255,255,.07);border-"><option value="0">Balanço marcado ou uso de dispositivo de auxílio</option><option value="1">Sem balanço, mas flexiona joelhos/dorso ou abre os braços ao caminhar</option><option value="2" selected>Sem balanço, flexão ou uso de braços/dispositivo de auxílio</option></select></div><div class="urg-field"><label>Postura ao Caminhar (Calcanhares)</label>
-              <select class="field-select" data-calc-input="postura_marcha" style="background:rgba(255,255,255,.07);border-"><option value="0">Calcanhares separados</option><option value="1" selected>Calcanhares quase se tocando enquanto caminha</option></select></div></div>
+              <select class="field-select" data-calc-input="equilibrio_sentado"><option value="0">Inclina-se ou escorrega na cadeira</option><option value="1" selected>Estável e seguro</option></select></div><div class="urg-field"><label>Levanta-se da Cadeira</label>
+              <select class="field-select" data-calc-input="levanta_se"><option value="0">Incapaz sem ajuda</option><option value="1">Capaz, usando os braços para ajudar</option><option value="2" selected>Capaz sem usar os braços</option></select></div><div class="urg-field"><label>Tentativas para Levantar-se</label>
+              <select class="field-select" data-calc-input="tentativas_levantar"><option value="0">Incapaz sem ajuda</option><option value="1">Capaz, necessita de mais de uma tentativa</option><option value="2" selected>Capaz de levantar em uma única tentativa</option></select></div><div class="urg-field"><label>Equilíbrio Imediato ao Ficar em Pé (primeiros 5 segundos)</label>
+              <select class="field-select" data-calc-input="equilibrio_imediato"><option value="0">Instável (cambaleia, move os pés, balança o tronco)</option><option value="1">Estável, mas usa andador ou outro apoio</option><option value="2" selected>Estável sem andador ou outro apoio</option></select></div><div class="urg-field"><label>Equilíbrio em Pé</label>
+              <select class="field-select" data-calc-input="equilibrio_em_pe"><option value="0">Instável</option><option value="1">Estável, mas com base alargada e uso de apoio</option><option value="2" selected>Base estreita sem apoio</option></select></div><div class="urg-field"><label>Prova do Nudge (Empurrão Leve no Esterno, 3x)</label>
+              <select class="field-select" data-calc-input="prova_nudge"><option value="0">Começa a cair</option><option value="1">Cambaleia, agarra-se, mas se recupera</option><option value="2" selected>Estável</option></select></div><div class="urg-field"><label>Equilíbrio em Pé com Olhos Fechados</label>
+              <select class="field-select" data-calc-input="olhos_fechados"><option value="0">Instável</option><option value="1" selected>Estável</option></select></div><div class="urg-field"><label>Girar 360° — Continuidade dos Passos</label>
+              <select class="field-select" data-calc-input="giro_passos"><option value="0">Passos descontínuos</option><option value="1" selected>Passos contínuos</option></select></div><div class="urg-field"><label>Girar 360° — Estabilidade</label>
+              <select class="field-select" data-calc-input="giro_estabilidade"><option value="0">Instável (cambaleia, agarra-se)</option><option value="1" selected>Estável</option></select></div><div class="urg-field"><label>Sentar-se</label>
+              <select class="field-select" data-calc-input="sentar_se"><option value="0">Inseguro (calcula mal a distância, cai na cadeira)</option><option value="1">Usa os braços ou movimento não suave</option><option value="2" selected>Seguro, movimento suave</option></select></div><div class="urg-field"><label>Início da Marcha</label>
+              <select class="field-select" data-calc-input="inicio_marcha"><option value="0">Qualquer hesitação ou múltiplas tentativas</option><option value="1" selected>Sem hesitação</option></select></div><div class="urg-field"><label>Comprimento e Altura do Passo — Pé Direito</label>
+              <select class="field-select" data-calc-input="passo_direito"><option value="0">Não ultrapassa o pé esquerdo parado</option><option value="1" selected>Ultrapassa o pé esquerdo parado</option></select></div><div class="urg-field"><label>Comprimento e Altura do Passo — Pé Esquerdo</label>
+              <select class="field-select" data-calc-input="passo_esquerdo"><option value="0">Não ultrapassa o pé direito parado</option><option value="1" selected>Ultrapassa o pé direito parado</option></select></div><div class="urg-field"><label>Elevação do Passo — Pé Direito</label>
+              <select class="field-select" data-calc-input="elevacao_pe_direito"><option value="0">Não sai completamente do chão (arrasta)</option><option value="1" selected>Sai completamente do chão</option></select></div><div class="urg-field"><label>Elevação do Passo — Pé Esquerdo</label>
+              <select class="field-select" data-calc-input="elevacao_pe_esquerdo"><option value="0">Não sai completamente do chão (arrasta)</option><option value="1" selected>Sai completamente do chão</option></select></div><div class="urg-field"><label>Simetria do Passo</label>
+              <select class="field-select" data-calc-input="simetria_passo"><option value="0">Comprimento desigual entre os passos</option><option value="1" selected>Comprimento aparentemente igual</option></select></div><div class="urg-field"><label>Continuidade dos Passos</label>
+              <select class="field-select" data-calc-input="continuidade_passo"><option value="0">Parada ou descontinuidade entre os passos</option><option value="1" selected>Passos parecem contínuos</option></select></div><div class="urg-field"><label>Trajetória (desvio observado)</label>
+              <select class="field-select" data-calc-input="trajetoria"><option value="0">Desvio marcado</option><option value="1">Desvio leve/moderado ou uso de dispositivo de auxílio à marcha</option><option value="2" selected>Trajetória reta sem dispositivo de auxílio</option></select></div><div class="urg-field"><label>Tronco</label>
+              <select class="field-select" data-calc-input="tronco"><option value="0">Balanço marcado ou uso de dispositivo de auxílio</option><option value="1">Sem balanço, mas flexiona joelhos/dorso ou abre os braços ao caminhar</option><option value="2" selected>Sem balanço, flexão ou uso de braços/dispositivo de auxílio</option></select></div><div class="urg-field"><label>Postura ao Caminhar (Calcanhares)</label>
+              <select class="field-select" data-calc-input="postura_marcha"><option value="0">Calcanhares separados</option><option value="1" selected>Calcanhares quase se tocando enquanto caminha</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">28</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco de Quedas</span>
@@ -904,14 +982,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -920,43 +998,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Alto Risco de Quedas</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:50%; background:#dc2626"></div></div>
-              <span class="dist-pct">50%</span></div><div class="dist-row"><span class="dist-label">Risco Moderado de Quedas</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#ca8a04"></div></div>
-              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Baixo Risco de Quedas</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:17%; background:#2563eb"></div></div>
-              <span class="dist-pct">17%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escala de Tinetti</td><td>28 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escala de Tinetti</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escala de Tinetti</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a Escala de Tinetti (POMA)</h2>
           <p>A Escala de Tinetti avalia o equilíbrio (9 manobras, máximo 16 pontos) e a marcha (8 itens, máximo 12 pontos) do paciente, somando um escore total de 0 a 28 pontos.</p><p><strong>Guia rápido:</strong> ≤18 = Alto risco de quedas | 19-23 = Risco moderado | ≥24 = Baixo risco.</p>
@@ -968,45 +1043,22 @@
               <p>Não isoladamente. É recomendável combinar seus resultados com o histórico de quedas prévias, avaliação de medicações, força muscular e outras ferramentas como o Timed Up and Go para uma avaliação mais completa do risco de quedas.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -1064,14 +1116,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "51627384-9506-1728-3940-516273849506", "code": "SCALE-TINETTI-001", "slug": "tinetti", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Tinetti (POMA) - Avaliação de Equilíbrio e Marcha", "description": "Calcule a Escala de Tinetti (Performance-Oriented Mobility Assessment) para avaliar equilíbrio, marcha e risco de quedas em idosos. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/tinetti.html"}, "breadcrumb": {"category": "Geriatria", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Tinetti", "acronym": "POMA", "categoryBadge": "Geriatria", "icon": "i-person", "objective": "Avaliar o equilíbrio e a marcha de idosos por meio de manobras funcionais padronizadas, estimando o risco de quedas.", "indication": "Indicada na avaliação geriátrica de idosos, especialmente aqueles com histórico de quedas, alterações de marcha ou equilíbrio, ou como parte de uma avaliação funcional ampla.", "targetPopulation": "Pacientes idosos, especialmente aqueles em risco de quedas ou com queixas de instabilidade postural.", "specialty": ["Geriatria", "Fisioterapia", "Enfermagem"], "averageTime": "10-15 minutos", "evidenceLevel": "II", "originalAuthors": ["Mary Tinetti"], "complexity": "advanced", "rating": 4.5, "ratingCount": 210}, "calculator": {"inputs": [{"id": "equilibrio_sentado", "type": "select", "label": "Equilíbrio Sentado", "defaultValue": 1, "description": "Observar o paciente sentado em cadeira rígida sem apoio de braços.", "options": [{"value": 0, "label": "Inclina-se ou escorrega na cadeira", "score": 0}, {"value": 1, "label": "Estável e seguro", "score": 1}]}, {"id": "levanta_se", "type": "select", "label": "Levanta-se da Cadeira", "defaultValue": 2, "description": "Capacidade de se levantar da cadeira.", "options": [{"value": 0, "label": "Incapaz sem ajuda", "score": 0}, {"value": 1, "label": "Capaz, usando os braços para ajudar", "score": 1}, {"value": 2, "label": "Capaz sem usar os braços", "score": 2}]}, {"id": "tentativas_levantar", "type": "select", "label": "Tentativas para Levantar-se", "defaultValue": 2, "description": "Número de tentativas necessárias para se levantar.", "options": [{"value": 0, "label": "Incapaz sem ajuda", "score": 0}, {"value": 1, "label": "Capaz, necessita de mais de uma tentativa", "score": 1}, {"value": 2, "label": "Capaz de levantar em uma única tentativa", "score": 2}]}, {"id": "equilibrio_imediato", "type": "select", "label": "Equilíbrio Imediato ao Ficar em Pé (primeiros 5 segundos)", "defaultValue": 2, "description": "Estabilidade nos primeiros 5 segundos em pé.", "options": [{"value": 0, "label": "Instável (cambaleia, move os pés, balança o tronco)", "score": 0}, {"value": 1, "label": "Estável, mas usa andador ou outro apoio", "score": 1}, {"value": 2, "label": "Estável sem andador ou outro apoio", "score": 2}]}, {"id": "equilibrio_em_pe", "type": "select", "label": "Equilíbrio em Pé", "defaultValue": 2, "description": "Estabilidade mantida em pé.", "options": [{"value": 0, "label": "Instável", "score": 0}, {"value": 1, "label": "Estável, mas com base alargada e uso de apoio", "score": 1}, {"value": 2, "label": "Base estreita sem apoio", "score": 2}]}, {"id": "prova_nudge", "type": "select", "label": "Prova do Nudge (Empurrão Leve no Esterno, 3x)", "defaultValue": 2, "description": "Examinador empurra levemente o esterno do paciente 3 vezes.", "options": [{"value": 0, "label": "Começa a cair", "score": 0}, {"value": 1, "label": "Cambaleia, agarra-se, mas se recupera", "score": 1}, {"value": 2, "label": "Estável", "score": 2}]}, {"id": "olhos_fechados", "type": "select", "label": "Equilíbrio em Pé com Olhos Fechados", "defaultValue": 1, "description": "Estabilidade em pé com os olhos fechados.", "options": [{"value": 0, "label": "Instável", "score": 0}, {"value": 1, "label": "Estável", "score": 1}]}, {"id": "giro_passos", "type": "select", "label": "Girar 360° — Continuidade dos Passos", "defaultValue": 1, "description": "Observar a continuidade dos passos ao girar 360 graus.", "options": [{"value": 0, "label": "Passos descontínuos", "score": 0}, {"value": 1, "label": "Passos contínuos", "score": 1}]}, {"id": "giro_estabilidade", "type": "select", "label": "Girar 360° — Estabilidade", "defaultValue": 1, "description": "Observar a estabilidade ao girar 360 graus.", "options": [{"value": 0, "label": "Instável (cambaleia, agarra-se)", "score": 0}, {"value": 1, "label": "Estável", "score": 1}]}, {"id": "sentar_se", "type": "select", "label": "Sentar-se", "defaultValue": 2, "description": "Capacidade de se sentar de forma segura.", "options": [{"value": 0, "label": "Inseguro (calcula mal a distância, cai na cadeira)", "score": 0}, {"value": 1, "label": "Usa os braços ou movimento não suave", "score": 1}, {"value": 2, "label": "Seguro, movimento suave", "score": 2}]}, {"id": "inicio_marcha", "type": "select", "label": "Início da Marcha", "defaultValue": 1, "description": "Observar hesitação ao iniciar a marcha.", "options": [{"value": 0, "label": "Qualquer hesitação ou múltiplas tentativas", "score": 0}, {"value": 1, "label": "Sem hesitação", "score": 1}]}, {"id": "passo_direito", "type": "select", "label": "Comprimento e Altura do Passo — Pé Direito", "defaultValue": 1, "description": "O pé direito, ao balançar, ultrapassa o pé esquerdo parado.", "options": [{"value": 0, "label": "Não ultrapassa o pé esquerdo parado", "score": 0}, {"value": 1, "label": "Ultrapassa o pé esquerdo parado", "score": 1}]}, {"id": "passo_esquerdo", "type": "select", "label": "Comprimento e Altura do Passo — Pé Esquerdo", "defaultValue": 1, "description": "O pé esquerdo, ao balançar, ultrapassa o pé direito parado.", "options": [{"value": 0, "label": "Não ultrapassa o pé direito parado", "score": 0}, {"value": 1, "label": "Ultrapassa o pé direito parado", "score": 1}]}, {"id": "elevacao_pe_direito", "type": "select", "label": "Elevação do Passo — Pé Direito", "defaultValue": 1, "description": "O pé direito sai completamente do chão ao balançar.", "options": [{"value": 0, "label": "Não sai completamente do chão (arrasta)", "score": 0}, {"value": 1, "label": "Sai completamente do chão", "score": 1}]}, {"id": "elevacao_pe_esquerdo", "type": "select", "label": "Elevação do Passo — Pé Esquerdo", "defaultValue": 1, "description": "O pé esquerdo sai completamente do chão ao balançar.", "options": [{"value": 0, "label": "Não sai completamente do chão (arrasta)", "score": 0}, {"value": 1, "label": "Sai completamente do chão", "score": 1}]}, {"id": "simetria_passo", "type": "select", "label": "Simetria do Passo", "defaultValue": 1, "description": "Comprimento do passo direito comparado ao esquerdo.", "options": [{"value": 0, "label": "Comprimento desigual entre os passos", "score": 0}, {"value": 1, "label": "Comprimento aparentemente igual", "score": 1}]}, {"id": "continuidade_passo", "type": "select", "label": "Continuidade dos Passos", "defaultValue": 1, "description": "Continuidade entre um passo e outro.", "options": [{"value": 0, "label": "Parada ou descontinuidade entre os passos", "score": 0}, {"value": 1, "label": "Passos parecem contínuos", "score": 1}]}, {"id": "trajetoria", "type": "select", "label": "Trajetória (desvio observado)", "defaultValue": 2, "description": "Desvio da trajetória em linha reta ao caminhar cerca de 3 metros.", "options": [{"value": 0, "label": "Desvio marcado", "score": 0}, {"value": 1, "label": "Desvio leve/moderado ou uso de dispositivo de auxílio à marcha", "score": 1}, {"value": 2, "label": "Trajetória reta sem dispositivo de auxílio", "score": 2}]}, {"id": "tronco", "type": "select", "label": "Tronco", "defaultValue": 2, "description": "Estabilidade do tronco durante a marcha.", "options": [{"value": 0, "label": "Balanço marcado ou uso de dispositivo de auxílio", "score": 0}, {"value": 1, "label": "Sem balanço, mas flexiona joelhos/dorso ou abre os braços ao caminhar", "score": 1}, {"value": 2, "label": "Sem balanço, flexão ou uso de braços/dispositivo de auxílio", "score": 2}]}, {"id": "postura_marcha", "type": "select", "label": "Postura ao Caminhar (Calcanhares)", "defaultValue": 1, "description": "Distância entre os calcanhares durante a marcha.", "options": [{"value": 0, "label": "Calcanhares separados", "score": 0}, {"value": 1, "label": "Calcanhares quase se tocando enquanto caminha", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Escala de Tinetti (POMA)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 18, "label": "Alto Risco de Quedas", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação de 18 pontos ou menos indica alto risco de quedas, com comprometimento significativo de equilíbrio e/ou marcha.", "recommendations": "• Encaminhar para avaliação fisioterapêutica especializada\n• Implementar medidas de prevenção de quedas (ambiente seguro, dispositivos de auxílio à marcha)\n• Reavaliar causas reversíveis (medicações, déficits visuais, força muscular)\n• Considerar programa de exercícios de equilíbrio e fortalecimento"}, {"min": 19, "max": 23, "label": "Risco Moderado de Quedas", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação entre 19 e 23 pontos indica risco moderado de quedas.", "recommendations": "• Orientar sobre medidas de prevenção de quedas\n• Considerar avaliação fisioterapêutica\n• Reavaliar periodicamente\n• Revisar polifarmácia e fatores ambientais de risco"}, {"min": 24, "max": 28, "label": "Baixo Risco de Quedas", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Pontuação de 24 pontos ou mais indica baixo risco de quedas, com equilíbrio e marcha preservados.", "recommendations": "• Manter acompanhamento geriátrico de rotina\n• Estimular atividade física regular\n• Reavaliar periodicamente, especialmente após eventos agudos de saúde"}]}, "sae": {"nanda": [{"diagnosis": "Risco de quedas", "definition": "Suscetibilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde, relacionada a comprometimento de equilíbrio e/ou marcha."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação no movimento físico independente e intencional do corpo ou de uma ou mais extremidades."}, {"diagnosis": "Deambulação prejudicada", "definition": "Limitação da movimentação independente a pé pelo ambiente."}], "noc": [{"outcome": "Equilíbrio", "indicators": ["Escore de Tinetti avaliado e monitorado ao longo do tempo", "Ausência de quedas durante o período de internação/acompanhamento", "Participação em programa de exercícios de equilíbrio quando indicado"]}], "nic": [{"intervention": "Prevenção de quedas", "activities": ["Aplicar a Escala de Tinetti na avaliação de equilíbrio e marcha", "Encaminhar para fisioterapia conforme risco identificado", "Orientar sobre uso adequado de dispositivos de auxílio à marcha", "Adaptar o ambiente para reduzir riscos de queda (iluminação, tapetes, calçados)", "Revisar medicações associadas a risco de queda (sedativos, hipotensores)"]}]}, "evidence": {"foundation": "A Escala de Tinetti (Performance-Oriented Mobility Assessment - POMA) avalia 9 manobras de equilíbrio (máximo 16 pontos) e 8 manobras de marcha (máximo 12 pontos), totalizando um escore combinado de 0 a 28 pontos, para avaliar o risco de quedas em idosos.", "history": "Desenvolvida por Mary Tinetti em 1986, é uma das ferramentas mais utilizadas mundialmente na avaliação funcional de equilíbrio e marcha em idosos, amplamente empregada em geriatria e fisioterapia.", "validation": "Amplamente validada e utilizada na prática clínica e em pesquisa, com boa confiabilidade interexaminadores e correlação com outras medidas de mobilidade, como o Timed Up and Go e a velocidade de marcha.", "limitations": "Requer treinamento e tempo para administração (10-15 minutos). O subteste de marcha pode apresentar efeito teto em populações com função relativamente preservada. Pontos de corte podem variar entre estudos e populações.", "references": [{"text": "TINETTI, M. E. Performance-oriented assessment of mobility problems in elderly patients. Journal of the American Geriatrics Society, v. 34, n. 2, p. 119-126, 1986."}, {"text": "FABER, M. J. et al. Clinimetric properties of the performance-oriented mobility assessment. Physical Therapy, v. 86, n. 7, p. 944-954, 2006."}, {"text": "SHIRLEY RYAN ABILITYLAB. Tinetti Performance Oriented Mobility Assessment. Rehabilitation Measures Database, 2014."}]}, "learning": {"tips": ["A escala é dividida em duas partes: equilíbrio (máximo 16 pontos) e marcha (máximo 12 pontos), somando um total de 28 pontos.", "Utilize uma cadeira rígida sem braços e um percurso de aproximadamente 3 metros para a avaliação padronizada.", "O ponto de corte de 18 pontos ou menos para alto risco é amplamente utilizado na prática clínica.", "Combine os resultados da Tinetti com outras ferramentas (Timed Up and Go, histórico de quedas) para uma avaliação mais completa do risco."], "examples": [{"label": "Idoso com boa mobilidade", "sublabel": "POMA 28", "emoji": "✅", "values": {"equilibrio_sentado": 1, "levanta_se": 2, "tentativas_levantar": 2, "equilibrio_imediato": 2, "equilibrio_em_pe": 2, "prova_nudge": 2, "olhos_fechados": 1, "giro_passos": 1, "giro_estabilidade": 1, "sentar_se": 2, "inicio_marcha": 1, "passo_direito": 1, "passo_esquerdo": 1, "elevacao_pe_direito": 1, "elevacao_pe_esquerdo": 1, "simetria_passo": 1, "continuidade_passo": 1, "trajetoria": 2, "tronco": 2, "postura_marcha": 1}}, {"label": "Risco moderado de quedas", "sublabel": "POMA 22", "emoji": "⚠️", "values": {"equilibrio_sentado": 1, "levanta_se": 1, "tentativas_levantar": 1, "equilibrio_imediato": 1, "equilibrio_em_pe": 1, "prova_nudge": 1, "olhos_fechados": 1, "giro_passos": 1, "giro_estabilidade": 1, "sentar_se": 1, "inicio_marcha": 1, "passo_direito": 1, "passo_esquerdo": 1, "elevacao_pe_direito": 1, "elevacao_pe_esquerdo": 1, "simetria_passo": 1, "continuidade_passo": 1, "trajetoria": 2, "tronco": 2, "postura_marcha": 1}}, {"label": "Alto risco de quedas", "sublabel": "POMA 9", "emoji": "🚨", "values": {"equilibrio_sentado": 0, "levanta_se": 0, "tentativas_levantar": 1, "equilibrio_imediato": 1, "equilibrio_em_pe": 1, "prova_nudge": 1, "olhos_fechados": 0, "giro_passos": 0, "giro_estabilidade": 0, "sentar_se": 1, "inicio_marcha": 0, "passo_direito": 1, "passo_esquerdo": 0, "elevacao_pe_direito": 0, "elevacao_pe_esquerdo": 0, "simetria_passo": 0, "continuidade_passo": 1, "trajetoria": 1, "tronco": 1, "postura_marcha": 0}}], "quiz": [{"q": "Qual a pontuação máxima total da Escala de Tinetti (POMA)?", "opts": ["16 pontos", "20 pontos", "24 pontos", "28 pontos"], "correct": 3, "expl": "A POMA soma o subteste de equilíbrio (máximo 16 pontos) e o de marcha (máximo 12 pontos), totalizando 28 pontos."}, {"q": "Qual pontuação total indica alto risco de quedas?", "opts": ["28 pontos ou mais", "24 pontos ou mais", "19 a 23 pontos", "18 pontos ou menos"], "correct": 3, "expl": "Uma pontuação de 18 pontos ou menos indica alto risco de quedas na Escala de Tinetti."}, {"q": "Quantos pontos, no máximo, compõe o subteste de equilíbrio?", "opts": ["12 pontos", "16 pontos", "20 pontos", "28 pontos"], "correct": 1, "expl": "O subteste de equilíbrio da POMA tem pontuação máxima de 16 pontos, distribuídos em 9 manobras."}]}, "faq": [{"q": "Quanto tempo leva para aplicar a Escala de Tinetti?", "a": "A aplicação completa costuma levar de 10 a 15 minutos, incluindo a observação das manobras de equilíbrio (sentado, levantar-se, em pé, girar) e de marcha (caminhar cerca de 3 metros)."}, {"q": "A Escala de Tinetti substitui outras avaliações de risco de queda?", "a": "Não isoladamente. É recomendável combinar seus resultados com o histórico de quedas prévias, avaliação de medicações, força muscular e outras ferramentas como o Timed Up and Go para uma avaliação mais completa do risco de quedas."}], "about": {"title": "Como funciona a Escala de Tinetti (POMA)", "html": "<p>A Escala de Tinetti avalia o equilíbrio (9 manobras, máximo 16 pontos) e a marcha (8 itens, máximo 12 pontos) do paciente, somando um escore total de 0 a 28 pontos.</p><p><strong>Guia rápido:</strong> ≤18 = Alto risco de quedas | 19-23 = Risco moderado | ≥24 = Baixo risco.</p>"}}</script>
+</body></html>

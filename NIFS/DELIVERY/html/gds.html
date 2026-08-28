@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="gds">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -342,8 +352,7 @@
                     <span class="formula-cap">Escala de Depressão Geriátrica (GDS-15)</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -372,10 +381,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -695,21 +772,22 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;satisfeito_vida&quot;: 1, &quot;abandonou_interesses&quot;: 0, &quot;vida_vazia&quot;: 0, &quot;aborrece_frequencia&quot;: 0, &quot;bem_com_vida&quot;: 1, &quot;medo_algo_ruim&quot;: 0, &quot;feliz_maior_parte&quot;: 1, &quot;desamparado&quot;: 0, &quot;prefere_ficar_casa&quot;: 0, &quot;problemas_memoria&quot;: 1, &quot;maravilhoso_viver&quot;: 1, &quot;sente_inutil&quot;: 0, &quot;cheio_energia&quot;: 1, &quot;sem_esperanca&quot;: 0, &quot;outros_melhor&quot;: 0}'>Sem sintomas significativos <span class="p-sub">GDS-15: 1</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;satisfeito_vida&quot;: 1, &quot;abandonou_interesses&quot;: 1, &quot;vida_vazia&quot;: 0, &quot;aborrece_frequencia&quot;: 1, &quot;bem_com_vida&quot;: 0, &quot;medo_algo_ruim&quot;: 1, &quot;feliz_maior_parte&quot;: 1, &quot;desamparado&quot;: 0, &quot;prefere_ficar_casa&quot;: 1, &quot;problemas_memoria&quot;: 1, &quot;maravilhoso_viver&quot;: 1, &quot;sente_inutil&quot;: 0, &quot;cheio_energia&quot;: 0, &quot;sem_esperanca&quot;: 0, &quot;outros_melhor&quot;: 0}'>Sintomas leves <span class="p-sub">GDS-15: 7</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;satisfeito_vida&quot;: 0, &quot;abandonou_interesses&quot;: 1, &quot;vida_vazia&quot;: 1, &quot;aborrece_frequencia&quot;: 1, &quot;bem_com_vida&quot;: 0, &quot;medo_algo_ruim&quot;: 1, &quot;feliz_maior_parte&quot;: 0, &quot;desamparado&quot;: 1, &quot;prefere_ficar_casa&quot;: 1, &quot;problemas_memoria&quot;: 1, &quot;maravilhoso_viver&quot;: 0, &quot;sente_inutil&quot;: 1, &quot;cheio_energia&quot;: 0, &quot;sem_esperanca&quot;: 1, &quot;outros_melhor&quot;: 1}'>Sintomas graves <span class="p-sub">GDS-15: 15</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>1. Está satisfeito(a) com sua vida?</label>
-              <select class="field-select" data-calc-input="satisfeito_vida" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>2. Abandonou muitos de seus interesses e atividades?</label>
-              <select class="field-select" data-calc-input="abandonou_interesses" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>3. Sente que sua vida está vazia?</label>
-              <select class="field-select" data-calc-input="vida_vazia" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>4. Se aborrece com frequência?</label>
-              <select class="field-select" data-calc-input="aborrece_frequencia" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>5. Sente-se bem com a vida a maior parte do tempo?</label>
-              <select class="field-select" data-calc-input="bem_com_vida" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>6. Tem medo que algo de ruim lhe aconteça?</label>
-              <select class="field-select" data-calc-input="medo_algo_ruim" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>7. Sente-se feliz a maior parte do tempo?</label>
-              <select class="field-select" data-calc-input="feliz_maior_parte" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>8. Sente-se frequentemente desamparado(a)?</label>
-              <select class="field-select" data-calc-input="desamparado" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>9. Prefere ficar em casa a sair e fazer coisas novas?</label>
-              <select class="field-select" data-calc-input="prefere_ficar_casa" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>10. Sente que tem mais problemas de memória do que a maioria das pessoas?</label>
-              <select class="field-select" data-calc-input="problemas_memoria" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>11. Pensa que é maravilhoso estar vivo(a) atualmente?</label>
-              <select class="field-select" data-calc-input="maravilhoso_viver" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>12. Sente-se um tanto inútil, do jeito que está atualmente?</label>
-              <select class="field-select" data-calc-input="sente_inutil" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>13. Sente-se cheio(a) de energia?</label>
-              <select class="field-select" data-calc-input="cheio_energia" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>14. Sente que sua situação é sem esperança?</label>
-              <select class="field-select" data-calc-input="sem_esperanca" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>15. Acha que a maioria das pessoas está em melhor situação do que o(a) senhor(a)?</label>
-              <select class="field-select" data-calc-input="outros_melhor" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div></div>
+              <select class="field-select" data-calc-input="satisfeito_vida"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>2. Abandonou muitos de seus interesses e atividades?</label>
+              <select class="field-select" data-calc-input="abandonou_interesses"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>3. Sente que sua vida está vazia?</label>
+              <select class="field-select" data-calc-input="vida_vazia"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>4. Se aborrece com frequência?</label>
+              <select class="field-select" data-calc-input="aborrece_frequencia"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>5. Sente-se bem com a vida a maior parte do tempo?</label>
+              <select class="field-select" data-calc-input="bem_com_vida"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>6. Tem medo que algo de ruim lhe aconteça?</label>
+              <select class="field-select" data-calc-input="medo_algo_ruim"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>7. Sente-se feliz a maior parte do tempo?</label>
+              <select class="field-select" data-calc-input="feliz_maior_parte"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>8. Sente-se frequentemente desamparado(a)?</label>
+              <select class="field-select" data-calc-input="desamparado"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>9. Prefere ficar em casa a sair e fazer coisas novas?</label>
+              <select class="field-select" data-calc-input="prefere_ficar_casa"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>10. Sente que tem mais problemas de memória do que a maioria das pessoas?</label>
+              <select class="field-select" data-calc-input="problemas_memoria"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>11. Pensa que é maravilhoso estar vivo(a) atualmente?</label>
+              <select class="field-select" data-calc-input="maravilhoso_viver"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>12. Sente-se um tanto inútil, do jeito que está atualmente?</label>
+              <select class="field-select" data-calc-input="sente_inutil"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>13. Sente-se cheio(a) de energia?</label>
+              <select class="field-select" data-calc-input="cheio_energia"><option value="1" selected>Sim</option><option value="0">Não</option></select></div><div class="urg-field"><label>14. Sente que sua situação é sem esperança?</label>
+              <select class="field-select" data-calc-input="sem_esperanca"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>15. Acha que a maioria das pessoas está em melhor situação do que o(a) senhor(a)?</label>
+              <select class="field-select" data-calc-input="outros_melhor"><option value="0" selected>Não</option><option value="1">Sim</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Sintomas Depressivos Significativos</span>
@@ -750,14 +828,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -766,45 +844,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Sem Sintomas Depressivos Significativos</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:40%; background:#2563eb"></div></div>
-              <span class="dist-pct">40%</span></div><div class="dist-row"><span class="dist-label">Sintomas Depressivos Leves</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:30%; background:#ca8a04"></div></div>
-              <span class="dist-pct">30%</span></div><div class="dist-row"><span class="dist-label">Sintomas Depressivos Moderados</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#ca8a04"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Sintomas Depressivos Graves</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#dc2626"></div></div>
-              <span class="dist-pct">10%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escala de Depressão Geriátrica</td><td>0 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escala de Depressão Geriátrica</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escala de Depressão Geriátrica</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a Escala de Depressão Geriátrica (GDS-15)</h2>
           <p>A GDS-15 soma 1 ponto para cada resposta indicativa de sintomas depressivos entre 15 perguntas de sim/não, totalizando de 0 a 15 pontos. Cinco itens (1, 5, 7, 11, 13) têm pontuação invertida.</p><p><strong>Guia rápido:</strong> 0-4 = Sem sintomas significativos | 5-8 = Leve | 9-11 = Moderada | 12-15 = Grave.</p>
@@ -816,45 +889,22 @@
               <p>Não é recomendada para idosos com comprometimento cognitivo importante, pois a compreensão das perguntas pode estar prejudicada, comprometendo a confiabilidade das respostas.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -912,14 +962,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "17283940-5162-8394-0516-172839405162", "code": "SCALE-GDS-001", "slug": "gds", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Depressão Geriátrica (GDS-15) - Rastreio de Depressão em Idosos", "description": "Calcule a Escala de Depressão Geriátrica (Geriatric Depression Scale, versão reduzida de 15 itens) para rastrear sintomas depressivos em idosos. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/gds.html"}, "breadcrumb": {"category": "Saúde Mental", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Depressão Geriátrica", "acronym": "GDS-15", "categoryBadge": "Saúde mental", "icon": "i-brain", "objective": "Rastrear sintomas depressivos em idosos por meio de 15 perguntas de resposta simples (sim/não), auxiliando na identificação precoce de depressão geriátrica.", "indication": "Indicada no rastreio de depressão em idosos, especialmente em atenção primária, geriatria e instituições de longa permanência.", "targetPopulation": "Pacientes idosos (geralmente 60 anos ou mais), sem comprometimento cognitivo grave que impeça a compreensão das perguntas.", "specialty": ["Geriatria", "Saúde Mental", "Enfermagem"], "averageTime": "5-7 minutos", "evidenceLevel": "II", "originalAuthors": ["Jerome Yesavage"], "complexity": "intermediate", "rating": 4.5, "ratingCount": 230}, "calculator": {"inputs": [{"id": "satisfeito_vida", "type": "select", "label": "1. Está satisfeito(a) com sua vida?", "defaultValue": 1, "description": "Pergunta de resposta invertida — 'Não' pontua.", "options": [{"value": 1, "label": "Sim", "score": 0}, {"value": 0, "label": "Não", "score": 1}]}, {"id": "abandonou_interesses", "type": "select", "label": "2. Abandonou muitos de seus interesses e atividades?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "vida_vazia", "type": "select", "label": "3. Sente que sua vida está vazia?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "aborrece_frequencia", "type": "select", "label": "4. Se aborrece com frequência?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "bem_com_vida", "type": "select", "label": "5. Sente-se bem com a vida a maior parte do tempo?", "defaultValue": 1, "description": "Pergunta de resposta invertida — 'Não' pontua.", "options": [{"value": 1, "label": "Sim", "score": 0}, {"value": 0, "label": "Não", "score": 1}]}, {"id": "medo_algo_ruim", "type": "select", "label": "6. Tem medo que algo de ruim lhe aconteça?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "feliz_maior_parte", "type": "select", "label": "7. Sente-se feliz a maior parte do tempo?", "defaultValue": 1, "description": "Pergunta de resposta invertida — 'Não' pontua.", "options": [{"value": 1, "label": "Sim", "score": 0}, {"value": 0, "label": "Não", "score": 1}]}, {"id": "desamparado", "type": "select", "label": "8. Sente-se frequentemente desamparado(a)?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "prefere_ficar_casa", "type": "select", "label": "9. Prefere ficar em casa a sair e fazer coisas novas?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "problemas_memoria", "type": "select", "label": "10. Sente que tem mais problemas de memória do que a maioria das pessoas?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "maravilhoso_viver", "type": "select", "label": "11. Pensa que é maravilhoso estar vivo(a) atualmente?", "defaultValue": 1, "description": "Pergunta de resposta invertida — 'Não' pontua.", "options": [{"value": 1, "label": "Sim", "score": 0}, {"value": 0, "label": "Não", "score": 1}]}, {"id": "sente_inutil", "type": "select", "label": "12. Sente-se um tanto inútil, do jeito que está atualmente?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "cheio_energia", "type": "select", "label": "13. Sente-se cheio(a) de energia?", "defaultValue": 1, "description": "Pergunta de resposta invertida — 'Não' pontua.", "options": [{"value": 1, "label": "Sim", "score": 0}, {"value": 0, "label": "Não", "score": 1}]}, {"id": "sem_esperanca", "type": "select", "label": "14. Sente que sua situação é sem esperança?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}, {"id": "outros_melhor", "type": "select", "label": "15. Acha que a maioria das pessoas está em melhor situação do que o(a) senhor(a)?", "defaultValue": 0, "description": "'Sim' pontua.", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Escala de Depressão Geriátrica (GDS-15)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 4, "label": "Sem Sintomas Depressivos Significativos", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Pontuação de 0 a 4 pontos, geralmente considerada dentro da normalidade.", "recommendations": "• Manter acompanhamento de rotina\n• Reavaliar periodicamente, especialmente após eventos estressores"}, {"min": 5, "max": 8, "label": "Sintomas Depressivos Leves", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Pontuação entre 5 e 8 pontos sugere sintomas depressivos leves.", "recommendations": "• Investigar fatores associados (isolamento social, luto, doenças crônicas)\n• Considerar encaminhamento para avaliação especializada\n• Reavaliar periodicamente"}, {"min": 9, "max": 11, "label": "Sintomas Depressivos Moderados", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação entre 9 e 11 pontos sugere sintomas depressivos moderados.", "recommendations": "• Encaminhar para avaliação especializada em saúde mental\n• Investigar risco de ideação suicida\n• Envolver a família no plano de cuidados"}, {"min": 12, "max": 15, "label": "Sintomas Depressivos Graves", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação entre 12 e 15 pontos sugere sintomas depressivos graves.", "recommendations": "• Encaminhamento prioritário para avaliação psiquiátrica/psicológica\n• Avaliar ativamente risco de ideação e comportamento suicida\n• Envolver equipe multiprofissional e a família no plano de cuidados"}]}, "sae": {"nanda": [{"diagnosis": "Risco de solidão", "definition": "Suscetibilidade a vivenciar um mal-estar associado a um desejo ou necessidade de mais contato com os outros, relacionado a sintomas depressivos identificados."}, {"diagnosis": "Padrão de sono perturbado", "definition": "Interrupções, durante um período de tempo limitado, da quantidade e qualidade do sono devido a fatores externos, comum em quadros depressivos."}, {"diagnosis": "Risco de suicídio", "definition": "Risco de lesão autoinfligida que ameaça a vida, a ser ativamente investigado em pacientes com pontuação elevada na GDS-15."}], "noc": [{"outcome": "Nível de depressão", "indicators": ["Escore da GDS-15 avaliado e monitorado ao longo do tempo", "Encaminhamento para avaliação especializada quando indicado", "Ausência de ideação suicida identificada e não tratada"]}], "nic": [{"intervention": "Manejo do humor", "activities": ["Aplicar a GDS-15 no rastreio de sintomas depressivos em idosos", "Investigar ativamente risco de ideação suicida em pontuações elevadas", "Encaminhar para avaliação especializada em saúde mental conforme resultado", "Envolver a família no plano de cuidados e observação", "Estimular participação em atividades sociais e físicas conforme capacidade"]}]}, "evidence": {"foundation": "A Escala de Depressão Geriátrica (GDS) em sua versão reduzida (GDS-15) avalia sintomas depressivos por meio de 15 perguntas de resposta sim/não, com pontuação de 0 a 15, sendo 10 itens que pontuam quando respondidos 'sim' e 5 itens (1, 5, 7, 11 e 13) que pontuam quando respondidos 'não'.", "history": "Desenvolvida por Jerome Yesavage e colaboradores, a versão original tinha 30 itens; a versão reduzida de 15 itens foi criada posteriormente para facilitar a aplicação em idosos, mantendo boa validade e confiabilidade.", "validation": "Amplamente validada para rastreio de depressão em idosos, com boa sensibilidade e especificidade, sendo uma das ferramentas de rastreio mais utilizadas em geriatria e atenção primária.", "limitations": "Não deve ser utilizada em idosos com comprometimento cognitivo importante que impeça a compreensão das perguntas. É uma ferramenta de rastreio, não substitui a avaliação diagnóstica especializada em saúde mental.", "references": [{"text": "YESAVAGE, J. A. et al. Development and validation of a geriatric depression screening scale: a preliminary report. Journal of Psychiatric Research, v. 17, n. 1, p. 37-49, 1982."}, {"text": "SHEIKH, J. I.; YESAVAGE, J. A. Geriatric Depression Scale (GDS): recent evidence and development of a shorter version. Clinical Gerontologist, v. 5, n. 1-2, p. 165-173, 1986."}, {"text": "ALMEIDA, O. P.; ALMEIDA, S. A. Confiabilidade da versão brasileira da Escala de Depressão em Geriatria (GDS) versão reduzida. Arquivos de Neuro-Psiquiatria, v. 57, n. 2B, p. 421-426, 1999."}]}, "learning": {"tips": ["A GDS-15 possui 5 itens de resposta invertida (1, 5, 7, 11 e 13), nos quais a resposta 'Não' é que pontua para depressão — atenção redobrada ao aplicar.", "É uma ferramenta de rastreio, não de diagnóstico — pontuações elevadas devem ser seguidas de avaliação especializada.", "Não é indicada para idosos com comprometimento cognitivo importante, que podem ter dificuldade em compreender e responder às perguntas de forma confiável.", "Sempre investigue ativamente risco de ideação suicida em idosos com pontuação elevada, independentemente da resposta a perguntas específicas sobre o tema."], "examples": [{"label": "Sem sintomas significativos", "sublabel": "GDS-15: 1", "emoji": "✅", "values": {"satisfeito_vida": 1, "abandonou_interesses": 0, "vida_vazia": 0, "aborrece_frequencia": 0, "bem_com_vida": 1, "medo_algo_ruim": 0, "feliz_maior_parte": 1, "desamparado": 0, "prefere_ficar_casa": 0, "problemas_memoria": 1, "maravilhoso_viver": 1, "sente_inutil": 0, "cheio_energia": 1, "sem_esperanca": 0, "outros_melhor": 0}}, {"label": "Sintomas leves", "sublabel": "GDS-15: 7", "emoji": "🔎", "values": {"satisfeito_vida": 1, "abandonou_interesses": 1, "vida_vazia": 0, "aborrece_frequencia": 1, "bem_com_vida": 0, "medo_algo_ruim": 1, "feliz_maior_parte": 1, "desamparado": 0, "prefere_ficar_casa": 1, "problemas_memoria": 1, "maravilhoso_viver": 1, "sente_inutil": 0, "cheio_energia": 0, "sem_esperanca": 0, "outros_melhor": 0}}, {"label": "Sintomas graves", "sublabel": "GDS-15: 15", "emoji": "🚨", "values": {"satisfeito_vida": 0, "abandonou_interesses": 1, "vida_vazia": 1, "aborrece_frequencia": 1, "bem_com_vida": 0, "medo_algo_ruim": 1, "feliz_maior_parte": 0, "desamparado": 1, "prefere_ficar_casa": 1, "problemas_memoria": 1, "maravilhoso_viver": 0, "sente_inutil": 1, "cheio_energia": 0, "sem_esperanca": 1, "outros_melhor": 1}}], "quiz": [{"q": "Quantos itens da GDS-15 têm resposta invertida (pontuam quando respondidos 'Não')?", "opts": ["Nenhum", "2", "5", "10"], "correct": 2, "expl": "Cinco itens (1, 5, 7, 11 e 13) pontuam quando respondidos 'Não', diferente dos demais 10 itens que pontuam quando respondidos 'Sim'."}, {"q": "Qual pontuação total sugere sintomas depressivos graves?", "opts": ["0 a 4 pontos", "5 a 8 pontos", "9 a 11 pontos", "12 a 15 pontos"], "correct": 3, "expl": "Uma pontuação entre 12 e 15 pontos sugere sintomas depressivos graves na GDS-15."}, {"q": "A GDS-15 é apropriada para idosos com comprometimento cognitivo importante?", "opts": ["Sim, sem restrições", "Não, pode comprometer a confiabilidade das respostas", "Apenas em fase inicial de demência leve", "É a ferramenta preferencial nesses casos"], "correct": 1, "expl": "A GDS-15 não é recomendada para idosos com comprometimento cognitivo importante, pois isso pode comprometer a compreensão das perguntas e a confiabilidade das respostas."}]}, "faq": [{"q": "A GDS-15 substitui a avaliação psiquiátrica?", "a": "Não. É uma ferramenta de rastreio que ajuda a identificar idosos com possíveis sintomas depressivos, mas o diagnóstico definitivo e o plano terapêutico devem ser estabelecidos por avaliação especializada em saúde mental."}, {"q": "A GDS-15 pode ser usada em idosos com demência?", "a": "Não é recomendada para idosos com comprometimento cognitivo importante, pois a compreensão das perguntas pode estar prejudicada, comprometendo a confiabilidade das respostas."}], "about": {"title": "Como funciona a Escala de Depressão Geriátrica (GDS-15)", "html": "<p>A GDS-15 soma 1 ponto para cada resposta indicativa de sintomas depressivos entre 15 perguntas de sim/não, totalizando de 0 a 15 pontos. Cinco itens (1, 5, 7, 11, 13) têm pontuação invertida.</p><p><strong>Guia rápido:</strong> 0-4 = Sem sintomas significativos | 5-8 = Leve | 9-11 = Moderada | 12-15 = Grave.</p>"}}</script>
+</body></html>

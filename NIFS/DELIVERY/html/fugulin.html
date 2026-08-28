@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="fugulin">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -116,7 +126,7 @@
                 <label class="field-label" for="calc-estado_mental">Estado Mental e Nível de Consciência</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-estado_mental" class="field-select" data-calc-input="estado_mental"><option value="1" selected>1 — 1 — Orientado / Consciente</option><option value="2">2 — 2 — Períodos de Desorientação</option><option value="3">3 — 3 — Inconsciência Parcial</option><option value="4">4 — 4 — Inconsciente / Coma</option></select>
+                <select id="calc-estado_mental" class="field-select" data-calc-input="estado_mental"><option value="1" selected>1 — Orientado / Consciente</option><option value="2">2 — Períodos de Desorientação</option><option value="3">3 — Inconsciência Parcial</option><option value="4">4 — Inconsciente / Coma</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Avalie o nível de consciência e orientação do paciente.</p>
@@ -126,7 +136,7 @@
                 <label class="field-label" for="calc-oxigenacao">Oxigenação</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-oxigenacao" class="field-select" data-calc-input="oxigenacao"><option value="1" selected>1 — 1 — Sem Necessidade de O2</option><option value="2">2 — 2 — O2 Intermitente / Cateter Nasal</option><option value="3">3 — 3 — O2 Contínuo / Máscara</option><option value="4">4 — 4 — Ventilação Mecânica</option></select>
+                <select id="calc-oxigenacao" class="field-select" data-calc-input="oxigenacao"><option value="1" selected>1 — Sem Necessidade de O2</option><option value="2">2 — O2 Intermitente / Cateter Nasal</option><option value="3">3 — O2 Contínuo / Máscara</option><option value="4">4 — Ventilação Mecânica</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Necessidade de suporte de oxigênio ou ventilatório.</p>
@@ -136,7 +146,7 @@
                 <label class="field-label" for="calc-sinais_vitais">Sinais Vitais</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-sinais_vitais" class="field-select" data-calc-input="sinais_vitais"><option value="1" selected>1 — 1 — Estáveis, Controle de Rotina</option><option value="2">2 — 2 — Controle a cada 4-6h</option><option value="3">3 — 3 — Controle a cada 2h</option><option value="4">4 — 4 — Monitorização Contínua</option></select>
+                <select id="calc-sinais_vitais" class="field-select" data-calc-input="sinais_vitais"><option value="1" selected>1 — Estáveis, Controle de Rotina</option><option value="2">2 — Controle a cada 4-6h</option><option value="3">3 — Controle a cada 2h</option><option value="4">4 — Monitorização Contínua</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Frequência de monitorização e estabilidade dos sinais vitais.</p>
@@ -146,7 +156,7 @@
                 <label class="field-label" for="calc-motilidade">Motilidade</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-motilidade" class="field-select" data-calc-input="motilidade"><option value="1" selected>1 — 1 — Movimenta-se Livremente</option><option value="2">2 — 2 — Limitação Leve</option><option value="3">3 — 3 — Limitação Importante</option><option value="4">4 — 4 — Incapaz de se Movimentar</option></select>
+                <select id="calc-motilidade" class="field-select" data-calc-input="motilidade"><option value="1" selected>1 — Movimenta-se Livremente</option><option value="2">2 — Limitação Leve</option><option value="3">3 — Limitação Importante</option><option value="4">4 — Incapaz de se Movimentar</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Capacidade de se movimentar no leito.</p>
@@ -156,7 +166,7 @@
                 <label class="field-label" for="calc-deambulacao">Deambulação</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-deambulacao" class="field-select" data-calc-input="deambulacao"><option value="1" selected>1 — 1 — Deambula Sozinho</option><option value="2">2 — 2 — Deambula com Auxílio</option><option value="3">3 — 3 — Restrito ao Leito com Mobilização</option><option value="4">4 — 4 — Restrito ao Leito, Sem Mobilização</option></select>
+                <select id="calc-deambulacao" class="field-select" data-calc-input="deambulacao"><option value="1" selected>1 — Deambula Sozinho</option><option value="2">2 — Deambula com Auxílio</option><option value="3">3 — Restrito ao Leito com Mobilização</option><option value="4">4 — Restrito ao Leito, Sem Mobilização</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Capacidade de caminhar de forma independente ou com auxílio.</p>
@@ -166,7 +176,7 @@
                 <label class="field-label" for="calc-alimentacao">Alimentação</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-alimentacao" class="field-select" data-calc-input="alimentacao"><option value="1" selected>1 — 1 — Independente, Via Oral</option><option value="2">2 — 2 — Necessita de Auxílio Parcial</option><option value="3">3 — 3 — Alimentação Assistida Total / Sonda</option><option value="4">4 — 4 — Nutrição Parenteral</option></select>
+                <select id="calc-alimentacao" class="field-select" data-calc-input="alimentacao"><option value="1" selected>1 — Independente, Via Oral</option><option value="2">2 — Necessita de Auxílio Parcial</option><option value="3">3 — Alimentação Assistida Total / Sonda</option><option value="4">4 — Nutrição Parenteral</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Via e grau de independência para se alimentar.</p>
@@ -176,7 +186,7 @@
                 <label class="field-label" for="calc-cuidado_corporal">Cuidado Corporal</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-cuidado_corporal" class="field-select" data-calc-input="cuidado_corporal"><option value="1" selected>1 — 1 — Independente</option><option value="2">2 — 2 — Auxílio Parcial</option><option value="3">3 — 3 — Auxílio Total no Leito</option><option value="4">4 — 4 — Cuidados Especiais Contínuos</option></select>
+                <select id="calc-cuidado_corporal" class="field-select" data-calc-input="cuidado_corporal"><option value="1" selected>1 — Independente</option><option value="2">2 — Auxílio Parcial</option><option value="3">3 — Auxílio Total no Leito</option><option value="4">4 — Cuidados Especiais Contínuos</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Grau de independência para higiene e cuidado corporal.</p>
@@ -186,7 +196,7 @@
                 <label class="field-label" for="calc-eliminacao">Eliminação</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-eliminacao" class="field-select" data-calc-input="eliminacao"><option value="1" selected>1 — 1 — Independente / Continente</option><option value="2">2 — 2 — Auxílio Ocasional</option><option value="3">3 — 3 — Incontinência / Dispositivo</option><option value="4">4 — 4 — Eliminações Especiais Contínuas</option></select>
+                <select id="calc-eliminacao" class="field-select" data-calc-input="eliminacao"><option value="1" selected>1 — Independente / Continente</option><option value="2">2 — Auxílio Ocasional</option><option value="3">3 — Incontinência / Dispositivo</option><option value="4">4 — Eliminações Especiais Contínuas</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Grau de independência e tipo de controle de eliminações.</p>
@@ -196,7 +206,7 @@
                 <label class="field-label" for="calc-terapeutica">Terapêutica</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-terapeutica" class="field-select" data-calc-input="terapeutica"><option value="1" selected>1 — 1 — Terapêutica Básica / Via Oral</option><option value="2">2 — 2 — Terapêutica EV Intermitente</option><option value="3">3 — 3 — Terapêutica EV Contínua / Múltiplas Drogas</option><option value="4">4 — 4 — Terapêutica de Alta Complexidade</option></select>
+                <select id="calc-terapeutica" class="field-select" data-calc-input="terapeutica"><option value="1" selected>1 — Terapêutica Básica / Via Oral</option><option value="2">2 — Terapêutica EV Intermitente</option><option value="3">3 — Terapêutica EV Contínua / Múltiplas Drogas</option><option value="4">4 — Terapêutica de Alta Complexidade</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Complexidade do tratamento medicamentoso e de procedimentos prescritos.</p>
@@ -264,8 +274,7 @@
                     <span class="formula-cap">Escore de Classificação</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -295,10 +304,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -309,7 +386,7 @@
                   <h3>Estado Mental e Nível de Consciência</h3>
                   <p class="step-hint">Avalie o nível de consciência e orientação do paciente.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="estado_mental"><option value="1" selected>1 — 1 — Orientado / Consciente</option><option value="2">2 — 2 — Períodos de Desorientação</option><option value="3">3 — 3 — Inconsciência Parcial</option><option value="4">4 — 4 — Inconsciente / Coma</option></select>
+                <select class="field-select" data-calc-input="estado_mental"><option value="1" selected>1 — Orientado / Consciente</option><option value="2">2 — Períodos de Desorientação</option><option value="3">3 — Inconsciência Parcial</option><option value="4">4 — Inconsciente / Coma</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -322,7 +399,7 @@
                   <h3>Oxigenação</h3>
                   <p class="step-hint">Necessidade de suporte de oxigênio ou ventilatório.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="oxigenacao"><option value="1" selected>1 — 1 — Sem Necessidade de O2</option><option value="2">2 — 2 — O2 Intermitente / Cateter Nasal</option><option value="3">3 — 3 — O2 Contínuo / Máscara</option><option value="4">4 — 4 — Ventilação Mecânica</option></select>
+                <select class="field-select" data-calc-input="oxigenacao"><option value="1" selected>1 — Sem Necessidade de O2</option><option value="2">2 — O2 Intermitente / Cateter Nasal</option><option value="3">3 — O2 Contínuo / Máscara</option><option value="4">4 — Ventilação Mecânica</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -335,7 +412,7 @@
                   <h3>Sinais Vitais</h3>
                   <p class="step-hint">Frequência de monitorização e estabilidade dos sinais vitais.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="sinais_vitais"><option value="1" selected>1 — 1 — Estáveis, Controle de Rotina</option><option value="2">2 — 2 — Controle a cada 4-6h</option><option value="3">3 — 3 — Controle a cada 2h</option><option value="4">4 — 4 — Monitorização Contínua</option></select>
+                <select class="field-select" data-calc-input="sinais_vitais"><option value="1" selected>1 — Estáveis, Controle de Rotina</option><option value="2">2 — Controle a cada 4-6h</option><option value="3">3 — Controle a cada 2h</option><option value="4">4 — Monitorização Contínua</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -348,7 +425,7 @@
                   <h3>Motilidade</h3>
                   <p class="step-hint">Capacidade de se movimentar no leito.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="motilidade"><option value="1" selected>1 — 1 — Movimenta-se Livremente</option><option value="2">2 — 2 — Limitação Leve</option><option value="3">3 — 3 — Limitação Importante</option><option value="4">4 — 4 — Incapaz de se Movimentar</option></select>
+                <select class="field-select" data-calc-input="motilidade"><option value="1" selected>1 — Movimenta-se Livremente</option><option value="2">2 — Limitação Leve</option><option value="3">3 — Limitação Importante</option><option value="4">4 — Incapaz de se Movimentar</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -361,7 +438,7 @@
                   <h3>Deambulação</h3>
                   <p class="step-hint">Capacidade de caminhar de forma independente ou com auxílio.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="deambulacao"><option value="1" selected>1 — 1 — Deambula Sozinho</option><option value="2">2 — 2 — Deambula com Auxílio</option><option value="3">3 — 3 — Restrito ao Leito com Mobilização</option><option value="4">4 — 4 — Restrito ao Leito, Sem Mobilização</option></select>
+                <select class="field-select" data-calc-input="deambulacao"><option value="1" selected>1 — Deambula Sozinho</option><option value="2">2 — Deambula com Auxílio</option><option value="3">3 — Restrito ao Leito com Mobilização</option><option value="4">4 — Restrito ao Leito, Sem Mobilização</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -374,7 +451,7 @@
                   <h3>Alimentação</h3>
                   <p class="step-hint">Via e grau de independência para se alimentar.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="alimentacao"><option value="1" selected>1 — 1 — Independente, Via Oral</option><option value="2">2 — 2 — Necessita de Auxílio Parcial</option><option value="3">3 — 3 — Alimentação Assistida Total / Sonda</option><option value="4">4 — 4 — Nutrição Parenteral</option></select>
+                <select class="field-select" data-calc-input="alimentacao"><option value="1" selected>1 — Independente, Via Oral</option><option value="2">2 — Necessita de Auxílio Parcial</option><option value="3">3 — Alimentação Assistida Total / Sonda</option><option value="4">4 — Nutrição Parenteral</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -387,7 +464,7 @@
                   <h3>Cuidado Corporal</h3>
                   <p class="step-hint">Grau de independência para higiene e cuidado corporal.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="cuidado_corporal"><option value="1" selected>1 — 1 — Independente</option><option value="2">2 — 2 — Auxílio Parcial</option><option value="3">3 — 3 — Auxílio Total no Leito</option><option value="4">4 — 4 — Cuidados Especiais Contínuos</option></select>
+                <select class="field-select" data-calc-input="cuidado_corporal"><option value="1" selected>1 — Independente</option><option value="2">2 — Auxílio Parcial</option><option value="3">3 — Auxílio Total no Leito</option><option value="4">4 — Cuidados Especiais Contínuos</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -400,7 +477,7 @@
                   <h3>Eliminação</h3>
                   <p class="step-hint">Grau de independência e tipo de controle de eliminações.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="eliminacao"><option value="1" selected>1 — 1 — Independente / Continente</option><option value="2">2 — 2 — Auxílio Ocasional</option><option value="3">3 — 3 — Incontinência / Dispositivo</option><option value="4">4 — 4 — Eliminações Especiais Contínuas</option></select>
+                <select class="field-select" data-calc-input="eliminacao"><option value="1" selected>1 — Independente / Continente</option><option value="2">2 — Auxílio Ocasional</option><option value="3">3 — Incontinência / Dispositivo</option><option value="4">4 — Eliminações Especiais Contínuas</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -413,7 +490,7 @@
                   <h3>Terapêutica</h3>
                   <p class="step-hint">Complexidade do tratamento medicamentoso e de procedimentos prescritos.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="terapeutica"><option value="1" selected>1 — 1 — Terapêutica Básica / Via Oral</option><option value="2">2 — 2 — Terapêutica EV Intermitente</option><option value="3">3 — 3 — Terapêutica EV Contínua / Múltiplas Drogas</option><option value="4">4 — 4 — Terapêutica de Alta Complexidade</option></select>
+                <select class="field-select" data-calc-input="terapeutica"><option value="1" selected>1 — Terapêutica Básica / Via Oral</option><option value="2">2 — Terapêutica EV Intermitente</option><option value="3">3 — Terapêutica EV Contínua / Múltiplas Drogas</option><option value="4">4 — Terapêutica de Alta Complexidade</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -516,15 +593,16 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;estado_mental&quot;: 1, &quot;oxigenacao&quot;: 1, &quot;sinais_vitais&quot;: 1, &quot;motilidade&quot;: 1, &quot;deambulacao&quot;: 1, &quot;alimentacao&quot;: 1, &quot;cuidado_corporal&quot;: 1, &quot;eliminacao&quot;: 1, &quot;terapeutica&quot;: 1}'>Paciente estável, autocuidado <span class="p-sub">Fugulin 9 (Mínimos)</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;estado_mental&quot;: 2, &quot;oxigenacao&quot;: 3, &quot;sinais_vitais&quot;: 3, &quot;motilidade&quot;: 3, &quot;deambulacao&quot;: 3, &quot;alimentacao&quot;: 2, &quot;cuidado_corporal&quot;: 2, &quot;eliminacao&quot;: 2, &quot;terapeutica&quot;: 2}'>Pós-operatório recente <span class="p-sub">Fugulin 22 (Alta Dependência)</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;estado_mental&quot;: 4, &quot;oxigenacao&quot;: 4, &quot;sinais_vitais&quot;: 4, &quot;motilidade&quot;: 4, &quot;deambulacao&quot;: 4, &quot;alimentacao&quot;: 3, &quot;cuidado_corporal&quot;: 4, &quot;eliminacao&quot;: 3, &quot;terapeutica&quot;: 4}'>Paciente crítico, drogas vasoativas <span class="p-sub">Fugulin 34 (Intensivos)</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Estado Mental e Nível de Consciência</label>
-              <select class="field-select" data-calc-input="estado_mental" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Orientado / Consciente</option><option value="2">2 — Períodos de Desorientação</option><option value="3">3 — Inconsciência Parcial</option><option value="4">4 — Inconsciente / Coma</option></select></div><div class="urg-field"><label>Oxigenação</label>
-              <select class="field-select" data-calc-input="oxigenacao" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Sem Necessidade de O2</option><option value="2">2 — O2 Intermitente / Cateter Nasal</option><option value="3">3 — O2 Contínuo / Máscara</option><option value="4">4 — Ventilação Mecânica</option></select></div><div class="urg-field"><label>Sinais Vitais</label>
-              <select class="field-select" data-calc-input="sinais_vitais" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Estáveis, Controle de Rotina</option><option value="2">2 — Controle a cada 4-6h</option><option value="3">3 — Controle a cada 2h</option><option value="4">4 — Monitorização Contínua</option></select></div><div class="urg-field"><label>Motilidade</label>
-              <select class="field-select" data-calc-input="motilidade" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Movimenta-se Livremente</option><option value="2">2 — Limitação Leve</option><option value="3">3 — Limitação Importante</option><option value="4">4 — Incapaz de se Movimentar</option></select></div><div class="urg-field"><label>Deambulação</label>
-              <select class="field-select" data-calc-input="deambulacao" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Deambula Sozinho</option><option value="2">2 — Deambula com Auxílio</option><option value="3">3 — Restrito ao Leito com Mobilização</option><option value="4">4 — Restrito ao Leito, Sem Mobilização</option></select></div><div class="urg-field"><label>Alimentação</label>
-              <select class="field-select" data-calc-input="alimentacao" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Independente, Via Oral</option><option value="2">2 — Necessita de Auxílio Parcial</option><option value="3">3 — Alimentação Assistida Total / Sonda</option><option value="4">4 — Nutrição Parenteral</option></select></div><div class="urg-field"><label>Cuidado Corporal</label>
-              <select class="field-select" data-calc-input="cuidado_corporal" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Independente</option><option value="2">2 — Auxílio Parcial</option><option value="3">3 — Auxílio Total no Leito</option><option value="4">4 — Cuidados Especiais Contínuos</option></select></div><div class="urg-field"><label>Eliminação</label>
-              <select class="field-select" data-calc-input="eliminacao" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Independente / Continente</option><option value="2">2 — Auxílio Ocasional</option><option value="3">3 — Incontinência / Dispositivo</option><option value="4">4 — Eliminações Especiais Contínuas</option></select></div><div class="urg-field"><label>Terapêutica</label>
-              <select class="field-select" data-calc-input="terapeutica" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>1 — Terapêutica Básica / Via Oral</option><option value="2">2 — Terapêutica EV Intermitente</option><option value="3">3 — Terapêutica EV Contínua / Múltiplas Drogas</option><option value="4">4 — Terapêutica de Alta Complexidade</option></select></div></div>
+              <select class="field-select" data-calc-input="estado_mental"><option value="1" selected>1 — Orientado / Consciente</option><option value="2">2 — Períodos de Desorientação</option><option value="3">3 — Inconsciência Parcial</option><option value="4">4 — Inconsciente / Coma</option></select></div><div class="urg-field"><label>Oxigenação</label>
+              <select class="field-select" data-calc-input="oxigenacao"><option value="1" selected>1 — Sem Necessidade de O2</option><option value="2">2 — O2 Intermitente / Cateter Nasal</option><option value="3">3 — O2 Contínuo / Máscara</option><option value="4">4 — Ventilação Mecânica</option></select></div><div class="urg-field"><label>Sinais Vitais</label>
+              <select class="field-select" data-calc-input="sinais_vitais"><option value="1" selected>1 — Estáveis, Controle de Rotina</option><option value="2">2 — Controle a cada 4-6h</option><option value="3">3 — Controle a cada 2h</option><option value="4">4 — Monitorização Contínua</option></select></div><div class="urg-field"><label>Motilidade</label>
+              <select class="field-select" data-calc-input="motilidade"><option value="1" selected>1 — Movimenta-se Livremente</option><option value="2">2 — Limitação Leve</option><option value="3">3 — Limitação Importante</option><option value="4">4 — Incapaz de se Movimentar</option></select></div><div class="urg-field"><label>Deambulação</label>
+              <select class="field-select" data-calc-input="deambulacao"><option value="1" selected>1 — Deambula Sozinho</option><option value="2">2 — Deambula com Auxílio</option><option value="3">3 — Restrito ao Leito com Mobilização</option><option value="4">4 — Restrito ao Leito, Sem Mobilização</option></select></div><div class="urg-field"><label>Alimentação</label>
+              <select class="field-select" data-calc-input="alimentacao"><option value="1" selected>1 — Independente, Via Oral</option><option value="2">2 — Necessita de Auxílio Parcial</option><option value="3">3 — Alimentação Assistida Total / Sonda</option><option value="4">4 — Nutrição Parenteral</option></select></div><div class="urg-field"><label>Cuidado Corporal</label>
+              <select class="field-select" data-calc-input="cuidado_corporal"><option value="1" selected>1 — Independente</option><option value="2">2 — Auxílio Parcial</option><option value="3">3 — Auxílio Total no Leito</option><option value="4">4 — Cuidados Especiais Contínuos</option></select></div><div class="urg-field"><label>Eliminação</label>
+              <select class="field-select" data-calc-input="eliminacao"><option value="1" selected>1 — Independente / Continente</option><option value="2">2 — Auxílio Ocasional</option><option value="3">3 — Incontinência / Dispositivo</option><option value="4">4 — Eliminações Especiais Contínuas</option></select></div><div class="urg-field"><label>Terapêutica</label>
+              <select class="field-select" data-calc-input="terapeutica"><option value="1" selected>1 — Terapêutica Básica / Via Oral</option><option value="2">2 — Terapêutica EV Intermitente</option><option value="3">3 — Terapêutica EV Contínua / Múltiplas Drogas</option><option value="4">4 — Terapêutica de Alta Complexidade</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">9</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Cuidados Mínimos (PCM)</span>
@@ -565,14 +643,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -581,47 +659,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Cuidados Mínimos (PCM)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#2563eb"></div></div>
-              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Cuidados Intermediários (PCI)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:27%; background:#ca8a04"></div></div>
-              <span class="dist-pct">27%</span></div><div class="dist-row"><span class="dist-label">Cuidados de Alta Dependência (PCAD)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#ca8a04"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Cuidados Semi-Intensivos (PCSI)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:13%; background:#dc2626"></div></div>
-              <span class="dist-pct">13%</span></div><div class="dist-row"><span class="dist-label">Cuidados Intensivos (PCIt)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:7%; background:#7f1d1d"></div></div>
-              <span class="dist-pct">7%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Sistema de Classificação de Pacientes de Fugulin</td><td>9 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Sistema de Classificação de Pacientes de Fugulin</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Sistema de Classificação de Pacientes de Fugulin</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o Sistema de Classificação de Fugulin</h2>
           <p>O Sistema de Fugulin soma pontos de 9 áreas de cuidado — estado mental, oxigenação, sinais vitais, motilidade, deambulação, alimentação, cuidado corporal, eliminação e terapêutica —, cada uma pontuada de 1 a 4, totalizando de 9 a 36 pontos, que classificam o paciente em 5 categorias de dependência de cuidados de enfermagem.</p><p><strong>Guia rápido:</strong> 9-14 = Mínimos | 15-20 = Intermediários | 21-26 = Alta Dependência | 27-31 = Semi-Intensivos | 32-36 = Intensivos.</p>
@@ -633,45 +704,21 @@
               <p>Não. É uma ferramenta objetiva de apoio à gestão, mas o enfermeiro responsável deve sempre considerar o contexto clínico completo do paciente na tomada de decisões sobre cuidado e alocação de recursos.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="adicional-noturno.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Adicional Noturno</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-de-ferias.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Férias</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-hora-extra.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Hora Extra</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-rescisao.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Rescisão Trabalhista</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="dimensionamento.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users-cog"/></svg></div><div><h3>Calculadora de Dimensionamento de Equipe de Enfermagem</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -729,14 +776,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "6d7e8f95-0718-4c2d-6374-8f9507182940", "code": "SCALE-FUGULIN-001", "slug": "fugulin", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Fugulin - Classificação de Pacientes e Dimensionamento de Enfermagem", "description": "Calcule o Sistema de Classificação de Pacientes de Fugulin para dimensionamento de pessoal de enfermagem, classificando o paciente conforme o grau de dependência de cuidados.", "canonical": "https://www.calculadorasdeenfermagem.com.br/fugulin.html"}, "breadcrumb": {"category": "Gestão em Enfermagem", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Sistema de Classificação de Pacientes de Fugulin", "acronym": "Fugulin", "categoryBadge": "Gestão em enfermagem", "icon": "i-clipcheck", "objective": "Classificar o paciente conforme seu grau de dependência dos cuidados de enfermagem, subsidiando o dimensionamento de pessoal de enfermagem nas unidades assistenciais.", "indication": "Indicada para uso diário nas unidades de internação, como instrumento de gestão para dimensionamento de pessoal de enfermagem, conforme preconizado pelo COFEN.", "targetPopulation": "Pacientes internados em unidades de enfermagem hospitalares, de qualquer especialidade.", "specialty": ["Gestão em Enfermagem", "Administração Hospitalar"], "averageTime": "3-5 minutos", "evidenceLevel": "II", "originalAuthors": ["Fugulin, F. M. T.", "Perroca, M. G."], "organizations": ["COFEN"], "complexity": "advanced", "rating": 4.6, "ratingCount": 195}, "calculator": {"inputs": [{"id": "estado_mental", "type": "select", "label": "Estado Mental e Nível de Consciência", "description": "Avalie o nível de consciência e orientação do paciente.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Orientado / Consciente", "score": 1, "description": "Paciente orientado, consciente e cooperativo."}, {"value": 2, "label": "2 — Períodos de Desorientação", "score": 2, "description": "Períodos ocasionais de desorientação ou confusão."}, {"value": 3, "label": "3 — Inconsciência Parcial", "score": 3, "description": "Rebaixamento parcial do nível de consciência."}, {"value": 4, "label": "4 — Inconsciente / Coma", "score": 4, "description": "Paciente inconsciente ou em coma."}]}, {"id": "oxigenacao", "type": "select", "label": "Oxigenação", "description": "Necessidade de suporte de oxigênio ou ventilatório.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Sem Necessidade de O2", "score": 1, "description": "Respira em ar ambiente, sem necessidade de suplementação."}, {"value": 2, "label": "2 — O2 Intermitente / Cateter Nasal", "score": 2, "description": "Uso intermitente de oxigênio suplementar de baixo fluxo."}, {"value": 3, "label": "3 — O2 Contínuo / Máscara", "score": 3, "description": "Uso contínuo de oxigenoterapia com máscara ou alto fluxo."}, {"value": 4, "label": "4 — Ventilação Mecânica", "score": 4, "description": "Paciente sob ventilação mecânica invasiva ou não invasiva contínua."}]}, {"id": "sinais_vitais", "type": "select", "label": "Sinais Vitais", "description": "Frequência de monitorização e estabilidade dos sinais vitais.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Estáveis, Controle de Rotina", "score": 1, "description": "Sinais vitais estáveis, controle conforme rotina do setor."}, {"value": 2, "label": "2 — Controle a cada 4-6h", "score": 2, "description": "Necessita de controle de sinais vitais a cada 4-6 horas."}, {"value": 3, "label": "3 — Controle a cada 2h", "score": 3, "description": "Necessita de controle de sinais vitais a cada 2 horas."}, {"value": 4, "label": "4 — Monitorização Contínua", "score": 4, "description": "Necessita de monitorização contínua dos sinais vitais."}]}, {"id": "motilidade", "type": "select", "label": "Motilidade", "description": "Capacidade de se movimentar no leito.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Movimenta-se Livremente", "score": 1, "description": "Movimenta-se no leito sem qualquer restrição."}, {"value": 2, "label": "2 — Limitação Leve", "score": 2, "description": "Alguma limitação de movimento, necessita de auxílio ocasional."}, {"value": 3, "label": "3 — Limitação Importante", "score": 3, "description": "Limitação importante de movimento, necessita de auxílio frequente."}, {"value": 4, "label": "4 — Incapaz de se Movimentar", "score": 4, "description": "Totalmente incapaz de se movimentar no leito sem ajuda total."}]}, {"id": "deambulacao", "type": "select", "label": "Deambulação", "description": "Capacidade de caminhar de forma independente ou com auxílio.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Deambula Sozinho", "score": 1, "description": "Deambula de forma independente, sem restrições."}, {"value": 2, "label": "2 — Deambula com Auxílio", "score": 2, "description": "Necessita de auxílio de dispositivo ou de uma pessoa para deambular."}, {"value": 3, "label": "3 — Restrito ao Leito com Mobilização", "score": 3, "description": "Restrito ao leito, porém pode ser mobilizado para cadeira/poltrona."}, {"value": 4, "label": "4 — Restrito ao Leito, Sem Mobilização", "score": 4, "description": "Totalmente restrito ao leito, sem indicação ou possibilidade de mobilização."}]}, {"id": "alimentacao", "type": "select", "label": "Alimentação", "description": "Via e grau de independência para se alimentar.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Independente, Via Oral", "score": 1, "description": "Alimenta-se sozinho, por via oral."}, {"value": 2, "label": "2 — Necessita de Auxílio Parcial", "score": 2, "description": "Necessita de auxílio parcial para se alimentar por via oral."}, {"value": 3, "label": "3 — Alimentação Assistida Total / Sonda", "score": 3, "description": "Necessita de assistência total, ou alimentação por sonda enteral."}, {"value": 4, "label": "4 — Nutrição Parenteral", "score": 4, "description": "Recebe nutrição exclusivamente por via parenteral."}]}, {"id": "cuidado_corporal", "type": "select", "label": "Cuidado Corporal", "description": "Grau de independência para higiene e cuidado corporal.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Independente", "score": 1, "description": "Realiza a própria higiene sem auxílio."}, {"value": 2, "label": "2 — Auxílio Parcial", "score": 2, "description": "Necessita de auxílio parcial para higiene corporal."}, {"value": 3, "label": "3 — Auxílio Total no Leito", "score": 3, "description": "Necessita de banho no leito com auxílio total da equipe."}, {"value": 4, "label": "4 — Cuidados Especiais Contínuos", "score": 4, "description": "Necessita de cuidados corporais especiais e contínuos (ex: múltiplas lesões, múltiplos dispositivos)."}]}, {"id": "eliminacao", "type": "select", "label": "Eliminação", "description": "Grau de independência e tipo de controle de eliminações.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Independente / Continente", "score": 1, "description": "Controle esfincteriano preservado, uso independente do banheiro."}, {"value": 2, "label": "2 — Auxílio Ocasional", "score": 2, "description": "Necessita de auxílio ocasional (comadre/urinol/troca de fralda)."}, {"value": 3, "label": "3 — Incontinência / Dispositivo", "score": 3, "description": "Incontinência com uso de dispositivo (sonda vesical, coletor)."}, {"value": 4, "label": "4 — Eliminações Especiais Contínuas", "score": 4, "description": "Necessita de cuidados especiais e contínuos com eliminações (ex: estomias múltiplas, diálise)."}]}, {"id": "terapeutica", "type": "select", "label": "Terapêutica", "description": "Complexidade do tratamento medicamentoso e de procedimentos prescritos.", "defaultValue": 1, "options": [{"value": 1, "label": "1 — Terapêutica Básica / Via Oral", "score": 1, "description": "Tratamento medicamentoso simples, predominantemente via oral."}, {"value": 2, "label": "2 — Terapêutica EV Intermitente", "score": 2, "description": "Uso de medicações endovenosas intermitentes."}, {"value": 3, "label": "3 — Terapêutica EV Contínua / Múltiplas Drogas", "score": 3, "description": "Infusão contínua de medicações ou múltiplas drogas endovenosas."}, {"value": 4, "label": "4 — Terapêutica de Alta Complexidade", "score": 4, "description": "Uso de drogas vasoativas, quimioterapia ou terapêutica de alta complexidade/risco."}]}], "formula": {"type": "sum", "resultLabel": "Escore de Classificação", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 9, "max": 14, "label": "Cuidados Mínimos (PCM)", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Paciente estável clinicamente e no autocuidado, necessitando de cuidados mínimos de enfermagem.", "recommendations": "• Cuidados de rotina conforme protocolo da unidade\n• Reavaliação diária conforme escala institucional"}, {"min": 15, "max": 20, "label": "Cuidados Intermediários (PCI)", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Paciente estável, porém com dependência parcial de cuidados de enfermagem em uma ou mais áreas avaliadas.", "recommendations": "• Dimensionar equipe conforme parâmetros institucionais para cuidados intermediários\n• Reavaliação diária"}, {"min": 21, "max": 26, "label": "Cuidados de Alta Dependência (PCAD)", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Paciente com recuperação de cirurgias de grande porte ou instabilidade das funções vitais, mas sem risco iminente de morte, com grande dependência da equipe de enfermagem.", "recommendations": "• Dimensionar equipe conforme parâmetros institucionais para alta dependência\n• Reavaliação diária ou mais frequente conforme evolução"}, {"min": 27, "max": 31, "label": "Cuidados Semi-Intensivos (PCSI)", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Paciente potencialmente grave, com necessidade de assistência de enfermagem e médica frequentes, com estabilidade das funções vitais.", "recommendations": "• Dimensionar equipe conforme parâmetros institucionais para semi-intensivos\n• Monitorização e reavaliação frequente"}, {"min": 32, "max": 36, "label": "Cuidados Intensivos (PCIt)", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Paciente grave, com risco iminente de morte, sujeito a instabilidade das funções vitais, exigindo assistência de enfermagem e médica permanente e especializada.", "recommendations": "• Dimensionar equipe conforme parâmetros institucionais para cuidados intensivos\n• Monitorização contínua e reavaliação a cada turno"}]}, "sae": {"nanda": [{"diagnosis": "Risco de síndrome do desuso", "definition": "Risco de deterioração dos sistemas corporais em decorrência de inatividade musculoesquelética prescrita ou inevitável, aplicável conforme o grau de dependência identificado."}], "noc": [{"outcome": "Nível de cuidado necessário identificado", "indicators": ["Classificação de dependência atualizada diariamente", "Recursos de enfermagem compatíveis com a necessidade do paciente"]}], "nic": [{"intervention": "Gerenciamento de recursos de enfermagem", "activities": ["Classificar diariamente o paciente conforme o grau de dependência", "Subsidiar o dimensionamento de pessoal de enfermagem do plantão/unidade", "Comunicar mudanças relevantes na classificação à equipe de gestão", "Documentar a classificação no prontuário/sistema institucional"]}]}, "evidence": {"foundation": "O Sistema de Classificação de Pacientes de Fugulin, desenvolvido por Fugulin e colaboradores a partir de estudos de Perroca, avalia 9 áreas de cuidado (estado mental, oxigenação, sinais vitais, motilidade, deambulação, alimentação, cuidado corporal, eliminação e terapêutica), cada uma pontuada de 1 a 4, para classificar o grau de dependência do paciente em relação aos cuidados de enfermagem.", "history": "Amplamente utilizado no Brasil como instrumento de gestão para subsidiar o dimensionamento de pessoal de enfermagem, sendo referenciado pela Resolução COFEN nº 543/2017, que trata dos parâmetros para dimensionamento do quadro de profissionais de enfermagem.", "validation": "Validado e amplamente utilizado em instituições de saúde brasileiras como ferramenta padronizada de classificação de pacientes, subsidiando decisões de gestão de recursos humanos em enfermagem.", "limitations": "A classificação deve ser reavaliada diariamente, pois o grau de dependência do paciente pode mudar rapidamente conforme sua evolução clínica. Os parâmetros de dimensionamento de pessoal associados a cada categoria variam conforme a legislação e normas institucionais vigentes.", "references": [{"text": "FUGULIN, F. M. T.; SILVA, S. H.; SHIMIZU, H. E.; CAMPOS, F. Sistema de Classificação de Pacientes: identificação do perfil assistencial dos pacientes das unidades de internação do HU-USP. Revista Latino-Americana de Enfermagem, v. 2, n. 5, 1994."}, {"text": "PERROCA, M. G.; GAIDZINSKI, R. R. Sistema de classificação de pacientes: construção e validação de um instrumento. Revista da Escola de Enfermagem da USP, v. 32, n. 2, p. 153-168, 1998."}, {"text": "COFEN. Resolução COFEN nº 543/2017 — Dimensionamento do quadro de profissionais de enfermagem. Brasília: COFEN, 2017."}]}, "learning": {"tips": ["Reavalie a classificação diariamente, pois o quadro clínico do paciente pode mudar rapidamente.", "Utilize a classificação para subsidiar, não substituir, o julgamento do enfermeiro sobre a necessidade de recursos.", "Documente a classificação de forma consistente para permitir análise de série histórica da unidade.", "Consulte a Resolução COFEN 543/2017 para os parâmetros de dimensionamento associados a cada categoria."], "examples": [{"label": "Paciente estável, autocuidado", "sublabel": "Fugulin 9 (Mínimos)", "emoji": "✅", "values": {"estado_mental": 1, "oxigenacao": 1, "sinais_vitais": 1, "motilidade": 1, "deambulacao": 1, "alimentacao": 1, "cuidado_corporal": 1, "eliminacao": 1, "terapeutica": 1}}, {"label": "Pós-operatório recente", "sublabel": "Fugulin 22 (Alta Dependência)", "emoji": "⚠️", "values": {"estado_mental": 2, "oxigenacao": 3, "sinais_vitais": 3, "motilidade": 3, "deambulacao": 3, "alimentacao": 2, "cuidado_corporal": 2, "eliminacao": 2, "terapeutica": 2}}, {"label": "Paciente crítico, drogas vasoativas", "sublabel": "Fugulin 34 (Intensivos)", "emoji": "🚨", "values": {"estado_mental": 4, "oxigenacao": 4, "sinais_vitais": 4, "motilidade": 4, "deambulacao": 4, "alimentacao": 3, "cuidado_corporal": 4, "eliminacao": 3, "terapeutica": 4}}], "quiz": [{"q": "Quantas áreas de cuidado compõem o Sistema de Classificação de Fugulin?", "opts": ["6", "7", "8", "9"], "correct": 3, "expl": "O instrumento avalia 9 áreas: estado mental, oxigenação, sinais vitais, motilidade, deambulação, alimentação, cuidado corporal, eliminação e terapêutica."}, {"q": "Para que finalidade principal é utilizado o Sistema de Classificação de Fugulin?", "opts": ["Diagnóstico médico", "Dimensionamento de pessoal de enfermagem", "Prescrição medicamentosa", "Avaliação nutricional"], "correct": 1, "expl": "É um instrumento de gestão que subsidia o dimensionamento de pessoal de enfermagem, conforme a Resolução COFEN nº 543/2017."}, {"q": "Um escore de 34 pontos classifica o paciente em qual categoria?", "opts": ["Cuidados Mínimos", "Cuidados Intermediários", "Cuidados de Alta Dependência", "Cuidados Intensivos"], "correct": 3, "expl": "Escores de 32 a 36 pontos classificam o paciente como Cuidados Intensivos (PCIt), a categoria de maior dependência."}]}, "faq": [{"q": "Com que frequência a classificação de Fugulin deve ser reaplicada?", "a": "Recomenda-se reavaliação diária, geralmente uma vez por turno ou por dia, conforme protocolo institucional, já que o grau de dependência do paciente pode mudar rapidamente."}, {"q": "O Sistema de Fugulin substitui o julgamento clínico do enfermeiro?", "a": "Não. É uma ferramenta objetiva de apoio à gestão, mas o enfermeiro responsável deve sempre considerar o contexto clínico completo do paciente na tomada de decisões sobre cuidado e alocação de recursos."}], "about": {"title": "Como funciona o Sistema de Classificação de Fugulin", "html": "<p>O Sistema de Fugulin soma pontos de 9 áreas de cuidado — estado mental, oxigenação, sinais vitais, motilidade, deambulação, alimentação, cuidado corporal, eliminação e terapêutica —, cada uma pontuada de 1 a 4, totalizando de 9 a 36 pontos, que classificam o paciente em 5 categorias de dependência de cuidados de enfermagem.</p><p><strong>Guia rápido:</strong> 9-14 = Mínimos | 15-20 = Intermediários | 21-26 = Alta Dependência | 27-31 = Semi-Intensivos | 32-36 = Intensivos.</p>"}}</script>
+</body></html>

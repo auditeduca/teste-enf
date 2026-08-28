@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="meows">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -264,8 +274,7 @@
                     <span class="formula-cap">MEOWS</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -294,10 +303,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -515,15 +592,16 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;temperatura&quot;: 3, &quot;pas&quot;: 3, &quot;pad&quot;: 3, &quot;fc&quot;: 3, &quot;fr&quot;: 3, &quot;spo2&quot;: 0, &quot;oxigenio_suplementar&quot;: 0, &quot;consciencia&quot;: 0, &quot;diurese&quot;: 0}'>Parâmetros normais <span class="p-sub">MEOWS 0</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;temperatura&quot;: 2, &quot;pas&quot;: 2, &quot;pad&quot;: 3, &quot;fc&quot;: 3, &quot;fr&quot;: 2, &quot;spo2&quot;: 0, &quot;oxigenio_suplementar&quot;: 0, &quot;consciencia&quot;: 0, &quot;diurese&quot;: 0}'>Alerta - monitorização aumentada <span class="p-sub">MEOWS 3</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;temperatura&quot;: 0, &quot;pas&quot;: 0, &quot;pad&quot;: 0, &quot;fc&quot;: 0, &quot;fr&quot;: 0, &quot;spo2&quot;: 2, &quot;oxigenio_suplementar&quot;: 1, &quot;consciencia&quot;: 2, &quot;diurese&quot;: 2}'>Risco crítico <span class="p-sub">MEOWS 25</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Temperatura (°C)</label>
-              <select class="field-select" data-calc-input="temperatura" style="background:rgba(255,255,255,.07);border-"><option value="0">≥ 39°</option><option value="1">38 - 38,9°</option><option value="2">37,5 - 37,9°</option><option value="3" selected>36 - 37,4° (normal)</option><option value="4">35 - 35,9°</option><option value="5">&lt; 35°</option></select></div><div class="urg-field"><label>Pressão Arterial Sistólica (mmHg)</label>
-              <select class="field-select" data-calc-input="pas" style="background:rgba(255,255,255,.07);border-"><option value="0">≥ 160</option><option value="1">150 - 159</option><option value="2">140 - 149</option><option value="3" selected>90 - 139 (normal)</option><option value="4">80 - 89</option><option value="5">70 - 79</option><option value="6">≤ 69</option></select></div><div class="urg-field"><label>Pressão Arterial Diastólica (mmHg)</label>
-              <select class="field-select" data-calc-input="pad" style="background:rgba(255,255,255,.07);border-"><option value="0">≥ 110</option><option value="1">100 - 109</option><option value="2">90 - 99</option><option value="3" selected>50 - 89 (normal)</option><option value="4">≤ 49</option></select></div><div class="urg-field"><label>Frequência Cardíaca (bpm)</label>
-              <select class="field-select" data-calc-input="fc" style="background:rgba(255,255,255,.07);border-"><option value="0">≥ 130</option><option value="1">110 - 129</option><option value="2">100 - 109</option><option value="3" selected>50 - 99 (normal)</option><option value="4">40 - 49</option><option value="5">&lt; 40</option></select></div><div class="urg-field"><label>Frequência Respiratória (irpm)</label>
-              <select class="field-select" data-calc-input="fr" style="background:rgba(255,255,255,.07);border-"><option value="0">≥ 30</option><option value="1">25 - 29</option><option value="2">20 - 24</option><option value="3" selected>11 - 19 (normal)</option><option value="4">≤ 10</option></select></div><div class="urg-field"><label>Saturação de Oxigênio (SpO2)</label>
-              <select class="field-select" data-calc-input="spo2" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>&gt; 95% (normal)</option><option value="1">92 - 95%</option><option value="2">&lt; 92%</option></select></div><div class="urg-field"><label>Uso de Oxigênio Suplementar</label>
-              <select class="field-select" data-calc-input="oxigenio_suplementar" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Nível de Consciência (AVPU)</label>
-              <select class="field-select" data-calc-input="consciencia" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Alerta</option><option value="1">Responde à voz</option><option value="2">Responde à dor</option><option value="3">Sem resposta</option></select></div><div class="urg-field"><label>Débito Urinário (mL/h)</label>
-              <select class="field-select" data-calc-input="diurese" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>&gt; 30 (normal)</option><option value="1">11 - 30</option><option value="2">≤ 10</option></select></div></div>
+              <select class="field-select" data-calc-input="temperatura"><option value="0">≥ 39°</option><option value="1">38 - 38,9°</option><option value="2">37,5 - 37,9°</option><option value="3" selected>36 - 37,4° (normal)</option><option value="4">35 - 35,9°</option><option value="5">&lt; 35°</option></select></div><div class="urg-field"><label>Pressão Arterial Sistólica (mmHg)</label>
+              <select class="field-select" data-calc-input="pas"><option value="0">≥ 160</option><option value="1">150 - 159</option><option value="2">140 - 149</option><option value="3" selected>90 - 139 (normal)</option><option value="4">80 - 89</option><option value="5">70 - 79</option><option value="6">≤ 69</option></select></div><div class="urg-field"><label>Pressão Arterial Diastólica (mmHg)</label>
+              <select class="field-select" data-calc-input="pad"><option value="0">≥ 110</option><option value="1">100 - 109</option><option value="2">90 - 99</option><option value="3" selected>50 - 89 (normal)</option><option value="4">≤ 49</option></select></div><div class="urg-field"><label>Frequência Cardíaca (bpm)</label>
+              <select class="field-select" data-calc-input="fc"><option value="0">≥ 130</option><option value="1">110 - 129</option><option value="2">100 - 109</option><option value="3" selected>50 - 99 (normal)</option><option value="4">40 - 49</option><option value="5">&lt; 40</option></select></div><div class="urg-field"><label>Frequência Respiratória (irpm)</label>
+              <select class="field-select" data-calc-input="fr"><option value="0">≥ 30</option><option value="1">25 - 29</option><option value="2">20 - 24</option><option value="3" selected>11 - 19 (normal)</option><option value="4">≤ 10</option></select></div><div class="urg-field"><label>Saturação de Oxigênio (SpO2)</label>
+              <select class="field-select" data-calc-input="spo2"><option value="0" selected>&gt; 95% (normal)</option><option value="1">92 - 95%</option><option value="2">&lt; 92%</option></select></div><div class="urg-field"><label>Uso de Oxigênio Suplementar</label>
+              <select class="field-select" data-calc-input="oxigenio_suplementar"><option value="0" selected>Não</option><option value="1">Sim</option></select></div><div class="urg-field"><label>Nível de Consciência (AVPU)</label>
+              <select class="field-select" data-calc-input="consciencia"><option value="0" selected>Alerta</option><option value="1">Responde à voz</option><option value="2">Responde à dor</option><option value="3">Sem resposta</option></select></div><div class="urg-field"><label>Débito Urinário (mL/h)</label>
+              <select class="field-select" data-calc-input="diurese"><option value="0" selected>&gt; 30 (normal)</option><option value="1">11 - 30</option><option value="2">≤ 10</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Sem Alteração</span>
@@ -564,14 +642,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -580,45 +658,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Sem Alteração</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:40%; background:#2563eb"></div></div>
-              <span class="dist-pct">40%</span></div><div class="dist-row"><span class="dist-label">Alerta - Monitorização Aumentada</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:30%; background:#ca8a04"></div></div>
-              <span class="dist-pct">30%</span></div><div class="dist-row"><span class="dist-label">Risco Aumentado - Resposta Urgente</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#ca8a04"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Risco Crítico - Resposta Imediata</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#7f1d1d"></div></div>
-              <span class="dist-pct">10%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escore de Alerta Obstétrico Precoce Modificado</td><td>0 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escore de Alerta Obstétrico Precoce Modificado</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escore de Alerta Obstétrico Precoce Modificado</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o MEOWS</h2>
           <p>O MEOWS soma a pontuação de 9 parâmetros fisiológicos (temperatura, PAS, PAD, FC, FR, SpO2, uso de O2, consciência e diurese), com pontuação individual crescente conforme o desvio da normalidade.</p><p><strong>Guia rápido:</strong> 0 = Normal | 1-4 = Monitorização aumentada | 5-6 (ou 3 em 1 parâmetro) = Resposta urgente | ≥7 = Resposta imediata/código de emergência.</p>
@@ -630,45 +703,22 @@
               <p>Não. O MEOWS é uma ferramenta complementar de triagem e monitorização. Se um paciente ou familiar expressar preocupação com o estado clínico, a equipe deve escalonar o cuidado independentemente da pontuação numérica obtida.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apache.html"><div class="icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div><div><h3>Calculadora de APACHE II</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -726,14 +776,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "a307eb6f-9e06-4e5a-a7d7-391790e157d8", "code": "SCALE-MEOWS-001", "slug": "meows", "version": "1.0.0", "status": "published", "seo": {"title": "MEOWS - Escore de Alerta Obstétrico Precoce Modificado", "description": "Calcule o MEOWS (Modified Early Obstetric Warning Score) para detectar deterioração clínica precoce em gestantes e puérperas. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/meows.html"}, "breadcrumb": {"category": "Obstetrícia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escore de Alerta Obstétrico Precoce Modificado", "acronym": "MEOWS", "categoryBadge": "Obstetrícia", "icon": "i-notes-medical", "objective": "Detectar precocemente sinais de deterioração clínica em gestantes e puérperas por meio da pontuação de 9 parâmetros fisiológicos: temperatura, pressão arterial sistólica e diastólica, frequência cardíaca, frequência respiratória, saturação de oxigênio, uso de oxigênio suplementar, nível de consciência e débito urinário.", "indication": "Indicado para gestantes com 20 semanas ou mais e puérperas até 6 semanas após o parto, para monitorização e detecção precoce de deterioração clínica (ex: pré-eclâmpsia grave, sepse, hemorragia).", "targetPopulation": "Gestantes com idade gestacional ≥20 semanas e puérperas até 6 semanas pós-parto.", "specialty": ["Obstetrícia", "Enfermagem", "Terapia Intensiva"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "complexity": "advanced", "rating": 4.5, "ratingCount": 90}, "calculator": {"inputs": [{"id": "temperatura", "type": "select", "label": "Temperatura (°C)", "defaultValue": 3, "description": "Temperatura corporal atual.", "options": [{"value": 0, "label": "≥ 39°", "score": 3}, {"value": 1, "label": "38 - 38,9°", "score": 2}, {"value": 2, "label": "37,5 - 37,9°", "score": 1}, {"value": 3, "label": "36 - 37,4° (normal)", "score": 0}, {"value": 4, "label": "35 - 35,9°", "score": 1}, {"value": 5, "label": "< 35°", "score": 2}]}, {"id": "pas", "type": "select", "label": "Pressão Arterial Sistólica (mmHg)", "defaultValue": 3, "description": "Pressão arterial sistólica atual.", "options": [{"value": 0, "label": "≥ 160", "score": 3}, {"value": 1, "label": "150 - 159", "score": 2}, {"value": 2, "label": "140 - 149", "score": 1}, {"value": 3, "label": "90 - 139 (normal)", "score": 0}, {"value": 4, "label": "80 - 89", "score": 1}, {"value": 5, "label": "70 - 79", "score": 2}, {"value": 6, "label": "≤ 69", "score": 3}]}, {"id": "pad", "type": "select", "label": "Pressão Arterial Diastólica (mmHg)", "defaultValue": 3, "description": "Pressão arterial diastólica atual.", "options": [{"value": 0, "label": "≥ 110", "score": 3}, {"value": 1, "label": "100 - 109", "score": 2}, {"value": 2, "label": "90 - 99", "score": 1}, {"value": 3, "label": "50 - 89 (normal)", "score": 0}, {"value": 4, "label": "≤ 49", "score": 1}]}, {"id": "fc", "type": "select", "label": "Frequência Cardíaca (bpm)", "defaultValue": 3, "description": "Frequência cardíaca atual.", "options": [{"value": 0, "label": "≥ 130", "score": 3}, {"value": 1, "label": "110 - 129", "score": 2}, {"value": 2, "label": "100 - 109", "score": 1}, {"value": 3, "label": "50 - 99 (normal)", "score": 0}, {"value": 4, "label": "40 - 49", "score": 1}, {"value": 5, "label": "< 40", "score": 2}]}, {"id": "fr", "type": "select", "label": "Frequência Respiratória (irpm)", "defaultValue": 3, "description": "Frequência respiratória atual.", "options": [{"value": 0, "label": "≥ 30", "score": 3}, {"value": 1, "label": "25 - 29", "score": 2}, {"value": 2, "label": "20 - 24", "score": 1}, {"value": 3, "label": "11 - 19 (normal)", "score": 0}, {"value": 4, "label": "≤ 10", "score": 3}]}, {"id": "spo2", "type": "select", "label": "Saturação de Oxigênio (SpO2)", "defaultValue": 0, "description": "Saturação periférica de oxigênio.", "options": [{"value": 0, "label": "> 95% (normal)", "score": 0}, {"value": 1, "label": "92 - 95%", "score": 2}, {"value": 2, "label": "< 92%", "score": 3}]}, {"id": "oxigenio_suplementar", "type": "select", "label": "Uso de Oxigênio Suplementar", "defaultValue": 0, "description": "A paciente está recebendo oxigênio suplementar?", "options": [{"value": 0, "label": "Não", "score": 0}, {"value": 1, "label": "Sim", "score": 2}]}, {"id": "consciencia", "type": "select", "label": "Nível de Consciência (AVPU)", "defaultValue": 0, "description": "Nível de consciência segundo a escala AVPU.", "options": [{"value": 0, "label": "Alerta", "score": 0}, {"value": 1, "label": "Responde à voz", "score": 1}, {"value": 2, "label": "Responde à dor", "score": 2}, {"value": 3, "label": "Sem resposta", "score": 3}]}, {"id": "diurese", "type": "select", "label": "Débito Urinário (mL/h)", "defaultValue": 0, "description": "Débito urinário nas últimas horas.", "options": [{"value": 0, "label": "> 30 (normal)", "score": 0}, {"value": 1, "label": "11 - 30", "score": 2}, {"value": 2, "label": "≤ 10", "score": 3}]}], "formula": {"type": "sum", "resultLabel": "MEOWS", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 0, "label": "Sem Alteração", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Pontuação 0, compatível com parâmetros vitais dentro da normalidade.", "recommendations": "• Manter monitorização padrão de sinais vitais\n• Resposta baseada na rotina da unidade"}, {"min": 1, "max": 4, "label": "Alerta - Monitorização Aumentada", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Pontuação de 1 a 4 pontos, sugerindo necessidade de monitorização mais frequente.", "recommendations": "• Reavaliar sinais vitais a cada 4-6 horas\n• Equipe de enfermagem deve avaliar necessidade de aumentar a frequência de monitorização e/ou escalonar para a equipe médica\n• Atenção especial se qualquer parâmetro isolado pontuar 3"}, {"min": 5, "max": 6, "label": "Risco Aumentado - Resposta Urgente", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação total de 5 a 6 pontos (ou 3 pontos em qualquer parâmetro isolado), indicando necessidade de resposta urgente.", "recommendations": "• Monitorização de sinais vitais a cada hora\n• Resposta urgente da unidade; acionar monitorização fetal eletrônica se aplicável\n• Comunicar o médico assistente e a anestesia"}, {"min": 7, "max": 26, "label": "Risco Crítico - Resposta Imediata", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Pontuação total igual ou superior a 7 pontos, indicando risco crítico de deterioração clínica.", "recommendations": "• Monitorização contínua\n• Chamada imediata para resposta rápida (código de emergência institucional)\n• Chamada imediata ao médico assistente e considerar consulta com UTI"}]}, "sae": {"nanda": [{"diagnosis": "Débito cardíaco diminuído", "definition": "Quantidade de sangue bombeada pelo coração inadequada para suprir as demandas metabólicas do corpo, identificada por alterações de frequência cardíaca e pressão arterial no MEOWS."}, {"diagnosis": "Padrão respiratório ineficaz", "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada, identificado por alterações de frequência respiratória e saturação de oxigênio."}, {"diagnosis": "Risco de choque", "definition": "Risco de fluxo sanguíneo inadequado aos tecidos corporais, que pode levar à disfunção celular com risco de morte, relacionado à deterioração hemodinâmica identificada pelo escore."}], "noc": [{"outcome": "Sinais vitais", "indicators": ["MEOWS avaliado sistematicamente conforme protocolo institucional", "Deterioração clínica identificada e comunicada precocemente", "Resposta clínica escalonada proporcionalmente ao escore obtido"]}], "nic": [{"intervention": "Monitorização de sinais vitais em obstetrícia", "activities": ["Aplicar o MEOWS em gestantes com 20 semanas ou mais e puérperas até 6 semanas pós-parto", "Somar a pontuação de todos os parâmetros para obter o escore total", "Escalonar a frequência de monitorização e a resposta clínica conforme o escore obtido", "Comunicar imediatamente a equipe médica caso qualquer parâmetro isolado pontue 3 ou o escore total seja ≥5", "Acionar resposta rápida institucional (código de emergência obstétrica) para escores ≥7"]}]}, "evidence": {"foundation": "O MEOWS soma a pontuação de 9 parâmetros fisiológicos — temperatura, pressão arterial sistólica e diastólica, frequência cardíaca, frequência respiratória, saturação de oxigênio, uso de oxigênio suplementar, nível de consciência (AVPU) e débito urinário — cada um pontuado conforme o grau de desvio da normalidade, para detecção precoce de deterioração clínica em gestantes e puérperas.", "history": "Desenvolvido a partir de escores de alerta precoce (Early Warning Scores) utilizados em cuidados gerais, o MEOWS foi adaptado especificamente para a população obstétrica, considerando as alterações fisiológicas normais da gestação, e vem sendo adotado por diversos serviços de saúde materna ao redor do mundo.", "validation": "Amplamente utilizado em maternidades e serviços obstétricos como ferramenta de triagem para detecção precoce de deterioração clínica, embora a evidência sobre a padronização exata dos limiares (thresholds) ainda seja objeto de debate, com variações entre diferentes versões institucionais.", "limitations": "Os limiares de trigger do MEOWS variam entre instituições e são baseados majoritariamente em consenso clínico, com evidências ainda limitadas sobre sua capacidade de melhorar desfechos na população obstétrica geral. Deve ser usado como ferramenta complementar ao julgamento clínico, e não isoladamente.", "references": [{"text": "SINGH, S. et al. A validation study of the CEMACH recommended modified early obstetric warning system chart. Anaesthesia, v. 67, n. 1, p. 12-18, 2012."}, {"text": "ROBBINS, T. et al. Modified early obstetric warning scores: a promising tool but more evidence and standardization is required. Acta Obstetricia et Gynecologica Scandinavica, v. 98, n. 10, p. 1263-1271, 2019."}, {"text": "SHARED HEALTH MANITOBA. Modified Early Obstetric Warning Score (MEOWS) Vital Sign Record. Winnipeg: WRHA, 2024."}]}, "learning": {"tips": ["O MEOWS é aplicado em gestantes com 20 semanas ou mais e puérperas até 6 semanas após o parto.", "Um único parâmetro pontuando 3 já é suficiente para acionar resposta urgente, independentemente do escore total.", "As alterações fisiológicas normais da gestação (ex: aumento discreto da frequência cardíaca e respiratória) foram consideradas na definição dos limiares de pontuação.", "Escores totais iguais ou superiores a 7 exigem chamada imediata de resposta rápida institucional e consideração de suporte de UTI."], "examples": [{"label": "Parâmetros normais", "sublabel": "MEOWS 0", "emoji": "✅", "values": {"temperatura": 3, "pas": 3, "pad": 3, "fc": 3, "fr": 3, "spo2": 0, "oxigenio_suplementar": 0, "consciencia": 0, "diurese": 0}}, {"label": "Alerta - monitorização aumentada", "sublabel": "MEOWS 3", "emoji": "🔎", "values": {"temperatura": 2, "pas": 2, "pad": 3, "fc": 3, "fr": 2, "spo2": 0, "oxigenio_suplementar": 0, "consciencia": 0, "diurese": 0}}, {"label": "Risco crítico", "sublabel": "MEOWS 25", "emoji": "🚨", "values": {"temperatura": 0, "pas": 0, "pad": 0, "fc": 0, "fr": 0, "spo2": 2, "oxigenio_suplementar": 1, "consciencia": 2, "diurese": 2}}], "quiz": [{"q": "Para qual população o MEOWS é indicado?", "opts": ["Apenas gestantes no primeiro trimestre", "Gestantes com 20 semanas ou mais e puérperas até 6 semanas pós-parto", "Apenas puérperas no primeiro mês", "Qualquer mulher em idade fértil"], "correct": 1, "expl": "O MEOWS é indicado para gestantes com idade gestacional igual ou superior a 20 semanas e puérperas até 6 semanas após o parto."}, {"q": "O que acontece se um único parâmetro do MEOWS pontuar 3, mesmo com escore total baixo?", "opts": ["É ignorado se o total for baixo", "Já é suficiente para acionar resposta urgente, independentemente do total", "Só importa se acontecer em 2 parâmetros", "Reduz a pontuação total automaticamente"], "correct": 1, "expl": "Segundo o protocolo do MEOWS, a pontuação de 3 em qualquer parâmetro isolado já é suficiente para acionar resposta urgente, mesmo que o escore total não atinja o limiar geral."}, {"q": "Quantos parâmetros fisiológicos compõem o MEOWS nesta calculadora?", "opts": ["5", "7", "9", "12"], "correct": 2, "expl": "O MEOWS avalia 9 parâmetros: temperatura, PAS, PAD, frequência cardíaca, frequência respiratória, SpO2, uso de oxigênio suplementar, nível de consciência e débito urinário."}]}, "faq": [{"q": "O MEOWS tem limiares padronizados internacionalmente?", "a": "Não completamente. Os limiares de trigger do MEOWS variam entre diferentes instituições e países, sendo baseados majoritariamente em consenso clínico. Por isso, é importante seguir o protocolo específico adotado pela instituição de saúde."}, {"q": "O MEOWS substitui o julgamento clínico da equipe?", "a": "Não. O MEOWS é uma ferramenta complementar de triagem e monitorização. Se um paciente ou familiar expressar preocupação com o estado clínico, a equipe deve escalonar o cuidado independentemente da pontuação numérica obtida."}], "about": {"title": "Como funciona o MEOWS", "html": "<p>O MEOWS soma a pontuação de 9 parâmetros fisiológicos (temperatura, PAS, PAD, FC, FR, SpO2, uso de O2, consciência e diurese), com pontuação individual crescente conforme o desvio da normalidade.</p><p><strong>Guia rápido:</strong> 0 = Normal | 1-4 = Monitorização aumentada | 5-6 (ou 3 em 1 parâmetro) = Resposta urgente | ≥7 = Resposta imediata/código de emergência.</p>"}}</script>
+</body></html>

@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="berg">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -329,8 +339,7 @@
                     <span class="formula-cap">Escala de Equilíbrio de Berg</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -358,10 +367,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -664,20 +741,21 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;sentado_para_pe&quot;: 4, &quot;em_pe_sem_apoio&quot;: 4, &quot;sentado_sem_apoio&quot;: 4, &quot;pe_para_sentado&quot;: 4, &quot;transferencias&quot;: 4, &quot;olhos_fechados&quot;: 4, &quot;pes_juntos&quot;: 4, &quot;alcance_frente&quot;: 3, &quot;pegar_objeto_chao&quot;: 4, &quot;virar_olhar_atras&quot;: 4, &quot;girar_360&quot;: 4, &quot;alternar_pes_banquinho&quot;: 3, &quot;pe_um_na_frente&quot;: 3, &quot;pe_uma_perna&quot;: 3}'>Baixo risco de quedas <span class="p-sub">Berg 52</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;sentado_para_pe&quot;: 3, &quot;em_pe_sem_apoio&quot;: 3, &quot;sentado_sem_apoio&quot;: 3, &quot;pe_para_sentado&quot;: 3, &quot;transferencias&quot;: 3, &quot;olhos_fechados&quot;: 2, &quot;pes_juntos&quot;: 2, &quot;alcance_frente&quot;: 2, &quot;pegar_objeto_chao&quot;: 2, &quot;virar_olhar_atras&quot;: 2, &quot;girar_360&quot;: 2, &quot;alternar_pes_banquinho&quot;: 2, &quot;pe_um_na_frente&quot;: 2, &quot;pe_uma_perna&quot;: 1}'>Risco moderado de quedas <span class="p-sub">Berg 32</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;sentado_para_pe&quot;: 2, &quot;em_pe_sem_apoio&quot;: 1, &quot;sentado_sem_apoio&quot;: 2, &quot;pe_para_sentado&quot;: 2, &quot;transferencias&quot;: 1, &quot;olhos_fechados&quot;: 1, &quot;pes_juntos&quot;: 1, &quot;alcance_frente&quot;: 1, &quot;pegar_objeto_chao&quot;: 0, &quot;virar_olhar_atras&quot;: 1, &quot;girar_360&quot;: 0, &quot;alternar_pes_banquinho&quot;: 1, &quot;pe_um_na_frente&quot;: 0, &quot;pe_uma_perna&quot;: 1}'>Alto risco de quedas <span class="p-sub">Berg 14</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>1. Sentado para em Pé</label>
-              <select class="field-select" data-calc-input="sentado_para_pe" style="background:rgba(255,255,255,.07);border-"><option value="0">Incapaz sem ajuda</option><option value="1">Necessita de ajuda mínima para levantar-se ou estabilizar-se</option><option value="2">Capaz de levantar-se usando as mãos após várias tentativas</option><option value="3">Capaz de levantar-se usando as mãos</option><option value="4" selected>Capaz de levantar-se sem usar as mãos e estabilizar-se</option></select></div><div class="urg-field"><label>2. Em Pé sem Apoio</label>
-              <select class="field-select" data-calc-input="em_pe_sem_apoio" style="background:rgba(255,255,255,.07);border-"><option value="0">Incapaz de manter-se em pé por 30 segundos sem ajuda</option><option value="1">Necessita de várias tentativas para ficar em pé sem apoio por 30 segundos</option><option value="2">Capaz de ficar em pé por 30 segundos sem apoio</option><option value="3">Capaz de ficar em pé por 2 minutos com supervisão</option><option value="4" selected>Capaz de ficar em pé com segurança por 2 minutos</option></select></div><div class="urg-field"><label>3. Sentado sem Apoio (pés apoiados no chão)</label>
-              <select class="field-select" data-calc-input="sentado_sem_apoio" style="background:rgba(255,255,255,.07);border-"><option value="0">Incapaz de manter-se sentado sem apoio por 10 segundos</option><option value="1">Capaz de manter-se sentado por 10 segundos</option><option value="2">Capaz de manter-se sentado por 30 segundos</option><option value="3">Capaz de manter-se sentado por 2 minutos sob supervisão</option><option value="4" selected>Capaz de manter-se sentado com segurança por 2 minutos</option></select></div><div class="urg-field"><label>4. Em Pé para Sentado</label>
-              <select class="field-select" data-calc-input="pe_para_sentado" style="background:rgba(255,255,255,.07);border-"><option value="0">Necessita de ajuda para sentar-se</option><option value="1">Senta-se sozinho, mas o movimento de descida não é controlado</option><option value="2">Usa as pernas para controlar a descida</option><option value="3">Usa as mãos para controlar a descida</option><option value="4" selected>Senta-se com segurança, com uso mínimo das mãos</option></select></div><div class="urg-field"><label>5. Transferências</label>
-              <select class="field-select" data-calc-input="transferencias" style="background:rgba(255,255,255,.07);border-"><option value="0">Necessita de ajuda de duas pessoas para a transferência</option><option value="1">Necessita de uma pessoa para ajudar</option><option value="2">Capaz de transferir-se com supervisão verbal e/ou apoio</option><option value="3">Capaz de transferir-se com segurança, com uso obrigatório das mãos</option><option value="4" selected>Capaz de transferir-se com segurança, com uso mínimo das mãos</option></select></div><div class="urg-field"><label>6. Em Pé sem Apoio com Olhos Fechados</label>
-              <select class="field-select" data-calc-input="olhos_fechados" style="background:rgba(255,255,255,.07);border-"><option value="0">Necessita de ajuda para evitar a queda</option><option value="1">Não consegue manter os olhos fechados por 3 segundos, mas mantém-se em pé</option><option value="2">Capaz de manter-se em pé por 3 segundos</option><option value="3">Capaz de manter-se em pé por 10 segundos com supervisão</option><option value="4" selected>Capaz de manter-se em pé com segurança por 10 segundos</option></select></div><div class="urg-field"><label>7. Em Pé sem Apoio com os Pés Juntos</label>
-              <select class="field-select" data-calc-input="pes_juntos" style="background:rgba(255,255,255,.07);border-"><option value="0">Necessita de ajuda para atingir a posição e não consegue manter-se por 15 segundos</option><option value="1">Necessita de ajuda para atingir a posição, mas consegue manter-se por 15 segundos</option><option value="2">Capaz de posicionar os pés juntos, mas sem manter por 30 segundos</option><option value="3">Capaz de posicionar os pés juntos, mantendo por 1 minuto com supervisão</option><option value="4" selected>Capaz de posicionar os pés juntos e manter por 1 minuto com segurança</option></select></div><div class="urg-field"><label>8. Alcançar à Frente com o Braço Estendido</label>
-              <select class="field-select" data-calc-input="alcance_frente" style="background:rgba(255,255,255,.07);border-"><option value="0">Necessita de ajuda para não cair</option><option value="1">Necessita de supervisão para alcançar</option><option value="2">Consegue alcançar, mas necessita de supervisão</option><option value="3">Consegue alcançar mais de 12,5 cm com segurança</option><option value="4" selected>Consegue alcançar à frente com confiança mais de 25 cm</option></select></div><div class="urg-field"><label>9. Apanhar um Objeto do Chão</label>
-              <select class="field-select" data-calc-input="pegar_objeto_chao" style="background:rgba(255,255,255,.07);border-"><option value="0">Incapaz de tentar / necessita de ajuda para não perder o equilíbrio</option><option value="1">Incapaz de apanhar e necessita de supervisão enquanto tenta</option><option value="2">Incapaz de apanhar, mas mantém-se em pé com segurança</option><option value="3">Capaz de apanhar o objeto, mas necessita de supervisão</option><option value="4" selected>Capaz de apanhar o objeto com facilidade e segurança</option></select></div><div class="urg-field"><label>10. Virar-se e Olhar para Trás</label>
-              <select class="field-select" data-calc-input="virar_olhar_atras" style="background:rgba(255,255,255,.07);border-"><option value="0">Necessita de ajuda para não perder o equilíbrio</option><option value="1">Necessita de supervisão ao virar</option><option value="2">Vira apenas para um dos lados, mostrando pouco equilíbrio</option><option value="3">Vira para os dois lados, apresentando pequena mudança no equilíbrio</option><option value="4" selected>Vira para os dois lados com boa mudança de peso</option></select></div><div class="urg-field"><label>11. Girar 360 Graus</label>
-              <select class="field-select" data-calc-input="girar_360" style="background:rgba(255,255,255,.07);border-"><option value="0">Necessita de ajuda enquanto gira</option><option value="1">Necessita de supervisão próxima ou orientação verbal</option><option value="2">Capaz de girar 360 graus com segurança, mas lentamente</option><option value="3">Capaz de girar 360 graus com segurança em um dos lados em ≤4 segundos</option><option value="4" selected>Capaz de girar 360 graus com segurança em ≤4 segundos para ambos os lados</option></select></div><div class="urg-field"><label>12. Colocar os Pés Alternadamente em um Banquinho</label>
-              <select class="field-select" data-calc-input="alternar_pes_banquinho" style="background:rgba(255,255,255,.07);border-"><option value="0">Incapaz de tentar / necessita de ajuda para não cair</option><option value="1">Capaz de completar menos de 2 alternâncias, necessitando de ajuda mínima</option><option value="2">Capaz de completar 4 alternâncias sem apoio, mas com supervisão</option><option value="3">Capaz de ficar em pé sem apoio e completar 8 alternâncias em mais de 20 segundos</option><option value="4" selected>Capaz de ficar em pé sem apoio e completar 8 alternâncias com segurança em 20 segundos</option></select></div><div class="urg-field"><label>13. Em Pé sem Apoio com um Pé à Frente</label>
-              <select class="field-select" data-calc-input="pe_um_na_frente" style="background:rgba(255,255,255,.07);border-"><option value="0">Perde o equilíbrio ao posicionar-se ou ao dar o passo</option><option value="1">Necessita de ajuda para dar o passo, mas mantém-se por 15 segundos</option><option value="2">Capaz de dar o passo à frente sozinho e manter por 30 segundos</option><option value="3">Capaz de colocar um pé à frente do outro, mantendo por 30 segundos</option><option value="4" selected>Capaz de colocar um pé diretamente à frente do outro (tandem), mantendo por 30 segundos</option></select></div><div class="urg-field"><label>14. Em Pé sobre uma Perna</label>
-              <select class="field-select" data-calc-input="pe_uma_perna" style="background:rgba(255,255,255,.07);border-"><option value="0">Incapaz de tentar ou necessita de ajuda para não cair</option><option value="1">Tenta levantar a perna, mas não consegue mantê-la por 3 segundos</option><option value="2">Capaz de levantar a perna sozinho e manter por 3 a 5 segundos</option><option value="3">Capaz de levantar a perna sozinho e manter por 5 a 10 segundos</option><option value="4" selected>Capaz de levantar a perna sozinho e manter por mais de 10 segundos</option></select></div></div>
+              <select class="field-select" data-calc-input="sentado_para_pe"><option value="0">Incapaz sem ajuda</option><option value="1">Necessita de ajuda mínima para levantar-se ou estabilizar-se</option><option value="2">Capaz de levantar-se usando as mãos após várias tentativas</option><option value="3">Capaz de levantar-se usando as mãos</option><option value="4" selected>Capaz de levantar-se sem usar as mãos e estabilizar-se</option></select></div><div class="urg-field"><label>2. Em Pé sem Apoio</label>
+              <select class="field-select" data-calc-input="em_pe_sem_apoio"><option value="0">Incapaz de manter-se em pé por 30 segundos sem ajuda</option><option value="1">Necessita de várias tentativas para ficar em pé sem apoio por 30 segundos</option><option value="2">Capaz de ficar em pé por 30 segundos sem apoio</option><option value="3">Capaz de ficar em pé por 2 minutos com supervisão</option><option value="4" selected>Capaz de ficar em pé com segurança por 2 minutos</option></select></div><div class="urg-field"><label>3. Sentado sem Apoio (pés apoiados no chão)</label>
+              <select class="field-select" data-calc-input="sentado_sem_apoio"><option value="0">Incapaz de manter-se sentado sem apoio por 10 segundos</option><option value="1">Capaz de manter-se sentado por 10 segundos</option><option value="2">Capaz de manter-se sentado por 30 segundos</option><option value="3">Capaz de manter-se sentado por 2 minutos sob supervisão</option><option value="4" selected>Capaz de manter-se sentado com segurança por 2 minutos</option></select></div><div class="urg-field"><label>4. Em Pé para Sentado</label>
+              <select class="field-select" data-calc-input="pe_para_sentado"><option value="0">Necessita de ajuda para sentar-se</option><option value="1">Senta-se sozinho, mas o movimento de descida não é controlado</option><option value="2">Usa as pernas para controlar a descida</option><option value="3">Usa as mãos para controlar a descida</option><option value="4" selected>Senta-se com segurança, com uso mínimo das mãos</option></select></div><div class="urg-field"><label>5. Transferências</label>
+              <select class="field-select" data-calc-input="transferencias"><option value="0">Necessita de ajuda de duas pessoas para a transferência</option><option value="1">Necessita de uma pessoa para ajudar</option><option value="2">Capaz de transferir-se com supervisão verbal e/ou apoio</option><option value="3">Capaz de transferir-se com segurança, com uso obrigatório das mãos</option><option value="4" selected>Capaz de transferir-se com segurança, com uso mínimo das mãos</option></select></div><div class="urg-field"><label>6. Em Pé sem Apoio com Olhos Fechados</label>
+              <select class="field-select" data-calc-input="olhos_fechados"><option value="0">Necessita de ajuda para evitar a queda</option><option value="1">Não consegue manter os olhos fechados por 3 segundos, mas mantém-se em pé</option><option value="2">Capaz de manter-se em pé por 3 segundos</option><option value="3">Capaz de manter-se em pé por 10 segundos com supervisão</option><option value="4" selected>Capaz de manter-se em pé com segurança por 10 segundos</option></select></div><div class="urg-field"><label>7. Em Pé sem Apoio com os Pés Juntos</label>
+              <select class="field-select" data-calc-input="pes_juntos"><option value="0">Necessita de ajuda para atingir a posição e não consegue manter-se por 15 segundos</option><option value="1">Necessita de ajuda para atingir a posição, mas consegue manter-se por 15 segundos</option><option value="2">Capaz de posicionar os pés juntos, mas sem manter por 30 segundos</option><option value="3">Capaz de posicionar os pés juntos, mantendo por 1 minuto com supervisão</option><option value="4" selected>Capaz de posicionar os pés juntos e manter por 1 minuto com segurança</option></select></div><div class="urg-field"><label>8. Alcançar à Frente com o Braço Estendido</label>
+              <select class="field-select" data-calc-input="alcance_frente"><option value="0">Necessita de ajuda para não cair</option><option value="1">Necessita de supervisão para alcançar</option><option value="2">Consegue alcançar, mas necessita de supervisão</option><option value="3">Consegue alcançar mais de 12,5 cm com segurança</option><option value="4" selected>Consegue alcançar à frente com confiança mais de 25 cm</option></select></div><div class="urg-field"><label>9. Apanhar um Objeto do Chão</label>
+              <select class="field-select" data-calc-input="pegar_objeto_chao"><option value="0">Incapaz de tentar / necessita de ajuda para não perder o equilíbrio</option><option value="1">Incapaz de apanhar e necessita de supervisão enquanto tenta</option><option value="2">Incapaz de apanhar, mas mantém-se em pé com segurança</option><option value="3">Capaz de apanhar o objeto, mas necessita de supervisão</option><option value="4" selected>Capaz de apanhar o objeto com facilidade e segurança</option></select></div><div class="urg-field"><label>10. Virar-se e Olhar para Trás</label>
+              <select class="field-select" data-calc-input="virar_olhar_atras"><option value="0">Necessita de ajuda para não perder o equilíbrio</option><option value="1">Necessita de supervisão ao virar</option><option value="2">Vira apenas para um dos lados, mostrando pouco equilíbrio</option><option value="3">Vira para os dois lados, apresentando pequena mudança no equilíbrio</option><option value="4" selected>Vira para os dois lados com boa mudança de peso</option></select></div><div class="urg-field"><label>11. Girar 360 Graus</label>
+              <select class="field-select" data-calc-input="girar_360"><option value="0">Necessita de ajuda enquanto gira</option><option value="1">Necessita de supervisão próxima ou orientação verbal</option><option value="2">Capaz de girar 360 graus com segurança, mas lentamente</option><option value="3">Capaz de girar 360 graus com segurança em um dos lados em ≤4 segundos</option><option value="4" selected>Capaz de girar 360 graus com segurança em ≤4 segundos para ambos os lados</option></select></div><div class="urg-field"><label>12. Colocar os Pés Alternadamente em um Banquinho</label>
+              <select class="field-select" data-calc-input="alternar_pes_banquinho"><option value="0">Incapaz de tentar / necessita de ajuda para não cair</option><option value="1">Capaz de completar menos de 2 alternâncias, necessitando de ajuda mínima</option><option value="2">Capaz de completar 4 alternâncias sem apoio, mas com supervisão</option><option value="3">Capaz de ficar em pé sem apoio e completar 8 alternâncias em mais de 20 segundos</option><option value="4" selected>Capaz de ficar em pé sem apoio e completar 8 alternâncias com segurança em 20 segundos</option></select></div><div class="urg-field"><label>13. Em Pé sem Apoio com um Pé à Frente</label>
+              <select class="field-select" data-calc-input="pe_um_na_frente"><option value="0">Perde o equilíbrio ao posicionar-se ou ao dar o passo</option><option value="1">Necessita de ajuda para dar o passo, mas mantém-se por 15 segundos</option><option value="2">Capaz de dar o passo à frente sozinho e manter por 30 segundos</option><option value="3">Capaz de colocar um pé à frente do outro, mantendo por 30 segundos</option><option value="4" selected>Capaz de colocar um pé diretamente à frente do outro (tandem), mantendo por 30 segundos</option></select></div><div class="urg-field"><label>14. Em Pé sobre uma Perna</label>
+              <select class="field-select" data-calc-input="pe_uma_perna"><option value="0">Incapaz de tentar ou necessita de ajuda para não cair</option><option value="1">Tenta levantar a perna, mas não consegue mantê-la por 3 segundos</option><option value="2">Capaz de levantar a perna sozinho e manter por 3 a 5 segundos</option><option value="3">Capaz de levantar a perna sozinho e manter por 5 a 10 segundos</option><option value="4" selected>Capaz de levantar a perna sozinho e manter por mais de 10 segundos</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">56</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixo Risco de Quedas</span>
@@ -718,14 +796,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -734,43 +812,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Alto Risco de Quedas</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:50%; background:#dc2626"></div></div>
-              <span class="dist-pct">50%</span></div><div class="dist-row"><span class="dist-label">Risco Moderado de Quedas</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#ca8a04"></div></div>
-              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Baixo Risco de Quedas</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:17%; background:#2563eb"></div></div>
-              <span class="dist-pct">17%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Escala de Equilíbrio de Berg</td><td>56 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Escala de Equilíbrio de Berg</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Escala de Equilíbrio de Berg</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a Escala de Equilíbrio de Berg</h2>
           <p>A Escala de Berg avalia 14 tarefas funcionais de equilíbrio (sentar, levantar, transferir-se, girar, alcançar, entre outras), cada uma pontuada de 0 a 4, somando um escore total de 0 a 56 pontos.</p><p><strong>Guia rápido:</strong> 0-20 = Alto risco de quedas | 21-40 = Risco moderado | 41-56 = Baixo risco.</p>
@@ -782,45 +857,22 @@
               <p>A aplicação completa das 14 tarefas costuma levar de 15 a 20 minutos, e requer espaço adequado, cadeira com e sem braços, banquinho e um objeto para ser apanhado do chão.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -878,14 +930,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "84950617-2839-4051-6273-849506172839", "code": "SCALE-BERG-001", "slug": "berg", "version": "1.0.0", "status": "published", "seo": {"title": "Escala de Equilíbrio de Berg - Avaliação de Equilíbrio Funcional", "description": "Calcule a Escala de Equilíbrio de Berg (Berg Balance Scale) para avaliar o equilíbrio funcional e o risco de quedas. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/berg.html"}, "breadcrumb": {"category": "Geriatria", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Escala de Equilíbrio de Berg", "acronym": "Berg Balance Scale", "categoryBadge": "Geriatria", "icon": "i-person", "objective": "Avaliar o equilíbrio funcional por meio de 14 tarefas de mobilidade padronizadas, estimando o risco de quedas em idosos e outras populações.", "indication": "Indicada na avaliação de equilíbrio de idosos, pacientes pós-AVC, com doença de Parkinson ou outras condições que afetam o equilíbrio.", "targetPopulation": "Idosos e pacientes com comprometimento de equilíbrio de diversas etiologias (AVC, Parkinson, vestibulopatias).", "specialty": ["Geriatria", "Fisioterapia", "Enfermagem"], "averageTime": "15-20 minutos", "evidenceLevel": "II", "originalAuthors": ["Katherine Berg"], "complexity": "advanced", "rating": 4.5, "ratingCount": 190}, "calculator": {"inputs": [{"id": "sentado_para_pe", "type": "select", "label": "1. Sentado para em Pé", "defaultValue": 4, "description": "Capacidade de se levantar de uma posição sentada.", "options": [{"value": 0, "label": "Incapaz sem ajuda", "score": 0}, {"value": 1, "label": "Necessita de ajuda mínima para levantar-se ou estabilizar-se", "score": 1}, {"value": 2, "label": "Capaz de levantar-se usando as mãos após várias tentativas", "score": 2}, {"value": 3, "label": "Capaz de levantar-se usando as mãos", "score": 3}, {"value": 4, "label": "Capaz de levantar-se sem usar as mãos e estabilizar-se", "score": 4}]}, {"id": "em_pe_sem_apoio", "type": "select", "label": "2. Em Pé sem Apoio", "defaultValue": 4, "description": "Manutenção da posição em pé sem apoio por 2 minutos.", "options": [{"value": 0, "label": "Incapaz de manter-se em pé por 30 segundos sem ajuda", "score": 0}, {"value": 1, "label": "Necessita de várias tentativas para ficar em pé sem apoio por 30 segundos", "score": 1}, {"value": 2, "label": "Capaz de ficar em pé por 30 segundos sem apoio", "score": 2}, {"value": 3, "label": "Capaz de ficar em pé por 2 minutos com supervisão", "score": 3}, {"value": 4, "label": "Capaz de ficar em pé com segurança por 2 minutos", "score": 4}]}, {"id": "sentado_sem_apoio", "type": "select", "label": "3. Sentado sem Apoio (pés apoiados no chão)", "defaultValue": 4, "description": "Manutenção da posição sentada sem apoio nas costas por 2 minutos.", "options": [{"value": 0, "label": "Incapaz de manter-se sentado sem apoio por 10 segundos", "score": 0}, {"value": 1, "label": "Capaz de manter-se sentado por 10 segundos", "score": 1}, {"value": 2, "label": "Capaz de manter-se sentado por 30 segundos", "score": 2}, {"value": 3, "label": "Capaz de manter-se sentado por 2 minutos sob supervisão", "score": 3}, {"value": 4, "label": "Capaz de manter-se sentado com segurança por 2 minutos", "score": 4}]}, {"id": "pe_para_sentado", "type": "select", "label": "4. Em Pé para Sentado", "defaultValue": 4, "description": "Capacidade de sentar-se de forma controlada.", "options": [{"value": 0, "label": "Necessita de ajuda para sentar-se", "score": 0}, {"value": 1, "label": "Senta-se sozinho, mas o movimento de descida não é controlado", "score": 1}, {"value": 2, "label": "Usa as pernas para controlar a descida", "score": 2}, {"value": 3, "label": "Usa as mãos para controlar a descida", "score": 3}, {"value": 4, "label": "Senta-se com segurança, com uso mínimo das mãos", "score": 4}]}, {"id": "transferencias", "type": "select", "label": "5. Transferências", "defaultValue": 4, "description": "Capacidade de transferir-se entre superfícies (ex: cadeira e cama).", "options": [{"value": 0, "label": "Necessita de ajuda de duas pessoas para a transferência", "score": 0}, {"value": 1, "label": "Necessita de uma pessoa para ajudar", "score": 1}, {"value": 2, "label": "Capaz de transferir-se com supervisão verbal e/ou apoio", "score": 2}, {"value": 3, "label": "Capaz de transferir-se com segurança, com uso obrigatório das mãos", "score": 3}, {"value": 4, "label": "Capaz de transferir-se com segurança, com uso mínimo das mãos", "score": 4}]}, {"id": "olhos_fechados", "type": "select", "label": "6. Em Pé sem Apoio com Olhos Fechados", "defaultValue": 4, "description": "Manutenção do equilíbrio em pé com os olhos fechados por 10 segundos.", "options": [{"value": 0, "label": "Necessita de ajuda para evitar a queda", "score": 0}, {"value": 1, "label": "Não consegue manter os olhos fechados por 3 segundos, mas mantém-se em pé", "score": 1}, {"value": 2, "label": "Capaz de manter-se em pé por 3 segundos", "score": 2}, {"value": 3, "label": "Capaz de manter-se em pé por 10 segundos com supervisão", "score": 3}, {"value": 4, "label": "Capaz de manter-se em pé com segurança por 10 segundos", "score": 4}]}, {"id": "pes_juntos", "type": "select", "label": "7. Em Pé sem Apoio com os Pés Juntos", "defaultValue": 4, "description": "Manutenção da posição em pé com os pés juntos por 1 minuto.", "options": [{"value": 0, "label": "Necessita de ajuda para atingir a posição e não consegue manter-se por 15 segundos", "score": 0}, {"value": 1, "label": "Necessita de ajuda para atingir a posição, mas consegue manter-se por 15 segundos", "score": 1}, {"value": 2, "label": "Capaz de posicionar os pés juntos, mas sem manter por 30 segundos", "score": 2}, {"value": 3, "label": "Capaz de posicionar os pés juntos, mantendo por 1 minuto com supervisão", "score": 3}, {"value": 4, "label": "Capaz de posicionar os pés juntos e manter por 1 minuto com segurança", "score": 4}]}, {"id": "alcance_frente", "type": "select", "label": "8. Alcançar à Frente com o Braço Estendido", "defaultValue": 4, "description": "Alcance funcional à frente com o braço estendido em pé.", "options": [{"value": 0, "label": "Necessita de ajuda para não cair", "score": 0}, {"value": 1, "label": "Necessita de supervisão para alcançar", "score": 1}, {"value": 2, "label": "Consegue alcançar, mas necessita de supervisão", "score": 2}, {"value": 3, "label": "Consegue alcançar mais de 12,5 cm com segurança", "score": 3}, {"value": 4, "label": "Consegue alcançar à frente com confiança mais de 25 cm", "score": 4}]}, {"id": "pegar_objeto_chao", "type": "select", "label": "9. Apanhar um Objeto do Chão", "defaultValue": 4, "description": "Capacidade de apanhar um objeto do chão a partir da posição em pé.", "options": [{"value": 0, "label": "Incapaz de tentar / necessita de ajuda para não perder o equilíbrio", "score": 0}, {"value": 1, "label": "Incapaz de apanhar e necessita de supervisão enquanto tenta", "score": 1}, {"value": 2, "label": "Incapaz de apanhar, mas mantém-se em pé com segurança", "score": 2}, {"value": 3, "label": "Capaz de apanhar o objeto, mas necessita de supervisão", "score": 3}, {"value": 4, "label": "Capaz de apanhar o objeto com facilidade e segurança", "score": 4}]}, {"id": "virar_olhar_atras", "type": "select", "label": "10. Virar-se e Olhar para Trás", "defaultValue": 4, "description": "Capacidade de olhar para trás por cima do ombro esquerdo e direito.", "options": [{"value": 0, "label": "Necessita de ajuda para não perder o equilíbrio", "score": 0}, {"value": 1, "label": "Necessita de supervisão ao virar", "score": 1}, {"value": 2, "label": "Vira apenas para um dos lados, mostrando pouco equilíbrio", "score": 2}, {"value": 3, "label": "Vira para os dois lados, apresentando pequena mudança no equilíbrio", "score": 3}, {"value": 4, "label": "Vira para os dois lados com boa mudança de peso", "score": 4}]}, {"id": "girar_360", "type": "select", "label": "11. Girar 360 Graus", "defaultValue": 4, "description": "Capacidade de girar completamente 360 graus.", "options": [{"value": 0, "label": "Necessita de ajuda enquanto gira", "score": 0}, {"value": 1, "label": "Necessita de supervisão próxima ou orientação verbal", "score": 1}, {"value": 2, "label": "Capaz de girar 360 graus com segurança, mas lentamente", "score": 2}, {"value": 3, "label": "Capaz de girar 360 graus com segurança em um dos lados em ≤4 segundos", "score": 3}, {"value": 4, "label": "Capaz de girar 360 graus com segurança em ≤4 segundos para ambos os lados", "score": 4}]}, {"id": "alternar_pes_banquinho", "type": "select", "label": "12. Colocar os Pés Alternadamente em um Banquinho", "defaultValue": 4, "description": "Alternância dos pés em um banquinho, 4 vezes cada, em pé sem apoio.", "options": [{"value": 0, "label": "Incapaz de tentar / necessita de ajuda para não cair", "score": 0}, {"value": 1, "label": "Capaz de completar menos de 2 alternâncias, necessitando de ajuda mínima", "score": 1}, {"value": 2, "label": "Capaz de completar 4 alternâncias sem apoio, mas com supervisão", "score": 2}, {"value": 3, "label": "Capaz de ficar em pé sem apoio e completar 8 alternâncias em mais de 20 segundos", "score": 3}, {"value": 4, "label": "Capaz de ficar em pé sem apoio e completar 8 alternâncias com segurança em 20 segundos", "score": 4}]}, {"id": "pe_um_na_frente", "type": "select", "label": "13. Em Pé sem Apoio com um Pé à Frente", "defaultValue": 4, "description": "Manutenção da posição tandem (um pé diretamente à frente do outro) por 30 segundos.", "options": [{"value": 0, "label": "Perde o equilíbrio ao posicionar-se ou ao dar o passo", "score": 0}, {"value": 1, "label": "Necessita de ajuda para dar o passo, mas mantém-se por 15 segundos", "score": 1}, {"value": 2, "label": "Capaz de dar o passo à frente sozinho e manter por 30 segundos", "score": 2}, {"value": 3, "label": "Capaz de colocar um pé à frente do outro, mantendo por 30 segundos", "score": 3}, {"value": 4, "label": "Capaz de colocar um pé diretamente à frente do outro (tandem), mantendo por 30 segundos", "score": 4}]}, {"id": "pe_uma_perna", "type": "select", "label": "14. Em Pé sobre uma Perna", "defaultValue": 4, "description": "Manutenção do equilíbrio em pé sobre uma perna, sem apoio.", "options": [{"value": 0, "label": "Incapaz de tentar ou necessita de ajuda para não cair", "score": 0}, {"value": 1, "label": "Tenta levantar a perna, mas não consegue mantê-la por 3 segundos", "score": 1}, {"value": 2, "label": "Capaz de levantar a perna sozinho e manter por 3 a 5 segundos", "score": 2}, {"value": 3, "label": "Capaz de levantar a perna sozinho e manter por 5 a 10 segundos", "score": 3}, {"value": 4, "label": "Capaz de levantar a perna sozinho e manter por mais de 10 segundos", "score": 4}]}], "formula": {"type": "sum", "resultLabel": "Escala de Equilíbrio de Berg", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 20, "label": "Alto Risco de Quedas", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação de 0 a 20 pontos indica comprometimento importante do equilíbrio funcional e alto risco de quedas, geralmente associado à necessidade de auxílio para deambulação.", "recommendations": "• Encaminhar para avaliação e programa de fisioterapia especializado\n• Implementar medidas intensivas de prevenção de quedas\n• Avaliar necessidade de dispositivos de auxílio à marcha\n• Reavaliar causas reversíveis de comprometimento do equilíbrio"}, {"min": 21, "max": 40, "label": "Risco Moderado de Quedas", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação de 21 a 40 pontos indica comprometimento moderado do equilíbrio, com risco moderado de quedas.", "recommendations": "• Encaminhar para programa de exercícios de equilíbrio\n• Orientar sobre prevenção de quedas\n• Reavaliar periodicamente\n• Considerar uso de dispositivos de auxílio à marcha conforme avaliação"}, {"min": 41, "max": 56, "label": "Baixo Risco de Quedas", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Pontuação de 41 a 56 pontos indica equilíbrio funcional preservado e baixo risco de quedas relacionado ao equilíbrio.", "recommendations": "• Manter acompanhamento de rotina\n• Estimular atividade física regular para manutenção do equilíbrio\n• Reavaliar após eventos agudos de saúde"}]}, "sae": {"nanda": [{"diagnosis": "Risco de quedas", "definition": "Suscetibilidade aumentada a quedas, que pode causar dano físico e comprometer a saúde, relacionada a comprometimento do equilíbrio funcional."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação no movimento físico independente e intencional do corpo ou de uma ou mais extremidades."}, {"diagnosis": "Risco de síndrome do desuso", "definition": "Risco de deterioração de sistemas corporais em consequência da inatividade musculoesquelética prescrita ou inevitável, relacionado a limitações no equilíbrio funcional."}], "noc": [{"outcome": "Equilíbrio", "indicators": ["Escore da Escala de Berg avaliado e monitorado ao longo do tempo", "Participação em programa de exercícios de equilíbrio quando indicado", "Ausência de quedas durante o acompanhamento"]}], "nic": [{"intervention": "Prevenção de quedas", "activities": ["Aplicar a Escala de Equilíbrio de Berg na avaliação funcional", "Encaminhar para fisioterapia conforme grau de comprometimento identificado", "Adaptar o ambiente para reduzir riscos de queda", "Orientar sobre uso adequado de dispositivos de auxílio à marcha", "Reavaliar periodicamente a evolução do equilíbrio funcional"]}]}, "evidence": {"foundation": "A Escala de Equilíbrio de Berg avalia 14 tarefas funcionais de equilíbrio estático e dinâmico, cada uma pontuada de 0 a 4, totalizando um escore de 0 a 56 pontos, para avaliar o equilíbrio funcional e o risco de quedas.", "history": "Desenvolvida por Katherine Berg e colaboradores, é uma das ferramentas mais utilizadas mundialmente na avaliação de equilíbrio, amplamente empregada em geriatria, neurologia e reabilitação.", "validation": "Extensivamente validada em diversas populações, incluindo idosos, pacientes pós-AVC e com doença de Parkinson, com boa confiabilidade interexaminadores e correlação com outras medidas de mobilidade e risco de quedas.", "limitations": "Requer tempo considerável para administração (15-20 minutos) e espaço adequado. O ponto de corte ideal para predição de quedas varia entre estudos e populações (valores citados entre 40 e 45 pontos).", "references": [{"text": "BERG, K. et al. Measuring balance in the elderly: validation of an instrument. Canadian Journal of Public Health, v. 83, suppl 2, p. S7-11, 1992."}, {"text": "BERG, K. O. et al. The balance scale: reliability assessment with elderly residents and patients with an acute stroke. Scandinavian Journal of Rehabilitation Medicine, v. 27, n. 1, p. 27-36, 1995."}, {"text": "SHIRLEY RYAN ABILITYLAB. Berg Balance Scale. Rehabilitation Measures Database, 2013."}]}, "learning": {"tips": ["A Escala de Berg avalia 14 tarefas funcionais, cada uma pontuada de 0 (incapaz) a 4 (independente e seguro), totalizando 56 pontos.", "Diferentes pontos de corte são usados na literatura para risco de quedas (40 a 45 pontos) — utilize o valor adotado pelo protocolo da sua instituição.", "É necessário espaço adequado, cadeira, banquinho e um objeto para apanhar do chão para a aplicação completa.", "Combine os resultados com o histórico de quedas prévias e outras ferramentas para uma avaliação mais completa do risco."], "examples": [{"label": "Baixo risco de quedas", "sublabel": "Berg 52", "emoji": "✅", "values": {"sentado_para_pe": 4, "em_pe_sem_apoio": 4, "sentado_sem_apoio": 4, "pe_para_sentado": 4, "transferencias": 4, "olhos_fechados": 4, "pes_juntos": 4, "alcance_frente": 3, "pegar_objeto_chao": 4, "virar_olhar_atras": 4, "girar_360": 4, "alternar_pes_banquinho": 3, "pe_um_na_frente": 3, "pe_uma_perna": 3}}, {"label": "Risco moderado de quedas", "sublabel": "Berg 32", "emoji": "⚠️", "values": {"sentado_para_pe": 3, "em_pe_sem_apoio": 3, "sentado_sem_apoio": 3, "pe_para_sentado": 3, "transferencias": 3, "olhos_fechados": 2, "pes_juntos": 2, "alcance_frente": 2, "pegar_objeto_chao": 2, "virar_olhar_atras": 2, "girar_360": 2, "alternar_pes_banquinho": 2, "pe_um_na_frente": 2, "pe_uma_perna": 1}}, {"label": "Alto risco de quedas", "sublabel": "Berg 14", "emoji": "🚨", "values": {"sentado_para_pe": 2, "em_pe_sem_apoio": 1, "sentado_sem_apoio": 2, "pe_para_sentado": 2, "transferencias": 1, "olhos_fechados": 1, "pes_juntos": 1, "alcance_frente": 1, "pegar_objeto_chao": 0, "virar_olhar_atras": 1, "girar_360": 0, "alternar_pes_banquinho": 1, "pe_um_na_frente": 0, "pe_uma_perna": 1}}], "quiz": [{"q": "Quantas tarefas compõem a Escala de Equilíbrio de Berg?", "opts": ["10", "12", "14", "20"], "correct": 2, "expl": "A Escala de Berg é composta por 14 tarefas funcionais de equilíbrio, cada uma pontuada de 0 a 4."}, {"q": "Qual a pontuação máxima da Escala de Berg?", "opts": ["40 pontos", "44 pontos", "50 pontos", "56 pontos"], "correct": 3, "expl": "A pontuação máxima é 56 pontos (14 itens × 4 pontos cada)."}, {"q": "Uma pontuação mais baixa na Escala de Berg indica:", "opts": ["Melhor equilíbrio funcional", "Maior risco de quedas", "Nenhuma relação com risco de queda", "Apenas comprometimento cognitivo"], "correct": 1, "expl": "Quanto menor a pontuação, maior o comprometimento do equilíbrio funcional e maior o risco de quedas."}]}, "faq": [{"q": "Qual o ponto de corte usado para risco de quedas na Escala de Berg?", "a": "A literatura cita diferentes pontos de corte, geralmente entre 40 e 45 pontos. Esta calculadora utiliza uma estratificação em três faixas (0-20 alto risco, 21-40 risco moderado, 41-56 baixo risco), mas o protocolo institucional pode adotar um ponto de corte específico."}, {"q": "Quanto tempo leva para aplicar a Escala de Berg?", "a": "A aplicação completa das 14 tarefas costuma levar de 15 a 20 minutos, e requer espaço adequado, cadeira com e sem braços, banquinho e um objeto para ser apanhado do chão."}], "about": {"title": "Como funciona a Escala de Equilíbrio de Berg", "html": "<p>A Escala de Berg avalia 14 tarefas funcionais de equilíbrio (sentar, levantar, transferir-se, girar, alcançar, entre outras), cada uma pontuada de 0 a 4, somando um escore total de 0 a 56 pontos.</p><p><strong>Guia rápido:</strong> 0-20 = Alto risco de quedas | 21-40 = Risco moderado | 41-56 = Baixo risco.</p>"}}</script>
+</body></html>

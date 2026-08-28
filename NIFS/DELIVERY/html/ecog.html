@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="ecog">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -116,7 +126,7 @@
                 <label class="field-label" for="calc-status">Capacidade Funcional</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-status" class="field-select" data-calc-input="status"><option value="0" selected>0 — 0 — Totalmente Ativo</option><option value="1">1 — 1 — Restrito a Atividades Físicas Extenuantes</option><option value="2">2 — 2 — Deambula, Autocuidado Preservado</option><option value="3">3 — 3 — Capacidade de Autocuidado Limitada</option><option value="4">4 — 4 — Completamente Incapacitado</option><option value="5">5 — 5 — Óbito</option></select>
+                <select id="calc-status" class="field-select" data-calc-input="status"><option value="0" selected>0 — Totalmente Ativo</option><option value="1">1 — Restrito a Atividades Físicas Extenuantes</option><option value="2">2 — Deambula, Autocuidado Preservado</option><option value="3">3 — Capacidade de Autocuidado Limitada</option><option value="4">4 — Completamente Incapacitado</option><option value="5">5 — Óbito</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Selecione a categoria que melhor descreve a capacidade funcional atual do paciente.</p>
@@ -160,8 +170,7 @@
                     <span class="formula-cap">ECOG Performance Status</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -190,10 +199,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -204,7 +281,7 @@
                   <h3>Capacidade Funcional</h3>
                   <p class="step-hint">Selecione a categoria que melhor descreve a capacidade funcional atual do paciente.</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="status"><option value="0" selected>0 — 0 — Totalmente Ativo</option><option value="1">1 — 1 — Restrito a Atividades Físicas Extenuantes</option><option value="2">2 — 2 — Deambula, Autocuidado Preservado</option><option value="3">3 — 3 — Capacidade de Autocuidado Limitada</option><option value="4">4 — 4 — Completamente Incapacitado</option><option value="5">5 — 5 — Óbito</option></select>
+                <select class="field-select" data-calc-input="status"><option value="0" selected>0 — Totalmente Ativo</option><option value="1">1 — Restrito a Atividades Físicas Extenuantes</option><option value="2">2 — Deambula, Autocuidado Preservado</option><option value="3">3 — Capacidade de Autocuidado Limitada</option><option value="4">4 — Completamente Incapacitado</option><option value="5">5 — Óbito</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -275,7 +352,8 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;status&quot;: 0}'>Paciente ativo <span class="p-sub">ECOG 0</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;status&quot;: 2}'>Limitação para trabalho <span class="p-sub">ECOG 2</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;status&quot;: 4}'>Totalmente dependente <span class="p-sub">ECOG 4</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Capacidade Funcional</label>
-              <select class="field-select" data-calc-input="status" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>0 — Totalmente Ativo</option><option value="1">1 — Restrito a Atividades Físicas Extenuantes</option><option value="2">2 — Deambula, Autocuidado Preservado</option><option value="3">3 — Capacidade de Autocuidado Limitada</option><option value="4">4 — Completamente Incapacitado</option><option value="5">5 — Óbito</option></select></div></div>
+              <select class="field-select" data-calc-input="status"><option value="0" selected>0 — Totalmente Ativo</option><option value="1">1 — Restrito a Atividades Físicas Extenuantes</option><option value="2">2 — Deambula, Autocuidado Preservado</option><option value="3">3 — Capacidade de Autocuidado Limitada</option><option value="4">4 — Completamente Incapacitado</option><option value="5">5 — Óbito</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit"></span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Boa Capacidade Funcional</span>
@@ -316,14 +394,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -332,45 +410,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Boa Capacidade Funcional</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:40%; background:#2563eb"></div></div>
-              <span class="dist-pct">40%</span></div><div class="dist-row"><span class="dist-label">Capacidade Funcional Intermediária</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:30%; background:#ca8a04"></div></div>
-              <span class="dist-pct">30%</span></div><div class="dist-row"><span class="dist-label">Capacidade Funcional Reduzida</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#ca8a04"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Incapacidade Funcional Grave</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#dc2626"></div></div>
-              <span class="dist-pct">10%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>ECOG Performance Status</td><td>0 </td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>ECOG Performance Status</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>ECOG Performance Status</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o ECOG Performance Status</h2>
           <p>O ECOG classifica a capacidade funcional do paciente oncológico em 6 níveis, de 0 (totalmente ativo, sem restrições) a 5 (óbito), orientando decisões sobre elegibilidade e intensidade de tratamento oncológico.</p><p><strong>Guia rápido:</strong> 0-1 = Boa capacidade funcional | 2 = Intermediária | 3 = Reduzida | 4 = Incapacidade grave | 5 = Óbito.</p>
@@ -382,45 +455,22 @@
               <p>Não. É uma ferramenta padronizada de comunicação sobre capacidade funcional, mas deve ser complementada por avaliação clínica individualizada, incluindo comorbidades e objetivos de cuidado do paciente.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -478,14 +528,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "b5c6d7e8-f906-4172-b394-5c6d7e8f9607", "code": "SCALE-ECOG-001", "slug": "ecog", "version": "1.0.0", "status": "published", "seo": {"title": "ECOG Performance Status - Capacidade Funcional Oncológica", "description": "Classifique a capacidade funcional do paciente oncológico com a escala ECOG Performance Status (0 a 5). Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/ecog.html"}, "breadcrumb": {"category": "Oncologia e Cuidados Paliativos", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "ECOG Performance Status", "acronym": "ECOG", "categoryBadge": "Oncologia e cuidados paliativos", "icon": "i-clipboard", "objective": "Classificar objetivamente a capacidade funcional do paciente oncológico, orientando decisões terapêuticas e prognósticas conforme o grau de autonomia para atividades da vida diária.", "indication": "Indicada para pacientes oncológicos, em qualquer fase do tratamento, e em cuidados paliativos, como parâmetro de decisão terapêutica e acompanhamento evolutivo.", "targetPopulation": "Pacientes adultos com diagnóstico oncológico ou em cuidados paliativos.", "specialty": ["Oncologia", "Cuidados Paliativos", "Enfermagem"], "averageTime": "1 minuto", "evidenceLevel": "II", "organizations": ["Eastern Cooperative Oncology Group (ECOG)"], "complexity": "basic", "rating": 4.7, "ratingCount": 320}, "calculator": {"inputs": [{"id": "status", "type": "select", "label": "Capacidade Funcional", "description": "Selecione a categoria que melhor descreve a capacidade funcional atual do paciente.", "defaultValue": 0, "options": [{"value": 0, "label": "0 — Totalmente Ativo", "score": 0, "description": "Capaz de realizar todas as atividades normais sem restrição, como antes da doença."}, {"value": 1, "label": "1 — Restrito a Atividades Físicas Extenuantes", "score": 1, "description": "Restrito a atividades fisicamente extenuantes, mas capaz de trabalho leve/sedentário (ex: trabalho doméstico leve, escritório)."}, {"value": 2, "label": "2 — Deambula, Autocuidado Preservado", "score": 2, "description": "Deambula e é capaz de todo o autocuidado, mas incapaz de realizar qualquer atividade de trabalho; fora do leito mais de 50% das horas de vigília."}, {"value": 3, "label": "3 — Capacidade de Autocuidado Limitada", "score": 3, "description": "Capacidade de autocuidado apenas limitada; confinado ao leito ou cadeira mais de 50% das horas de vigília."}, {"value": 4, "label": "4 — Completamente Incapacitado", "score": 4, "description": "Completamente incapacitado; não é capaz de realizar qualquer autocuidado; totalmente confinado ao leito ou cadeira."}, {"value": 5, "label": "5 — Óbito", "score": 5, "description": "Óbito."}]}], "formula": {"type": "sum", "resultLabel": "ECOG Performance Status", "resultUnit": "", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 1, "label": "Boa Capacidade Funcional", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Paciente com boa capacidade funcional, geralmente candidato a tratamentos oncológicos de intenção curativa em dose plena.", "recommendations": "• Avaliar elegibilidade para tratamento oncológico ativo conforme protocolo\n• Reavaliar periodicamente ao longo do tratamento"}, {"min": 2, "max": 2, "label": "Capacidade Funcional Intermediária", "riskLevel": "low", "color": "#ca8a04", "clinicalImplications": "Paciente deambula e mantém autocuidado, mas com limitação para atividades laborais. Requer avaliação individualizada quanto à tolerância a tratamentos mais agressivos.", "recommendations": "• Avaliação multiprofissional para definição terapêutica\n• Considerar ajuste de dose/intensidade do tratamento conforme tolerância"}, {"min": 3, "max": 3, "label": "Capacidade Funcional Reduzida", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Capacidade de autocuidado limitada, com mais da metade do tempo no leito/cadeira. Tratamentos oncológicos agressivos geralmente não são bem tolerados.", "recommendations": "• Priorizar discussão sobre objetivos de cuidado\n• Considerar abordagem paliativa associada\n• Avaliação individualizada de risco-benefício de tratamentos ativos"}, {"min": 4, "max": 4, "label": "Incapacidade Funcional Grave", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Paciente completamente dependente para autocuidado, confinado ao leito/cadeira. Tratamentos oncológicos ativos geralmente não são indicados.", "recommendations": "• Priorizar cuidados paliativos e conforto\n• Discussão de objetivos de cuidado com paciente/família\n• Suporte multiprofissional intensivo"}]}, "sae": {"nanda": [{"diagnosis": "Fadiga", "definition": "Sensação avassaladora e sustentada de exaustão e diminuição da capacidade para trabalho físico e mental."}, {"diagnosis": "Mobilidade física prejudicada", "definition": "Limitação na movimentação voluntária independente de partes ou todo o corpo."}, {"diagnosis": "Disposição para conforto melhorado", "definition": "Padrão de bem-estar em dimensões física, psicoespiritual, ambiental, cultural e/ou social que pode ser fortalecido."}], "noc": [{"outcome": "Status funcional", "indicators": ["Capacidade de autocuidado preservada conforme possível", "Nível de energia adequado à condição clínica", "Participação em decisões sobre o plano terapêutico"]}], "nic": [{"intervention": "Manejo de energia", "activities": ["Avaliar a capacidade funcional com escala validada (ECOG)", "Planejar cuidados conforme o grau de dependência identificado", "Envolver equipe multiprofissional na definição terapêutica", "Reavaliar periodicamente ao longo do tratamento"]}]}, "evidence": {"foundation": "A escala ECOG Performance Status foi desenvolvida pelo Eastern Cooperative Oncology Group, classificando a capacidade funcional do paciente oncológico em uma escala de 0 (totalmente ativo) a 5 (óbito), sendo um dos instrumentos mais utilizados mundialmente em oncologia para decisões terapêuticas e prognósticas.", "history": "Amplamente adotada em ensaios clínicos oncológicos como critério de elegibilidade e estratificação de risco, e na prática clínica diária para orientar decisões sobre intensidade de tratamento.", "validation": "Apresenta boa correlação com prognóstico e tolerância a tratamentos oncológicos, sendo validada e utilizada extensivamente na literatura oncológica internacional.", "limitations": "É uma escala relativamente simples e pode não capturar nuances específicas de determinadas condições; a Escala de Karnofsky, mais granular (0-100), é frequentemente usada como complemento ou alternativa em determinados contextos.", "references": [{"text": "OKEN, M. M. et al. Toxicity and response criteria of the Eastern Cooperative Oncology Group. American Journal of Clinical Oncology, v. 5, n. 6, p. 649-655, 1982."}, {"text": "INSTITUTO NACIONAL DE CÂNCER (INCA). Cuidados paliativos oncológicos: controle de sintomas. Rio de Janeiro: INCA, 2021."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["Avalie a capacidade funcional real do paciente, não sua capacidade percebida ou desejada.", "Reavalie o ECOG a cada consulta ou ciclo de tratamento oncológico para acompanhar a evolução.", "Use em conjunto com a Escala de Karnofsky quando maior granularidade for necessária para decisões terapêuticas.", "O ECOG é frequentemente utilizado como critério de elegibilidade para ensaios clínicos e protocolos de tratamento."], "examples": [{"label": "Paciente ativo", "sublabel": "ECOG 0", "emoji": "✅", "values": {"status": 0}}, {"label": "Limitação para trabalho", "sublabel": "ECOG 2", "emoji": "⚠️", "values": {"status": 2}}, {"label": "Totalmente dependente", "sublabel": "ECOG 4", "emoji": "🚨", "values": {"status": 4}}], "quiz": [{"q": "Qual a faixa de valores do ECOG Performance Status?", "opts": ["0 a 3", "0 a 5", "1 a 10", "0 a 100"], "correct": 1, "expl": "O ECOG varia de 0 (totalmente ativo) a 5 (óbito)."}, {"q": "Um paciente ECOG 4 é geralmente candidato a tratamento oncológico agressivo?", "opts": ["Sim, sempre", "Geralmente não, prioriza-se abordagem paliativa", "Apenas com quimioterapia oral", "Depende apenas da idade"], "correct": 1, "expl": "Pacientes ECOG 4 (completamente incapacitados) geralmente não toleram tratamentos oncológicos agressivos, sendo priorizada a abordagem de cuidados paliativos e conforto."}, {"q": "Para que é frequentemente utilizado o ECOG em pesquisa clínica?", "opts": ["Cálculo de dose de medicação", "Critério de elegibilidade em ensaios clínicos oncológicos", "Diagnóstico de câncer", "Estadiamento tumoral"], "correct": 1, "expl": "O ECOG é amplamente utilizado como critério de elegibilidade e estratificação de risco em ensaios clínicos oncológicos."}]}, "faq": [{"q": "Qual a diferença entre ECOG e Escala de Karnofsky?", "a": "Ambas avaliam capacidade funcional em oncologia, mas o ECOG usa uma escala mais simples de 0 a 5, enquanto a Karnofsky usa uma escala mais granular de 0 a 100 (incrementos de 10), permitindo maior precisão em determinados contextos."}, {"q": "O ECOG substitui a avaliação clínica completa do paciente oncológico?", "a": "Não. É uma ferramenta padronizada de comunicação sobre capacidade funcional, mas deve ser complementada por avaliação clínica individualizada, incluindo comorbidades e objetivos de cuidado do paciente."}], "about": {"title": "Como funciona o ECOG Performance Status", "html": "<p>O ECOG classifica a capacidade funcional do paciente oncológico em 6 níveis, de 0 (totalmente ativo, sem restrições) a 5 (óbito), orientando decisões sobre elegibilidade e intensidade de tratamento oncológico.</p><p><strong>Guia rápido:</strong> 0-1 = Boa capacidade funcional | 2 = Intermediária | 3 = Reduzida | 4 = Incapacidade grave | 5 = Óbito.</p>"}}</script>
+</body></html>

@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="alvarado">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -251,8 +261,7 @@
                     <span class="formula-cap">Índice de Alvarado</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -281,10 +290,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -485,14 +562,15 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;migracao_dor&quot;: 0, &quot;anorexia&quot;: 1, &quot;nausea_vomito&quot;: 0, &quot;dor_fid&quot;: 0, &quot;descompressao&quot;: 0, &quot;temperatura&quot;: 0, &quot;leucocitose&quot;: 0, &quot;desvio_esquerda&quot;: 1}'>Baixa probabilidade <span class="p-sub">Alvarado 2</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;migracao_dor&quot;: 1, &quot;anorexia&quot;: 1, &quot;nausea_vomito&quot;: 1, &quot;dor_fid&quot;: 2, &quot;descompressao&quot;: 0, &quot;temperatura&quot;: 0, &quot;leucocitose&quot;: 0, &quot;desvio_esquerda&quot;: 1}'>Possível apendicite <span class="p-sub">Alvarado 6</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;migracao_dor&quot;: 1, &quot;anorexia&quot;: 1, &quot;nausea_vomito&quot;: 1, &quot;dor_fid&quot;: 2, &quot;descompressao&quot;: 1, &quot;temperatura&quot;: 1, &quot;leucocitose&quot;: 2, &quot;desvio_esquerda&quot;: 0}'>Muito provável apendicite <span class="p-sub">Alvarado 9</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Migração da Dor para a Fossa Ilíaca Direita</label>
-              <select class="field-select" data-calc-input="migracao_dor" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Anorexia</label>
-              <select class="field-select" data-calc-input="anorexia" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Náusea ou Vômito</label>
-              <select class="field-select" data-calc-input="nausea_vomito" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Dor à Palpação em Fossa Ilíaca Direita</label>
-              <select class="field-select" data-calc-input="dor_fid" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Ausente</option><option value="2">Presente</option></select></div><div class="urg-field"><label>Dor à Descompressão Súbita (Blumberg)</label>
-              <select class="field-select" data-calc-input="descompressao" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Elevação da Temperatura</label>
-              <select class="field-select" data-calc-input="temperatura" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Menor que 37,3°C</option><option value="1">37,3°C ou Mais</option></select></div><div class="urg-field"><label>Leucocitose</label>
-              <select class="field-select" data-calc-input="leucocitose" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Menor ou Igual a 10.000/mm³</option><option value="2">Maior que 10.000/mm³</option></select></div><div class="urg-field"><label>Desvio à Esquerda (Neutrófilos)</label>
-              <select class="field-select" data-calc-input="desvio_esquerda" style="background:rgba(255,255,255,.07);border-"><option value="0" selected>Menor ou Igual a 75%</option><option value="1">Maior que 75%</option></select></div></div>
+              <select class="field-select" data-calc-input="migracao_dor"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Anorexia</label>
+              <select class="field-select" data-calc-input="anorexia"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Náusea ou Vômito</label>
+              <select class="field-select" data-calc-input="nausea_vomito"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Dor à Palpação em Fossa Ilíaca Direita</label>
+              <select class="field-select" data-calc-input="dor_fid"><option value="0" selected>Ausente</option><option value="2">Presente</option></select></div><div class="urg-field"><label>Dor à Descompressão Súbita (Blumberg)</label>
+              <select class="field-select" data-calc-input="descompressao"><option value="0" selected>Ausente</option><option value="1">Presente</option></select></div><div class="urg-field"><label>Elevação da Temperatura</label>
+              <select class="field-select" data-calc-input="temperatura"><option value="0" selected>Menor que 37,3°C</option><option value="1">37,3°C ou Mais</option></select></div><div class="urg-field"><label>Leucocitose</label>
+              <select class="field-select" data-calc-input="leucocitose"><option value="0" selected>Menor ou Igual a 10.000/mm³</option><option value="2">Maior que 10.000/mm³</option></select></div><div class="urg-field"><label>Desvio à Esquerda (Neutrófilos)</label>
+              <select class="field-select" data-calc-input="desvio_esquerda"><option value="0" selected>Menor ou Igual a 75%</option><option value="1">Maior que 75%</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Baixa Probabilidade</span>
@@ -533,14 +611,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -549,45 +627,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Baixa Probabilidade</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:40%; background:#2563eb"></div></div>
-              <span class="dist-pct">40%</span></div><div class="dist-row"><span class="dist-label">Possível Apendicite</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:30%; background:#ca8a04"></div></div>
-              <span class="dist-pct">30%</span></div><div class="dist-row"><span class="dist-label">Provável Apendicite</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#dc2626"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Muito Provável Apendicite</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#7f1d1d"></div></div>
-              <span class="dist-pct">10%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Índice de Alvarado</td><td>0 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Índice de Alvarado</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Índice de Alvarado</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o Índice de Alvarado</h2>
           <p>O Índice de Alvarado soma pontos de 8 critérios (mnemônico MANTRELS): migração da dor, anorexia, náusea/vômito, dor em fossa ilíaca direita, dor à descompressão, febre, leucocitose e desvio à esquerda, totalizando de 0 a 10 pontos.</p><p><strong>Guia rápido:</strong> 0-4 = Baixa probabilidade | 5-6 = Possível apendicite | 7-8 = Provável apendicite | 9-10 = Muito provável apendicite.</p>
@@ -599,45 +672,22 @@
               <p>O desempenho do índice pode ser reduzido nessas populações, sendo recomendável complementar sempre com avaliação clínica detalhada e exames de imagem quando houver qualquer dúvida diagnóstica.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="berg.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Escala de Equilíbrio de Berg</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -695,14 +745,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "29405162-7384-4506-1728-395061728495", "code": "SCALE-ALVARADO-001", "slug": "alvarado", "version": "1.0.0", "status": "published", "seo": {"title": "Índice de Alvarado - Probabilidade de Apendicite Aguda", "description": "Calcule o Índice de Alvarado para estimar a probabilidade de apendicite aguda a partir de sinais clínicos e exames laboratoriais. Inclui interpretação e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/alvarado.html"}, "breadcrumb": {"category": "Emergência e Terapia Intensiva", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Índice de Alvarado", "acronym": "Alvarado", "categoryBadge": "Emergência", "icon": "i-stetho", "objective": "Estimar a probabilidade de apendicite aguda a partir da combinação de sinais e sintomas clínicos com exames laboratoriais simples, auxiliando na triagem e decisão sobre investigação adicional ou avaliação cirúrgica.", "indication": "Indicada para pacientes com dor abdominal sugestiva de apendicite aguda, no pronto-socorro ou unidade de emergência.", "targetPopulation": "Pacientes com quadro clínico de dor abdominal aguda com suspeita de apendicite.", "specialty": ["Emergência", "Cirurgia Geral", "Enfermagem"], "averageTime": "2-3 minutos", "evidenceLevel": "II", "originalAuthors": ["Alfredo Alvarado"], "complexity": "intermediate", "rating": 4.6, "ratingCount": 230}, "calculator": {"inputs": [{"id": "migracao_dor", "type": "select", "label": "Migração da Dor para a Fossa Ilíaca Direita", "description": "Dor que se inicia na região periumbilical/epigástrica e migra para a fossa ilíaca direita.", "defaultValue": 0, "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 1, "label": "Presente", "score": 1}]}, {"id": "anorexia", "type": "select", "label": "Anorexia", "description": "Perda de apetite associada ao quadro atual.", "defaultValue": 0, "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 1, "label": "Presente", "score": 1}]}, {"id": "nausea_vomito", "type": "select", "label": "Náusea ou Vômito", "description": "Presença de náusea e/ou episódios de vômito.", "defaultValue": 0, "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 1, "label": "Presente", "score": 1}]}, {"id": "dor_fid", "type": "select", "label": "Dor à Palpação em Fossa Ilíaca Direita", "description": "Dor à palpação profunda na fossa ilíaca direita (ponto de McBurney).", "defaultValue": 0, "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 2, "label": "Presente", "score": 2}]}, {"id": "descompressao", "type": "select", "label": "Dor à Descompressão Súbita (Blumberg)", "description": "Dor de rebote (sinal de Blumberg) na fossa ilíaca direita.", "defaultValue": 0, "options": [{"value": 0, "label": "Ausente", "score": 0}, {"value": 1, "label": "Presente", "score": 1}]}, {"id": "temperatura", "type": "select", "label": "Elevação da Temperatura", "description": "Temperatura corporal igual ou superior a 37,3°C.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor que 37,3°C", "score": 0}, {"value": 1, "label": "37,3°C ou Mais", "score": 1}]}, {"id": "leucocitose", "type": "select", "label": "Leucocitose", "description": "Contagem de leucócitos maior que 10.000/mm³.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor ou Igual a 10.000/mm³", "score": 0}, {"value": 2, "label": "Maior que 10.000/mm³", "score": 2}]}, {"id": "desvio_esquerda", "type": "select", "label": "Desvio à Esquerda (Neutrófilos)", "description": "Percentual de neutrófilos maior que 75%.", "defaultValue": 0, "options": [{"value": 0, "label": "Menor ou Igual a 75%", "score": 0}, {"value": 1, "label": "Maior que 75%", "score": 1}]}], "formula": {"type": "sum", "resultLabel": "Índice de Alvarado", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 4, "label": "Baixa Probabilidade", "riskLevel": "low", "color": "#2563eb", "clinicalImplications": "Baixa probabilidade de apendicite aguda. Considerar diagnósticos diferenciais.", "recommendations": "• Investigar diagnósticos diferenciais de dor abdominal\n• Reavaliação clínica se persistência ou piora dos sintomas\n• Considerar alta com orientações de retorno se sinais de alarme"}, {"min": 5, "max": 6, "label": "Possível Apendicite", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Probabilidade intermediária de apendicite aguda. Recomenda-se observação clínica e/ou exames de imagem complementares.", "recommendations": "• Considerar exame de imagem complementar (ultrassonografia ou tomografia)\n• Observação clínica seriada\n• Reavaliação do escore após algumas horas"}, {"min": 7, "max": 8, "label": "Provável Apendicite", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Alta probabilidade de apendicite aguda. Avaliação cirúrgica geralmente recomendada.", "recommendations": "• Comunicar à equipe cirúrgica\n• Preparo pré-operatório conforme avaliação médica\n• Considerar exame de imagem se ainda houver dúvida diagnóstica"}, {"min": 9, "max": 10, "label": "Muito Provável Apendicite", "riskLevel": "critical", "color": "#7f1d1d", "clinicalImplications": "Probabilidade muito alta de apendicite aguda. Intervenção cirúrgica geralmente indicada.", "recommendations": "• Acionar avaliação cirúrgica de urgência\n• Preparo pré-operatório\n• Monitorização de sinais de complicação (perfuração, peritonite)"}]}, "sae": {"nanda": [{"diagnosis": "Dor aguda", "definition": "Experiência sensorial e emocional desagradável associada a lesão tecidual real ou potencial, de início súbito ou lento, com intensidade de leve a intensa."}, {"diagnosis": "Risco de infecção", "definition": "Suscetibilidade aumentada a ser invadido por organismos patogênicos, relacionado a possível processo inflamatório/infeccioso abdominal."}, {"diagnosis": "Náusea", "definition": "Sensação subjetiva desagradável, semelhante a ondas, na parte posterior da garganta, epigástrio ou abdome, que pode ou não levar ao vômito."}], "noc": [{"outcome": "Controle da dor", "indicators": ["Relata dor controlada ou em investigação ativa", "Comunica mudanças no padrão da dor à equipe"]}], "nic": [{"intervention": "Manejo da dor abdominal aguda", "activities": ["Avaliar características da dor (localização, migração, intensidade)", "Aplicar o Índice de Alvarado de forma sistemática", "Coletar exames laboratoriais conforme solicitação médica", "Comunicar escore elevado à equipe médica/cirúrgica", "Manter o paciente em jejum até definição diagnóstica, conforme orientação médica"]}]}, "evidence": {"foundation": "O Índice de Alvarado foi desenvolvido por Alfredo Alvarado em 1986, combinando 3 sintomas (migração da dor, anorexia, náusea/vômito), 3 sinais clínicos (dor em fossa ilíaca direita, dor à descompressão, febre) e 2 achados laboratoriais (leucocitose e desvio à esquerda), com o mnemônico MANTRELS, totalizando 10 pontos.", "history": "Amplamente utilizado em serviços de emergência como ferramenta de triagem para pacientes com suspeita de apendicite aguda, auxiliando na decisão sobre necessidade de exames de imagem complementares ou avaliação cirúrgica direta.", "validation": "Estudos de validação demonstram boa sensibilidade para escores elevados (7 ou mais), embora a especificidade varie conforme a população estudada e a prevalência da doença.", "limitations": "Não substitui o julgamento clínico nem exames de imagem em casos de dúvida diagnóstica, especialmente em crianças, idosos, gestantes e mulheres em idade fértil, populações em que o índice pode ter desempenho reduzido.", "references": [{"text": "ALVARADO, A. A practical score for the early diagnosis of acute appendicitis. Annals of Emergency Medicine, v. 15, n. 5, p. 557-564, 1986."}, {"text": "OHLE, R. et al. The Alvarado score for predicting acute appendicitis: a systematic review. BMC Medicine, v. 9, n. 1, p. 139, 2011."}, {"text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."}]}, "learning": {"tips": ["O mnemônico MANTRELS ajuda a lembrar os 8 critérios: Migração, Anorexia, Náusea/vômito, Tenderness (dor em FID), Rebound, Elevated temperature, Leukocytosis, Shift to left.", "Escores de 7 ou mais têm maior sensibilidade para apendicite aguda e geralmente motivam avaliação cirúrgica.", "Em populações especiais (crianças, idosos, gestantes), considere sempre complementar com exame de imagem, independentemente do escore.", "Reavalie o escore se o quadro clínico evoluir, pois a apresentação da apendicite pode mudar ao longo do tempo."], "examples": [{"label": "Baixa probabilidade", "sublabel": "Alvarado 2", "emoji": "✅", "values": {"migracao_dor": 0, "anorexia": 1, "nausea_vomito": 0, "dor_fid": 0, "descompressao": 0, "temperatura": 0, "leucocitose": 0, "desvio_esquerda": 1}}, {"label": "Possível apendicite", "sublabel": "Alvarado 6", "emoji": "⚠️", "values": {"migracao_dor": 1, "anorexia": 1, "nausea_vomito": 1, "dor_fid": 2, "descompressao": 0, "temperatura": 0, "leucocitose": 0, "desvio_esquerda": 1}}, {"label": "Muito provável apendicite", "sublabel": "Alvarado 9", "emoji": "🚨", "values": {"migracao_dor": 1, "anorexia": 1, "nausea_vomito": 1, "dor_fid": 2, "descompressao": 1, "temperatura": 1, "leucocitose": 2, "desvio_esquerda": 0}}], "quiz": [{"q": "O que significa o mnemônico MANTRELS?", "opts": ["Os nomes dos autores do estudo", "Os 8 critérios que compõem o Índice de Alvarado", "Um tipo de exame de imagem", "Uma classificação cirúrgica"], "correct": 1, "expl": "MANTRELS é o mnemônico em inglês para os 8 critérios do Índice de Alvarado: Migration, Anorexia, Nausea/vomiting, Tenderness, Rebound, Elevated temperature, Leukocytosis, Shift to left."}, {"q": "Qual a pontuação máxima do Índice de Alvarado?", "opts": ["8", "10", "12", "15"], "correct": 1, "expl": "A soma máxima possível é 10 pontos, considerando os pesos de cada critério (2 pontos para dor em FID e leucocitose, 1 ponto para os demais)."}, {"q": "Um escore de Alvarado de 9 a 10 pontos indica qual conduta geral?", "opts": ["Alta hospitalar", "Observação por 7 dias sem investigação", "Avaliação cirúrgica de urgência", "Repetir exames em 1 semana"], "correct": 2, "expl": "Escores de 9 a 10 pontos indicam probabilidade muito alta de apendicite aguda, geralmente motivando avaliação cirúrgica de urgência."}]}, "faq": [{"q": "O Índice de Alvarado substitui a tomografia computadorizada?", "a": "Não necessariamente. Em casos de escore intermediário (5-6) ou dúvida diagnóstica, especialmente em populações especiais, exames de imagem complementares (ultrassonografia ou tomografia) são frequentemente recomendados."}, {"q": "O Índice de Alvarado é confiável em crianças e gestantes?", "a": "O desempenho do índice pode ser reduzido nessas populações, sendo recomendável complementar sempre com avaliação clínica detalhada e exames de imagem quando houver qualquer dúvida diagnóstica."}], "about": {"title": "Como funciona o Índice de Alvarado", "html": "<p>O Índice de Alvarado soma pontos de 8 critérios (mnemônico MANTRELS): migração da dor, anorexia, náusea/vômito, dor em fossa ilíaca direita, dor à descompressão, febre, leucocitose e desvio à esquerda, totalizando de 0 a 10 pontos.</p><p><strong>Guia rápido:</strong> 0-4 = Baixa probabilidade | 5-6 = Possível apendicite | 7-8 = Provável apendicite | 9-10 = Muito provável apendicite.</p>"}}</script>
+</body></html>

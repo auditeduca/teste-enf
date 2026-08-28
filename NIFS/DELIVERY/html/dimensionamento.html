@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="dimensionamento">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -267,8 +277,7 @@
                     <span class="formula-cap">Quadro de Pessoal (QP)</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -297,10 +306,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -509,6 +586,7 @@
               <input aria-label="Number" type="number" data-calc-input="dias_semana" value="7"></div><div class="urg-field"><label>Índice de Segurança Técnica (IST)</label>
               <input aria-label="Number" type="number" data-calc-input="ist" value="15"></div><div class="urg-field"><label>Carga Horária Semanal do Profissional (CHS)</label>
               <input aria-label="Number" type="number" data-calc-input="chs" value="36"></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">0.0</span><span class="urg-result-unit" id="urgResultUnit">profissionais</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Equipe Pequena (até 6 profissionais)</span>
@@ -549,14 +627,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -565,45 +643,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Equipe Pequena (até 6 profissionais)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:40%; background:#2563eb"></div></div>
-              <span class="dist-pct">40%</span></div><div class="dist-row"><span class="dist-label">Equipe Média (6 a 21 profissionais)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:30%; background:#2563eb"></div></div>
-              <span class="dist-pct">30%</span></div><div class="dist-row"><span class="dist-label">Equipe Grande (21 a 51 profissionais)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:20%; background:#ca8a04"></div></div>
-              <span class="dist-pct">20%</span></div><div class="dist-row"><span class="dist-label">Equipe Muito Grande (acima de 51 profissionais)</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:10%; background:#dc2626"></div></div>
-              <span class="dist-pct">10%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Calculadora de Dimensionamento de Equipe de Enfermagem</td><td>0.0 profissionais</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Calculadora de Dimensionamento de Equipe de Enfermagem</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Calculadora de Dimensionamento de Equipe de Enfermagem</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona a Calculadora de Dimensionamento (COFEN 543/2017)</h2>
           <p>Calcula o Total de Horas de Enfermagem (THE) a partir do número de pacientes em cada categoria do SCP, aplica a Constante de Marinho (KM) e obtém o Quadro de Pessoal (QP = THE × KM).</p><p><strong>Fórmula:</strong> THE = (PCM×4 + PCI×6 + PCAD×10 + PCSI×10 + PCIt×18) | KM = DS×(1+IST)/CHS | QP = THE × KM.</p>
@@ -615,45 +688,21 @@
               <p>Recomenda-se reavaliação periódica (geralmente semestral ou anual) e sempre que houver mudança relevante no perfil de complexidade dos pacientes atendidos pela unidade.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="adicional-noturno.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Adicional Noturno</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-de-ferias.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Férias</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-hora-extra.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Hora Extra</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="calculo-rescisao.html"><div class="icon-wrap"><svg class="icon"><use href="#i-calculator"/></svg></div><div><h3>Calculadora de Rescisão Trabalhista</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="fugulin.html"><div class="icon-wrap"><svg class="icon"><use href="#i-clipcheck"/></svg></div><div><h3>Sistema de Classificação de Pacientes de Fugulin</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -711,14 +760,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "462cbc09-1148-4483-85ad-7eba1d575a21", "code": "CALC-DIMENSIONAMENTO-001", "slug": "dimensionamento", "version": "1.0.0", "status": "published", "seo": {"title": "Calculadora de Dimensionamento de Equipe de Enfermagem (COFEN 543/2017)", "description": "Calcule o quadro de pessoal de enfermagem (QP) conforme a Resolução COFEN nº 543/2017, a partir do Sistema de Classificação de Pacientes (SCP) e da Constante de Marinho (KM).", "canonical": "https://www.calculadorasdeenfermagem.com.br/dimensionamento.html"}, "breadcrumb": {"category": "Gestão em Enfermagem", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Calculadora de Dimensionamento de Equipe de Enfermagem", "acronym": "QP-COFEN 543", "categoryBadge": "Gestão em Enfermagem", "icon": "i-users-cog", "objective": "Calcular o quantitativo de profissionais de enfermagem (QP) necessário para uma unidade, a partir do total de horas de enfermagem (THE) demandado pelo perfil de pacientes (SCP) e da Constante de Marinho (KM), conforme a metodologia da Resolução COFEN nº 543/2017.", "indication": "Indicado para gestores de enfermagem no planejamento e dimensionamento de equipes em unidades de internação, considerando a classificação dos pacientes por complexidade assistencial.", "targetPopulation": "Unidades de internação hospitalar (clínica médica, cirúrgica, pediátrica, obstétrica, entre outras).", "specialty": ["Gestão em Enfermagem", "Administração Hospitalar"], "averageTime": "3-5 minutos", "evidenceLevel": "II", "organizations": ["Conselho Federal de Enfermagem (COFEN)"], "complexity": "advanced", "rating": 4.5, "ratingCount": 96}, "calculator": {"inputs": [{"id": "pcm", "type": "number", "label": "Pacientes de Cuidados Mínimos (PCM)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes estáveis, sob cuidados de rotina — 4 horas de enfermagem/paciente/dia."}, {"id": "pci", "type": "number", "label": "Pacientes de Cuidados Intermediários (PCI)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes estáveis com dependência parcial da equipe — 6 horas de enfermagem/paciente/dia."}, {"id": "pcad", "type": "number", "label": "Pacientes de Alta Dependência (PCAD)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes crônicos estáveis, totalmente dependentes das ações da equipe — 10 horas de enfermagem/paciente/dia."}, {"id": "pcsi", "type": "number", "label": "Pacientes Semi-Intensivos (PCSI)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes graves, porém estáveis, com risco de instabilização — 10 horas de enfermagem/paciente/dia."}, {"id": "pcit", "type": "number", "label": "Pacientes Intensivos (PCIt)", "unit": "pacientes", "defaultValue": 0, "min": 0, "max": 200, "step": 1, "description": "Pacientes graves e instáveis, com risco iminente de morte — 18 horas de enfermagem/paciente/dia."}, {"id": "dias_semana", "type": "number", "label": "Dias de Funcionamento por Semana (DS)", "unit": "dias", "defaultValue": 7, "min": 1, "max": 7, "step": 1, "description": "Número de dias por semana em que a unidade funciona (7 para unidades de internação com funcionamento contínuo)."}, {"id": "ist", "type": "number", "label": "Índice de Segurança Técnica (IST)", "unit": "%", "defaultValue": 15, "min": 15, "max": 100, "step": 1, "description": "Percentual para cobrir ausências previstas (férias, faltas, licenças). A Resolução COFEN 543/2017 exige no mínimo 15%."}, {"id": "chs", "type": "number", "label": "Carga Horária Semanal do Profissional (CHS)", "unit": "horas/semana", "defaultValue": 36, "min": 20, "max": 44, "step": 1, "description": "Carga horária semanal de trabalho do profissional de enfermagem (comumente 30, 36 ou 40 horas, conforme legislação/instituição)."}], "formula": {"type": "expression", "expression": "(pcm*4 + pci*6 + pcad*10 + pcsi*10 + pcit*18) * (dias_semana*(1+ist/100)/chs)", "resultLabel": "Quadro de Pessoal (QP)", "resultUnit": "profissionais", "decimals": 1}}, "interpretation": {"ranges": [{"min": 0, "max": 5.99, "label": "Equipe Pequena (até 6 profissionais)", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Quadro de pessoal compatível com unidades de pequeno porte ou baixa complexidade assistencial.", "recommendations": "• Distribuir 33% da equipe como Enfermeiros e o restante como Técnicos/Auxiliares de Enfermagem (cuidado mínimo/intermediário), respeitando o mínimo de 6 enfermeiros por unidade\n• Reavaliar o dimensionamento a cada mudança relevante no perfil de pacientes"}, {"min": 6, "max": 20.99, "label": "Equipe Média (6 a 21 profissionais)", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Quadro de pessoal compatível com unidades de porte médio.", "recommendations": "• Distribuir a equipe conforme o percentual de enfermeiros exigido para o perfil de complexidade predominante\n• Considerar sazonalidade de ausências ao planejar escalas\n• Reavaliar periodicamente com nova classificação SCP dos pacientes"}, {"min": 21, "max": 50.99, "label": "Equipe Grande (21 a 51 profissionais)", "riskLevel": "none", "color": "#ca8a04", "clinicalImplications": "Quadro de pessoal compatível com unidades de grande porte ou maior complexidade assistencial.", "recommendations": "• Considerar necessidade de coordenação/supervisão adicional para equipes grandes\n• Reavaliar o dimensionamento a cada mudança relevante no perfil de pacientes (SCP)\n• Verificar adequação da proporção enfermeiro/técnico conforme legislação vigente"}, {"min": 51, "max": 100000, "label": "Equipe Muito Grande (acima de 51 profissionais)", "riskLevel": "none", "color": "#dc2626", "clinicalImplications": "Quadro de pessoal compatível com unidades de alta complexidade e grande volume de pacientes (ex: UTI de grande porte).", "recommendations": "• Avaliar a divisão da unidade em subunidades/postos para facilitar a gestão\n• Assegurar liderança e supervisão de enfermagem em todos os turnos\n• Reavaliar o dimensionamento periodicamente conforme variação do perfil assistencial"}]}, "sae": {"nanda": [{"diagnosis": "Risco de infecção (relacionado à sobrecarga da equipe)", "definition": "Risco aumentado de eventos adversos e infecções relacionado a dimensionamento inadequado de pessoal frente à demanda assistencial."}], "noc": [{"outcome": "Adequação do quadro de pessoal", "indicators": ["Quadro de pessoal calculado conforme metodologia COFEN 543/2017", "Proporção enfermeiro/técnico respeitada conforme a complexidade assistencial", "Reavaliação periódica do dimensionamento conforme mudança do perfil de pacientes (SCP)"]}], "nic": [{"intervention": "Gestão de recursos humanos em enfermagem", "activities": ["Classificar os pacientes da unidade conforme Sistema de Classificação de Pacientes (SCP)", "Calcular o Total de Horas de Enfermagem (THE) demandado pelo perfil de pacientes", "Aplicar a Constante de Marinho (KM) considerando dias de funcionamento, IST e carga horária da equipe", "Distribuir o quadro de pessoal (QP) entre enfermeiros e técnicos/auxiliares conforme a complexidade predominante", "Reavaliar o dimensionamento periodicamente e a cada mudança relevante no perfil assistencial"]}]}, "evidence": {"foundation": "O dimensionamento segue três etapas: (1) cálculo do Total de Horas de Enfermagem (THE), somando o produto do número de pacientes em cada categoria do SCP pelo respectivo tempo de cuidado (Mínimo=4h, Intermediário=6h, Alta Dependência=10h, Semi-Intensivo=10h, Intensivo=18h); (2) cálculo da Constante de Marinho (KM = DS × (1+IST)/CHS); (3) cálculo do Quadro de Pessoal (QP = THE × KM).", "history": "A metodologia foi originalmente proposta por Maria José Trevizan Marinho e incorporada às normativas do Conselho Federal de Enfermagem, sendo consolidada na Resolução COFEN nº 543/2017 (posteriormente revisada pela Resolução COFEN nº 743/2024).", "validation": "Metodologia oficial adotada nacionalmente para dimensionamento de pessoal de enfermagem em serviços de saúde, referenciada por auditorias dos Conselhos Regionais de Enfermagem (COREN).", "limitations": "O resultado representa o quantitativo total teórico de profissionais (enfermeiros + técnicos/auxiliares); a distribuição percentual entre essas categorias depende da complexidade predominante e deve seguir os parâmetros normativos vigentes. A carga horária semanal (CHS) e o IST podem variar conforme legislação trabalhista, convenção coletiva e política institucional.", "references": [{"text": "CONSELHO FEDERAL DE ENFERMAGEM (COFEN). Resolução COFEN nº 543, de 18 de abril de 2017. Atualiza a norma para dimensionamento do quantitativo de profissionais de enfermagem nos serviços/locais em que são realizadas atividades de enfermagem."}, {"text": "CONSELHO FEDERAL DE ENFERMAGEM (COFEN). Manual Prático de Dimensionamento de Pessoal - Resolução COFEN nº 543/2017. Brasília: COFEN, 2017."}, {"text": "CONSELHO FEDERAL DE ENFERMAGEM (COFEN). Resolução COFEN nº 743, de 2024 (revoga e atualiza a Resolução 543/2017)."}]}, "learning": {"tips": ["A fórmula tem 3 etapas: THE (horas totais de cuidado demandadas), KM (constante de Marinho, que ajusta pela cobertura de 7 dias, ausências e carga horária) e QP = THE × KM.", "O IST (Índice de Segurança Técnica) nunca pode ser inferior a 15%, conforme a Resolução COFEN nº 543/2017.", "Para cuidados mínimos e intermediários, recomenda-se que ao menos 33% da equipe (mínimo de 6) sejam enfermeiros, sendo o restante técnicos/auxiliares de enfermagem.", "Em unidades de maior complexidade (alta dependência, semi-intensivo, intensivo), a proporção de enfermeiros deve ser maior, conforme parâmetros normativos vigentes."], "examples": [{"label": "Clínica médica: 12 cuidados mínimos, 15 intermediários, 5 alta dependência", "sublabel": "QP 42,0 profissionais", "emoji": "🔵", "values": {"pcm": 12, "pci": 15, "pcad": 5, "pcsi": 0, "pcit": 0, "dias_semana": 7, "ist": 15, "chs": 36}}, {"label": "UTI: 10 pacientes intensivos, 5 semi-intensivos", "sublabel": "QP 53,7 profissionais", "emoji": "🔴", "values": {"pcm": 0, "pci": 0, "pcad": 0, "pcsi": 5, "pcit": 10, "dias_semana": 7, "ist": 20, "chs": 36}}, {"label": "Ambulatório/unidade de 6 dias: 5 mínimos, 3 intermediários", "sublabel": "QP 8,7 profissionais", "emoji": "🟢", "values": {"pcm": 5, "pci": 3, "pcad": 0, "pcsi": 0, "pcit": 0, "dias_semana": 6, "ist": 15, "chs": 30}}], "quiz": [{"q": "Quais são as 5 categorias do Sistema de Classificação de Pacientes (SCP) usadas no THE?", "opts": ["Leve, moderado, grave, crítico, terminal", "Mínimos, intermediários, alta dependência, semi-intensivos, intensivos", "Ambulatorial, internação, UTI, emergência, cirúrgico", "Pediátrico, adulto, idoso, obstétrico, neonatal"], "correct": 1, "expl": "O SCP classifica os pacientes em 5 categorias: cuidados mínimos (4h), intermediários (6h), alta dependência (10h), semi-intensivos (10h) e intensivos (18h) de enfermagem por paciente/dia."}, {"q": "Qual o valor mínimo exigido para o Índice de Segurança Técnica (IST) pela Resolução COFEN 543/2017?", "opts": ["5%", "10%", "15%", "25%"], "correct": 2, "expl": "A Resolução COFEN nº 543/2017 exige um Índice de Segurança Técnica (IST) não inferior a 15%, para cobrir ausências previstas como férias, faltas e licenças."}, {"q": "Como é calculado o Quadro de Pessoal (QP)?", "opts": ["QP = THE + KM", "QP = THE × KM", "QP = THE ÷ KM", "QP = KM - THE"], "correct": 1, "expl": "O Quadro de Pessoal é calculado multiplicando o Total de Horas de Enfermagem (THE) pela Constante de Marinho (KM)."}]}, "faq": [{"q": "O resultado do QP já vem dividido entre enfermeiros e técnicos?", "a": "Não. O QP representa o quantitativo total de profissionais de enfermagem. A distribuição percentual entre enfermeiros e técnicos/auxiliares deve seguir os parâmetros normativos conforme a complexidade assistencial predominante da unidade."}, {"q": "Com que frequência o dimensionamento deve ser refeito?", "a": "Recomenda-se reavaliação periódica (geralmente semestral ou anual) e sempre que houver mudança relevante no perfil de complexidade dos pacientes atendidos pela unidade."}], "about": {"title": "Como funciona a Calculadora de Dimensionamento (COFEN 543/2017)", "html": "<p>Calcula o Total de Horas de Enfermagem (THE) a partir do número de pacientes em cada categoria do SCP, aplica a Constante de Marinho (KM) e obtém o Quadro de Pessoal (QP = THE × KM).</p><p><strong>Fórmula:</strong> THE = (PCM×4 + PCI×6 + PCAD×10 + PCSI×10 + PCIt×18) | KM = DS×(1+IST)/CHS | QP = THE × KM.</p>"}}</script>
+</body></html>

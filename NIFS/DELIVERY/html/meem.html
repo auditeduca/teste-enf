@@ -43,7 +43,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style id="calc-critical-css">[data-tab-panels]>[data-tab-panel]:not(.active){display:none!important}</style>
 <link rel="stylesheet" href="css/site-styles.css">
+<link rel="stylesheet" href="css/print-template.css">
 </head>
 <body data-page="meem">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -98,9 +100,17 @@
         <button class="tab active" data-tab="padrao" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm"><use href="#i-person"/></svg> Padrão</button>
         <button class="tab" data-tab="estudante" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-cap"/></svg> Estudante</button>
         <button class="tab" data-tab="urgencia" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-bolt"/></svg> Modo Urgência</button>
-        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
         <button class="tab" data-tab="gestor" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Gestor</button>
-      </div>
+        <button class="tab" data-tab="academico" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm"><use href="#i-book"/></svg> Acadêmico</button>
+</div>
+    </div>
+
+    
+    <div id="cognitiveProfileStrip" class="cognitive-profile-strip" aria-live="polite">
+      <span class="cog-kicker">Raciocínio clínico integrado (Nurse-PaLM)</span>
+      <strong>NANDA:</strong> <span id="cogStripNanda">—</span> ·
+      <strong>NIC:</strong> <span id="cogStripNic">—</span> ·
+      <strong>NOC:</strong> <span id="cogStripNoc">—</span>
     </div>
 
     <div data-tab-panels="perfil">
@@ -116,7 +126,7 @@
                 <label class="field-label" for="calc-orientacao_temporal">Orientação Temporal</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-orientacao_temporal" class="field-select" data-calc-input="orientacao_temporal"><option value="5" selected>5 — 5 — Todos corretos</option><option value="4">4 — 4 corretos</option><option value="3">3 — 3 corretos</option><option value="2">2 — 2 corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — 0 — Nenhum correto</option></select>
+                <select id="calc-orientacao_temporal" class="field-select" data-calc-input="orientacao_temporal"><option value="5" selected>5 — Todos corretos</option><option value="4">4 — 4 corretos</option><option value="3">3 — 3 corretos</option><option value="2">2 — 2 corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — Nenhum correto</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Ano, estação, mês, dia do mês e dia da semana (1 ponto cada, máximo 5).</p>
@@ -126,7 +136,7 @@
                 <label class="field-label" for="calc-orientacao_espacial">Orientação Espacial</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-orientacao_espacial" class="field-select" data-calc-input="orientacao_espacial"><option value="5" selected>5 — 5 — Todos corretos</option><option value="4">4 — 4 corretos</option><option value="3">3 — 3 corretos</option><option value="2">2 — 2 corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — 0 — Nenhum correto</option></select>
+                <select id="calc-orientacao_espacial" class="field-select" data-calc-input="orientacao_espacial"><option value="5" selected>5 — Todos corretos</option><option value="4">4 — 4 corretos</option><option value="3">3 — 3 corretos</option><option value="2">2 — 2 corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — Nenhum correto</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Estado, cidade, bairro, local e andar/setor (1 ponto cada, máximo 5).</p>
@@ -136,7 +146,7 @@
                 <label class="field-label" for="calc-registro">Registro de 3 Palavras</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-registro" class="field-select" data-calc-input="registro"><option value="3" selected>3 — 3 — Todas repetidas</option><option value="2">2 — 2 repetidas</option><option value="1">1 — 1 repetida</option><option value="0">0 — 0 — Nenhuma repetida</option></select>
+                <select id="calc-registro" class="field-select" data-calc-input="registro"><option value="3" selected>3 — Todas repetidas</option><option value="2">2 — 2 repetidas</option><option value="1">1 — 1 repetida</option><option value="0">0 — Nenhuma repetida</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Repetir imediatamente 3 palavras não relacionadas (1 ponto cada, máximo 3).</p>
@@ -146,7 +156,7 @@
                 <label class="field-label" for="calc-atencao_calculo">Atenção e Cálculo (Série de 7 ou soletrar &#x27;MUNDO&#x27; ao contrário)</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-atencao_calculo" class="field-select" data-calc-input="atencao_calculo"><option value="5" selected>5 — 5 — Todas corretas</option><option value="4">4 — 4 corretas</option><option value="3">3 — 3 corretas</option><option value="2">2 — 2 corretas</option><option value="1">1 — 1 correta</option><option value="0">0 — 0 — Nenhuma correta</option></select>
+                <select id="calc-atencao_calculo" class="field-select" data-calc-input="atencao_calculo"><option value="5" selected>5 — Todas corretas</option><option value="4">4 — 4 corretas</option><option value="3">3 — 3 corretas</option><option value="2">2 — 2 corretas</option><option value="1">1 — 1 correta</option><option value="0">0 — Nenhuma correta</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">5 subtrações consecutivas de 7 a partir de 100, ou soletrar a palavra &#x27;MUNDO&#x27; de trás para frente (máximo 5).</p>
@@ -156,7 +166,7 @@
                 <label class="field-label" for="calc-evocacao">Evocação das 3 Palavras</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-evocacao" class="field-select" data-calc-input="evocacao"><option value="3" selected>3 — 3 — Todas evocadas</option><option value="2">2 — 2 evocadas</option><option value="1">1 — 1 evocada</option><option value="0">0 — 0 — Nenhuma evocada</option></select>
+                <select id="calc-evocacao" class="field-select" data-calc-input="evocacao"><option value="3" selected>3 — Todas evocadas</option><option value="2">2 — 2 evocadas</option><option value="1">1 — 1 evocada</option><option value="0">0 — Nenhuma evocada</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Recordar as 3 palavras registradas anteriormente (1 ponto cada, máximo 3).</p>
@@ -166,7 +176,7 @@
                 <label class="field-label" for="calc-nomeacao">Nomeação de 2 Objetos</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-nomeacao" class="field-select" data-calc-input="nomeacao"><option value="2" selected>2 — 2 — Ambos corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — 0 — Nenhum correto</option></select>
+                <select id="calc-nomeacao" class="field-select" data-calc-input="nomeacao"><option value="2" selected>2 — Ambos corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — Nenhum correto</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Nomear corretamente 2 objetos mostrados (ex: caneta, relógio).</p>
@@ -186,7 +196,7 @@
                 <label class="field-label" for="calc-comando_3_estagios">Comando de 3 Estágios</label>
               </div>
               <div class="field-select-wrap">
-                <select id="calc-comando_3_estagios" class="field-select" data-calc-input="comando_3_estagios"><option value="3" selected>3 — 3 — Todas as etapas corretas</option><option value="2">2 — 2 etapas corretas</option><option value="1">1 — 1 etapa correta</option><option value="0">0 — 0 — Nenhuma etapa correta</option></select>
+                <select id="calc-comando_3_estagios" class="field-select" data-calc-input="comando_3_estagios"><option value="3" selected>3 — Todas as etapas corretas</option><option value="2">2 — 2 etapas corretas</option><option value="1">1 — 1 etapa correta</option><option value="0">0 — Nenhuma etapa correta</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div>
               <p class="field-hint">Executar corretamente as 3 etapas do comando (ex: &#x27;pegue o papel com a mão direita, dobre-o ao meio e coloque-o no chão&#x27;).</p>
@@ -290,8 +300,7 @@
                     <span class="formula-cap">Mini Exame do Estado Mental (MEEM)</span>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             <section class="calc-card history-card" aria-labelledby="calcHistoryTitle">
               <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 id="calcHistoryTitle">Últimos cálculos</h2></div>
@@ -319,10 +328,78 @@
             </section>
           </div>
         </form>
-      </div>
+
+        <!-- Raciocínio Clínico Integrado — revelado após calcular (preview_v2) -->
+        <div class="flow-divider" id="calcFlowDivider" style="display:none;">
+          <span>Raciocínio Clínico Integrado</span>
+        </div>
+
+        <div id="calcClinicalFlow" class="clinical-flow-wrap">
+
+          <section class="calc-card flow-card" aria-labelledby="calcNandaTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcNandaTitle"><svg class="icon icon-sm"><use href="#i-brain"/></svg> Raciocínio NANDA · NIC · NOC</h2>
+            </div>
+            <div class="nnn-grid">
+              <div>
+                <span class="nnn-label">Diagnóstico (NANDA-I)</span>
+                <p class="nnn-value" id="calcNandaText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Intervenção (NIC)</span>
+                <p class="nnn-value" id="calcNicText">—</p>
+              </div>
+              <div>
+                <span class="nnn-label">Resultado esperado (NOC)</span>
+                <p class="nnn-value" id="calcNocText">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcPlanTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcPlanTitle"><svg class="icon icon-sm"><use href="#i-clipcheck"/></svg> Plano de Ação</h2>
+            </div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Confirmar dados do paciente e contexto clínico.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Aplicar o resultado conforme protocolo institucional.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Registrar escore, horário e conduta no prontuário.</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Reavaliar conforme a gravidade e evolução clínica.</li>
+            </ul>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcEvalTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcEvalTitle"><svg class="icon icon-sm"><use href="#i-trend"/></svg> Avaliação &amp; Monitoramento (NOC)</h2>
+            </div>
+            <p class="flow-text">Monitorar sinais vitais, evolução do escore e resposta às intervenções. Reavaliar nos intervalos definidos pelo protocolo e comunicar alterações à equipe.</p>
+          </section>
+
+          <section class="calc-card flow-card" aria-labelledby="calcSafetyTitle">
+            <div class="calc-card-header">
+              <span class="bar" aria-hidden="true"></span>
+              <h2 id="calcSafetyTitle"><svg class="icon icon-sm"><use href="#i-shield"/></svg> Segurança do Paciente</h2>
+            </div>
+            <div class="safety-grid">
+              <div class="safety-col" id="calcSafetyMeds">
+                <span class="nnn-label">9 Certos da Medicação</span>
+                <ul class="tips-list" id="calcSafetyMedsList"></ul>
+              </div>
+              <div class="safety-col" id="calcSafetyIpsg">
+                <span class="nnn-label">Metas Internacionais (IPSG)</span>
+                <ul class="tips-list" id="calcSafetyIpsgList"></ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
 
       <!-- ================= PERFIL: ESTUDANTE ================= -->
       <div class="tab-panel" data-tab-panel="estudante">
+        <p id="estCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
         <div class="est-grid">
           <div class="side-stack">
             
@@ -333,7 +410,7 @@
                   <h3>Orientação Temporal</h3>
                   <p class="step-hint">Ano, estação, mês, dia do mês e dia da semana (1 ponto cada, máximo 5).</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="orientacao_temporal"><option value="5" selected>5 — 5 — Todos corretos</option><option value="4">4 — 4 corretos</option><option value="3">3 — 3 corretos</option><option value="2">2 — 2 corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — 0 — Nenhum correto</option></select>
+                <select class="field-select" data-calc-input="orientacao_temporal"><option value="5" selected>5 — Todos corretos</option><option value="4">4 — 4 corretos</option><option value="3">3 — 3 corretos</option><option value="2">2 — 2 corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — Nenhum correto</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -346,7 +423,7 @@
                   <h3>Orientação Espacial</h3>
                   <p class="step-hint">Estado, cidade, bairro, local e andar/setor (1 ponto cada, máximo 5).</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="orientacao_espacial"><option value="5" selected>5 — 5 — Todos corretos</option><option value="4">4 — 4 corretos</option><option value="3">3 — 3 corretos</option><option value="2">2 — 2 corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — 0 — Nenhum correto</option></select>
+                <select class="field-select" data-calc-input="orientacao_espacial"><option value="5" selected>5 — Todos corretos</option><option value="4">4 — 4 corretos</option><option value="3">3 — 3 corretos</option><option value="2">2 — 2 corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — Nenhum correto</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -359,7 +436,7 @@
                   <h3>Registro de 3 Palavras</h3>
                   <p class="step-hint">Repetir imediatamente 3 palavras não relacionadas (1 ponto cada, máximo 3).</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="registro"><option value="3" selected>3 — 3 — Todas repetidas</option><option value="2">2 — 2 repetidas</option><option value="1">1 — 1 repetida</option><option value="0">0 — 0 — Nenhuma repetida</option></select>
+                <select class="field-select" data-calc-input="registro"><option value="3" selected>3 — Todas repetidas</option><option value="2">2 — 2 repetidas</option><option value="1">1 — 1 repetida</option><option value="0">0 — Nenhuma repetida</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -372,7 +449,7 @@
                   <h3>Atenção e Cálculo (Série de 7 ou soletrar &#x27;MUNDO&#x27; ao contrário)</h3>
                   <p class="step-hint">5 subtrações consecutivas de 7 a partir de 100, ou soletrar a palavra &#x27;MUNDO&#x27; de trás para frente (máximo 5).</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="atencao_calculo"><option value="5" selected>5 — 5 — Todas corretas</option><option value="4">4 — 4 corretas</option><option value="3">3 — 3 corretas</option><option value="2">2 — 2 corretas</option><option value="1">1 — 1 correta</option><option value="0">0 — 0 — Nenhuma correta</option></select>
+                <select class="field-select" data-calc-input="atencao_calculo"><option value="5" selected>5 — Todas corretas</option><option value="4">4 — 4 corretas</option><option value="3">3 — 3 corretas</option><option value="2">2 — 2 corretas</option><option value="1">1 — 1 correta</option><option value="0">0 — Nenhuma correta</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -385,7 +462,7 @@
                   <h3>Evocação das 3 Palavras</h3>
                   <p class="step-hint">Recordar as 3 palavras registradas anteriormente (1 ponto cada, máximo 3).</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="evocacao"><option value="3" selected>3 — 3 — Todas evocadas</option><option value="2">2 — 2 evocadas</option><option value="1">1 — 1 evocada</option><option value="0">0 — 0 — Nenhuma evocada</option></select>
+                <select class="field-select" data-calc-input="evocacao"><option value="3" selected>3 — Todas evocadas</option><option value="2">2 — 2 evocadas</option><option value="1">1 — 1 evocada</option><option value="0">0 — Nenhuma evocada</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -398,7 +475,7 @@
                   <h3>Nomeação de 2 Objetos</h3>
                   <p class="step-hint">Nomear corretamente 2 objetos mostrados (ex: caneta, relógio).</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="nomeacao"><option value="2" selected>2 — 2 — Ambos corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — 0 — Nenhum correto</option></select>
+                <select class="field-select" data-calc-input="nomeacao"><option value="2" selected>2 — Ambos corretos</option><option value="1">1 — 1 correto</option><option value="0">0 — Nenhum correto</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -424,7 +501,7 @@
                   <h3>Comando de 3 Estágios</h3>
                   <p class="step-hint">Executar corretamente as 3 etapas do comando (ex: &#x27;pegue o papel com a mão direita, dobre-o ao meio e coloque-o no chão&#x27;).</p>
                   <div class="step-content"><div class="field-select-wrap" style="flex:1;min-width:220px">
-                <select class="field-select" data-calc-input="comando_3_estagios"><option value="3" selected>3 — 3 — Todas as etapas corretas</option><option value="2">2 — 2 etapas corretas</option><option value="1">1 — 1 etapa correta</option><option value="0">0 — 0 — Nenhuma etapa correta</option></select>
+                <select class="field-select" data-calc-input="comando_3_estagios"><option value="3" selected>3 — Todas as etapas corretas</option><option value="2">2 — 2 etapas corretas</option><option value="1">1 — 1 etapa correta</option><option value="0">0 — Nenhuma etapa correta</option></select>
                 <svg class="icon"><use href="#i-arrow"/></svg>
               </div></div>
                 </div>
@@ -574,17 +651,18 @@
               <div class="urg-presets"><button type="button" class="urg-preset" data-example data-values='{&quot;orientacao_temporal&quot;: 5, &quot;orientacao_espacial&quot;: 5, &quot;registro&quot;: 3, &quot;atencao_calculo&quot;: 4, &quot;evocacao&quot;: 3, &quot;nomeacao&quot;: 2, &quot;repeticao_frase&quot;: 1, &quot;comando_3_estagios&quot;: 3, &quot;leitura_execucao&quot;: 1, &quot;escrita_frase&quot;: 1, &quot;copia_desenho&quot;: 1}'>Cognição normal <span class="p-sub">MEEM 29</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;orientacao_temporal&quot;: 3, &quot;orientacao_espacial&quot;: 3, &quot;registro&quot;: 3, &quot;atencao_calculo&quot;: 2, &quot;evocacao&quot;: 1, &quot;nomeacao&quot;: 2, &quot;repeticao_frase&quot;: 1, &quot;comando_3_estagios&quot;: 2, &quot;leitura_execucao&quot;: 1, &quot;escrita_frase&quot;: 1, &quot;copia_desenho&quot;: 1}'>Comprometimento leve a moderado <span class="p-sub">MEEM 20</span></button><button type="button" class="urg-preset" data-example data-values='{&quot;orientacao_temporal&quot;: 1, &quot;orientacao_espacial&quot;: 1, &quot;registro&quot;: 2, &quot;atencao_calculo&quot;: 0, &quot;evocacao&quot;: 0, &quot;nomeacao&quot;: 1, &quot;repeticao_frase&quot;: 0, &quot;comando_3_estagios&quot;: 1, &quot;leitura_execucao&quot;: 1, &quot;escrita_frase&quot;: 0, &quot;copia_desenho&quot;: 0}'>Comprometimento importante <span class="p-sub">MEEM 7</span></button></div>
             </div>
             <div class="urg-grid"><div class="urg-field"><label>Orientação Temporal</label>
-              <select class="field-select" data-calc-input="orientacao_temporal" style="background:rgba(255,255,255,.07);border-"><option value="5" selected>5 — Todos corretos</option><option value="4">4 corretos</option><option value="3">3 corretos</option><option value="2">2 corretos</option><option value="1">1 correto</option><option value="0">0 — Nenhum correto</option></select></div><div class="urg-field"><label>Orientação Espacial</label>
-              <select class="field-select" data-calc-input="orientacao_espacial" style="background:rgba(255,255,255,.07);border-"><option value="5" selected>5 — Todos corretos</option><option value="4">4 corretos</option><option value="3">3 corretos</option><option value="2">2 corretos</option><option value="1">1 correto</option><option value="0">0 — Nenhum correto</option></select></div><div class="urg-field"><label>Registro de 3 Palavras</label>
-              <select class="field-select" data-calc-input="registro" style="background:rgba(255,255,255,.07);border-"><option value="3" selected>3 — Todas repetidas</option><option value="2">2 repetidas</option><option value="1">1 repetida</option><option value="0">0 — Nenhuma repetida</option></select></div><div class="urg-field"><label>Atenção e Cálculo (Série de 7 ou soletrar &#x27;MUNDO&#x27; ao contrário)</label>
-              <select class="field-select" data-calc-input="atencao_calculo" style="background:rgba(255,255,255,.07);border-"><option value="5" selected>5 — Todas corretas</option><option value="4">4 corretas</option><option value="3">3 corretas</option><option value="2">2 corretas</option><option value="1">1 correta</option><option value="0">0 — Nenhuma correta</option></select></div><div class="urg-field"><label>Evocação das 3 Palavras</label>
-              <select class="field-select" data-calc-input="evocacao" style="background:rgba(255,255,255,.07);border-"><option value="3" selected>3 — Todas evocadas</option><option value="2">2 evocadas</option><option value="1">1 evocada</option><option value="0">0 — Nenhuma evocada</option></select></div><div class="urg-field"><label>Nomeação de 2 Objetos</label>
-              <select class="field-select" data-calc-input="nomeacao" style="background:rgba(255,255,255,.07);border-"><option value="2" selected>2 — Ambos corretos</option><option value="1">1 correto</option><option value="0">0 — Nenhum correto</option></select></div><div class="urg-field"><label>Repetição de Frase</label>
-              <select class="field-select" data-calc-input="repeticao_frase" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div><div class="urg-field"><label>Comando de 3 Estágios</label>
-              <select class="field-select" data-calc-input="comando_3_estagios" style="background:rgba(255,255,255,.07);border-"><option value="3" selected>3 — Todas as etapas corretas</option><option value="2">2 etapas corretas</option><option value="1">1 etapa correta</option><option value="0">0 — Nenhuma etapa correta</option></select></div><div class="urg-field"><label>Leitura e Execução (&#x27;Feche os olhos&#x27;)</label>
-              <select class="field-select" data-calc-input="leitura_execucao" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div><div class="urg-field"><label>Escrita de Frase</label>
-              <select class="field-select" data-calc-input="escrita_frase" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div><div class="urg-field"><label>Cópia do Desenho (Dois Pentágonos Sobrepostos)</label>
-              <select class="field-select" data-calc-input="copia_desenho" style="background:rgba(255,255,255,.07);border-"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div></div>
+              <select class="field-select" data-calc-input="orientacao_temporal"><option value="5" selected>5 — Todos corretos</option><option value="4">4 corretos</option><option value="3">3 corretos</option><option value="2">2 corretos</option><option value="1">1 correto</option><option value="0">0 — Nenhum correto</option></select></div><div class="urg-field"><label>Orientação Espacial</label>
+              <select class="field-select" data-calc-input="orientacao_espacial"><option value="5" selected>5 — Todos corretos</option><option value="4">4 corretos</option><option value="3">3 corretos</option><option value="2">2 corretos</option><option value="1">1 correto</option><option value="0">0 — Nenhum correto</option></select></div><div class="urg-field"><label>Registro de 3 Palavras</label>
+              <select class="field-select" data-calc-input="registro"><option value="3" selected>3 — Todas repetidas</option><option value="2">2 repetidas</option><option value="1">1 repetida</option><option value="0">0 — Nenhuma repetida</option></select></div><div class="urg-field"><label>Atenção e Cálculo (Série de 7 ou soletrar &#x27;MUNDO&#x27; ao contrário)</label>
+              <select class="field-select" data-calc-input="atencao_calculo"><option value="5" selected>5 — Todas corretas</option><option value="4">4 corretas</option><option value="3">3 corretas</option><option value="2">2 corretas</option><option value="1">1 correta</option><option value="0">0 — Nenhuma correta</option></select></div><div class="urg-field"><label>Evocação das 3 Palavras</label>
+              <select class="field-select" data-calc-input="evocacao"><option value="3" selected>3 — Todas evocadas</option><option value="2">2 evocadas</option><option value="1">1 evocada</option><option value="0">0 — Nenhuma evocada</option></select></div><div class="urg-field"><label>Nomeação de 2 Objetos</label>
+              <select class="field-select" data-calc-input="nomeacao"><option value="2" selected>2 — Ambos corretos</option><option value="1">1 correto</option><option value="0">0 — Nenhum correto</option></select></div><div class="urg-field"><label>Repetição de Frase</label>
+              <select class="field-select" data-calc-input="repeticao_frase"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div><div class="urg-field"><label>Comando de 3 Estágios</label>
+              <select class="field-select" data-calc-input="comando_3_estagios"><option value="3" selected>3 — Todas as etapas corretas</option><option value="2">2 etapas corretas</option><option value="1">1 etapa correta</option><option value="0">0 — Nenhuma etapa correta</option></select></div><div class="urg-field"><label>Leitura e Execução (&#x27;Feche os olhos&#x27;)</label>
+              <select class="field-select" data-calc-input="leitura_execucao"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div><div class="urg-field"><label>Escrita de Frase</label>
+              <select class="field-select" data-calc-input="escrita_frase"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div><div class="urg-field"><label>Cópia do Desenho (Dois Pentágonos Sobrepostos)</label>
+              <select class="field-select" data-calc-input="copia_desenho"><option value="1" selected>Correta</option><option value="0">Incorreta</option></select></div></div>
+            <p id="urgCognitiveHint" class="cognitive-profile-strip" style="display:none;margin-bottom:12px;"></p>
             <div class="urg-result">
               <div><span class="urg-result-num safe" id="urgResultNum">30</span><span class="urg-result-unit" id="urgResultUnit">pontos</span></div>
               <span class="urg-alarm-badge safe" id="urgAlarmBadge"><svg class="icon icon-sm"><use href="#i-check"/></svg> Cognição Normal</span>
@@ -625,14 +703,14 @@
           </div>
         </div>
       </div>
+</div>
 
-      <!-- ================= PERFIL: GESTOR (demonstrativo) ================= -->
       <div class="tab-panel" data-tab-panel="gestor">
-        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — os dados abaixo são fictícios (mock), pensados como referência de layout. Para uso real, conecte esta visão a uma fonte de dados/backend da sua instituição.</div>
+        <div class="gestor-notice"><svg class="icon"><use href="#i-warning"/></svg> Painel demonstrativo — dados fictícios (mock). Conecte a um backend institucional para uso em produção.</div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-label">Avaliações (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
+          <div class="kpi-card"><div class="kpi-label">Cálculos (7 dias)</div><div class="kpi-value">284</div><div class="kpi-sub">▲ 9% vs. semana anterior</div></div>
           <div class="kpi-card"><div class="kpi-label">Dentro da faixa esperada</div><div class="kpi-value">231</div><div class="kpi-sub">81% do total</div></div>
-          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub" >13% do total</div></div>
+          <div class="kpi-card"><div class="kpi-label">Casos de alto risco</div><div class="kpi-value">37</div><div class="kpi-sub">13% do total</div></div>
           <div class="kpi-card"><div class="kpi-label">Unidades ativas</div><div class="kpi-value">4</div><div class="kpi-sub">UTI, Enfermaria, Pediatria, Emergência</div></div>
         </div>
         <div class="gestor-grid">
@@ -641,43 +719,40 @@
             <div class="bar-chart">
               <div class="bar-col"><span class="bar-val">38</span><div class="bar" style="height:60%"></div><span class="bar-day">Seg</span></div>
               <div class="bar-col"><span class="bar-val">33</span><div class="bar" style="height:52%"></div><span class="bar-day">Ter</span></div>
-              <div class="bar-col"><span class="bar-val">47</span><div class="bar" style="height:75%"></div><span class="bar-day">Qua</span></div>
-              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qui</span></div>
-              <div class="bar-col"><span class="bar-val">58</span><div class="bar" style="height:92%"></div><span class="bar-day">Sex</span></div>
-              <div class="bar-col"><span class="bar-val">27</span><div class="bar" style="height:43%"></div><span class="bar-day">Sáb</span></div>
-              <div class="bar-col"><span class="bar-val">40</span><div class="bar" style="height:63%"></div><span class="bar-day">Dom</span></div>
+              <div class="bar-col"><span class="bar-val">41</span><div class="bar" style="height:65%"></div><span class="bar-day">Qua</span></div>
+              <div class="bar-col"><span class="bar-val">36</span><div class="bar" style="height:57%"></div><span class="bar-day">Qui</span></div>
+              <div class="bar-col"><span class="bar-val">44</span><div class="bar" style="height:70%"></div><span class="bar-day">Sex</span></div>
+              <div class="bar-col"><span class="bar-val">29</span><div class="bar" style="height:46%"></div><span class="bar-day">Sáb</span></div>
+              <div class="bar-col"><span class="bar-val">22</span><div class="bar" style="height:35%"></div><span class="bar-day">Dom</span></div>
             </div>
           </section>
           <section class="calc-card">
             <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Distribuição por faixa de risco</h2></div>
-            <div class="equipo-dist"><div class="dist-row"><span class="dist-label">Comprometimento Cognitivo Importante</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:50%; background:#dc2626"></div></div>
-              <span class="dist-pct">50%</span></div><div class="dist-row"><span class="dist-label">Comprometimento Cognitivo Leve a Moderado</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:33%; background:#ca8a04"></div></div>
-              <span class="dist-pct">33%</span></div><div class="dist-row"><span class="dist-label">Cognição Normal</span>
-              <div class="dist-bar-wrap"><div class="dist-bar" style="width:17%; background:#2563eb"></div></div>
-              <span class="dist-pct">17%</span></div></div>
+            <ul class="tips-list">
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Baixo risco / dentro da faixa: 81%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Risco moderado: 6%</li>
+              <li><svg class="icon"><use href="#i-clipcheck"/></svg> Alto risco / alarme: 13%</li>
+            </ul>
           </section>
         </div>
         <section class="calc-card">
-          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Trilha de auditoria (amostra)</h2></div>
-          <div style="overflow-x:auto">
-            <table class="audit-table">
-              <thead><tr><th>ID</th><th>Data</th><th>Avaliação</th><th>Resultado</th><th>Status</th><th>Profissional</th></tr></thead>
-              <tbody>
-                <tr><td>A-3021</td><td>02/07 09:14</td><td>Mini Exame do Estado Mental</td><td>30 pontos</td><td><span class="audit-status ok">OK</span></td><td>Enf. Carla</td></tr>
-                <tr><td>A-3020</td><td>02/07 08:40</td><td>Mini Exame do Estado Mental</td><td>—</td><td><span class="audit-status alarm">Alarme</span></td><td>Enf. Pedro</td></tr>
-                <tr><td>A-3019</td><td>01/07 22:05</td><td>Mini Exame do Estado Mental</td><td>—</td><td><span class="audit-status ok">OK</span></td><td>Enf. Joana</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="calc-card-header"><span class="bar" aria-hidden="true"></span><h2 style="font-size:15px">Auditoria de registro (mock)</h2></div>
+          <table class="audit-table">
+            <thead><tr><th>Data</th><th>Unidade</th><th>Resultado</th><th>Faixa</th><th>Registro</th></tr></thead>
+            <tbody>
+              <tr><td>Hoje 08:14</td><td>UTI</td><td>—</td><td>Esperada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Hoje 07:52</td><td>Emergência</td><td>—</td><td>Moderada</td><td><span class="audit-ok">OK</span></td></tr>
+              <tr><td>Ontem 22:10</td><td>Enfermaria</td><td>—</td><td>Esperada</td><td><span class="audit-warn">Revisar</span></td></tr>
+            </tbody>
+          </table>
         </section>
       </div>
 
-    </div>
+        </div>
+      </div>
 
     <section class="about-section">
-      <div class="about-grid">
+      <div class="about-grid about-grid--single">
         <div class="about-box">
           <h2>Como funciona o Mini Exame do Estado Mental (MEEM)</h2>
           <p>O MEEM soma pontos de 7 domínios cognitivos — orientação temporal (5), orientação espacial (5), registro (3), atenção/cálculo (5), evocação (3) e linguagem (9) — totalizando 30 pontos.</p><p><strong>Guia rápido (sem ajuste por escolaridade):</strong> ≥24 = Normal | 18-23 = Leve a moderado | <18 = Importante.</p>
@@ -689,45 +764,22 @@
               <p>Não. É uma ferramenta de rastreio cognitivo que identifica pacientes que necessitam de avaliação mais aprofundada. O diagnóstico de demência requer avaliação clínica completa, exames complementares e, frequentemente, avaliação neuropsicológica especializada.</p>
             </details></div>
         </div>
-        <div class="disclaimer-card">
-          <h3><svg class="icon"><use href="#i-shieldcheck"/></svg> Aviso importante</h3>
-          <p>Esta ferramenta tem finalidade educacional e de apoio à decisão clínica. Os resultados devem ser sempre conferidos e validados por um profissional de enfermagem qualificado, de acordo com a avaliação do paciente e os protocolos da instituição.</p>
-        </div>
       </div>
     </section>
 
   </div>
 
-    <!-- ═══ Clinical Intelligence Package — 6 Dimensões Inline ═══ -->
-    <section class="cip-section">
-      <h2 class="cip-section-title">📦 Clinical Intelligence Package</h2>
-      <p class="cip-section-intro">6 dimensões de inteligência clínica integradas ao resultado da calculadora</p>
-      <div id="cipContainer" class="cip-hidden"></div>
-    </section>
-
-    <!-- ═══ Nurse-PaLM Cognitive Analysis ═══ -->
-    <section class="cog-section-wrapper">
-      <div id="cognitivePanel" class="cognitive-panel cip-hidden">
-        <div class="cognitive-panel-header">
-          <h3><i class="fa-solid fa-brain"></i> Análise Cognitiva</h3>
-          <span class="cognitive-badge">Motor Clínico</span>
-        </div>
-        <div id="cognitivePanelContent"></div>
-      </div>
-    </section>
-    <!-- ═══ Knowledge Graph Links ═══ -->
-    <section class="cip-kg-links">
-      <h3><i class="fa-solid fa-link"></i> Recursos Conectados</h3>
-      <div class="cip-kg-links-list">
-        <a href="biblioteca.html" class="cip-kg-link"><i class="fa-solid fa-book"></i> Biblioteca de Recursos</a>
-        <a href="nurse-palm.html" class="cip-kg-link"><i class="fa-solid fa-brain"></i> Dashboard Nurse-PaLM</a>
-        <a href="diagnosticosnanda.html" class="cip-kg-link"><i class="fa-solid fa-clipboard-list"></i> NANDA-I</a>
-        <a href="sae.html" class="cip-kg-link"><i class="fa-solid fa-file-medical"></i> SAE</a>
-        <a href="sbar.html" class="cip-kg-link"><i class="fa-solid fa-comments"></i> SBAR</a>
-        <a href="medicamentos.html" class="cip-kg-link"><i class="fa-solid fa-pills"></i> Medicamentos</a>
-        <a href="protocolos.html" class="cip-kg-link"><i class="fa-solid fa-shield-halved"></i> Protocolos</a>
-      </div>
-    </section>
+    <section class="tool-footer-zone">
+  <h2 class="related-tools-title">Ferramentas relacionadas</h2>
+  <div class="related-tools-grid">
+    <a class="related-tool-card" href="abcd2.html"><div class="icon-wrap"><svg class="icon"><use href="#i-brain"/></svg></div><div><h3>ABCD2 Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="alvarado.html"><div class="icon-wrap"><svg class="icon"><use href="#i-stetho"/></svg></div><div><h3>Índice de Alvarado</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="apgar.html"><div class="icon-wrap"><svg class="icon"><use href="#i-users"/></svg></div><div><h3>Índice de Apgar</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="balancohidrico.html"><div class="icon-wrap"><svg class="icon"><use href="#i-droplet"/></svg></div><div><h3>Calculadora de Balanço Hídrico</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="ballard.html"><div class="icon-wrap"><svg class="icon"><use href="#i-baby"/></svg></div><div><h3>New Ballard Score</h3><p>Ferramenta relacionada</p></div></a>
+    <a class="related-tool-card" href="barthel.html"><div class="icon-wrap"><svg class="icon"><use href="#i-person"/></svg></div><div><h3>Índice de Barthel</h3><p>Ferramenta relacionada</p></div></a>
+  </div>
+</section>
 
 </main>
 
@@ -785,14 +837,79 @@
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5l2.5 2.5a2.5 2.5 0 0 0 3.5-3.5L13 9.5"/><path d="M14 10.5l-2.5-2.5a2.5 2.5 0 0 0-3.5 3.5L11 14.5"/></symbol>
 </defs></svg>
 
+
+<div class="print-area no-print-screen" style="display:none;" id="printTemplate">
+  <div class="print-header">
+    <div class="print-header-left">
+      <h1 id="printToolName">Calculadora</h1>
+      <p class="subtitle" id="printToolCategory">Escala clínica</p>
+      <span class="badge-validated">✓ Validada clinicamente</span>
+    </div>
+    <div class="print-header-right">
+      <div class="report-date" id="printDate"></div>
+      <div>calculadorasdeenfermagem.com.br</div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">2</span> Dados do Paciente</div>
+    <div class="print-patient-grid">
+      <div><div class="label">Nome</div><div class="value" id="printPatientName">—</div></div>
+      <div><div class="label">Registro</div><div class="value" id="printPatientReg">—</div></div>
+      <div><div class="label">Idade</div><div class="value" id="printPatientAge">—</div></div>
+      <div><div class="label">Leito / Setor</div><div class="value" id="printPatientBed">—</div></div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">3</span> Parâmetros Inseridos</div>
+    <ul class="print-params-list" id="printParamsList"></ul>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">4</span> Classificação e Interpretação</div>
+    <div class="print-classification">
+      <div class="score" id="printScore">—</div>
+      <div class="label" id="printClassification">—</div>
+    </div>
+    <div class="print-interpretation" id="printInterpretation"></div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">5</span> Raciocínio Clínico (NANDA · NIC · NOC)</div>
+    <p><strong>NANDA:</strong> <span id="printNandaText">—</span></p>
+    <p><strong>NIC:</strong> <span id="printNicText">—</span></p>
+    <p><strong>NOC:</strong> <span id="printNocText">—</span></p>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">6</span> Metas Internacionais de Segurança</div>
+    <div class="print-safety-grid">
+      <div class="print-safety-col" id="printSafetyMedsCol">
+        <h4>9 Certos da Medicação</h4>
+        <ul id="printSafetyMeds"></ul>
+      </div>
+      <div class="print-safety-col">
+        <h4>Metas Internacionais (IPSG)</h4>
+        <ul id="printSafetyIpsg"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="print-section">
+    <div class="print-section-title"><span class="section-number">7</span> Referência</div>
+    <div class="print-reference" id="printReference">Documento gerado automaticamente.</div>
+  </div>
+  <div class="print-signature">
+    <div class="print-signature-left">
+      <div>Enf. Responsável: _________________</div>
+      <div class="coren">COREN: _______</div>
+    </div>
+    <div class="print-signature-right">
+      <div class="url">calculadorasdeenfermagem.com.br</div>
+      <div class="disclaimer">Documento gerado automaticamente — não substitui avaliação profissional</div>
+    </div>
+  </div>
+</div>
+
 <div id="site-footer"></div>
 <div id="site-cookie"></div>
 
-<script src="js/calc-engine-v2.js"></script>
 <script src="js/partials-loader.js"></script>
-  <script src="js/i18n-loader.js"></script>
-  <script src="js/nurse-palm.js"></script>
-  <script src="js/cognitive-ui.js"></script>
-  <script src="js/knowledge-graph.js"></script>
-</body>
-</html>
+
+<script type="application/json" id="tool-config">{"id": "28394051-6273-9405-1627-283940516273", "code": "SCALE-MEEM-001", "slug": "meem", "version": "1.0.0", "status": "published", "seo": {"title": "Mini Exame do Estado Mental (MEEM) - Rastreio Cognitivo", "description": "Calcule o Mini Exame do Estado Mental (MEEM/MMSE) para rastreio de comprometimento cognitivo. Inclui interpretação, SAE e evidências.", "canonical": "https://www.calculadorasdeenfermagem.com.br/meem.html"}, "breadcrumb": {"category": "Neurologia", "categoryHref": "index.html#calculadoras"}, "overview": {"name": "Mini Exame do Estado Mental", "acronym": "MEEM", "categoryBadge": "Neurologia", "icon": "i-brain", "objective": "Rastrear o comprometimento cognitivo global por meio da avaliação de orientação, registro, atenção/cálculo, evocação e linguagem.", "indication": "Indicado no rastreio de comprometimento cognitivo em idosos, pacientes com suspeita de demência, ou como parte de avaliação neurológica/geriátrica ampla.", "targetPopulation": "Pacientes adultos e idosos com suspeita de comprometimento cognitivo.", "specialty": ["Neurologia", "Geriatria", "Enfermagem"], "averageTime": "7-10 minutos", "evidenceLevel": "II", "originalAuthors": ["Marshal Folstein", "Susan Folstein"], "complexity": "advanced", "rating": 4.5, "ratingCount": 275}, "calculator": {"inputs": [{"id": "orientacao_temporal", "type": "select", "label": "Orientação Temporal", "defaultValue": 5, "description": "Ano, estação, mês, dia do mês e dia da semana (1 ponto cada, máximo 5).", "options": [{"value": 5, "label": "5 — Todos corretos", "score": 5}, {"value": 4, "label": "4 corretos", "score": 4}, {"value": 3, "label": "3 corretos", "score": 3}, {"value": 2, "label": "2 corretos", "score": 2}, {"value": 1, "label": "1 correto", "score": 1}, {"value": 0, "label": "0 — Nenhum correto", "score": 0}]}, {"id": "orientacao_espacial", "type": "select", "label": "Orientação Espacial", "defaultValue": 5, "description": "Estado, cidade, bairro, local e andar/setor (1 ponto cada, máximo 5).", "options": [{"value": 5, "label": "5 — Todos corretos", "score": 5}, {"value": 4, "label": "4 corretos", "score": 4}, {"value": 3, "label": "3 corretos", "score": 3}, {"value": 2, "label": "2 corretos", "score": 2}, {"value": 1, "label": "1 correto", "score": 1}, {"value": 0, "label": "0 — Nenhum correto", "score": 0}]}, {"id": "registro", "type": "select", "label": "Registro de 3 Palavras", "defaultValue": 3, "description": "Repetir imediatamente 3 palavras não relacionadas (1 ponto cada, máximo 3).", "options": [{"value": 3, "label": "3 — Todas repetidas", "score": 3}, {"value": 2, "label": "2 repetidas", "score": 2}, {"value": 1, "label": "1 repetida", "score": 1}, {"value": 0, "label": "0 — Nenhuma repetida", "score": 0}]}, {"id": "atencao_calculo", "type": "select", "label": "Atenção e Cálculo (Série de 7 ou soletrar 'MUNDO' ao contrário)", "defaultValue": 5, "description": "5 subtrações consecutivas de 7 a partir de 100, ou soletrar a palavra 'MUNDO' de trás para frente (máximo 5).", "options": [{"value": 5, "label": "5 — Todas corretas", "score": 5}, {"value": 4, "label": "4 corretas", "score": 4}, {"value": 3, "label": "3 corretas", "score": 3}, {"value": 2, "label": "2 corretas", "score": 2}, {"value": 1, "label": "1 correta", "score": 1}, {"value": 0, "label": "0 — Nenhuma correta", "score": 0}]}, {"id": "evocacao", "type": "select", "label": "Evocação das 3 Palavras", "defaultValue": 3, "description": "Recordar as 3 palavras registradas anteriormente (1 ponto cada, máximo 3).", "options": [{"value": 3, "label": "3 — Todas evocadas", "score": 3}, {"value": 2, "label": "2 evocadas", "score": 2}, {"value": 1, "label": "1 evocada", "score": 1}, {"value": 0, "label": "0 — Nenhuma evocada", "score": 0}]}, {"id": "nomeacao", "type": "select", "label": "Nomeação de 2 Objetos", "defaultValue": 2, "description": "Nomear corretamente 2 objetos mostrados (ex: caneta, relógio).", "options": [{"value": 2, "label": "2 — Ambos corretos", "score": 2}, {"value": 1, "label": "1 correto", "score": 1}, {"value": 0, "label": "0 — Nenhum correto", "score": 0}]}, {"id": "repeticao_frase", "type": "select", "label": "Repetição de Frase", "defaultValue": 1, "description": "Repetir corretamente a frase 'Nem aqui, nem ali, nem lá'.", "options": [{"value": 1, "label": "Correta", "score": 1}, {"value": 0, "label": "Incorreta", "score": 0}]}, {"id": "comando_3_estagios", "type": "select", "label": "Comando de 3 Estágios", "defaultValue": 3, "description": "Executar corretamente as 3 etapas do comando (ex: 'pegue o papel com a mão direita, dobre-o ao meio e coloque-o no chão').", "options": [{"value": 3, "label": "3 — Todas as etapas corretas", "score": 3}, {"value": 2, "label": "2 etapas corretas", "score": 2}, {"value": 1, "label": "1 etapa correta", "score": 1}, {"value": 0, "label": "0 — Nenhuma etapa correta", "score": 0}]}, {"id": "leitura_execucao", "type": "select", "label": "Leitura e Execução ('Feche os olhos')", "defaultValue": 1, "description": "Ler e executar corretamente o comando escrito 'Feche os olhos'.", "options": [{"value": 1, "label": "Correta", "score": 1}, {"value": 0, "label": "Incorreta", "score": 0}]}, {"id": "escrita_frase", "type": "select", "label": "Escrita de Frase", "defaultValue": 1, "description": "Escrever espontaneamente uma frase com sentido, contendo sujeito e verbo.", "options": [{"value": 1, "label": "Correta", "score": 1}, {"value": 0, "label": "Incorreta", "score": 0}]}, {"id": "copia_desenho", "type": "select", "label": "Cópia do Desenho (Dois Pentágonos Sobrepostos)", "defaultValue": 1, "description": "Copiar corretamente o desenho de dois pentágonos sobrepostos.", "options": [{"value": 1, "label": "Correta", "score": 1}, {"value": 0, "label": "Incorreta", "score": 0}]}], "formula": {"type": "sum", "resultLabel": "Mini Exame do Estado Mental (MEEM)", "resultUnit": "pontos", "decimals": 0}}, "interpretation": {"ranges": [{"min": 0, "max": 17, "label": "Comprometimento Cognitivo Importante", "riskLevel": "high", "color": "#dc2626", "clinicalImplications": "Pontuação abaixo de 18 pontos sugere comprometimento cognitivo importante, frequentemente associado a quadros demenciais.", "recommendations": "• Encaminhar para avaliação neurológica/geriátrica especializada\n• Investigar causas de comprometimento cognitivo (demência, delirium, causas reversíveis)\n• Avaliar segurança e capacidade funcional do paciente\n• Envolver a família no plano de cuidados"}, {"min": 18, "max": 23, "label": "Comprometimento Cognitivo Leve a Moderado", "riskLevel": "moderate", "color": "#ca8a04", "clinicalImplications": "Pontuação entre 18 e 23 pontos sugere comprometimento cognitivo leve a moderado.", "recommendations": "• Encaminhar para avaliação neuropsicológica complementar\n• Reavaliar periodicamente a evolução cognitiva\n• Investigar causas potencialmente reversíveis"}, {"min": 24, "max": 30, "label": "Cognição Normal", "riskLevel": "none", "color": "#2563eb", "clinicalImplications": "Pontuação de 24 pontos ou mais é geralmente considerada dentro da normalidade cognitiva (sem ajuste por escolaridade).", "recommendations": "• Manter acompanhamento de rotina\n• Reavaliar periodicamente, especialmente em caso de queixas cognitivas subjetivas"}]}, "sae": {"nanda": [{"diagnosis": "Memória prejudicada", "definition": "Incapacidade de lembrar ou recuperar pedaços de informação ou habilidades comportamentais aprendidas anteriormente."}, {"diagnosis": "Confusão crônica", "definition": "Deterioração irreversível, de longa duração e/ou progressiva do intelecto e da personalidade, caracterizada por diminuição da capacidade de interpretar estímulos ambientais e de processos de pensamento."}, {"diagnosis": "Risco de quedas", "definition": "Suscetibilidade aumentada a quedas, relacionada ao comprometimento cognitivo identificado que pode afetar julgamento e segurança."}], "noc": [{"outcome": "Cognição", "indicators": ["Escore do MEEM avaliado e monitorado ao longo do tempo", "Encaminhamento para avaliação especializada quando indicado", "Ambiente adaptado para segurança do paciente conforme grau de comprometimento"]}], "nic": [{"intervention": "Estimulação cognitiva", "activities": ["Aplicar o MEEM no rastreio de comprometimento cognitivo", "Encaminhar para avaliação neuropsicológica especializada conforme resultado", "Orientar a família sobre estratégias de comunicação e segurança", "Investigar causas potencialmente reversíveis de comprometimento cognitivo (medicações, distúrbios metabólicos, depressão)", "Reavaliar periodicamente a evolução cognitiva do paciente"]}]}, "evidence": {"foundation": "O MEEM avalia 7 domínios cognitivos — orientação temporal (5 pontos), orientação espacial (5 pontos), registro (3 pontos), atenção e cálculo (5 pontos), evocação (3 pontos) e linguagem (9 pontos, distribuídos em nomeação, repetição, comando, leitura, escrita e cópia) — totalizando 30 pontos.", "history": "Desenvolvido por Marshal e Susan Folstein em 1975, é um dos instrumentos de rastreio cognitivo mais utilizados mundialmente, por sua rapidez de aplicação e ampla validação em diferentes populações e idiomas.", "validation": "Extensivamente validado e traduzido para diversos idiomas, incluindo o português brasileiro, com pontos de corte ajustados por escolaridade amplamente estudados na população brasileira (Bertolucci et al., 1994; Brucki et al., 2003).", "limitations": "O desempenho no MEEM é fortemente influenciado pela escolaridade — os pontos de corte apresentados aqui não consideram esse ajuste. Recomenda-se, sempre que possível, utilizar pontos de corte ajustados por escolaridade conforme validação brasileira. Não avalia funções executivas de forma aprofundada.", "references": [{"text": "FOLSTEIN, M. F.; FOLSTEIN, S. E.; MCHUGH, P. R. Mini-mental state: a practical method for grading the cognitive state of patients for the clinician. Journal of Psychiatric Research, v. 12, n. 3, p. 189-198, 1975."}, {"text": "BERTOLUCCI, P. H. F. et al. O Mini-Exame do Estado Mental em uma população geral: impacto da escolaridade. Arquivos de Neuro-Psiquiatria, v. 52, n. 1, p. 1-7, 1994."}, {"text": "BRUCKI, S. M. D. et al. Sugestões para o uso do mini-exame do estado mental no Brasil. Arquivos de Neuro-Psiquiatria, v. 61, n. 3B, p. 777-781, 2003."}]}, "learning": {"tips": ["O desempenho no MEEM é fortemente influenciado pela escolaridade — utilize, sempre que possível, pontos de corte ajustados conforme validação brasileira (Bertolucci et al., 1994).", "Os pontos de corte gerais (≥24 normal, 18-23 leve a moderado, <18 importante) não consideram escolaridade e devem ser interpretados com cautela.", "O MEEM é uma ferramenta de rastreio, não de diagnóstico definitivo de demência.", "Considere fatores como déficit sensorial (visual/auditivo), fadiga e ansiedade, que podem influenciar o desempenho no teste."], "examples": [{"label": "Cognição normal", "sublabel": "MEEM 29", "emoji": "✅", "values": {"orientacao_temporal": 5, "orientacao_espacial": 5, "registro": 3, "atencao_calculo": 4, "evocacao": 3, "nomeacao": 2, "repeticao_frase": 1, "comando_3_estagios": 3, "leitura_execucao": 1, "escrita_frase": 1, "copia_desenho": 1}}, {"label": "Comprometimento leve a moderado", "sublabel": "MEEM 20", "emoji": "🔎", "values": {"orientacao_temporal": 3, "orientacao_espacial": 3, "registro": 3, "atencao_calculo": 2, "evocacao": 1, "nomeacao": 2, "repeticao_frase": 1, "comando_3_estagios": 2, "leitura_execucao": 1, "escrita_frase": 1, "copia_desenho": 1}}, {"label": "Comprometimento importante", "sublabel": "MEEM 7", "emoji": "🚨", "values": {"orientacao_temporal": 1, "orientacao_espacial": 1, "registro": 2, "atencao_calculo": 0, "evocacao": 0, "nomeacao": 1, "repeticao_frase": 0, "comando_3_estagios": 1, "leitura_execucao": 1, "escrita_frase": 0, "copia_desenho": 0}}], "quiz": [{"q": "Qual a pontuação máxima do MEEM?", "opts": ["20 pontos", "24 pontos", "28 pontos", "30 pontos"], "correct": 3, "expl": "O MEEM tem pontuação máxima de 30 pontos, distribuídos entre orientação, registro, atenção/cálculo, evocação e linguagem."}, {"q": "O que influencia fortemente o desempenho no MEEM, exigindo ajuste dos pontos de corte?", "opts": ["Cor dos olhos", "Escolaridade", "Altura", "Tipo sanguíneo"], "correct": 1, "expl": "A escolaridade influencia fortemente o desempenho no MEEM, sendo recomendado o uso de pontos de corte ajustados por nível educacional."}, {"q": "O MEEM substitui a avaliação diagnóstica de demência?", "opts": ["Sim, é suficiente isoladamente", "Não, é uma ferramenta de rastreio", "Apenas em pacientes analfabetos", "Não tem relação com demência"], "correct": 1, "expl": "O MEEM é uma ferramenta de rastreio cognitivo; o diagnóstico de demência requer avaliação clínica e neuropsicológica mais aprofundada."}]}, "faq": [{"q": "Os pontos de corte do MEEM são os mesmos para todos os níveis de escolaridade?", "a": "Não deveriam ser. A escolaridade influencia fortemente o desempenho no teste. Estudos brasileiros (Bertolucci et al., 1994; Brucki et al., 2003) propõem pontos de corte ajustados por nível educacional, que devem ser priorizados sempre que disponíveis."}, {"q": "O MEEM diagnostica demência?", "a": "Não. É uma ferramenta de rastreio cognitivo que identifica pacientes que necessitam de avaliação mais aprofundada. O diagnóstico de demência requer avaliação clínica completa, exames complementares e, frequentemente, avaliação neuropsicológica especializada."}], "about": {"title": "Como funciona o Mini Exame do Estado Mental (MEEM)", "html": "<p>O MEEM soma pontos de 7 domínios cognitivos — orientação temporal (5), orientação espacial (5), registro (3), atenção/cálculo (5), evocação (3) e linguagem (9) — totalizando 30 pontos.</p><p><strong>Guia rápido (sem ajuste por escolaridade):</strong> ≥24 = Normal | 18-23 = Leve a moderado | <18 = Importante.</p>"}}</script>
+</body></html>
