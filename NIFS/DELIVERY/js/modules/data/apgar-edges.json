@@ -1,0 +1,135 @@
+{
+  "schema_version": "2026.2.2-draft",
+  "status": "review",
+  "concept_code": "APGAR",
+  "description": "Edge layer APGAR → NANDA → NIC → NOC. Sem entidade REL — tipos de relation_dictionary.json.",
+  "evidence_note": "NANDA/NIC/NOC alinhados a nnn_linkages.json (NANDA.00162). Labels clínicos educacionais — Grau C até revisão.",
+  "edges": [
+    {
+      "from": "APGAR_SCL_001",
+      "to": "NANDA_00162",
+      "relation_type": "supports_diagnosis",
+      "weight": 0.82,
+      "evidence_grade": "MODERATE",
+      "status": "review",
+      "notes": "Score baixo em respiração/atividade → padrão respiratório ineficaz"
+    },
+    {
+      "from": "APGAR_RULE_001",
+      "to": "NANDA_00162",
+      "relation_type": "triggers",
+      "weight": 0.91,
+      "evidence_grade": "MODERATE",
+      "status": "review",
+      "notes": "Regra threshold score ≤6 dispara NANDA principal"
+    },
+    {
+      "from": "APGAR_SCL_001",
+      "to": "NANDA_00046",
+      "relation_type": "supports_diagnosis",
+      "weight": 0.68,
+      "evidence_grade": "MODERATE",
+      "status": "review",
+      "notes": "Hipoxia/neonatal distress — proxy troca gasosa (demo)"
+    },
+    {
+      "from": "APGAR_FLA_001",
+      "to": "APGAR_SCL_001",
+      "relation_type": "derived_from",
+      "weight": 1,
+      "status": "review"
+    },
+    {
+      "from": "NANDA_00162",
+      "to": "NIC_2380",
+      "relation_type": "treated_by",
+      "weight": 0.92,
+      "evidence_grade": "MODERATE",
+      "status": "draft",
+      "notes": "NNN.NANDA.00162.NIC.2380 — manejo de vias aéreas"
+    },
+    {
+      "from": "NANDA_00162",
+      "to": "NIC_2300",
+      "relation_type": "maps_to",
+      "weight": 0.85,
+      "evidence_grade": "MODERATE",
+      "status": "draft",
+      "notes": "Monitoramento contínuo pós-reanimação"
+    },
+    {
+      "from": "NANDA_00162",
+      "to": "NIC_1120",
+      "relation_type": "maps_to",
+      "weight": 0.7,
+      "evidence_grade": "MODERATE",
+      "status": "draft",
+      "notes": "Posicionamento — suporte ventilatório passivo"
+    },
+    {
+      "from": "NIC_2380",
+      "to": "NOC_0405",
+      "relation_type": "impacts",
+      "weight": 0.88,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    },
+    {
+      "from": "NIC_2300",
+      "to": "NOC_0405",
+      "relation_type": "impacts",
+      "weight": 0.75,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    },
+    {
+      "from": "NIC_1120",
+      "to": "NOC_1100",
+      "relation_type": "impacts",
+      "weight": 0.6,
+      "evidence_grade": "MODERATE",
+      "status": "draft"
+    }
+  ],
+  "inference_rules": [
+    {
+      "rule_id": "APGAR_RULE_001",
+      "logic_type": "threshold_mapping",
+      "rules": [
+        {
+          "condition": "score <= 3",
+          "label": "severe_distress",
+          "nanda_boost": {
+            "NANDA_00162": 0.87,
+            "NANDA_00046": 0.75
+          }
+        },
+        {
+          "condition": "score >= 4 && score <= 6",
+          "label": "moderate_distress",
+          "nanda_boost": {
+            "NANDA_00162": 0.72,
+            "NANDA_00046": 0.55
+          }
+        },
+        {
+          "condition": "score >= 7",
+          "label": "stable",
+          "nanda_boost": {
+            "NANDA_00162": 0.15,
+            "NANDA_00046": 0.1
+          }
+        }
+      ]
+    }
+  ],
+  "_generated": {
+    "by": "compiler/build_all.py",
+    "do_not_edit": true,
+    "at": "2026-07-09T04:54:45.934133Z",
+    "artifact": "js/modules/data/apgar-edges.json",
+    "sources": [
+      "NIFS/reference-datasets/ontology/apgar_edges.json"
+    ]
+  }
+}
