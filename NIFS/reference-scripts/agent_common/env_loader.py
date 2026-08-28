@@ -2,26 +2,45 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 _LOADED = False
-ROOT = Path(__file__).resolve().parent.parent.parent
+_LOADED_FROM: Path | None = None
+# NIFS/reference-scripts/agent_common -> NIFS
+NIFS_ROOT = Path(__file__).resolve().parent.parent.parent
+WORKSPACE_ROOT = NIFS_ROOT.parent
+
+_SCRIPTS = WORKSPACE_ROOT / "scripts"
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+from env_paths import env_candidates  # noqa: E402
 
 
 def project_root() -> Path:
-    return ROOT
+    return NIFS_ROOT
+
+
+def _env_candidates() -> list[Path]:
+    return env_candidates(WORKSPACE_ROOT, nifs=NIFS_ROOT, include_home=False)
 
 
 def load_project_env(*, force: bool = False) -> dict[str, str]:
-    """Parse .env na raiz e injeta em os.environ (sem sobrescrever vars já definidas)."""
-    global _LOADED
+    """Parse .env e injeta em os.environ (sem sobrescrever vars já definidas)."""
+    global _LOADED, _LOADED_FROM
     if _LOADED and not force:
         return {}
 
-    env_path = ROOT / ".env"
     loaded: dict[str, str] = {}
-    if not env_path.is_file():
+    env_path = None
+    for candidate in _env_candidates():
+        if candidate.is_file():
+            env_path = candidate
+            break
+
+    if not env_path:
         _LOADED = True
+        _LOADED_FROM = None
         return loaded
 
     for raw_line in env_path.read_text(encoding="utf-8").splitlines():
@@ -46,12 +65,14 @@ def load_project_env(*, force: bool = False) -> dict[str, str]:
             loaded[key] = value
 
     _LOADED = True
+    _LOADED_FROM = env_path
     return loaded
 
 
 def env_status() -> dict:
     """Quais chaves de agente estão configuradas (sem expor valores)."""
     load_project_env()
+    env_path = _LOADED_FROM
     keys = [
         "ANTHROPIC_API_KEY",
         "DEEPSEEK_API_KEY",
@@ -68,7 +89,7 @@ def env_status() -> dict:
         "NKOS_NO_LLM",
     ]
     return {
-        "env_file": str(ROOT / ".env"),
-        "env_file_exists": (ROOT / ".env").is_file(),
+        "env_file": str(env_path) if env_path else "",
+        "env_file_exists": env_path is not None,
         "keys": {k: bool((os.environ.get(k) or "").strip()) for k in keys},
     }
