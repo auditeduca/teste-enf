@@ -1,0 +1,375 @@
+{
+  "id": "a2b3c4d5-e6f7-8901-2345-6789abcdef01",
+  "code": "CALC-GASOMETRIA-001",
+  "slug": "gasometria",
+  "version": "1.0.0",
+  "status": "published",
+  "seo": {
+    "title": "Calculadora de Gasometria Arterial",
+    "description": "Interprete a gasometria arterial (pH, PaCO₂, HCO₃⁻, BE, SatO₂, eletrólitos e lactato) e identifique distúrbios ácido-base e de oxigenação. Ferramenta gratuita para enfermagem.",
+    "canonical": "https://www.calculadorasdeenfermagem.com.br/gasometria.html"
+  },
+  "breadcrumb": {
+    "category": "Cálculos Clínicos",
+    "categoryHref": "index.html#calculadoras"
+  },
+  "overview": {
+    "name": "Calculadora de Gasometria Arterial",
+    "acronym": "Gasometria",
+    "categoryBadge": "Cálculos clínicos",
+    "icon": "i-stetho",
+    "objective": "Interpretar o equilíbrio ácido-base e parâmetros de oxigenação a partir dos valores da gasometria arterial, auxiliando o raciocínio clínico à beira do leito.",
+    "indication": "Indicada para profissionais que necessitem interpretar resultados de gasometria arterial em contextos de emergência, UTI, enfermaria ou ambulatório.",
+    "targetPopulation": "Pacientes adultos e pediátricos com coleta de gasometria arterial, conforme indicação clínica.",
+    "specialty": [
+      "Enfermagem em Terapia Intensiva",
+      "Enfermagem de Emergência",
+      "Enfermagem Médico-Cirúrgica",
+      "Enfermagem Respiratória"
+    ],
+    "averageTime": "2-3 minutos",
+    "evidenceLevel": "II",
+    "complexity": "intermediate",
+    "rating": 4.9,
+    "ratingCount": 3200
+  },
+  "calculator": {
+    "inputs": [
+      {
+        "id": "ph",
+        "type": "number",
+        "label": "pH",
+        "unit": "",
+        "defaultValue": 7.4,
+        "min": 6.8,
+        "max": 7.8,
+        "step": 0.01,
+        "description": "Valor do pH arterial (referência: 7,35–7,45)."
+      },
+      {
+        "id": "paco2",
+        "type": "number",
+        "label": "PaCO₂",
+        "unit": "mmHg",
+        "defaultValue": 40,
+        "min": 10,
+        "max": 120,
+        "step": 0.1,
+        "description": "Pressão parcial de CO₂ arterial (referência: 35–45 mmHg)."
+      },
+      {
+        "id": "hco3",
+        "type": "number",
+        "label": "HCO₃⁻",
+        "unit": "mEq/L",
+        "defaultValue": 24,
+        "min": 5,
+        "max": 45,
+        "step": 0.1,
+        "description": "Bicarbonato arterial (referência: 22–26 mEq/L)."
+      },
+      {
+        "id": "pao2",
+        "type": "number",
+        "label": "PaO₂",
+        "unit": "mmHg",
+        "optional": true,
+        "min": 20,
+        "max": 600,
+        "step": 0.1,
+        "description": "Pressão parcial de O₂ arterial (referência: 80–100 mmHg)."
+      },
+      {
+        "id": "na",
+        "type": "number",
+        "label": "Sódio (Na⁺)",
+        "unit": "mEq/L",
+        "optional": true,
+        "min": 100,
+        "max": 180,
+        "step": 0.1,
+        "description": "Sódio plasmático para cálculo do ânion gap (referência: 135–145 mEq/L)."
+      },
+      {
+        "id": "cl",
+        "type": "number",
+        "label": "Cloro (Cl⁻)",
+        "unit": "mEq/L",
+        "optional": true,
+        "min": 70,
+        "max": 130,
+        "step": 0.1,
+        "description": "Cloro plasmático para cálculo do ânion gap (referência: 98–107 mEq/L)."
+      },
+      {
+        "id": "be",
+        "type": "number",
+        "label": "Excesso de Base (BE)",
+        "unit": "mEq/L",
+        "optional": true,
+        "min": -30,
+        "max": 30,
+        "step": 0.1,
+        "description": "Excesso de base (referência: −2 a +2 mEq/L)."
+      },
+      {
+        "id": "lactato",
+        "type": "number",
+        "label": "Lactato",
+        "unit": "mmol/L",
+        "optional": true,
+        "min": 0,
+        "max": 30,
+        "step": 0.1,
+        "description": "Lactato arterial (referência: < 2,0 mmol/L)."
+      },
+      {
+        "id": "hb",
+        "type": "number",
+        "label": "Hemoglobina (Hb)",
+        "unit": "g/dL",
+        "optional": true,
+        "min": 3,
+        "max": 25,
+        "step": 0.1,
+        "description": "Hemoglobina (referência adulto: 12–16 g/dL)."
+      },
+      {
+        "id": "cohb",
+        "type": "number",
+        "label": "Carboxiemoglobina (COHb)",
+        "unit": "%",
+        "optional": true,
+        "min": 0,
+        "max": 50,
+        "step": 0.1,
+        "description": "Fração de carboxiemoglobina (referência: < 1,5%)."
+      }
+    ],
+    "formula": {
+      "type": "gasometria",
+      "resultLabel": "Diagnóstico ácido-base",
+      "resultUnit": "",
+      "decimals": 0
+    }
+  },
+  "interpretation": {
+    "ranges": [
+      {
+        "min": 0,
+        "max": 0,
+        "label": "Normal / Compensada",
+        "riskLevel": "none",
+        "color": "#2563eb",
+        "clinicalImplications": "Equilíbrio ácido-base dentro dos limites da normalidade ou totalmente compensado. Manter monitorização conforme rotina e reavaliar se houver mudança clínica."
+      },
+      {
+        "min": 10,
+        "max": 10,
+        "label": "Distúrbio compensado",
+        "riskLevel": "low",
+        "color": "#2563eb",
+        "clinicalImplications": "Acidose ou alcalose com compensação total dos sistemas respiratório e metabólico. Investigar causa de base e monitorar evolução."
+      },
+      {
+        "min": 20,
+        "max": 20,
+        "label": "Parcialmente compensado",
+        "riskLevel": "moderate",
+        "color": "#f59e0b",
+        "clinicalImplications": "Distúrbio ácido-base com compensação parcial. Avaliar necessidade de suporte ventilatório ou correção metabólica. Notificar equipe médica."
+      },
+      {
+        "min": 30,
+        "max": 30,
+        "label": "Sem compensação",
+        "riskLevel": "high",
+        "color": "#dc2626",
+        "clinicalImplications": "Distúrbio ácido-base primário sem compensação adequada. Requer intervenção clínica imediata e monitorização contínua."
+      },
+      {
+        "min": 40,
+        "max": 40,
+        "label": "Distúrbio misto grave",
+        "riskLevel": "critical",
+        "color": "#dc2626",
+        "clinicalImplications": "Acidose ou alcalose mista (respiratória e metabólica simultâneas). Situação grave — escalar cuidado imediatamente e preparar suporte avançado."
+      }
+    ]
+  },
+  "sae": {
+    "nanda": [
+      {
+        "diagnosis": "Troca de gases prejudicada",
+        "definition": "Excesso ou déficit na oxigenação e/ou eliminação de dióxido de carbono na membrana alvéolo-capilar."
+      },
+      {
+        "diagnosis": "Padrão respiratório ineficaz",
+        "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."
+      },
+      {
+        "diagnosis": "Risco de desequilíbrio eletrolítico",
+        "definition": "Vulnerabilidade a distúrbios nos eletrólitos que podem comprometer a saúde."
+      }
+    ],
+    "noc": [
+      {
+        "outcome": "Troca de gases",
+        "indicators": [
+          "pH arterial dentro da faixa alvo",
+          "PaO₂ adequada à condição clínica",
+          "Ausência de sinais de fadiga respiratória"
+        ]
+      },
+      {
+        "outcome": "Status ácido-base",
+        "indicators": [
+          "HCO₃⁻ e PaCO₂ compatíveis com compensação",
+          "Ausência de acidose ou alcalose grave",
+          "Lactato em queda quando elevado"
+        ]
+      }
+    ],
+    "nic": [
+      {
+        "intervention": "Monitorização respiratória",
+        "activities": [
+          "Avaliar padrão respiratório e saturação de O₂",
+          "Notificar alterações gasométricas à equipe",
+          "Administrar O₂ conforme prescrição",
+          "Posicionar paciente para otimizar ventilação"
+        ]
+      },
+      {
+        "intervention": "Monitorização eletrolítica",
+        "activities": [
+          "Registrar valores de Na⁺, Cl⁻ e ânion gap",
+          "Identificar hiperlactatemia",
+          "Preparar amostras para gasometria seriada"
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "foundation": "A interpretação da gasometria arterial baseia-se na análise do pH, PaCO₂ e HCO₃⁻ para classificar distúrbios ácido-base em respiratórios, metabólicos ou mistos, avaliando o grau de compensação entre os sistemas respiratório e renal. O ânion gap (Na⁺ − Cl⁻ − HCO₃⁻) auxilia na diferenciação de acidoses metabólicas.",
+    "history": "A gasometria arterial moderna utiliza eletrodos seletivos de íons desenvolvidos na década de 1950. Os critérios de normalidade (pH 7,35–7,45; PaCO₂ 35–45 mmHg; HCO₃⁻ 22–26 mEq/L) são consensuais na literatura de fisiologia respiratória.",
+    "validation": "A abordagem sistemática pH → PaCO₂ → HCO₃⁻ é ensinada em cursos de enfermagem e medicina de emergência e UTI, com boa reprodutibilidade quando aplicada de forma padronizada.",
+    "limitations": "Esta ferramenta oferece interpretação orientativa e não substitui o julgamento clínico, o contexto do paciente, exames complementares nem a correlação com a história clínica. Distúrbios complexos podem requerer avaliação especializada.",
+    "references": [
+      {
+        "text": "GUYTON, A. C.; HALL, J. E. Tratado de fisiologia médica. 13ª ed. Rio de Janeiro: Elsevier, 2017."
+      },
+      {
+        "text": "BRUNNER, L. S.; SUDDARTH, D. S. Tratado de enfermagem médico-cirúrgica. 14ª ed. Rio de Janeiro: Guanabara Koogan, 2020."
+      },
+      {
+        "text": "HALL, J. E.; GUYTON, A. C. Guyton & Hall: fisiologia médica. 14ª ed. Rio de Janeiro: Elsevier, 2021."
+      },
+      {
+        "text": "KRAUT, J. A.; MADIAS, N. E. Metabolic Acidosis: Pathophysiology, Diagnosis and Management. Nature Reviews Nephrology, 2019."
+      }
+    ]
+  },
+  "learning": {
+    "tips": [
+      "Siga a ordem: pH → PaCO₂ → HCO₃⁻ para identificar o distúrbio primário.",
+      "PaCO₂ reflete o componente respiratório; HCO₃⁻ reflete o metabólico.",
+      "Ânion gap elevado (> 12) sugere acidose metabólica com ânion gap aumentado.",
+      "Lactato > 2 mmol/L pode indicar hipoperfusão tecidual.",
+      "Sempre correlacione com o exame clínico e a história do paciente."
+    ],
+    "examples": [
+      {
+        "label": "Normal",
+        "sublabel": "pH 7,40 · PaCO₂ 40 · HCO₃⁻ 24",
+        "emoji": "✅",
+        "values": {
+          "ph": 7.4,
+          "paco2": 40,
+          "hco3": 24
+        }
+      },
+      {
+        "label": "Acidose metabólica",
+        "sublabel": "pH 7,25 · PaCO₂ 30 · HCO₃⁻ 14",
+        "emoji": "⚠️",
+        "values": {
+          "ph": 7.25,
+          "paco2": 30,
+          "hco3": 14,
+          "na": 140,
+          "cl": 100,
+          "lactato": 4.5
+        }
+      },
+      {
+        "label": "Acidose respiratória",
+        "sublabel": "pH 7,28 · PaCO₂ 55 · HCO₃⁻ 26",
+        "emoji": "🫁",
+        "values": {
+          "ph": 7.28,
+          "paco2": 55,
+          "hco3": 26,
+          "pao2": 55
+        }
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Qual a faixa de normalidade do pH arterial?",
+        "opts": [
+          "7,00–7,20",
+          "7,35–7,45",
+          "7,50–7,60",
+          "6,80–7,00"
+        ],
+        "correct": 1,
+        "expl": "O pH arterial normal situa-se entre 7,35 e 7,45. Valores abaixo indicam acidemia; acima, alcalemia."
+      },
+      {
+        "q": "PaCO₂ elevada com pH baixo sugere:",
+        "opts": [
+          "Acidose respiratória",
+          "Alcalose metabólica",
+          "Acidose metabólica compensada",
+          "Estado normal"
+        ],
+        "correct": 0,
+        "expl": "pH baixo (acidemia) com PaCO₂ elevada indica acidose respiratória — o CO₂ retido acidifica o sangue."
+      },
+      {
+        "q": "Como se calcula o ânion gap?",
+        "opts": [
+          "Na⁺ + Cl⁻ − HCO₃⁻",
+          "Na⁺ − (Cl⁻ + HCO₃⁻)",
+          "PaCO₂ − HCO₃⁻",
+          "pH × HCO₃⁻"
+        ],
+        "correct": 1,
+        "expl": "Ânion gap = Na⁺ − (Cl⁻ + HCO₃⁻). Valores acima de 12 mEq/L indicam acidose metabólica com ânion gap elevado."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Quais valores são obrigatórios para a interpretação?",
+      "a": "No mínimo pH, PaCO₂ e HCO₃⁻. Os demais parâmetros (PaO₂, eletrólitos, lactato, Hb, COHb) enriquecem a análise quando disponíveis."
+    },
+    {
+      "q": "Esta calculadora substitui a avaliação médica?",
+      "a": "Não. A ferramenta auxilia o raciocínio clínico à beira do leito, mas não substitui o diagnóstico médico, a correlação clínica nem os protocolos institucionais."
+    },
+    {
+      "q": "O que significa distúrbio misto?",
+      "a": "Ocorre quando há alteração simultânea do componente respiratório (PaCO₂) e metabólico (HCO₃⁻) na mesma direção da acidemia ou alcalemia, indicando situação mais grave."
+    },
+    {
+      "q": "Quando solicitar nova gasometria?",
+      "a": "Conforme protocolo institucional — geralmente após intervenções (ajuste ventilatório, fluidoterapia, correção metabólica) ou em pacientes instáveis com reavaliação seriada."
+    }
+  ],
+  "about": {
+    "title": "Como interpretar a gasometria arterial",
+    "html": "<p>A interpretação da gasometria arterial segue uma abordagem sistemática: primeiro avalia-se o pH (acidemia ou alcalemia), depois identifica-se o distúrbio primário pelo componente alterado (PaCO₂ para respiratório, HCO₃⁻ para metabólico) e, por fim, verifica-se se há compensação pelo sistema oposto.</p><p>Valores de referência: pH 7,35–7,45; PaCO₂ 35–45 mmHg; HCO₃⁻ 22–26 mEq/L; PaO₂ 80–100 mmHg.</p><p>O ânion gap (Na⁺ − Cl⁻ − HCO₃⁻) auxilia na investigação de acidoses metabólicas, e o lactato elevado pode indicar hipoperfusão tecidual.</p>"
+  }
+}

@@ -41,6 +41,8 @@ def default_state(inputs):
             state[inp["id"]] = inp["defaultValue"]
         elif inp.get("options"):
             state[inp["id"]] = inp["options"][0]["value"]
+        elif inp.get("optional"):
+            state[inp["id"]] = ""
         else:
             state[inp["id"]] = 0
     return state
@@ -55,6 +57,47 @@ def score_of(inp, value):
     return value
 
 
+def _read_gasometria_val(inputs, state, field_id):
+    inp = next((i for i in inputs if i["id"] == field_id), None)
+    raw = state.get(field_id)
+    if inp and inp.get("optional") and raw in ("", None):
+        return float("nan")
+    try:
+        return float(raw)
+    except (TypeError, ValueError):
+        return float("nan")
+
+
+def _interpret_gasometria_severity(cfg, state):
+    inputs = cfg["calculator"]["inputs"]
+    ph = _read_gasometria_val(inputs, state, "ph")
+    paco2 = _read_gasometria_val(inputs, state, "paco2")
+    hco3 = _read_gasometria_val(inputs, state, "hco3")
+    if ph != ph or paco2 != paco2 or hco3 != hco3:
+        return -1
+    severity = 0
+    if ph < 7.35:
+        diagnostico = "ACIDOSE"
+    elif ph > 7.45:
+        diagnostico = "ALCALOSE"
+    else:
+        diagnostico = "NORMAL / COMPENSADA"
+    if diagnostico != "NORMAL / COMPENSADA":
+        is_resp = (ph < 7.35 and paco2 > 45) or (ph > 7.45 and paco2 < 35)
+        is_metab = (ph < 7.35 and hco3 < 22) or (ph > 7.45 and hco3 > 26)
+        if is_resp and not is_metab:
+            severity = 20 if ((ph < 7.35 and hco3 > 26) or (ph > 7.45 and hco3 < 22)) else 30
+        elif is_metab and not is_resp:
+            severity = 20 if ((ph < 7.35 and paco2 < 35) or (ph > 7.45 and paco2 > 45)) else 30
+        elif is_resp and is_metab:
+            severity = 40
+        else:
+            severity = 30
+    elif paco2 != 40 and hco3 != 24:
+        severity = 10
+    return severity
+
+
 def compute_total(cfg, state):
     formula = cfg["calculator"]["formula"]
     inputs = cfg["calculator"]["inputs"]
@@ -64,6 +107,8 @@ def compute_total(cfg, state):
         expr = formula["expression"]
         scope = {inp["id"]: float(state[inp["id"]]) for inp in inputs}
         return eval(expr, {"__builtins__": {}}, scope)
+    if formula["type"] == "gasometria":
+        return _interpret_gasometria_severity(cfg, state)
     return 0
 
 
@@ -110,6 +155,13 @@ def render_field_row(inp, state, formula_type="sum"):
             </div>'''
     else:
         unit = inp.get("unit", "")
+        val = state[inp["id"]]
+        val_attr = "" if val in ("", None) else esc(val)
+        optional_hint = (
+            f'<p class="field-hint">{esc(inp.get("description",""))} (opcional)</p>'
+            if inp.get("optional") and inp.get("description")
+            else (f'<p class="field-hint">Opcional</p>' if inp.get("optional") else "")
+        )
         return f'''
             <div class="field-row">
               <div class="field-top">
@@ -118,10 +170,11 @@ def render_field_row(inp, state, formula_type="sum"):
               </div>
               <div class="field-input-wrap">
                 <input type="number" inputmode="decimal" id="calc-{esc(inp['id'])}" class="field-input"
-                       data-calc-input="{esc(inp['id'])}" value="{esc(state[inp['id']])}"
+                       data-calc-input="{esc(inp['id'])}" value="{val_attr}"
                        min="{esc(inp.get('min',''))}" max="{esc(inp.get('max',''))}" step="{esc(inp.get('step',1))}">
                 <span class="field-suffix">{esc(unit)}</span>
               </div>
+              {optional_hint}
             </div>'''
 
 
