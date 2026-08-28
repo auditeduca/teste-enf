@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://calculadorasdeenfermagem.com.br/schemas/cko-v3.schema.json",
+  "title": "Clinical Knowledge Object (CKO) v3",
+  "description": "Objeto canônico v3 — referências por código a terminologia global; textos exclusivos da ferramenta em pt-BR.",
+  "type": "object",
+  "required": ["cko_id", "metadata", "terminology"],
+  "properties": {
+    "cko_id": { "type": "string", "pattern": "^CKO-[A-Z0-9-]+$" },
+    "metadata": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "domain": { "type": "string" },
+        "version": { "type": "string" },
+        "last_review": { "type": "string" },
+        "validated_by": { "type": "string" }
+      }
+    },
+    "assessment_model": { "type": "object" },
+    "terminology": {
+      "type": "object",
+      "properties": {
+        "nanda": { "type": "array", "items": { "$ref": "#/definitions/codeRef" } },
+        "nic": { "type": "array", "items": { "$ref": "#/definitions/codeRef" } },
+        "noc": { "type": "array", "items": { "$ref": "#/definitions/codeRef" } }
+      }
+    },
+    "nursing_process": {
+      "type": "object",
+      "properties": {
+        "diagnosis_codes": { "type": "array", "items": { "type": "string" } },
+        "intervention_codes": { "type": "array", "items": { "type": "string" } },
+        "outcome_codes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "clinical_reasoning": { "type": "object" },
+    "knowledge_sources": { "type": "object" },
+    "interoperability": { "type": "object" },
+    "ai": { "type": "object" },
+    "semantic_graph": { "type": "object" },
+    "presentation": { "type": "object" },
+    "localization": {
+      "type": "object",
+      "description": "Traduções por locale (Fase 6+); chaves exclusivas da ferramenta"
+    }
+  },
+  "definitions": {
+    "codeRef": {
+      "type": "object",
+      "required": ["code"],
+      "properties": {
+        "code": { "type": "string" },
+        "axis": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

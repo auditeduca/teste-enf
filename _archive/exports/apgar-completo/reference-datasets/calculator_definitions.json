@@ -1,0 +1,6561 @@
+{
+  "generated_at": "2026-06-19T21:01:25.212427Z",
+  "schema_version": "2026.1.0",
+  "micro_phase": "5.1",
+  "template_id": "T5.1",
+  "entity": "CalculatorDefinition",
+  "nkos_phase": 5,
+  "edition": "2026",
+  "content_source": "NKOS_CUSTOM",
+  "reference_page": "/missao",
+  "count": 100,
+  "records": [
+    {
+      "uuid": "2336a83d-2e62-5e4a-bac1-bad12f8a49c2",
+      "definition_code": "CALC.TOOL.GCS",
+      "tool_code": "TOOL.GCS",
+      "name": "Glasgow Coma Scale (GCS)",
+      "acronym": "GCS",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "neurology",
+      "taxonomy_code": "CLIN.NEURO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.GCS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "eye + verbal + motor",
+      "parameters": [
+        {
+          "code": "eye",
+          "label": "Abertura ocular",
+          "type": "integer",
+          "min": 1,
+          "max": 4
+        },
+        {
+          "code": "verbal",
+          "label": "Resposta verbal",
+          "type": "integer",
+          "min": 1,
+          "max": 5
+        },
+        {
+          "code": "motor",
+          "label": "Resposta motora",
+          "type": "integer",
+          "min": 1,
+          "max": 6
+        }
+      ],
+      "score_min": 3,
+      "score_max": 15,
+      "interpretation_bands": [
+        {
+          "min": 13,
+          "max": 15,
+          "label_pt": "Leve",
+          "severity": "low",
+          "action_pt": "Monitorar neurologico de rotina"
+        },
+        {
+          "min": 9,
+          "max": 12,
+          "label_pt": "Moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 3,
+          "max": 8,
+          "label_pt": "Grave",
+          "severity": "high",
+          "action_pt": "Acionar equipe medica; considerar via aerea avancada"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00226",
+        "NANDA.00155"
+      ],
+      "evidence_code": "EVID.GRADE.HIGH",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "3bd6ae58-8308-5728-be85-bdd1e1dee8df",
+      "definition_code": "CALC.TOOL.BRADEN",
+      "tool_code": "TOOL.BRADEN",
+      "name": "Braden Scale",
+      "acronym": "BRADEN",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "wound_care",
+      "taxonomy_code": "CLIN.FERID",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.BRADEN.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(subscales)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 6,
+      "score_max": 23,
+      "interpretation_bands": [
+        {
+          "min": 19,
+          "max": 23,
+          "label_pt": "Sem risco",
+          "severity": "low",
+          "action_pt": "Cuidados de pele de rotina"
+        },
+        {
+          "min": 15,
+          "max": 18,
+          "label_pt": "Risco leve",
+          "severity": "low",
+          "action_pt": "Reavaliar a cada 48-72h"
+        },
+        {
+          "min": 13,
+          "max": 14,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Plano preventivo de LP; reavaliar diariamente"
+        },
+        {
+          "min": 6,
+          "max": 12,
+          "label_pt": "Risco alto",
+          "severity": "high",
+          "action_pt": "Intervencoes intensivas; reavaliar a cada turno"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00235",
+        "NANDA.00202"
+      ],
+      "evidence_code": "EVID.GRADE.HIGH",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "1a4ef8a6-bd08-5824-9480-1d0ce6279ef7",
+      "definition_code": "CALC.TOOL.MORSE",
+      "tool_code": "TOOL.MORSE",
+      "name": "Morse Fall Scale",
+      "acronym": "MORSE",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "patient_safety",
+      "taxonomy_code": "CLIN.SEGPAC",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.MORSE.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(risk_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 125,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 24,
+          "label_pt": "Baixo risco de queda",
+          "severity": "low",
+          "action_pt": "Precaucoes padrao"
+        },
+        {
+          "min": 25,
+          "max": 50,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Intervencoes moderadas; pulseira de risco"
+        },
+        {
+          "min": 51,
+          "max": 125,
+          "label_pt": "Alto risco de queda",
+          "severity": "high",
+          "action_pt": "Intervencoes de alta intensidade; sinalizacao e supervisao"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00102"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "f897a434-9ede-564d-911f-5f6b14586210",
+      "definition_code": "CALC.TOOL.RASS",
+      "tool_code": "TOOL.RASS",
+      "name": "Richmond Agitation-Sedation Scale",
+      "acronym": "RASS",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "critical_care",
+      "taxonomy_code": "CLIN.UTI",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.RASS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "categorical",
+      "formula": "single_item_score",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": -5,
+      "score_max": 4,
+      "interpretation_bands": [
+        {
+          "min": -5,
+          "max": -4,
+          "label_pt": "Nao despertavel",
+          "severity": "high",
+          "action_pt": "Sedacao profunda; titulacao cuidadosa"
+        },
+        {
+          "min": -3,
+          "max": -2,
+          "label_pt": "Sedacao moderada/leve",
+          "severity": "moderate",
+          "action_pt": "Meta de sedacao conforme protocolo"
+        },
+        {
+          "min": -1,
+          "max": 0,
+          "label_pt": "Alerta/calmo",
+          "severity": "low",
+          "action_pt": "Manter conforto e seguranca"
+        },
+        {
+          "min": 1,
+          "max": 4,
+          "label_pt": "Agitacao",
+          "severity": "high",
+          "action_pt": "Investigar causa; considerar sedacao/analgesia"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00155"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "4c131cc8-56cb-50ec-8ce1-038f9c3f598b",
+      "definition_code": "CALC.TOOL.CAM-ICU",
+      "tool_code": "TOOL.CAM-ICU",
+      "name": "Confusion Assessment Method for ICU",
+      "acronym": "CAM-ICU",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "critical_care",
+      "taxonomy_code": "CLIN.UTI",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.CAM-ICU.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00155"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "86c649db-01c8-5087-9233-f9b16eb6618c",
+      "definition_code": "CALC.TOOL.BARTHEL",
+      "tool_code": "TOOL.BARTHEL",
+      "name": "Barthel Index",
+      "acronym": "BARTHEL",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "rehabilitation",
+      "taxonomy_code": "CLIN.REAB",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.BARTHEL.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "4223292e-b7dc-5131-b60c-28679586e019",
+      "definition_code": "CALC.TOOL.KATZ",
+      "tool_code": "TOOL.KATZ",
+      "name": "Katz Index",
+      "acronym": "KATZ",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "gerontology",
+      "taxonomy_code": "CLIN.GERIAT",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.KATZ.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "95a70731-e275-59f7-8fd9-36b233c6e185",
+      "definition_code": "CALC.TOOL.NORTON",
+      "tool_code": "TOOL.NORTON",
+      "name": "Norton Scale",
+      "acronym": "NORTON",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "wound_care",
+      "taxonomy_code": "CLIN.FERID",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.NORTON.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00235"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "e64b6088-73cb-5d54-afa7-82a505a4fcd8",
+      "definition_code": "CALC.TOOL.WATERLOW",
+      "tool_code": "TOOL.WATERLOW",
+      "name": "Waterlow Scale",
+      "acronym": "WATERLOW",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "wound_care",
+      "taxonomy_code": "CLIN.FERID",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.WATERLOW.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00235"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "5a34213b-8577-5952-9297-8dce42e87bdb",
+      "definition_code": "CALC.TOOL.NEWS2",
+      "tool_code": "TOOL.NEWS2",
+      "name": "National Early Warning Score 2",
+      "acronym": "NEWS2",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "critical_care",
+      "taxonomy_code": "CLIN.UTI",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.NEWS2.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "weighted_sum",
+      "formula": "respiratory + spo2 + supplemental_o2 + temp + bp + pulse + consciousness",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 4,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 5,
+          "max": 6,
+          "label_pt": "Risco medio",
+          "severity": "moderate",
+          "action_pt": "Reavaliacao urgente pela equipe"
+        },
+        {
+          "min": 7,
+          "max": 20,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Resposta clinica imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00046",
+        "NANDA.00004"
+      ],
+      "evidence_code": "EVID.GRADE.HIGH",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "956a3dba-310d-5f35-bfa1-eeb9eebfcd76",
+      "definition_code": "CALC.TOOL.MEWS",
+      "tool_code": "TOOL.MEWS",
+      "name": "Modified Early Warning Score",
+      "acronym": "MEWS",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "critical_care",
+      "taxonomy_code": "CLIN.UTI",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.MEWS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00046"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "52216cda-dd77-5bb0-b640-d6f4e8cf62f4",
+      "definition_code": "CALC.TOOL.APACHE2",
+      "tool_code": "TOOL.APACHE2",
+      "name": "APACHE II",
+      "acronym": "APACHE2",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "critical_care",
+      "taxonomy_code": "CLIN.UTI",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.APACHE2.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "weighted_sum",
+      "formula": "acute_physiology + age + chronic_health",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 71,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Baixa mortalidade prevista",
+          "severity": "low",
+          "action_pt": "Cuidados de enfermaria/UTI leve"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Mortalidade moderada",
+          "severity": "moderate",
+          "action_pt": "UTI; monitorizacao intensiva"
+        },
+        {
+          "min": 20,
+          "max": 71,
+          "label_pt": "Alta mortalidade prevista",
+          "severity": "high",
+          "action_pt": "Prognostico reservado; metas de cuidado"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00046"
+      ],
+      "evidence_code": "EVID.GRADE.HIGH",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "121107a4-7c1c-56d2-a904-b9ef0cfb7e2f",
+      "definition_code": "CALC.TOOL.SOFA",
+      "tool_code": "TOOL.SOFA",
+      "name": "Sequential Organ Failure Assessment",
+      "acronym": "SOFA",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "critical_care",
+      "taxonomy_code": "CLIN.UTI",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.SOFA.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(organ_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 24,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Disfuncao organica leve",
+          "severity": "low",
+          "action_pt": "Monitorar evolucao"
+        },
+        {
+          "min": 7,
+          "max": 9,
+          "label_pt": "Disfuncao moderada",
+          "severity": "moderate",
+          "action_pt": "Suporte organico direcionado"
+        },
+        {
+          "min": 10,
+          "max": 24,
+          "label_pt": "Disfuncao grave",
+          "severity": "high",
+          "action_pt": "Cuidados criticos; prognostico reservado"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00046"
+      ],
+      "evidence_code": "EVID.GRADE.HIGH",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "174647f1-1315-50ec-b173-1d33298f3d7c",
+      "definition_code": "CALC.TOOL.qSOFA",
+      "tool_code": "TOOL.qSOFA",
+      "name": "Quick SOFA",
+      "acronym": "qSOFA",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "infectious_disease",
+      "taxonomy_code": "CLIN.INFCONT",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.qSOFA.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "resp_rate + altered_consciousness + systolic_bp",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 3,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 1,
+          "label_pt": "Baixo risco de sepse",
+          "severity": "low",
+          "action_pt": "Investigar infeccao se suspeita clinica"
+        },
+        {
+          "min": 2,
+          "max": 3,
+          "label_pt": "Alto risco de sepse",
+          "severity": "high",
+          "action_pt": "Investigar disfuncao organica; bundle de sepse"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00004"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "e0d61fe6-169a-5fc6-8cc4-69d7fbdf6ec6",
+      "definition_code": "CALC.TOOL.PSI",
+      "tool_code": "TOOL.PSI",
+      "name": "Pneumonia Severity Index",
+      "acronym": "PSI",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "pneumology",
+      "taxonomy_code": "CLIN.PNEUMO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.PSI.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "51ba470b-5412-5286-97fa-a2f0f6504b5f",
+      "definition_code": "CALC.TOOL.CURB65",
+      "tool_code": "TOOL.CURB65",
+      "name": "CURB-65",
+      "acronym": "CURB65",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "pneumology",
+      "taxonomy_code": "CLIN.PNEUMO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.CURB65.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(pneumonia_criteria)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 5,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 1,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Tratamento ambulatorial possivel"
+        },
+        {
+          "min": 2,
+          "max": 2,
+          "label_pt": "Risco intermediario",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao breve"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Internacao; considerar UTI se >=4"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "f862a486-cd1e-5f29-8d7f-bd5948faa9d2",
+      "definition_code": "CALC.TOOL.WELLS_DVT",
+      "tool_code": "TOOL.WELLS_DVT",
+      "name": "Wells Criteria (DVT)",
+      "acronym": "WELLS_DVT",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "cardiology",
+      "taxonomy_code": "CLIN.CARDIO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.WELLS_DVT.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "b61dd1c8-c4f0-5a89-bc5d-b3a71f11fd61",
+      "definition_code": "CALC.TOOL.WELLS_PE",
+      "tool_code": "TOOL.WELLS_PE",
+      "name": "Wells Criteria (PE)",
+      "acronym": "WELLS_PE",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "cardiology",
+      "taxonomy_code": "CLIN.CARDIO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.WELLS_PE.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "ef3b6ab9-763f-5c19-aace-64c7c563ee7e",
+      "definition_code": "CALC.TOOL.GENEVA_PE",
+      "tool_code": "TOOL.GENEVA_PE",
+      "name": "Geneva Score (PE)",
+      "acronym": "GENEVA_PE",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "cardiology",
+      "taxonomy_code": "CLIN.CARDIO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.GENEVA_PE.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "8a78d3f8-e996-5901-a78e-37ecd7c8fe04",
+      "definition_code": "CALC.TOOL.PERC",
+      "tool_code": "TOOL.PERC",
+      "name": "Pulmonary Embolism Rule-out Criteria",
+      "acronym": "PERC",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "emergency",
+      "taxonomy_code": "CLIN.EMERG",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.PERC.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00172",
+        "NANDA.00173",
+        "NANDA.00174"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "20892cfc-87d8-5ee0-9b12-1950e9b0d78a",
+      "definition_code": "CALC.TOOL.HEART",
+      "tool_code": "TOOL.HEART",
+      "name": "HEART Score",
+      "acronym": "HEART",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "cardiology",
+      "taxonomy_code": "CLIN.CARDIO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.HEART.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "5c122332-6210-5c6f-a21a-f96add6c410b",
+      "definition_code": "CALC.TOOL.GRACE",
+      "tool_code": "TOOL.GRACE",
+      "name": "GRACE Score",
+      "acronym": "GRACE",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "cardiology",
+      "taxonomy_code": "CLIN.CARDIO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.GRACE.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "3a986394-1298-57a6-870a-bb6cd973c66a",
+      "definition_code": "CALC.TOOL.TIMI",
+      "tool_code": "TOOL.TIMI",
+      "name": "TIMI Score",
+      "acronym": "TIMI",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "cardiology",
+      "taxonomy_code": "CLIN.CARDIO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.TIMI.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "a7f514c1-e07f-567a-a374-3e5762d4e0b5",
+      "definition_code": "CALC.TOOL.HASBLED",
+      "tool_code": "TOOL.HASBLED",
+      "name": "HAS-BLED Score",
+      "acronym": "HASBLED",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "hematology",
+      "taxonomy_code": "CLIN.HEMATO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.HASBLED.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(item_scores)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 20,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 6,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 7,
+          "max": 13,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 14,
+          "max": 20,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "7d05b0eb-46b2-5df0-b099-3f2f194cd063",
+      "definition_code": "CALC.TOOL.CHA2DS2VASc",
+      "tool_code": "TOOL.CHA2DS2VASc",
+      "name": "CHA2DS2-VASc Score",
+      "acronym": "CHA2DS2VASc",
+      "tool_type": "score",
+      "category": "assessment_scales",
+      "domain": "cardiology",
+      "taxonomy_code": "CLIN.CARDIO",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.CHA2DS2VASc.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(stroke_risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 9,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 0,
+          "label_pt": "Baixo risco tromboembolico",
+          "severity": "low",
+          "action_pt": "Anticoagulacao geralmente nao indicada"
+        },
+        {
+          "min": 1,
+          "max": 1,
+          "label_pt": "Risco intermediario",
+          "severity": "moderate",
+          "action_pt": "Considerar anticoagulacao conforme FA"
+        },
+        {
+          "min": 2,
+          "max": 9,
+          "label_pt": "Alto risco tromboembolico",
+          "severity": "high",
+          "action_pt": "Anticoagulacao recomendada salvo contraindicacao"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00016",
+        "NANDA.00158",
+        "NANDA.00194"
+      ],
+      "evidence_code": "EVID.GRADE.HIGH",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "a605eec4-73b9-5b5b-8b4a-297c5f57cff4",
+      "definition_code": "CALC.TOOL.CLARK",
+      "tool_code": "TOOL.CLARK",
+      "name": "Pediatric Dose (Clark)",
+      "acronym": "CLARK",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.CLARK.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "cc55ba10-7779-5552-be65-e27c12d0ac6a",
+      "definition_code": "CALC.TOOL.YOUNG",
+      "tool_code": "TOOL.YOUNG",
+      "name": "Pediatric Dose (Young)",
+      "acronym": "YOUNG",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.YOUNG.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c3f9812c-7233-500c-8785-0058b63a4810",
+      "definition_code": "CALC.TOOL.BSA_MOSTELLER",
+      "tool_code": "TOOL.BSA_MOSTELLER",
+      "name": "Body Surface Area (Mosteller)",
+      "acronym": "BSA_MOSTELLER",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.BSA_MOSTELLER.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c2dc87c4-cc4e-5234-bdc7-22e61e4f08f3",
+      "definition_code": "CALC.TOOL.BSA_DUBOIS",
+      "tool_code": "TOOL.BSA_DUBOIS",
+      "name": "Body Surface Area (DuBois)",
+      "acronym": "BSA_DUBOIS",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.BSA_DUBOIS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "162babcd-a0a4-55a3-843b-b90b771858ed",
+      "definition_code": "CALC.TOOL.INFUSION",
+      "tool_code": "TOOL.INFUSION",
+      "name": "Infusion Rate Calculator",
+      "acronym": "INFUSION",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.INFUSION.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "(volume_ml * drop_factor) / time_min",
+      "parameters": [
+        {
+          "code": "volume_ml",
+          "label": "Volume (mL)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "time_min",
+          "label": "Tempo (min)",
+          "type": "number",
+          "min": 1
+        },
+        {
+          "code": "drop_factor",
+          "label": "Fator gotejamento",
+          "type": "integer",
+          "default": 20
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "gtt_min": "number",
+        "ml_h": "number"
+      },
+      "units": {
+        "gtt_min": "gtt/min",
+        "ml_h": "mL/h"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "1f0d9ecf-c05f-53ef-a03b-1cb2da4289a0",
+      "definition_code": "CALC.TOOL.MCG_KG_MIN",
+      "tool_code": "TOOL.MCG_KG_MIN",
+      "name": "mcg/kg/min Calculator",
+      "acronym": "MCG_KG_MIN",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.MCG_KG_MIN.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "(dose_mcg_kg_min * weight_kg * 60) / concentration_mcg_ml",
+      "parameters": [
+        {
+          "code": "dose_mcg_kg_min",
+          "label": "Dose (mcg/kg/min)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration_mcg_ml",
+          "label": "Concentracao (mcg/mL)",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "ml_h": "number"
+      },
+      "units": {
+        "ml_h": "mL/h"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "fa276883-1757-55cf-be3b-8336c6f6d665",
+      "definition_code": "CALC.TOOL.DILUTION",
+      "tool_code": "TOOL.DILUTION",
+      "name": "Drug Dilution Calculator",
+      "acronym": "DILUTION",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.DILUTION.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "d1f92ebe-a3bc-5626-aa32-27933296a3da",
+      "definition_code": "CALC.TOOL.RENAL_CG",
+      "tool_code": "TOOL.RENAL_CG",
+      "name": "Renal Dose (Cockcroft-Gault)",
+      "acronym": "RENAL_CG",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.RENAL_CG.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "90954e05-33c9-58ee-aeff-9eb1e9421f72",
+      "definition_code": "CALC.TOOL.RENAL_MDRD",
+      "tool_code": "TOOL.RENAL_MDRD",
+      "name": "Renal Dose (MDRD)",
+      "acronym": "RENAL_MDRD",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.RENAL_MDRD.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c0b0f906-f79d-544f-bb57-4d93ddb366dd",
+      "definition_code": "CALC.TOOL.RENAL_CKD",
+      "tool_code": "TOOL.RENAL_CKD",
+      "name": "Renal Dose (CKD-EPI)",
+      "acronym": "RENAL_CKD",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.RENAL_CKD.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "8200a719-b2a9-538a-85c6-2a7c29e0fa01",
+      "definition_code": "CALC.TOOL.HEPATIC_CP",
+      "tool_code": "TOOL.HEPATIC_CP",
+      "name": "Hepatic Dose (Child-Pugh)",
+      "acronym": "HEPATIC_CP",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.HEPATIC_CP.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "a48a0c9f-dec3-5dca-a1ff-6b28da7ca228",
+      "definition_code": "CALC.TOOL.BMI",
+      "tool_code": "TOOL.BMI",
+      "name": "BMI Calculator",
+      "acronym": "BMI",
+      "tool_type": "anthropometric",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.BMI.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "weight_kg / (height_m ** 2)",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 1
+        },
+        {
+          "code": "height_m",
+          "label": "Altura (m)",
+          "type": "number",
+          "min": 0.5
+        }
+      ],
+      "score_min": 10,
+      "score_max": 60,
+      "interpretation_bands": [
+        {
+          "min": 10,
+          "max": 18.4,
+          "label_pt": "Baixo peso",
+          "severity": "moderate",
+          "action_pt": "Avaliacao nutricional"
+        },
+        {
+          "min": 18.5,
+          "max": 24.9,
+          "label_pt": "Eutrofia",
+          "severity": "low",
+          "action_pt": "Manter habitos saudaveis"
+        },
+        {
+          "min": 25,
+          "max": 29.9,
+          "label_pt": "Sobrepeso",
+          "severity": "moderate",
+          "action_pt": "Orientacao nutricional"
+        },
+        {
+          "min": 30,
+          "max": 60,
+          "label_pt": "Obesidade",
+          "severity": "high",
+          "action_pt": "Plano multidisciplinar"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "1d009cc2-d8e7-5cfc-80cf-fe4b37973400",
+      "definition_code": "CALC.TOOL.IBW_DEVINE",
+      "tool_code": "TOOL.IBW_DEVINE",
+      "name": "Ideal Body Weight (Devine)",
+      "acronym": "IBW_DEVINE",
+      "tool_type": "anthropometric",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IBW_DEVINE.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "anthropometric_index",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        },
+        {
+          "code": "height_cm",
+          "label": "Altura (cm)",
+          "type": "number"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "a86c0ad7-a6bd-5334-8cf5-e43900798b6c",
+      "definition_code": "CALC.TOOL.IBW_ROBINSON",
+      "tool_code": "TOOL.IBW_ROBINSON",
+      "name": "Ideal Body Weight (Robinson)",
+      "acronym": "IBW_ROBINSON",
+      "tool_type": "anthropometric",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IBW_ROBINSON.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "anthropometric_index",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        },
+        {
+          "code": "height_cm",
+          "label": "Altura (cm)",
+          "type": "number"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "6644859d-9700-54f4-a515-0ed7ef3df637",
+      "definition_code": "CALC.TOOL.BSA",
+      "tool_code": "TOOL.BSA",
+      "name": "BSA Calculator",
+      "acronym": "BSA",
+      "tool_type": "anthropometric",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.BSA.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "anthropometric_index",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        },
+        {
+          "code": "height_cm",
+          "label": "Altura (cm)",
+          "type": "number"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "17124cd5-b0cf-5797-89a5-72423a97f3a8",
+      "definition_code": "CALC.TOOL.HEPARIN",
+      "tool_code": "TOOL.HEPARIN",
+      "name": "Heparin Protocol",
+      "acronym": "HEPARIN",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.HEPARIN.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "ec35ea98-407b-589a-9cce-3699fb2cde27",
+      "definition_code": "CALC.TOOL.INSULIN",
+      "tool_code": "TOOL.INSULIN",
+      "name": "Insulin Sliding Scale",
+      "acronym": "INSULIN",
+      "tool_type": "dose_calculation",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.INSULIN.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "dose_mg * weight_kg / concentration",
+      "parameters": [
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "dose_mg",
+          "label": "Dose (mg)",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "code": "concentration",
+          "label": "Concentracao",
+          "type": "number",
+          "min": 0
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "result_ml": "number",
+        "result_mg": "number"
+      },
+      "units": {
+        "result_ml": "mL",
+        "result_mg": "mg"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "641354db-2982-59e0-a8e8-94c95af00c58",
+      "definition_code": "CALC.TOOL.HYPERNAT",
+      "tool_code": "TOOL.HYPERNAT",
+      "name": "Hypernatremia Correction",
+      "acronym": "HYPERNAT",
+      "tool_type": "fluid_balance",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.HYPERNAT.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "electrolyte_correction",
+      "parameters": [
+        {
+          "code": "current_value",
+          "label": "Valor atual",
+          "type": "number"
+        },
+        {
+          "code": "target_value",
+          "label": "Valor alvo",
+          "type": "number"
+        },
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "463c4206-ebc8-5a56-93d2-f41e128e72c3",
+      "definition_code": "CALC.TOOL.HYPONAT",
+      "tool_code": "TOOL.HYPONAT",
+      "name": "Hyponatremia Correction",
+      "acronym": "HYPONAT",
+      "tool_type": "fluid_balance",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.HYPONAT.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "electrolyte_correction",
+      "parameters": [
+        {
+          "code": "current_value",
+          "label": "Valor atual",
+          "type": "number"
+        },
+        {
+          "code": "target_value",
+          "label": "Valor alvo",
+          "type": "number"
+        },
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "a8330247-8f7d-54d9-b211-1e52a323cbd3",
+      "definition_code": "CALC.TOOL.BICARB",
+      "tool_code": "TOOL.BICARB",
+      "name": "Bicarbonate Deficit",
+      "acronym": "BICARB",
+      "tool_type": "fluid_balance",
+      "category": "dose_calculators",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.BICARB.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "electrolyte_correction",
+      "parameters": [
+        {
+          "code": "current_value",
+          "label": "Valor atual",
+          "type": "number"
+        },
+        {
+          "code": "target_value",
+          "label": "Valor alvo",
+          "type": "number"
+        },
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c8234c2c-7de9-5ec5-a7b2-3e78f545ab53",
+      "definition_code": "CALC.TOOL.CPP",
+      "tool_code": "TOOL.CPP",
+      "name": "Cerebral Perfusion Pressure",
+      "acronym": "CPP",
+      "tool_type": "hemodynamic",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.CPP.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "hemodynamic_index",
+      "parameters": [
+        {
+          "code": "map",
+          "label": "PAM (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "icp",
+          "label": "PIC (mmHg)",
+          "type": "number",
+          "optional": true
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "6b417def-dd00-5376-88e8-bcc71c172706",
+      "definition_code": "CALC.TOOL.CI_FICK",
+      "tool_code": "TOOL.CI_FICK",
+      "name": "Cardiac Index (Fick)",
+      "acronym": "CI_FICK",
+      "tool_type": "hemodynamic",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.CI_FICK.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "hemodynamic_index",
+      "parameters": [
+        {
+          "code": "map",
+          "label": "PAM (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "icp",
+          "label": "PIC (mmHg)",
+          "type": "number",
+          "optional": true
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "bb2f0ba2-9c51-5ffc-8a3e-c8c1ac10dffb",
+      "definition_code": "CALC.TOOL.SVR",
+      "tool_code": "TOOL.SVR",
+      "name": "Systemic Vascular Resistance",
+      "acronym": "SVR",
+      "tool_type": "hemodynamic",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.SVR.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "hemodynamic_index",
+      "parameters": [
+        {
+          "code": "map",
+          "label": "PAM (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "icp",
+          "label": "PIC (mmHg)",
+          "type": "number",
+          "optional": true
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "752c12a0-40e9-5b26-a497-08c99dd31032",
+      "definition_code": "CALC.TOOL.PVR",
+      "tool_code": "TOOL.PVR",
+      "name": "Pulmonary Vascular Resistance",
+      "acronym": "PVR",
+      "tool_type": "hemodynamic",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.PVR.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "hemodynamic_index",
+      "parameters": [
+        {
+          "code": "map",
+          "label": "PAM (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "icp",
+          "label": "PIC (mmHg)",
+          "type": "number",
+          "optional": true
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "e7c573e7-fe8a-5e35-ba3c-add230a16758",
+      "definition_code": "CALC.TOOL.SHUNT",
+      "tool_code": "TOOL.SHUNT",
+      "name": "Intrapulmonary Shunt (Qs/Qt)",
+      "acronym": "SHUNT",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.SHUNT.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "04a00f4e-be23-5f7b-b4a6-94544ec78de2",
+      "definition_code": "CALC.TOOL.COMPLIANCE",
+      "tool_code": "TOOL.COMPLIANCE",
+      "name": "Pulmonary Compliance",
+      "acronym": "COMPLIANCE",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.COMPLIANCE.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "b58fae4b-bdc1-589c-b077-ab0e64a21951",
+      "definition_code": "CALC.TOOL.DRIVING_P",
+      "tool_code": "TOOL.DRIVING_P",
+      "name": "Driving Pressure",
+      "acronym": "DRIVING_P",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.DRIVING_P.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "94523b78-803f-5bd2-98c9-47bbf579157f",
+      "definition_code": "CALC.TOOL.PF_RATIO",
+      "tool_code": "TOOL.PF_RATIO",
+      "name": "P/F Ratio",
+      "acronym": "PF_RATIO",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.PF_RATIO.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "05bb540b-e57e-5e35-9033-9afa9addf482",
+      "definition_code": "CALC.TOOL.HOROWITZ",
+      "tool_code": "TOOL.HOROWITZ",
+      "name": "Horowitz Index",
+      "acronym": "HOROWITZ",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.HOROWITZ.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "0b11d0f1-f48c-55e5-9fe1-2a203172d576",
+      "definition_code": "CALC.TOOL.VT_IDEAL",
+      "tool_code": "TOOL.VT_IDEAL",
+      "name": "Ideal Tidal Volume",
+      "acronym": "VT_IDEAL",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.VT_IDEAL.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "4442f10e-9dd0-5fd3-aebd-3879036bc8a6",
+      "definition_code": "CALC.TOOL.PEEP_FIO2",
+      "tool_code": "TOOL.PEEP_FIO2",
+      "name": "PEEP/FiO2 Table (ARDSNet)",
+      "acronym": "PEEP_FIO2",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.PEEP_FIO2.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "71d52507-154a-5ba9-8ec0-a0bd86381ba7",
+      "definition_code": "CALC.TOOL.LIS",
+      "tool_code": "TOOL.LIS",
+      "name": "Lung Injury Score",
+      "acronym": "LIS",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.LIS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "e42c8019-cc9b-522f-8162-52cfdedac7da",
+      "definition_code": "CALC.TOOL.MURRAY",
+      "tool_code": "TOOL.MURRAY",
+      "name": "Murray Score",
+      "acronym": "MURRAY",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.MURRAY.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "33df9b94-e17c-56aa-9716-251ff409cd7a",
+      "definition_code": "CALC.TOOL.ROX",
+      "tool_code": "TOOL.ROX",
+      "name": "ROX Index",
+      "acronym": "ROX",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.ROX.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c3665442-9bd3-54ae-b1f5-01b18d36daf9",
+      "definition_code": "CALC.TOOL.PRED_PF",
+      "tool_code": "TOOL.PRED_PF",
+      "name": "Predicted PaO2/FiO2",
+      "acronym": "PRED_PF",
+      "tool_type": "respiratory",
+      "category": "hemodynamic_respiratory",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.PRED_PF.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "respiratory_index",
+      "parameters": [
+        {
+          "code": "pao2",
+          "label": "PaO2 (mmHg)",
+          "type": "number"
+        },
+        {
+          "code": "fio2",
+          "label": "FiO2 (decimal)",
+          "type": "number",
+          "min": 0.21,
+          "max": 1
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c64bd3a4-2f00-5ff3-ba87-c3ea743fb79e",
+      "definition_code": "CALC.TOOL.CRCL_24H",
+      "tool_code": "TOOL.CRCL_24H",
+      "name": "Creatinine Clearance (24h)",
+      "acronym": "CRCL_24H",
+      "tool_type": "renal",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.CRCL_24H.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "creatinine_clearance",
+      "parameters": [
+        {
+          "code": "age",
+          "label": "Idade (anos)",
+          "type": "integer"
+        },
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        },
+        {
+          "code": "creatinine_mg_dl",
+          "label": "Creatinina (mg/dL)",
+          "type": "number"
+        },
+        {
+          "code": "sex",
+          "label": "Sexo",
+          "type": "string",
+          "enum": [
+            "M",
+            "F"
+          ]
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "crcl_ml_min": "number"
+      },
+      "units": {
+        "crcl_ml_min": "mL/min"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "7c0b3e4b-2570-5a5d-ae7b-0e7351d8e60c",
+      "definition_code": "CALC.TOOL.CRCL_CG",
+      "tool_code": "TOOL.CRCL_CG",
+      "name": "Creatinine Clearance (Cockcroft-Gault)",
+      "acronym": "CRCL_CG",
+      "tool_type": "renal",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.CRCL_CG.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "creatinine_clearance",
+      "parameters": [
+        {
+          "code": "age",
+          "label": "Idade (anos)",
+          "type": "integer"
+        },
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        },
+        {
+          "code": "creatinine_mg_dl",
+          "label": "Creatinina (mg/dL)",
+          "type": "number"
+        },
+        {
+          "code": "sex",
+          "label": "Sexo",
+          "type": "string",
+          "enum": [
+            "M",
+            "F"
+          ]
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "crcl_ml_min": "number"
+      },
+      "units": {
+        "crcl_ml_min": "mL/min"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "26438dce-9fb5-54cc-8292-4253afb6ccf2",
+      "definition_code": "CALC.TOOL.CRCL_CKD",
+      "tool_code": "TOOL.CRCL_CKD",
+      "name": "Creatinine Clearance (CKD-EPI)",
+      "acronym": "CRCL_CKD",
+      "tool_type": "renal",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.CRCL_CKD.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "creatinine_clearance",
+      "parameters": [
+        {
+          "code": "age",
+          "label": "Idade (anos)",
+          "type": "integer"
+        },
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        },
+        {
+          "code": "creatinine_mg_dl",
+          "label": "Creatinina (mg/dL)",
+          "type": "number"
+        },
+        {
+          "code": "sex",
+          "label": "Sexo",
+          "type": "string",
+          "enum": [
+            "M",
+            "F"
+          ]
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "crcl_ml_min": "number"
+      },
+      "units": {
+        "crcl_ml_min": "mL/min"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "df5d7c36-5aec-5aae-a251-61feb0f84ed0",
+      "definition_code": "CALC.TOOL.NEXUS",
+      "tool_code": "TOOL.NEXUS",
+      "name": "NEXUS Criteria (C-Spine)",
+      "acronym": "NEXUS",
+      "tool_type": "risk_stratification",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.NEXUS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "eb2947f0-51aa-5d75-a840-1b0dfeedaeb6",
+      "definition_code": "CALC.TOOL.CANADIAN_CS",
+      "tool_code": "TOOL.CANADIAN_CS",
+      "name": "Canadian C-Spine Rule",
+      "acronym": "CANADIAN_CS",
+      "tool_type": "risk_stratification",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.CANADIAN_CS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "ab38a5fd-f288-5253-b08b-d5986e64b60b",
+      "definition_code": "CALC.TOOL.RANSON",
+      "tool_code": "TOOL.RANSON",
+      "name": "Ranson Criteria",
+      "acronym": "RANSON",
+      "tool_type": "risk_stratification",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.RANSON.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "03d2081d-ce4a-581f-bf96-b04a22816fbc",
+      "definition_code": "CALC.TOOL.BISAP",
+      "tool_code": "TOOL.BISAP",
+      "name": "BISAP Score",
+      "acronym": "BISAP",
+      "tool_type": "risk_stratification",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.BISAP.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "f7ff358d-7447-5412-a0c0-ffa5a96d975d",
+      "definition_code": "CALC.TOOL.NUTRIC",
+      "tool_code": "TOOL.NUTRIC",
+      "name": "NUTRIC Score",
+      "acronym": "NUTRIC",
+      "tool_type": "nutritional",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.NUTRIC.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(nutrition_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 30,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 20,
+          "max": 30,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "440b51fb-422f-5c8a-87f1-307d6994cadb",
+      "definition_code": "CALC.TOOL.MUST",
+      "tool_code": "TOOL.MUST",
+      "name": "MUST",
+      "acronym": "MUST",
+      "tool_type": "nutritional",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.MUST.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(nutrition_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 30,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 20,
+          "max": 30,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c10aace9-fb49-530e-933e-c5b0bc64d5a5",
+      "definition_code": "CALC.TOOL.NRS2002",
+      "tool_code": "TOOL.NRS2002",
+      "name": "NRS-2002",
+      "acronym": "NRS2002",
+      "tool_type": "nutritional",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.NRS2002.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(nutrition_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 30,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 20,
+          "max": 30,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "4feaf676-7f14-59e1-b9ad-c1ffc39dd7c3",
+      "definition_code": "CALC.TOOL.APGAR",
+      "tool_code": "TOOL.APGAR",
+      "name": "Apgar Score",
+      "acronym": "APGAR",
+      "tool_type": "pediatric",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.SCALE_FORM",
+      "field_config_code": "FIELD.TOOL.APGAR.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(component_scores) where each component in 0..2",
+      "parameters": [
+        {
+          "code": "appearance",
+          "label": "Aparência (cor)",
+          "type": "integer",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "code": "pulse",
+          "label": "Pulso (frequência cardíaca)",
+          "type": "integer",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "code": "grimace",
+          "label": "Irritabilidade reflexa",
+          "type": "integer",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "code": "activity",
+          "label": "Atividade (tonus muscular)",
+          "type": "integer",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "code": "respiration",
+          "label": "Respiração",
+          "type": "integer",
+          "min": 0,
+          "max": 2
+        },
+        {
+          "code": "assessment_minute",
+          "label": "Minuto",
+          "type": "integer",
+          "enum": [
+            1,
+            5
+          ]
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 3,
+          "label_pt": "Baixo / criticamente baixo",
+          "label_en": "Low / critically low",
+          "severity": "critical",
+          "action_pt": "Reanimação neonatal; escalar equipe"
+        },
+        {
+          "min": 4,
+          "max": 6,
+          "label_pt": "Moderadamente anormal",
+          "label_en": "Moderately abnormal",
+          "severity": "moderate",
+          "action_pt": "Suporte ventilatório; monitorização intensiva"
+        },
+        {
+          "min": 7,
+          "max": 10,
+          "label_pt": "Tranquilizador / normal",
+          "label_en": "Reassuring / normal",
+          "severity": "normal",
+          "action_pt": "Cuidados de rotina neonatal"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00162",
+        "NANDA.00046"
+      ],
+      "evidence_code": "EVID.GRADE.A",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-21T01:28:15.767867Z",
+      "timing_minutes": [
+        1,
+        5
+      ],
+      "clinical_purpose": "Avaliar vitalidade do recém-nascido no 1º e 5º minuto de vida"
+    },
+    {
+      "uuid": "bf4be1b4-3e1d-56f8-8601-c3c85e1b8b8e",
+      "definition_code": "CALC.TOOL.BALLARD",
+      "tool_code": "TOOL.BALLARD",
+      "name": "Ballard Score",
+      "acronym": "BALLARD",
+      "tool_type": "pediatric",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.BALLARD.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(pediatric_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 30,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 20,
+          "max": 30,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "abcdbfc9-b3e3-5bb3-968f-c3e086463f90",
+      "definition_code": "CALC.TOOL.PARKLAND",
+      "tool_code": "TOOL.PARKLAND",
+      "name": "Parkland Formula",
+      "acronym": "PARKLAND",
+      "tool_type": "fluid_balance",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.PARKLAND.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "electrolyte_correction",
+      "parameters": [
+        {
+          "code": "current_value",
+          "label": "Valor atual",
+          "type": "number"
+        },
+        {
+          "code": "target_value",
+          "label": "Valor alvo",
+          "type": "number"
+        },
+        {
+          "code": "weight_kg",
+          "label": "Peso (kg)",
+          "type": "number"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "C",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "1bfe115b-6700-5911-8826-dc8e7672fe30",
+      "definition_code": "CALC.TOOL.RULE9",
+      "tool_code": "TOOL.RULE9",
+      "name": "Rule of Nines",
+      "acronym": "RULE9",
+      "tool_type": "custom",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.RULE9.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "custom_calculation",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.QI",
+      "evidence_level": "D",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "a8f32d73-5905-50fa-8b64-230e87d22d54",
+      "definition_code": "CALC.TOOL.SILVERMAN",
+      "tool_code": "TOOL.SILVERMAN",
+      "name": "Silverman Score",
+      "acronym": "SILVERMAN",
+      "tool_type": "pediatric",
+      "category": "renal_nutrition_obstetric",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.SILVERMAN.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(pediatric_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 30,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 20,
+          "max": 30,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "1ec2ffb5-eded-50ac-9b1d-be830c080076",
+      "definition_code": "CALC.TOOL.PADUA",
+      "tool_code": "TOOL.PADUA",
+      "name": "Padua Score (VTE)",
+      "acronym": "PADUA",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.PADUA.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "3914b778-6603-5748-99d2-f99504eb94b9",
+      "definition_code": "CALC.TOOL.CAPRINI",
+      "tool_code": "TOOL.CAPRINI",
+      "name": "Caprini Score (VTE)",
+      "acronym": "CAPRINI",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.CAPRINI.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "ff3b9212-8cd1-50b0-ab12-87c8402b3b2f",
+      "definition_code": "CALC.TOOL.IMPROVE",
+      "tool_code": "TOOL.IMPROVE",
+      "name": "IMPROVE Score (VTE)",
+      "acronym": "IMPROVE",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IMPROVE.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "574e478e-f12a-566b-a89f-441937a6c9bd",
+      "definition_code": "CALC.TOOL.DETSKY",
+      "tool_code": "TOOL.DETSKY",
+      "name": "Detsky Cardiac Risk",
+      "acronym": "DETSKY",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.DETSKY.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "2901cafd-73f9-5ec2-bb2c-e7abad1e4786",
+      "definition_code": "CALC.TOOL.RCRI",
+      "tool_code": "TOOL.RCRI",
+      "name": "Revised Cardiac Risk Index",
+      "acronym": "RCRI",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.RCRI.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c7417bed-1efb-5660-a703-c502d66e50a8",
+      "definition_code": "CALC.TOOL.ASA",
+      "tool_code": "TOOL.ASA",
+      "name": "ASA Physical Status",
+      "acronym": "ASA",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.ASA.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "086969d0-d67d-5dc6-832f-52164038e9d0",
+      "definition_code": "CALC.TOOL.STOPBANG",
+      "tool_code": "TOOL.STOPBANG",
+      "name": "STOP-BANG",
+      "acronym": "STOPBANG",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.STOPBANG.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "c5ffeb22-0f28-5813-9ad8-07f52e1503db",
+      "definition_code": "CALC.TOOL.FRAX",
+      "tool_code": "TOOL.FRAX",
+      "name": "FRAX",
+      "acronym": "FRAX",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.FRAX.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "e4ab703b-1373-5aad-9227-960ec565746d",
+      "definition_code": "CALC.TOOL.ABCD2",
+      "tool_code": "TOOL.ABCD2",
+      "name": "ABCD2 Score",
+      "acronym": "ABCD2",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.ABCD2.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "1c8da3d4-cd90-5b28-b224-875df0d2e6b9",
+      "definition_code": "CALC.TOOL.NIHSS",
+      "tool_code": "TOOL.NIHSS",
+      "name": "NIH Stroke Scale",
+      "acronym": "NIHSS",
+      "tool_type": "neurological",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.NIHSS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(neurologic_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 42,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 4,
+          "label_pt": "AVC leve",
+          "severity": "low",
+          "action_pt": "Reabilitacao precoce"
+        },
+        {
+          "min": 5,
+          "max": 15,
+          "label_pt": "AVC moderado",
+          "severity": "moderate",
+          "action_pt": "Monitorizacao neurologica intensiva"
+        },
+        {
+          "min": 16,
+          "max": 42,
+          "label_pt": "AVC grave",
+          "severity": "high",
+          "action_pt": "Cuidados criticos; risco elevado de incapacidade"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.HIGH",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "15adfc23-0d5d-5203-a1ef-0a816ae9ff54",
+      "definition_code": "CALC.TOOL.HUNT_HESS",
+      "tool_code": "TOOL.HUNT_HESS",
+      "name": "Hunt-Hess Scale",
+      "acronym": "HUNT_HESS",
+      "tool_type": "neurological",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.HUNT_HESS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(neurologic_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 30,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 20,
+          "max": 30,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "535534c9-7cd6-5d10-8e47-83835e20ff51",
+      "definition_code": "CALC.TOOL.WFNS",
+      "tool_code": "TOOL.WFNS",
+      "name": "WFNS Scale",
+      "acronym": "WFNS",
+      "tool_type": "neurological",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.WFNS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(neurologic_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 30,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 20,
+          "max": 30,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "7f039f33-de29-558d-a068-0c542a3d73e5",
+      "definition_code": "CALC.TOOL.GBS",
+      "tool_code": "TOOL.GBS",
+      "name": "GBS Sepsis Calculator",
+      "acronym": "GBS",
+      "tool_type": "pediatric",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.GBS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "sum_score",
+      "formula": "sum(pediatric_items)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 30,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 9,
+          "label_pt": "Escore baixo",
+          "severity": "low",
+          "action_pt": "Monitorizacao de rotina"
+        },
+        {
+          "min": 10,
+          "max": 19,
+          "label_pt": "Escore moderado",
+          "severity": "moderate",
+          "action_pt": "Aumentar frequencia de avaliacao"
+        },
+        {
+          "min": 20,
+          "max": 30,
+          "label_pt": "Escore alto",
+          "severity": "high",
+          "action_pt": "Intervencao direcionada; notificar equipe"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "6bad9c31-fd59-5a3a-aee5-c04c4d4b6c58",
+      "definition_code": "CALC.TOOL.SEPSIS3",
+      "tool_code": "TOOL.SEPSIS3",
+      "name": "SIRS/Sepsis-3",
+      "acronym": "SEPSIS3",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.SEPSIS3.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "f16500d1-f80b-5680-9745-da439af3b551",
+      "definition_code": "CALC.TOOL.QSOFA",
+      "tool_code": "TOOL.QSOFA",
+      "name": "qSOFA",
+      "acronym": "QSOFA",
+      "tool_type": "risk_stratification",
+      "category": "risk_stratification",
+      "domain": "patient_safety",
+      "taxonomy_code": "TOOL.RISCO",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.QSOFA.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "risk_points",
+      "formula": "sum(risk_factors)",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 2,
+          "label_pt": "Baixo risco",
+          "severity": "low",
+          "action_pt": "Conduta ambulatorial ou observacao"
+        },
+        {
+          "min": 3,
+          "max": 5,
+          "label_pt": "Risco moderado",
+          "severity": "moderate",
+          "action_pt": "Considerar internacao ou vigilancia"
+        },
+        {
+          "min": 6,
+          "max": 10,
+          "label_pt": "Alto risco",
+          "severity": "high",
+          "action_pt": "Intervencao imediata; considerar UTI"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {
+        "total_score": "points"
+      },
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.GRADE.MODERATE",
+      "evidence_level": "B",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "55e44b4d-7182-5637-a1e7-65be5a1eb46f",
+      "definition_code": "CALC.TOOL.9RIGHTS",
+      "tool_code": "TOOL.9RIGHTS",
+      "name": "9 Rights of Medication",
+      "acronym": "9RIGHTS",
+      "tool_type": "protocol",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.9RIGHTS.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "checklist",
+      "formula": "all_rights_confirmed",
+      "parameters": [
+        {
+          "code": "right_patient",
+          "label": "Paciente certo",
+          "type": "boolean"
+        },
+        {
+          "code": "right_drug",
+          "label": "Medicamento certo",
+          "type": "boolean"
+        },
+        {
+          "code": "right_dose",
+          "label": "Dose certa",
+          "type": "boolean"
+        },
+        {
+          "code": "right_route",
+          "label": "Via certa",
+          "type": "boolean"
+        },
+        {
+          "code": "right_time",
+          "label": "Hora certa",
+          "type": "boolean"
+        },
+        {
+          "code": "right_documentation",
+          "label": "Documentacao certa",
+          "type": "boolean"
+        },
+        {
+          "code": "right_reason",
+          "label": "Razao certa",
+          "type": "boolean"
+        },
+        {
+          "code": "right_response",
+          "label": "Resposta certa",
+          "type": "boolean"
+        },
+        {
+          "code": "right_refusal",
+          "label": "Recusa certa",
+          "type": "boolean"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 9,
+          "max": 9,
+          "label_pt": "Seguro para administrar",
+          "severity": "low",
+          "action_pt": "Prosseguir com administracao"
+        },
+        {
+          "min": 0,
+          "max": 8,
+          "label_pt": "Nao conforme",
+          "severity": "high",
+          "action_pt": "Interromper; corrigir antes de administrar"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "557d5db9-b5de-5e2b-b221-49d10e73ce20",
+      "definition_code": "CALC.TOOL.DUAL_CHECK",
+      "tool_code": "TOOL.DUAL_CHECK",
+      "name": "Dual Check Protocol",
+      "acronym": "DUAL_CHECK",
+      "tool_type": "protocol",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.DUAL_CHECK.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "checklist",
+      "formula": "all_steps_confirmed",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 10,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "20e73aa4-d51c-5acf-8c66-2177263d8cb3",
+      "definition_code": "CALC.TOOL.IPSG01",
+      "tool_code": "TOOL.IPSG01",
+      "name": "Patient Identification (IPSG-01)",
+      "acronym": "IPSG01",
+      "tool_type": "protocol",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IPSG01.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "checklist",
+      "formula": "all_steps_confirmed",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 10,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "af327a5a-6a5d-5d6d-9e40-2773ebe59493",
+      "definition_code": "CALC.TOOL.IPSG02",
+      "tool_code": "TOOL.IPSG02",
+      "name": "Effective Communication (IPSG-02)",
+      "acronym": "IPSG02",
+      "tool_type": "protocol",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IPSG02.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "checklist",
+      "formula": "all_steps_confirmed",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 10,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "99638c31-6e31-58d4-88d3-528993ffb2e7",
+      "definition_code": "CALC.TOOL.IPSG03",
+      "tool_code": "TOOL.IPSG03",
+      "name": "High-Alert Medication (IPSG-03)",
+      "acronym": "IPSG03",
+      "tool_type": "protocol",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IPSG03.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "checklist",
+      "formula": "all_steps_confirmed",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 10,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "e173d844-a26d-5cdd-9b33-73eaa0ed2b28",
+      "definition_code": "CALC.TOOL.IPSG04",
+      "tool_code": "TOOL.IPSG04",
+      "name": "Surgical Safety (IPSG-04)",
+      "acronym": "IPSG04",
+      "tool_type": "protocol",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IPSG04.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "checklist",
+      "formula": "all_steps_confirmed",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 10,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "69349398-a931-5f67-843d-7aa3f8736a94",
+      "definition_code": "CALC.TOOL.IPSG05",
+      "tool_code": "TOOL.IPSG05",
+      "name": "Hand Hygiene (IPSG-05)",
+      "acronym": "IPSG05",
+      "tool_type": "protocol",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IPSG05.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "checklist",
+      "formula": "all_steps_confirmed",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 10,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "6b3b0264-928d-595f-8c4a-235703e30b07",
+      "definition_code": "CALC.TOOL.IPSG06",
+      "tool_code": "TOOL.IPSG06",
+      "name": "Fall Prevention (IPSG-06)",
+      "acronym": "IPSG06",
+      "tool_type": "protocol",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.IPSG06.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "checklist",
+      "formula": "all_steps_confirmed",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 10,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 10,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.PROTOCOL",
+      "evidence_level": "A",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "a86c8eeb-00a3-5fc9-92c7-7f84a8e1c7b5",
+      "definition_code": "CALC.TOOL.STAFFING",
+      "tool_code": "TOOL.STAFFING",
+      "name": "Nursing Staffing Calculator",
+      "acronym": "STAFFING",
+      "tool_type": "custom",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.STAFFING.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "custom_calculation",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.QI",
+      "evidence_level": "D",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    },
+    {
+      "uuid": "08c5c0b9-5111-5673-99af-04d5bcfa460e",
+      "definition_code": "CALC.TOOL.TURNOVER",
+      "tool_code": "TOOL.TURNOVER",
+      "name": "Turnover/Absenteeism Calculator",
+      "acronym": "TURNOVER",
+      "tool_type": "custom",
+      "category": "nursing_protocols",
+      "domain": "general",
+      "taxonomy_code": "CLIN.SAE",
+      "template_code": "TPL.CALCULATOR",
+      "field_config_code": "FIELD.TOOL.TURNOVER.STANDARD",
+      "default_mode": "CALC_MODE.STANDARD",
+      "calculation_type": "formula",
+      "formula": "custom_calculation",
+      "parameters": [
+        {
+          "code": "item_scores",
+          "label": "Itens da escala",
+          "type": "array"
+        }
+      ],
+      "score_min": 0,
+      "score_max": 100,
+      "interpretation_bands": [
+        {
+          "min": 0,
+          "max": 100,
+          "label_pt": "Resultado calculado",
+          "severity": "low",
+          "action_pt": "Interpretar conforme protocolo institucional"
+        }
+      ],
+      "output_schema": {
+        "total_score": "number",
+        "interpretation": "string"
+      },
+      "units": {},
+      "related_diagnosis_codes": [
+        "NANDA.00198",
+        "NANDA.00001",
+        "NANDA.00002"
+      ],
+      "evidence_code": "EVID.TYPE.QI",
+      "evidence_level": "D",
+      "reference_framework": "NKOS 2026",
+      "content_source": "NKOS_CUSTOM",
+      "edition": "2026",
+      "status": "active",
+      "created_at": "2026-06-19T20:41:06Z",
+      "updated_at": "2026-06-19T21:01:25Z"
+    }
+  ],
+  "validation_summary": {
+    "total_records": 100,
+    "passed": true,
+    "errors": []
+  },
+  "target": 100,
+  "import_status": "complete",
+  "reference_framework": "NANDA-I 2026"
+}

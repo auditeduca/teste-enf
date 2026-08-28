@@ -1,0 +1,408 @@
+{
+  "schema_version": "cko-v1",
+  "metadata": {
+    "id": "8b3c4d5e-6f70-4819-ab2c-3d4e5f607283",
+    "code": "APGAR",
+    "slug": "apgar",
+    "version": "1.0.0",
+    "status": "published",
+    "seo": {
+      "title": "Índice de Apgar - Avaliação do Recém-Nascido",
+      "description": "Calcule o Índice de Apgar para avaliação da vitalidade do recém-nascido ao nascer.",
+      "canonical": "https://www.calculadorasdeenfermagem.com.br/apgar.html"
+    },
+    "breadcrumb": {
+      "category": "Neonatologia",
+      "categoryHref": "index.html#calculadoras"
+    }
+  },
+  "knowledge": {
+    "concept_code": "APGAR",
+    "tool_code": "TOOL.APGAR",
+    "definition_code": "CALC.TOOL.APGAR",
+    "domain": [
+      "neonatology",
+      "obstetrics",
+      "nursing"
+    ],
+    "clinical_purpose": "Avaliar vitalidade do recém-nascido no 1º e 5º minuto de vida",
+    "timing_minutes": [
+      1,
+      5
+    ],
+    "terminology": {
+      "snomed": [],
+      "loinc": [],
+      "related_diagnosis_codes": [
+        "NANDA.00162",
+        "NANDA.00046"
+      ]
+    },
+    "score_min": 0,
+    "score_max": 10
+  },
+  "reasoning": {
+    "edges_file": "js/modules/data/apgar-edges.json",
+    "sae": {
+      "nanda": [
+        {
+          "diagnosis": "Padrão respiratório ineficaz",
+          "definition": "Inspiração e/ou expiração que não proporciona ventilação adequada."
+        },
+        {
+          "diagnosis": "Risco de nível de glicemia instável",
+          "definition": "Vulnerabilidade a variação nos níveis de glicose no sangue."
+        }
+      ],
+      "noc": [
+        {
+          "outcome": "Status respiratório do recém-nascido",
+          "indicators": [
+            "Frequência respiratória adequada",
+            "Ausência de cianose",
+            "Choro vigoroso"
+          ]
+        },
+        {
+          "outcome": "Adaptação do recém-nascido à vida extrauterina",
+          "indicators": [
+            "Estabilidade térmica",
+            "Estabilidade cardiorrespiratória",
+            "Reflexos presentes"
+          ]
+        }
+      ],
+      "nic": [
+        {
+          "intervention": "Cuidados ao recém-nascido: imediatos",
+          "activities": [
+            "Secar e aquecer o recém-nascido",
+            "Avaliar Apgar no 1º e 5º minuto",
+            "Aspirar vias aéreas se necessário",
+            "Realizar contato pele a pele"
+          ]
+        }
+      ]
+    }
+  },
+  "evidence": {
+    "foundation": "Desenvolvido por Virginia Apgar em 1952 como método padronizado de avaliação neonatal imediata.",
+    "validation": "Amplamente validado como indicador de vitalidade neonatal; não deve isolar prognóstico neurológico.",
+    "limitations": "Não diagnosticar asfixia perinatal isoladamente; interpretar com gasometria de cordão.",
+    "references": [
+      {
+        "text": "APGAR, V. A proposal for a new method of evaluation of the newborn infant. Current Researches in Anesthesia and Analgesia, v. 32, n. 4, p. 260-267, 1953."
+      },
+      {
+        "text": "AMERICAN ACADEMY OF PEDIATRICS; ACOG. The Apgar Score. Committee Opinion, 2015."
+      }
+    ],
+    "evidence_level": "I"
+  },
+  "ai": {
+    "summary": "O Índice de Apgar soma cinco sinais (FC, respiração, tônus, irritabilidade, cor) de 0 a 2 cada, total 0–10, no 1º e 5º minuto. Escore ≤6 sugere depressão neonatal e necessidade de suporte; reanimação não deve ser adiada para calcular.",
+    "clinicalPearls": [
+      "Avaliar no 1º e 5º minuto; repetir a cada 5 min se <7.",
+      "Mnemônico APGAR: Aparência, Pulso, Gesticulação, Atividade, Respiração.",
+      "Documentar escores do 1º e 5º minuto separadamente."
+    ],
+    "commonErrors": [
+      "Atrasar reanimação para completar o escore.",
+      "Avaliar antes do minuto completo de vida.",
+      "Usar Apgar isolado para prognóstico neurológico de longo prazo."
+    ],
+    "contraindications": [],
+    "explainLikeResident": "É um 'checklist rápido' de 5 itens no recém-nascido. Cada item vale 0, 1 ou 2. Soma de 7–10 = vigoroso; 4–6 = precisa de ajuda; 0–3 = reanimação imediata.",
+    "keywords": [
+      "Apgar",
+      "neonatologia",
+      "vitalidade",
+      "reanimação neonatal",
+      "NANDA",
+      "sala de parto"
+    ],
+    "reasoning": [
+      "0–3: Baixo / criticamente baixo. Reanimação neonatal; escalar equipe",
+      "4–6: Moderadamente anormal. Suporte ventilatório; monitorização intensiva",
+      "7–10: Tranquilizador / normal. Cuidados de rotina neonatal"
+    ]
+  },
+  "interoperability": {
+    "fhir": {
+      "observation": {
+        "resourceType": "Observation",
+        "category": "survey",
+        "code_display": "Apgar score",
+        "component_codes": [
+          "heart rate",
+          "respiratory effort",
+          "muscle tone",
+          "reflex irritability",
+          "skin color"
+        ]
+      },
+      "riskAssessment": {
+        "resourceType": "RiskAssessment",
+        "method": "Apgar interpretation band"
+      },
+      "carePlan": {
+        "resourceType": "CarePlan",
+        "category": "neonatal-reanimation"
+      }
+    }
+  },
+  "presentation": {
+    "profiles": [
+      "padrao",
+      "urgencia",
+      "gestor",
+      "estudante",
+      "academico"
+    ],
+    "kg_links": [
+      {
+        "href": "biblioteca.html",
+        "icon": "fa-book",
+        "label": "Biblioteca de Recursos"
+      },
+      {
+        "href": "nurse-palm.html",
+        "icon": "fa-brain",
+        "label": "Dashboard Nurse-PaLM"
+      },
+      {
+        "href": "diagnosticosnanda.html",
+        "icon": "fa-clipboard-list",
+        "label": "NANDA-I"
+      },
+      {
+        "href": "sae.html",
+        "icon": "fa-file-medical",
+        "label": "SAE"
+      },
+      {
+        "href": "sbar.html",
+        "icon": "fa-comments",
+        "label": "SBAR"
+      },
+      {
+        "href": "medicamentos.html",
+        "icon": "fa-pills",
+        "label": "Medicamentos"
+      },
+      {
+        "href": "protocolos.html",
+        "icon": "fa-shield-halved",
+        "label": "Protocolos"
+      }
+    ],
+    "related_tools": [
+      {
+        "href": "ballard.html",
+        "title": "New Ballard Score",
+        "desc": "Estimativa da idade gestacional",
+        "icon": "i-baby"
+      },
+      {
+        "href": "capurro.html",
+        "title": "Capurro",
+        "desc": "Maturidade somática do recém-nascido",
+        "icon": "i-users"
+      },
+      {
+        "href": "bps.html",
+        "title": "Perfil Biofísico",
+        "desc": "Avaliação do bem-estar fetal",
+        "icon": "i-pulse"
+      },
+      {
+        "href": "silverman-andersen.html",
+        "title": "Silverman-Andersen",
+        "desc": "Desconforto respiratório neonatal",
+        "icon": "i-pulse"
+      },
+      {
+        "href": "downes.html",
+        "title": "Downes",
+        "desc": "Desconforto respiratório infantil",
+        "icon": "i-pulse"
+      },
+      {
+        "href": "bishop.html",
+        "title": "Bishop",
+        "desc": "Avaliação do colo uterino",
+        "icon": "i-gauge"
+      },
+      {
+        "href": "medicamentos.html",
+        "title": "Calculadora de Medicamentos",
+        "desc": "Regra de três e dose por volume",
+        "icon": "i-pills"
+      }
+    ],
+    "learning": [
+      {
+        "href": "biblioteca-provas.html",
+        "title": "Quiz",
+        "desc": "Teste seu conhecimento sobre o Índice de Apgar e vitalidade neonatal.",
+        "icon": "i-clipboard"
+      },
+      {
+        "href": "protocolos.html",
+        "title": "Protocolos",
+        "desc": "Protocolos institucionais e fluxos operacionais de enfermagem.",
+        "icon": "i-clipboard"
+      },
+      {
+        "href": "biblioteca.html",
+        "title": "Artigos & Evidência",
+        "desc": "Literatura de referência sobre avaliação do recém-nascido.",
+        "icon": "i-book"
+      },
+      {
+        "href": "medicamentos.html",
+        "title": "Medicamentos",
+        "desc": "Base NKOS com doses e classes farmacológicas.",
+        "icon": "i-pills"
+      }
+    ],
+    "tags": [
+      {
+        "href": "index.html#calculadoras",
+        "label": "#Neonatologia"
+      },
+      {
+        "href": "index.html#calculadoras",
+        "label": "#Apgar"
+      },
+      {
+        "href": "index.html#calculadoras",
+        "label": "#AvaliaçãoNeonatal"
+      },
+      {
+        "href": "index.html#calculadoras",
+        "label": "#ReanimaçãoNeonatal"
+      },
+      {
+        "href": "diagnosticosnanda.html",
+        "label": "#NANDA-I"
+      },
+      {
+        "href": "sae.html",
+        "label": "#SAE"
+      },
+      {
+        "href": "protocolos.html",
+        "label": "#Protocolos"
+      },
+      {
+        "href": "medicamentos.html",
+        "label": "#Medicação"
+      }
+    ],
+    "kpis": [
+      "Taxa de Apgar <7 no 5º minuto",
+      "Tempo de registro no prontuário",
+      "Reanimações neonatais por período",
+      "Percentual de escores na faixa esperada"
+    ],
+    "profileContent": {
+      "padrao": {
+        "title": "Visão Padrão",
+        "intro": "Fluxo completo: cálculo, raciocínio clínico integrado, medicamentos contextuais, trilha de aprendizagem e ferramentas relacionadas.",
+        "emphasis": [
+          "calculation",
+          "clinical_flow",
+          "medications",
+          "learning",
+          "kg",
+          "related_tools"
+        ]
+      },
+      "urgencia": {
+        "title": "Modo Urgência",
+        "intro": "Cálculo rápido na sala de parto com presets, resultado em destaque e raciocínio clínico condensado para decisão imediata.",
+        "emphasis": [
+          "calculation",
+          "decision",
+          "cognitive",
+          "safety",
+          "kg"
+        ],
+        "sections": [
+          {
+            "heading": "Algoritmo de decisão",
+            "items": [
+              "Apgar 7–10: cuidados de rotina",
+              "Apgar 4–6: suporte ventilatório e monitorização",
+              "Apgar 0–3: reanimação neonatal imediata"
+            ]
+          }
+        ]
+      },
+      "gestor": {
+        "title": "Visão Gestor",
+        "intro": "Indicadores de qualidade neonatal, auditoria e benchmarks institucionais derivados do uso da ferramenta.",
+        "emphasis": [
+          "kpi",
+          "audit",
+          "evidence",
+          "cognitive",
+          "kg"
+        ],
+        "sections": [
+          {
+            "heading": "KPIs sugeridos",
+            "items": [
+              "Taxa de Apgar <7 no 5º minuto",
+              "Tempo de registro no prontuário",
+              "Reanimações neonatais por período"
+            ]
+          }
+        ]
+      },
+      "estudante": {
+        "title": "Visão Estudante",
+        "intro": "Aprendizado passo a passo com exemplos, glossário, quiz e fundamentação do escore Apgar.",
+        "emphasis": [
+          "steps",
+          "examples",
+          "quiz",
+          "glossary",
+          "ai_pearls",
+          "kg"
+        ],
+        "sections": [
+          {
+            "heading": "Objetivos de aprendizado",
+            "items": [
+              "Identificar os 5 componentes APGAR",
+              "Interpretar faixas 0–3, 4–6 e 7–10",
+              "Relacionar escore com conduta de reanimação"
+            ]
+          }
+        ]
+      },
+      "academico": {
+        "title": "Visão Acadêmica",
+        "intro": "Fundamentação, evidências, SAE estruturada e referências bibliográficas no padrão ABNT.",
+        "emphasis": [
+          "evidence",
+          "sae",
+          "references",
+          "fhir",
+          "kg"
+        ],
+        "sections": [
+          {
+            "heading": "Evidência",
+            "items": [
+              "Nível I — uso sistemático em neonatologia",
+              "Limitação: não prediz sozinho desfecho neurológico"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
