@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/runtime-platform.schema.json",
+  "title": "Drive runtime platform pages",
+  "type": "object",
+  "required": ["pages", "home", "no_report_dashboard", "no_control_room_app"],
+  "properties": {
+    "home": { "const": "index.html" },
+    "no_report_dashboard": { "const": true },
+    "no_control_room_app": { "const": true },
+    "pages": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "enum": [
+          "index.html",
+          "missao.html",
+          "objetivo.html",
+          "ecossistema.html",
+          "acessibilidade.html",
+          "tecnologiaverde.html",
+          "privacidade.html",
+          "politica-editorial.html",
+          "notificacoes-legais.html",
+          "fale.html",
+          "forum-enfermagem.html",
+          "mapa-do-site.html"
+        ]
+      }
+    }
+  }
+}

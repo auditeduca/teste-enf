@@ -33,7 +33,25 @@ const INTEGRITY_DENIALS = new Set([
   "COVERAGE_100_KNOWN",
   "EVIDENCE_COVERAGE_100",
   "TEST_PASS_100_DEFINED",
+  "NO_REPORT_DASHBOARD",
+  "RUNTIME_IS_DRIVE_PLATFORM",
+  "NO_CONTROL_ROOM_APP",
 ]);
+
+export const RUNTIME_PAGES = [
+  "index.html",
+  "missao.html",
+  "objetivo.html",
+  "ecossistema.html",
+  "acessibilidade.html",
+  "tecnologiaverde.html",
+  "privacidade.html",
+  "politica-editorial.html",
+  "notificacoes-legais.html",
+  "fale.html",
+  "forum-enfermagem.html",
+  "mapa-do-site.html",
+];
 
 const SHA_RE = /^[a-f0-9]{64}$/;
 const BLOCK_IDS = ["B1", "B2", "B3", "B4", "B5", "B6.1", "B6.2", "B6.3", "B6.4", "B7", "B8", "B9", "B10"];
@@ -55,7 +73,36 @@ export async function digestSha256(text) {
   return createHash("sha256").update(text).digest("hex");
 }
 
-export function knownUniverseObjects(universe) {
+export function inspectPlatform(platform) {
+  const denials = [];
+  const files = platform?.files || {};
+  const listing = platform?.listing || Object.keys(files);
+  const index = files["index.html"] || "";
+  if (/id="graph"|Reexecutar cascata|id="orquestrador"|Relat[oó]rio T[eé]cnico Final Controlado/.test(index)) {
+    denials.push({ id: "NO_REPORT_DASHBOARD", reason: "report dashboard must not be the runtime frontend" });
+  }
+  if (!/Calculadoras de Enfermagem/.test(index) || !/PAGE_INSTITUTIONAL_CLUSTER/.test(index)) {
+    denials.push({ id: "RUNTIME_IS_DRIVE_PLATFORM", reason: "home must be Drive Wave2 platform" });
+  }
+  if (listing.includes("app.js")) {
+    denials.push({ id: "NO_CONTROL_ROOM_APP", reason: "public/app.js is control-room UI" });
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function platformGraphConstraints(platform) {
+  const violations = [];
+  if (!platform) return { ok: true, violations, skipped: true };
+  const files = platform.files || {};
+  for (const p of RUNTIME_PAGES) {
+    const html = files[p] || "";
+    if (!html.includes("<main")) violations.push(`missing runtime page ${p}`);
+    if (/canvas id="graph"/.test(html)) violations.push(`${p} must not embed control-room graph`);
+  }
+  return { ok: violations.length === 0, violations, pages: RUNTIME_PAGES.length };
+}
+
+export function knownUniverseObjects(universe, platform) {
   const items = [];
   const push = (kind, id, extra = {}) => items.push({ kind, id, ...extra });
   for (const b of universe.blocks) push("block", b.id, { sha256: b.sha256, artifact: b.artifact_id });
@@ -73,10 +120,33 @@ export function knownUniverseObjects(universe) {
   universe.assurance_stack.forEach((p, i) => push("stack", `STK-${i + 1}`, { text: p }));
   push("baseline", universe.baseline.global_id, { sha256: universe.baseline.sha256 });
   push("residual", "X", { value: universe.residual_uncertainty.value });
+  if (platform) {
+    for (const p of RUNTIME_PAGES) push("runtime-page", p);
+  }
   return items;
 }
 
-export function validateSchema(universe) {
+export function validateRuntimePlatformSchema(platform) {
+  if (!platform) return { ok: true, skipped: true, errors: [] };
+  const errors = [];
+  const files = platform.files || {};
+  const listing = platform.listing || Object.keys(files);
+  if (listing.includes("app.js")) errors.push("schema: control-room app.js is not a runtime platform file");
+  if (RUNTIME_PAGES.length !== 12) errors.push("schema: runtime pages must be exactly 12");
+  for (const p of RUNTIME_PAGES) {
+    if (!files[p]) errors.push(`schema: missing required page ${p}`);
+  }
+  const index = files["index.html"] || "";
+  if (/id="graph"|Reexecutar cascata|id="orquestrador"|Relat[oó]rio T[eé]cnico Final Controlado/.test(index)) {
+    errors.push("schema: report dashboard is not a valid runtime platform");
+  }
+  if (index && (!/Calculadoras de Enfermagem/.test(index) || !/PAGE_INSTITUTIONAL_CLUSTER/.test(index))) {
+    errors.push("schema: home is not Drive Wave2 PAGE_INSTITUTIONAL_CLUSTER");
+  }
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateSchema(universe, platform) {
   const errors = [];
   if (universe.document?.classification !== "CONTROLLED") errors.push("document.classification != CONTROLLED");
   if (universe.document?.not_production_release !== true) errors.push("must declare not_production_release");
@@ -101,6 +171,8 @@ export function validateSchema(universe) {
   if (folderSum !== 449 || universe.inventory?.file_count !== 449) errors.push("inventory must cover 449 files");
   if (universe.kpis?.aud8l !== "104/104") errors.push("AUD-8L coverage");
   if (universe.kpis?.layers !== "44/44") errors.push("44 layers");
+  const plat = validateRuntimePlatformSchema(platform);
+  errors.push(...plat.errors);
   return { ok: errors.length === 0, errors };
 }
 
@@ -135,6 +207,10 @@ export function evaluatePolicies(universe, ctx = {}) {
   }
   if ((universe.unknown_universe || []).length === 0) deny("UNKNOWN_UNIVERSE_EXPLICIT", "unknown not explicit");
   if (universe.residual_uncertainty?.value == null) deny("RESIDUAL_X_REQUIRED", "X missing");
+  if (ctx.platform) {
+    const plat = inspectPlatform(ctx.platform);
+    for (const d of plat.denials) deny(d.id, d.reason);
+  }
 
   return {
     ok: denials.length === 0,
@@ -144,7 +220,7 @@ export function evaluatePolicies(universe, ctx = {}) {
   };
 }
 
-export function graphConstraints(universe) {
+export function graphConstraints(universe, platform) {
   const violations = [];
   const nodes = universe.blocks.map((b) => b.id);
   const edges = [
@@ -174,17 +250,20 @@ export function graphConstraints(universe) {
   const twin = universe.blocks.find((b) => b.id === "B5");
   if (twin && !/137 nodes/.test(twin.coverage)) violations.push("B5 digital twin cardinality");
   if ((universe.lenses || []).length !== 8) violations.push("AUD-8L cardinality");
+  const plat = platformGraphConstraints(platform);
+  violations.push(...plat.violations);
   return {
     ok: violations.length === 0,
     nodes: nodes.length,
     edges: edges.length,
     violations,
+    pages: plat.pages || 0,
     temporal: { as_of: universe.document.date, type: "snapshot-graph" },
   };
 }
 
-export function coverageReport(universe) {
-  const objects = knownUniverseObjects(universe);
+export function coverageReport(universe, platform) {
+  const objects = knownUniverseObjects(universe, platform);
   const requiredKinds = ["block", "lens", "checkpoint", "priority", "drive", "folder", "unknown", "baseline", "residual"];
   const missing = [];
   for (const kind of requiredKinds) {
@@ -207,8 +286,8 @@ export function coverageReport(universe) {
   };
 }
 
-export function evidenceCoverage(universe, receipts) {
-  const objects = knownUniverseObjects(universe);
+export function evidenceCoverage(universe, receipts, platform) {
+  const objects = knownUniverseObjects(universe, platform);
   const bySubject = new Map(receipts.map((r) => [r.subject, r]));
   const missing = [];
   for (const obj of objects) {
@@ -226,7 +305,7 @@ export function evidenceCoverage(universe, receipts) {
   };
 }
 
-export function runtimeAssertions(universe) {
+export function runtimeAssertions(universe, platform) {
   const asserts = [];
   const check = (id, ok, detail) => asserts.push({ id, ok, detail });
   check("A-RELEASE-HOLD", String(universe.baseline.release).includes("NOT_RELEASED"), universe.baseline.release);
@@ -237,6 +316,16 @@ export function runtimeAssertions(universe) {
   check("A-X-BOUNDED", universe.residual_uncertainty.value > 0 && universe.residual_uncertainty.value <= 1, "X");
   check("A-UNKNOWN-EXPLICIT", universe.unknown_universe.length >= 8, universe.unknown_universe.length);
   check("A-HASH-GLOBAL", SHA_RE.test(universe.baseline.sha256), "global hash");
+  if (platform) {
+    const plat = inspectPlatform(platform);
+    check("A-NO-REPORT-DASHBOARD", plat.denials.every((d) => d.id !== "NO_REPORT_DASHBOARD"), "frontend");
+    check("A-DRIVE-PLATFORM", plat.denials.every((d) => d.id !== "RUNTIME_IS_DRIVE_PLATFORM"), "wave2");
+    check("A-NO-APP-JS", plat.denials.every((d) => d.id !== "NO_CONTROL_ROOM_APP"), "app.js");
+    for (const p of RUNTIME_PAGES) {
+      const html = platform.files?.[p] || "";
+      check(`A-PAGE-${p}`, html.includes("<main"), p);
+    }
+  }
   const failed = asserts.filter((a) => !a.ok);
   return { ok: failed.length === 0, asserts, failed };
 }
@@ -439,14 +528,16 @@ export function evaluatePolicyRoot(universe, ctx = {}) {
 }
 
 export async function automaticEvidence(universe, extras = {}) {
-  const objects = knownUniverseObjects(universe);
+  const objects = knownUniverseObjects(universe, extras.platform);
   const now = extras.now || new Date().toISOString();
   const receipts = [];
+  const files = extras.platform?.files || {};
   for (const obj of objects) {
-    const sha = await digestSha256(`${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`);
+    const body = obj.kind === "runtime-page" ? files[obj.id] || "" : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
+    const sha = await digestSha256(body);
     receipts.push({
       id: `EVD-${obj.kind}-${obj.id}`.replace(/[^A-Za-z0-9-]/g, "-"),
-      kind: obj.kind === "checkpoint" ? "checkpoint" : "coverage",
+      kind: obj.kind === "checkpoint" ? "checkpoint" : obj.kind === "runtime-page" ? "runtime" : "coverage",
       subject: obj.id,
       sha256: sha,
       created_at: now,
@@ -483,18 +574,18 @@ export async function runGates(universe, options = {}) {
     blockedBy = id;
   };
 
-  const policy = evaluatePolicyRoot(universe, { action: options.action || "inspect" });
+  const policy = evaluatePolicyRoot(universe, { action: options.action || "inspect", platform: options.platform });
   if (policy.ok) pass("policy-as-code", { release_denied: true });
   else fail("policy-as-code", { integrity_denials: policy.integrity_denials });
 
-  const schema = blockedBy ? skip("schemas") : validateSchema(universe);
+  const schema = blockedBy ? skip("schemas") : validateSchema(universe, options.platform);
   if (!blockedBy) (schema.ok ? pass : fail)("schemas", { errors: schema.errors });
 
-  const graph = blockedBy ? skip("graph-constraints") : graphConstraints(universe);
+  const graph = blockedBy ? skip("graph-constraints") : graphConstraints(universe, options.platform);
   if (!schema.skipped && !blockedBy) (graph.ok ? pass : fail)("graph-constraints", { violations: graph.violations });
   else if (!schema.skipped && blockedBy && cascade.at(-1)?.id !== "graph-constraints") skip("graph-constraints");
 
-  const coverage = coverageReport(universe);
+  const coverage = coverageReport(universe, options.platform);
   const evaluation = evaluationScience(universe);
   const properties = propertyBased(universe);
   const orch = orchestrator(
@@ -517,7 +608,7 @@ export async function runGates(universe, options = {}) {
   const ci = blockedBy ? skip("CI-gates") : { ok: ciOk };
   if (!ci.skipped) (ci.ok ? pass : fail)("CI-gates", { coverage: coverage.ratio, evaluation: evaluation.ok });
 
-  const runtime = blockedBy ? skip("runtime-assertions") : runtimeAssertions(universe);
+  const runtime = blockedBy ? skip("runtime-assertions") : runtimeAssertions(universe, options.platform);
   if (!runtime.skipped) (runtime.ok ? pass : fail)("runtime-assertions", { failed: runtime.failed });
 
   let receipts = options.receipts || [];
@@ -526,7 +617,7 @@ export async function runGates(universe, options = {}) {
     skip("automatic-evidence");
   } else {
     receipts = options.receipts || (await automaticEvidence(universe, options));
-    evidence = evidenceCoverage(universe, receipts);
+    evidence = evidenceCoverage(universe, receipts, options.platform);
     if (evidence.ok) pass("automatic-evidence", { receipts_n: receipts.length, ratio: evidence.ratio });
     else fail("automatic-evidence", { missing: evidence.missing });
   }

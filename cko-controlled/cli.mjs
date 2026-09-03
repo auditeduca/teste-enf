@@ -1,12 +1,22 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { runGates } from "./public/engine/core.js";
+import { CASCADE, runGates, RUNTIME_PAGES } from "./public/engine/core.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
-const universe = JSON.parse(readFileSync(join(root, "public/data/universe.json"), "utf8"));
-const report = await runGates(universe, { action: "inspect" });
+const pub = join(root, "public");
+const policy = JSON.parse(readFileSync(join(pub, "policies/fail-closed.json"), "utf8"));
+if (!policy.root || policy.kind !== "policy-as-code" || JSON.stringify(policy.cascade) !== JSON.stringify(CASCADE)) {
+  console.error("CKO GATE FAIL policy-as-code root mismatch");
+  process.exit(1);
+}
+const universe = JSON.parse(readFileSync(join(pub, "data/universe.json"), "utf8"));
+const listing = readdirSync(pub);
+const files = Object.fromEntries(RUNTIME_PAGES.map((p) => [p, readFileSync(join(pub, p), "utf8")]));
+const platform = { listing, files };
+
+const report = await runGates(universe, { action: "inspect", platform });
 
 const outDir = join(root, "public/data");
 mkdirSync(outDir, { recursive: true });

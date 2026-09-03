@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Materialize universe + test + evidence
+      - name: Cascade policy-as-code → schemas → graph → CI → runtime → evidence
         run: |
           cd cko-controlled
           python3 scripts/generate_universe.py
@@ -32,7 +32,14 @@ jobs:
           ids=[s["id"] for s in r["cascade"]]
           assert ids==["policy-as-code","schemas","graph-constraints","CI-gates","runtime-assertions","automatic-evidence"]
           assert all(s["status"]=="PASS" for s in r["cascade"])
-          print("cascade root policy-as-code OK")
+          pol=json.load(open("public/policies/fail-closed.json"))
+          assert pol["root"] is True
+          assert pol["kind"]=="policy-as-code"
+          assert pol["cascade"]==ids
+          idx=open("public/index.html",encoding="utf-8").read()
+          assert "PAGE_INSTITUTIONAL_CLUSTER" in idx
+          assert 'id="graph"' not in idx
+          print("cascade root policy-as-code OK; runtime is Drive platform")
           PY
       - name: Fail-closed release invariant
         run: |

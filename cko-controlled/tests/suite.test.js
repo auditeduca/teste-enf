@@ -5,6 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   validateSchema,
+  validateRuntimePlatformSchema,
   evaluatePolicies,
   graphConstraints,
   coverageReport,
@@ -17,10 +18,16 @@ import {
   runGates,
   knownUniverseObjects,
   CASCADE,
+  RUNTIME_PAGES,
 } from "../public/engine/core.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
-const universe = JSON.parse(readFileSync(join(root, "../public/data/universe.json"), "utf8"));
+const pub = join(root, "../public");
+const universe = JSON.parse(readFileSync(join(pub, "data/universe.json"), "utf8"));
+const platform = {
+  listing: readdirSync(pub),
+  files: Object.fromEntries(RUNTIME_PAGES.map((p) => [p, readFileSync(join(pub, p), "utf8")])),
+};
 
 describe("schemas", () => {
   it("accepts the controlled universe", () => {
@@ -33,9 +40,32 @@ describe("schemas", () => {
     const r = validateSchema(clone);
     assert.equal(r.ok, false);
   });
+  it("accepts the Drive Wave2 runtime platform schema", () => {
+    const r = validateSchema(universe, platform);
+    assert.equal(r.ok, true, r.errors.join("; "));
+    const plat = validateRuntimePlatformSchema(platform);
+    assert.equal(plat.ok, true, plat.errors.join("; "));
+  });
+  it("rejects a missing runtime page as schema-invalid", () => {
+    const broken = { listing: platform.listing, files: { ...platform.files } };
+    delete broken.files["missao.html"];
+    const r = validateRuntimePlatformSchema(broken);
+    assert.equal(r.ok, false);
+    assert.ok(r.errors.some((e) => e.includes("missao.html")));
+  });
 });
 
 describe("policy-as-code", () => {
+  it("declares the cascade in fail-closed.json as the executable root", () => {
+    const policy = JSON.parse(readFileSync(join(pub, "policies/fail-closed.json"), "utf8"));
+    const schema = JSON.parse(readFileSync(join(pub, "schemas/runtime-platform.schema.json"), "utf8"));
+    assert.equal(policy.root, true);
+    assert.equal(policy.kind, "policy-as-code");
+    assert.deepEqual(policy.cascade, CASCADE);
+    assert.deepEqual(schema.properties.pages.items.enum, RUNTIME_PAGES);
+    assert.ok(policy.rules.some((r) => r.id === "NO_REPORT_DASHBOARD"));
+    assert.ok(policy.rules.some((r) => r.id === "RUNTIME_IS_DRIVE_PLATFORM"));
+  });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
     assert.equal(r.release_allowed, false);
@@ -72,6 +102,17 @@ describe("graph constraints", () => {
     assert.equal(r.nodes, 13);
     assert.ok(r.edges >= 14);
   });
+  it("requires the 12 Wave2 pages without a control-room graph canvas", () => {
+    const r = graphConstraints(universe, platform);
+    assert.equal(r.ok, true, r.violations.join("; "));
+    assert.equal(r.pages, 12);
+    const poisoned = {
+      files: { ...platform.files, "objetivo.html": '<html><canvas id="graph"></canvas></html>' },
+    };
+    const bad = graphConstraints(universe, poisoned);
+    assert.equal(bad.ok, false);
+    assert.ok(bad.violations.some((v) => v.includes("objetivo.html")));
+  });
 });
 
 describe("coverage rules", () => {
@@ -86,6 +127,14 @@ describe("coverage rules", () => {
     assert.equal(r.ok, true, r.missing.slice(0, 8).join(","));
     assert.equal(r.ratio, 1);
     assert.equal(receipts.length, knownUniverseObjects(universe).length);
+  });
+  it("evidences the 12 runtime pages when the platform is in the cascade", async () => {
+    const receipts = await automaticEvidence(universe, { platform, now: "2026-09-03T00:00:00.000Z" });
+    const r = evidenceCoverage(universe, receipts, platform);
+    assert.equal(r.ok, true, r.missing.slice(0, 8).join(","));
+    assert.equal(r.ratio, 1);
+    assert.equal(receipts.filter((x) => x.kind === "runtime").length, 12);
+    assert.ok(receipts.every((x) => x.root === "policy-as-code" && x.no_fact_without_evidence === true));
   });
   it("quantifies residual uncertainty X", () => {
     assert.equal(universe.residual_uncertainty.id, "X");
@@ -102,6 +151,17 @@ describe("runtime assertions", () => {
   it("holds release and Nurse-PaLM operational claim", () => {
     const r = runtimeAssertions(universe);
     assert.equal(r.ok, true, JSON.stringify(r.failed));
+  });
+  it("asserts the 12 Drive pages and rejects a report dashboard", () => {
+    const r = runtimeAssertions(universe, platform);
+    assert.equal(r.ok, true, JSON.stringify(r.failed));
+    const poisoned = {
+      listing: ["index.html", "app.js"],
+      files: { ...platform.files, "index.html": '<html><canvas id="graph"></canvas><h1>Relatório Técnico Final Controlado</h1></html>' },
+    };
+    const bad = runtimeAssertions(universe, poisoned);
+    assert.equal(bad.ok, false);
+    assert.ok(bad.failed.some((a) => a.id === "A-NO-REPORT-DASHBOARD"));
   });
 });
 
@@ -140,7 +200,7 @@ describe("distributed orchestrator", () => {
 
 describe("CI gates", () => {
   it("passes the defined gate set without releasing", async () => {
-    const r = await runGates(universe);
+    const r = await runGates(universe, { platform });
     assert.equal(r.ok, true, JSON.stringify(r.failed));
     assert.equal(r.release, "HOLD / NOT_RELEASED");
     assert.equal(r.starts_at, "policy-as-code");
@@ -173,30 +233,27 @@ describe("cascade root", () => {
 
 describe("runtime frontend", () => {
   it("ships the platform pages and not the control-room graph UI", () => {
-    const pub = join(root, "../public");
-    const index = readFileSync(join(pub, "index.html"), "utf8");
+    const index = platform.files["index.html"];
     assert.match(index, /Calculadoras de Enfermagem/);
     assert.equal(index.includes('id="graph"'), false);
     assert.equal(index.includes("Reexecutar cascata"), false);
     assert.equal(index.includes("orquestrador"), false);
-    const pages = [
-      "missao.html",
-      "objetivo.html",
-      "ecossistema.html",
-      "acessibilidade.html",
-      "tecnologiaverde.html",
-      "privacidade.html",
-      "politica-editorial.html",
-      "notificacoes-legais.html",
-      "fale.html",
-      "forum-enfermagem.html",
-      "mapa-do-site.html",
-    ];
-    for (const p of pages) {
-      const html = readFileSync(join(pub, p), "utf8");
+    for (const p of RUNTIME_PAGES) {
+      const html = platform.files[p];
       assert.ok(html.includes("<main"), p);
       assert.equal(html.includes('canvas id="graph"'), false, p);
     }
-    assert.equal(readdirSync(pub).includes("app.js"), false);
+    assert.equal(platform.listing.includes("app.js"), false);
+  });
+  it("fails at policy-as-code if the report dashboard returns, skipping the rest", async () => {
+    const poisoned = {
+      listing: ["index.html", "app.js"],
+      files: { ...platform.files, "index.html": '<html><canvas id="graph"></canvas><h1>Relatório Técnico Final Controlado</h1></html>' },
+    };
+    const r = await runGates(universe, { platform: poisoned });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].id, "policy-as-code");
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
   });
 });

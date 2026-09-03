@@ -2,11 +2,11 @@
 
 ## Frontend (runtime)
 
-O Hosting serve **somente a plataforma** (cluster institucional Wave2):
+O Hosting serve **somente a plataforma** do Drive (cluster institucional Wave2):
 
 `/` `missao.html` `objetivo.html` `ecossistema.html` `acessibilidade.html` `tecnologiaverde.html` `privacidade.html` `politica-editorial.html` `notificacoes-legais.html` `fale.html` `forum-enfermagem.html` `mapa-do-site.html`
 
-Não há páginas de grafo, AUD-8L, heatmap, evaluation science ou orquestrador no frontend.
+A cascata é o contrato do projeto no CI/engine — não é UI. Tudo inicia em policy-as-code. Estágio seguinte só entra se o predecessor PASS. Voltar o dashboard do relatório no frontend falha em policy-as-code e não emite evidência.
 
 ## Cascata (CI / engine — não é UI)
 
