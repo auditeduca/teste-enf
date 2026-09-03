@@ -180,6 +180,16 @@ jobs:
           assert mdreg["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
           assert "layer-policies" in cascade_html
           assert "extraction" in cascade_html
+          apis=json.load(open(site/"data/cko/api-catalog.json"))
+          assert apis["id"]=="POL-CKO-API-CATALOG-1.0.0"
+          assert apis["document_id"]=="CKO-POL-API-001"
+          assert apis["family_count"]==9
+          assert apis["endpoint_total"]==222
+          assert apis["active"] is False
+          assert apis["implantado"] is False
+          assert apis["md_reg_complete"] is False
+          assert apis["md_reg_next_task"] is True
+          assert "api-catalog" in cascade_html
           assert cascade["rules"]["coverage"].find("100%")>=0
           assert cascade["verification"]["fuzz_n"]==1000
           assert cascade["verification"]["fuzz_false_accept"]==0

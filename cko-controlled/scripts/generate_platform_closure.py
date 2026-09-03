@@ -68,6 +68,7 @@ EXISTING = [
     {"id": "POL-CKO-VISUAL-ASSET-1.0.0", "role": "designos", "document_id": "CKO-VAS-001"},
     {"id": "POL-CKO-LAYER-CATALOG-1.0.0", "role": "layers", "document_id": "CKO-POL-LYR-001"},
     {"id": "POL-CKO-EXTRACTION-1.0.0", "role": "extraction", "document_id": "CKO-POL-EXTRACT-001"},
+    {"id": "POL-CKO-API-CATALOG-1.0.0", "role": "apis", "document_id": "CKO-POL-API-001"},
 ]
 
 HOLDS = [

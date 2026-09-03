@@ -1,0 +1,3752 @@
+{
+  "id": "POL-CKO-API-CATALOG-1.0.0",
+  "kind": "policy-as-code",
+  "mode": "fail-closed",
+  "root": false,
+  "starts_at": "policy-as-code",
+  "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+  "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+  "inherits": [
+    "POL-CKO-FAIL-CLOSED-1.0.0",
+    "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+  ],
+  "document_id": "CKO-POL-API-001",
+  "document_version": "1.0.0",
+  "status": "CONTROLLED_API_HOLD",
+  "frozen": true,
+  "active": false,
+  "cascade": [
+    "policy-as-code",
+    "schemas",
+    "graph-constraints",
+    "CI-gates",
+    "runtime-assertions",
+    "automatic-evidence"
+  ],
+  "release": "HOLD / NOT_RELEASED",
+  "release_allowed": false,
+  "published": false,
+  "operational": "NOT_ASSERTED",
+  "canonical_promotion": false,
+  "documentado": true,
+  "implantado": false,
+  "assured": false,
+  "new_architectural_root": false,
+  "family_count": 9,
+  "endpoint_total": 222,
+  "md_reg_complete": false,
+  "md_reg_next_task": true,
+  "families": [
+    {
+      "id": "POL-CKO-API-SHARED-DEEPSEEK-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-SHARED-DEEPSEEK",
+      "document_id": "API-SHARED-DEEPSEEK",
+      "document_version": "1.0.0",
+      "policy_type": "SHARED_CONVERSATION",
+      "name": "APIs da conversa compartilhada DeepSeek/API-first",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-SHARED-DEEPSEEK-1.0.0",
+            "policy_name": "APIs da conversa compartilhada DeepSeek/API-first",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-SHARED-DEEPSEEK"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "CKO — Bootstrap DeepSeek API Worker v1.0.0",
+              "CKO — START HERE Multiagent Shared Blackboard v1.0.1"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "bind_shared_deepseek_apis_without_claiming_operational",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "CKO-REG",
+              "LYR-SEC-001"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "nursePalm == ASSERTED or deepseek.result == canonical"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "slug": "cko-deepseek-gateway",
+          "version": "v4",
+          "hash": "f7d2a0936ca358c4b904120066fff85ac75e823d0d5d92844e6ee27d1a69f7b0",
+          "role": "gateway",
+          "canonical_authority": false,
+          "note": "Tarefas estruturadas; resultado exige validação downstream"
+        },
+        {
+          "slug": "cko-deepseek-regulatory-extract",
+          "version": "v7",
+          "hash": "40203dd95ff3b79b8e935723207371d7b8c82e773cabfc5f0850a1ab822e7942",
+          "role": "regulatory_extractor",
+          "canonical_authority": false,
+          "next_task": "MD_REG_COMPLETE",
+          "note": "Prioritário para corpus normativo; MD/REG completa na próxima tarefa"
+        },
+        {
+          "slug": "cko-deepseek-health",
+          "version": "NOT_IN_LAYER_HASH",
+          "hash": null,
+          "role": "health",
+          "canonical_authority": false,
+          "note": "HTTP 200 isolado não prova configured=true"
+        }
+      ],
+      "endpoint_count": 3,
+      "precedence": [
+        "SPECIALIZED_GOVERNED_EDGE",
+        "CKO_DEEPSEEK_GATEWAY",
+        "DIRECT_PROVIDER_CALL"
+      ],
+      "supabase_project_shared": "pgsybzggewhinaniybiy",
+      "supabase_project_readable": "aevqrmkdhffmursdtcmo"
+    },
+    {
+      "id": "POL-CKO-API-EDGE-CONTROLLED-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-EDGE-CONTROLLED",
+      "document_id": "API-EDGE-CONTROLLED",
+      "document_version": "1.0.0",
+      "policy_type": "EDGE_HASH",
+      "name": "Edge functions com hash de controlo LYR-SEC-001",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-EDGE-CONTROLLED-1.0.0",
+            "policy_name": "Edge functions com hash de controlo LYR-SEC-001",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-EDGE-CONTROLLED"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "ART-H12-SECURITY-FINAL-CONTROLLED"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "keep_layer_hashed_edge_functions_hold",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "LYR-SEC-001"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "edge.canonical_promotion == true"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "slug": "cko-regulatory-orchestrator",
+          "version": "v6",
+          "hash": "1f6432b1c25653599563a2487fe2c5efac0fa481e268517ede2ed8aebd023ce5",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "slug": "cko-deepseek-gateway",
+          "version": "v4",
+          "hash": "f7d2a0936ca358c4b904120066fff85ac75e823d0d5d92844e6ee27d1a69f7b0",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "slug": "cko-deepseek-regulatory-extract",
+          "version": "v7",
+          "hash": "40203dd95ff3b79b8e935723207371d7b8c82e773cabfc5f0850a1ab822e7942",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "slug": "vdc-template-agent",
+          "version": "v4",
+          "hash": "ccc1d3434d27e57bfdd3cc2218fab385cf7ee395bcf176ebb290e3d29a414eed",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "slug": "vdc-studio-api",
+          "version": "v3",
+          "hash": "e100783854f9d2980802d2c22dce0fccb76bd88d42fbe92534019f7884c795de",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "slug": "vdc-creative-api",
+          "version": "v3",
+          "hash": "c9a16ff18c45189151dd38cd1d11b31bc1af91aa25bf554ace1009e5211fd629",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "slug": "cko-access-resolver",
+          "version": "v3",
+          "hash": "e354ebc64bccf4bfbfd58efc00b426619e5b6956b18e0d7fc08668aed5af8243",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "slug": "cko-sitemap-discovery",
+          "version": "v4",
+          "hash": "72843aff49e82ce6839723c329d61c9d38f92900467290090059c13dd3f51e22",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "slug": "cko-sitemap-worker",
+          "version": "v3",
+          "hash": "8933211acec5d5fe906642838adb75f203152c4e08ca05eb6ffd0c7dcce0ef30",
+          "source": "LYR-SEC-001/FINAL_MANIFEST",
+          "operational": "NOT_ASSERTED"
+        }
+      ],
+      "endpoint_count": 9
+    },
+    {
+      "id": "POL-CKO-API-EDGE-LIVE-READBACK-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-EDGE-LIVE-READBACK",
+      "document_id": "API-EDGE-LIVE-READBACK",
+      "document_version": "1.0.0",
+      "policy_type": "LIVE_READBACK",
+      "name": "Readback das Edge Functions no projeto Supabase acessível",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-EDGE-LIVE-READBACK-1.0.0",
+            "policy_name": "Readback das Edge Functions no projeto Supabase acessível",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-EDGE-LIVE-READBACK"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "Supabase list_edge_functions",
+              "NO_FACT_WITHOUT_EVIDENCE"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "document_live_readback_without_promoting_canonical",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "LYR-SEC-001"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "live.ACTIVE == platform.ACTIVE"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "slug": "extrair-questoes-enfermagem",
+          "version": 2,
+          "project": "aevqrmkdhffmursdtcmo"
+        },
+        {
+          "slug": "recover-cko-artifact",
+          "version": 1,
+          "project": "aevqrmkdhffmursdtcmo"
+        },
+        {
+          "slug": "invoke-recover-cko-artifact-once",
+          "version": 3,
+          "project": "aevqrmkdhffmursdtcmo"
+        },
+        {
+          "slug": "santos-study-renderer",
+          "version": 3,
+          "project": "aevqrmkdhffmursdtcmo"
+        },
+        {
+          "slug": "santos-study-export-once",
+          "version": 2,
+          "project": "aevqrmkdhffmursdtcmo"
+        },
+        {
+          "slug": "cko-deepseek-gateway",
+          "version": 1,
+          "project": "aevqrmkdhffmursdtcmo",
+          "drift": "layer_hash_is_v4"
+        },
+        {
+          "slug": "calculadoras-smart-deepseek-gateway",
+          "version": 1,
+          "project": "aevqrmkdhffmursdtcmo"
+        }
+      ],
+      "endpoint_count": 7,
+      "note": "ACTIVE no projeto acessível ≠ ACTIVE da plataforma CKO. Gateway live v1 ≠ hash v4."
+    },
+    {
+      "id": "POL-CKO-API-NIS-REST-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-NIS-REST",
+      "document_id": "API-NIS-REST",
+      "document_version": "1.0.0",
+      "policy_type": "NIS_DESIGN",
+      "name": "Catálogo REST NIFS-800-05",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-NIS-REST-1.0.0",
+            "policy_name": "Catálogo REST NIFS-800-05",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-NIS-REST"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "NIFS-800-05"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "keep_nifs_rest_design_hold_calculators_paused",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "LYR-CLIN-CALC-001",
+              "LYR-TERM-001"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "POST /api/v1/calculators/*/calculate without PAUSED"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/v1/reasoning/sessions",
+          "purpose": "Iniciar sessão de raciocínio",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/reasoning/sessions/{id}",
+          "purpose": "Recuperar sessão",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/reasoning/sessions/{id}/trace",
+          "purpose": "Recuperar rastro completo",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/reasoning/sessions/{id}/explanation",
+          "purpose": "Recuperar explicação",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/reasoning/sessions/{id}/feedback",
+          "purpose": "Enviar feedback humano",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/reasoning/hypotheses/{id}",
+          "purpose": "Recuperar hipóteses",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/nanda",
+          "purpose": "Listar diagnósticos NANDA",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/nanda/{code}",
+          "purpose": "Detalhe de diagnóstico",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/nic",
+          "purpose": "Listar intervenções NIC",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/nic/{code}",
+          "purpose": "Detalhe de intervenção",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/noc",
+          "purpose": "Listar desfechos NOC",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/noc/{code}",
+          "purpose": "Detalhe de desfecho",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/graph/nodes",
+          "purpose": "Buscar nós do grafo",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/graph/nodes/{id}/neighbors",
+          "purpose": "Vizinhos de um nó",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/graph/paths",
+          "purpose": "Caminhos entre nós",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/graph/search",
+          "purpose": "Busca semântica no grafo",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/calculators/{calc_id}/calculate",
+          "purpose": "Executar calculadora",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "PAUSED",
+          "modality": "MUST_NOT"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/calculators",
+          "purpose": "Listar calculadoras",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "PAUSED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/calculators/{calc_id}",
+          "purpose": "Detalhe de calculadora",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "PAUSED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/calculators/{calc_id}/mappings",
+          "purpose": "Mapeamentos NNN",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "PAUSED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/council/sessions/{id}",
+          "purpose": "Recuperar sessão do conselho",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/council/sessions/{id}/deliberation",
+          "purpose": "Log de deliberação",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/council/sessions/{id}/consensus",
+          "purpose": "Resultado do consenso",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/council/agents",
+          "purpose": "Listar agentes",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/memory/episodes",
+          "purpose": "Listar episódios",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/memory/episodes/{id}",
+          "purpose": "Detalhe de episódio",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/memory/search",
+          "purpose": "Buscar casos similares",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/terminology/lookup",
+          "purpose": "Lookup por código",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/terminology/map",
+          "purpose": "Cross-map entre terminologias",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/terminology/validate",
+          "purpose": "Validar código",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/evidence",
+          "purpose": "Listar evidências",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/evidence/{id}",
+          "purpose": "Detalhe de evidência",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/evidence/grade/{nanda_code}",
+          "purpose": "Evidências para diagnóstico",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/plans",
+          "purpose": "Criar plano",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/plans/{id}",
+          "purpose": "Recuperar plano",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/plans/{id}/graph",
+          "purpose": "Grafo do plano",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/plans/{id}/simulate",
+          "purpose": "Simular plano",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/plans/{id}/execute",
+          "purpose": "Registrar execução",
+          "source": "NIFS-800-05",
+          "operational": "NOT_ASSERTED",
+          "clinical": "NOT_ASSERTED",
+          "modality": "HOLD"
+        }
+      ],
+      "endpoint_count": 38
+    },
+    {
+      "id": "POL-CKO-API-NIS-FHIR-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-NIS-FHIR",
+      "document_id": "API-NIS-FHIR",
+      "document_version": "1.0.0",
+      "policy_type": "NIS_DESIGN",
+      "name": "Catálogo FHIR NIFS-800-01",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-NIS-FHIR-1.0.0",
+            "policy_name": "Catálogo FHIR NIFS-800-01",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-NIS-FHIR"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "NIFS-800-01"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "keep_fhir_design_hold",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "LYR-TERM-001",
+              "CKO-REG"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "fhir.operational == ASSERTED"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "path": "/fhir/Patient",
+          "methods": "GET, POST",
+          "purpose": "Patient sync (anonymous hash)",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/Encounter",
+          "methods": "GET, POST",
+          "purpose": "Case/encounter sync",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/Observation",
+          "methods": "GET, POST",
+          "purpose": "Assessment results",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/Condition",
+          "methods": "GET, POST",
+          "purpose": "NANDA diagnoses",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/CarePlan",
+          "methods": "GET, POST",
+          "purpose": "Care plans",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/Procedure",
+          "methods": "GET, POST",
+          "purpose": "NIC interventions",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/MedicationAdministration",
+          "methods": "GET, POST",
+          "purpose": "Medication records",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/ClinicalImpression",
+          "methods": "GET",
+          "purpose": "Reasoning sessions (read-only)",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/DiagnosticReport",
+          "methods": "GET",
+          "purpose": "Explanation reports (read-only)",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/PlanDefinition",
+          "methods": "GET",
+          "purpose": "Protocol definitions",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/CodeSystem",
+          "methods": "GET",
+          "purpose": "NANDA, NIC, NOC code systems",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        },
+        {
+          "path": "/fhir/ValueSet",
+          "methods": "GET",
+          "purpose": "Value sets for each terminology",
+          "source": "NIFS-800-01",
+          "operational": "NOT_ASSERTED"
+        }
+      ],
+      "endpoint_count": 12
+    },
+    {
+      "id": "POL-CKO-API-NIS-ALTERNATE-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-NIS-ALTERNATE",
+      "document_id": "API-NIS-ALTERNATE",
+      "document_version": "1.0.0",
+      "policy_type": "NIS_DESIGN",
+      "name": "GraphQL, gRPC, Webhooks, SMART, Gateway",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-NIS-ALTERNATE-1.0.0",
+            "policy_name": "GraphQL, gRPC, Webhooks, SMART, Gateway",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-NIS-ALTERNATE"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "NIFS-800-04",
+              "NIFS-800-06",
+              "NIFS-800-07",
+              "NIFS-800-08",
+              "NIFS-900-08"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "keep_alternate_interop_design_hold",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "LYR-RUN-001"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "alternate.implantado == true"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "id": "NIFS-800-04",
+          "name": "SMART on FHIR",
+          "status": "DESIGN_HOLD"
+        },
+        {
+          "id": "NIFS-800-06",
+          "name": "GraphQL",
+          "status": "DESIGN_HOLD"
+        },
+        {
+          "id": "NIFS-800-07",
+          "name": "gRPC",
+          "status": "DESIGN_HOLD"
+        },
+        {
+          "id": "NIFS-800-08",
+          "name": "Webhooks",
+          "status": "DESIGN_HOLD"
+        },
+        {
+          "id": "NIFS-900-08",
+          "name": "API Gateway",
+          "status": "DESIGN_HOLD"
+        }
+      ],
+      "endpoint_count": 5
+    },
+    {
+      "id": "POL-CKO-API-NKP-ADMIN-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-NKP-ADMIN",
+      "document_id": "API-NKP-ADMIN",
+      "document_version": "1.0.0",
+      "policy_type": "ADMIN_CODE",
+      "name": "NKP admin API extraída de nkp_api.py",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-NKP-ADMIN-1.0.0",
+            "policy_name": "NKP admin API extraída de nkp_api.py",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-NKP-ADMIN"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "NIFS/reference-scripts/nkp_api.py"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "bind_nkp_admin_routes_as_hold_not_production",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "LYR-RUN-001"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "nkp_api.production == true"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/health",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/monitor/progress",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/stats",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/scopes",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/scopes/<country_code>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/scopes/locale/<locale_code>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/entities/<entity_key>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/entities/<entity_key>/<record_id>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/entities/<entity_key>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "PUT",
+          "path": "/api/entities/<entity_key>/<record_id>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/entities/<entity_key>/import",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/content/home-preview",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/translations/summary",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/locales/summary",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/graph/relations",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/graph/mindmap",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/graph/entity-options",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/audit/progress",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/audit/execution-plan",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/audit/monitor",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/audit/domains/<domain_id>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/audit/free-apis",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/audit/report",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/audit/frameworks",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/audit/report/export",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/audit/suggest",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/audit/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/ai/complete",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/ai/templates",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/llm/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/llm/route",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/review/report",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/review/clear",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/review/report",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/review/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/review/stop",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/review/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/review/apply",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/review/changes",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/review/rules",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/apgar/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/apgar/validate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/apgar/field/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/apgar/translation/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/apgar/phases/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/content-pending/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-pending/validate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-pending/catalog/rebuild",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-pending/field/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-pending/phases/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/content-pending/workflow",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/content-pending/workflow/<workflow_id>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-pending/workflow/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-pending/workflow/approve",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-pending/workflow/reject",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-pending/archive/prepare",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/content-factory/sync",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/pending/inventory",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/pending/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/daily-agent/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/daily-agent/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/site-full/manifest",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/site-full/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/site-full/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/global-expansion/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/global-expansion/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/careers/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/careers/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/resource-expansion/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/resource-expansion/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/medication-dictionary/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/medication-dictionary/catalog/rebuild",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/medication-dictionary/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/compulsory-notifications/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/compulsory-notifications/scrape",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/compulsory-notifications/catalog/rebuild",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/compulsory-notifications/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/compulsory-notifications/validate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/brazilian-legislation/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/brazilian-legislation/discover",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/brazilian-legislation/fetch",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/brazilian-legislation/refresh",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/brazilian-legislation/validate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/anvisa-open-data/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/anvisa-open-data/sync-catalog",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/anvisa-open-data/discover",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/anvisa-open-data/fetch",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/anvisa-open-data/monthly",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/anvisa-open-data/validate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/code-sequence/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/code-sequence/approve",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/code-sequence/reject",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/visual-intelligence/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/visual-intelligence/generate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/visual-intelligence/audit",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/visual-intelligence/prompt-dna",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/clinical-articles/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/clinical-articles/generate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/nursing-os/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/nursing-os/domains",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/nursing-os/context/resolve",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/nursing-ai-agents/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/professional-intelligence/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/professional-intelligence/tool-context",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/professional-intelligence/regulatory/query",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/professional-intelligence/exam-plan",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/professional-intelligence/career-map",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/ai-factory/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/ai-factory/agents",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/ai-factory/workflows",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/ai-factory/tools",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/ai-factory/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/ai-factory/run-batch",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/ai-factory/evaluate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/nursing-ai-agents/route",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/nursing-knowledge-api/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/nursing-knowledge-api/services",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/studio/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/studio/formats",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/studio/blocks",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/graph/studio/context",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/studio/generate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/studio/evaluate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/studio/review",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/studio/asset/<path:filename>",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/graph-intelligence/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/graph-intelligence/inventory",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/graph-intelligence/criteria",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/graph-intelligence/review-plan",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/graph-intelligence/validate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/graph-intelligence/fast-screen",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/graph-intelligence/generate-content",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/graph-intelligence/cross-tool",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/database-sync/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/database-sync/validate",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/database-sync/schema",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/database-sync/upload",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/database-sync/sync",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/database-sync/backup",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/database-sync/finalize",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/tasks/status",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "GET",
+          "path": "/api/tasks/list",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/tasks/sync",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/tasks/run",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/tasks/run-batch",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        },
+        {
+          "method": "POST",
+          "path": "/api/tasks/run-pending-agents",
+          "source": "NIFS/reference-scripts/nkp_api.py",
+          "operational": "NOT_ASSERTED",
+          "release": "HOLD / NOT_RELEASED"
+        }
+      ],
+      "endpoint_count": 146
+    },
+    {
+      "id": "POL-CKO-API-SITE-ADMIN-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-SITE-ADMIN",
+      "document_id": "API-SITE-ADMIN",
+      "document_version": "1.0.0",
+      "policy_type": "SITE_ADMIN",
+      "name": "Admin API do site hospedado",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-SITE-ADMIN-1.0.0",
+            "policy_name": "Admin API do site hospedado",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-SITE-ADMIN"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "reference-website/js/admin-engine.js"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "keep_site_admin_api_hold",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "LYR-SEC-001"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "adminApi.unauthenticated == true and action == mutate"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/functions/adminApi",
+          "source": "reference-website/js/admin-engine.js",
+          "operational": "NOT_ASSERTED"
+        }
+      ],
+      "endpoint_count": 1
+    },
+    {
+      "id": "POL-CKO-API-MD-REG-NEXT-1.0.0",
+      "kind": "policy-as-code",
+      "family_id": "API-MD-REG-NEXT",
+      "document_id": "API-MD-REG-NEXT",
+      "document_version": "1.0.0",
+      "policy_type": "NEXT_TASK",
+      "name": "MD/REG via API — próxima tarefa",
+      "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "inherits": [
+        "POL-CKO-FAIL-CLOSED-1.0.0",
+        "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+      ],
+      "starts_at": "policy-as-code",
+      "status": "CONTROLLED_API_HOLD",
+      "active": false,
+      "implantado": false,
+      "assured": false,
+      "release": "HOLD / NOT_RELEASED",
+      "release_allowed": false,
+      "published": false,
+      "operational": "NOT_ASSERTED",
+      "modality": "MUST_NOT",
+      "blocking_inspect": false,
+      "blocking_release": true,
+      "contract": {
+        "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "field_count": 28,
+        "fields": {
+          "IDENTITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "policy_id": "POL-CKO-API-MD-REG-NEXT-1.0.0",
+            "policy_name": "MD/REG via API — próxima tarefa",
+            "policy_type": "API",
+            "policy_status": "CONTROLLED_EXTRACTION_HOLD",
+            "family_id": "API-MD-REG-NEXT"
+          },
+          "AUTHORITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "sources": [
+              "CKO-MD",
+              "CKO-REG",
+              "cko-deepseek-regulatory-extract"
+            ]
+          },
+          "INTENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "objective": "forbid_claiming_md_reg_complete_in_this_catalog",
+            "desired_state": "human_signed_or_explicit_hold",
+            "prohibited_state": "silent_bypass_or_release"
+          },
+          "APPLICABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "mode": "REQUIRED"
+          },
+          "SCOPE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "layers": [
+              "CKO-MD",
+              "CKO-REG"
+            ]
+          },
+          "SUBJECT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "actors": [
+              "HUMAN",
+              "AGENT"
+            ],
+            "objects": [
+              "PLATFORM",
+              "RELEASE"
+            ]
+          },
+          "MODALITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "type": "MUST_NOT"
+          },
+          "CONDITIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CONSTRAINTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DECISION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "deny_if": [
+              "md_reg_complete == true"
+            ],
+            "allow_if": [
+              "human.signed == true"
+            ]
+          },
+          "OUTCOME": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "on_deny": "HOLD",
+            "on_allow": "HUMAN_REVIEW",
+            "severity": "BLOCKER"
+          },
+          "ENFORCEMENT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "preventive": [
+              "INSPECT",
+              "CI_GATE"
+            ],
+            "detective": [
+              "LEDGER"
+            ]
+          },
+          "CONTRACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "IMPLEMENTATION": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "TESTS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CI_GATES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "RUNTIME_ASSERTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "OBSERVABILITY": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "EVIDENCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "PROVENANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "GOVERNANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "owner": "HUMAN",
+            "approval_required": true,
+            "human_boundary": "FINAL_APPROVAL",
+            "blocking_inspect": false,
+            "blocking_release": true
+          },
+          "EXCEPTIONS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "DEPENDENCIES": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "VERSIONING": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "LIFECYCLE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "CHANGE_IMPACT": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false
+          },
+          "READINESS": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "score": "NOT_READY",
+            "active": false
+          },
+          "ASSURANCE": {
+            "status": "SPECIALIZED_HOLD",
+            "implemented": false,
+            "assured": false,
+            "verdict": "HOLD",
+            "release_allowed": false
+          }
+        }
+      },
+      "endpoints": [
+        {
+          "slug": "cko-deepseek-regulatory-extract",
+          "next_task": "MD_REG_COMPLETE",
+          "classified_md_fields": 2496,
+          "classified_reg_bindings": 10913,
+          "materialized_field_bindings": false,
+          "corpus_denominator": 0
+        }
+      ],
+      "endpoint_count": 1,
+      "md_reg_complete": false,
+      "note": "Classificado ≠ extraído clause-level ≠ implantado. Completar MD/REG é a próxima tarefa."
+    }
+  ],
+  "rule": "Todas as APIs da conversa compartilhada, NIFS-800, NKP e readback live estão extraídas e ligadas a policy-as-code. Nenhuma é operacional canónica. MD/REG completa na próxima tarefa.",
+  "evaluation": {
+    "verdict": "API_HOLD_EXTRACTED_NOT_OPERATIONAL",
+    "documentado": true,
+    "implantado": false,
+    "assured": false,
+    "active": false,
+    "md_reg_complete": false,
+    "findings": [
+      {
+        "id": "API-F-SHARED-BOUND",
+        "severity": "HOLD",
+        "text": "cko-deepseek-gateway / regulatory-extract / health ligados. Gateway não tem autoridade canónica."
+      },
+      {
+        "id": "API-F-VERSION-DRIFT",
+        "severity": "HOLD",
+        "text": "Hash LYR-SEC gateway@v4 ≠ readback live gateway@v1 no projeto acessível. Drift ≠ promoção."
+      },
+      {
+        "id": "API-F-MD-REG-NEXT",
+        "severity": "HOLD",
+        "text": "MD 2496 e REG 10913 permanecem classificados. Completar extração/amarração MD/REG é a próxima tarefa."
+      }
+    ]
+  }
+}

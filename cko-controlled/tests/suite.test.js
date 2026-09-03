@@ -20,12 +20,17 @@ import {
   inspectPlatformClosure,
   inspectLayerPolicies,
   inspectExtractionPolicy,
+  inspectApiCatalog,
   LAYER_CATALOG_ID,
   LAYER_DOCUMENT_ID,
   LAYER_POLICY_N,
   EXTRACTION_POLICY_ID,
   EXTRACTION_DOCUMENT_ID,
   EXTRACTION_STREAM_N,
+  API_CATALOG_ID,
+  API_DOCUMENT_ID,
+  API_FAMILY_N,
+  API_ENDPOINT_TOTAL,
   POLICY_MASTER_FIELDS,
   CLOSURE_POLICY_ID,
   CLOSURE_DOCUMENT_ID,
@@ -89,6 +94,7 @@ const visualAssetPolicy = JSON.parse(readFileSync(join(gatePub, "policies/visual
 const platformClosure = JSON.parse(readFileSync(join(gatePub, "policies/platform-closure.json"), "utf8"));
 const layerPolicies = JSON.parse(readFileSync(join(gatePub, "policies/layer-policies.json"), "utf8"));
 const extractionPolicy = JSON.parse(readFileSync(join(gatePub, "policies/extraction.json"), "utf8"));
+const apiCatalog = JSON.parse(readFileSync(join(gatePub, "policies/api-catalog.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -111,6 +117,7 @@ const platform = {
   platformClosure,
   layerPolicies,
   extractionPolicy,
+  apiCatalog,
 };
 
 describe("schemas", () => {
@@ -171,6 +178,7 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "PLATFORM_CLOSURE_HOLD"));
     assert.ok(policy.rules.some((r) => r.id === "LAYER_POLICY_HOLD"));
     assert.ok(policy.rules.some((r) => r.id === "EXTRACTION_POLICY_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "API_CATALOG_HOLD"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -984,6 +992,49 @@ describe("layer and extraction hold policies", () => {
     assert.match(holds, /data-cko-ds-render="extraction"/);
     assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderLayerPolicies/);
     assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderExtraction/);
+  });
+});
+
+describe("API catalog hold", () => {
+  it("extracts and binds the nine API families from the shared conversation", () => {
+    const r = inspectApiCatalog(apiCatalog);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(apiCatalog.id, API_CATALOG_ID);
+    assert.equal(apiCatalog.document_id, API_DOCUMENT_ID);
+    assert.equal(apiCatalog.family_count, API_FAMILY_N);
+    assert.equal(apiCatalog.families.length, API_FAMILY_N);
+    assert.equal(apiCatalog.endpoint_total, API_ENDPOINT_TOTAL);
+    assert.equal(apiCatalog.active, false);
+    assert.equal(apiCatalog.release_allowed, false);
+    assert.equal(apiCatalog.implantado, false);
+    assert.equal(apiCatalog.assured, false);
+    assert.equal(apiCatalog.md_reg_complete, false);
+    assert.equal(apiCatalog.md_reg_next_task, true);
+    assert.ok(apiCatalog.families.every((f) => f.contract.field_count === 28 && f.specializes === POLICY_MASTER_ID && f.active === false));
+    const shared = apiCatalog.families.find((f) => f.family_id === "API-SHARED-DEEPSEEK");
+    const slugs = (shared.endpoints || []).map((e) => e.slug);
+    assert.ok(slugs.includes("cko-deepseek-gateway"));
+    assert.ok(slugs.includes("cko-deepseek-regulatory-extract"));
+    assert.ok(slugs.includes("cko-deepseek-health"));
+    const rest = apiCatalog.families.find((f) => f.family_id === "API-NIS-REST");
+    const calc = (rest.endpoints || []).find((e) => String(e.path || "").includes("/calculate"));
+    assert.equal(calc.clinical, "PAUSED");
+    const next = apiCatalog.families.find((f) => f.family_id === "API-MD-REG-NEXT");
+    assert.equal(next.md_reg_complete, false);
+  });
+  it("fails at policy-as-code if the API catalog is marked ACTIVE or MD/REG complete", async () => {
+    const broken = { ...platform, apiCatalog: { ...apiCatalog, active: true, implantado: true, md_reg_complete: true } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "API_CATALOG_HOLD"));
+  });
+  it("renders the API catalog on cascade and holds pages", () => {
+    const cascade = readFileSync(join(site, "data/cko/cascade/index.html"), "utf8");
+    const holds = readFileSync(join(site, "cko-holds.html"), "utf8");
+    assert.match(cascade, /data-cko-ds-render="api-catalog"/);
+    assert.match(holds, /data-cko-ds-render="api-catalog"/);
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderApiCatalog/);
   });
 });
 
