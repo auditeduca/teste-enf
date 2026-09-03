@@ -45,6 +45,7 @@ const INTEGRITY_DENIALS = new Set([
   "GRAPH_GOVERNS_RUNTIME",
   "TWIN_GOVERNS_RUNTIME",
   "NURSEPALM_GOVERNS_RUNTIME",
+  "LAYERS_44_PRESENT",
 ]);
 
 export const TOOL_RUNTIME_CANARIES = [
@@ -85,6 +86,53 @@ export const CALENF_STRUCTURE = [
   "js/knowledge-graph.js",
   "js/partials-loader.js",
   "partials/header.html",
+];
+
+export const CANONICAL_LAYER_IDS = [
+  "CKO-MD",
+  "CKO-REG",
+  "LYR-CLIN-CALC-001",
+  "LYR-CLIN-SCALE-001",
+  "LYR-CLIN-RULE-001",
+  "LYR-LIB-001",
+  "LYR-MED-001",
+  "LYR-LAB-001",
+  "LYR-ANAT-001",
+  "LYR-COND-001",
+  "LYR-PROC-001",
+  "LYR-TERM-001",
+  "LYR-EDU-001",
+  "LYR-REF-001",
+  "LYR-CONTENT-001",
+  "LYR-LEARN-001",
+  "LYR-PAGE-TPL-001",
+  "LYR-DOC-TPL-001",
+  "LYR-MEDIA-001",
+  "LYR-DERIVE-001",
+  "LYR-HCD-001",
+  "LYR-A11Y-001",
+  "LYR-DS-001",
+  "LYR-UI-001",
+  "LYR-PRV-001",
+  "LYR-SEC-001",
+  "LYR-ROUTE-001",
+  "LYR-SEO-001",
+  "LYR-OG-001",
+  "LYR-SEM-001",
+  "LYR-I18N-001",
+  "LYR-SEARCH-001",
+  "LYR-REC-001",
+  "LYR-USERSTATE-001",
+  "LYR-ANL-001",
+  "LYR-PERF-001",
+  "LYR-REL-001",
+  "LYR-OBS-001",
+  "LYR-SUS-001",
+  "LYR-RND-001",
+  "LYR-RUN-001",
+  "LYR-EXPORT-001",
+  "LYR-PUB-001",
+  "LYR-MON-001",
 ];
 
 export const RUNTIME_PAGES = [
@@ -162,6 +210,54 @@ export function inspectPlatform(platform) {
   if (platform?.pendencies) {
     const pend = inspectPendencies(platform.pendencies, platform.driveImmutable);
     denials.push(...pend.denials);
+  }
+  if (Object.keys(files).length) {
+    denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectLayers(layers, ecossistemaHtml = "") {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "LAYERS_44_PRESENT", reason });
+  if (!layers) {
+    deny("hosted site is missing the 44 classified horizontal layers");
+    return { ok: false, denials };
+  }
+  if (layers.id !== "CKO-44-LAYER-SITE-1.0.0" || layers.kind !== "cko-44-layers") {
+    deny("layers catalog identity must be CKO-44-LAYER-SITE-1.0.0");
+  }
+  if (layers.count !== 44 || !Array.isArray(layers.layers) || layers.layers.length !== 44) {
+    deny(`layers count ${layers.count}/${(layers.layers || []).length} != 44/44`);
+  }
+  if (!String(layers.release || "").includes("NOT_RELEASED") || layers.published === true) {
+    deny("44-layer catalog must remain HOLD / NOT_RELEASED");
+  }
+  if (layers.operational && layers.operational !== "NOT_ASSERTED") {
+    deny("44-layer catalog must not assert operational runtime");
+  }
+  const ids = (layers.layers || []).map((l) => l.id);
+  if (JSON.stringify(ids) !== JSON.stringify(CANONICAL_LAYER_IDS)) {
+    deny("layer ids must match ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE");
+  }
+  for (const layer of layers.layers || []) {
+    if (layer.present !== true) deny(`${layer.id} is not present on the hosted site`);
+    if (!String(layer.release || "").includes("NOT_RELEASED")) deny(`${layer.id} must remain NOT_RELEASED`);
+    if (!SHA_RE.test(layer.sha256 || "")) deny(`${layer.id} classified sha256 invalid`);
+    if (!Array.isArray(layer.runtime_paths) || layer.runtime_paths.length === 0) {
+      deny(`${layer.id} missing CALENF runtime binding`);
+    }
+    if (layer.operational === true || layer.operational === "ASSERTED") {
+      deny(`${layer.id} must not claim operational runtime`);
+    }
+    if (layer.published === true) deny(`${layer.id} must not claim publication`);
+  }
+  if (ecossistemaHtml) {
+    const missingOnPage = CANONICAL_LAYER_IDS.filter((id) => !ecossistemaHtml.includes(id));
+    if (missingOnPage.length) deny(`ecossistema.html missing layer ids ${missingOnPage.slice(0, 8).join(",")}`);
+    if (!/44\/44/.test(ecossistemaHtml) || !/HOLD \/ NOT_RELEASED/.test(ecossistemaHtml)) {
+      deny("ecossistema.html must declare 44/44 HOLD / NOT_RELEASED");
+    }
   }
   return { ok: denials.length === 0, denials };
 }
@@ -270,6 +366,7 @@ export function knownUniverseObjects(universe, platform) {
     for (const p of RUNTIME_PAGES) push("runtime-page", p);
     if (platform.toolLibrary) push("tool-library-runtime", "CKO-TOOL-LIBRARY-RUNTIME-1.0.0");
     if (platform.governance) push("calenf-governance", "CKO-CALENF-GOVERNANCE-1.0.0");
+    if (platform.layers) push("cko-44-layers", "CKO-44-LAYER-SITE-1.0.0");
     for (const p of platform.pendencies?.items || []) push("pendency", p.id, { status: p.status });
     if (platform.driveImmutable) push("drive-immutable", "CKO-DRIVE-IMMUTABLE-1.0.0");
   }
@@ -295,6 +392,31 @@ export function validateRuntimePlatformSchema(platform) {
   }
   errors.push(...validateToolLibrarySchema(platform).errors);
   errors.push(...validatePendenciesSchema(platform).errors);
+  errors.push(...validateLayersSchema(platform).errors);
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateLayersSchema(platform) {
+  if (!platform?.layers && !(platform?.files && Object.keys(platform.files).length)) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const l = platform.layers;
+  if (!l) {
+    errors.push("schema: 44 classified layers catalog missing");
+    return { ok: false, errors };
+  }
+  if (l.id !== "CKO-44-LAYER-SITE-1.0.0") errors.push("schema: layers id");
+  if (l.kind !== "cko-44-layers") errors.push("schema: layers kind must be cko-44-layers");
+  if (l.count !== 44 || !Array.isArray(l.layers) || l.layers.length !== 44) errors.push("schema: layers must be 44/44");
+  if (!String(l.release || "").includes("NOT_RELEASED")) errors.push("schema: layers must remain NOT_RELEASED");
+  if (l.published === true) errors.push("schema: layers must not claim publication");
+  const ids = (l.layers || []).map((row) => row.id);
+  if (JSON.stringify(ids) !== JSON.stringify(CANONICAL_LAYER_IDS)) errors.push("schema: layer ids must match closure");
+  for (const row of l.layers || []) {
+    if (row.present !== true) errors.push(`schema: ${row.id} not present`);
+    if (!SHA_RE.test(row.sha256 || "")) errors.push(`schema: ${row.id} sha256`);
+  }
   return { ok: errors.length === 0, errors };
 }
 
@@ -453,6 +575,14 @@ export function graphConstraints(universe, platform) {
     const g = inspectCalenfGovernance(platform.governance);
     for (const d of g.denials) violations.push(`graph: ${d.id} ${d.reason}`);
   }
+  if (platform?.layers) {
+    if (platform.layers.count !== 44 || (platform.layers.layers || []).length !== 44) {
+      violations.push("graph: hosted site must contain 44/44 classified layers");
+    }
+    if (platform.layers.published === true || !String(platform.layers.release || "").includes("NOT_RELEASED")) {
+      violations.push("graph: 44-layer fan-in remains HOLD / NOT_RELEASED");
+    }
+  }
   return {
     ok: violations.length === 0,
     nodes: nodes.length,
@@ -546,6 +676,13 @@ export function runtimeAssertions(universe, platform) {
       check("A-PENDENCIES-EXPLICIT", pend.denials.every((d) => d.id !== "PENDENCIES_EXPLICIT"), "ledger");
       check("A-DRIVE-IMMUTABLE", pend.denials.every((d) => d.id !== "DRIVE_IMMUTABLE"), "drive");
       check("A-PENDENCIES-DO-NOT-CLOSE-B9", platform.pendencies.closes_b9 === false, "B9");
+    }
+    if (platform.layers || Object.keys(platform.files || {}).length) {
+      const lyr = inspectLayers(platform.layers, platform.files?.["ecossistema.html"] || "");
+      check("A-LAYERS-44", lyr.ok, "44/44");
+      check("A-LAYERS-HOLD", String(platform.layers?.release || "").includes("NOT_RELEASED") && platform.layers?.published !== true, "HOLD");
+      const pub = (platform.layers?.layers || []).find((l) => l.id === "LYR-PUB-001");
+      check("A-LAYER-PUB-HOLD", pub?.published !== true && String(pub?.release || "").includes("NOT_RELEASED"), "LYR-PUB-001");
     }
   }
   const failed = asserts.filter((a) => !a.ok);
@@ -762,7 +899,9 @@ export async function automaticEvidence(universe, extras = {}) {
           ? JSON.stringify(extras.platform?.toolLibrary || {})
           : obj.kind === "calenf-governance"
             ? JSON.stringify(extras.platform?.governance || {})
-            : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
+            : obj.kind === "cko-44-layers"
+              ? JSON.stringify(extras.platform?.layers || {})
+              : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
     const sha = await digestSha256(body);
     receipts.push({
       id: `EVD-${obj.kind}-${obj.id}`.replace(/[^A-Za-z0-9-]/g, "-"),

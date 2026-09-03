@@ -9,6 +9,7 @@ import {
   validateToolLibrarySchema,
   inspectPendencies,
   inspectCalenfGovernance,
+  inspectLayers,
   validatePendenciesSchema,
   evaluatePolicies,
   graphConstraints,
@@ -26,6 +27,7 @@ import {
   TOOL_RUNTIME_CANARIES,
   LIBRARY_RUNTIME_CANARIES,
   TOOL_ENGINE_LIBS,
+  CANONICAL_LAYER_IDS,
 } from "../public/engine/core.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -34,6 +36,7 @@ const site = join(root, "../../reference-website");
 const universe = JSON.parse(readFileSync(join(gatePub, "data/universe.json"), "utf8"));
 const toolLibrary = JSON.parse(readFileSync(join(site, "data/cko/tool-library-runtime.json"), "utf8"));
 const governance = JSON.parse(readFileSync(join(site, "data/cko/governance.json"), "utf8"));
+const layers = JSON.parse(readFileSync(join(site, "data/cko/layers.json"), "utf8"));
 const pendencies = JSON.parse(readFileSync(join(gatePub, "data/pendencies.json"), "utf8"));
 const driveImmutable = JSON.parse(readFileSync(join(gatePub, "data/drive-immutable.json"), "utf8"));
 const platform = {
@@ -46,6 +49,7 @@ const platform = {
   ),
   toolLibrary,
   governance,
+  layers,
   pendencies,
   driveImmutable,
 };
@@ -95,6 +99,7 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "NURSEPALM_GOVERNS_RUNTIME"));
     assert.ok(policy.rules.some((r) => r.id === "PENDENCIES_EXPLICIT"));
     assert.ok(policy.rules.some((r) => r.id === "DRIVE_IMMUTABLE"));
+    assert.ok(policy.rules.some((r) => r.id === "LAYERS_44_PRESENT"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -410,5 +415,41 @@ describe("platform remediations without Drive mutation", () => {
     assert.equal(bySlug["escala-de-braden"].has_calc_runtime, true);
     assert.equal(bySlug["calculo-rescisao"].has_calc_runtime, true);
     assert.equal(toolLibrary.tools_with_calc_runtime, toolLibrary.tools_n);
+  });
+  it("ships the 44 classified horizontal layers from the PDF closure onto the CALENF site", () => {
+    assert.equal(CANONICAL_LAYER_IDS.length, 44);
+    assert.deepEqual(layers.layers.map((l) => l.id), CANONICAL_LAYER_IDS);
+    assert.equal(layers.id, "CKO-44-LAYER-SITE-1.0.0");
+    assert.equal(layers.count, 44);
+    assert.equal(layers.gold, "44/44");
+    assert.match(layers.release, /NOT_RELEASED/);
+    assert.equal(layers.published, false);
+    assert.equal(layers.operational, "NOT_ASSERTED");
+    const inspected = inspectLayers(layers, platform.files["ecossistema.html"]);
+    assert.equal(inspected.ok, true, JSON.stringify(inspected.denials));
+    for (const layer of layers.layers) {
+      assert.equal(layer.present, true, layer.id);
+      assert.match(layer.release, /NOT_RELEASED/);
+      assert.equal(existsSync(join(site, "data/cko/layers", layer.id, "FINAL_MANIFEST.json")), true, layer.id);
+      assert.ok(layer.runtime_paths.length >= 1, layer.id);
+    }
+    const pub = layers.layers.find((l) => l.id === "LYR-PUB-001");
+    assert.equal(pub.published, false);
+    const eco = platform.files["ecossistema.html"];
+    assert.match(eco, /44\/44/);
+    assert.match(eco, /HOLD \/ NOT_RELEASED/);
+    assert.equal(eco.includes('id="graph"'), false);
+    const rt = runtimeAssertions(universe, platform);
+    assert.ok(rt.asserts.some((a) => a.id === "A-LAYERS-44" && a.ok));
+    assert.ok(rt.asserts.some((a) => a.id === "A-LAYER-PUB-HOLD" && a.ok));
+  });
+  it("fails at policy-as-code if the 44 layers disappear", async () => {
+    const broken = { ...platform, layers: undefined };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].id, "policy-as-code");
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "LAYERS_44_PRESENT"));
+    assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
   });
 });

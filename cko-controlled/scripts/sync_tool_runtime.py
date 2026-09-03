@@ -459,6 +459,7 @@ KEEP_DATA = {
     "drive-immutable.json",
     "evidence-index.json",
     "gate-report.json",
+    "layers.json",
     "pendencies.json",
     "remediation-plan.json",
     "residual-uncertainty.json",
@@ -519,6 +520,13 @@ def assert_canaries(inventory: dict, governance: dict) -> None:
         raise SystemExit("CALENF runtime missing: " + ", ".join(missing[:40]))
 
 
+def materialize_44_layers() -> dict:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from generate_layers import generate
+
+    return generate()
+
+
 def main() -> None:
     overlay_wave2_into_calenf()
     write_home_aliases()
@@ -531,6 +539,7 @@ def main() -> None:
     write_json(SITE / "data" / "cko" / "tool-library-runtime.json", slim)
     write_json(SITE / "data" / "cko" / "governance.json", governance)
     write_json(WAVE2 / "data" / "tool-library-runtime.json", slim)
+    layers = materialize_44_layers()
     if "--inventory-only" not in sys.argv:
         drop_duplicate_cko_copies()
     assert_canaries(slim, governance)
@@ -547,6 +556,9 @@ def main() -> None:
                 "nursePalm": governance["nursePalm"]["operational"],
                 "digitalTwin_observed": governance["digitalTwin"]["observed"],
                 "home_missing_hrefs": slim["home_missing_hrefs"],
+                "layers": layers["count"],
+                "layers_present": sum(1 for row in layers["layers"] if row["present"]),
+                "layers_release": layers["release"],
             },
             ensure_ascii=False,
             indent=2,

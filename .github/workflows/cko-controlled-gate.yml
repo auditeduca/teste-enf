@@ -63,6 +63,17 @@ jobs:
           assert (site/"js/nurse-palm.js").is_file()
           assert (site/"js/knowledge-graph.js").is_file()
           assert (site/"data/schemas/tool.schema.json").is_file()
+          layers=json.load(open(site/"data/cko/layers.json"))
+          assert layers["count"]==44
+          assert layers["id"]=="CKO-44-LAYER-SITE-1.0.0"
+          assert layers["release"].find("NOT_RELEASED")>=0
+          assert layers["published"] is False
+          assert all(row["present"] for row in layers["layers"])
+          eco=(site/"ecossistema.html").read_text(encoding="utf-8")
+          assert "LYR-CLIN-CALC-001" in eco
+          assert "CKO-MD" in eco
+          assert "LYR-MON-001" in eco
+          assert "44/44" in eco
           p=json.load(open("public/data/pendencies.json"))
           assert p["mutate_drive"] is False
           assert p["closes_b9"] is False

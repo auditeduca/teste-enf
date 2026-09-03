@@ -23,11 +23,13 @@ const toolLibraryPath = existsSync(join(site, "data/cko/tool-library-runtime.jso
 const toolLibrary = existsSync(toolLibraryPath) ? JSON.parse(readFileSync(toolLibraryPath, "utf8")) : undefined;
 const governancePath = join(site, "data/cko/governance.json");
 const governance = existsSync(governancePath) ? JSON.parse(readFileSync(governancePath, "utf8")) : undefined;
+const layersPath = join(site, "data/cko/layers.json");
+const layers = existsSync(layersPath) ? JSON.parse(readFileSync(layersPath, "utf8")) : undefined;
 const pendenciesPath = join(gatePub, "data/pendencies.json");
 const pendencies = existsSync(pendenciesPath) ? JSON.parse(readFileSync(pendenciesPath, "utf8")) : undefined;
 const driveImmutablePath = join(gatePub, "data/drive-immutable.json");
 const driveImmutable = existsSync(driveImmutablePath) ? JSON.parse(readFileSync(driveImmutablePath, "utf8")) : undefined;
-const platform = { listing, files, toolLibrary, governance, pendencies, driveImmutable };
+const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable };
 
 const report = await runGates(universe, { action: "inspect", platform });
 
