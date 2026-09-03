@@ -375,7 +375,7 @@ def write_layer_page(row: dict, runtime_paths: list[str], zip_verified: bool, hr
 <section class="cko-ds-section" aria-label="Catálogo renderizado">
   <div id="cko-ds-root" data-cko-ds-render="{mode}" data-cko-ds-src="{src}"></div>
 </section>
-<script type="module" src="/js/cko-ds-render.js"></script>
+<script type="module" src="/js/cko-ds-render.js?v=pmc-1"></script>
 """
     identity_link = (
         '<p><a class="cko-ds-link" href="/cko-identidade.html">Manual de identidade v10 no cluster</a> · '
@@ -457,7 +457,7 @@ def write_camadas_index(catalog: dict) -> None:
 </noscript>
 </main>
 <div id="footer-placeholder"></div>
-<script type="module" src="/js/cko-ds-render.js"></script>
+<script type="module" src="/js/cko-ds-render.js?v=pmc-1"></script>
 </body>
 </html>
 """

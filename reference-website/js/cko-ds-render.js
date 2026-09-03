@@ -394,7 +394,7 @@ function renderCatalog(ds, mode) {
   const hero = `<section class="cko-ds-hero">
     <span class="cko-ds-badge cko-ds-badge--hold">HOLD / NOT_RELEASED</span>
     <h1>Design system completo via render</h1>
-    <p>Tudo inicia em <strong>policy-as-code</strong>. ${esc(ds.inventory.components)} componentes · ${esc(ds.inventory.templates)} templates · ${esc(ds.inventory.themes)} temas · ${esc(ds.inventory.theme_slots)} slots. Nurse-PaLM operacional NOT_ASSERTED.</p>
+    <p>Tudo inicia em <strong>policy-as-code</strong>. ${esc((ds.inventory || {}).components)} componentes · ${esc((ds.inventory || {}).templates)} templates · ${esc((ds.inventory || {}).themes)} temas · ${esc((ds.inventory || {}).theme_slots)} slots. Nurse-PaLM operacional NOT_ASSERTED.</p>
   </section>`;
   const spine = renderCascade(ds);
   if (mode === "manual") return renderIdentityManual(ds);
@@ -456,20 +456,20 @@ async function mount(el) {
       refreshShellToc();
       return;
     }
-    if (mode === "universal-tool") {
-      const policy = src.includes("universal-tool") ? ds : await loadJson("/data/cko/universal-tool.json");
+    if (mode === "universal-tool" || ds.document_id === "CKO-POL-UT-001") {
+      const policy = src.includes("universal-tool") || ds.document_id === "CKO-POL-UT-001" ? ds : await loadJson("/data/cko/universal-tool.json");
       el.innerHTML = renderUniversalTool(policy);
       refreshShellToc();
       return;
     }
-    if (mode === "policy-master") {
-      const policy = src.includes("policy-master") ? ds : await loadJson("/data/cko/policy-master.json");
+    if (mode === "policy-master" || ds.document_id === "POLICY_MASTER_CONTRACT") {
+      const policy = src.includes("policy-master") || ds.document_id === "POLICY_MASTER_CONTRACT" ? ds : await loadJson("/data/cko/policy-master.json");
       el.innerHTML = renderPolicyMaster(policy);
       refreshShellToc();
       return;
     }
-    if (mode === "visual-assets") {
-      const policy = src.includes("visual-assets") ? ds : await loadJson("/data/cko/visual-assets.json");
+    if (mode === "visual-assets" || ds.document_id === "CKO-VAS-001") {
+      const policy = src.includes("visual-assets") || ds.document_id === "CKO-VAS-001" ? ds : await loadJson("/data/cko/visual-assets.json");
       el.innerHTML = renderVisualAssets(policy);
       refreshShellToc();
       return;
