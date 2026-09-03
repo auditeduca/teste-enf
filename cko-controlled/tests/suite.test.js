@@ -1,6 +1,8 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { execSync } from "node:child_process";
+import { mkdtempSync, readFileSync, readdirSync, existsSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -837,5 +839,57 @@ describe("chrome templates", () => {
     assert.match(missao, /class="crumbs"/);
     assert.match(missao, /<section class="hero"/);
     assert.equal(missao.includes("data-cko-slot="), false);
+  });
+});
+
+describe("GitHub Pages CALENF runtime", () => {
+  it("stages reference-website with project-site base and site-pattern canaries", () => {
+    const out = mkdtempSync(join(tmpdir(), "cko-pages-"));
+    try {
+      execSync(`python3 scripts/prepare_github_pages.py --out ${out} --base /teste-enf`, {
+        cwd: join(root, ".."),
+        encoding: "utf8",
+      });
+      const index = readFileSync(join(out, "index.html"), "utf8");
+      assert.match(index, /PAGE_INSTITUTIONAL_CLUSTER/);
+      assert.match(index, /<base href="\/teste-enf\/">/);
+      assert.match(index, /href="\/teste-enf\/public\/output\.css"/);
+      assert.equal(existsSync(join(out, "aldrete.html")), true);
+      assert.equal(existsSync(join(out, "camadas", "index.html")), true);
+      assert.equal(existsSync(join(out, ".nojekyll")), true);
+      assert.equal(existsSync(join(out, "admin.html")), false);
+      assert.equal(existsSync(join(out, "zh")), false);
+      const mapa = readFileSync(join(site, "mapa-do-site.html"), "utf8");
+      assert.match(mapa, /href="\/camadas\/"/);
+      assert.match(mapa, /href="\/aldrete\.html"/);
+      assert.match(mapa, /href="\/cko-hold-preview\.html"/);
+      assert.equal(existsSync(join(out, "cko-hold-preview.html")), true);
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("HOLD localStorage preview", () => {
+  it("ships a single-file CALENF preview seeded into CKO_HOLD_PREVIEW_V1", () => {
+    const html = readFileSync(join(site, "cko-hold-preview.html"), "utf8");
+    const snap = JSON.parse(readFileSync(join(site, "data/cko/hold-preview.json"), "utf8"));
+    assert.match(html, /CKO_HOLD_PREVIEW_V1/);
+    assert.match(html, /Calculadoras de Enfermagem/);
+    assert.match(html, /localStorage/);
+    assert.match(html, /Não autoriza deploy|Não é deploy/);
+    assert.equal(snap.id, "CKO-HOLD-PREVIEW-1.0.0");
+    assert.equal(snap.layer_count, 44);
+    assert.equal(snap.layers.length, 44);
+    assert.equal(snap.release_allowed, false);
+    assert.equal(snap.deploy, false);
+    assert.equal(snap.home.title, "Calculadoras de Enfermagem");
+    assert.ok(snap.tools.some((t) => t.id === "aldrete"));
+    assert.ok(snap.tools.some((t) => t.id === "imc"));
+    assert.ok((snap.specialties || []).length >= 12);
+    assert.ok(snap.pages.some((p) => p.id === "mapa"));
+    const script = html.split("<script>")[1].split("</script>")[0];
+    assert.match(script, /href="#\/especialidade\/'/);
+    assert.doesNotThrow(() => new Function(script));
   });
 });

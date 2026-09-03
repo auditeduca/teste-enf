@@ -772,6 +772,8 @@ def main() -> None:
     write_json(SITE / "data" / "cko" / "governance.json", governance)
     write_json(WAVE2 / "data" / "tool-library-runtime.json", slim)
     layers = materialize_44_layers()
+    from generate_hold_preview import main as generate_hold_preview
+    generate_hold_preview()
     from stamp_static_chrome import main as stamp_static_chrome
     stamp_static_chrome()
     mdreg = GATE / "public" / "policies" / "md-reg-frontend.json"
