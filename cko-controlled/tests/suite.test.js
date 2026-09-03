@@ -687,6 +687,12 @@ describe("design system runtime render", () => {
     assert.equal(ds.templates_implemented_n, 11);
     assert.equal(ds.templates.filter((t) => t.status === "implemented").length, 11);
     assert.ok(ds.templates.every((t) => t.status === "implemented" || t.status === "wireframe"));
+    assert.match(ds.refinement, /1\.2\.0-HOLD/);
+    assert.equal(ds.identity_manual.version, "v10");
+    assert.equal(ds.identity_manual.release_allowed, false);
+    assert.match(tokens, /--navy:\s*var\(--cko-navy-900\)/);
+    assert.match(tokens, /--navy-light:\s*var\(--cko-navy-700\)/);
+    assert.match(tokens, /--navy-dark:\s*var\(--cko-navy-800\)/);
     const renderer = readFileSync(join(site, "js/cko-ds-render.js"), "utf8");
     assert.match(renderer, /data-cko-ds-render/);
     assert.match(renderer, /NOT_ASSERTED/);
@@ -832,12 +838,18 @@ describe("chrome templates", () => {
     assert.match(calcTpl, /data-cko-static="breadcrumb"/);
     assert.match(calcTpl, /data-cko-static="hero"/);
   });
-  it("keeps Aldrete/IMC with static hero so the shell must skip the slot", () => {
+  it("keeps Aldrete/IMC with a local H1 in source; shell now prefers the cluster hero", () => {
     for (const name of ["aldrete.html", "imc.html"]) {
       const html = readFileSync(join(site, name), "utf8");
       assert.match(html, /data-cko-slot="hero"/);
       assert.match(html, /<h1\b/);
     }
+    const shell = readFileSync(join(site, "js/cko-page-shell.js"), "utf8");
+    assert.match(shell, /hideLegacyLocalHeroes/);
+    assert.match(shell, /data-cko-legacy-hero/);
+    const staticFn = shell.slice(shell.indexOf("function hasStaticHero"), shell.indexOf("function hideLegacyLocalHeroes"));
+    assert.equal(staticFn.includes("-card-navy"), false);
+    assert.equal(shell.includes("-card-navy"), true);
     const missao = readFileSync(join(site, "missao.html"), "utf8");
     assert.match(missao, /class="crumbs"/);
     assert.match(missao, /<section class="hero"/);
@@ -864,5 +876,33 @@ describe("chrome templates", () => {
     assert.match(holds, /data-cko-ds-render="human-holds"/);
     assert.ok(humanDecisions.items.every((item) => item.code_progress && item.next_human));
     assert.ok(humanDecisions.items.every((item) => item.status === "HOLD_HUMAN_NON_BLOCKING"));
+  });
+  it("ships identity v10 and scale specimen on the standard cluster", () => {
+    const identidade = readFileSync(join(site, "cko-identidade.html"), "utf8");
+    assert.match(identidade, /data-cko-template="institutional"/);
+    assert.match(identidade, /data-cko-page="cko-identidade"/);
+    assert.match(identidade, /data-cko-slot="chrome"/);
+    assert.match(identidade, /data-cko-slot="hero"/);
+    assert.match(identidade, /data-cko-ds-render="manual"/);
+    assert.equal(/<style[\s\S]*--navy-light/.test(identidade), false);
+    const scale = readFileSync(join(site, "templates/scale.html"), "utf8");
+    assert.match(scale, /data-cko-template="scale"/);
+    assert.match(scale, /data-cko-scale-items/);
+    assert.match(scale, /cko-scale-grid/);
+    assert.equal(scale.includes("-card-navy"), false);
+    const specimen = readFileSync(join(site, "escala-padrao.html"), "utf8");
+    assert.match(specimen, /data-cko-page="escala-padrao"/);
+    assert.match(specimen, /data-cko-scale-items/);
+    assert.match(specimen, /CKO-POL-UT-001/);
+    assert.equal(specimen.includes("-card-navy"), false);
+    const renderer = readFileSync(join(site, "js/cko-ds-render.js"), "utf8");
+    assert.match(renderer, /renderIdentityManual/);
+    assert.match(readFileSync(join(site, "js/cko-scale-standard.js"), "utf8"), /cko-tpl-scale/);
+    const catalog = JSON.parse(readFileSync(join(site, "data/cko-shell-pages.json"), "utf8"));
+    assert.ok(catalog.pages["cko-identidade"]);
+    assert.ok(catalog.pages["escala-padrao"]);
+    const dsLayer = readFileSync(join(site, "camadas/LYR-DS-001/index.html"), "utf8");
+    assert.match(dsLayer, /global-header-container/);
+    assert.match(dsLayer, /cko-identidade\.html/);
   });
 });

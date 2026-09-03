@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-cko-md="CKO-MD" data-cko-reg="CKO-REG" data-cko-norm="NIFS-900-03" data-cko-evidence="HOLD" data-cko-chain="MD / REG / Schema / Engine / Validator / Renderer / Runtime / Frontend">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>NOME DA ESCALA | Calculadoras de Enfermagem</title>
 <meta name="description" content="DESCRIÇÃO"/>
+<meta name="robots" content="noindex, nofollow"/>
 <link href="/public/output.css" rel="stylesheet">
 <link href="/global-styles.css" rel="stylesheet">
 <link href="/css/pages/cart-emergencia.css" rel="stylesheet">
@@ -14,30 +15,46 @@
 <script src="/lang-selector.js" defer></script>
 <script src="/js/cko-page-shell.js" defer></script>
 <script src="/js/cko-page-templates.js" defer></script>
+<script src="/js/cko-scale-standard.js" defer></script>
 <script src="/js/cko-ratings-hold.js" defer></script>
 </head>
-<body class="cko-cart-page" data-cko-template="scale" data-cko-theme="clinical">
+<body class="cko-cart-page cko-tpl-scale" data-cko-template="scale" data-cko-theme="clinical">
 <a class="cko-ds-skip" href="#main-content">Ir para o conteúdo</a>
 <div id="global-header-container"></div>
 <div id="language-selector-placeholder"></div>
 <main id="main-content" class="flex-grow p-4 sm:p-8 max-w-7xl mx-auto w-full">
-  <!-- POL-CKO-MD-REG-FRONTEND: chrome.breadcrumb=one, chrome.hero=one.
-       Do not add nav.crumbs / section.hero here. -->
+  <!-- POL-CKO-MD-REG-FRONTEND + identity v10: chrome.breadcrumb=one, chrome.hero=one.
+       Do not add nav.crumbs, section.hero, or a local navy card here. -->
   <div data-cko-page="PAGE_ID" data-cko-slot="chrome"></div>
   <div data-cko-page="PAGE_ID" data-cko-slot="hero"></div>
   <div class="cko-layout">
     <div class="cko-layout__main">
       <div class="cko-calc-workspace">
+        <section class="cko-scale-patient no-print" data-cko-scale-patient>
+          <button type="button" class="cko-scale-patient__toggle" aria-expanded="false" data-cko-scale-patient-toggle>
+            <span>Dados do paciente</span>
+            <small>Opcional · HOLD · sem promoção clínica</small>
+          </button>
+          <div class="cko-scale-patient__body" hidden>
+            <label class="cko-ds-field"><span class="cko-ds-label">Iniciais</span><input class="cko-ds-input" type="text" autocomplete="off"></label>
+            <label class="cko-ds-field"><span class="cko-ds-label">Leito / unidade</span><input class="cko-ds-input" type="text" autocomplete="off"></label>
+          </div>
+        </section>
         <section class="cko-calc-panel" data-cko-scale-items>
           <h2 class="cko-calc-panel__title">Itens da escala</h2>
-          <form id="scaleForm"><!-- critérios --></form>
+          <form id="scaleForm" class="cko-scale-grid">
+            <!-- um .cko-scale-item por domínio -->
+          </form>
           <div class="cko-calc-actions">
             <button type="button" class="cko-btn cko-btn--primary">Calcular escore</button>
             <button type="button" class="cko-btn cko-btn--ghost">Limpar</button>
           </div>
+          <p class="cko-ratings-hold" data-cko-hold="HOLD-HUMAN-COPY-RATINGS">Avaliações e estrelas em HOLD — texto não autorizado.</p>
         </section>
         <section class="cko-calc-result" data-cko-scale-score hidden>
-          <p>Escore e interpretação — HOLD, sem promoção clínica.</p>
+          <p class="cko-scale-score__label">Escore</p>
+          <p class="cko-scale-score__value">—</p>
+          <p>Interpretação — HOLD, sem promoção clínica. CKO-POL-UT-001 permanece PAUSED.</p>
         </section>
       </div>
     </div>

@@ -243,6 +243,74 @@ function renderUniversalTool(policy) {
     </section>`;
 }
 
+function renderIdentityManual(ds) {
+  const identity = ds.identity_manual || {};
+  const typeRows = (ds.tokens.typography || [])
+    .map(
+      (t) => `<tr>
+        <th scope="row">${esc(t.id)}</th>
+        <td>${esc(t.spec)}</td>
+        <td>${esc(t.sample)}</td>
+      </tr>`
+    )
+    .join("");
+  const chrome = [
+    ["Header global", "#global-header-container · partials/header.html"],
+    ["Idioma", "#language-selector-placeholder · lang-selector.js"],
+    ["Acessibilidade", "partials/accessibility-toolbar.html"],
+    ["Hero do cluster", ".cko-cart-hero via shell · um H1"],
+    ["Grid", ".cko-layout = main + sidebar 280px"],
+    ["Footer", "#footer-placeholder · partials/footer.html"],
+    ["Escala", "templates/scale.html · " + (identity.scale_specimen || "escala-padrao.html")],
+  ]
+    .map((row) => `<tr><th scope="row">${esc(row[0])}</th><td>${esc(row[1])}</td></tr>`)
+    .join("");
+  const buttons = (ds.components || [])
+    .filter((c) => c.kind === "button")
+    .map((c) => `<div class="cko-ds-stage">${c.html}</div>`)
+    .join("");
+  return (
+    `<nav class="cko-ds-manual-toc" aria-label="Secções do manual">
+      <a href="#ds-manual-tokens">Cor e tipo</a>
+      <a href="#ds-manual-chrome">Chrome do cluster</a>
+      <a href="#ds-manual-buttons">Botões</a>
+      <a href="#ds-manual-scale">Escala</a>
+    </nav>` +
+    `<section class="cko-ds-section" id="ds-manual-tokens">
+      <h2>Identidade v10 no catálogo</h2>
+      <p class="cko-ds-help">${esc(identity.rule || "Manual v10 ingerido. Sem HTML solto. HOLD / NOT_RELEASED.")}</p>
+      <p class="cko-ds-help">Estado <code>${esc(identity.status || "INGESTED_HOLD")}</code> · versão ${esc(identity.version || "v10")}. Tokens <code>--navy</code> / <code>--navy-light</code> / <code>--navy-dark</code> aliasam <code>--cko-navy-*</code>.</p>
+    </section>` +
+    renderTokens(ds) +
+    `<section class="cko-ds-section" id="ds-manual-type-table">
+      <h2>Tipografia (tabela)</h2>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Papel</th><th>Spec</th><th>Amostra</th></tr></thead>
+        <tbody>${typeRows}</tbody>
+      </table></div>
+    </section>` +
+    `<section class="cko-ds-section" id="ds-manual-chrome">
+      <h2>Chrome do cluster</h2>
+      <p class="cko-ds-help">O manual v10 demonstrava header, idioma, a11y e footer com HTML próprio. No padrão CKO esses blocos vêm dos partials e do shell — um de cada, sem cópia inline.</p>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Peça</th><th>Fonte canónica</th></tr></thead>
+        <tbody>${chrome}</tbody>
+      </table></div>
+    </section>` +
+    `<section class="cko-ds-section" id="ds-manual-buttons">
+      <h2>Botões</h2>
+      <div class="cko-ds-button-grid">${buttons}</div>
+    </section>` +
+    `<section class="cko-ds-section" id="ds-manual-scale">
+      <h2>Espécime de escala</h2>
+      <p class="cko-ds-help">Template <code>scale</code> no cluster. Sem hero navy local. Sem promoção clínica.</p>
+      <p><a class="cko-ds-link" href="/escala-padrao.html">Abrir escala padrão</a> · <a class="cko-ds-link" href="/templates/scale.html">HTML do template</a></p>
+    </section>` +
+    renderThemes(ds) +
+    renderHolds(ds)
+  );
+}
+
 function renderCatalog(ds, mode) {
   const hero = `<section class="cko-ds-hero">
     <span class="cko-ds-badge cko-ds-badge--hold">HOLD / NOT_RELEASED</span>
@@ -250,6 +318,7 @@ function renderCatalog(ds, mode) {
     <p>Tudo inicia em <strong>policy-as-code</strong>. ${esc(ds.inventory.components)} componentes · ${esc(ds.inventory.templates)} templates · ${esc(ds.inventory.themes)} temas · ${esc(ds.inventory.theme_slots)} slots. Nurse-PaLM operacional NOT_ASSERTED.</p>
   </section>`;
   const spine = renderCascade(ds);
+  if (mode === "manual") return renderIdentityManual(ds);
   if (mode === "cascade") return hero + spine;
   if (mode === "states") {
     return hero + spine + renderComponents(ds, "states") + renderThemes(ds);
@@ -309,6 +378,10 @@ async function mount(el) {
     if (mode === "human-holds") {
       const ledger = src.includes("human-decisions") ? ds : await loadJson("/data/cko/human-decisions.json");
       el.innerHTML = renderHumanHolds(ledger);
+      return;
+    }
+    if (mode === "manual") {
+      el.innerHTML = renderIdentityManual(ds);
       return;
     }
     el.innerHTML = renderCatalog(ds, mode);
