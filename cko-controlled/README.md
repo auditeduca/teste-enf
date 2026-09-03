@@ -1,14 +1,16 @@
-# CKO / CALENF — Site em runtime + cascata de assurance
+# CKO / CALENF — Site CALENF + cascata de assurance
 
 ## Frontend (runtime)
 
-O Hosting serve **somente a plataforma** do Drive (cluster institucional Wave2):
+O Hosting serve a **estrutura CALENF** (`reference-website`, NIFS-900-03):
 
-`/` `missao.html` `objetivo.html` `ecossistema.html` `acessibilidade.html` `tecnologiaverde.html` `privacidade.html` `politica-editorial.html` `notificacoes-legais.html` `fale.html` `forum-enfermagem.html` `mapa-do-site.html`
+- `data/tools/*.json` + `data/schemas/tool.schema.json` → páginas de calculadora
+- `js/calc-engine.js` / `js/calc-engine-v2.js` → runtime das ferramentas
+- `js/nurse-palm.js` → Nurse-PaLM V9 (operacional **NOT_ASSERTED**)
+- `js/knowledge-graph.js` → grafo clínico
+- Digital twin **NIFS-600-15** projetado em cada ferramenta (B5 HOLD: not observed / not deployed)
 
-A cascata é o contrato do projeto no CI/engine — não é UI. Tudo inicia em policy-as-code. Estágio seguinte só entra se o predecessor PASS. Voltar o dashboard do relatório no frontend falha em policy-as-code e não emite evidência.
-
-Pendências do PDF e do diretório são materializadas em `public/data/pendencies.json` **sem alterar** `public/drive/` nem `control-plane/drive-html/`. Criar pendência não fecha B9.
+As 12 páginas institucionais Wave2 são sobrepostas nessa árvore. A cascata CKO é o contrato no CI/engine — não é UI.
 
 ## Cascata (CI / engine — não é UI)
 
@@ -26,35 +28,25 @@ runtime assertions
 automatic evidence
 ```
 
-```
-coverage = 100% do universo conhecido
-evidence coverage = 100%
-test pass = 100% dos testes definidos
-residual uncertainty = X
-unknown universe = explicitado
-```
+Tudo inicia em policy-as-code. Ferramentas e bibliotecas só passam se forem instâncias do schema CALENF, nós do grafo, projeções do digital twin e bindings Nurse-PaLM.
 
-Stack: policy-as-code → schemas → graph constraints → CI gates → runtime assertions → automatic evidence.
+B9 permanece HOLD / NOT_RELEASED.
 
 ## Comandos
 
 ```bash
 cd cko-controlled
 python3 scripts/generate_universe.py
-python3 scripts/generate_pendencies.py
+python3 scripts/sync_tool_runtime.py
 node --test tests/suite.test.js
 node cli.mjs
-python3 -m http.server 4173 --directory public
+python3 -m http.server 4173 --directory ../reference-website
 ```
+
+`sync_tool_runtime.py` **não copia** o CALENF para `cko-controlled/public`. Ele converge o overlay Wave2 **para** `reference-website` e gera `data/cko/governance.json`.
 
 ## Deploy
 
-Firebase Hosting lê `firebase.json` na raiz (`public: cko-controlled/public`).
+Firebase Hosting lê `firebase.json` (`public: reference-website`). Locales extra não entram no Hosting.
 
-O ambiente deste agente **não está autenticado no Firebase**. Após `npx -y firebase-tools@latest login` e `use <PROJECT_ID>`:
-
-```bash
-npx -y firebase-tools@latest deploy --only hosting
-```
-
-Este deploy é superfície técnica controlada. **Não** promove B9 nem afirma runtime operacional.
+Este deploy é superfície técnica controlada. **Não** promove B9 nem afirma runtime operacional do Nurse-PaLM.

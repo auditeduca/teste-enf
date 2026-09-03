@@ -5,28 +5,33 @@ import { fileURLToPath } from "node:url";
 import { CASCADE, runGates, RUNTIME_PAGES } from "./public/engine/core.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
-const pub = join(root, "public");
-const policy = JSON.parse(readFileSync(join(pub, "policies/fail-closed.json"), "utf8"));
+const gatePub = join(root, "public");
+const site = join(root, "../reference-website");
+const policy = JSON.parse(readFileSync(join(gatePub, "policies/fail-closed.json"), "utf8"));
 if (!policy.root || policy.kind !== "policy-as-code" || JSON.stringify(policy.cascade) !== JSON.stringify(CASCADE)) {
   console.error("CKO GATE FAIL policy-as-code root mismatch");
   process.exit(1);
 }
-const universe = JSON.parse(readFileSync(join(pub, "data/universe.json"), "utf8"));
-const listing = readdirSync(pub);
+const universe = JSON.parse(readFileSync(join(gatePub, "data/universe.json"), "utf8"));
+const listing = readdirSync(site);
 const files = Object.fromEntries(
-  [...RUNTIME_PAGES, "aldrete.html"].filter((p) => existsSync(join(pub, p))).map((p) => [p, readFileSync(join(pub, p), "utf8")])
+  [...RUNTIME_PAGES, "aldrete.html"].filter((p) => existsSync(join(site, p))).map((p) => [p, readFileSync(join(site, p), "utf8")])
 );
-const toolLibraryPath = join(pub, "data/tool-library-runtime.json");
+const toolLibraryPath = existsSync(join(site, "data/cko/tool-library-runtime.json"))
+  ? join(site, "data/cko/tool-library-runtime.json")
+  : join(gatePub, "data/tool-library-runtime.json");
 const toolLibrary = existsSync(toolLibraryPath) ? JSON.parse(readFileSync(toolLibraryPath, "utf8")) : undefined;
-const pendenciesPath = join(pub, "data/pendencies.json");
+const governancePath = join(site, "data/cko/governance.json");
+const governance = existsSync(governancePath) ? JSON.parse(readFileSync(governancePath, "utf8")) : undefined;
+const pendenciesPath = join(gatePub, "data/pendencies.json");
 const pendencies = existsSync(pendenciesPath) ? JSON.parse(readFileSync(pendenciesPath, "utf8")) : undefined;
-const driveImmutablePath = join(pub, "data/drive-immutable.json");
+const driveImmutablePath = join(gatePub, "data/drive-immutable.json");
 const driveImmutable = existsSync(driveImmutablePath) ? JSON.parse(readFileSync(driveImmutablePath, "utf8")) : undefined;
-const platform = { listing, files, toolLibrary, pendencies, driveImmutable };
+const platform = { listing, files, toolLibrary, governance, pendencies, driveImmutable };
 
 const report = await runGates(universe, { action: "inspect", platform });
 
-const outDir = join(root, "public/data");
+const outDir = join(gatePub, "data");
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, "gate-report.json"), JSON.stringify(report, null, 2) + "\n");
 writeFileSync(
@@ -59,4 +64,5 @@ console.log(JSON.stringify({
   residual_uncertainty: report.residual_uncertainty.value,
   unknown: report.unknown_universe.length,
   release: report.release,
+  site: "reference-website",
 }, null, 2));

@@ -41,6 +41,10 @@ const INTEGRITY_DENIALS = new Set([
   "TOOL_LIBRARIES_PRESENT",
   "PENDENCIES_EXPLICIT",
   "DRIVE_IMMUTABLE",
+  "SCHEMA_GOVERNS_RUNTIME",
+  "GRAPH_GOVERNS_RUNTIME",
+  "TWIN_GOVERNS_RUNTIME",
+  "NURSEPALM_GOVERNS_RUNTIME",
 ]);
 
 export const TOOL_RUNTIME_CANARIES = [
@@ -66,7 +70,21 @@ export const TOOL_ENGINE_LIBS = [
   "js/calc-engine.js",
   "js/calc-engine-v2.js",
   "js/ce-calculadora-padrao.js",
+  "js/nurse-palm.js",
+  "js/knowledge-graph.js",
   "js/modules/data/biblioteca.json",
+];
+
+export const CALENF_STRUCTURE = [
+  "data/schemas/tool.schema.json",
+  "data/tools",
+  "scripts/generate_tool_page.py",
+  "js/calc-engine.js",
+  "js/calc-engine-v2.js",
+  "js/nurse-palm.js",
+  "js/knowledge-graph.js",
+  "js/partials-loader.js",
+  "partials/header.html",
 ];
 
 export const RUNTIME_PAGES = [
@@ -109,10 +127,7 @@ export function inspectPlatform(platform) {
   const files = platform?.files || {};
   const listing = platform?.listing || Object.keys(files);
   const index = files["index.html"] || "";
-  if (
-    /id="graph"|Reexecutar cascata|id="orquestrador"|Relat[oó]rio T[eé]cnico Final Controlado/.test(index) ||
-    listing.includes("cko-relatorio-tecnico-final.html")
-  ) {
+  if (/id="graph"|Reexecutar cascata|id="orquestrador"|Relat[oó]rio T[eé]cnico Final Controlado/.test(index)) {
     denials.push({ id: "NO_REPORT_DASHBOARD", reason: "report dashboard must not be the runtime frontend" });
   }
   if (!/Calculadoras de Enfermagem/.test(index) || !/PAGE_INSTITUTIONAL_CLUSTER/.test(index)) {
@@ -135,10 +150,48 @@ export function inspectPlatform(platform) {
     if (TOOL_ENGINE_LIBS.some((p) => !engines.has(p))) {
       denials.push({ id: "TOOL_LIBRARIES_PRESENT", reason: "calculator/library JS engines are missing" });
     }
+    if ((tl.structure && tl.structure !== "calenf") || (tl.calenf_structure && CALENF_STRUCTURE.some((p) => !(tl.calenf_structure || []).includes(p)))) {
+      denials.push({ id: "SCHEMA_GOVERNS_RUNTIME", reason: "runtime is not the CALENF NIFS-900 structure" });
+    }
+  }
+  const gov = platform?.governance;
+  if (gov) {
+    const g = inspectCalenfGovernance(gov);
+    denials.push(...g.denials);
   }
   if (platform?.pendencies) {
     const pend = inspectPendencies(platform.pendencies, platform.driveImmutable);
     denials.push(...pend.denials);
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectCalenfGovernance(governance) {
+  const denials = [];
+  if (!governance) return { ok: true, skipped: true, denials };
+  if (governance.kind !== "calenf-runtime-governance") {
+    denials.push({ id: "SCHEMA_GOVERNS_RUNTIME", reason: "governance kind must be calenf-runtime-governance" });
+  }
+  if (governance.schema !== "data/schemas/tool.schema.json") {
+    denials.push({ id: "SCHEMA_GOVERNS_RUNTIME", reason: "tools must instance data/schemas/tool.schema.json" });
+  }
+  if (governance.graph !== "js/knowledge-graph.js") {
+    denials.push({ id: "GRAPH_GOVERNS_RUNTIME", reason: "runtime graph must be js/knowledge-graph.js" });
+  }
+  const twin = governance.digitalTwin || {};
+  if (twin.nifs !== "NIFS-600-15" || twin.observed === true || twin.deployed === true) {
+    denials.push({ id: "TWIN_GOVERNS_RUNTIME", reason: "digital twin must remain NIFS-600-15 HOLD (not observed/deployed)" });
+  }
+  const np = governance.nursePalm || {};
+  if (np.engine !== "js/nurse-palm.js" || np.operational !== "NOT_ASSERTED" || (np.layers || []).length !== 10) {
+    denials.push({ id: "NURSEPALM_GOVERNS_RUNTIME", reason: "Nurse-PaLM V9 must bind js/nurse-palm.js and stay NOT_ASSERTED" });
+  }
+  const edges = governance.edges || [];
+  const hasFanIn = edges.some((e) => String(e[0] || "").startsWith("TOOL-") && e[1] === "B9" && e[2] === "fanIn");
+  const hasTwin = edges.some((e) => e[2] === "governedBy" && e[1] === "B5");
+  const hasPalm = edges.some((e) => e[2] === "boundTo" && e[1] === "B10");
+  if (!hasFanIn || !hasTwin || !hasPalm) {
+    denials.push({ id: "GRAPH_GOVERNS_RUNTIME", reason: "tools must fan-in to B9 and bind B5 twin + B10 Nurse-PaLM" });
   }
   return { ok: denials.length === 0, denials };
 }
@@ -216,6 +269,7 @@ export function knownUniverseObjects(universe, platform) {
   if (platform) {
     for (const p of RUNTIME_PAGES) push("runtime-page", p);
     if (platform.toolLibrary) push("tool-library-runtime", "CKO-TOOL-LIBRARY-RUNTIME-1.0.0");
+    if (platform.governance) push("calenf-governance", "CKO-CALENF-GOVERNANCE-1.0.0");
     for (const p of platform.pendencies?.items || []) push("pendency", p.id, { status: p.status });
     if (platform.driveImmutable) push("drive-immutable", "CKO-DRIVE-IMMUTABLE-1.0.0");
   }
@@ -228,7 +282,6 @@ export function validateRuntimePlatformSchema(platform) {
   const files = platform.files || {};
   const listing = platform.listing || Object.keys(files);
   if (listing.includes("app.js")) errors.push("schema: control-room app.js is not a runtime platform file");
-  if (listing.includes("cko-relatorio-tecnico-final.html")) errors.push("schema: report bridge page is not a runtime platform file");
   if (RUNTIME_PAGES.length !== 12) errors.push("schema: runtime pages must be exactly 12");
   for (const p of RUNTIME_PAGES) {
     if (!files[p]) errors.push(`schema: missing required page ${p}`);
@@ -278,6 +331,10 @@ export function validateToolLibrarySchema(platform) {
     errors.push("schema: calculator runtimes must cover the known tool canaries");
   }
   if ((tl.biblioteca_articles_n || 0) < 1) errors.push("schema: biblioteca article runtime is empty");
+  if (tl.structure && tl.structure !== "calenf") errors.push("schema: runtime structure must be calenf");
+  for (const p of CALENF_STRUCTURE) {
+    if (tl.calenf_structure && !tl.calenf_structure.includes(p)) errors.push(`schema: missing CALENF path ${p}`);
+  }
   return { ok: errors.length === 0, errors };
 }
 
@@ -392,6 +449,10 @@ export function graphConstraints(universe, platform) {
     if (locales !== 360) violations.push("graph: Wave2 locale cells must remain 360 classified holds");
     if (platform.pendencies.closes_b9 !== false) violations.push("graph: pendencies cannot close B9");
   }
+  if (platform?.governance) {
+    const g = inspectCalenfGovernance(platform.governance);
+    for (const d of g.denials) violations.push(`graph: ${d.id} ${d.reason}`);
+  }
   return {
     ok: violations.length === 0,
     nodes: nodes.length,
@@ -472,6 +533,13 @@ export function runtimeAssertions(universe, platform) {
       check("A-TOOL-LIBS", TOOL_ENGINE_LIBS.every((p) => (tl.engine_libraries || []).includes(p)), "engines");
       const aldrete = platform.files?.["aldrete.html"] || "";
       check("A-ALDRETE-CALC", /btnCalcular/.test(aldrete) && /scoreValor/.test(aldrete), "aldrete");
+    }
+    if (platform.governance) {
+      const g = inspectCalenfGovernance(platform.governance);
+      check("A-CALENF-SCHEMA", g.denials.every((d) => d.id !== "SCHEMA_GOVERNS_RUNTIME"), "schema");
+      check("A-CALENF-GRAPH", g.denials.every((d) => d.id !== "GRAPH_GOVERNS_RUNTIME"), "graph");
+      check("A-CALENF-TWIN", g.denials.every((d) => d.id !== "TWIN_GOVERNS_RUNTIME"), "twin");
+      check("A-CALENF-NURSEPALM", g.denials.every((d) => d.id !== "NURSEPALM_GOVERNS_RUNTIME"), "nurse-palm");
     }
     if (platform.pendencies) {
       const pend = inspectPendencies(platform.pendencies, platform.driveImmutable);
@@ -692,7 +760,9 @@ export async function automaticEvidence(universe, extras = {}) {
         ? files[obj.id] || ""
         : obj.kind === "tool-library-runtime"
           ? JSON.stringify(extras.platform?.toolLibrary || {})
-          : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
+          : obj.kind === "calenf-governance"
+            ? JSON.stringify(extras.platform?.governance || {})
+            : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
     const sha = await digestSha256(body);
     receipts.push({
       id: `EVD-${obj.kind}-${obj.id}`.replace(/[^A-Za-z0-9-]/g, "-"),

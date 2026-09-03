@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -228,7 +227,7 @@ def from_pdf(universe: dict, items: list[dict]) -> None:
 def from_directory(audit: dict, items: list[dict], created: list[str]) -> None:
     html = audit["html_pendentes"]
     for name in html["links_quebrados_referenciados_no_index"]:
-        exists = (PUB / name).is_file()
+        exists = (REF / name).is_file()
         pendency(
             items,
             pid=f"PEND-DIR-PAGE-{Path(name).stem}",
@@ -271,7 +270,7 @@ def from_directory(audit: dict, items: list[dict], created: list[str]) -> None:
             next_action="REGENERATE_FROM_data/tools/asa.json_WITHOUT_DRIVE",
         )
     for lang in audit["traducoes_pendentes"]["idiomas_planejados_sem_arquivo_json"]:
-        exists = (PUB / "i18n" / f"{lang}.json").is_file()
+        exists = (REF / "i18n" / f"{lang}.json").is_file()
         pendency(
             items,
             pid=f"PEND-DIR-I18N-{lang}",
@@ -288,7 +287,7 @@ def from_directory(audit: dict, items: list[dict], created: list[str]) -> None:
         pid="PEND-DIR-SITEMAP",
         source="directory",
         kind="asset",
-        status="CREATED_IN_RUNTIME_HOLD" if (PUB / "sitemap.xml").is_file() else "MISSING",
+        status="CREATED_IN_RUNTIME_HOLD" if (REF / "sitemap.xml").is_file() else "MISSING",
         summary="sitemap.xml",
         path="sitemap.xml",
     )
@@ -317,7 +316,7 @@ def from_directory(audit: dict, items: list[dict], created: list[str]) -> None:
         pid="PEND-DIR-WEBMANIFEST",
         source="directory",
         kind="asset",
-        status="CREATED_IN_RUNTIME_HOLD" if (PUB / "site.webmanifest").is_file() else "HOLD",
+        status="CREATED_IN_RUNTIME_HOLD" if (REF / "site.webmanifest").is_file() else "HOLD",
         summary="site.webmanifest",
         path="site.webmanifest",
     )
@@ -406,94 +405,33 @@ def redirect_html(target: str) -> str:
 
 
 def materialize_directory(audit: dict) -> list[str]:
+    """Converge documented aliases/sitemap into CALENF. Never copy CALENF into CKO public."""
     created: list[str] = []
     if not REF.is_dir():
         return created
 
-    def copy_from_ref(rel: str) -> None:
-        src = REF / rel
-        dest = PUB / rel
-        if not src.exists():
-            return
+    def write_site_text(rel: str, content: str) -> None:
+        dest = REF / rel
         assert_not_drive(dest)
         dest.parent.mkdir(parents=True, exist_ok=True)
-        if src.is_dir():
-            shutil.copytree(src, dest, dirs_exist_ok=True)
-        else:
-            shutil.copy2(src, dest)
+        dest.write_text(content, encoding="utf-8")
         created.append(rel)
 
-    for name in audit["html_pendentes"]["links_quebrados_referenciados_no_index"]:
-        if name in WAVE2_PAGES:
-            continue
-        copy_from_ref(name)
-        stem = Path(name).stem
-        tool_json = REF / "data" / "tools" / f"{stem}.json"
-        if tool_json.is_file():
-            copy_from_ref(f"data/tools/{stem}.json")
-
     for row in audit["html_pendentes"]["links_com_alias_existente_corrigir_no_index"]:
-        if name_exists := (PUB / row["arquivo_existente"]).is_file():
-            _ = name_exists
-        copy_from_ref(row["arquivo_existente"])
-        dest = PUB / row["link_index"]
-        if not dest.exists() and (PUB / row["arquivo_existente"]).is_file():
-            assert_not_drive(dest)
-            dest.write_text(redirect_html(row["arquivo_existente"]), encoding="utf-8")
-            created.append(row["link_index"])
+        dest = REF / row["link_index"]
+        target = REF / row["arquivo_existente"]
+        if not dest.exists() and target.is_file():
+            write_site_text(row["link_index"], redirect_html(row["arquivo_existente"]))
 
     for alias, target in SLUG_ALIASES:
-        dest = PUB / alias
-        if not dest.exists() and (PUB / target).is_file():
-            assert_not_drive(dest)
-            dest.write_text(redirect_html(target), encoding="utf-8")
-            created.append(alias)
+        dest = REF / alias
+        if not dest.exists() and (REF / target).is_file():
+            write_site_text(alias, redirect_html(target))
 
-    copy_from_ref("sitemap.xml")
-    if (REF / "i18n").is_dir():
-        for src in (REF / "i18n").glob("*.json"):
-            if src.name in {"validation_report.json", "manifest.json", "country-locale-map.json"}:
-                copy_from_ref(f"i18n/{src.name}")
-                continue
-            copy_from_ref(f"i18n/{src.name}")
-
-    if (REF / "biblioteca").is_dir():
-        copy_from_ref("biblioteca")
-    for rel in (
-        "public/output.css",
-        "global-styles.css",
-        "css/fontawesome.min.css",
-        "site.webmanifest",
-        "js/calc-engine.js",
-        "js/calc-engine-v2.js",
-        "js/ce-calculadora-padrao.js",
-        "js/modules/data/biblioteca.json",
-        "js/modules/catalog-page.js",
-        "aldrete.html",
-        "imc.html",
-        "gotejamento.html",
-        "braden.html",
-        "news.html",
-        "gasometria.html",
-        "biblioteca.html",
-        "downloads.html",
-        "biblioteca-provas.html",
-        "biblioteca-cirurgica.html",
-        "biblioteca-curativo.html",
-        "biblioteca-seringa.html",
-        "biblioteca-carinho-de-emergencia.html",
-    ):
-        copy_from_ref(rel)
-
-    fonts_src = REF / "fonts"
-    if fonts_src.is_dir():
-        for font in ("inter/inter-regular.woff2", "inter/inter-600.woff2", "nunito/nunito-regular.woff2", "nunito/nunito-700.woff2"):
-            copy_from_ref(f"fonts/{font}")
-
-    manifest = PUB / "site.webmanifest"
+    manifest = REF / "site.webmanifest"
     if not manifest.exists():
-        assert_not_drive(manifest)
-        manifest.write_text(
+        write_site_text(
+            "site.webmanifest",
             json.dumps(
                 {
                     "name": "Calculadoras de Enfermagem",
@@ -507,9 +445,7 @@ def materialize_directory(audit: dict) -> list[str]:
                 indent=2,
             )
             + "\n",
-            encoding="utf-8",
         )
-        created.append("site.webmanifest")
     return created
 
 

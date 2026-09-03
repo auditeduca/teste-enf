@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "cko-controlled/**"
+      - "reference-website/**"
       - "firebase.json"
       - ".github/workflows/cko-controlled-gate.yml"
 
@@ -39,14 +40,27 @@ jobs:
           assert pol["root"] is True
           assert pol["kind"]=="policy-as-code"
           assert pol["cascade"]==ids
-          idx=open("public/index.html",encoding="utf-8").read()
+          site=Path("../reference-website")
+          idx=(site/"index.html").read_text(encoding="utf-8")
           assert "PAGE_INSTITUTIONAL_CLUSTER" in idx
           assert 'id="graph"' not in idx
+          firebase=json.load(open("../firebase.json"))
+          assert firebase["hosting"]["public"]=="reference-website"
+          ignore=set(firebase["hosting"]["ignore"])
+          assert "cko-relatorio-tecnico-final.html" in ignore
+          assert "grafo-clinico.html" in ignore
           inv=json.load(open("public/data/tool-library-runtime.json"))
           for p in ["aldrete.html","imc.html","gotejamento.html","biblioteca.html"]:
               assert p in inv["tool_canaries"] or p in inv["library_canaries"]
-          assert (open("public/aldrete.html",encoding="utf-8").read()).find("btnCalcular")>=0
-          assert (open("public/js/calc-engine.js",encoding="utf-8").read()).find("calc-engine")>=0
+          assert inv["structure"]=="calenf"
+          gov=json.load(open(site/"data/cko/governance.json"))
+          assert gov["nursePalm"]["operational"]=="NOT_ASSERTED"
+          assert gov["digitalTwin"]["observed"] is False
+          assert (site/"aldrete.html").read_text(encoding="utf-8").find("btnCalcular")>=0
+          assert (site/"js/calc-engine.js").read_text(encoding="utf-8").find("calc-engine")>=0
+          assert (site/"js/nurse-palm.js").is_file()
+          assert (site/"js/knowledge-graph.js").is_file()
+          assert (site/"data/schemas/tool.schema.json").is_file()
           p=json.load(open("public/data/pendencies.json"))
           assert p["mutate_drive"] is False
           assert p["closes_b9"] is False
@@ -56,9 +70,9 @@ jobs:
           for f in freeze["files"]:
               raw=Path(f["path"]).read_bytes()
               assert hashlib.sha256(raw).hexdigest()==f["sha256"], f["path"]
-          assert Path("public/sitemap.xml").is_file()
-          assert Path("public/berg.html").is_file()
-          print("cascade root policy-as-code OK; pendencies explicit; Drive immutable")
+          assert (site/"sitemap.xml").is_file()
+          assert (site/"berg.html").is_file()
+          print("cascade root policy-as-code OK; CALENF site; pendencies explicit; Drive immutable")
           PY
       - name: Fail-closed release invariant
         run: |

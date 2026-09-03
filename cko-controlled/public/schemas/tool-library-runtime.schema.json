@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/tool-library-runtime.schema.json",
+  "title": "Hosted tool and library runtimes",
+  "type": "object",
+  "required": [
+    "kind",
+    "release",
+    "tool_canaries",
+    "library_canaries",
+    "engine_libraries",
+    "tools_with_calc_runtime",
+    "biblioteca_articles_n"
+  ],
+  "properties": {
+    "id": { "const": "CKO-TOOL-LIBRARY-RUNTIME-1.0.0" },
+    "kind": { "const": "tool-library-runtime" },
+    "root": { "const": "policy-as-code" },
+    "release": { "type": "string", "pattern": "NOT_RELEASED" },
+    "tool_canaries": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "enum": [
+          "aldrete.html",
+          "imc.html",
+          "gotejamento.html",
+          "braden.html",
+          "news.html",
+          "gasometria.html"
+        ]
+      }
+    },
+    "library_canaries": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "enum": [
+          "biblioteca.html",
+          "downloads.html",
+          "biblioteca-provas.html",
+          "biblioteca-cirurgica.html",
+          "biblioteca-curativo.html",
+          "biblioteca-seringa.html",
+          "biblioteca-carinho-de-emergencia.html"
+        ]
+      }
+    },
+    "engine_libraries": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "enum": [
+          "js/calc-engine.js",
+          "js/calc-engine-v2.js",
+          "js/ce-calculadora-padrao.js",
+          "js/nurse-palm.js",
+          "js/knowledge-graph.js",
+          "js/modules/data/biblioteca.json"
+        ]
+      }
+    },
+    "structure": { "const": "calenf" },
+    "tools_with_calc_runtime": { "type": "integer", "minimum": 6 },
+    "biblioteca_articles_n": { "type": "integer", "minimum": 1 }
+  }
+}

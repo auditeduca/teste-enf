@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Sync PT-BR tool/library runtimes from reference-website into the hosted public root.
+"""Converge the CKO overlay into the CALENF (reference-website) structure.
 
-Wave2 institutional pages stay in place. Asset trees are copied (or refreshed)
-from reference-website. This script also writes the known-universe inventory
-used by policy-as-code and generates the missing escalas-de-enfermagem hubs.
+The hosted site is CALENF: data/tools/*.json → HTML, js/calc-engine.js,
+js/nurse-palm.js, js/knowledge-graph.js, NIFS-600-15 digital twin (HOLD).
+Wave2 institutional pages are overlaid onto that tree. The script does not
+copy CALENF into cko-controlled/public.
 """
 from __future__ import annotations
 
@@ -13,9 +14,9 @@ import shutil
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-PUB = ROOT / "public"
-SRC = ROOT.parent / "reference-website"
+GATE = Path(__file__).resolve().parents[1]
+SITE = GATE.parent / "reference-website"
+WAVE2 = GATE / "public"
 
 WAVE2_PAGES = {
     "index.html",
@@ -30,11 +31,6 @@ WAVE2_PAGES = {
     "fale.html",
     "forum-enfermagem.html",
     "mapa-do-site.html",
-}
-
-SKIP_HTML = {
-    "cko-relatorio-tecnico-final.html",
-    "grafo-clinico.html",
 }
 
 TOOL_CANARIES = [
@@ -58,10 +54,33 @@ ENGINE_LIBS = [
     "js/calc-engine.js",
     "js/calc-engine-v2.js",
     "js/ce-calculadora-padrao.js",
+    "js/nurse-palm.js",
+    "js/knowledge-graph.js",
     "js/modules/data/biblioteca.json",
-    "js/modules/catalog-page.js",
 ]
-
+CALENF_STRUCTURE = [
+    "data/schemas/tool.schema.json",
+    "data/tools",
+    "scripts/generate_tool_page.py",
+    "js/calc-engine.js",
+    "js/calc-engine-v2.js",
+    "js/nurse-palm.js",
+    "js/knowledge-graph.js",
+    "js/partials-loader.js",
+    "partials/header.html",
+]
+NURSE_PALM_V9_LAYERS = [
+    "Clinical Reasoning",
+    "Episodic Memory",
+    "Temporal Graph",
+    "World Model",
+    "Clinical Attention",
+    "Uncertainty Model",
+    "Planner",
+    "Feedback Learning",
+    "Simulation Engine",
+    "Multi-Agent Council",
+]
 CALC_MARKERS = (
     "btnCalcular",
     "scoreValor",
@@ -71,20 +90,6 @@ CALC_MARKERS = (
     "calc-engine.js",
     "data-calc-input",
 )
-
-ASSET_TREES = (
-    "js",
-    "css",
-    "fonts",
-    "img",
-    "images",
-    "assets",
-    "biblioteca",
-    "blog",
-    "downloads",
-    "partials",
-)
-
 HUBS = [
     ("centro-cirurgico", "Centro Cirúrgico", ("cirúrg", "anestesi", "srpa", "perioper", "elpo", "aldrete", "asa")),
     ("dor", "Dor", ("dor", "pain", "bps", "flacc", "cries", "lanss", "wong", "nips", "numéric", "numeric")),
@@ -100,52 +105,7 @@ HUBS = [
     ("terapia-intensiva", "Terapia Intensiva", ("uti", "sofa", "qsofa", "apache", "rass", "bps", "ramsay", "news")),
     ("urgencia-emergencia", "Urgência/Emergência", ("urgên", "emerg", "manchester", "heart", "news", "mews", "alvarado", "abcd2", "wells")),
 ]
-
-
-def copy_tree(src: Path, dst: Path) -> None:
-    dst.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(src, dst, dirs_exist_ok=True)
-
-
-def sync_from_reference() -> None:
-    if not SRC.is_dir():
-        raise SystemExit(f"reference-website not found: {SRC}")
-    copied = 0
-    skipped = 0
-    for html in SRC.glob("*.html"):
-        if html.name in WAVE2_PAGES or html.name in SKIP_HTML:
-            skipped += 1
-            continue
-        shutil.copy2(html, PUB / html.name)
-        copied += 1
-    for name in SKIP_HTML:
-        stale = PUB / name
-        if stale.exists():
-            stale.unlink()
-    for name in ASSET_TREES:
-        src = SRC / name
-        if src.is_dir():
-            copy_tree(src, PUB / name)
-    src_data = SRC / "data"
-    if src_data.is_dir():
-        copy_tree(src_data, PUB / "data")
-    (PUB / "public").mkdir(parents=True, exist_ok=True)
-    for rel in (
-        "public/output.css",
-        "global-styles.css",
-        "global-scripts.js",
-        "lang-selector.js",
-        "favicon.ico",
-        "favicon.svg",
-        "apple-touch-icon.png",
-        "site.webmanifest",
-    ):
-        src = SRC / rel
-        if src.exists():
-            dest = PUB / rel
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(src, dest)
-    print(f"html_copied={copied} wave2_preserved={skipped}")
+TOOL_REQUIRED = ("id", "slug", "code", "overview", "calculator", "interpretation")
 
 
 def read_text(path: Path) -> str:
@@ -156,26 +116,42 @@ def is_calc_html(html: str) -> bool:
     return any(m in html for m in CALC_MARKERS)
 
 
-def home_local_hrefs() -> list[str]:
-    index = read_text(PUB / "index.html")
-    hrefs = []
-    for raw in re.findall(r'href="([^"]+)"', index):
-        if raw.startswith(("http://", "https://", "mailto:", "tel:", "#", "//")):
-            continue
-        path = raw.split("#", 1)[0].split("?", 1)[0]
-        if not path:
-            continue
-        hrefs.append(path.lstrip("/"))
-    return sorted(set(hrefs))
+def overlay_wave2_into_calenf() -> None:
+    if not SITE.is_dir():
+        raise SystemExit(f"CALENF root missing: {SITE}")
+    copied = []
+    for name in sorted(WAVE2_PAGES):
+        src = WAVE2 / name
+        if not src.is_file():
+            raise SystemExit(f"Wave2 page missing in overlay source: {name}")
+        shutil.copy2(src, SITE / name)
+        copied.append(name)
+    robots = WAVE2 / "robots.txt"
+    if robots.is_file():
+        shutil.copy2(robots, SITE / "robots.txt")
+    print("wave2_overlaid", ",".join(copied))
+
+
+def validate_tool_schema(data: dict) -> list[str]:
+    errors = []
+    for key in TOOL_REQUIRED:
+        if key not in data:
+            errors.append(f"missing {key}")
+    overview = data.get("overview") or {}
+    if "name" not in overview or "objective" not in overview:
+        errors.append("overview.name/objective")
+    calc = data.get("calculator") or {}
+    if "inputs" not in calc or "formula" not in calc:
+        errors.append("calculator.inputs/formula")
+    return errors
 
 
 def load_tool_jsons() -> list[dict]:
     tools = []
-    tools_dir = PUB / "data" / "tools"
-    if not tools_dir.is_dir():
-        return tools
+    tools_dir = SITE / "data" / "tools"
     for path in sorted(tools_dir.glob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
+        schema_errors = validate_tool_schema(data)
         tools.append(
             {
                 "slug": data.get("slug") or path.stem,
@@ -184,6 +160,8 @@ def load_tool_jsons() -> list[dict]:
                 "html": f"{data.get('slug') or path.stem}.html",
                 "specialty": (data.get("overview") or {}).get("specialty") or [],
                 "category": (data.get("breadcrumb") or {}).get("category"),
+                "schema_ok": len(schema_errors) == 0,
+                "schema_errors": schema_errors,
             }
         )
     return tools
@@ -200,9 +178,22 @@ def resolve_tool_html(slug: str) -> str | None:
     if slug == "escala-de-glasgow":
         candidates.append("glasgow.html")
     for name in candidates:
-        if (PUB / name).is_file():
+        if (SITE / name).is_file():
             return name
     return None
+
+
+def home_local_hrefs() -> list[str]:
+    index = read_text(SITE / "index.html")
+    hrefs = []
+    for raw in re.findall(r'href="([^"]+)"', index):
+        if raw.startswith(("http://", "https://", "mailto:", "tel:", "#", "//")):
+            continue
+        path = raw.split("#", 1)[0].split("?", 1)[0]
+        if not path:
+            continue
+        hrefs.append(path.lstrip("/"))
+    return sorted(set(hrefs))
 
 
 def build_inventory() -> dict:
@@ -210,43 +201,37 @@ def build_inventory() -> dict:
     for tool in tools:
         html = resolve_tool_html(tool["slug"])
         tool["html"] = html
-        tool["present"] = bool(html and (PUB / html).is_file())
-        if html:
-            tool["has_calc_runtime"] = is_calc_html(read_text(PUB / html))
-        else:
-            tool["has_calc_runtime"] = False
-
-    library_pages = [name for name in LIBRARY_CANARIES if (PUB / name).is_file()]
-    biblioteca_articles = sorted(
-        str(p.relative_to(PUB)).replace("\\", "/")
-        for p in (PUB / "biblioteca").rglob("*.html")
-        if p.is_file()
-    )
-    libs = [rel for rel in ENGINE_LIBS if (PUB / rel).is_file()]
+        tool["present"] = bool(html and (SITE / html).is_file())
+        tool["has_calc_runtime"] = bool(html and is_calc_html(read_text(SITE / html)))
+    library_pages = [name for name in LIBRARY_CANARIES if (SITE / name).is_file()]
+    biblioteca_n = sum(1 for _ in (SITE / "biblioteca").rglob("*.html")) if (SITE / "biblioteca").is_dir() else 0
+    libs = [rel for rel in ENGINE_LIBS if (SITE / rel).exists()]
     hrefs = home_local_hrefs()
     missing_home = []
     for h in hrefs:
-        target = PUB / h
-        if target.exists():
-            continue
-        if h.endswith("/") and (PUB / h / "index.html").exists():
+        target = SITE / h
+        if target.exists() or (h.endswith("/") and (SITE / h / "index.html").exists()):
             continue
         missing_home.append(h)
-    canary_tools = [n for n in TOOL_CANARIES if (PUB / n).is_file() and is_calc_html(read_text(PUB / n))]
+    canary_tools = [n for n in TOOL_CANARIES if (SITE / n).is_file() and is_calc_html(read_text(SITE / n))]
+    structure = [rel for rel in CALENF_STRUCTURE if (SITE / rel).exists()]
     return {
         "id": "CKO-TOOL-LIBRARY-RUNTIME-1.0.0",
         "kind": "tool-library-runtime",
         "root": "policy-as-code",
+        "structure": "calenf",
         "release": "HOLD / NOT_RELEASED",
         "wave2_pages": sorted(WAVE2_PAGES),
         "tool_canaries": canary_tools,
         "library_canaries": library_pages,
         "engine_libraries": libs,
+        "calenf_structure": structure,
         "tools": tools,
         "tools_n": len(tools),
         "tools_with_html": sum(1 for t in tools if t["present"]),
         "tools_with_calc_runtime": sum(1 for t in tools if t["has_calc_runtime"]),
-        "biblioteca_articles_n": len(biblioteca_articles),
+        "tools_schema_ok": sum(1 for t in tools if t["schema_ok"]),
+        "biblioteca_articles_n": biblioteca_n,
         "home_local_hrefs": hrefs,
         "home_missing_hrefs": missing_home,
         "hubs": [f"escalas-de-enfermagem/{slug}/index.html" for slug, _, _ in HUBS],
@@ -254,20 +239,19 @@ def build_inventory() -> dict:
 
 
 def write_home_aliases() -> None:
-    """Fill Wave2 home hrefs that do not exist as dedicated files in the source tree."""
     aliases = {
         "classificacao_intervencoes-enfermagem.html": "nanda.html",
         "dimensionamento-cofen.html": "dimensionamento.html",
     }
     for dest_name, src_name in aliases.items():
-        src = PUB / src_name
-        dest = PUB / dest_name
+        src = SITE / src_name
+        dest = SITE / dest_name
         if src.is_file():
             shutil.copy2(src, dest)
-    hub = PUB / "concurso_publico" / "index.html"
+    hub = SITE / "concurso_publico" / "index.html"
     hub.parent.mkdir(parents=True, exist_ok=True)
-    sims = sorted(p.name for p in PUB.glob("simulado*.html"))
-    extra = [n for n in ("biblioteca-provas.html", "simulados.html") if (PUB / n).is_file()]
+    sims = sorted(p.name for p in SITE.glob("simulado*.html"))
+    extra = [n for n in ("biblioteca-provas.html", "simulados.html") if (SITE / n).is_file()]
     items = "\n".join(
         f'<li><a class="block rounded-2xl border border-blue-100 bg-white p-5 hover:shadow-lg" href="../{name}"><strong class="text-[#1A3E74]">{name.replace(".html","").replace("_"," ").replace("-"," ")}</strong></a></li>'
         for name in extra + sims
@@ -301,7 +285,7 @@ def write_home_aliases() -> None:
 def write_hubs(inventory: dict) -> None:
     tools = inventory["tools"]
     for slug, title, needles in HUBS:
-        dest = PUB / "escalas-de-enfermagem" / slug / "index.html"
+        dest = SITE / "escalas-de-enfermagem" / slug / "index.html"
         dest.parent.mkdir(parents=True, exist_ok=True)
         matched = []
         for tool in tools:
@@ -348,47 +332,208 @@ def write_hubs(inventory: dict) -> None:
         )
 
 
-def write_inventory(inventory: dict) -> Path:
-    slim = dict(inventory)
-    slim.pop("home_local_hrefs", None)
-    out = PUB / "data" / "tool-library-runtime.json"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(slim, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return out
+def build_governance(inventory: dict) -> dict:
+    nodes = [
+        {"id": "B5", "type": "DigitalTwin", "nifs": "NIFS-600-15", "observed": False, "deployed": False},
+        {"id": "B6.1", "type": "ClinicalVertical"},
+        {"id": "B6.2", "type": "KnowledgeLibraries"},
+        {"id": "B9", "type": "ReleaseFanIn", "release": "NOT_RELEASED"},
+        {"id": "B10", "type": "NursePaLM", "operational": "NOT_ASSERTED", "engine": "js/nurse-palm.js", "layers": NURSE_PALM_V9_LAYERS},
+        {"id": "SCHEMA-TOOL", "type": "Schema", "path": "data/schemas/tool.schema.json"},
+        {"id": "GRAPH-KG", "type": "KnowledgeGraph", "path": "js/knowledge-graph.js"},
+    ]
+    edges = [
+        ["B5", "B9", "fanIn"],
+        ["B6.1", "B9", "fanIn"],
+        ["B6.2", "B9", "fanIn"],
+        ["B10", "B9", "fanIn"],
+        ["B5", "B10", "feeds"],
+    ]
+    for tool in inventory["tools"]:
+        node_id = f"TOOL-{tool['slug']}"
+        twin_id = f"TWIN-{tool['slug']}"
+        nodes.append(
+            {
+                "id": node_id,
+                "type": "ToolRuntime",
+                "slug": tool["slug"],
+                "schema": "data/schemas/tool.schema.json",
+                "schema_ok": tool["schema_ok"],
+                "html": tool.get("html"),
+                "nursePalm": {"engine": "js/nurse-palm.js", "layers": 10, "operational": "NOT_ASSERTED"},
+            }
+        )
+        nodes.append(
+            {
+                "id": twin_id,
+                "type": "TwinProjection",
+                "of": node_id,
+                "governedBy": "B5",
+                "nifs": "NIFS-600-15",
+                "observed": False,
+                "deployed": False,
+            }
+        )
+        edges.extend(
+            [
+                [node_id, "SCHEMA-TOOL", "instanceOf"],
+                [node_id, twin_id, "projectedAs"],
+                [twin_id, "B5", "governedBy"],
+                [node_id, "B10", "boundTo"],
+                [node_id, "GRAPH-KG", "inGraph"],
+                [node_id, "B6.1", "clinicalVertical"],
+                [node_id, "B9", "fanIn"],
+            ]
+        )
+    for lib in inventory["library_canaries"]:
+        node_id = f"LIB-{Path(lib).stem}"
+        nodes.append({"id": node_id, "type": "LibraryRuntime", "html": lib, "schema": "js/modules/data/biblioteca.json"})
+        edges.extend([[node_id, "B6.2", "governedBy"], [node_id, "B9", "fanIn"], [node_id, "B10", "boundTo"]])
+    return {
+        "id": "CKO-CALENF-GOVERNANCE-1.0.0",
+        "kind": "calenf-runtime-governance",
+        "root": "policy-as-code",
+        "structure": "NIFS-900-03",
+        "release": "HOLD / NOT_RELEASED",
+        "nursePalm": {
+            "engine": "js/nurse-palm.js",
+            "layers": NURSE_PALM_V9_LAYERS,
+            "operational": "NOT_ASSERTED",
+            "audit": "NURSE_PALM_21_LAYER_COMPLETENESS_AUDIT_v6_4_0",
+        },
+        "digitalTwin": {
+            "nifs": "NIFS-600-15",
+            "block": "B5",
+            "observed": False,
+            "deployed": False,
+            "classified_nodes": 137,
+            "classified_edges": 136,
+        },
+        "schema": "data/schemas/tool.schema.json",
+        "graph": "js/knowledge-graph.js",
+        "ssg": "scripts/generate_tool_page.py",
+        "nodes": nodes,
+        "edges": edges,
+        "nodeCount": len(nodes),
+        "edgeCount": len(edges),
+        "tools_schema_ok": inventory["tools_schema_ok"],
+        "tools_n": inventory["tools_n"],
+    }
 
 
-def assert_canaries(inventory: dict) -> None:
+def write_json(path: Path, payload: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+KEEP_OVERLAY = {
+    "404.html",
+    "footer.html",
+    "engine",
+    "policies",
+    "schemas",
+    "graph",
+    "drive",
+    "institucional",
+    "data",
+    "fonts",
+    "public",
+    "robots.txt",
+    "global-scripts.js",
+    "global-styles.css",
+    "lang-selector.js",
+} | set(WAVE2_PAGES)
+KEEP_DATA = {
+    "drive-immutable.json",
+    "evidence-index.json",
+    "gate-report.json",
+    "pendencies.json",
+    "residual-uncertainty.json",
+    "tool-library-runtime.json",
+    "universe.json",
+    "unknown-universe.json",
+}
+
+
+def drop_duplicate_cko_copies() -> None:
+    """Remove one-way CALENF copies from the CKO overlay. The site is reference-website."""
+    removed = 0
+    for path in list(WAVE2.iterdir()):
+        if path.name in KEEP_OVERLAY or path.name.startswith("."):
+            continue
+        if path.is_dir():
+            shutil.rmtree(path)
+        else:
+            path.unlink()
+        removed += 1
+    data = WAVE2 / "data"
+    if data.is_dir():
+        for path in list(data.iterdir()):
+            if path.name in KEEP_DATA:
+                continue
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
+            removed += 1
+    fonts = WAVE2 / "fonts"
+    if fonts.is_dir():
+        for path in list(fonts.iterdir()):
+            if path.name == "inter":
+                continue
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
+            removed += 1
+    print(f"cko_public_duplicates_removed={removed}")
+
+
+def assert_canaries(inventory: dict, governance: dict) -> None:
     missing = [n for n in TOOL_CANARIES if n not in inventory["tool_canaries"]]
     missing += [n for n in LIBRARY_CANARIES if n not in inventory["library_canaries"]]
     missing += [n for n in ENGINE_LIBS if n not in inventory["engine_libraries"]]
+    missing += [rel for rel in CALENF_STRUCTURE if rel not in inventory["calenf_structure"]]
     if inventory["home_missing_hrefs"]:
         missing.extend(f"home:{h}" for h in inventory["home_missing_hrefs"])
+    if governance["nursePalm"]["operational"] != "NOT_ASSERTED":
+        missing.append("nursePalm.operational")
+    if governance["digitalTwin"]["observed"] or governance["digitalTwin"]["deployed"]:
+        missing.append("digitalTwin.observed/deployed")
+    if inventory["tools_schema_ok"] < len(TOOL_CANARIES):
+        missing.append("tools_schema_ok")
     if missing:
-        raise SystemExit("tool/library runtime missing: " + ", ".join(missing[:40]))
+        raise SystemExit("CALENF runtime missing: " + ", ".join(missing[:40]))
 
 
 def main() -> None:
-    inventory_only = "--inventory-only" in sys.argv
-    if not inventory_only:
-        sync_from_reference()
+    overlay_wave2_into_calenf()
     write_home_aliases()
     inventory = build_inventory()
     write_hubs(inventory)
     inventory = build_inventory()
-    path = write_inventory(inventory)
-    assert_canaries(inventory)
+    slim = dict(inventory)
+    slim.pop("home_local_hrefs", None)
+    governance = build_governance(slim)
+    write_json(SITE / "data" / "cko" / "tool-library-runtime.json", slim)
+    write_json(SITE / "data" / "cko" / "governance.json", governance)
+    write_json(WAVE2 / "data" / "tool-library-runtime.json", slim)
+    if "--inventory-only" not in sys.argv:
+        drop_duplicate_cko_copies()
+    assert_canaries(slim, governance)
     print(
         json.dumps(
             {
-                "inventory": str(path.relative_to(ROOT)),
-                "tools_n": inventory["tools_n"],
-                "tools_with_html": inventory["tools_with_html"],
-                "tools_with_calc_runtime": inventory["tools_with_calc_runtime"],
-                "biblioteca_articles_n": inventory["biblioteca_articles_n"],
-                "tool_canaries": inventory["tool_canaries"],
-                "library_canaries": inventory["library_canaries"],
-                "engine_libraries": inventory["engine_libraries"],
-                "home_missing_hrefs": inventory["home_missing_hrefs"],
+                "site": "reference-website",
+                "structure": "NIFS-900-03",
+                "tools_n": slim["tools_n"],
+                "tools_schema_ok": slim["tools_schema_ok"],
+                "tools_with_calc_runtime": slim["tools_with_calc_runtime"],
+                "biblioteca_articles_n": slim["biblioteca_articles_n"],
+                "governance_nodes": governance["nodeCount"],
+                "nursePalm": governance["nursePalm"]["operational"],
+                "digitalTwin_observed": governance["digitalTwin"]["observed"],
+                "home_missing_hrefs": slim["home_missing_hrefs"],
             },
             ensure_ascii=False,
             indent=2,

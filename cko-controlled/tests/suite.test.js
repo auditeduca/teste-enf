@@ -8,6 +8,7 @@ import {
   validateRuntimePlatformSchema,
   validateToolLibrarySchema,
   inspectPendencies,
+  inspectCalenfGovernance,
   validatePendenciesSchema,
   evaluatePolicies,
   graphConstraints,
@@ -28,20 +29,23 @@ import {
 } from "../public/engine/core.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
-const pub = join(root, "../public");
-const universe = JSON.parse(readFileSync(join(pub, "data/universe.json"), "utf8"));
-const toolLibrary = JSON.parse(readFileSync(join(pub, "data/tool-library-runtime.json"), "utf8"));
-const pendencies = JSON.parse(readFileSync(join(pub, "data/pendencies.json"), "utf8"));
-const driveImmutable = JSON.parse(readFileSync(join(pub, "data/drive-immutable.json"), "utf8"));
+const gatePub = join(root, "../public");
+const site = join(root, "../../reference-website");
+const universe = JSON.parse(readFileSync(join(gatePub, "data/universe.json"), "utf8"));
+const toolLibrary = JSON.parse(readFileSync(join(site, "data/cko/tool-library-runtime.json"), "utf8"));
+const governance = JSON.parse(readFileSync(join(site, "data/cko/governance.json"), "utf8"));
+const pendencies = JSON.parse(readFileSync(join(gatePub, "data/pendencies.json"), "utf8"));
+const driveImmutable = JSON.parse(readFileSync(join(gatePub, "data/drive-immutable.json"), "utf8"));
 const platform = {
-  listing: readdirSync(pub),
+  listing: readdirSync(site),
   files: Object.fromEntries(
     [...RUNTIME_PAGES, "aldrete.html", "imc.html", "gotejamento.html", "biblioteca.html"].map((p) => [
       p,
-      readFileSync(join(pub, p), "utf8"),
+      readFileSync(join(site, p), "utf8"),
     ])
   ),
   toolLibrary,
+  governance,
   pendencies,
   driveImmutable,
 };
@@ -74,8 +78,8 @@ describe("schemas", () => {
 
 describe("policy-as-code", () => {
   it("declares the cascade in fail-closed.json as the executable root", () => {
-    const policy = JSON.parse(readFileSync(join(pub, "policies/fail-closed.json"), "utf8"));
-    const schema = JSON.parse(readFileSync(join(pub, "schemas/runtime-platform.schema.json"), "utf8"));
+    const policy = JSON.parse(readFileSync(join(gatePub, "policies/fail-closed.json"), "utf8"));
+    const schema = JSON.parse(readFileSync(join(gatePub, "schemas/runtime-platform.schema.json"), "utf8"));
     assert.equal(policy.root, true);
     assert.equal(policy.kind, "policy-as-code");
     assert.deepEqual(policy.cascade, CASCADE);
@@ -85,6 +89,10 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "TOOL_RUNTIME_PRESENT"));
     assert.ok(policy.rules.some((r) => r.id === "LIBRARY_RUNTIME_PRESENT"));
     assert.ok(policy.rules.some((r) => r.id === "TOOL_LIBRARIES_PRESENT"));
+    assert.ok(policy.rules.some((r) => r.id === "SCHEMA_GOVERNS_RUNTIME"));
+    assert.ok(policy.rules.some((r) => r.id === "GRAPH_GOVERNS_RUNTIME"));
+    assert.ok(policy.rules.some((r) => r.id === "TWIN_GOVERNS_RUNTIME"));
+    assert.ok(policy.rules.some((r) => r.id === "NURSEPALM_GOVERNS_RUNTIME"));
     assert.ok(policy.rules.some((r) => r.id === "PENDENCIES_EXPLICIT"));
     assert.ok(policy.rules.some((r) => r.id === "DRIVE_IMMUTABLE"));
   });
@@ -267,7 +275,10 @@ describe("runtime frontend", () => {
       assert.equal(html.includes('canvas id="graph"'), false, p);
     }
     assert.equal(platform.listing.includes("app.js"), false);
-    assert.equal(platform.listing.includes("cko-relatorio-tecnico-final.html"), false);
+    const firebase = JSON.parse(readFileSync(join(root, "../../firebase.json"), "utf8"));
+    assert.equal(firebase.hosting.public, "reference-website");
+    assert.ok(firebase.hosting.ignore.includes("cko-relatorio-tecnico-final.html"));
+    assert.ok(firebase.hosting.ignore.includes("grafo-clinico.html"));
   });
   it("ships calculator and library runtimes plus JS engines", () => {
     const plat = validateToolLibrarySchema(platform);
@@ -292,6 +303,11 @@ describe("runtime frontend", () => {
     assert.equal(r.ok, true, JSON.stringify(r.failed));
     assert.ok(r.asserts.some((a) => a.id === "A-TOOL-RUNTIME" && a.ok));
     assert.ok(r.asserts.some((a) => a.id === "A-LIBRARY-RUNTIME" && a.ok));
+    const g = inspectCalenfGovernance(platform.governance);
+    assert.equal(g.ok, true, JSON.stringify(g.denials));
+    assert.equal(platform.governance.nursePalm.operational, "NOT_ASSERTED");
+    assert.equal(platform.governance.digitalTwin.observed, false);
+    assert.equal(platform.toolLibrary.structure, "calenf");
   });
   it("materializes every documented PDF and directory pendency without mutating Drive or closing B9", () => {
     const r = inspectPendencies(pendencies, driveImmutable);
@@ -310,9 +326,12 @@ describe("runtime frontend", () => {
     assert.ok(byId["PEND-BLOCK-B9"]);
     assert.ok(byId["PEND-DIR-SITEMAP"]);
     assert.ok(driveImmutable.files.length >= 10);
-    assert.equal(existsSync(join(pub, "sitemap.xml")), true);
-    assert.equal(existsSync(join(pub, "escala-de-braden.html")), true);
-    assert.equal(existsSync(join(pub, "berg.html")), true);
+    assert.equal(existsSync(join(site, "sitemap.xml")), true);
+    assert.equal(existsSync(join(site, "braden.html")), true);
+    assert.equal(existsSync(join(site, "berg.html")), true);
+    assert.equal(existsSync(join(site, "data/schemas/tool.schema.json")), true);
+    assert.equal(existsSync(join(site, "js/nurse-palm.js")), true);
+    assert.equal(existsSync(join(site, "js/knowledge-graph.js")), true);
     const rt = runtimeAssertions(universe, platform);
     assert.ok(rt.asserts.some((a) => a.id === "A-PENDENCIES-EXPLICIT" && a.ok));
     assert.ok(rt.asserts.some((a) => a.id === "A-DRIVE-IMMUTABLE" && a.ok));
