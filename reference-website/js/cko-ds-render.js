@@ -268,6 +268,52 @@ function renderLayerPolicies(policy) {
     </section>`;
 }
 
+function renderApiCatalog(policy) {
+  const families = (policy.families || [])
+    .map(
+      (f) => `<tr>
+        <th scope="row"><code>${esc(f.family_id)}</code></th>
+        <td>${esc(f.name)}</td>
+        <td>${esc(f.endpoint_count)}</td>
+        <td><span class="cko-ds-badge cko-ds-badge--hold">${esc(f.status)}</span></td>
+      </tr>`
+    )
+    .join("");
+  const shared = (policy.families || []).find((f) => f.family_id === "API-SHARED-DEEPSEEK");
+  const slugs = (shared?.endpoints || [])
+    .map(
+      (e) => `<li><code>${esc(e.slug)}</code> ${esc(e.version || "")} · ${esc(e.role || "")} · autoridade canónica ${e.canonical_authority === true ? "SIM" : "NÃO"}</li>`
+    )
+    .join("");
+  const next = (policy.families || []).find((f) => f.family_id === "API-MD-REG-NEXT");
+  const findings = (policy.evaluation?.findings || [])
+    .map((f) => `<li><code>${esc(f.id)}</code> ${esc(f.text)}</li>`)
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_API_HOLD")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>${esc(policy.rule || "")} DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED. Não é ACTIVE. MD/REG completa na próxima tarefa.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>9 famílias · ${esc(policy.endpoint_total)} endpoints</h2>
+      <p class="cko-ds-help">Conversa compartilhada, hashes LYR-SEC, readback live, NIFS, NKP e admin do site. Live ACTIVE ≠ plataforma ACTIVE. Calculadoras permanecem PAUSED.</p>
+      <ul class="cko-ds-ut-findings">${findings}</ul>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Família</th><th>Nome</th><th>N</th><th>Estado</th></tr></thead>
+        <tbody>${families}</tbody>
+      </table></div>
+    </section>
+    <section class="cko-ds-section">
+      <h2>DeepSeek da conversa compartilhada</h2>
+      <p class="cko-ds-help">Precedência SPECIALIZED GOVERNED EDGE → CKO DEEPSEEK GATEWAY → DIRECT PROVIDER CALL. Gateway sem autoridade canónica.</p>
+      <ul class="cko-ds-ut-chips">${slugs}</ul>
+    </section>
+    <section class="cko-ds-section">
+      <h2>MD/REG — próxima tarefa</h2>
+      <p class="cko-ds-help"><code>md_reg_complete=${esc(policy.md_reg_complete)}</code> · próxima tarefa ${esc(policy.md_reg_next_task)}. ${esc(next?.note || "Classificado ≠ extraído clause-level ≠ implantado.")}</p>
+    </section>`;
+}
+
 function renderExtraction(policy) {
   const rows = (policy.streams || [])
     .map(
@@ -591,6 +637,12 @@ async function mount(el) {
       refreshShellToc();
       return;
     }
+    if (mode === "api-catalog" || ds.document_id === "CKO-POL-API-001") {
+      const policy = src.includes("api-catalog") || ds.document_id === "CKO-POL-API-001" ? ds : await loadJson("/data/cko/api-catalog.json");
+      el.innerHTML = renderApiCatalog(policy);
+      refreshShellToc();
+      return;
+    }
     if (mode === "manual") {
       el.innerHTML = renderIdentityManual(ds);
       refreshShellToc();
@@ -626,4 +678,4 @@ if (document.readyState === "loading") {
   boot();
 }
 
-export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets, renderPlatformClosure, renderLayerPolicies, renderExtraction };
+export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets, renderPlatformClosure, renderLayerPolicies, renderExtraction, renderApiCatalog };

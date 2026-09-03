@@ -59,6 +59,7 @@ const INTEGRITY_DENIALS = new Set([
   "PLATFORM_CLOSURE_HOLD",
   "LAYER_POLICY_HOLD",
   "EXTRACTION_POLICY_HOLD",
+  "API_CATALOG_HOLD",
 ]);
 
 export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
@@ -113,6 +114,21 @@ export const LAYER_POLICY_N = 44;
 export const EXTRACTION_POLICY_ID = "POL-CKO-EXTRACTION-1.0.0";
 export const EXTRACTION_DOCUMENT_ID = "CKO-POL-EXTRACT-001";
 export const EXTRACTION_STREAM_N = 8;
+export const API_CATALOG_ID = "POL-CKO-API-CATALOG-1.0.0";
+export const API_DOCUMENT_ID = "CKO-POL-API-001";
+export const API_FAMILY_N = 9;
+export const API_ENDPOINT_TOTAL = 222;
+export const API_FAMILY_IDS = [
+  "API-SHARED-DEEPSEEK",
+  "API-EDGE-CONTROLLED",
+  "API-EDGE-LIVE-READBACK",
+  "API-NIS-REST",
+  "API-NIS-FHIR",
+  "API-NIS-ALTERNATE",
+  "API-NKP-ADMIN",
+  "API-SITE-ADMIN",
+  "API-MD-REG-NEXT",
+];
 export const EXTRACTION_STREAM_IDS = [
   "EXT-LAYER-ZIP",
   "EXT-PDF-PACK",
@@ -318,6 +334,7 @@ export function inspectPlatform(platform) {
     denials.push(...inspectPlatformClosure(platform.platformClosure, platform.humanDecisions).denials);
     denials.push(...inspectLayerPolicies(platform.layerPolicies, platform.layers).denials);
     denials.push(...inspectExtractionPolicy(platform.extractionPolicy).denials);
+    denials.push(...inspectApiCatalog(platform.apiCatalog).denials);
   }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
@@ -1026,6 +1043,77 @@ export function inspectExtractionPolicy(policy) {
   return { ok: denials.length === 0, denials };
 }
 
+export function inspectApiCatalog(policy) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "API_CATALOG_HOLD", reason });
+  if (!policy) {
+    deny("API catalog missing; shared conversation APIs must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== API_CATALOG_ID || policy.kind !== "policy-as-code") {
+    deny("identity must be POL-CKO-API-CATALOG-1.0.0");
+  }
+  if (policy.document_id !== API_DOCUMENT_ID || policy.document_version !== "1.0.0") {
+    deny("frozen API catalog identity must remain CKO-POL-API-001 v1.0.0");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    deny("API catalog must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (policy.starts_at !== "policy-as-code") {
+    deny("API catalog must start at policy-as-code");
+  }
+  if (policy.active === true || policy.status !== "CONTROLLED_API_HOLD") {
+    deny("API catalog is a HOLD catalog; it is not ACTIVE");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED")) {
+    deny("API catalog must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.operational === "ASSERTED") {
+    deny("API catalog cannot claim implantado, assured, or operational");
+  }
+  if (policy.md_reg_complete === true || policy.md_reg_next_task !== true) {
+    deny("MD/REG completion must remain the next task");
+  }
+  const families = policy.families || [];
+  if (policy.family_count !== API_FAMILY_N || families.length !== API_FAMILY_N) {
+    deny(`API catalog must declare ${API_FAMILY_N} families`);
+  }
+  const ids = families.map((f) => f.family_id);
+  if (JSON.stringify(ids) !== JSON.stringify(API_FAMILY_IDS)) {
+    deny("API families must remain the nine canonical families in order");
+  }
+  if (policy.endpoint_total !== API_ENDPOINT_TOTAL) {
+    deny(`API endpoint_total must remain ${API_ENDPOINT_TOTAL}`);
+  }
+  for (const fam of families) {
+    if (fam.active === true || fam.implantado === true || fam.assured === true) {
+      deny(`${fam.id} cannot be ACTIVE/implantado/assured`);
+    }
+    if (fam.parent !== POLICY_MASTER_ID || fam.specializes !== POLICY_MASTER_ID) {
+      deny(`${fam.id} must specialize POLICY_MASTER_CONTRACT`);
+    }
+    const fields = fam.contract?.fields || {};
+    if (fam.contract?.field_count !== POLICY_MASTER_FIELD_N || Object.keys(fields).length !== POLICY_MASTER_FIELD_N) {
+      deny(`${fam.id} must specialize all 28 master fields`);
+    }
+  }
+  const shared = families.find((f) => f.family_id === "API-SHARED-DEEPSEEK");
+  const slugs = (shared?.endpoints || []).map((e) => e.slug);
+  if (!["cko-deepseek-gateway", "cko-deepseek-regulatory-extract", "cko-deepseek-health"].every((s) => slugs.includes(s))) {
+    deny("shared conversation must bind gateway, regulatory-extract, and health");
+  }
+  const rest = families.find((f) => f.family_id === "API-NIS-REST");
+  const calc = (rest?.endpoints || []).find((e) => String(e.path || "").includes("/calculate"));
+  if (calc && calc.clinical !== "PAUSED") {
+    deny("calculator calculate API must remain PAUSED");
+  }
+  const next = families.find((f) => f.family_id === "API-MD-REG-NEXT");
+  if (next?.md_reg_complete === true) {
+    deny("API-MD-REG-NEXT cannot claim MD/REG complete");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
 export function inspectVisualAssetPolicy(policy) {
   const denials = [];
   const deny = (reason) => denials.push({ id: "VAS_HOLD", reason });
@@ -1201,6 +1289,7 @@ export function knownUniverseObjects(universe, platform) {
     if (platform.platformClosure) push("platform-closure-policy", platform.platformClosure.id || CLOSURE_POLICY_ID);
     if (platform.layerPolicies) push("layer-policy-catalog", platform.layerPolicies.id || LAYER_CATALOG_ID);
     if (platform.extractionPolicy) push("extraction-policy", platform.extractionPolicy.id || EXTRACTION_POLICY_ID);
+    if (platform.apiCatalog) push("api-catalog-policy", platform.apiCatalog.id || API_CATALOG_ID);
   }
   return items;
 }
@@ -1232,6 +1321,7 @@ export function validateRuntimePlatformSchema(platform) {
   errors.push(...validatePlatformClosureSchema(platform).errors);
   errors.push(...validateLayerPoliciesSchema(platform).errors);
   errors.push(...validateExtractionSchema(platform).errors);
+  errors.push(...validateApiCatalogSchema(platform).errors);
   return { ok: errors.length === 0, errors };
 }
 
@@ -1295,6 +1385,29 @@ export function validateExtractionSchema(platform) {
   if (!Array.isArray(policy.streams) || policy.streams.length !== EXTRACTION_STREAM_N || policy.stream_count !== EXTRACTION_STREAM_N) {
     errors.push("schema: extraction streams != 8");
   }
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateApiCatalogSchema(platform) {
+  if (!platform?.layers && !platform?.apiCatalog) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.apiCatalog;
+  if (!policy) {
+    errors.push("schema: API catalog missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== API_CATALOG_ID) errors.push("schema: api-catalog id");
+  if (policy.status !== "CONTROLLED_API_HOLD" || policy.active === true) errors.push("schema: api-catalog is not ACTIVE");
+  if (policy.starts_at !== "policy-as-code" || policy.specializes !== POLICY_MASTER_ID) {
+    errors.push("schema: api-catalog must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (!Array.isArray(policy.families) || policy.families.length !== API_FAMILY_N || policy.family_count !== API_FAMILY_N) {
+    errors.push("schema: api families != 9");
+  }
+  if (policy.endpoint_total !== API_ENDPOINT_TOTAL) errors.push("schema: api endpoint_total");
+  if (policy.md_reg_complete === true) errors.push("schema: MD/REG must remain next task");
   return { ok: errors.length === 0, errors };
 }
 
@@ -1634,6 +1747,10 @@ export function graphConstraints(universe, platform) {
     if (!ext.ok) {
       violations.push("graph: extraction streams must specialize POLICY_MASTER_CONTRACT");
     }
+    const apis = inspectApiCatalog(platform.apiCatalog);
+    if (!apis.ok) {
+      violations.push("graph: API catalog must specialize POLICY_MASTER_CONTRACT");
+    }
     if (platform.mdRegPolicy && (platform.mdRegPolicy.parent !== POLICY_MASTER_ID || platform.mdRegPolicy.specializes !== POLICY_MASTER_ID)) {
       violations.push("graph: MD/REG must specialize POLICY_MASTER_CONTRACT");
     }
@@ -1770,6 +1887,8 @@ export function runtimeAssertions(universe, platform) {
       check("A-LAYER-POLICY-HOLD", lyrPol.ok, "CKO-POL-LYR-001");
       const ext = inspectExtractionPolicy(platform.extractionPolicy);
       check("A-EXTRACTION-POLICY-HOLD", ext.ok, "CKO-POL-EXTRACT-001");
+      const apis = inspectApiCatalog(platform.apiCatalog);
+      check("A-API-CATALOG-HOLD", apis.ok, "CKO-POL-API-001");
     }
   }
   const failed = asserts.filter((a) => !a.ok);
