@@ -10,8 +10,15 @@ const esc = (value) =>
     .replaceAll('"', "&quot;");
 
 function section(title, note, inner) {
-  return `<section class="cko-ds-section">
-    <h2>${esc(title)}</h2>
+  const id = "ds-" + String(title || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 48);
+  return `<section class="cko-ds-section" ${id ? `id="${esc(id)}"` : ""}>
+    <h2${id ? ` id="${esc(id)}-title"` : ""}>${esc(title)}</h2>
     ${note ? `<p class="cko-ds-help">${esc(note)}</p>` : ""}
     ${inner}
   </section>`;
@@ -355,6 +362,12 @@ async function loadJson(url) {
   return res.json();
 }
 
+function refreshShellToc() {
+  if (window.CKOPageShell && typeof window.CKOPageShell.refreshToc === "function") {
+    window.CKOPageShell.refreshToc();
+  }
+}
+
 async function mount(el) {
   const mode = el.dataset.ckoDsRender || "catalog";
   const src = el.dataset.ckoDsSrc || "/data/cko/design-system.json";
@@ -368,23 +381,28 @@ async function mount(el) {
       const layersSrc = el.dataset.ckoLayersSrc || "/data/cko/layers.json";
       const layers = await loadJson(layersSrc);
       el.innerHTML = renderLayers(ds, layers);
+      refreshShellToc();
       return;
     }
     if (mode === "universal-tool") {
       const policy = src.includes("universal-tool") ? ds : await loadJson("/data/cko/universal-tool.json");
       el.innerHTML = renderUniversalTool(policy);
+      refreshShellToc();
       return;
     }
     if (mode === "human-holds") {
       const ledger = src.includes("human-decisions") ? ds : await loadJson("/data/cko/human-decisions.json");
       el.innerHTML = renderHumanHolds(ledger);
+      refreshShellToc();
       return;
     }
     if (mode === "manual") {
       el.innerHTML = renderIdentityManual(ds);
+      refreshShellToc();
       return;
     }
     el.innerHTML = renderCatalog(ds, mode);
+    refreshShellToc();
   } catch (err) {
     el.innerHTML = `<article class="cko-ds-card cko-ds-card--warn"><p>Catálogo indisponível. ${esc(err.message)}</p></article>`;
   }

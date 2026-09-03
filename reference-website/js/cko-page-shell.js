@@ -281,14 +281,25 @@
         document.querySelector(".cko-layout__main") ||
         document.getElementById("main-content");
       if (!main) return;
-      var heads = main.querySelectorAll("h2[id]");
+      var heads = main.querySelectorAll("h2[id], section.cko-ds-section > h2, .cko-ds-section h2");
       if (!heads.length) {
         ol.innerHTML =
           '<li><span class="cko-shell-aside__notice">Sem seções com id ainda.</span></li>';
         return;
       }
       var html = "";
+      var seen = {};
       Array.prototype.forEach.call(heads, function (h) {
+        if (!h.id) {
+          var slug = (h.textContent || "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "")
+            .slice(0, 40);
+          if (slug) h.id = slug;
+        }
+        if (!h.id || seen[h.id]) return;
+        seen[h.id] = true;
         html +=
           '<li><a href="#' +
           escapeHtml(h.id) +
@@ -468,6 +479,7 @@
   window.CKOPageShell = {
     boot: boot,
     siteUrl: siteUrl,
+    refreshToc: fillAutoToc,
     getCatalog: function () {
       return catalogCache;
     }
