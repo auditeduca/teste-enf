@@ -100,7 +100,7 @@ function renderComponents(ds, mode) {
         ? `<div class="cko-ds-stage" data-state="focus"><span class="cko-ds-help">estado: foco / hover / disabled via CSS</span>${c.html}</div>`
         : "";
       return `<article class="cko-ds-comp" data-cko-component="${esc(c.id)}" data-cko-kind="${esc(c.kind)}">
-        <header><h3>${esc(c.name)}</h3><span>${esc(c.id)}</span></header>
+        <div class="cko-ds-comp-head"><h3>${esc(c.name)}</h3><span>${esc(c.id)}</span></div>
         <div class="cko-ds-stage">${c.html}</div>
         ${extra}
       </article>`;
@@ -114,7 +114,7 @@ function renderTemplates(ds) {
   const cards = ds.templates
     .map(
       (t) => `<article class="cko-ds-comp" data-cko-template="${esc(t.id)}">
-        <header><h3>${esc(t.name)}</h3><span>${esc(t.id)}</span></header>
+        <div class="cko-ds-comp-head"><h3>${esc(t.name)}</h3><span>${esc(t.id)}</span></div>
         <div class="cko-ds-wire" aria-hidden="true"><b></b><i></i><em></em></div>
         <p class="cko-ds-help">${esc(t.note)}</p>
       </article>`
