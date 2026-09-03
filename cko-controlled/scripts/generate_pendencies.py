@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +47,20 @@ SLUG_ALIASES = [
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def tool_config_parses(html_path: Path) -> bool:
+    if not html_path.is_file():
+        return False
+    html = html_path.read_text(encoding="utf-8", errors="replace")
+    match = re.search(r'<script[^>]*id="tool-config"[^>]*>(.*?)</script>', html, re.S)
+    if not match:
+        return False
+    try:
+        json.loads(match.group(1).replace("\\u003c", "<"))
+    except json.JSONDecodeError:
+        return False
+    return True
 
 
 def load_json(path: Path):
@@ -259,13 +274,18 @@ def from_directory(audit: dict, items: list[dict], created: list[str]) -> None:
             path=f"escala-de-{row['slug_html']}.html" if row["slug_html"] != "braden" else "escala-de-braden.html",
         )
     for row in audit["json_pendentes"]["html_com_tool_config_json_invalido"]:
+        parsed = tool_config_parses(REF / row["html"])
         pendency(
             items,
             pid="PEND-DIR-ASA-TOOL-CONFIG",
             source="directory",
             kind="parse-hold",
-            status="HOLD",
-            summary=row["erro"],
+            status="CREATED_IN_RUNTIME_HOLD" if parsed else "HOLD",
+            summary=(
+                "tool-config regenerated from data/tools JSON; parse OK; HOLD / NOT_RELEASED"
+                if parsed
+                else row["erro"]
+            ),
             path=row["html"],
             next_action="REGENERATE_FROM_data/tools/asa.json_WITHOUT_DRIVE",
         )

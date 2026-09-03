@@ -25,7 +25,9 @@ jobs:
           cd cko-controlled
           python3 scripts/generate_universe.py
           python3 scripts/sync_tool_runtime.py
+          python3 scripts/remediate_platform_now.py
           python3 scripts/generate_pendencies.py
+          python3 scripts/report_pendency_progress.py
           node --test tests/suite.test.js
           node cli.mjs
           python3 - <<'PY'
@@ -72,6 +74,17 @@ jobs:
               assert hashlib.sha256(raw).hexdigest()==f["sha256"], f["path"]
           assert (site/"sitemap.xml").is_file()
           assert (site/"berg.html").is_file()
+          import json as _json, re
+          asa=(site/"asa.html").read_text(encoding="utf-8")
+          m=re.search(r'<script[^>]*id="tool-config"[^>]*>(.*?)</script>', asa, re.S)
+          assert m, "asa.html missing tool-config"
+          _json.loads(m.group(1).replace("\\u003c","<"))
+          for loc in ("da","uk","zh"):
+              body=_json.loads((site/"i18n"/f"{loc}.json").read_text(encoding="utf-8"))
+              assert body["_meta"]["activate_in_selector"] is False
+              assert body["_meta"]["status"]=="HOLD_TRANSLATION_REQUIRED"
+          inv=json.load(open("public/data/tool-library-runtime.json"))
+          assert inv["tools_with_calc_runtime"]==inv["tools_n"]
           print("cascade root policy-as-code OK; CALENF site; pendencies explicit; Drive immutable")
           PY
       - name: Fail-closed release invariant

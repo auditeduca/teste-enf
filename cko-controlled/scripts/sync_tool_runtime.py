@@ -168,6 +168,7 @@ def load_tool_jsons() -> list[dict]:
 
 
 def resolve_tool_html(slug: str) -> str | None:
+    """Prefer a calculator HTML over a redirect alias for the same slug."""
     candidates = [f"{slug}.html"]
     if slug.startswith("escala-de-"):
         candidates.append(f"{slug.replace('escala-de-', '')}.html")
@@ -177,10 +178,21 @@ def resolve_tool_html(slug: str) -> str | None:
         candidates.append("morse.html")
     if slug == "escala-de-glasgow":
         candidates.append("glasgow.html")
+    scored: list[tuple[int, str]] = []
+    seen: set[str] = set()
     for name in candidates:
-        if (SITE / name).is_file():
-            return name
-    return None
+        if name in seen or not (SITE / name).is_file():
+            continue
+        seen.add(name)
+        html = read_text(SITE / name)
+        rank = 2 if is_calc_html(html) else 1
+        if 'http-equiv="refresh"' in html or "meta http-equiv='refresh'" in html:
+            rank = 0
+        scored.append((rank, name))
+    if not scored:
+        return None
+    scored.sort(key=lambda row: (-row[0], row[1]))
+    return scored[0][1]
 
 
 def home_local_hrefs() -> list[str]:
@@ -448,6 +460,7 @@ KEEP_DATA = {
     "evidence-index.json",
     "gate-report.json",
     "pendencies.json",
+    "remediation-plan.json",
     "residual-uncertainty.json",
     "tool-library-runtime.json",
     "universe.json",

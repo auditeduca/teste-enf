@@ -368,3 +368,47 @@ describe("runtime frontend", () => {
     assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
   });
 });
+
+describe("platform remediations without Drive mutation", () => {
+  it("parses ASA tool-config regenerated from data/tools JSON", () => {
+    const html = readFileSync(join(site, "asa.html"), "utf8");
+    const match = html.match(/<script[^>]*id="tool-config"[^>]*>([\s\S]*?)<\/script>/);
+    assert.ok(match, "asa.html missing #tool-config");
+    const cfg = JSON.parse(match[1].replace(/\\u003c/g, "<"));
+    assert.equal(cfg.slug, "asa");
+    assert.ok(cfg.calculator && Array.isArray(cfg.calculator.inputs));
+    const byId = Object.fromEntries(pendencies.items.map((i) => [i.id, i]));
+    assert.equal(byId["PEND-DIR-ASA-TOOL-CONFIG"].status, "CREATED_IN_RUNTIME_HOLD");
+  });
+  it("keeps da/uk/zh i18n as HOLD scaffolds off the language selector", () => {
+    for (const locale of ["da", "uk", "zh"]) {
+      const path = join(site, "i18n", `${locale}.json`);
+      assert.equal(existsSync(path), true, `${locale}.json missing`);
+      const body = JSON.parse(readFileSync(path, "utf8"));
+      assert.equal(body._meta.status, "HOLD_TRANSLATION_REQUIRED");
+      assert.equal(body._meta.activate_in_selector, false);
+      assert.equal(body._meta.release, "HOLD / NOT_RELEASED");
+    }
+    const selector = readFileSync(join(site, "js/lang-selector.js"), "utf8");
+    const codesMatch = selector.match(/var ALL_LANG_CODES = (\[[^\]]+\])/);
+    assert.ok(codesMatch, "ALL_LANG_CODES missing");
+    const codes = JSON.parse(codesMatch[1]);
+    assert.equal(codes.includes("da"), false);
+    assert.equal(codes.includes("uk"), false);
+    assert.equal(codes.includes("zh"), false);
+    assert.equal(codes.includes("zh-CN"), true);
+    const byId = Object.fromEntries(pendencies.items.map((i) => [i.id, i]));
+    assert.equal(byId["PEND-DIR-I18N-da"].status, "CREATED_IN_RUNTIME_HOLD");
+    assert.equal(byId["PEND-DIR-I18N-uk"].status, "CREATED_IN_RUNTIME_HOLD");
+    assert.equal(byId["PEND-DIR-I18N-zh"].status, "CREATED_IN_RUNTIME_HOLD");
+  });
+  it("resolves slug aliases to calculator HTML instead of redirects", () => {
+    const bySlug = Object.fromEntries(toolLibrary.tools.map((t) => [t.slug, t]));
+    assert.equal(bySlug["escala-de-braden"].html, "braden.html");
+    assert.equal(bySlug["escala-de-glasgow"].html, "glasgow.html");
+    assert.equal(bySlug["escala-de-morse"].html, "morse.html");
+    assert.equal(bySlug["escala-de-braden"].has_calc_runtime, true);
+    assert.equal(bySlug["calculo-rescisao"].has_calc_runtime, true);
+    assert.equal(toolLibrary.tools_with_calc_runtime, toolLibrary.tools_n);
+  });
+});
