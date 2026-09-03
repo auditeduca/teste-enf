@@ -11,6 +11,30 @@ export const RULES = {
   unknown_universe: "explicitado",
 };
 
+/** Everything starts here. Later stages cannot PASS if a predecessor failed. */
+export const CASCADE = [
+  "policy-as-code",
+  "schemas",
+  "graph-constraints",
+  "CI-gates",
+  "runtime-assertions",
+  "automatic-evidence",
+];
+
+const INTEGRITY_DENIALS = new Set([
+  "NO_FACT_WITHOUT_EVIDENCE",
+  "DISCOVERY_IS_NOT_EVIDENCE",
+  "PENDING_IS_NOT_ACK",
+  "RUNTIME_OBSERVED_NOT_INFERRED",
+  "UNKNOWN_UNIVERSE_EXPLICIT",
+  "RESIDUAL_X_REQUIRED",
+  "NO_CLINICAL_CLAIM_FROM_CLASSIFICATION",
+  "RIGHTS_CHAIN_REQUIRED_TO_PUBLISH",
+  "COVERAGE_100_KNOWN",
+  "EVIDENCE_COVERAGE_100",
+  "TEST_PASS_100_DEFINED",
+]);
+
 const SHA_RE = /^[a-f0-9]{64}$/;
 const BLOCK_IDS = ["B1", "B2", "B3", "B4", "B5", "B6.1", "B6.2", "B6.3", "B6.4", "B7", "B8", "B9", "B10"];
 const LENS_IDS = ["AUD-360", "AUD-DIR", "AUD-COMP", "AUD-INV", "AUD-DIAG", "AUD-VERT", "AUD-HOR", "AUD-CIRC"];
@@ -393,6 +417,27 @@ export function orchestrator(universe, events) {
   };
 }
 
+export function evaluatePolicyRoot(universe, ctx = {}) {
+  const inspect = evaluatePolicies(universe, { ...ctx, action: ctx.action || "inspect" });
+  const release = evaluatePolicies(universe, { ...ctx, action: "release" });
+  const integrity = inspect.denials.filter((d) => INTEGRITY_DENIALS.has(d.id));
+  const ok =
+    inspect.mode === "fail-closed" &&
+    integrity.length === 0 &&
+    release.release_allowed === false &&
+    release.denials.length > 0;
+  return {
+    ok,
+    mode: inspect.mode,
+    root: "policy-as-code",
+    integrity_denials: integrity,
+    release_denials: release.denials,
+    release_allowed: false,
+    inspect,
+    release,
+  };
+}
+
 export async function automaticEvidence(universe, extras = {}) {
   const objects = knownUniverseObjects(universe);
   const now = extras.now || new Date().toISOString();
@@ -407,6 +452,8 @@ export async function automaticEvidence(universe, extras = {}) {
       created_at: now,
       status: obj.id === "B9" ? "HOLD" : "PASS_WITH_SCOPED_HOLDS",
       gate: "automatic-evidence",
+      derived_from: CASCADE,
+      root: "policy-as-code",
       no_fact_without_evidence: true,
     });
   }
@@ -414,54 +461,94 @@ export async function automaticEvidence(universe, extras = {}) {
 }
 
 export async function runGates(universe, options = {}) {
-  const schema = validateSchema(universe);
-  const policy = evaluatePolicies(universe, { action: options.action || "inspect" });
-  const graph = graphConstraints(universe);
+  const cascade = [];
+  let blockedBy = null;
+  const skip = (id) => {
+    cascade.push({
+      id,
+      ok: false,
+      status: "SKIPPED",
+      predecessor_failed: blockedBy,
+      note: "cascade fail-closed: stage does not run unless policy-as-code and all predecessors PASS",
+    });
+    return { ok: false, skipped: true, blocked_by: blockedBy };
+  };
+  const pass = (id, extra = {}) => {
+    const prev = cascade.at(-1)?.id ?? null;
+    cascade.push({ id, ok: true, status: "PASS", predecessor: prev, root: "policy-as-code", ...extra });
+  };
+  const fail = (id, extra = {}) => {
+    const prev = cascade.at(-1)?.id ?? null;
+    cascade.push({ id, ok: false, status: "FAIL", predecessor: prev, root: "policy-as-code", ...extra });
+    blockedBy = id;
+  };
+
+  const policy = evaluatePolicyRoot(universe, { action: options.action || "inspect" });
+  if (policy.ok) pass("policy-as-code", { release_denied: true });
+  else fail("policy-as-code", { integrity_denials: policy.integrity_denials });
+
+  const schema = blockedBy ? skip("schemas") : validateSchema(universe);
+  if (!blockedBy) (schema.ok ? pass : fail)("schemas", { errors: schema.errors });
+
+  const graph = blockedBy ? skip("graph-constraints") : graphConstraints(universe);
+  if (!schema.skipped && !blockedBy) (graph.ok ? pass : fail)("graph-constraints", { violations: graph.violations });
+  else if (!schema.skipped && blockedBy && cascade.at(-1)?.id !== "graph-constraints") skip("graph-constraints");
+
   const coverage = coverageReport(universe);
-  const receipts = options.receipts || (await automaticEvidence(universe, options));
-  const evidence = evidenceCoverage(universe, receipts);
-  const runtime = runtimeAssertions(universe);
   const evaluation = evaluationScience(universe);
   const properties = propertyBased(universe);
-  const orch = orchestrator(universe, options.events || [
-    { type: "site.materialize", payload: { version: universe.document.version }, idempotency_key: "site-1" },
-    { type: "site.materialize", payload: { version: universe.document.version }, idempotency_key: "site-1" },
-    { type: "release.request", payload: { actor: "ci" }, idempotency_key: "rel-1" },
-    { type: "ack.claim", payload: { from: "PENDING" }, idempotency_key: "ack-1" },
-  ]);
+  const orch = orchestrator(
+    universe,
+    options.events || [
+      { type: "site.materialize", payload: { version: universe.document.version }, idempotency_key: "site-1" },
+      { type: "site.materialize", payload: { version: universe.document.version }, idempotency_key: "site-1" },
+      { type: "release.request", payload: { actor: "ci" }, idempotency_key: "rel-1" },
+      { type: "ack.claim", payload: { from: "PENDING" }, idempotency_key: "ack-1" },
+    ]
+  );
+  const ciOk =
+    coverage.ok &&
+    evaluation.ok &&
+    properties.ok &&
+    orch.dlq >= 2 &&
+    orch.acked >= 1 &&
+    typeof universe.residual_uncertainty.value === "number" &&
+    universe.unknown_universe.length > 0;
+  const ci = blockedBy ? skip("CI-gates") : { ok: ciOk };
+  if (!ci.skipped) (ci.ok ? pass : fail)("CI-gates", { coverage: coverage.ratio, evaluation: evaluation.ok });
 
-  const gates = [
-    { id: "policy-as-code", ok: policy.release_allowed === false && policy.mode === "fail-closed" },
-    { id: "schemas", ok: schema.ok },
-    { id: "graph-constraints", ok: graph.ok },
-    { id: "CI-gates", ok: schema.ok && graph.ok && coverage.ok && evidence.ok },
-    { id: "runtime-assertions", ok: runtime.ok },
-    { id: "automatic-evidence", ok: evidence.ok },
-    { id: "coverage-100-known", ok: coverage.ok },
-    { id: "evidence-coverage-100", ok: evidence.ok },
-    { id: "residual-X-quantified", ok: typeof universe.residual_uncertainty.value === "number" },
-    { id: "unknown-explicit", ok: universe.unknown_universe.length > 0 },
-    { id: "evaluation-science", ok: evaluation.ok },
-    { id: "property-based", ok: properties.ok },
-    { id: "orchestrator", ok: orch.dlq >= 2 && orch.acked >= 1 },
-  ];
+  const runtime = blockedBy ? skip("runtime-assertions") : runtimeAssertions(universe);
+  if (!runtime.skipped) (runtime.ok ? pass : fail)("runtime-assertions", { failed: runtime.failed });
 
-  const failed = gates.filter((g) => !g.ok);
+  let receipts = options.receipts || [];
+  let evidence = { ok: false, ratio: 0, missing: ["cascade-blocked"], evidenced: 0 };
+  if (blockedBy) {
+    skip("automatic-evidence");
+  } else {
+    receipts = options.receipts || (await automaticEvidence(universe, options));
+    evidence = evidenceCoverage(universe, receipts);
+    if (evidence.ok) pass("automatic-evidence", { receipts_n: receipts.length, ratio: evidence.ratio });
+    else fail("automatic-evidence", { missing: evidence.missing });
+  }
+
+  const failed = cascade.filter((g) => !g.ok);
   return {
-    ok: failed.length === 0,
+    ok: failed.length === 0 && cascade.length === CASCADE.length && cascade[0].id === "policy-as-code",
+    starts_at: "policy-as-code",
+    cascade,
     rules: RULES,
     residual_uncertainty: universe.residual_uncertainty,
     unknown_universe: universe.unknown_universe,
-    schema,
+    schema: schema.skipped ? schema : schema,
     policy,
-    graph,
+    graph: graph.skipped ? graph : graph,
     coverage,
     evidence,
-    runtime,
+    runtime: runtime.skipped ? runtime : runtime,
     evaluation,
     properties,
     orchestrator: orch,
-    gates,
+    gates: cascade,
     failed,
     receipts_n: receipts.length,
     release: "HOLD / NOT_RELEASED",

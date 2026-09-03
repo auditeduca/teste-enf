@@ -32,6 +32,7 @@
     <p class="hash" style="margin-top:1rem">SHA-256 <span id="hash">…</span></p>
   </header>
   <nav class="toc" aria-label="Seções">
+    <a href="#assurance">policy-as-code ↓</a>
     <a href="#sumario">Sumário</a>
     <a href="#escopo">Escopo</a>
     <a href="#arquitetura">Arquitetura</a>
@@ -52,6 +53,34 @@
     <a href="./institucional/">Wave2</a>
   </nav>
   <main>
+    <section id="assurance">
+      <h2>Tudo inicia em policy-as-code</h2>
+      <p class="lead">A implantação é uma cascata fail-closed. Nenhum estágio seguinte corre como PASS se o predecessor falhar. Evidência automática só é emitida no fim da cadeia.</p>
+      <ol class="cascade" id="cascade-live">
+        <li data-stage="policy-as-code"><b>01</b> policy-as-code <small>raiz</small></li>
+        <li class="arrow" aria-hidden="true">↓</li>
+        <li data-stage="schemas"><b>02</b> schemas</li>
+        <li class="arrow" aria-hidden="true">↓</li>
+        <li data-stage="graph-constraints"><b>03</b> graph constraints</li>
+        <li class="arrow" aria-hidden="true">↓</li>
+        <li data-stage="CI-gates"><b>04</b> CI gates</li>
+        <li class="arrow" aria-hidden="true">↓</li>
+        <li data-stage="runtime-assertions"><b>05</b> runtime assertions</li>
+        <li class="arrow" aria-hidden="true">↓</li>
+        <li data-stage="automatic-evidence"><b>06</b> automatic evidence</li>
+      </ol>
+      <p class="lead">
+        <code>coverage = 100% do universo conhecido</code> ·
+        <code>evidence coverage = 100%</code> ·
+        <code>test pass = 100% dos testes definidos</code> ·
+        <code>residual uncertainty = X</code> ·
+        <code>unknown universe = explicitado</code>
+      </p>
+      <p><button id="run-gates" type="button">Reexecutar cascata</button> <span id="gate-status" class="tag hold">…</span></p>
+      <div id="gates"></div>
+      <pre id="coverage-box"></pre>
+    </section>
+
     <section id="sumario">
       <h2>1. Sumário executivo</h2>
       <p class="lead">Conclusão de controle: classificação e lineage fechados. Runtime operacional Nurse-PaLM não afirmado. Site técnico implantado sem promover B9.</p>
@@ -118,28 +147,6 @@
       <h2>11. Snapshot materializado — 449 arquivos</h2>
       <p class="lead">ALL-SHA256-MANIFEST-20260902.json declara scope=ALL_FILES_MATERIALIZED_IN_CURRENT_EXECUTION_ENVIRONMENT, file_count=449, SHA-256, 50.904.695 bytes.</p>
       <div id="folders"></div>
-    </section>
-
-    <section id="assurance">
-      <h2>Assurance stack (regra de implantação)</h2>
-      <div class="stack">
-        <div>policy-as-code <small>01</small></div>
-        <div>schemas <small>02</small></div>
-        <div>graph constraints <small>03</small></div>
-        <div>CI gates <small>04</small></div>
-        <div>runtime assertions <small>05</small></div>
-        <div>automatic evidence <small>06</small></div>
-      </div>
-      <p class="lead" style="margin-top:1rem">
-        <code>coverage = 100% do universo conhecido</code> ·
-        <code>evidence coverage = 100%</code> ·
-        <code>test pass = 100% dos testes definidos</code> ·
-        <code>residual uncertainty = X</code> ·
-        <code>unknown universe = explicitado</code>
-      </p>
-      <p><button id="run-gates" type="button">Reexecutar gates</button> <span id="gate-status" class="tag hold">…</span></p>
-      <div id="gates"></div>
-      <pre id="coverage-box"></pre>
     </section>
 
     <section id="grafo">

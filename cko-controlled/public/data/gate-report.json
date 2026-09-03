@@ -1,5 +1,58 @@
 {
   "ok": true,
+  "starts_at": "policy-as-code",
+  "cascade": [
+    {
+      "id": "policy-as-code",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": null,
+      "root": "policy-as-code",
+      "release_denied": true
+    },
+    {
+      "id": "schemas",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "policy-as-code",
+      "root": "policy-as-code",
+      "errors": []
+    },
+    {
+      "id": "graph-constraints",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "schemas",
+      "root": "policy-as-code",
+      "violations": []
+    },
+    {
+      "id": "CI-gates",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "graph-constraints",
+      "root": "policy-as-code",
+      "coverage": 1,
+      "evaluation": true
+    },
+    {
+      "id": "runtime-assertions",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "CI-gates",
+      "root": "policy-as-code",
+      "failed": []
+    },
+    {
+      "id": "automatic-evidence",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "runtime-assertions",
+      "root": "policy-as-code",
+      "receipts_n": 176,
+      "ratio": 1
+    }
+  ],
   "rules": {
     "coverage": "100% do universo conhecido",
     "evidence_coverage": "100%",
@@ -101,8 +154,64 @@
   "policy": {
     "ok": true,
     "mode": "fail-closed",
-    "denials": [],
-    "release_allowed": false
+    "root": "policy-as-code",
+    "integrity_denials": [],
+    "release_denials": [
+      {
+        "id": "RELEASE_FAIL_CLOSED",
+        "reason": "baseline is HOLD / NOT_RELEASED"
+      },
+      {
+        "id": "B9_HOLD_BLOCKS_RELEASE",
+        "reason": "B9 remains NOT_RELEASED"
+      },
+      {
+        "id": "RECERT_FAIL_BLOCKS_RELEASE",
+        "reason": "B7 recert FAIL"
+      },
+      {
+        "id": "RIGHTS_CHAIN_REQUIRED_TO_PUBLISH",
+        "reason": "13 rights holds"
+      },
+      {
+        "id": "NURSEPALM_NOT_ASSERTED",
+        "reason": "operational runtime not asserted"
+      }
+    ],
+    "release_allowed": false,
+    "inspect": {
+      "ok": true,
+      "mode": "fail-closed",
+      "denials": [],
+      "release_allowed": false
+    },
+    "release": {
+      "ok": false,
+      "mode": "fail-closed",
+      "denials": [
+        {
+          "id": "RELEASE_FAIL_CLOSED",
+          "reason": "baseline is HOLD / NOT_RELEASED"
+        },
+        {
+          "id": "B9_HOLD_BLOCKS_RELEASE",
+          "reason": "B9 remains NOT_RELEASED"
+        },
+        {
+          "id": "RECERT_FAIL_BLOCKS_RELEASE",
+          "reason": "B7 recert FAIL"
+        },
+        {
+          "id": "RIGHTS_CHAIN_REQUIRED_TO_PUBLISH",
+          "reason": "13 rights holds"
+        },
+        {
+          "id": "NURSEPALM_NOT_ASSERTED",
+          "reason": "operational runtime not asserted"
+        }
+      ],
+      "release_allowed": false
+    }
   },
   "graph": {
     "ok": true,
@@ -383,55 +492,53 @@
   "gates": [
     {
       "id": "policy-as-code",
-      "ok": true
+      "ok": true,
+      "status": "PASS",
+      "predecessor": null,
+      "root": "policy-as-code",
+      "release_denied": true
     },
     {
       "id": "schemas",
-      "ok": true
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "policy-as-code",
+      "root": "policy-as-code",
+      "errors": []
     },
     {
       "id": "graph-constraints",
-      "ok": true
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "schemas",
+      "root": "policy-as-code",
+      "violations": []
     },
     {
       "id": "CI-gates",
-      "ok": true
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "graph-constraints",
+      "root": "policy-as-code",
+      "coverage": 1,
+      "evaluation": true
     },
     {
       "id": "runtime-assertions",
-      "ok": true
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "CI-gates",
+      "root": "policy-as-code",
+      "failed": []
     },
     {
       "id": "automatic-evidence",
-      "ok": true
-    },
-    {
-      "id": "coverage-100-known",
-      "ok": true
-    },
-    {
-      "id": "evidence-coverage-100",
-      "ok": true
-    },
-    {
-      "id": "residual-X-quantified",
-      "ok": true
-    },
-    {
-      "id": "unknown-explicit",
-      "ok": true
-    },
-    {
-      "id": "evaluation-science",
-      "ok": true
-    },
-    {
-      "id": "property-based",
-      "ok": true
-    },
-    {
-      "id": "orchestrator",
-      "ok": true
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "runtime-assertions",
+      "root": "policy-as-code",
+      "receipts_n": 176,
+      "ratio": 1
     }
   ],
   "failed": [],

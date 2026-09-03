@@ -7,7 +7,23 @@ Implanta o texto de `CKO_Relatorio_Tecnico_Final_Controlado_v1.0.0` como **Fireb
 - Nurse-PaLM operacional: **NOT_ASSERTED**
 - `robots: noindex`
 
-## Regras
+## Cascata (raiz)
+
+```
+policy-as-code
+        ↓
+schemas
+        ↓
+graph constraints
+        ↓
+CI gates
+        ↓
+runtime assertions
+        ↓
+automatic evidence
+```
+
+Tudo inicia em `policy-as-code`. Estágio seguinte só entra como PASS se o predecessor passou. Sem evidência automática se a cadeia quebrou.
 
 ```
 coverage = 100% do universo conhecido

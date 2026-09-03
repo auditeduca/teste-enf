@@ -16,6 +16,7 @@ import {
   automaticEvidence,
   runGates,
   knownUniverseObjects,
+  CASCADE,
 } from "../public/engine/core.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -142,7 +143,30 @@ describe("CI gates", () => {
     const r = await runGates(universe);
     assert.equal(r.ok, true, JSON.stringify(r.failed));
     assert.equal(r.release, "HOLD / NOT_RELEASED");
-    assert.equal(r.gates.length, 13);
-    assert.ok(r.gates.every((g) => g.ok));
+    assert.equal(r.starts_at, "policy-as-code");
+    assert.deepEqual(r.cascade.map((g) => g.id), CASCADE);
+    assert.ok(r.gates.every((g) => g.ok && g.status === "PASS"));
+  });
+});
+
+describe("cascade root", () => {
+  it("starts at policy-as-code and skips every downstream stage on policy fail", async () => {
+    const clone = structuredClone(universe);
+    clone.unknown_universe = [];
+    const r = await runGates(clone);
+    assert.equal(r.ok, false);
+    assert.equal(r.starts_at, "policy-as-code");
+    assert.equal(r.cascade[0].id, "policy-as-code");
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
+    assert.equal(r.receipts_n, 0);
+  });
+  it("does not emit automatic evidence unless the cascade reached that stage", async () => {
+    const clone = structuredClone(universe);
+    clone.baseline.release = "RELEASED";
+    const r = await runGates(clone);
+    assert.equal(r.ok, false);
+    const evidence = r.cascade.find((s) => s.id === "automatic-evidence");
+    assert.ok(evidence.status === "SKIPPED" || evidence.status === "FAIL");
   });
 });

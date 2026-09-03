@@ -25,6 +25,15 @@ jobs:
           python3 scripts/generate_universe.py
           node --test tests/suite.test.js
           node cli.mjs
+          python3 - <<'PY'
+          import json
+          r=json.load(open("public/data/gate-report.json"))
+          assert r["starts_at"]=="policy-as-code"
+          ids=[s["id"] for s in r["cascade"]]
+          assert ids==["policy-as-code","schemas","graph-constraints","CI-gates","runtime-assertions","automatic-evidence"]
+          assert all(s["status"]=="PASS" for s in r["cascade"])
+          print("cascade root policy-as-code OK")
+          PY
       - name: Fail-closed release invariant
         run: |
           python3 - <<'PY'

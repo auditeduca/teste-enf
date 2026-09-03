@@ -2,6 +2,16 @@
   "id": "POL-CKO-FAIL-CLOSED-1.0.0",
   "kind": "policy-as-code",
   "mode": "fail-closed",
+  "root": true,
+  "cascade": [
+    "policy-as-code",
+    "schemas",
+    "graph-constraints",
+    "CI-gates",
+    "runtime-assertions",
+    "automatic-evidence"
+  ],
+  "rule": "tudo inicia em policy-as-code; estágio seguinte só corre se o predecessor PASS",
   "rules": [
     {
       "id": "NO_FACT_WITHOUT_EVIDENCE",

@@ -33,11 +33,12 @@ if (!report.ok) {
 }
 console.log("CKO GATE PASS");
 console.log(JSON.stringify({
+  starts_at: report.starts_at,
+  cascade: report.cascade.map((g) => `${g.id}:${g.status}`),
   coverage: report.coverage.ratio,
   evidence: report.evidence.ratio,
   tests_defined_pass: 1,
   residual_uncertainty: report.residual_uncertainty.value,
   unknown: report.unknown_universe.length,
   release: report.release,
-  gates: report.gates.map((g) => g.id),
 }, null, 2));

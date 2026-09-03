@@ -209,12 +209,26 @@ function drawGraph(canvas, graph) {
 async function runLive(universe) {
   $("gate-status").textContent = "executando gates…";
   const report = await runGates(universe);
-  $("gate-status").textContent = report.ok ? "GATE PASS · release HOLD / NOT_RELEASED" : "GATE FAIL";
+  $("gate-status").textContent = report.ok
+    ? "CASCADE PASS · raiz policy-as-code · release HOLD / NOT_RELEASED"
+    : "CASCADE FAIL · fail-closed a partir de " + (report.failed[0]?.id || "policy-as-code");
   $("gate-status").className = report.ok ? "tag pass" : "tag fail";
+  document.querySelectorAll("#cascade-live li[data-stage]").forEach((node) => {
+    const stage = report.cascade.find((g) => g.id === node.dataset.stage);
+    node.classList.remove("pass", "fail", "skip");
+    if (!stage) return;
+    node.classList.add(stage.status === "PASS" ? "pass" : stage.status === "SKIPPED" ? "skip" : "fail");
+    const small = node.querySelector("small") || node.appendChild(el("small"));
+    small.textContent = stage.status;
+  });
   $("gates").replaceChildren(
     table(
-      ["Gate", "Resultado"],
-      report.gates.map((g) => [g.id, tag(g.ok ? "PASS" : "FAIL", g.ok ? "pass" : "fail")])
+      ["Estágio", "Predecessor", "Status"],
+      report.cascade.map((g, i) => [
+        (i === 0 ? "raiz · " : "") + g.id,
+        g.predecessor || g.predecessor_failed || "—",
+        tag(g.status, g.status === "PASS" ? "pass" : g.status === "SKIPPED" ? "hold" : "fail"),
+      ])
     )
   );
   $("eval").textContent = JSON.stringify(
@@ -244,6 +258,8 @@ async function runLive(universe) {
   );
   $("coverage-box").textContent = JSON.stringify(
     {
+      starts_at: report.starts_at,
+      cascade: report.cascade.map((g) => `${g.id}:${g.status}`),
       coverage: report.coverage,
       evidence: { ratio: report.evidence.ratio, ok: report.evidence.ok, evidenced: report.evidence.evidenced },
       residual_uncertainty: report.residual_uncertainty.value,
