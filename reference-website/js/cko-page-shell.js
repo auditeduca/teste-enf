@@ -281,14 +281,25 @@
         document.querySelector(".cko-layout__main") ||
         document.getElementById("main-content");
       if (!main) return;
-      var heads = main.querySelectorAll("h2[id]");
+      var heads = main.querySelectorAll("h2[id], section.cko-ds-section > h2, .cko-ds-section h2");
       if (!heads.length) {
         ol.innerHTML =
           '<li><span class="cko-shell-aside__notice">Sem seções com id ainda.</span></li>';
         return;
       }
       var html = "";
+      var seen = {};
       Array.prototype.forEach.call(heads, function (h) {
+        if (!h.id) {
+          var slug = (h.textContent || "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "")
+            .slice(0, 40);
+          if (slug) h.id = slug;
+        }
+        if (!h.id || seen[h.id]) return;
+        seen[h.id] = true;
         html +=
           '<li><a href="#' +
           escapeHtml(h.id) +
@@ -342,19 +353,47 @@
   }
 
   function hasStaticHero(mount) {
+    // Only intentional static chrome wins. Local navy cards and loose H1s
+    // are forbidden by PADRAO_PAGINAS / identity v10 — they must not suppress the shell.
     var marked = document.querySelectorAll(
-      '[data-cko-static="hero"], .tool-header, section.hero, .cko-home-hero, [class*="-card-navy"]'
+      '[data-cko-static="hero"], .tool-header, section.hero, .cko-home-hero'
     );
     for (var i = 0; i < marked.length; i += 1) {
       if (!isInsideSlot(marked[i], mount)) return true;
     }
-    var main = document.getElementById("main-content") || document.querySelector("main");
-    if (!main) return false;
-    var titles = main.querySelectorAll("h1");
-    for (var j = 0; j < titles.length; j += 1) {
-      if (!isInsideSlot(titles[j], mount)) return true;
-    }
     return false;
+  }
+
+  function hideLegacyLocalHeroes() {
+    var slots = document.querySelectorAll('[data-cko-slot="hero"]');
+    var hasShellHero = false;
+    Array.prototype.forEach.call(slots, function (slot) {
+      if (slot.querySelector(".cko-cart-hero") && slot.getAttribute("data-cko-deduped") !== "hero") {
+        hasShellHero = true;
+      }
+    });
+    if (!hasShellHero) return;
+    document.querySelectorAll('[class*="-card-navy"]').forEach(function (el) {
+      if (isInsideSlot(el)) return;
+      if (el.closest("#resultado-section, [data-cko-scale-score], .print-area")) return;
+      if (!el.querySelector("h1")) return;
+      el.setAttribute("data-cko-legacy-hero", "1");
+      el.hidden = true;
+    });
+    var main = document.getElementById("main-content") || document.querySelector("main");
+    if (!main) return;
+    var titles = main.querySelectorAll("h1");
+    for (var i = 0; i < titles.length; i += 1) {
+      var h1 = titles[i];
+      if (isInsideSlot(h1)) continue;
+      if (h1.closest("[data-cko-static='hero'], .tool-header, section.hero, .cko-home-hero")) continue;
+      if (h1.closest(".cko-calc-workspace, [data-cko-scale-items], #resultado-section, .print-area")) continue;
+      var wrap = h1.closest("section") || h1.parentElement;
+      if (!wrap || isInsideSlot(wrap)) continue;
+      wrap.setAttribute("data-cko-legacy-hero", "1");
+      wrap.hidden = true;
+      break;
+    }
   }
 
   function fillMounts(catalog) {
@@ -399,6 +438,7 @@
       el.setAttribute("data-cko-ready", "1");
       if (slot === "sidebar") bindSidebar(el);
     });
+    hideLegacyLocalHeroes();
     fillAutoToc();
   }
 
@@ -439,6 +479,7 @@
   window.CKOPageShell = {
     boot: boot,
     siteUrl: siteUrl,
+    refreshToc: fillAutoToc,
     getCatalog: function () {
       return catalogCache;
     }

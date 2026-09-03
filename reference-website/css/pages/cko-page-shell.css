@@ -1,10 +1,23 @@
-/* CKO page shell — breadcrumb, layout, sidebar, feedback */
+/* CKO page shell — breadcrumb, layout, sidebar, feedback.
+   Tokens come from LYR-DS-001 (cko-ds-tokens.css). Local aliases are fallbacks. */
 :root {
-  --cko-navy: #1A3E74;
-  --cko-navy-mid: #1E4D8C;
-  --cko-slate-500: #64748b;
-  --cko-slate-800: #1e293b;
-  --cko-page-tint: #f8fafc;
+  --cko-navy: var(--cko-navy-900, #1A3E74);
+  --cko-navy-mid: var(--cko-navy-700, #1E4D8C);
+  --cko-slate-500: var(--cko-muted-2, #64748b);
+  --cko-slate-800: var(--cko-ink, #1e293b);
+  --cko-page-tint: var(--cko-bg, #f8fafc);
+}
+
+:focus-visible {
+  outline: 3px solid var(--cko-focus-ring, #1D4ED8);
+  outline-offset: 3px;
+}
+
+.cko-ratings-hold {
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cko-hold, #7c3aed);
 }
 
 .cko-breadcrumb {

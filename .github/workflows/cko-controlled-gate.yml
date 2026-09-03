@@ -133,7 +133,36 @@ jobs:
           assert ut["abnt"]["nbr_6023"]["edition"]=="2025"
           assert ut["evaluation"]["clinical_promotion"]=="DENIED"
           assert ut["starts_at"]=="policy-as-code"
+          assert ut["parent"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert ut["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert ut["template_governance"]["status"]=="BOUND_HOLD"
+          assert ut["contract"]["field_count"]==28
           assert "universal-tool" in (site/"data/cko/cascade/index.html").read_text(encoding="utf-8")
+          master=json.load(open(site/"data/cko/policy-master.json"))
+          assert master["id"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert master["field_count"]==28
+          assert master["status"]=="CONTROLLED_TEMPLATE_HOLD"
+          assert master["active"] is False
+          vas=json.load(open(site/"data/cko/visual-assets.json"))
+          assert vas["id"]=="POL-CKO-VISUAL-ASSET-1.0.0"
+          assert vas["new_architectural_root"] is False
+          assert vas["one_image_per_page"] is False
+          assert len(vas["families"])==3
+          assert vas["document_projections"]["docx"]["files_generated"] is False
+          closure=json.load(open(site/"data/cko/platform-closure.json"))
+          assert closure["id"]=="POL-CKO-PLATFORM-CLOSURE-1.0.0"
+          assert closure["document_id"]=="CKO-POL-CLOSURE-001"
+          assert closure["hold_count"]==9
+          assert closure["active"] is False
+          assert closure["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert all(h["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0" for h in closure["holds"])
+          human=json.load(open(site/"data/cko/human-decisions.json"))
+          assert human["hold_count"]==9
+          assert all(i.get("policy_id","").startswith("POL-CKO-HOLD-") for i in human["items"])
+          cascade_html=(site/"data/cko/cascade/index.html").read_text(encoding="utf-8")
+          assert "policy-master" in cascade_html
+          assert "visual-assets" in cascade_html
+          assert "platform-closure" in cascade_html
           assert cascade["rules"]["coverage"].find("100%")>=0
           assert cascade["verification"]["fuzz_n"]==1000
           assert cascade["verification"]["fuzz_false_accept"]==0

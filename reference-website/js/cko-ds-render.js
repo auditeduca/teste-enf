@@ -10,8 +10,15 @@ const esc = (value) =>
     .replaceAll('"', "&quot;");
 
 function section(title, note, inner) {
-  return `<section class="cko-ds-section">
-    <h2>${esc(title)}</h2>
+  const id = "ds-" + String(title || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 48);
+  return `<section class="cko-ds-section" ${id ? `id="${esc(id)}"` : ""}>
+    <h2${id ? ` id="${esc(id)}-title"` : ""}>${esc(title)}</h2>
     ${note ? `<p class="cko-ds-help">${esc(note)}</p>` : ""}
     ${inner}
   </section>`;
@@ -59,6 +66,12 @@ function renderTokens(ds) {
 }
 
 function renderThemes(ds) {
+  const switcher = (ds.themes || [])
+    .map(
+      (t) =>
+        `<button type="button" class="cko-ds-btn cko-ds-btn--secondary" data-cko-theme-set="${esc(t.id)}">${esc(t.name)}</button>`
+    )
+    .join("");
   const themes = ds.themes
     .map(
       (t) => `<article class="cko-ds-card" data-cko-theme="${esc(t.id)}">
@@ -72,7 +85,11 @@ function renderThemes(ds) {
       </article>`
     )
     .join("");
-  return section("Temas (4)", "Troca visual via data-cko-theme. Não altera o estado de release.", `<div class="cko-ds-theme-row">${themes}</div>`);
+  return section(
+    "Temas (4)",
+    "Troca visual via data-cko-theme. Não altera o estado de release.",
+    `<div class="cko-ds-theme-switch" role="group" aria-label="Pré-visualizar tema">${switcher}</div><div class="cko-ds-theme-row">${themes}</div>`
+  );
 }
 
 function renderSlots(ds) {
@@ -111,16 +128,34 @@ function renderComponents(ds, mode) {
 }
 
 function renderTemplates(ds) {
+  const implemented = ds.templates_implemented_n ?? ds.templates.filter((t) => t.status === "implemented").length;
   const cards = ds.templates
-    .map(
-      (t) => `<article class="cko-ds-comp" data-cko-template="${esc(t.id)}">
+    .map((t) => {
+      const status = t.status || "wireframe";
+      const link = t.html
+        ? `<p class="cko-ds-help">HTML: <a class="cko-ds-link" href="/${esc(t.html)}">${esc(t.html)}</a></p>`
+        : `<p class="cko-ds-help">Moldura apenas. Sem chrome HTML.</p>`;
+      const gov = t.governed_by || {};
+      const policyChip = gov.policy
+        ? `<span class="cko-ds-badge cko-ds-badge--hold">${esc(gov.policy)}</span>`
+        : `<span class="cko-ds-badge">${esc(gov.contract || "POLICY_MASTER_CONTRACT")}</span>`;
+      return `<article class="cko-ds-comp" data-cko-template="${esc(t.id)}" data-cko-template-status="${esc(status)}" data-cko-governed-by="${esc(gov.policy || gov.contract || "")}">
         <div class="cko-ds-comp-head"><h3>${esc(t.name)}</h3><span>${esc(t.id)}</span></div>
+        <span class="cko-ds-badge ${status === "implemented" ? "" : "cko-ds-badge--hold"}">${esc(status)}</span>
+        ${policyChip}
         <div class="cko-ds-wire" aria-hidden="true"><b></b><i></i><em></em></div>
         <p class="cko-ds-help">${esc(t.note)}</p>
-      </article>`
-    )
+        <p class="cko-ds-help">Contrato ${esc(gov.contract || "—")} · ${esc((gov.utc || []).join(" ") || "UTC-046")} · ${esc(gov.status || "UNBOUND")}</p>
+        ${link}
+      </article>`;
+    })
     .join("");
-  return section("21 templates", "Molduras de página. Renderer LYR-RND-001 permanece NOT_ASSERTED como motor clínico.", `<div class="cko-ds-tpl-grid">${cards}</div>`);
+  const govRule = ds.template_governance?.rule || "Templates especializam POLICY_MASTER_CONTRACT. tool/scale também CKO-POL-UT-001.";
+  return section(
+    "21 templates",
+    `${implemented} com chrome HTML. Restantes em wireframe. ${govRule} Renderer LYR-RND-001 permanece NOT_ASSERTED como motor clínico.`,
+    `<div class="cko-ds-tpl-grid">${cards}</div>`
+  );
 }
 
 function renderHolds(ds) {
@@ -150,6 +185,60 @@ function renderCascade(ds) {
     ds.rule || "tudo inicia em policy-as-code; estágio seguinte só corre se o predecessor PASS",
     `<ol class="cko-ds-cascade" data-cko-cascade-root="${esc(ds.root || "policy-as-code")}">${items}</ol>`
   );
+}
+
+function renderHumanHolds(ledger) {
+  const items = (ledger.items || [])
+    .map(
+      (item) => `<article class="cko-ds-card cko-ds-card--hold" data-cko-hold="${esc(item.id)}" data-cko-hold-policy="${esc(item.policy_id || "")}">
+        <span class="cko-ds-badge cko-ds-badge--hold">${esc(item.status)}</span>
+        <h3>${esc(item.id)}</h3>
+        <p>${esc(item.decision)}</p>
+        <p class="cko-ds-help">Política <code>${esc(item.policy_id || "UNBOUND")}</code> · ${esc(item.policy_type || "")} · ${esc(item.modality || "")} · especializa POLICY_MASTER_CONTRACT.</p>
+        <p class="cko-ds-help">Código: ${esc(item.code_progress || "nenhum avanço automático")}. Humano: ${esc(item.next_human || "decisão pendente")}.</p>
+      </article>`
+    )
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(ledger.release || "HOLD / NOT_RELEASED")}</span>
+      <h1>Holds humanos</h1>
+      <p>${esc(ledger.rule)}. Não bloqueiam inspect/CI. Continuam a negar release. B9 permanece NOT_RELEASED.</p>
+    </section>
+    <div class="cko-ds-comp-grid">${items}</div>`;
+}
+
+function renderPlatformClosure(policy) {
+  const existing = (policy.existing_policies || [])
+    .map((p) => `<li><code>${esc(p.id)}</code> <span class="cko-ds-badge">${esc(p.role)}</span></li>`)
+    .join("");
+  const rows = (policy.holds || [])
+    .map(
+      (h) => `<tr>
+        <th scope="row"><code>${esc(h.hold_id)}</code></th>
+        <td><code>${esc(h.id)}</code></td>
+        <td>${esc(h.policy_type)}</td>
+        <td>${esc(h.modality)}</td>
+        <td><span class="cko-ds-badge cko-ds-badge--hold">${esc(h.status)}</span></td>
+      </tr>`
+    )
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_CLOSURE_HOLD")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>${esc(policy.rule || "")} DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED. Não é ACTIVE.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Políticas já no ecossistema</h2>
+      <ul class="cko-ds-ut-chips">${existing}</ul>
+    </section>
+    <section class="cko-ds-section">
+      <h2>9 holds como policy-as-code</h2>
+      <p class="cko-ds-help">Cada hold especializa os 28 campos do POLICY_MASTER_CONTRACT. Binding ≠ assinatura humana.</p>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Hold</th><th>Política</th><th>Tipo</th><th>Modalidade</th><th>Estado</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </section>`;
 }
 
 function renderUniversalTool(policy) {
@@ -183,6 +272,8 @@ function renderUniversalTool(policy) {
       <h2>Gate</h2>
       <ul class="cko-ds-ut-meta">
         <li>Controlos ${esc(policy.control_count)} · implementados ${esc(policy.implemented_n)}</li>
+        <li>Especializa <code>${esc(policy.specializes || policy.parent || "")}</code></li>
+        <li>Templates ${esc(policy.template_governance?.status || "UNBOUND")} · ${esc((policy.template_governance?.templates || []).map((t) => t.id).join(", "))}</li>
         <li>ABNT NBR 6023:${esc(policy.abnt?.nbr_6023?.edition)} clause ${esc(policy.abnt?.nbr_6023?.clause_level)}</li>
         <li>Linha de versão ${esc(policy.version_lineage?.status)}</li>
         <li>Promoção clínica ${esc(policy.evaluation?.clinical_promotion)}</li>
@@ -203,16 +294,151 @@ function renderUniversalTool(policy) {
     </section>`;
 }
 
+function renderPolicyMaster(policy) {
+  const chips = (policy.fields || [])
+    .map((f) => `<li><code>${esc(f.seq)}</code> ${esc(f.id)}</li>`)
+    .join("");
+  const rows = (policy.fields || [])
+    .map(
+      (f) => `<tr>
+        <th scope="row"><code>${esc(f.seq)}</code> ${esc(f.id)}</th>
+        <td>${esc(f.question)}</td>
+        <td>${esc(f.meaning)}</td>
+        <td><span class="cko-ds-badge">${esc(f.base_kind)}</span> ${esc(f.bases)}</td>
+      </tr>`
+    )
+    .join("");
+  const principles = (policy.principles || [])
+    .map((p) => `<li><code>${esc(p.id)}</code> ${esc(p.name)}</li>`)
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_TEMPLATE_HOLD")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>Molde congelado. Políticas especializam estes 28 campos. Não é ACTIVE. DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>28 campos</h2>
+      <p class="cko-ds-help">${esc(policy.golden_rule || "")}</p>
+      <ul class="cko-ds-ut-chips">${chips}</ul>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Campo</th><th>Pergunta</th><th>O que é</th><th>Base normativa</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </section>
+    <section class="cko-ds-section">
+      <h2>P01–P20</h2>
+      <ul class="cko-ds-ut-chips">${principles}</ul>
+      <p class="cko-ds-help">${esc(policy.template_governance_rule || "")}</p>
+    </section>`;
+}
+
+function renderVisualAssets(policy) {
+  const fam = (policy.families || [])
+    .map(
+      (f) => `<article class="cko-ds-card"><span class="cko-ds-badge">${esc(f.id)}</span><h3>${esc(f.name)}</h3><p>${esc(f.purpose)}</p></article>`
+    )
+    .join("");
+  const langs = (policy.object_languages || [])
+    .map((o) => `<li><code>${esc(o.code)}</code> ${esc(o.object_type)}</li>`)
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.release || "HOLD / NOT_RELEASED")}</span>
+      <h1>Visual Asset System</h1>
+      <p>Não é uma imagem por página. O objeto canônico gera projeções Web, Social e File. Não é 45ª camada. Gerador ${esc(policy.generator?.operational)}. Word/PPT não gerados.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Três famílias</h2>
+      <div class="cko-ds-theme-row">${fam}</div>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Linguagens de objeto</h2>
+      <ul class="cko-ds-ut-chips">${langs}</ul>
+      <p class="cko-ds-help">OG ${esc(policy.dimensions?.og?.width)}×${esc(policy.dimensions?.og?.height)} · LinkedIn ${esc(policy.dimensions?.linkedin?.width)}×${esc(policy.dimensions?.linkedin?.height)} · uma fonte, múltiplas projeções.</p>
+    </section>`;
+}
+
+function renderIdentityManual(ds) {
+  const identity = ds.identity_manual || {};
+  const typeRows = (ds.tokens.typography || [])
+    .map(
+      (t) => `<tr>
+        <th scope="row">${esc(t.id)}</th>
+        <td>${esc(t.spec)}</td>
+        <td>${esc(t.sample)}</td>
+      </tr>`
+    )
+    .join("");
+  const chrome = [
+    ["Header global", "#global-header-container · partials/header.html"],
+    ["Idioma", "#language-selector-placeholder · lang-selector.js"],
+    ["Acessibilidade", "partials/accessibility-toolbar.html"],
+    ["Hero do cluster", ".cko-cart-hero via shell · um H1"],
+    ["Grid", ".cko-layout = main + sidebar 280px"],
+    ["Footer", "#footer-placeholder · partials/footer.html"],
+    ["Escala", "templates/scale.html · " + (identity.scale_specimen || "escala-padrao.html")],
+  ]
+    .map((row) => `<tr><th scope="row">${esc(row[0])}</th><td>${esc(row[1])}</td></tr>`)
+    .join("");
+  const buttons = (ds.components || [])
+    .filter((c) => c.kind === "button")
+    .map((c) => `<div class="cko-ds-stage">${c.html}</div>`)
+    .join("");
+  return (
+    `<nav class="cko-ds-manual-toc" aria-label="Secções do manual">
+      <a href="#ds-manual-tokens">Cor e tipo</a>
+      <a href="#ds-manual-chrome">Chrome do cluster</a>
+      <a href="#ds-manual-buttons">Botões</a>
+      <a href="#ds-manual-scale">Escala</a>
+    </nav>` +
+    `<section class="cko-ds-section" id="ds-manual-tokens">
+      <h2>Identidade v10 no catálogo</h2>
+      <p class="cko-ds-help">${esc(identity.rule || "Manual v10 ingerido. Sem HTML solto. HOLD / NOT_RELEASED.")}</p>
+      <p class="cko-ds-help">Estado <code>${esc(identity.status || "INGESTED_HOLD")}</code> · versão ${esc(identity.version || "v10")}. Tokens <code>--navy</code> / <code>--navy-light</code> / <code>--navy-dark</code> aliasam <code>--cko-navy-*</code>.</p>
+    </section>` +
+    renderTokens(ds) +
+    `<section class="cko-ds-section" id="ds-manual-type-table">
+      <h2>Tipografia (tabela)</h2>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Papel</th><th>Spec</th><th>Amostra</th></tr></thead>
+        <tbody>${typeRows}</tbody>
+      </table></div>
+    </section>` +
+    `<section class="cko-ds-section" id="ds-manual-chrome">
+      <h2>Chrome do cluster</h2>
+      <p class="cko-ds-help">O manual v10 demonstrava header, idioma, a11y e footer com HTML próprio. No padrão CKO esses blocos vêm dos partials e do shell — um de cada, sem cópia inline.</p>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Peça</th><th>Fonte canónica</th></tr></thead>
+        <tbody>${chrome}</tbody>
+      </table></div>
+    </section>` +
+    `<section class="cko-ds-section" id="ds-manual-buttons">
+      <h2>Botões</h2>
+      <div class="cko-ds-button-grid">${buttons}</div>
+    </section>` +
+    `<section class="cko-ds-section" id="ds-manual-scale">
+      <h2>Espécime de escala</h2>
+      <p class="cko-ds-help">Template <code>scale</code> no cluster. Sem hero navy local. Sem promoção clínica.</p>
+      <p><a class="cko-ds-link" href="/escala-padrao.html">Abrir escala padrão</a> · <a class="cko-ds-link" href="/templates/scale.html">HTML do template</a></p>
+    </section>` +
+    renderThemes(ds) +
+    renderHolds(ds)
+  );
+}
+
 function renderCatalog(ds, mode) {
   const hero = `<section class="cko-ds-hero">
     <span class="cko-ds-badge cko-ds-badge--hold">HOLD / NOT_RELEASED</span>
     <h1>Design system completo via render</h1>
-    <p>Tudo inicia em <strong>policy-as-code</strong>. ${esc(ds.inventory.components)} componentes · ${esc(ds.inventory.templates)} templates · ${esc(ds.inventory.themes)} temas · ${esc(ds.inventory.theme_slots)} slots. Nurse-PaLM operacional NOT_ASSERTED.</p>
+    <p>Tudo inicia em <strong>policy-as-code</strong>. ${esc((ds.inventory || {}).components)} componentes · ${esc((ds.inventory || {}).templates)} templates · ${esc((ds.inventory || {}).themes)} temas · ${esc((ds.inventory || {}).theme_slots)} slots. Nurse-PaLM operacional NOT_ASSERTED.</p>
   </section>`;
   const spine = renderCascade(ds);
+  if (mode === "manual") return renderIdentityManual(ds);
   if (mode === "cascade") return hero + spine;
   if (mode === "states") {
     return hero + spine + renderComponents(ds, "states") + renderThemes(ds);
+  }
+  if (mode === "templates") {
+    return hero + spine + renderTemplates(ds);
   }
   return hero + spine + renderTokens(ds) + renderThemes(ds) + renderSlots(ds) + renderComponents(ds, mode) + renderTemplates(ds) + renderHolds(ds);
 }
@@ -243,6 +469,12 @@ async function loadJson(url) {
   return res.json();
 }
 
+function refreshShellToc() {
+  if (window.CKOPageShell && typeof window.CKOPageShell.refreshToc === "function") {
+    window.CKOPageShell.refreshToc();
+  }
+}
+
 async function mount(el) {
   const mode = el.dataset.ckoDsRender || "catalog";
   const src = el.dataset.ckoDsSrc || "/data/cko/design-system.json";
@@ -256,19 +488,63 @@ async function mount(el) {
       const layersSrc = el.dataset.ckoLayersSrc || "/data/cko/layers.json";
       const layers = await loadJson(layersSrc);
       el.innerHTML = renderLayers(ds, layers);
+      refreshShellToc();
       return;
     }
-    if (mode === "universal-tool") {
-      el.innerHTML = renderUniversalTool(ds);
+    if (mode === "universal-tool" || ds.document_id === "CKO-POL-UT-001") {
+      const policy = src.includes("universal-tool") || ds.document_id === "CKO-POL-UT-001" ? ds : await loadJson("/data/cko/universal-tool.json");
+      el.innerHTML = renderUniversalTool(policy);
+      refreshShellToc();
+      return;
+    }
+    if (mode === "policy-master" || ds.document_id === "POLICY_MASTER_CONTRACT") {
+      const policy = src.includes("policy-master") || ds.document_id === "POLICY_MASTER_CONTRACT" ? ds : await loadJson("/data/cko/policy-master.json");
+      el.innerHTML = renderPolicyMaster(policy);
+      refreshShellToc();
+      return;
+    }
+    if (mode === "visual-assets" || ds.document_id === "CKO-VAS-001") {
+      const policy = src.includes("visual-assets") || ds.document_id === "CKO-VAS-001" ? ds : await loadJson("/data/cko/visual-assets.json");
+      el.innerHTML = renderVisualAssets(policy);
+      refreshShellToc();
+      return;
+    }
+    if (mode === "human-holds") {
+      const ledger = src.includes("human-decisions") ? ds : await loadJson("/data/cko/human-decisions.json");
+      el.innerHTML = renderHumanHolds(ledger);
+      refreshShellToc();
+      return;
+    }
+    if (mode === "platform-closure" || ds.document_id === "CKO-POL-CLOSURE-001") {
+      const policy = src.includes("platform-closure") || ds.document_id === "CKO-POL-CLOSURE-001" ? ds : await loadJson("/data/cko/platform-closure.json");
+      el.innerHTML = renderPlatformClosure(policy);
+      refreshShellToc();
+      return;
+    }
+    if (mode === "manual") {
+      el.innerHTML = renderIdentityManual(ds);
+      refreshShellToc();
       return;
     }
     el.innerHTML = renderCatalog(ds, mode);
+    refreshShellToc();
   } catch (err) {
     el.innerHTML = `<article class="cko-ds-card cko-ds-card--warn"><p>Catálogo indisponível. ${esc(err.message)}</p></article>`;
   }
 }
 
+function bindThemeSwitch() {
+  document.addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-cko-theme-set]");
+    if (!btn) return;
+    const theme = btn.getAttribute("data-cko-theme-set");
+    document.documentElement.setAttribute("data-cko-theme", theme);
+    document.body.setAttribute("data-cko-theme", theme);
+  });
+}
+
 function boot() {
+  bindThemeSwitch();
   document.querySelectorAll("[data-cko-ds-render]").forEach((node) => {
     mount(node);
   });
@@ -280,4 +556,4 @@ if (document.readyState === "loading") {
   boot();
 }
 
-export { mount, renderCatalog, renderUniversalTool };
+export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets, renderPlatformClosure };

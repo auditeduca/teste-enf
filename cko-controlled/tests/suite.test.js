@@ -14,12 +14,25 @@ import {
   inspectHumanDecisions,
   inspectDesignSystem,
   inspectUniversalToolPolicy,
+  inspectPolicyMaster,
+  inspectTemplateGovernance,
+  inspectVisualAssetPolicy,
+  inspectPlatformClosure,
+  POLICY_MASTER_FIELDS,
+  CLOSURE_POLICY_ID,
+  CLOSURE_DOCUMENT_ID,
+  HOLD_POLICY_N,
   MD_REG_CHAIN,
   MD_REG_POLICY_ID,
   UT_POLICY_ID,
   UT_DOCUMENT_ID,
   UT_CONTROL_N,
   UT_MD_GATE,
+  POLICY_MASTER_ID,
+  POLICY_MASTER_FIELD_N,
+  VAS_POLICY_ID,
+  VAS_FAMILY_N,
+  VAS_INTERNAL_POLICY_N,
   HOLD_HUMAN_STATUS,
   validatePendenciesSchema,
   evaluatePolicies,
@@ -63,6 +76,9 @@ const mdRegPolicy = JSON.parse(readFileSync(join(gatePub, "policies/md-reg-front
 const humanDecisions = JSON.parse(readFileSync(join(gatePub, "data/human-decisions.json"), "utf8"));
 const designSystem = JSON.parse(readFileSync(join(site, "data/cko/design-system.json"), "utf8"));
 const universalToolPolicy = JSON.parse(readFileSync(join(gatePub, "policies/universal-tool.json"), "utf8"));
+const policyMaster = JSON.parse(readFileSync(join(gatePub, "policies/policy-master.json"), "utf8"));
+const visualAssetPolicy = JSON.parse(readFileSync(join(gatePub, "policies/visual-assets.json"), "utf8"));
+const platformClosure = JSON.parse(readFileSync(join(gatePub, "policies/platform-closure.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -80,6 +96,9 @@ const platform = {
   humanDecisions,
   designSystem,
   universalToolPolicy,
+  policyMaster,
+  visualAssetPolicy,
+  platformClosure,
 };
 
 describe("schemas", () => {
@@ -135,6 +154,9 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "MD_REG_IS_POLICY"));
     assert.ok(policy.rules.some((r) => r.id === "DS_STARTS_AT_POLICY"));
     assert.ok(policy.rules.some((r) => r.id === "UT_POLICY_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "POLICY_MASTER_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "TEMPLATE_POLICY_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "PLATFORM_CLOSURE_HOLD"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -206,6 +228,8 @@ describe("coverage rules", () => {
     assert.equal(receipts.filter((x) => x.kind === "runtime").length, 12);
     assert.ok(receipts.some((x) => x.subject === "CKO-TOOL-LIBRARY-RUNTIME-1.0.0"));
     assert.ok(receipts.some((x) => x.subject === UT_POLICY_ID));
+    assert.ok(receipts.some((x) => x.subject === POLICY_MASTER_ID));
+    assert.ok(receipts.some((x) => x.subject === VAS_POLICY_ID));
     assert.ok(receipts.every((x) => x.root === "policy-as-code" && x.no_fact_without_evidence === true));
   });
   it("quantifies residual uncertainty X", () => {
@@ -682,6 +706,23 @@ describe("design system runtime render", () => {
     assert.equal(existsSync(join(site, "js/cko-ds-render.js")), true);
     const tokens = readFileSync(join(site, "css/cko-ds-tokens.css"), "utf8");
     assert.match(tokens, /--cko-navy-900:\s*#1a3e74/i);
+    assert.match(tokens, /--cko-slot-01:/);
+    assert.match(tokens, /--cko-slot-44:/);
+    assert.equal(ds.templates_implemented_n, 11);
+    assert.equal(ds.templates.filter((t) => t.status === "implemented").length, 11);
+    assert.ok(ds.templates.every((t) => t.status === "implemented" || t.status === "wireframe"));
+    assert.ok(ds.templates.every((t) => t.governed_by?.contract === "POLICY_MASTER_CONTRACT"));
+    assert.equal(ds.templates.find((t) => t.id === "tool").governed_by.policy, "CKO-POL-UT-001");
+    assert.equal(ds.templates.find((t) => t.id === "scale").governed_by.policy, "CKO-POL-UT-001");
+    assert.equal(ds.template_governance.status, "BOUND_HOLD");
+    const tplGov = inspectTemplateGovernance(ds, universalToolPolicy);
+    assert.equal(tplGov.ok, true, JSON.stringify(tplGov.denials));
+    assert.match(ds.refinement, /1\.2\.0-HOLD/);
+    assert.equal(ds.identity_manual.version, "v10");
+    assert.equal(ds.identity_manual.release_allowed, false);
+    assert.match(tokens, /--navy:\s*var\(--cko-navy-900\)/);
+    assert.match(tokens, /--navy-light:\s*var\(--cko-navy-700\)/);
+    assert.match(tokens, /--navy-dark:\s*var\(--cko-navy-800\)/);
     const renderer = readFileSync(join(site, "js/cko-ds-render.js"), "utf8");
     assert.match(renderer, /data-cko-ds-render/);
     assert.match(renderer, /NOT_ASSERTED/);
@@ -737,6 +778,13 @@ describe("CKO-POL-UT-001 Universal Tool Policy", () => {
     assert.equal(universalToolPolicy.evaluation.clinical_promotion, "DENIED");
     assert.equal(universalToolPolicy.version_lineage.status, "VERSION_DRIFT_HOLD");
     assert.equal(universalToolPolicy.starts_at, "policy-as-code");
+    assert.equal(universalToolPolicy.parent, POLICY_MASTER_ID);
+    assert.equal(universalToolPolicy.specializes, POLICY_MASTER_ID);
+    assert.equal(universalToolPolicy.contract.field_count, 28);
+    assert.deepEqual(Object.keys(universalToolPolicy.contract.fields), POLICY_MASTER_FIELDS);
+    assert.equal(universalToolPolicy.template_governance.status, "BOUND_HOLD");
+    assert.equal(universalToolPolicy.template_governance.implantado, false);
+    assert.ok(["tool", "calculator", "scale"].every((id) => universalToolPolicy.template_governance.templates.some((t) => t.id === id)));
     assert.ok(universalToolPolicy.controls.every((c) => c.implemented === false && c.status === "DOCUMENTADO_HOLD"));
   });
   it("fails at policy-as-code if calculators are claimed PASS or any UTC is implemented", async () => {
@@ -758,6 +806,113 @@ describe("CKO-POL-UT-001 Universal Tool Policy", () => {
   it("renders the evaluation from JSON on the cascade page", () => {
     assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /universal-tool/);
     assert.match(readFileSync(join(site, "data/cko/cascade/index.html"), "utf8"), /data-cko-ds-render="universal-tool"/);
+  });
+  it("fails at policy-as-code if UT skips POLICY_MASTER_CONTRACT", async () => {
+    const broken = {
+      ...platform,
+      universalToolPolicy: {
+        ...universalToolPolicy,
+        parent: "POL-CKO-FAIL-CLOSED-1.0.0",
+        specializes: undefined,
+        template_governance: { ...universalToolPolicy.template_governance, status: "UNBOUND" },
+      },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "UT_POLICY_HOLD" || d.id === "TEMPLATE_POLICY_HOLD"));
+  });
+});
+
+describe("POLICY_MASTER_CONTRACT", () => {
+  it("freezes 28 fields as a HOLD template not ACTIVE", () => {
+    const r = inspectPolicyMaster(policyMaster);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(policyMaster.id, POLICY_MASTER_ID);
+    assert.equal(policyMaster.field_count, POLICY_MASTER_FIELD_N);
+    assert.equal(policyMaster.fields.length, POLICY_MASTER_FIELD_N);
+    assert.deepEqual(policyMaster.fields.map((f) => f.id), POLICY_MASTER_FIELDS);
+    assert.ok(policyMaster.fields.every((f) => f.meaning && f.question && f.base_kind && f.implemented === false));
+    assert.equal(policyMaster.principles.length, 20);
+    assert.equal(policyMaster.evaluation.verdict, "ACCEPTED_FROZEN_HOLD");
+    assert.equal(policyMaster.status, "CONTROLLED_TEMPLATE_HOLD");
+    assert.equal(policyMaster.active, false);
+    assert.equal(policyMaster.frozen, true);
+    assert.equal(policyMaster.new_architectural_root, false);
+  });
+  it("fails at policy-as-code if the master is marked ACTIVE", async () => {
+    const broken = { ...platform, policyMaster: { ...policyMaster, active: true, status: "ACTIVE" } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "POLICY_MASTER_HOLD"));
+  });
+});
+
+describe("Visual Asset System", () => {
+  it("binds discovery/share/content to existing layers without a 45th root", () => {
+    const r = inspectVisualAssetPolicy(visualAssetPolicy);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(visualAssetPolicy.id, VAS_POLICY_ID);
+    assert.equal(visualAssetPolicy.families.length, VAS_FAMILY_N);
+    assert.equal(visualAssetPolicy.internal_policies.length, VAS_INTERNAL_POLICY_N);
+    assert.equal(visualAssetPolicy.new_architectural_root, false);
+    assert.equal(visualAssetPolicy.one_image_per_page, false);
+    assert.equal(visualAssetPolicy.generator.operational, "NOT_ASSERTED");
+    assert.equal(visualAssetPolicy.document_projections.docx.files_generated, false);
+    assert.equal(visualAssetPolicy.dimensions.og.width, 1200);
+    assert.equal(visualAssetPolicy.dimensions.og.height, 630);
+    assert.equal(visualAssetPolicy.dimensions.linkedin.height, 627);
+  });
+  it("fails at policy-as-code if VAS claims a 45th layer or generated Word files", async () => {
+    const broken = {
+      ...platform,
+      visualAssetPolicy: {
+        ...visualAssetPolicy,
+        new_architectural_root: true,
+        document_projections: { ...visualAssetPolicy.document_projections, docx: { files_generated: true } },
+      },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "VAS_HOLD"));
+  });
+  it("renders master and VAS from JSON on the cascade page", () => {
+    const html = readFileSync(join(site, "data/cko/cascade/index.html"), "utf8");
+    assert.match(html, /data-cko-ds-render="policy-master"/);
+    assert.match(html, /data-cko-ds-render="visual-assets"/);
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderVisualAssets/);
+  });
+});
+
+describe("platform closure hold policies", () => {
+  it("specializes the nine human holds onto POLICY_MASTER_CONTRACT", () => {
+    const r = inspectPlatformClosure(platformClosure, humanDecisions);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(platformClosure.id, CLOSURE_POLICY_ID);
+    assert.equal(platformClosure.document_id, CLOSURE_DOCUMENT_ID);
+    assert.equal(platformClosure.hold_count, HOLD_POLICY_N);
+    assert.equal(platformClosure.holds.length, HOLD_POLICY_N);
+    assert.equal(platformClosure.active, false);
+    assert.equal(platformClosure.release_allowed, false);
+    assert.equal(platformClosure.specializes, POLICY_MASTER_ID);
+    assert.ok(platformClosure.holds.every((h) => h.contract.field_count === 28 && h.specializes === POLICY_MASTER_ID && h.active === false));
+    assert.ok(humanDecisions.items.every((item) => platformClosure.holds.some((h) => h.hold_id === item.id && h.id === item.policy_id)));
+  });
+  it("fails at policy-as-code if a hold policy is marked ACTIVE", async () => {
+    const brokenHolds = platformClosure.holds.map((h, i) => (i === 0 ? { ...h, active: true, implantado: true } : h));
+    const broken = { ...platform, platformClosure: { ...platformClosure, holds: brokenHolds } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "PLATFORM_CLOSURE_HOLD"));
+  });
+  it("renders the closure catalog on cascade and holds pages", () => {
+    assert.match(readFileSync(join(site, "data/cko/cascade/index.html"), "utf8"), /data-cko-ds-render="platform-closure"/);
+    assert.match(readFileSync(join(site, "cko-holds.html"), "utf8"), /data-cko-ds-render="platform-closure"/);
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderPlatformClosure/);
+    assert.match(readFileSync(join(site, "cko-holds.html"), "utf8"), /data-cko-ds-render="human-holds"/);
   });
 });
 
@@ -787,6 +942,8 @@ describe("MD/REG as policy through the frontend", () => {
     assert.equal(r.ok, true, JSON.stringify(r.failed));
     assert.equal(r.policy.release_allowed, false);
     assert.ok(r.runtime.asserts.some((a) => a.id === "A-HOLD-HUMAN-NON-BLOCKING" && a.ok));
+    assert.equal(humanDecisions.hold_count, HOLD_POLICY_N);
+    assert.ok(humanDecisions.items.every((item) => item.policy_id && item.specializes === POLICY_MASTER_ID));
   });
   it("fails inspect only if a human decision is marked blocking", async () => {
     const broken = {
@@ -827,15 +984,100 @@ describe("chrome templates", () => {
     assert.match(calcTpl, /data-cko-static="breadcrumb"/);
     assert.match(calcTpl, /data-cko-static="hero"/);
   });
-  it("keeps Aldrete/IMC with static hero so the shell must skip the slot", () => {
+  it("keeps Aldrete/IMC with a local H1 in source; shell now prefers the cluster hero", () => {
     for (const name of ["aldrete.html", "imc.html"]) {
       const html = readFileSync(join(site, name), "utf8");
       assert.match(html, /data-cko-slot="hero"/);
       assert.match(html, /<h1\b/);
     }
+    const shell = readFileSync(join(site, "js/cko-page-shell.js"), "utf8");
+    assert.match(shell, /hideLegacyLocalHeroes/);
+    assert.match(shell, /data-cko-legacy-hero/);
+    const staticFn = shell.slice(shell.indexOf("function hasStaticHero"), shell.indexOf("function hideLegacyLocalHeroes"));
+    assert.equal(staticFn.includes("-card-navy"), false);
+    assert.equal(shell.includes("-card-navy"), true);
     const missao = readFileSync(join(site, "missao.html"), "utf8");
     assert.match(missao, /class="crumbs"/);
     assert.match(missao, /<section class="hero"/);
     assert.equal(missao.includes("data-cko-slot="), false);
+  });
+  it("binds tool/calculator/scale HTML to CKO-POL-UT-001 and POLICY_MASTER_CONTRACT", () => {
+    for (const name of ["calculator.html", "tool.html", "scale.html"]) {
+      const html = readFileSync(join(site, "templates", name), "utf8");
+      assert.match(html, /data-cko-policy="CKO-POL-UT-001"/);
+      assert.match(html, /data-cko-contract="POLICY_MASTER_CONTRACT"/);
+      assert.match(html, /data-cko-utc="UTC-013 UTC-046"/);
+    }
+    const specimen = readFileSync(join(site, "escala-padrao.html"), "utf8");
+    assert.match(specimen, /data-cko-policy="CKO-POL-UT-001"/);
+    assert.match(specimen, /data-cko-contract="POLICY_MASTER_CONTRACT"/);
+    for (const name of ["home.html", "institutional.html", "library.html", "content.html"]) {
+      const html = readFileSync(join(site, "templates", name), "utf8");
+      assert.match(html, /data-cko-contract="POLICY_MASTER_CONTRACT"/);
+    }
+    const renderer = readFileSync(join(site, "js/cko-ds-render.js"), "utf8");
+    assert.match(renderer, /governed_by/);
+    assert.match(renderer, /Base normativa/);
+  });
+  it("fails at policy-as-code if catalog templates lose policy binding", async () => {
+    const unbound = designSystem.templates.map((t) => ({ ...t, governed_by: undefined }));
+    const broken = {
+      ...platform,
+      designSystem: { ...designSystem, templates: unbound, template_governance: { contract: "NONE" } },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "TEMPLATE_POLICY_HOLD"));
+  });
+  it("ships refined scale/library/content templates and gates rating copy", () => {
+    for (const name of ["scale.html", "library.html", "content.html"]) {
+      const html = readFileSync(join(site, "templates", name), "utf8");
+      assert.match(html, /data-cko-slot="chrome"/);
+      assert.match(html, /data-cko-slot="hero"/);
+    }
+    const gen = readFileSync(join(site, "scripts/generate_tool_page.py"), "utf8");
+    assert.match(gen, /HOLD-HUMAN-COPY-RATINGS/);
+    assert.equal(gen.includes("de 5 estrelas"), false);
+    assert.equal(existsSync(join(site, "js/cko-ratings-hold.js")), true);
+    const gate = readFileSync(join(site, "js/cko-ratings-hold.js"), "utf8");
+    assert.match(gate, /HOLD-HUMAN-COPY-RATINGS/);
+    assert.match(readFileSync(join(site, "js/partials-loader.js"), "utf8"), /cko-ratings-hold\.js/);
+    const calc = readFileSync(join(site, "camadas/LYR-CLIN-CALC-001/index.html"), "utf8");
+    assert.match(calc, /data-cko-ds-render="universal-tool"/);
+    const tpl = readFileSync(join(site, "camadas/LYR-PAGE-TPL-001/index.html"), "utf8");
+    assert.match(tpl, /data-cko-ds-render="templates"/);
+    const holds = readFileSync(join(site, "cko-holds.html"), "utf8");
+    assert.match(holds, /data-cko-ds-render="human-holds"/);
+    assert.ok(humanDecisions.items.every((item) => item.code_progress && item.next_human));
+    assert.ok(humanDecisions.items.every((item) => item.status === "HOLD_HUMAN_NON_BLOCKING"));
+  });
+  it("ships identity v10 and scale specimen on the standard cluster", () => {
+    const identidade = readFileSync(join(site, "cko-identidade.html"), "utf8");
+    assert.match(identidade, /data-cko-template="institutional"/);
+    assert.match(identidade, /data-cko-page="cko-identidade"/);
+    assert.match(identidade, /data-cko-slot="chrome"/);
+    assert.match(identidade, /data-cko-slot="hero"/);
+    assert.match(identidade, /data-cko-ds-render="manual"/);
+    assert.equal(/<style[\s\S]*--navy-light/.test(identidade), false);
+    const scale = readFileSync(join(site, "templates/scale.html"), "utf8");
+    assert.match(scale, /data-cko-template="scale"/);
+    assert.match(scale, /data-cko-scale-items/);
+    assert.match(scale, /cko-scale-grid/);
+    assert.equal(scale.includes("-card-navy"), false);
+    const specimen = readFileSync(join(site, "escala-padrao.html"), "utf8");
+    assert.match(specimen, /data-cko-page="escala-padrao"/);
+    assert.match(specimen, /data-cko-scale-items/);
+    assert.match(specimen, /CKO-POL-UT-001/);
+    assert.equal(specimen.includes("-card-navy"), false);
+    const renderer = readFileSync(join(site, "js/cko-ds-render.js"), "utf8");
+    assert.match(renderer, /renderIdentityManual/);
+    assert.match(readFileSync(join(site, "js/cko-scale-standard.js"), "utf8"), /cko-tpl-scale/);
+    const catalog = JSON.parse(readFileSync(join(site, "data/cko-shell-pages.json"), "utf8"));
+    assert.ok(catalog.pages["cko-identidade"]);
+    assert.ok(catalog.pages["escala-padrao"]);
+    const dsLayer = readFileSync(join(site, "camadas/LYR-DS-001/index.html"), "utf8");
+    assert.match(dsLayer, /global-header-container/);
+    assert.match(dsLayer, /cko-identidade\.html/);
   });
 });

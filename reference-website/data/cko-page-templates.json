@@ -44,15 +44,15 @@
       "pilots": ["missao.html", "objetivo.html", "politica.html", "termos.html"]
     },
     "calculator": {
-      "label": "Calculadora / Escala",
+      "label": "Calculadora",
       "bodyClass": "cko-tpl-calculator",
       "shell": true,
       "slots": ["chrome", "hero", "sidebar"],
       "layout": "cko-layout",
       "workspace": "cko-calc-workspace",
       "requiredRegions": ["form", "result"],
-      "description": "Formulário clínico + resultado + sidebar de recursos/disclaimer.",
-      "pilot": "news.html"
+      "description": "Formulário clínico + resultado + sidebar de recursos/disclaimer. Escalas usam o template scale.",
+      "pilot": "imc.html"
     },
     "tool": {
       "label": "Ferramenta / utilitário",
@@ -71,7 +71,29 @@
       "slots": ["chrome", "hero", "sidebar"],
       "layout": "cko-layout",
       "description": "Protocolos/guias — ver CKO-CONTENT-ENGINE.md",
-      "pilot": "time-de-resposta-rapida.html"
+      "pilot": "time-de-resposta-rapida.html",
+      "html": "templates/content.html"
+    },
+    "scale": {
+      "label": "Escala",
+      "bodyClass": "cko-tpl-scale",
+      "shell": true,
+      "slots": ["chrome", "hero", "sidebar"],
+      "layout": "cko-layout",
+      "workspace": "cko-calc-workspace",
+      "requiredRegions": ["items", "score"],
+      "description": "Itens + escore + referências no cluster v10. Sem hero navy local. CKO-POL-UT-001 permanece PAUSED.",
+      "html": "templates/scale.html",
+      "pilot": "escala-padrao.html"
+    },
+    "library": {
+      "label": "Biblioteca",
+      "bodyClass": "cko-tpl-library",
+      "shell": true,
+      "slots": ["chrome", "hero", "sidebar"],
+      "layout": "cko-layout",
+      "description": "Listagem + filtros. Sem publicação de acervo novo.",
+      "html": "templates/library.html"
     }
   }
 }

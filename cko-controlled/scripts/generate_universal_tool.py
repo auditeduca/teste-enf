@@ -13,6 +13,64 @@ GATE = Path(__file__).resolve().parents[1]
 SITE = GATE.parent / "reference-website"
 OUT_POLICY = GATE / "public" / "policies" / "universal-tool.json"
 OUT_SITE = SITE / "data" / "cko" / "universal-tool.json"
+OUT_CASCADE = SITE / "data" / "cko" / "cascade" / "universal-tool.json"
+
+POLICY_MASTER_ID = "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+FAIL_CLOSED_ID = "POL-CKO-FAIL-CLOSED-1.0.0"
+MASTER_FIELDS = [
+    "IDENTITY",
+    "AUTHORITY",
+    "INTENT",
+    "APPLICABILITY",
+    "SCOPE",
+    "SUBJECT",
+    "MODALITY",
+    "CONDITIONS",
+    "CONSTRAINTS",
+    "DECISION",
+    "OUTCOME",
+    "ENFORCEMENT",
+    "CONTRACT",
+    "IMPLEMENTATION",
+    "TESTS",
+    "CI_GATES",
+    "RUNTIME_ASSERTIONS",
+    "OBSERVABILITY",
+    "EVIDENCE",
+    "PROVENANCE",
+    "GOVERNANCE",
+    "EXCEPTIONS",
+    "DEPENDENCIES",
+    "VERSIONING",
+    "LIFECYCLE",
+    "CHANGE_IMPACT",
+    "READINESS",
+    "ASSURANCE",
+]
+
+GOVERNED_TEMPLATES = [
+    {
+        "id": "tool",
+        "html": "templates/tool.html",
+        "catalog_id": "tool",
+        "utc": ["UTC-013", "UTC-046"],
+        "status": "BOUND_HOLD",
+    },
+    {
+        "id": "calculator",
+        "html": "templates/calculator.html",
+        "catalog_id": "tool",
+        "utc": ["UTC-013", "UTC-046"],
+        "status": "BOUND_HOLD",
+    },
+    {
+        "id": "scale",
+        "html": "templates/scale.html",
+        "catalog_id": "scale",
+        "utc": ["UTC-013", "UTC-046"],
+        "status": "BOUND_HOLD",
+    },
+]
 
 CASCADE = [
     "policy-as-code",
@@ -125,6 +183,84 @@ CONTROLS = [
 ]
 
 
+def specialize_contract() -> dict:
+    """CKO-POL-UT-001 specializes POLICY_MASTER_CONTRACT. Fields remain HOLD."""
+    fields = {
+        fid: {"status": "SPECIALIZED_HOLD", "implemented": False, "assured": False} for fid in MASTER_FIELDS
+    }
+    fields["IDENTITY"].update(
+        {
+            "policy_id": "POL-CKO-UNIVERSAL-TOOL-1.3.0",
+            "document_id": "CKO-POL-UT-001",
+            "policy_version": "1.3.0",
+            "policy_name": "Universal Tool Policy",
+            "policy_type": "APPLICATION",
+            "policy_status": "POLITICA_CONTROLADA",
+        }
+    )
+    fields["AUTHORITY"].update(
+        {
+            "sources": ["CKO-REG", "CKO-MD", "ABNT-NBR-6023-2025", "ABNT-NBR-10520-2023", "ABNT-NBR-5891-2014"],
+            "controls": [f"UTC-{i:03d}" for i in range(1, 99)],
+        }
+    )
+    fields["INTENT"].update(
+        {
+            "objective": "govern_universal_tool_anatomy",
+            "desired_state": "every_tool_and_scale_template_specializes_the_28_field_contract",
+            "prohibited_state": "ungoverned_html_template_or_inline_clinical_truth",
+        }
+    )
+    fields["APPLICABILITY"].update(
+        {
+            "mode": "CONDITIONAL",
+            "object_types": ["TOOL", "SCALE", "CALCULATOR"],
+            "determination": "applies when a page uses data-cko-template tool|calculator|scale",
+        }
+    )
+    fields["SCOPE"].update(
+        {
+            "layers": ["LYR-CLIN-CALC-001", "LYR-PAGE-TPL-001", "LYR-DS-001"],
+            "templates": ["tool", "calculator", "scale"],
+            "operations": ["CREATE", "UPDATE", "PUBLISH", "RENDER"],
+        }
+    )
+    fields["SUBJECT"].update({"actors": ["HUMAN", "AGENT", "SERVICE"], "objects": ["TOOL", "SCALE", "PAGE", "TEMPLATE"]})
+    fields["MODALITY"].update({"type": "MUST", "clinical_promotion": "MUST_NOT"})
+    fields["DECISION"].update(
+        {
+            "deny_if": [
+                "template.ungoverned == true",
+                "clinical_calculators == PASS",
+                "md_gate != REMEDIATION_REQUIRED_NORMATIVE_GATE",
+            ],
+            "allow_if": ["template.governed_by.contract == POLICY_MASTER_CONTRACT"],
+        }
+    )
+    fields["OUTCOME"].update({"on_deny": "BLOCK", "on_allow": "HOLD_RENDER", "severity": "BLOCKER"})
+    fields["ENFORCEMENT"].update({"preventive": ["CI_GATE", "INSPECT"], "detective": ["RUNTIME_ASSERTION"]})
+    fields["GOVERNANCE"].update(
+        {
+            "owner": "CLINICAL_GOVERNANCE",
+            "human_boundary": "FINAL_APPROVAL_AND_PUBLICATION",
+            "approval_required": True,
+        }
+    )
+    fields["READINESS"].update({"score": "NOT_READY", "active": False})
+    fields["ASSURANCE"].update({"verdict": "DOCUMENTADO_HOLD_NOT_IMPLEMENTED", "clinical_promotion": "DENIED"})
+    assert list(fields) == MASTER_FIELDS
+    return {
+        "contract_id": POLICY_MASTER_ID,
+        "document_id": "POLICY_MASTER_CONTRACT",
+        "document_version": "1.0.0",
+        "status": "SPECIALIZED_HOLD",
+        "implemented": False,
+        "assured": False,
+        "field_count": 28,
+        "fields": fields,
+    }
+
+
 def build() -> dict:
     controls = [
         {
@@ -147,7 +283,9 @@ def build() -> dict:
         "mode": "fail-closed",
         "root": False,
         "starts_at": "policy-as-code",
-        "parent": "POL-CKO-FAIL-CLOSED-1.0.0",
+        "parent": POLICY_MASTER_ID,
+        "specializes": POLICY_MASTER_ID,
+        "inherits": [FAIL_CLOSED_ID, POLICY_MASTER_ID],
         "document_id": "CKO-POL-UT-001",
         "document_version": "1.3.0",
         "document_date": "2026-08-22",
@@ -266,10 +404,27 @@ def build() -> dict:
                     "severity": "NOTE",
                     "text": "UTC-006 está declarado (maker!=checker!=auditor) com operational NOT_ASSERTED. Não é evidência de segregação em runtime.",
                 },
+                {
+                    "id": "UT-F-TEMPLATE-BOUND",
+                    "severity": "HOLD",
+                    "text": "Templates tool/calculator/scale passam a especializar POLICY_MASTER_CONTRACT via CKO-POL-UT-001 (UTC-013, UTC-046). Binding ≠ implantado ≠ assured. Chrome HTML não é o Universal Tool Contract.",
+                },
             ],
         },
+        "contract": specialize_contract(),
+        "template_governance": {
+            "status": "BOUND_HOLD",
+            "implantado": False,
+            "assured": False,
+            "contract": "POLICY_MASTER_CONTRACT",
+            "contract_id": POLICY_MASTER_ID,
+            "policy": "CKO-POL-UT-001",
+            "utc": ["UTC-013", "UTC-046"],
+            "templates": GOVERNED_TEMPLATES,
+            "rule": "HTML de ferramenta/escala sem data-cko-policy + data-cko-contract é chrome não governado.",
+        },
         "controls": controls,
-        "rule": "Fonte/Norma → Requisito → CKO-REG → CKO-MD → Tool Contract → Engines → Safety/SAE → Renderer → Assurance → Release. Nenhum UTC PASS enquanto md_gate for REMEDIATION_REQUIRED_NORMATIVE_GATE.",
+        "rule": "Fonte/Norma → Requisito → CKO-REG → CKO-MD → POLICY_MASTER_CONTRACT → Tool Contract → Engines → Safety/SAE → Renderer → Assurance → Release. Nenhum UTC PASS enquanto md_gate for REMEDIATION_REQUIRED_NORMATIVE_GATE.",
     }
 
 
@@ -278,8 +433,9 @@ def generate() -> dict:
     text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     OUT_POLICY.parent.mkdir(parents=True, exist_ok=True)
     OUT_SITE.parent.mkdir(parents=True, exist_ok=True)
-    OUT_POLICY.write_text(text, encoding="utf-8")
-    OUT_SITE.write_text(text, encoding="utf-8")
+    for dest in (OUT_POLICY, OUT_SITE, OUT_CASCADE):
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(text, encoding="utf-8")
     return payload
 
 

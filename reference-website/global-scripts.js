@@ -848,3 +848,13 @@ window.addEventListener('load', function() {
     }, 1000); // Aguarda 1 segundo após o load completo da página
 });
 
+/* HOLD-HUMAN-COPY-RATINGS — gate star copy without claiming the human hold closed */
+(function () {
+  try {
+    var s = document.createElement("script");
+    s.src = (window.__FETCH_PREFIX || "/") + "js/cko-ratings-hold.js";
+    s.defer = true;
+    document.head.appendChild(s);
+  } catch (e) {}
+})();
+

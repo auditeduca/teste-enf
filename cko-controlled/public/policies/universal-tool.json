@@ -4,7 +4,12 @@
   "mode": "fail-closed",
   "root": false,
   "starts_at": "policy-as-code",
-  "parent": "POL-CKO-FAIL-CLOSED-1.0.0",
+  "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+  "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+  "inherits": [
+    "POL-CKO-FAIL-CLOSED-1.0.0",
+    "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+  ],
   "document_id": "CKO-POL-UT-001",
   "document_version": "1.3.0",
   "document_date": "2026-08-22",
@@ -136,8 +141,386 @@
         "id": "UT-F-AGENTS-DECLARED",
         "severity": "NOTE",
         "text": "UTC-006 está declarado (maker!=checker!=auditor) com operational NOT_ASSERTED. Não é evidência de segregação em runtime."
+      },
+      {
+        "id": "UT-F-TEMPLATE-BOUND",
+        "severity": "HOLD",
+        "text": "Templates tool/calculator/scale passam a especializar POLICY_MASTER_CONTRACT via CKO-POL-UT-001 (UTC-013, UTC-046). Binding ≠ implantado ≠ assured. Chrome HTML não é o Universal Tool Contract."
       }
     ]
+  },
+  "contract": {
+    "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+    "document_id": "POLICY_MASTER_CONTRACT",
+    "document_version": "1.0.0",
+    "status": "SPECIALIZED_HOLD",
+    "implemented": false,
+    "assured": false,
+    "field_count": 28,
+    "fields": {
+      "IDENTITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "policy_id": "POL-CKO-UNIVERSAL-TOOL-1.3.0",
+        "document_id": "CKO-POL-UT-001",
+        "policy_version": "1.3.0",
+        "policy_name": "Universal Tool Policy",
+        "policy_type": "APPLICATION",
+        "policy_status": "POLITICA_CONTROLADA"
+      },
+      "AUTHORITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "sources": [
+          "CKO-REG",
+          "CKO-MD",
+          "ABNT-NBR-6023-2025",
+          "ABNT-NBR-10520-2023",
+          "ABNT-NBR-5891-2014"
+        ],
+        "controls": [
+          "UTC-001",
+          "UTC-002",
+          "UTC-003",
+          "UTC-004",
+          "UTC-005",
+          "UTC-006",
+          "UTC-007",
+          "UTC-008",
+          "UTC-009",
+          "UTC-010",
+          "UTC-011",
+          "UTC-012",
+          "UTC-013",
+          "UTC-014",
+          "UTC-015",
+          "UTC-016",
+          "UTC-017",
+          "UTC-018",
+          "UTC-019",
+          "UTC-020",
+          "UTC-021",
+          "UTC-022",
+          "UTC-023",
+          "UTC-024",
+          "UTC-025",
+          "UTC-026",
+          "UTC-027",
+          "UTC-028",
+          "UTC-029",
+          "UTC-030",
+          "UTC-031",
+          "UTC-032",
+          "UTC-033",
+          "UTC-034",
+          "UTC-035",
+          "UTC-036",
+          "UTC-037",
+          "UTC-038",
+          "UTC-039",
+          "UTC-040",
+          "UTC-041",
+          "UTC-042",
+          "UTC-043",
+          "UTC-044",
+          "UTC-045",
+          "UTC-046",
+          "UTC-047",
+          "UTC-048",
+          "UTC-049",
+          "UTC-050",
+          "UTC-051",
+          "UTC-052",
+          "UTC-053",
+          "UTC-054",
+          "UTC-055",
+          "UTC-056",
+          "UTC-057",
+          "UTC-058",
+          "UTC-059",
+          "UTC-060",
+          "UTC-061",
+          "UTC-062",
+          "UTC-063",
+          "UTC-064",
+          "UTC-065",
+          "UTC-066",
+          "UTC-067",
+          "UTC-068",
+          "UTC-069",
+          "UTC-070",
+          "UTC-071",
+          "UTC-072",
+          "UTC-073",
+          "UTC-074",
+          "UTC-075",
+          "UTC-076",
+          "UTC-077",
+          "UTC-078",
+          "UTC-079",
+          "UTC-080",
+          "UTC-081",
+          "UTC-082",
+          "UTC-083",
+          "UTC-084",
+          "UTC-085",
+          "UTC-086",
+          "UTC-087",
+          "UTC-088",
+          "UTC-089",
+          "UTC-090",
+          "UTC-091",
+          "UTC-092",
+          "UTC-093",
+          "UTC-094",
+          "UTC-095",
+          "UTC-096",
+          "UTC-097",
+          "UTC-098"
+        ]
+      },
+      "INTENT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "objective": "govern_universal_tool_anatomy",
+        "desired_state": "every_tool_and_scale_template_specializes_the_28_field_contract",
+        "prohibited_state": "ungoverned_html_template_or_inline_clinical_truth"
+      },
+      "APPLICABILITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "mode": "CONDITIONAL",
+        "object_types": [
+          "TOOL",
+          "SCALE",
+          "CALCULATOR"
+        ],
+        "determination": "applies when a page uses data-cko-template tool|calculator|scale"
+      },
+      "SCOPE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "layers": [
+          "LYR-CLIN-CALC-001",
+          "LYR-PAGE-TPL-001",
+          "LYR-DS-001"
+        ],
+        "templates": [
+          "tool",
+          "calculator",
+          "scale"
+        ],
+        "operations": [
+          "CREATE",
+          "UPDATE",
+          "PUBLISH",
+          "RENDER"
+        ]
+      },
+      "SUBJECT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "actors": [
+          "HUMAN",
+          "AGENT",
+          "SERVICE"
+        ],
+        "objects": [
+          "TOOL",
+          "SCALE",
+          "PAGE",
+          "TEMPLATE"
+        ]
+      },
+      "MODALITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "type": "MUST",
+        "clinical_promotion": "MUST_NOT"
+      },
+      "CONDITIONS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "CONSTRAINTS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "DECISION": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "deny_if": [
+          "template.ungoverned == true",
+          "clinical_calculators == PASS",
+          "md_gate != REMEDIATION_REQUIRED_NORMATIVE_GATE"
+        ],
+        "allow_if": [
+          "template.governed_by.contract == POLICY_MASTER_CONTRACT"
+        ]
+      },
+      "OUTCOME": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "on_deny": "BLOCK",
+        "on_allow": "HOLD_RENDER",
+        "severity": "BLOCKER"
+      },
+      "ENFORCEMENT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "preventive": [
+          "CI_GATE",
+          "INSPECT"
+        ],
+        "detective": [
+          "RUNTIME_ASSERTION"
+        ]
+      },
+      "CONTRACT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "IMPLEMENTATION": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "TESTS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "CI_GATES": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "RUNTIME_ASSERTIONS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "OBSERVABILITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "EVIDENCE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "PROVENANCE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "GOVERNANCE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "owner": "CLINICAL_GOVERNANCE",
+        "human_boundary": "FINAL_APPROVAL_AND_PUBLICATION",
+        "approval_required": true
+      },
+      "EXCEPTIONS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "DEPENDENCIES": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "VERSIONING": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "LIFECYCLE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "CHANGE_IMPACT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "READINESS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "score": "NOT_READY",
+        "active": false
+      },
+      "ASSURANCE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "verdict": "DOCUMENTADO_HOLD_NOT_IMPLEMENTED",
+        "clinical_promotion": "DENIED"
+      }
+    }
+  },
+  "template_governance": {
+    "status": "BOUND_HOLD",
+    "implantado": false,
+    "assured": false,
+    "contract": "POLICY_MASTER_CONTRACT",
+    "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+    "policy": "CKO-POL-UT-001",
+    "utc": [
+      "UTC-013",
+      "UTC-046"
+    ],
+    "templates": [
+      {
+        "id": "tool",
+        "html": "templates/tool.html",
+        "catalog_id": "tool",
+        "utc": [
+          "UTC-013",
+          "UTC-046"
+        ],
+        "status": "BOUND_HOLD"
+      },
+      {
+        "id": "calculator",
+        "html": "templates/calculator.html",
+        "catalog_id": "tool",
+        "utc": [
+          "UTC-013",
+          "UTC-046"
+        ],
+        "status": "BOUND_HOLD"
+      },
+      {
+        "id": "scale",
+        "html": "templates/scale.html",
+        "catalog_id": "scale",
+        "utc": [
+          "UTC-013",
+          "UTC-046"
+        ],
+        "status": "BOUND_HOLD"
+      }
+    ],
+    "rule": "HTML de ferramenta/escala sem data-cko-policy + data-cko-contract é chrome não governado."
   },
   "controls": [
     {
@@ -1121,5 +1504,5 @@
       "canonical_promotion": false
     }
   ],
-  "rule": "Fonte/Norma → Requisito → CKO-REG → CKO-MD → Tool Contract → Engines → Safety/SAE → Renderer → Assurance → Release. Nenhum UTC PASS enquanto md_gate for REMEDIATION_REQUIRED_NORMATIVE_GATE."
+  "rule": "Fonte/Norma → Requisito → CKO-REG → CKO-MD → POLICY_MASTER_CONTRACT → Tool Contract → Engines → Safety/SAE → Renderer → Assurance → Release. Nenhum UTC PASS enquanto md_gate for REMEDIATION_REQUIRED_NORMATIVE_GATE."
 }

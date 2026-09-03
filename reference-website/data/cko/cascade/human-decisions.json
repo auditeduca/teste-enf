@@ -2,14 +2,16 @@
   "id": "CKO-HOLD-HUMAN-1.0.0",
   "kind": "hold-human-non-blocking",
   "root": "policy-as-code",
-  "policy": "POL-CKO-MD-REG-FRONTEND-1.0.0",
+  "policy": "POL-CKO-PLATFORM-CLOSURE-1.0.0",
+  "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
   "status": "HOLD_HUMAN_NON_BLOCKING",
   "blocking_inspect": false,
   "blocking_ci": false,
   "blocking_release": true,
   "release": "HOLD / NOT_RELEASED",
   "release_allowed": false,
-  "rule": "decisão humana = HOLD_HUMAN_NON_BLOCKING; coverage 100% do universo conhecido; não bloqueia inspect/CI",
+  "rule": "decisão humana = HOLD_HUMAN_NON_BLOCKING; cada hold especializa POLICY_MASTER_CONTRACT; não bloqueia inspect/CI",
+  "hold_count": 9,
   "items": [
     {
       "id": "HOLD-HUMAN-CLINICAL-HOMOLOG",
@@ -17,7 +19,13 @@
       "owner": "human",
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "CKO-POL-UT-001 especializa o molde; templates BOUND_HOLD; calculadoras PAUSED; promoção DENIED",
+      "next_human": "Assinar homologação clínica operacional",
+      "policy_id": "POL-CKO-HOLD-CLINICAL-HOMOLOG-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "RELEASE",
+      "modality": "MUST_NOT"
     },
     {
       "id": "HOLD-HUMAN-RIGHTS-CHAIN",
@@ -25,7 +33,14 @@
       "owner": "human",
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "13 rights holds explícitos em pendencies; sem assets novos",
+      "next_human": "Clearance jurídico da cadeia de direitos",
+      "policy_id": "POL-CKO-HOLD-RIGHTS-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "GOVERNANCE",
+      "modality": "MUST_NOT",
+      "count": 13
     },
     {
       "id": "HOLD-HUMAN-A11Y-EMPIRICAL",
@@ -33,7 +48,13 @@
       "owner": "human",
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "Skip links e :focus-visible; identidade v10 no cluster; escalas sem hero navy local",
+      "next_human": "Auditoria B6.3 em browsers e dispositivos reais",
+      "policy_id": "POL-CKO-HOLD-A11Y-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "ACCESSIBILITY",
+      "modality": "MUST_NOT"
     },
     {
       "id": "HOLD-HUMAN-NURSEPALM-OPS",
@@ -41,16 +62,28 @@
       "owner": "human",
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "NOT_ASSERTED mantido; gate recusa claim operacional",
+      "next_human": "Certificar Nurse-PaLM operacional",
+      "policy_id": "POL-CKO-HOLD-NURSEPALM-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "AI",
+      "modality": "MUST_NOT"
     },
     {
       "id": "HOLD-HUMAN-LOCALE-ACTIVATE",
       "decision": "Ativar células de locale Wave2 no seletor",
       "owner": "human",
-      "count": 360,
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "360 células HOLD; seletor continua desativado",
+      "next_human": "Revisão linguística antes de activate_in_selector",
+      "policy_id": "POL-CKO-HOLD-LOCALE-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "CONTENT",
+      "modality": "MUST_NOT",
+      "count": 360
     },
     {
       "id": "HOLD-HUMAN-HERO-MEDIA-RIGHTS",
@@ -58,7 +91,13 @@
       "owner": "human",
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "Heroes de template e DS são texto-only; sem camada 7 de mídia",
+      "next_human": "Aprovar direitos de imagem do hero",
+      "policy_id": "POL-CKO-HOLD-HERO-MEDIA-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "CONTENT",
+      "modality": "MUST_NOT"
     },
     {
       "id": "HOLD-HUMAN-OBSERVED-RUNTIME",
@@ -66,7 +105,13 @@
       "owner": "human",
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "Preview local e staging; observed:false no twin",
+      "next_human": "Assinar runtime observado em produção/mobile",
+      "policy_id": "POL-CKO-HOLD-RUNTIME-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "RUNTIME",
+      "modality": "MUST_NOT"
     },
     {
       "id": "HOLD-HUMAN-RECERT-B7",
@@ -74,7 +119,14 @@
       "owner": "human",
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "201 pending_reperformance explícitos; recert B7 FAIL",
+      "next_human": "Aprovar reperformance e recertificação B7",
+      "policy_id": "POL-CKO-HOLD-RECERT-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "ASSURANCE",
+      "modality": "MUST_NOT",
+      "count": 201
     },
     {
       "id": "HOLD-HUMAN-COPY-RATINGS",
@@ -82,7 +134,13 @@
       "owner": "human",
       "status": "HOLD_HUMAN_NON_BLOCKING",
       "blocking_inspect": false,
-      "blocking_release": true
+      "blocking_release": true,
+      "code_progress": "js/cko-ratings-hold.js substitui .stars/.tool-rating; gerador deixa de emitir estrelas",
+      "next_human": "Autorizar texto de avaliações, se algum",
+      "policy_id": "POL-CKO-HOLD-RATINGS-1.0.0",
+      "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+      "policy_type": "CONTENT",
+      "modality": "MUST_NOT"
     }
   ]
 }

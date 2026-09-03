@@ -144,6 +144,22 @@
     {
       "id": "UT_POLICY_HOLD",
       "deny_if": "CKO-POL-UT-001 claims implementation, reopens Clinical Calculators/Scales, closes the MD gate, or skips policy-as-code"
+    },
+    {
+      "id": "POLICY_MASTER_HOLD",
+      "deny_if": "POLICY_MASTER_CONTRACT is missing, ACTIVE, or claims a new architectural root instead of remaining a frozen HOLD template"
+    },
+    {
+      "id": "TEMPLATE_POLICY_HOLD",
+      "deny_if": "tool/scale/calculator templates lack POLICY_MASTER_CONTRACT + CKO-POL-UT-001 binding, or UT does not specialize the master contract"
+    },
+    {
+      "id": "PLATFORM_CLOSURE_HOLD",
+      "deny_if": "platform closure pack is missing, ACTIVE, or human holds are not specialized onto POLICY_MASTER_CONTRACT"
+    },
+    {
+      "id": "VAS_HOLD",
+      "deny_if": "Visual Asset System claims a 45th layer, one-image-per-page, operational generator, Word/PPT files, or ACTIVE POL-VIS policies"
     }
   ]
 }

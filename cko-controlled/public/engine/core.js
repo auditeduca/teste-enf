@@ -53,6 +53,10 @@ const INTEGRITY_DENIALS = new Set([
   "MD_REG_IS_POLICY",
   "DS_STARTS_AT_POLICY",
   "UT_POLICY_HOLD",
+  "POLICY_MASTER_HOLD",
+  "VAS_HOLD",
+  "TEMPLATE_POLICY_HOLD",
+  "PLATFORM_CLOSURE_HOLD",
 ]);
 
 export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
@@ -63,6 +67,44 @@ export const UT_DOCUMENT_ID = "CKO-POL-UT-001";
 export const UT_DOCUMENT_VERSION = "1.3.0";
 export const UT_CONTROL_N = 98;
 export const UT_MD_GATE = "REMEDIATION_REQUIRED_NORMATIVE_GATE";
+export const POLICY_MASTER_ID = "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0";
+export const POLICY_MASTER_FIELD_N = 28;
+export const POLICY_MASTER_FIELDS = [
+  "IDENTITY",
+  "AUTHORITY",
+  "INTENT",
+  "APPLICABILITY",
+  "SCOPE",
+  "SUBJECT",
+  "MODALITY",
+  "CONDITIONS",
+  "CONSTRAINTS",
+  "DECISION",
+  "OUTCOME",
+  "ENFORCEMENT",
+  "CONTRACT",
+  "IMPLEMENTATION",
+  "TESTS",
+  "CI_GATES",
+  "RUNTIME_ASSERTIONS",
+  "OBSERVABILITY",
+  "EVIDENCE",
+  "PROVENANCE",
+  "GOVERNANCE",
+  "EXCEPTIONS",
+  "DEPENDENCIES",
+  "VERSIONING",
+  "LIFECYCLE",
+  "CHANGE_IMPACT",
+  "READINESS",
+  "ASSURANCE",
+];
+export const VAS_POLICY_ID = "POL-CKO-VISUAL-ASSET-1.0.0";
+export const VAS_FAMILY_N = 3;
+export const VAS_INTERNAL_POLICY_N = 15;
+export const CLOSURE_POLICY_ID = "POL-CKO-PLATFORM-CLOSURE-1.0.0";
+export const CLOSURE_DOCUMENT_ID = "CKO-POL-CLOSURE-001";
+export const HOLD_POLICY_N = 9;
 export const HOLD_HUMAN_STATUS = "HOLD_HUMAN_NON_BLOCKING";
 export const MD_NORM_STAMP = {
   md: 'data-cko-md="CKO-MD"',
@@ -244,6 +286,10 @@ export function inspectPlatform(platform) {
   if (platform?.layers) {
     denials.push(...inspectDesignSystem(platform.designSystem).denials);
     denials.push(...inspectUniversalToolPolicy(platform.universalToolPolicy).denials);
+    denials.push(...inspectPolicyMaster(platform.policyMaster).denials);
+    denials.push(...inspectVisualAssetPolicy(platform.visualAssetPolicy).denials);
+    denials.push(...inspectTemplateGovernance(platform.designSystem, platform.universalToolPolicy).denials);
+    denials.push(...inspectPlatformClosure(platform.platformClosure, platform.humanDecisions).denials);
   }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
@@ -559,8 +605,35 @@ export function inspectUniversalToolPolicy(policy) {
   if (policy.document_id !== UT_DOCUMENT_ID || policy.document_version !== UT_DOCUMENT_VERSION) {
     deny("evaluated document must remain CKO-POL-UT-001 v1.3.0");
   }
-  if (policy.root === true || policy.starts_at !== "policy-as-code" || policy.parent !== "POL-CKO-FAIL-CLOSED-1.0.0") {
-    deny("Universal Tool Policy must inherit fail-closed and start at policy-as-code");
+  if (policy.root === true || policy.starts_at !== "policy-as-code") {
+    deny("Universal Tool Policy must start at policy-as-code and not claim root");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    deny("Universal Tool Policy must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (!Array.isArray(policy.inherits) || !policy.inherits.includes("POL-CKO-FAIL-CLOSED-1.0.0")) {
+    deny("Universal Tool Policy must still inherit fail-closed");
+  }
+  const specialized = policy.contract?.fields || {};
+  if (policy.contract?.contract_id !== POLICY_MASTER_ID || Object.keys(specialized).length !== POLICY_MASTER_FIELD_N) {
+    deny("UT must specialize all 28 POLICY_MASTER_CONTRACT fields");
+  }
+  if (JSON.stringify(Object.keys(specialized)) !== JSON.stringify(POLICY_MASTER_FIELDS)) {
+    deny("UT contract fields must remain in canonical 28-field order");
+  }
+  if (policy.contract?.implemented === true || policy.contract?.assured === true) {
+    deny("UT contract specialization cannot claim implemented or assured");
+  }
+  const tg = policy.template_governance || {};
+  if (tg.status !== "BOUND_HOLD" || tg.implantado === true || tg.assured === true) {
+    deny("UT templates must be BOUND_HOLD, not implantado/assured");
+  }
+  if (tg.contract !== "POLICY_MASTER_CONTRACT" || tg.policy !== UT_DOCUMENT_ID) {
+    deny("UT template_governance must bind CKO-POL-UT-001 to POLICY_MASTER_CONTRACT");
+  }
+  const boundIds = (tg.templates || []).map((t) => t.id);
+  if (!["tool", "calculator", "scale"].every((id) => boundIds.includes(id))) {
+    deny("UT must govern tool, calculator, and scale templates");
   }
   if (JSON.stringify(policy.cascade) !== JSON.stringify(CASCADE)) {
     deny("Universal Tool Policy cascade must match the fail-closed cascade");
@@ -606,6 +679,236 @@ export function inspectUniversalToolPolicy(policy) {
   }
   if (policy.inventory_agent?.canonical_promotion === true || policy.inventory_agent?.operational === "ASSERTED") {
     deny("Inventory Agent cannot promote Master Data or claim operational runtime");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectPolicyMaster(policy) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "POLICY_MASTER_HOLD", reason });
+  if (!policy) {
+    deny("POLICY_MASTER_CONTRACT missing; specializations must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== POLICY_MASTER_ID || policy.kind !== "policy-as-code") {
+    deny("identity must be POL-CKO-POLICY-MASTER-CONTRACT-1.0.0");
+  }
+  if (policy.document_id !== "POLICY_MASTER_CONTRACT" || policy.document_version !== "1.0.0") {
+    deny("frozen template identity must remain POLICY_MASTER_CONTRACT v1.0.0");
+  }
+  if (policy.starts_at !== "policy-as-code" || policy.parent !== "POL-CKO-FAIL-CLOSED-1.0.0") {
+    deny("master contract must inherit fail-closed and start at policy-as-code");
+  }
+  if (JSON.stringify(policy.cascade) !== JSON.stringify(CASCADE)) {
+    deny("master contract cascade must match fail-closed cascade");
+  }
+  if (policy.active === true || policy.status !== "CONTROLLED_TEMPLATE_HOLD" || policy.frozen !== true) {
+    deny("master contract is a frozen HOLD template; it is not ACTIVE");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED")) {
+    deny("master contract must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.new_architectural_root === true) {
+    deny("master contract cannot claim implementation or a new architectural root");
+  }
+  if (!Array.isArray(policy.fields) || policy.fields.length !== POLICY_MASTER_FIELD_N || policy.field_count !== POLICY_MASTER_FIELD_N) {
+    deny("POLICY_MASTER_CONTRACT must declare 28 fields");
+  }
+  const ids = (policy.fields || []).map((f) => f.id);
+  if (JSON.stringify(ids) !== JSON.stringify(POLICY_MASTER_FIELDS)) {
+    deny("28 master fields must remain in canonical order");
+  }
+  if ((policy.fields || []).some((f) => f.implemented === true)) {
+    deny("master fields are the template, not implemented controls");
+  }
+  if ((policy.fields || []).some((f) => !f.meaning || !f.question || !f.base_kind)) {
+    deny("each master field must declare meaning, question, and base_kind");
+  }
+  if (!Array.isArray(policy.principles) || policy.principles.length !== 20) {
+    deny("master contract must declare P01–P20");
+  }
+  if (policy.evaluation?.verdict !== "ACCEPTED_FROZEN_HOLD" || policy.evaluation?.active === true) {
+    deny("master evaluation must remain ACCEPTED_FROZEN_HOLD and not ACTIVE");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectTemplateGovernance(ds, ut) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "TEMPLATE_POLICY_HOLD", reason });
+  if (!ds) {
+    deny("design-system catalog missing; templates cannot be governed");
+    return { ok: false, denials };
+  }
+  if (ds.template_governance?.contract !== "POLICY_MASTER_CONTRACT") {
+    deny("design-system templates must be governed by POLICY_MASTER_CONTRACT");
+  }
+  if (ds.template_governance?.implantado === true) {
+    deny("template binding cannot claim implantado");
+  }
+  const templates = ds.templates || [];
+  if (templates.some((t) => t.governed_by?.contract !== "POLICY_MASTER_CONTRACT")) {
+    deny("every catalog template must declare governed_by.contract = POLICY_MASTER_CONTRACT");
+  }
+  for (const id of ["tool", "scale"]) {
+    const t = templates.find((row) => row.id === id);
+    if (!t || t.governed_by?.policy !== UT_DOCUMENT_ID || t.governed_by?.status !== "BOUND_HOLD") {
+      deny(`${id} template must be BOUND_HOLD to CKO-POL-UT-001`);
+    }
+  }
+  if (!ut) {
+    deny("CKO-POL-UT-001 missing; universal templates have no policy");
+    return { ok: false, denials };
+  }
+  if (ut.parent !== POLICY_MASTER_ID || ut.specializes !== POLICY_MASTER_ID) {
+    deny("CKO-POL-UT-001 must specialize POLICY_MASTER_CONTRACT before governing templates");
+  }
+  if (ut.template_governance?.status !== "BOUND_HOLD") {
+    deny("CKO-POL-UT-001 template_governance must be BOUND_HOLD");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectPlatformClosure(policy, ledger) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "PLATFORM_CLOSURE_HOLD", reason });
+  if (!policy) {
+    deny("platform closure pack missing; holds must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== CLOSURE_POLICY_ID || policy.kind !== "policy-as-code") {
+    deny("identity must be POL-CKO-PLATFORM-CLOSURE-1.0.0");
+  }
+  if (policy.document_id !== CLOSURE_DOCUMENT_ID || policy.document_version !== "1.0.0") {
+    deny("frozen closure identity must remain CKO-POL-CLOSURE-001 v1.0.0");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    deny("platform closure must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (policy.starts_at !== "policy-as-code") {
+    deny("platform closure must start at policy-as-code");
+  }
+  if (policy.active === true || policy.status !== "CONTROLLED_CLOSURE_HOLD") {
+    deny("platform closure is a HOLD catalog; it is not ACTIVE");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED")) {
+    deny("platform closure must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.new_architectural_root === true) {
+    deny("platform closure cannot claim implementation or a new architectural root");
+  }
+  const holds = policy.holds || [];
+  if (policy.hold_count !== HOLD_POLICY_N || holds.length !== HOLD_POLICY_N) {
+    deny(`platform closure must declare ${HOLD_POLICY_N} hold policies`);
+  }
+  const holdIds = holds.map((h) => h.hold_id);
+  const expected = [
+    "HOLD-HUMAN-CLINICAL-HOMOLOG",
+    "HOLD-HUMAN-RIGHTS-CHAIN",
+    "HOLD-HUMAN-A11Y-EMPIRICAL",
+    "HOLD-HUMAN-NURSEPALM-OPS",
+    "HOLD-HUMAN-LOCALE-ACTIVATE",
+    "HOLD-HUMAN-HERO-MEDIA-RIGHTS",
+    "HOLD-HUMAN-OBSERVED-RUNTIME",
+    "HOLD-HUMAN-RECERT-B7",
+    "HOLD-HUMAN-COPY-RATINGS",
+  ];
+  if (JSON.stringify(holdIds) !== JSON.stringify(expected)) {
+    deny("hold policies must remain the nine canonical human holds in order");
+  }
+  for (const hold of holds) {
+    if (hold.active === true || hold.implantado === true || hold.assured === true) {
+      deny(`${hold.id} cannot be ACTIVE/implantado/assured`);
+    }
+    if (hold.parent !== POLICY_MASTER_ID || hold.specializes !== POLICY_MASTER_ID) {
+      deny(`${hold.id} must specialize POLICY_MASTER_CONTRACT`);
+    }
+    if (hold.release_allowed === true || hold.blocking_release !== true) {
+      deny(`${hold.id} must keep blocking release`);
+    }
+    if (hold.blocking_inspect === true) {
+      deny(`${hold.id} must remain HOLD_HUMAN_NON_BLOCKING for inspect`);
+    }
+    const fields = hold.contract?.fields || {};
+    if (hold.contract?.field_count !== POLICY_MASTER_FIELD_N || Object.keys(fields).length !== POLICY_MASTER_FIELD_N) {
+      deny(`${hold.id} must specialize all 28 master fields`);
+    }
+    if (JSON.stringify(Object.keys(fields)) !== JSON.stringify(POLICY_MASTER_FIELDS)) {
+      deny(`${hold.id} contract fields must remain in canonical order`);
+    }
+  }
+  if (ledger) {
+    const ledgerIds = (ledger.items || []).map((i) => i.id);
+    if (JSON.stringify(ledgerIds) !== JSON.stringify(expected)) {
+      deny("human ledger ids must match the nine closure hold policies");
+    }
+    for (const item of ledger.items || []) {
+      const hold = holds.find((h) => h.hold_id === item.id);
+      if (!hold || hold.id !== item.policy_id) {
+        deny(`${item.id} ledger binding must match its hold policy`);
+      }
+    }
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectVisualAssetPolicy(policy) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "VAS_HOLD", reason });
+  if (!policy) {
+    deny("Visual Asset System missing; DesignOS visuals must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== VAS_POLICY_ID || policy.kind !== "policy-as-code") {
+    deny("Visual Asset System identity must be POL-CKO-VISUAL-ASSET-1.0.0");
+  }
+  if (policy.starts_at !== "policy-as-code" || policy.parent !== POLICY_MASTER_ID) {
+    deny("VAS must specialize POLICY_MASTER_CONTRACT and start at policy-as-code");
+  }
+  if (JSON.stringify(policy.cascade) !== JSON.stringify(CASCADE)) {
+    deny("VAS cascade must match fail-closed cascade");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED") || policy.published === true) {
+    deny("VAS must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.canonical_promotion === true) {
+    deny("VAS cannot claim implementation or canonical promotion");
+  }
+  if (policy.new_architectural_root === true || policy.library_is_layer === true || policy.layer_count_must_remain !== 44) {
+    deny("VAS is DesignOS on existing layers; it is not a 45th sequential layer");
+  }
+  if (policy.one_image_per_page === true) {
+    deny("VAS forbids one image per page; projections come from the canonical object");
+  }
+  if (!Array.isArray(policy.families) || policy.families.length !== VAS_FAMILY_N) {
+    deny("VAS must declare discovery/share/content families");
+  }
+  const fam = (policy.families || []).map((f) => f.id);
+  if (JSON.stringify(fam) !== JSON.stringify(["discovery", "share", "content"])) {
+    deny("VAS families must be discovery, share, content");
+  }
+  if (policy.dimensions?.og?.width !== 1200 || policy.dimensions?.og?.height !== 630) {
+    deny("OG master must remain 1200×630");
+  }
+  if (policy.dimensions?.linkedin?.width !== 1200 || policy.dimensions?.linkedin?.height !== 627) {
+    deny("LinkedIn share must remain 1200×627 from the OG master");
+  }
+  if (policy.generator?.operational === "ASSERTED" || policy.generator?.may_publish === true) {
+    deny("asset generator remains NOT_ASSERTED and cannot publish");
+  }
+  if (policy.document_projections?.docx?.files_generated === true || policy.document_projections?.pptx?.files_generated === true) {
+    deny("Word/PPT binaries must not be claimed generated");
+  }
+  if (policy.evaluation?.word_pptx_created === true) {
+    deny("evaluation must not pretend Word/PPT files exist");
+  }
+  const internals = policy.internal_policies || [];
+  if (internals.length !== VAS_INTERNAL_POLICY_N) deny("VAS internal policies must be POL-VIS-001…015");
+  if (internals.some((p) => p.active === true || p.implemented === true || p.status === "ACTIVE")) {
+    deny("POL-VIS-* remain DOCUMENTADO_HOLD; none are ACTIVE");
+  }
+  if (policy.image_registry?.materialized === true) {
+    deny("Image Registry is specified, not materialized");
   }
   return { ok: denials.length === 0, denials };
 }
@@ -657,6 +960,17 @@ export function inspectHumanDecisions(ledger) {
       deny(`${item.id} must keep blocking_release`);
       break;
     }
+    if (!item.policy_id || !String(item.policy_id).startsWith("POL-CKO-HOLD-")) {
+      deny(`${item.id} must be bound to a HOLD policy-as-code`);
+      break;
+    }
+    if (item.specializes !== POLICY_MASTER_ID) {
+      deny(`${item.id} must specialize POLICY_MASTER_CONTRACT`);
+      break;
+    }
+  }
+  if (items.length && items.length !== HOLD_POLICY_N) {
+    deny(`human ledger must declare exactly ${HOLD_POLICY_N} hold policies`);
   }
   return { ok: denials.length === 0, denials };
 }
@@ -708,6 +1022,9 @@ export function knownUniverseObjects(universe, platform) {
     }
     if (platform.designSystem) push("design-system-catalog", platform.designSystem.id || "CKO-DS-RUNTIME-1.0.0");
     if (platform.universalToolPolicy) push("universal-tool-policy", platform.universalToolPolicy.id || UT_POLICY_ID);
+    if (platform.policyMaster) push("policy-master-contract", platform.policyMaster.id || POLICY_MASTER_ID);
+    if (platform.visualAssetPolicy) push("visual-asset-policy", platform.visualAssetPolicy.id || VAS_POLICY_ID);
+    if (platform.platformClosure) push("platform-closure-policy", platform.platformClosure.id || CLOSURE_POLICY_ID);
   }
   return items;
 }
@@ -734,6 +1051,67 @@ export function validateRuntimePlatformSchema(platform) {
   errors.push(...validateLayersSchema(platform).errors);
   errors.push(...validateDesignSystemSchema(platform).errors);
   errors.push(...validateUniversalToolPolicySchema(platform).errors);
+  errors.push(...validatePolicyMasterSchema(platform).errors);
+  errors.push(...validateVisualAssetSchema(platform).errors);
+  errors.push(...validatePlatformClosureSchema(platform).errors);
+  return { ok: errors.length === 0, errors };
+}
+
+export function validatePlatformClosureSchema(platform) {
+  if (!platform?.layers && !platform?.platformClosure) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.platformClosure;
+  if (!policy) {
+    errors.push("schema: platform closure pack missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== CLOSURE_POLICY_ID) errors.push("schema: platform-closure id");
+  if (policy.status !== "CONTROLLED_CLOSURE_HOLD" || policy.active === true) errors.push("schema: platform-closure is not ACTIVE");
+  if (policy.starts_at !== "policy-as-code" || policy.specializes !== POLICY_MASTER_ID) {
+    errors.push("schema: platform-closure must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (!Array.isArray(policy.holds) || policy.holds.length !== HOLD_POLICY_N || policy.hold_count !== HOLD_POLICY_N) {
+    errors.push("schema: platform-closure holds != 9");
+  }
+  return { ok: errors.length === 0, errors };
+}
+
+export function validatePolicyMasterSchema(platform) {
+  if (!platform?.layers && !platform?.policyMaster) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.policyMaster;
+  if (!policy) {
+    errors.push("schema: POLICY_MASTER_CONTRACT missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== POLICY_MASTER_ID) errors.push("schema: policy-master id");
+  if (policy.status !== "CONTROLLED_TEMPLATE_HOLD" || policy.active === true) errors.push("schema: policy-master is not ACTIVE");
+  if (policy.starts_at !== "policy-as-code") errors.push("schema: policy-master root");
+  if (!Array.isArray(policy.fields) || policy.fields.length !== POLICY_MASTER_FIELD_N) errors.push("schema: policy-master fields != 28");
+  if ((policy.fields || []).some((f) => !f.meaning)) errors.push("schema: policy-master fields need meaning");
+  if (!Array.isArray(policy.principles) || policy.principles.length !== 20) errors.push("schema: policy-master principles != 20");
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateVisualAssetSchema(platform) {
+  if (!platform?.layers && !platform?.visualAssetPolicy) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.visualAssetPolicy;
+  if (!policy) {
+    errors.push("schema: Visual Asset System policy missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== VAS_POLICY_ID) errors.push("schema: visual-asset id");
+  if (policy.starts_at !== "policy-as-code") errors.push("schema: visual-asset must start at policy-as-code");
+  if (policy.new_architectural_root === true || policy.library_is_layer === true) errors.push("schema: VAS is not a 45th layer");
+  if (!Array.isArray(policy.families) || policy.families.length !== VAS_FAMILY_N) errors.push("schema: VAS families != 3");
+  if (policy.document_projections?.docx?.files_generated === true) errors.push("schema: Word files must not be claimed");
   return { ok: errors.length === 0, errors };
 }
 
@@ -754,6 +1132,12 @@ export function validateUniversalToolPolicySchema(platform) {
   }
   if (policy.starts_at !== "policy-as-code" || JSON.stringify(policy.cascade) !== JSON.stringify(CASCADE)) {
     errors.push("schema: universal-tool must start at policy-as-code");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    errors.push("schema: universal-tool must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (policy.template_governance?.status !== "BOUND_HOLD") {
+    errors.push("schema: universal-tool templates must be BOUND_HOLD");
   }
   if (!String(policy.release || "").includes("NOT_RELEASED") || policy.release_allowed === true) {
     errors.push("schema: universal-tool must remain NOT_RELEASED");
@@ -795,6 +1179,9 @@ export function validateDesignSystemSchema(platform) {
   if (ds.inventory?.templates !== 21 || ds.templates?.length !== 21) errors.push("schema: design-system templates != 21");
   if (ds.inventory?.themes !== 4 || ds.themes?.length !== 4) errors.push("schema: design-system themes != 4");
   if (ds.inventory?.theme_slots !== 44 || ds.theme_slots?.length !== 44) errors.push("schema: design-system theme_slots != 44");
+  if ((ds.templates || []).some((t) => t.governed_by?.contract !== "POLICY_MASTER_CONTRACT")) {
+    errors.push("schema: templates must be governed by POLICY_MASTER_CONTRACT");
+  }
   return { ok: errors.length === 0, errors };
 }
 
@@ -997,6 +1384,28 @@ export function graphConstraints(universe, platform) {
     if (ut && (ut.clinical_calculators !== "PAUSED" || ut.md_gate !== UT_MD_GATE)) {
       violations.push("graph: Universal Tool Policy cannot reopen calculators while MD gate is open");
     }
+    if (ut && (ut.parent !== POLICY_MASTER_ID || ut.specializes !== POLICY_MASTER_ID)) {
+      violations.push("graph: CKO-POL-UT-001 must specialize POLICY_MASTER_CONTRACT");
+    }
+    const tplGov = inspectTemplateGovernance(ds, ut);
+    if (!tplGov.ok) {
+      violations.push("graph: templates must be governed by POLICY_MASTER_CONTRACT + CKO-POL-UT-001");
+    }
+    const master = platform.policyMaster;
+    if (!master || master.starts_at !== "policy-as-code" || master.status !== "CONTROLLED_TEMPLATE_HOLD") {
+      violations.push("graph: POLICY_MASTER_CONTRACT must start at policy-as-code as a frozen HOLD template");
+    }
+    const vas = platform.visualAssetPolicy;
+    if (!vas || vas.starts_at !== "policy-as-code" || JSON.stringify(vas.cascade) !== JSON.stringify(CASCADE)) {
+      violations.push("graph: Visual Asset System must start at policy-as-code");
+    }
+    if (vas && (vas.new_architectural_root === true || vas.library_is_layer === true)) {
+      violations.push("graph: VAS cannot add a 45th sequential layer");
+    }
+    const closure = inspectPlatformClosure(platform.platformClosure, platform.humanDecisions);
+    if (!closure.ok) {
+      violations.push("graph: platform closure holds must specialize POLICY_MASTER_CONTRACT");
+    }
   }
   return {
     ok: violations.length === 0,
@@ -1117,6 +1526,15 @@ export function runtimeAssertions(universe, platform) {
       check("A-UT-POLICY-HOLD", ut.ok, "CKO-POL-UT-001");
       check("A-UT-CALCULATORS-PAUSED", platform.universalToolPolicy?.clinical_calculators === "PAUSED", "PAUSED");
       check("A-UT-MD-GATE-OPEN", platform.universalToolPolicy?.md_gate === UT_MD_GATE, "MD");
+      const master = inspectPolicyMaster(platform.policyMaster);
+      check("A-POLICY-MASTER-HOLD", master.ok, "POLICY_MASTER_CONTRACT");
+      const vas = inspectVisualAssetPolicy(platform.visualAssetPolicy);
+      check("A-VAS-HOLD", vas.ok, "CKO-VAS-001");
+      check("A-VAS-NOT-45TH-LAYER", platform.visualAssetPolicy?.new_architectural_root !== true, "44/44");
+      const tpl = inspectTemplateGovernance(platform.designSystem, platform.universalToolPolicy);
+      check("A-TEMPLATE-POLICY-HOLD", tpl.ok, "templates");
+      const closure = inspectPlatformClosure(platform.platformClosure, platform.humanDecisions);
+      check("A-PLATFORM-CLOSURE-HOLD", closure.ok, "CKO-POL-CLOSURE-001");
     }
   }
   const failed = asserts.filter((a) => !a.ok);
@@ -1685,6 +2103,10 @@ export async function automaticEvidence(universe, extras = {}) {
                       ? JSON.stringify(extras.platform?.designSystem || {})
                       : obj.kind === "universal-tool-policy"
                         ? JSON.stringify(extras.platform?.universalToolPolicy || {})
+                        : obj.kind === "policy-master-contract"
+                          ? JSON.stringify(extras.platform?.policyMaster || {})
+                          : obj.kind === "visual-asset-policy"
+                            ? JSON.stringify(extras.platform?.visualAssetPolicy || {})
               : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
     const sha = await digestSha256(body);
     receipts.push({
