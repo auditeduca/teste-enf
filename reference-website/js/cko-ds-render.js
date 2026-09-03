@@ -190,10 +190,11 @@ function renderCascade(ds) {
 function renderHumanHolds(ledger) {
   const items = (ledger.items || [])
     .map(
-      (item) => `<article class="cko-ds-card cko-ds-card--hold" data-cko-hold="${esc(item.id)}">
+      (item) => `<article class="cko-ds-card cko-ds-card--hold" data-cko-hold="${esc(item.id)}" data-cko-hold-policy="${esc(item.policy_id || "")}">
         <span class="cko-ds-badge cko-ds-badge--hold">${esc(item.status)}</span>
         <h3>${esc(item.id)}</h3>
         <p>${esc(item.decision)}</p>
+        <p class="cko-ds-help">Política <code>${esc(item.policy_id || "UNBOUND")}</code> · ${esc(item.policy_type || "")} · ${esc(item.modality || "")} · especializa POLICY_MASTER_CONTRACT.</p>
         <p class="cko-ds-help">Código: ${esc(item.code_progress || "nenhum avanço automático")}. Humano: ${esc(item.next_human || "decisão pendente")}.</p>
       </article>`
     )
@@ -204,6 +205,40 @@ function renderHumanHolds(ledger) {
       <p>${esc(ledger.rule)}. Não bloqueiam inspect/CI. Continuam a negar release. B9 permanece NOT_RELEASED.</p>
     </section>
     <div class="cko-ds-comp-grid">${items}</div>`;
+}
+
+function renderPlatformClosure(policy) {
+  const existing = (policy.existing_policies || [])
+    .map((p) => `<li><code>${esc(p.id)}</code> <span class="cko-ds-badge">${esc(p.role)}</span></li>`)
+    .join("");
+  const rows = (policy.holds || [])
+    .map(
+      (h) => `<tr>
+        <th scope="row"><code>${esc(h.hold_id)}</code></th>
+        <td><code>${esc(h.id)}</code></td>
+        <td>${esc(h.policy_type)}</td>
+        <td>${esc(h.modality)}</td>
+        <td><span class="cko-ds-badge cko-ds-badge--hold">${esc(h.status)}</span></td>
+      </tr>`
+    )
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_CLOSURE_HOLD")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>${esc(policy.rule || "")} DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED. Não é ACTIVE.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Políticas já no ecossistema</h2>
+      <ul class="cko-ds-ut-chips">${existing}</ul>
+    </section>
+    <section class="cko-ds-section">
+      <h2>9 holds como policy-as-code</h2>
+      <p class="cko-ds-help">Cada hold especializa os 28 campos do POLICY_MASTER_CONTRACT. Binding ≠ assinatura humana.</p>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Hold</th><th>Política</th><th>Tipo</th><th>Modalidade</th><th>Estado</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </section>`;
 }
 
 function renderUniversalTool(policy) {
@@ -480,6 +515,12 @@ async function mount(el) {
       refreshShellToc();
       return;
     }
+    if (mode === "platform-closure" || ds.document_id === "CKO-POL-CLOSURE-001") {
+      const policy = src.includes("platform-closure") || ds.document_id === "CKO-POL-CLOSURE-001" ? ds : await loadJson("/data/cko/platform-closure.json");
+      el.innerHTML = renderPlatformClosure(policy);
+      refreshShellToc();
+      return;
+    }
     if (mode === "manual") {
       el.innerHTML = renderIdentityManual(ds);
       refreshShellToc();
@@ -515,4 +556,4 @@ if (document.readyState === "loading") {
   boot();
 }
 
-export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets };
+export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets, renderPlatformClosure };

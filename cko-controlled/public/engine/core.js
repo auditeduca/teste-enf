@@ -56,6 +56,7 @@ const INTEGRITY_DENIALS = new Set([
   "POLICY_MASTER_HOLD",
   "VAS_HOLD",
   "TEMPLATE_POLICY_HOLD",
+  "PLATFORM_CLOSURE_HOLD",
 ]);
 
 export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
@@ -101,6 +102,9 @@ export const POLICY_MASTER_FIELDS = [
 export const VAS_POLICY_ID = "POL-CKO-VISUAL-ASSET-1.0.0";
 export const VAS_FAMILY_N = 3;
 export const VAS_INTERNAL_POLICY_N = 15;
+export const CLOSURE_POLICY_ID = "POL-CKO-PLATFORM-CLOSURE-1.0.0";
+export const CLOSURE_DOCUMENT_ID = "CKO-POL-CLOSURE-001";
+export const HOLD_POLICY_N = 9;
 export const HOLD_HUMAN_STATUS = "HOLD_HUMAN_NON_BLOCKING";
 export const MD_NORM_STAMP = {
   md: 'data-cko-md="CKO-MD"',
@@ -285,6 +289,7 @@ export function inspectPlatform(platform) {
     denials.push(...inspectPolicyMaster(platform.policyMaster).denials);
     denials.push(...inspectVisualAssetPolicy(platform.visualAssetPolicy).denials);
     denials.push(...inspectTemplateGovernance(platform.designSystem, platform.universalToolPolicy).denials);
+    denials.push(...inspectPlatformClosure(platform.platformClosure, platform.humanDecisions).denials);
   }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
@@ -764,6 +769,89 @@ export function inspectTemplateGovernance(ds, ut) {
   return { ok: denials.length === 0, denials };
 }
 
+export function inspectPlatformClosure(policy, ledger) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "PLATFORM_CLOSURE_HOLD", reason });
+  if (!policy) {
+    deny("platform closure pack missing; holds must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== CLOSURE_POLICY_ID || policy.kind !== "policy-as-code") {
+    deny("identity must be POL-CKO-PLATFORM-CLOSURE-1.0.0");
+  }
+  if (policy.document_id !== CLOSURE_DOCUMENT_ID || policy.document_version !== "1.0.0") {
+    deny("frozen closure identity must remain CKO-POL-CLOSURE-001 v1.0.0");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    deny("platform closure must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (policy.starts_at !== "policy-as-code") {
+    deny("platform closure must start at policy-as-code");
+  }
+  if (policy.active === true || policy.status !== "CONTROLLED_CLOSURE_HOLD") {
+    deny("platform closure is a HOLD catalog; it is not ACTIVE");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED")) {
+    deny("platform closure must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.new_architectural_root === true) {
+    deny("platform closure cannot claim implementation or a new architectural root");
+  }
+  const holds = policy.holds || [];
+  if (policy.hold_count !== HOLD_POLICY_N || holds.length !== HOLD_POLICY_N) {
+    deny(`platform closure must declare ${HOLD_POLICY_N} hold policies`);
+  }
+  const holdIds = holds.map((h) => h.hold_id);
+  const expected = [
+    "HOLD-HUMAN-CLINICAL-HOMOLOG",
+    "HOLD-HUMAN-RIGHTS-CHAIN",
+    "HOLD-HUMAN-A11Y-EMPIRICAL",
+    "HOLD-HUMAN-NURSEPALM-OPS",
+    "HOLD-HUMAN-LOCALE-ACTIVATE",
+    "HOLD-HUMAN-HERO-MEDIA-RIGHTS",
+    "HOLD-HUMAN-OBSERVED-RUNTIME",
+    "HOLD-HUMAN-RECERT-B7",
+    "HOLD-HUMAN-COPY-RATINGS",
+  ];
+  if (JSON.stringify(holdIds) !== JSON.stringify(expected)) {
+    deny("hold policies must remain the nine canonical human holds in order");
+  }
+  for (const hold of holds) {
+    if (hold.active === true || hold.implantado === true || hold.assured === true) {
+      deny(`${hold.id} cannot be ACTIVE/implantado/assured`);
+    }
+    if (hold.parent !== POLICY_MASTER_ID || hold.specializes !== POLICY_MASTER_ID) {
+      deny(`${hold.id} must specialize POLICY_MASTER_CONTRACT`);
+    }
+    if (hold.release_allowed === true || hold.blocking_release !== true) {
+      deny(`${hold.id} must keep blocking release`);
+    }
+    if (hold.blocking_inspect === true) {
+      deny(`${hold.id} must remain HOLD_HUMAN_NON_BLOCKING for inspect`);
+    }
+    const fields = hold.contract?.fields || {};
+    if (hold.contract?.field_count !== POLICY_MASTER_FIELD_N || Object.keys(fields).length !== POLICY_MASTER_FIELD_N) {
+      deny(`${hold.id} must specialize all 28 master fields`);
+    }
+    if (JSON.stringify(Object.keys(fields)) !== JSON.stringify(POLICY_MASTER_FIELDS)) {
+      deny(`${hold.id} contract fields must remain in canonical order`);
+    }
+  }
+  if (ledger) {
+    const ledgerIds = (ledger.items || []).map((i) => i.id);
+    if (JSON.stringify(ledgerIds) !== JSON.stringify(expected)) {
+      deny("human ledger ids must match the nine closure hold policies");
+    }
+    for (const item of ledger.items || []) {
+      const hold = holds.find((h) => h.hold_id === item.id);
+      if (!hold || hold.id !== item.policy_id) {
+        deny(`${item.id} ledger binding must match its hold policy`);
+      }
+    }
+  }
+  return { ok: denials.length === 0, denials };
+}
+
 export function inspectVisualAssetPolicy(policy) {
   const denials = [];
   const deny = (reason) => denials.push({ id: "VAS_HOLD", reason });
@@ -872,6 +960,17 @@ export function inspectHumanDecisions(ledger) {
       deny(`${item.id} must keep blocking_release`);
       break;
     }
+    if (!item.policy_id || !String(item.policy_id).startsWith("POL-CKO-HOLD-")) {
+      deny(`${item.id} must be bound to a HOLD policy-as-code`);
+      break;
+    }
+    if (item.specializes !== POLICY_MASTER_ID) {
+      deny(`${item.id} must specialize POLICY_MASTER_CONTRACT`);
+      break;
+    }
+  }
+  if (items.length && items.length !== HOLD_POLICY_N) {
+    deny(`human ledger must declare exactly ${HOLD_POLICY_N} hold policies`);
   }
   return { ok: denials.length === 0, denials };
 }
@@ -925,6 +1024,7 @@ export function knownUniverseObjects(universe, platform) {
     if (platform.universalToolPolicy) push("universal-tool-policy", platform.universalToolPolicy.id || UT_POLICY_ID);
     if (platform.policyMaster) push("policy-master-contract", platform.policyMaster.id || POLICY_MASTER_ID);
     if (platform.visualAssetPolicy) push("visual-asset-policy", platform.visualAssetPolicy.id || VAS_POLICY_ID);
+    if (platform.platformClosure) push("platform-closure-policy", platform.platformClosure.id || CLOSURE_POLICY_ID);
   }
   return items;
 }
@@ -953,6 +1053,28 @@ export function validateRuntimePlatformSchema(platform) {
   errors.push(...validateUniversalToolPolicySchema(platform).errors);
   errors.push(...validatePolicyMasterSchema(platform).errors);
   errors.push(...validateVisualAssetSchema(platform).errors);
+  errors.push(...validatePlatformClosureSchema(platform).errors);
+  return { ok: errors.length === 0, errors };
+}
+
+export function validatePlatformClosureSchema(platform) {
+  if (!platform?.layers && !platform?.platformClosure) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.platformClosure;
+  if (!policy) {
+    errors.push("schema: platform closure pack missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== CLOSURE_POLICY_ID) errors.push("schema: platform-closure id");
+  if (policy.status !== "CONTROLLED_CLOSURE_HOLD" || policy.active === true) errors.push("schema: platform-closure is not ACTIVE");
+  if (policy.starts_at !== "policy-as-code" || policy.specializes !== POLICY_MASTER_ID) {
+    errors.push("schema: platform-closure must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (!Array.isArray(policy.holds) || policy.holds.length !== HOLD_POLICY_N || policy.hold_count !== HOLD_POLICY_N) {
+    errors.push("schema: platform-closure holds != 9");
+  }
   return { ok: errors.length === 0, errors };
 }
 
@@ -1280,6 +1402,10 @@ export function graphConstraints(universe, platform) {
     if (vas && (vas.new_architectural_root === true || vas.library_is_layer === true)) {
       violations.push("graph: VAS cannot add a 45th sequential layer");
     }
+    const closure = inspectPlatformClosure(platform.platformClosure, platform.humanDecisions);
+    if (!closure.ok) {
+      violations.push("graph: platform closure holds must specialize POLICY_MASTER_CONTRACT");
+    }
   }
   return {
     ok: violations.length === 0,
@@ -1407,6 +1533,8 @@ export function runtimeAssertions(universe, platform) {
       check("A-VAS-NOT-45TH-LAYER", platform.visualAssetPolicy?.new_architectural_root !== true, "44/44");
       const tpl = inspectTemplateGovernance(platform.designSystem, platform.universalToolPolicy);
       check("A-TEMPLATE-POLICY-HOLD", tpl.ok, "templates");
+      const closure = inspectPlatformClosure(platform.platformClosure, platform.humanDecisions);
+      check("A-PLATFORM-CLOSURE-HOLD", closure.ok, "CKO-POL-CLOSURE-001");
     }
   }
   const failed = asserts.filter((a) => !a.ok);

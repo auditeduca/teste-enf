@@ -17,7 +17,11 @@ import {
   inspectPolicyMaster,
   inspectTemplateGovernance,
   inspectVisualAssetPolicy,
+  inspectPlatformClosure,
   POLICY_MASTER_FIELDS,
+  CLOSURE_POLICY_ID,
+  CLOSURE_DOCUMENT_ID,
+  HOLD_POLICY_N,
   MD_REG_CHAIN,
   MD_REG_POLICY_ID,
   UT_POLICY_ID,
@@ -74,6 +78,7 @@ const designSystem = JSON.parse(readFileSync(join(site, "data/cko/design-system.
 const universalToolPolicy = JSON.parse(readFileSync(join(gatePub, "policies/universal-tool.json"), "utf8"));
 const policyMaster = JSON.parse(readFileSync(join(gatePub, "policies/policy-master.json"), "utf8"));
 const visualAssetPolicy = JSON.parse(readFileSync(join(gatePub, "policies/visual-assets.json"), "utf8"));
+const platformClosure = JSON.parse(readFileSync(join(gatePub, "policies/platform-closure.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -93,6 +98,7 @@ const platform = {
   universalToolPolicy,
   policyMaster,
   visualAssetPolicy,
+  platformClosure,
 };
 
 describe("schemas", () => {
@@ -150,6 +156,7 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "UT_POLICY_HOLD"));
     assert.ok(policy.rules.some((r) => r.id === "POLICY_MASTER_HOLD"));
     assert.ok(policy.rules.some((r) => r.id === "TEMPLATE_POLICY_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "PLATFORM_CLOSURE_HOLD"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -879,6 +886,36 @@ describe("Visual Asset System", () => {
   });
 });
 
+describe("platform closure hold policies", () => {
+  it("specializes the nine human holds onto POLICY_MASTER_CONTRACT", () => {
+    const r = inspectPlatformClosure(platformClosure, humanDecisions);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(platformClosure.id, CLOSURE_POLICY_ID);
+    assert.equal(platformClosure.document_id, CLOSURE_DOCUMENT_ID);
+    assert.equal(platformClosure.hold_count, HOLD_POLICY_N);
+    assert.equal(platformClosure.holds.length, HOLD_POLICY_N);
+    assert.equal(platformClosure.active, false);
+    assert.equal(platformClosure.release_allowed, false);
+    assert.equal(platformClosure.specializes, POLICY_MASTER_ID);
+    assert.ok(platformClosure.holds.every((h) => h.contract.field_count === 28 && h.specializes === POLICY_MASTER_ID && h.active === false));
+    assert.ok(humanDecisions.items.every((item) => platformClosure.holds.some((h) => h.hold_id === item.id && h.id === item.policy_id)));
+  });
+  it("fails at policy-as-code if a hold policy is marked ACTIVE", async () => {
+    const brokenHolds = platformClosure.holds.map((h, i) => (i === 0 ? { ...h, active: true, implantado: true } : h));
+    const broken = { ...platform, platformClosure: { ...platformClosure, holds: brokenHolds } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "PLATFORM_CLOSURE_HOLD"));
+  });
+  it("renders the closure catalog on cascade and holds pages", () => {
+    assert.match(readFileSync(join(site, "data/cko/cascade/index.html"), "utf8"), /data-cko-ds-render="platform-closure"/);
+    assert.match(readFileSync(join(site, "cko-holds.html"), "utf8"), /data-cko-ds-render="platform-closure"/);
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderPlatformClosure/);
+    assert.match(readFileSync(join(site, "cko-holds.html"), "utf8"), /data-cko-ds-render="human-holds"/);
+  });
+});
+
 describe("applied security probes", () => {
   it("denies forged ACK, replay, injection, traversal and prompt injection without a second effect", () => {
     const r = securityOffensive(universe);
@@ -905,6 +942,8 @@ describe("MD/REG as policy through the frontend", () => {
     assert.equal(r.ok, true, JSON.stringify(r.failed));
     assert.equal(r.policy.release_allowed, false);
     assert.ok(r.runtime.asserts.some((a) => a.id === "A-HOLD-HUMAN-NON-BLOCKING" && a.ok));
+    assert.equal(humanDecisions.hold_count, HOLD_POLICY_N);
+    assert.ok(humanDecisions.items.every((item) => item.policy_id && item.specializes === POLICY_MASTER_ID));
   });
   it("fails inspect only if a human decision is marked blocking", async () => {
     const broken = {

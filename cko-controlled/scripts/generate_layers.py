@@ -21,6 +21,7 @@ from generate_design_system import generate as generate_design_system
 from generate_universal_tool import generate as generate_universal_tool
 from generate_policy_master import generate as generate_policy_master
 from generate_visual_assets import generate as generate_visual_assets
+from generate_platform_closure import generate as generate_platform_closure
 
 GATE = Path(__file__).resolve().parents[1]
 SITE = GATE.parent / "reference-website"
@@ -589,6 +590,7 @@ def generate() -> dict:
     generate_universal_tool()
     generate_policy_master()
     generate_visual_assets()
+    generate_platform_closure()
     if not CLOSURE.is_file():
         raise SystemExit(f"closure HTML missing: {CLOSURE}")
     rows = json.loads(CANON.read_text(encoding="utf-8"))

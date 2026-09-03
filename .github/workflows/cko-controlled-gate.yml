@@ -149,9 +149,20 @@ jobs:
           assert vas["one_image_per_page"] is False
           assert len(vas["families"])==3
           assert vas["document_projections"]["docx"]["files_generated"] is False
+          closure=json.load(open(site/"data/cko/platform-closure.json"))
+          assert closure["id"]=="POL-CKO-PLATFORM-CLOSURE-1.0.0"
+          assert closure["document_id"]=="CKO-POL-CLOSURE-001"
+          assert closure["hold_count"]==9
+          assert closure["active"] is False
+          assert closure["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert all(h["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0" for h in closure["holds"])
+          human=json.load(open(site/"data/cko/human-decisions.json"))
+          assert human["hold_count"]==9
+          assert all(i.get("policy_id","").startswith("POL-CKO-HOLD-") for i in human["items"])
           cascade_html=(site/"data/cko/cascade/index.html").read_text(encoding="utf-8")
           assert "policy-master" in cascade_html
           assert "visual-assets" in cascade_html
+          assert "platform-closure" in cascade_html
           assert cascade["rules"]["coverage"].find("100%")>=0
           assert cascade["verification"]["fuzz_n"]==1000
           assert cascade["verification"]["fuzz_false_accept"]==0
