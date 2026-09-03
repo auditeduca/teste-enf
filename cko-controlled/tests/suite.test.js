@@ -441,10 +441,19 @@ describe("platform remediations without Drive mutation", () => {
     assert.equal(inspected.ok, true, JSON.stringify(inspected.denials));
     for (const layer of layers.layers) {
       assert.equal(layer.present, true, layer.id);
+      assert.equal(layer.zip_verified, true, layer.id);
       assert.match(layer.release, /NOT_RELEASED/);
-      assert.equal(existsSync(join(site, "data/cko/layers", layer.id, "FINAL_MANIFEST.json")), true, layer.id);
+      assert.equal(existsSync(join(site, "data/cko/layers", layer.id, "package.zip")), true, layer.id);
+      assert.equal(existsSync(join(site, "data/cko/layers", layer.id, "package", "FINAL_MANIFEST.json")), true, layer.id);
+      assert.equal(existsSync(join(site, "camadas", layer.id, "index.html")), true, layer.id);
+      assert.ok(String(layer.href).includes(`/camadas/${layer.id}`), layer.id);
       assert.ok(layer.runtime_paths.length >= 1, layer.id);
     }
+    assert.equal(layers.zip_verified_n, 44);
+    const snapshot = JSON.parse(readFileSync(join(site, "data/cko/snapshot-index.json"), "utf8"));
+    assert.equal(snapshot.file_count, 449);
+    assert.equal(snapshot.gold, 449);
+    assert.equal(existsSync(join(site, "camadas", "index.html")), true);
     const pub = layers.layers.find((l) => l.id === "LYR-PUB-001");
     assert.equal(pub.published, false);
     assert.equal(layers.governed_by.graph, "js/knowledge-graph.js");
@@ -474,6 +483,7 @@ describe("platform remediations without Drive mutation", () => {
     assert.match(eco, /cko-md-norm-evidence/);
     assert.match(eco, /2496/);
     assert.match(eco, /10913/);
+    assert.match(eco, /\/camadas\//);
     assert.match(platform.files["index.html"], /data-cko-md="CKO-MD"/);
     assert.match(platform.files["index.html"], /data-cko-reg="CKO-REG"/);
     assert.match(platform.files["aldrete.html"], /data-cko-evidence="HOLD"/);

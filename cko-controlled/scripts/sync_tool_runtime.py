@@ -634,6 +634,7 @@ KEEP_DATA = {
     "gate-report.json",
     "layers.json",
     "md-norm-evidence.json",
+    "snapshot-index.json",
     "pendencies.json",
     "remediation-plan.json",
     "residual-uncertainty.json",

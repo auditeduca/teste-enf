@@ -284,6 +284,10 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
       deny(`${layer.id} must not claim operational runtime`);
     }
     if (layer.published === true) deny(`${layer.id} must not claim publication`);
+    if (layer.zip_verified !== true) deny(`${layer.id} PDF package SHA-256 was not verified`);
+    if (!String(layer.href || "").includes(`/camadas/${layer.id}`)) {
+      deny(`${layer.id} missing converted /camadas/ href`);
+    }
     const lgb = layer.governed_by || layers.governed_by || {};
     if (lgb.graph !== "js/knowledge-graph.js" || lgb.twin !== "B5" || lgb.agentic !== "B1" || lgb.nursePalm !== "B10") {
       deny(`${layer.id} missing graph/twin/agentic/Nurse-PaLM governance`);
@@ -301,6 +305,12 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
     if (!/cko-md-norm-evidence/.test(ecossistemaHtml) || !/2496/.test(ecossistemaHtml) || !/10913/.test(ecossistemaHtml)) {
       deny("ecossistema.html must declare MD→norma→evidência chain");
     }
+    if (!/\/camadas\//.test(ecossistemaHtml)) {
+      deny("ecossistema.html must link the converted PDF /camadas/ structure");
+    }
+  }
+  if (layers.zip_verified_n !== 44) {
+    deny(`PDF layer packages verified ${layers.zip_verified_n} != 44/44`);
   }
   return { ok: denials.length === 0, denials };
 }
@@ -566,7 +576,9 @@ export function validateLayersSchema(platform) {
   for (const row of l.layers || []) {
     if (row.present !== true) errors.push(`schema: ${row.id} not present`);
     if (!SHA_RE.test(row.sha256 || "")) errors.push(`schema: ${row.id} sha256`);
+    if (row.zip_verified !== true) errors.push(`schema: ${row.id} PDF zip not verified`);
   }
+  if (l.zip_verified_n !== 44) errors.push("schema: zip_verified_n must be 44");
   return { ok: errors.length === 0, errors };
 }
 

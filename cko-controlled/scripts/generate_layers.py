@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Materialize the 44 classified horizontal layers onto the CALENF site.
+"""Convert the PDF 44-layer packages into the hosted final site structure.
 
-Source of identity: ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE (Drive HTML copy,
-immutable). Each layer is bound to an existing CALENF runtime path. Release
-remains HOLD / NOT_RELEASED. Nurse-PaLM and publication stay unasserted.
+Source of identity: the files listed in CKO Relatorio Tecnico Final Controlado
+(Anexo A snapshot + ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE). CALENF paths
+are runtime bindings only. Release remains HOLD / NOT_RELEASED.
 """
 from __future__ import annotations
 
@@ -22,6 +22,8 @@ WAVE2 = GATE / "public"
 CLOSURE = GATE / "control-plane" / "drive-html" / "CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE.html"
 CANON = Path(__file__).resolve().parent / "cko_44_layers.json"
 LAYERS_DIR = SITE / "data" / "cko" / "layers"
+CAMADAS = SITE / "camadas"
+SNAPSHOT_MANIFEST = GATE / "public" / "drive" / "ALL-SHA256-MANIFEST-20260902.json"
 ZIP_CANDIDATES = [
     Path("/tmp/cko-layers"),
     GATE / "control-plane" / "layer-zips",
@@ -29,6 +31,22 @@ ZIP_CANDIDATES = [
 CLOSURE_SHA_PREFIX = "3dd61cd50883"
 MARKER_BEGIN = "<!-- CKO-44-LAYERS:BEGIN -->"
 MARKER_END = "<!-- CKO-44-LAYERS:END -->"
+SNAPSHOT_RULES = (
+    ("aldrete_a11y", "LYR-A11Y-001"),
+    ("aldrete_asset_derivation", "LYR-DERIVE-001"),
+    ("aldrete_ds", "LYR-DS-001"),
+    ("aldrete_i18n", "LYR-I18N-001"),
+    ("aldrete_media", "LYR-MEDIA-001"),
+    ("aldrete_og", "LYR-OG-001"),
+    ("aldrete_pdf", "LYR-EXPORT-001"),
+    ("aldrete_routes", "LYR-ROUTE-001"),
+    ("aldrete_reliability", "LYR-REL-001"),
+    ("aldrete_hcd", "LYR-HCD-001"),
+    ("FLASHCARDS", "LYR-LEARN-001"),
+    ("CKO_DESIGN_SYSTEM", "LYR-DS-001"),
+    ("CKO-POL-UT", "LYR-CLIN-CALC-001"),
+    ("aldrete", "LYR-CLIN-SCALE-001"),
+)
 
 BINDINGS: dict[str, list[str]] = {
     "CKO-MD": ["data/schemas/tool.schema.json"],
@@ -220,7 +238,15 @@ def materialize_layer(row: dict) -> dict:
             },
         },
     )
-    present = len(missing) == 0 and (dest / "FINAL_MANIFEST.json").is_file()
+    href = f"camadas/{layer_id}/"
+    write_layer_page(row, runtime_paths, zip_verified, href)
+    present = (
+        len(missing) == 0
+        and zip_verified
+        and (dest / "package.zip").is_file()
+        and (dest / "package" / "FINAL_MANIFEST.json").is_file()
+        and (CAMADAS / layer_id / "index.html").is_file()
+    )
     return {
         "seq": row["seq"],
         "id": layer_id,
@@ -238,6 +264,7 @@ def materialize_layer(row: dict) -> dict:
         "present": present,
         "runtime_paths": runtime_paths,
         "package": f"data/cko/layers/{layer_id}/",
+        "href": f"/{href}",
         "zip_verified": zip_verified,
         "extracted_n": len(extracted),
         "missing_runtime": missing,
@@ -268,6 +295,112 @@ def materialize_layer(row: dict) -> dict:
     }
 
 
+def map_snapshot_layer(path: str) -> str:
+    blob = path.replace("\\", "/").lower()
+    for needle, layer_id in SNAPSHOT_RULES:
+        if needle.lower() in blob:
+            return layer_id
+    return "LYR-CLIN-SCALE-001"
+
+
+def write_snapshot_index() -> dict:
+    data = json.loads(SNAPSHOT_MANIFEST.read_text(encoding="utf-8"))
+    files = data.get("files") or []
+    mapped = []
+    counts: dict[str, int] = {}
+    for row in files:
+        path = row["path"]
+        layer_id = map_snapshot_layer(path)
+        counts[layer_id] = counts.get(layer_id, 0) + 1
+        mapped.append(
+            {
+                "path": path,
+                "sha256": row["sha256"],
+                "bytes": row["bytes"],
+                "layer_id": layer_id,
+            }
+        )
+    catalog = {
+        "id": "CKO-PDF-ANEXO-A-SNAPSHOT-1.0.0",
+        "kind": "pdf-anexo-a-snapshot",
+        "source": "ALL-SHA256-MANIFEST-20260902.json",
+        "file_count": len(mapped),
+        "gold": 449,
+        "release": "HOLD / NOT_RELEASED",
+        "converted_to": "camadas/",
+        "layer_file_counts": counts,
+        "files": mapped,
+    }
+    write_json(SITE / "data" / "cko" / "snapshot-index.json", catalog)
+    write_json(WAVE2 / "data" / "snapshot-index.json", catalog)
+    if catalog["file_count"] != 449:
+        raise SystemExit(f"Anexo A snapshot must be 449 files, got {catalog['file_count']}")
+    return catalog
+
+
+def write_layer_page(row: dict, runtime_paths: list[str], zip_verified: bool, href: str) -> None:
+    dest = CAMADAS / row["id"]
+    dest.mkdir(parents=True, exist_ok=True)
+    runtime_links = "".join(
+        f'<li><a href="/{p}">{p}</a></li>' for p in runtime_paths
+    )
+    html = f"""<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{row['id']} — {row['name']} | Calculadoras de Enfermagem</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1A3E74">
+<link rel="stylesheet" href="/global-styles.css">
+</head>
+<body data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layer="{row['id']}" data-cko-release="HOLD_NOT_RELEASED">
+<a class="skip" href="#main-content">Pular para o conteúdo principal</a>
+<main id="main-content" class="shell" style="width:min(960px,calc(100% - 2rem));margin:2rem auto;font-family:Inter,system-ui,sans-serif">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <a href="/camadas/">Camadas</a> › <span aria-current="page">{row['id']}</span></nav>
+<article>
+  <p class="label">Camada {row['seq']} · HOLD / NOT_RELEASED</p>
+  <h1>{row['name']}</h1>
+  <p>Pacote classificado do PDF <code>{row['artifact']}</code> convertido para a estrutura final do site. SHA-256 <code>{row['sha256'][:16]}…</code>. Zip verificado: <strong>{'sim' if zip_verified else 'não'}</strong>. Nurse-PaLM operacional: <strong>NOT_ASSERTED</strong>.</p>
+  <p>Runtime CALENF (base de implementação, não a estrutura final):</p>
+  <ul>{runtime_links}</ul>
+  <p><a href="/data/cko/layers/{row['id']}/package.zip">Pacote original do PDF</a> · <a href="/data/cko/layers/{row['id']}/package/FINAL_MANIFEST.json">Manifesto original</a></p>
+</article>
+</main>
+</body>
+</html>
+"""
+    (dest / "index.html").write_text(html, encoding="utf-8")
+
+
+def write_camadas_index(catalog: dict) -> None:
+    CAMADAS.mkdir(parents=True, exist_ok=True)
+    items = "".join(
+        f'<li><a href="/camadas/{layer["id"]}/"><code>{layer["id"]}</code> — {layer["name"]}</a></li>'
+        for layer in catalog["layers"]
+    )
+    html = f"""<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>44 camadas do PDF | Calculadoras de Enfermagem</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/global-styles.css">
+</head>
+<body data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layers="44">
+<main id="main-content" style="width:min(960px,calc(100% - 2rem));margin:2rem auto;font-family:Inter,system-ui,sans-serif">
+<nav><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Camadas</span></nav>
+<h1>44 camadas classificadas do PDF</h1>
+<p>Estrutura final convertida dos pacotes do relatório técnico. Cobertura <strong>44/44</strong>. Estado: <strong>HOLD / NOT_RELEASED</strong>.</p>
+<ol>{items}</ol>
+</main>
+</body>
+</html>
+"""
+    (CAMADAS / "index.html").write_text(html, encoding="utf-8")
+
+
 def layers_section_html(catalog: dict) -> str:
     rows = []
     for layer in catalog["layers"]:
@@ -276,7 +409,7 @@ def layers_section_html(catalog: dict) -> str:
         rows.append(
             "<tr>"
             f"<td>{layer['seq']}</td>"
-            f"<td><code data-layer-id=\"{layer['id']}\">{layer['id']}</code></td>"
+            f"<td><a href=\"/camadas/{layer['id']}/\"><code data-layer-id=\"{layer['id']}\">{layer['id']}</code></a></td>"
             f"<td>{layer['name']}</td>"
             f"<td><code>{sha}…</code></td>"
             f"<td>{runtime}</td>"
@@ -322,11 +455,13 @@ def layers_section_html(catalog: dict) -> str:
 <article class="card hold" id="cko-44-layers" data-cko-layers="44" data-cko-layers-release="HOLD_NOT_RELEASED">
   <span class="label">Camadas horizontais</span>
   <h2>44 camadas classificadas do PDF inicial</h2>
-  <p>O site hospeda as <strong>44 camadas horizontais</strong> do artefato
-  <code>ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE</code>
+  <p>O site converte os <strong>arquivos do PDF</strong> — pacotes das 44 camadas
+  e o inventário Anexo A de 449 arquivos — para a estrutura final em
+  <a href="/camadas/"><code>/camadas/</code></a>.
+  Artefato <code>ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE</code>
   (SHA prefixo <code>{CLOSURE_SHA_PREFIX}</code>). Cobertura <strong>44/44</strong>.
-  Cada camada está no grafo, projetada no twin, ligada a B1 e a B10, e faz fan-in a B9.
-  Estado: <strong>HOLD / NOT_RELEASED</strong>. Nurse-PaLM operacional permanece
+  A árvore CALENF é a base de implementação. Estado:
+  <strong>HOLD / NOT_RELEASED</strong>. Nurse-PaLM operacional permanece
   <strong>NOT_ASSERTED</strong>. Nenhuma camada está publicada.</p>
   <p class="kpi">44/44</p>
   <p class="small">Fonte: fechamento técnico + global fan-in assurance. Maker ≠ Checker ≠ Auditor.</p>
@@ -384,6 +519,10 @@ def generate() -> dict:
     absent = [l["id"] for l in layers if not l["present"]]
     if absent:
         raise SystemExit("layers missing runtime: " + ",".join(absent))
+    unverified = [l["id"] for l in layers if not l["zip_verified"]]
+    if unverified:
+        raise SystemExit("PDF layer zips not verified: " + ",".join(unverified))
+    snapshot = write_snapshot_index()
     catalog = {
         "id": "CKO-44-LAYER-SITE-1.0.0",
         "kind": "cko-44-layers",
@@ -398,7 +537,8 @@ def generate() -> dict:
         "published": False,
         "pending_is_not_ack": True,
         "reexecution": False,
-        "page": "ecossistema.html",
+        "page": "camadas/index.html",
+        "listing_page": "ecossistema.html",
         "governed_by": {
             "graph": "js/knowledge-graph.js",
             "twin": "B5",
@@ -423,9 +563,11 @@ def generate() -> dict:
         "reg_freeze": "FROZEN",
         "layers": layers,
         "zip_verified_n": sum(1 for l in layers if l["zip_verified"]),
+        "snapshot_files": snapshot["file_count"],
     }
     write_json(SITE / "data" / "cko" / "layers.json", catalog)
     write_json(WAVE2 / "data" / "layers.json", catalog)
+    write_camadas_index(catalog)
     inject_ecossistema(catalog)
     print(
         json.dumps(
@@ -433,6 +575,7 @@ def generate() -> dict:
                 "layers": catalog["count"],
                 "present": sum(1 for l in layers if l["present"]),
                 "zip_verified_n": catalog["zip_verified_n"],
+                "snapshot_files": catalog["snapshot_files"],
                 "release": catalog["release"],
             },
             ensure_ascii=False,
