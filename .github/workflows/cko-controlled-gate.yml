@@ -115,6 +115,11 @@ jobs:
           cascade=json.load(open(site/"data/cko/cascade/index.json"))
           assert cascade["release_allowed"] is False
           assert cascade["cascade"]==ids
+          ds=json.load(open(site/"data/cko/design-system.json"))
+          assert ds["root"]=="policy-as-code"
+          assert ds["starts_at"]=="policy-as-code"
+          assert ds["cascade"]==ids
+          assert ds["release_allowed"] is False
           assert cascade["rules"]["coverage"].find("100%")>=0
           assert cascade["verification"]["fuzz_n"]==1000
           assert cascade["verification"]["fuzz_false_accept"]==0

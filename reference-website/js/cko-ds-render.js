@@ -132,16 +132,38 @@ function renderHolds(ds) {
   );
 }
 
+function renderCascade(ds) {
+  const stages = Array.isArray(ds.cascade) ? ds.cascade : [];
+  const items = stages
+    .map((id, i) => {
+      const pred = i === 0 ? "raiz" : stages[i - 1];
+      const note = i === 0 ? "tudo inicia aqui" : `só corre se ${pred} PASS`;
+      return `<li class="cko-ds-cascade-step" data-cko-stage="${esc(id)}">
+        <span class="cko-ds-badge ${i === 0 ? "cko-ds-badge--hold" : ""}">${i === 0 ? "raiz" : "↓"}</span>
+        <strong>${esc(id)}</strong>
+        <small>${esc(note)}</small>
+      </li>`;
+    })
+    .join("");
+  return section(
+    "Cascata de garantia",
+    ds.rule || "tudo inicia em policy-as-code; estágio seguinte só corre se o predecessor PASS",
+    `<ol class="cko-ds-cascade" data-cko-cascade-root="${esc(ds.root || "policy-as-code")}">${items}</ol>`
+  );
+}
+
 function renderCatalog(ds, mode) {
   const hero = `<section class="cko-ds-hero">
     <span class="cko-ds-badge cko-ds-badge--hold">HOLD / NOT_RELEASED</span>
     <h1>Design system completo via render</h1>
-    <p>${esc(ds.inventory.components)} componentes · ${esc(ds.inventory.templates)} templates · ${esc(ds.inventory.themes)} temas · ${esc(ds.inventory.theme_slots)} slots. Nurse-PaLM operacional NOT_ASSERTED.</p>
+    <p>Tudo inicia em <strong>policy-as-code</strong>. ${esc(ds.inventory.components)} componentes · ${esc(ds.inventory.templates)} templates · ${esc(ds.inventory.themes)} temas · ${esc(ds.inventory.theme_slots)} slots. Nurse-PaLM operacional NOT_ASSERTED.</p>
   </section>`;
+  const spine = renderCascade(ds);
+  if (mode === "cascade") return hero + spine;
   if (mode === "states") {
-    return hero + renderComponents(ds, "states") + renderThemes(ds);
+    return hero + spine + renderComponents(ds, "states") + renderThemes(ds);
   }
-  return hero + renderTokens(ds) + renderThemes(ds) + renderSlots(ds) + renderComponents(ds, mode) + renderTemplates(ds) + renderHolds(ds);
+  return hero + spine + renderTokens(ds) + renderThemes(ds) + renderSlots(ds) + renderComponents(ds, mode) + renderTemplates(ds) + renderHolds(ds);
 }
 
 function renderLayers(ds, layers) {

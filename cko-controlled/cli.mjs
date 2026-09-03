@@ -35,8 +35,12 @@ const humanPath = existsSync(join(site, "data/cko/human-decisions.json"))
   ? join(site, "data/cko/human-decisions.json")
   : join(gatePub, "data/human-decisions.json");
 const humanDecisions = existsSync(humanPath) ? JSON.parse(readFileSync(humanPath, "utf8")) : undefined;
+const dsPath = existsSync(join(site, "data/cko/design-system.json"))
+  ? join(site, "data/cko/design-system.json")
+  : join(gatePub, "data/design-system.json");
+const designSystem = existsSync(dsPath) ? JSON.parse(readFileSync(dsPath, "utf8")) : undefined;
 const ontology = existsSync(join(gatePub, "graph/ontology.ttl")) ? readFileSync(join(gatePub, "graph/ontology.ttl"), "utf8") : "";
-const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable, mdRegPolicy, humanDecisions };
+const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable, mdRegPolicy, humanDecisions, designSystem };
 
 const report = await runGates(universe, { action: "inspect", platform, ontology });
 
@@ -151,7 +155,27 @@ if (humanDecisions) {
 }
 writeFileSync(
   join(cascadeDir, "index.html"),
-  `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>CKO cascade HOLD</title></head><body><main><h1>Assurance cascade</h1><p>HOLD / NOT_RELEASED. <code>release_allowed: false</code>.</p><p><a href="./index.json">index.json</a> · <a href="./gate-report.json">gate-report.json</a></p></main></body></html>\n`
+  `<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cascata de garantia | Calculadoras de Enfermagem</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1A3E74">
+<link rel="stylesheet" href="/css/cko-ds.css">
+</head>
+<body class="cko-ds-body" data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-cascade="policy-as-code" data-cko-release="HOLD_NOT_RELEASED">
+<a class="cko-ds-skip" href="#main-content">Pular para o conteúdo principal</a>
+<main id="main-content" class="cko-ds-page">
+<nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Cascata</span></nav>
+<div id="cko-ds-root" data-cko-ds-render="cascade" data-cko-ds-src="/data/cko/design-system.json"></div>
+<p class="cko-ds-help"><a class="cko-ds-link" href="./index.json">index.json</a> · <a class="cko-ds-link" href="./gate-report.json">gate-report.json</a></p>
+</main>
+<script type="module" src="/js/cko-ds-render.js"></script>
+</body>
+</html>
+`
 );
 
 const failed = report.failed.map((g) => g.id);

@@ -51,6 +51,7 @@ const INTEGRITY_DENIALS = new Set([
   "CASCADE_DECLARED",
   "HOLD_HUMAN_NON_BLOCKING",
   "MD_REG_IS_POLICY",
+  "DS_STARTS_AT_POLICY",
 ]);
 
 export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
@@ -233,6 +234,9 @@ export function inspectPlatform(platform) {
   }
   if (platform?.humanDecisions) {
     denials.push(...inspectHumanDecisions(platform.humanDecisions).denials);
+  }
+  if (platform?.layers) {
+    denials.push(...inspectDesignSystem(platform.designSystem).denials);
   }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
@@ -535,6 +539,28 @@ export function inspectMdRegPolicy(policy) {
   return { ok: denials.length === 0, denials };
 }
 
+export function inspectDesignSystem(ds) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "DS_STARTS_AT_POLICY", reason });
+  if (!ds) {
+    deny("design-system catalog missing; LYR-DS-001 must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (ds.root !== "policy-as-code" || ds.starts_at !== "policy-as-code") {
+    deny("design system must start at policy-as-code");
+  }
+  if (JSON.stringify(ds.cascade) !== JSON.stringify(CASCADE)) {
+    deny("design system cascade must be policy-as-code → schemas → graph-constraints → CI-gates → runtime-assertions → automatic-evidence");
+  }
+  if (ds.release_allowed === true || !String(ds.release || "").includes("NOT_RELEASED")) {
+    deny("design system must remain HOLD / NOT_RELEASED");
+  }
+  if (ds.published === true || ds.operational === "ASSERTED") {
+    deny("design system must not claim publication or operational runtime");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
 export function inspectHumanDecisions(ledger) {
   const denials = [];
   const deny = (reason) => denials.push({ id: "HOLD_HUMAN_NON_BLOCKING", reason });
@@ -609,6 +635,7 @@ export function knownUniverseObjects(universe, platform) {
         push("hold-human", item.id, { status: item.status });
       }
     }
+    if (platform.designSystem) push("design-system-catalog", platform.designSystem.id || "CKO-DS-RUNTIME-1.0.0");
   }
   return items;
 }
@@ -633,6 +660,35 @@ export function validateRuntimePlatformSchema(platform) {
   errors.push(...validateToolLibrarySchema(platform).errors);
   errors.push(...validatePendenciesSchema(platform).errors);
   errors.push(...validateLayersSchema(platform).errors);
+  errors.push(...validateDesignSystemSchema(platform).errors);
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateDesignSystemSchema(platform) {
+  if (!platform?.layers && !platform?.designSystem) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const ds = platform.designSystem;
+  if (!ds) {
+    errors.push("schema: design-system catalog missing");
+    return { ok: false, errors };
+  }
+  if (ds.id !== "CKO-DS-RUNTIME-1.0.0") errors.push("schema: design-system id");
+  if (ds.kind !== "design-system-catalog") errors.push("schema: design-system kind");
+  if (ds.root !== "policy-as-code" || ds.starts_at !== "policy-as-code") {
+    errors.push("schema: design-system root must be policy-as-code");
+  }
+  if (JSON.stringify(ds.cascade) !== JSON.stringify(CASCADE)) {
+    errors.push("schema: design-system cascade must match fail-closed cascade");
+  }
+  if (!String(ds.release || "").includes("NOT_RELEASED") || ds.release_allowed === true) {
+    errors.push("schema: design-system must remain NOT_RELEASED");
+  }
+  if (ds.inventory?.components !== 37 || ds.components?.length !== 37) errors.push("schema: design-system components != 37");
+  if (ds.inventory?.templates !== 21 || ds.templates?.length !== 21) errors.push("schema: design-system templates != 21");
+  if (ds.inventory?.themes !== 4 || ds.themes?.length !== 4) errors.push("schema: design-system themes != 4");
+  if (ds.inventory?.theme_slots !== 44 || ds.theme_slots?.length !== 44) errors.push("schema: design-system theme_slots != 44");
   return { ok: errors.length === 0, errors };
 }
 
@@ -824,6 +880,10 @@ export function graphConstraints(universe, platform) {
     if (platform.layers.published === true || !String(platform.layers.release || "").includes("NOT_RELEASED")) {
       violations.push("graph: 44-layer fan-in remains HOLD / NOT_RELEASED");
     }
+    const ds = platform.designSystem;
+    if (!ds || ds.root !== "policy-as-code" || JSON.stringify(ds.cascade) !== JSON.stringify(CASCADE)) {
+      violations.push("graph: design system cascade must start at policy-as-code");
+    }
   }
   return {
     ok: violations.length === 0,
@@ -936,6 +996,10 @@ export function runtimeAssertions(universe, platform) {
       check("A-LAYERS-HOLD", String(platform.layers?.release || "").includes("NOT_RELEASED") && platform.layers?.published !== true, "HOLD");
       const pub = (platform.layers?.layers || []).find((l) => l.id === "LYR-PUB-001");
       check("A-LAYER-PUB-HOLD", pub?.published !== true && String(pub?.release || "").includes("NOT_RELEASED"), "LYR-PUB-001");
+    }
+    if (platform.layers) {
+      const ds = inspectDesignSystem(platform.designSystem);
+      check("A-DS-CASCADE", ds.ok, "policy-as-code");
     }
   }
   const failed = asserts.filter((a) => !a.ok);
@@ -1500,6 +1564,8 @@ export async function automaticEvidence(universe, extras = {}) {
                   ? JSON.stringify(extras.platform?.mdRegPolicy || {})
                   : obj.kind === "hold-human-ledger" || obj.kind === "hold-human"
                     ? JSON.stringify(extras.platform?.humanDecisions || {})
+                    : obj.kind === "design-system-catalog"
+                      ? JSON.stringify(extras.platform?.designSystem || {})
               : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
     const sha = await digestSha256(body);
     receipts.push({

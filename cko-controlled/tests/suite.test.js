@@ -12,6 +12,7 @@ import {
   inspectLayers,
   inspectMdRegPolicy,
   inspectHumanDecisions,
+  inspectDesignSystem,
   MD_REG_CHAIN,
   MD_REG_POLICY_ID,
   HOLD_HUMAN_STATUS,
@@ -55,6 +56,7 @@ const pendencies = JSON.parse(readFileSync(join(gatePub, "data/pendencies.json")
 const driveImmutable = JSON.parse(readFileSync(join(gatePub, "data/drive-immutable.json"), "utf8"));
 const mdRegPolicy = JSON.parse(readFileSync(join(gatePub, "policies/md-reg-frontend.json"), "utf8"));
 const humanDecisions = JSON.parse(readFileSync(join(gatePub, "data/human-decisions.json"), "utf8"));
+const designSystem = JSON.parse(readFileSync(join(site, "data/cko/design-system.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -70,6 +72,7 @@ const platform = {
   driveImmutable,
   mdRegPolicy,
   humanDecisions,
+  designSystem,
 };
 
 describe("schemas", () => {
@@ -684,6 +687,24 @@ describe("design system runtime render", () => {
     const hub = readFileSync(join(site, "camadas/index.html"), "utf8");
     assert.match(hub, /data-cko-ds-render="layers"/);
     assert.match(readFileSync(join(site, "global-styles.css"), "utf8"), /cko-ds-tokens\.css/);
+  });
+  it("starts the catalog at policy-as-code and skips nothing in the cascade", () => {
+    assert.equal(designSystem.root, "policy-as-code");
+    assert.equal(designSystem.starts_at, "policy-as-code");
+    assert.deepEqual(designSystem.cascade, CASCADE);
+    assert.equal(designSystem.release_allowed, false);
+    const r = inspectDesignSystem(designSystem);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /cko-ds-cascade/);
+  });
+  it("fails at policy-as-code if the design system skips the cascade root", async () => {
+    const broken = { ...platform, designSystem: { ...designSystem, root: "runtime-assertions", starts_at: "runtime-assertions" } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].id, "policy-as-code");
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "DS_STARTS_AT_POLICY"));
+    assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
   });
 });
 
