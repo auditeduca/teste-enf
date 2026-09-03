@@ -61,6 +61,11 @@ jobs:
           assert gov["agentic"]["operational"]=="NOT_ASSERTED"
           assert gov["layerCount"]==44
           assert gov["pageCount"]==12
+          assert gov["evidence_chain"]["id"]=="CKO-MD-TO-FRONTEND-1.0.0"
+          assert gov["master_data"]["fields_classified"]==2496
+          assert gov["normative"]["bindings_classified"]==10913
+          assert gov["evidence_chain"]["no_fact_without_evidence"] is True
+          assert gov["evidence_chain"]["materialized_field_bindings"] is False
           assert any(n.get("id")=="B1" for n in gov["nodes"])
           assert (site/"aldrete.html").read_text(encoding="utf-8").find("btnCalcular")>=0
           assert (site/"js/calc-engine.js").read_text(encoding="utf-8").find("calc-engine")>=0
@@ -86,6 +91,19 @@ jobs:
           assert layers["governed_by"]["twin"]=="B5"
           assert layers["governed_by"]["agentic"]=="B1"
           assert layers["governed_by"]["nursePalm"]=="B10"
+          assert layers["governed_by"]["master_data"]=="CKO-MD"
+          assert layers["governed_by"]["regulatory"]=="CKO-REG"
+          assert layers["master_data_to_frontend"]["id"]=="CKO-MD-TO-FRONTEND-1.0.0"
+          assert layers["master_data_to_frontend"]["no_fact_without_evidence"] is True
+          assert "cko-md-norm-evidence" in eco
+          assert "2496" in eco
+          assert "10913" in eco
+          idx=(site/"index.html").read_text(encoding="utf-8")
+          assert 'data-cko-md="CKO-MD"' in idx
+          assert 'data-cko-reg="CKO-REG"' in idx
+          assert 'data-cko-evidence="HOLD"' in idx
+          assert 'data-cko-chain="MD / REG / Schema / Engine / Validator / Renderer / Runtime / Frontend"' in idx
+          assert (site/"data/cko/md-norm-evidence.json").is_file()
           p=json.load(open("public/data/pendencies.json"))
           assert p["mutate_drive"] is False
           assert p["closes_b9"] is False

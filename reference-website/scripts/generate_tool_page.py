@@ -318,7 +318,7 @@ def build(cfg):
     tool_config_json = json.dumps(cfg, ensure_ascii=False)
 
     page = f"""<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-cko-md="CKO-MD" data-cko-reg="CKO-REG" data-cko-norm="NIFS-900-03" data-cko-evidence="HOLD" data-cko-chain="MD / REG / Schema / Engine / Validator / Renderer / Runtime / Frontend">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

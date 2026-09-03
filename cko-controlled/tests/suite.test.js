@@ -101,6 +101,7 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "PENDENCIES_EXPLICIT"));
     assert.ok(policy.rules.some((r) => r.id === "DRIVE_IMMUTABLE"));
     assert.ok(policy.rules.some((r) => r.id === "LAYERS_44_PRESENT"));
+    assert.ok(policy.rules.some((r) => r.id === "MD_NORMS_EVIDENCE_CHAIN"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -318,6 +319,10 @@ describe("runtime frontend", () => {
     assert.equal(platform.governance.layerCount, 44);
     assert.equal(platform.governance.pageCount, 12);
     assert.ok(platform.governance.nodes.some((n) => n.id === "B1"));
+    assert.equal(platform.governance.evidence_chain.id, "CKO-MD-TO-FRONTEND-1.0.0");
+    assert.equal(platform.governance.master_data.fields_classified, 2496);
+    assert.equal(platform.governance.normative.bindings_classified, 10913);
+    assert.equal(platform.governance.evidence_chain.materialized_field_bindings, false);
     assert.equal(platform.toolLibrary.structure, "calenf");
   });
   it("materializes every documented PDF and directory pendency without mutating Drive or closing B9", () => {
@@ -446,23 +451,38 @@ describe("platform remediations without Drive mutation", () => {
     assert.equal(layers.governed_by.twin, "B5");
     assert.equal(layers.governed_by.agentic, "B1");
     assert.equal(layers.governed_by.nursePalm, "B10");
+    assert.equal(layers.governed_by.master_data, "CKO-MD");
+    assert.equal(layers.governed_by.regulatory, "CKO-REG");
+    assert.equal(layers.master_data_to_frontend.id, "CKO-MD-TO-FRONTEND-1.0.0");
     const learn = layers.layers.find((l) => l.id === "LYR-LEARN-001");
     assert.equal(learn.semantic, "learning");
+    assert.equal(learn.master_data, "CKO-MD");
+    assert.equal(learn.evidence.no_fact_without_evidence, true);
     const layerNodes = platform.governance.nodes.filter((n) => n.type === "LayerRuntime");
     assert.equal(layerNodes.length, 44);
     assert.ok(platform.governance.edges.some((e) => e[0] === "LAYER-LYR-CLIN-CALC-001" && e[1] === "B9" && e[2] === "fanIn"));
     assert.ok(platform.governance.edges.some((e) => e[0] === "LAYER-LYR-LEARN-001" && e[1] === "SEM-LEARN" && e[2] === "instanceOf"));
+    assert.ok(platform.governance.edges.some((e) => e[0] === "LAYER-CKO-REG" && e[1] === "LAYER-CKO-MD" && e[2] === "derivedFrom"));
+    assert.ok(platform.governance.edges.some((e) => e[0] === "PAGE-index" && e[1] === "LAYER-CKO-MD" && e[2] === "derivedFrom"));
+    assert.ok(platform.governance.edges.some((e) => e[0] === "PAGE-index" && e[1] === "EVD-PAGE-index" && e[2] === "hasEvidence"));
     const eco = platform.files["ecossistema.html"];
     assert.match(eco, /44\/44/);
     assert.match(eco, /HOLD \/ NOT_RELEASED/);
     assert.match(eco, /IA agêntica/);
     assert.match(eco, /Nurse-PaLM/);
     assert.match(eco, /digital twin/i);
+    assert.match(eco, /cko-md-norm-evidence/);
+    assert.match(eco, /2496/);
+    assert.match(eco, /10913/);
+    assert.match(platform.files["index.html"], /data-cko-md="CKO-MD"/);
+    assert.match(platform.files["index.html"], /data-cko-reg="CKO-REG"/);
+    assert.match(platform.files["aldrete.html"], /data-cko-evidence="HOLD"/);
     assert.equal(eco.includes('id="graph"'), false);
     const rt = runtimeAssertions(universe, platform);
     assert.ok(rt.asserts.some((a) => a.id === "A-LAYERS-44" && a.ok));
     assert.ok(rt.asserts.some((a) => a.id === "A-LAYER-PUB-HOLD" && a.ok));
     assert.ok(rt.asserts.some((a) => a.id === "A-CALENF-AGENTIC" && a.ok));
+    assert.ok(rt.asserts.some((a) => a.id === "A-MD-NORM-EVIDENCE" && a.ok));
   });
   it("fails at policy-as-code if the 44 layers disappear", async () => {
     const broken = { ...platform, layers: undefined };
@@ -497,5 +517,24 @@ describe("platform remediations without Drive mutation", () => {
     assert.equal(r.ok, false);
     assert.equal(r.cascade[0].status, "FAIL");
     assert.ok(r.policy.inspect.denials.some((d) => d.id === "LAYERS_44_PRESENT"));
+  });
+  it("fails at policy-as-code if MD→norma→evidência stamps drop from the frontend", async () => {
+    const broken = {
+      ...platform,
+      files: { ...platform.files, "index.html": platform.files["index.html"].replace(/data-cko-md="CKO-MD"/, "") },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "MD_NORMS_EVIDENCE_CHAIN"));
+  });
+  it("fails at policy-as-code if master-data/norm chain is dropped from governance", async () => {
+    const broken = {
+      ...platform,
+      governance: { ...platform.governance, evidence_chain: undefined, master_data: undefined, normative: undefined },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "MD_NORMS_EVIDENCE_CHAIN"));
   });
 });

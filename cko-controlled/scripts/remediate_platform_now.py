@@ -6,6 +6,8 @@ import json
 import re
 from pathlib import Path
 
+from cko_md_norm import stamp_html_file
+
 REPO = Path(__file__).resolve().parents[2]
 SITE = REPO / "reference-website"
 DRIVE = (
@@ -55,6 +57,8 @@ def inject_tool_config(html_name: str, json_name: str, include_engine: bool = Fa
         html = html[:last] + "\n" + tag + "\n" + engine + html[last:]
     assert_not_drive(html_path)
     html_path.write_text(html, encoding="utf-8")
+    stamp_html_file(html_path)
+    html = html_path.read_text(encoding="utf-8")
     m = re.search(r'<script[^>]*id="tool-config"[^>]*>(.*?)</script>', html, re.S)
     json.loads(m.group(1).replace("\\u003c", "<"))
     cfg_at = html.rfind('id="tool-config"')

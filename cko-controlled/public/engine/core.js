@@ -47,7 +47,17 @@ const INTEGRITY_DENIALS = new Set([
   "NURSEPALM_GOVERNS_RUNTIME",
   "AGENTIC_GOVERNS_RUNTIME",
   "LAYERS_44_PRESENT",
+  "MD_NORMS_EVIDENCE_CHAIN",
 ]);
+
+export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
+export const MD_NORM_STAMP = {
+  md: 'data-cko-md="CKO-MD"',
+  reg: 'data-cko-reg="CKO-REG"',
+  norm: 'data-cko-norm="NIFS-900-03"',
+  evidence: 'data-cko-evidence="HOLD"',
+  chain: 'data-cko-chain="MD / REG / Schema / Engine / Validator / Renderer / Runtime / Frontend"',
+};
 
 export const TOOL_RUNTIME_CANARIES = [
   "aldrete.html",
@@ -214,6 +224,15 @@ export function inspectPlatform(platform) {
   }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
+    const stamped = [...RUNTIME_PAGES, ...TOOL_RUNTIME_CANARIES.filter((p) => files[p]), ...LIBRARY_RUNTIME_CANARIES.filter((p) => files[p])];
+    for (const p of stamped) {
+      const html = files[p] || "";
+      if (!html) continue;
+      if (!html.includes(MD_NORM_STAMP.md) || !html.includes(MD_NORM_STAMP.reg) || !html.includes(MD_NORM_STAMP.evidence) || !html.includes(MD_NORM_STAMP.chain)) {
+        denials.push({ id: "MD_NORMS_EVIDENCE_CHAIN", reason: `${p} missing MD→norma→evidência frontend stamp` });
+        break;
+      }
+    }
   }
   return { ok: denials.length === 0, denials };
 }
@@ -241,6 +260,15 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
   if (gb.graph !== "js/knowledge-graph.js" || gb.twin !== "B5" || gb.agentic !== "B1" || gb.nursePalm !== "B10") {
     deny("44 layers must be governed by graph + digital twin + agentic AI + Nurse-PaLM");
   }
+  if (gb.master_data !== "CKO-MD" || gb.regulatory !== "CKO-REG" || gb.evidence !== "HOLD") {
+    deny("44 layers must bind master data, regulatory norm and HOLD evidence");
+  }
+  if (layers.master_data_to_frontend?.id !== MD_NORM_CHAIN_ID || layers.master_data_to_frontend?.no_fact_without_evidence !== true) {
+    deny("44-layer catalog missing MD→frontend evidence chain");
+  }
+  if (layers.master_data_to_frontend?.materialized_field_bindings === true) {
+    deny("must not claim 10913 field bindings materialized");
+  }
   const ids = (layers.layers || []).map((l) => l.id);
   if (JSON.stringify(ids) !== JSON.stringify(CANONICAL_LAYER_IDS)) {
     deny("layer ids must match ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE");
@@ -260,12 +288,18 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
     if (lgb.graph !== "js/knowledge-graph.js" || lgb.twin !== "B5" || lgb.agentic !== "B1" || lgb.nursePalm !== "B10") {
       deny(`${layer.id} missing graph/twin/agentic/Nurse-PaLM governance`);
     }
+    if (layer.master_data !== "CKO-MD" || layer.regulatory !== "CKO-REG" || layer.evidence?.no_fact_without_evidence !== true) {
+      deny(`${layer.id} missing master-data / norm / evidence amarração`);
+    }
   }
   if (ecossistemaHtml) {
     const missingOnPage = CANONICAL_LAYER_IDS.filter((id) => !ecossistemaHtml.includes(id));
     if (missingOnPage.length) deny(`ecossistema.html missing layer ids ${missingOnPage.slice(0, 8).join(",")}`);
     if (!/44\/44/.test(ecossistemaHtml) || !/HOLD \/ NOT_RELEASED/.test(ecossistemaHtml)) {
       deny("ecossistema.html must declare 44/44 HOLD / NOT_RELEASED");
+    }
+    if (!/cko-md-norm-evidence/.test(ecossistemaHtml) || !/2496/.test(ecossistemaHtml) || !/10913/.test(ecossistemaHtml)) {
+      deny("ecossistema.html must declare MD→norma→evidência chain");
     }
   }
   return { ok: denials.length === 0, denials };
@@ -360,6 +394,50 @@ export function inspectCalenfGovernance(governance) {
   if (!String(sc.learning || "").includes("Agent Continuous Learning") || !String(sc.educational || "").includes("derived from Content")) {
     deny("GRAPH_GOVERNS_RUNTIME", "PDF semantic controls not encoded");
   }
+  const chain = governance.evidence_chain || {};
+  if (chain.id !== MD_NORM_CHAIN_ID || chain.no_fact_without_evidence !== true || chain.operational !== "NOT_ASSERTED") {
+    deny("MD_NORMS_EVIDENCE_CHAIN", "MD→frontend evidence chain missing or operational claimed");
+  }
+  if (chain.materialized_field_bindings === true) {
+    deny("MD_NORMS_EVIDENCE_CHAIN", "classified 10913 bindings must not be claimed materialized");
+  }
+  if (governance.master_data?.layer !== "CKO-MD" || governance.master_data?.fields_classified !== 2496) {
+    deny("MD_NORMS_EVIDENCE_CHAIN", "CKO-MD classified field count 2496 missing");
+  }
+  if (governance.normative?.layer !== "CKO-REG" || governance.normative?.bindings_classified !== 10913) {
+    deny("MD_NORMS_EVIDENCE_CHAIN", "CKO-REG classified binding count 10913 missing");
+  }
+  for (const cid of ["CHAIN-MD", "CHAIN-REG", "CHAIN-SCHEMA", "CHAIN-ENGINE", "CHAIN-VALIDATOR", "CHAIN-RENDERER", "CHAIN-RUNTIME", "CHAIN-FRONTEND"]) {
+    if (!byId.has(cid)) {
+      deny("MD_NORMS_EVIDENCE_CHAIN", `${cid} missing`);
+      break;
+    }
+  }
+  if (!hasEdge("LAYER-CKO-REG", "LAYER-CKO-MD", "derivedFrom") || !hasEdge("SCHEMA-TOOL", "LAYER-CKO-MD", "derivedFrom") || !hasEdge("SCHEMA-TOOL", "LAYER-CKO-REG", "boundToNorm")) {
+    deny("MD_NORMS_EVIDENCE_CHAIN", "REG/schema are not derived from master data with norm binding");
+  }
+  for (const id of CANONICAL_LAYER_IDS) {
+    const nid = `LAYER-${id}`;
+    if (id !== "CKO-MD" && !hasEdge(nid, "LAYER-CKO-MD", "derivedFrom")) {
+      deny("MD_NORMS_EVIDENCE_CHAIN", `${nid} not derived from CKO-MD`);
+      break;
+    }
+    if (id !== "CKO-REG" && !hasEdge(nid, "LAYER-CKO-REG", "boundToNorm")) {
+      deny("MD_NORMS_EVIDENCE_CHAIN", `${nid} missing CKO-REG norm binding`);
+      break;
+    }
+    if (!hasEdge(nid, `EVD-${nid}`, "hasEvidence")) {
+      deny("MD_NORMS_EVIDENCE_CHAIN", `${nid} missing evidence receipt`);
+      break;
+    }
+  }
+  for (const page of RUNTIME_PAGES) {
+    const nid = `PAGE-${page.replace(/\.html$/, "")}`;
+    if (!hasEdge(nid, "LAYER-CKO-MD", "derivedFrom") || !hasEdge(nid, "LAYER-CKO-REG", "boundToNorm") || !hasEdge(nid, `EVD-${nid}`, "hasEvidence") || !hasEdge(nid, "CHAIN-FRONTEND", "instanceOf")) {
+      deny("MD_NORMS_EVIDENCE_CHAIN", `${nid} is not amarrado MD→norma→evidência→frontend`);
+      break;
+    }
+  }
   return { ok: denials.length === 0, denials };
 }
 
@@ -438,6 +516,7 @@ export function knownUniverseObjects(universe, platform) {
     if (platform.toolLibrary) push("tool-library-runtime", "CKO-TOOL-LIBRARY-RUNTIME-1.0.0");
     if (platform.governance) push("calenf-governance", "CKO-CALENF-GOVERNANCE-1.0.0");
     if (platform.layers) push("cko-44-layers", "CKO-44-LAYER-SITE-1.0.0");
+    if (platform.governance?.evidence_chain) push("md-norm-evidence-chain", MD_NORM_CHAIN_ID);
     for (const p of platform.pendencies?.items || []) push("pendency", p.id, { status: p.status });
     if (platform.driveImmutable) push("drive-immutable", "CKO-DRIVE-IMMUTABLE-1.0.0");
   }
@@ -742,6 +821,7 @@ export function runtimeAssertions(universe, platform) {
       check("A-CALENF-TWIN", g.denials.every((d) => d.id !== "TWIN_GOVERNS_RUNTIME"), "twin");
       check("A-CALENF-NURSEPALM", g.denials.every((d) => d.id !== "NURSEPALM_GOVERNS_RUNTIME"), "nurse-palm");
       check("A-CALENF-AGENTIC", g.denials.every((d) => d.id !== "AGENTIC_GOVERNS_RUNTIME"), "agentic");
+      check("A-MD-NORM-EVIDENCE", g.denials.every((d) => d.id !== "MD_NORMS_EVIDENCE_CHAIN"), "md-norm");
     }
     if (platform.pendencies) {
       const pend = inspectPendencies(platform.pendencies, platform.driveImmutable);
@@ -973,6 +1053,8 @@ export async function automaticEvidence(universe, extras = {}) {
             ? JSON.stringify(extras.platform?.governance || {})
             : obj.kind === "cko-44-layers"
               ? JSON.stringify(extras.platform?.layers || {})
+              : obj.kind === "md-norm-evidence-chain"
+                ? JSON.stringify(extras.platform?.governance?.evidence_chain || {})
               : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
     const sha = await digestSha256(body);
     receipts.push({

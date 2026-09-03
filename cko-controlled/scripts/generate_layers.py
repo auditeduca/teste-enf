@@ -14,6 +14,8 @@ import shutil
 import zipfile
 from pathlib import Path
 
+from cko_md_norm import MD_NORM_CHAIN
+
 GATE = Path(__file__).resolve().parents[1]
 SITE = GATE.parent / "reference-website"
 WAVE2 = GATE / "public"
@@ -204,6 +206,17 @@ def materialize_layer(row: dict) -> dict:
                 "twin": "B5",
                 "agentic": "B1",
                 "nursePalm": "B10",
+                "master_data": "CKO-MD",
+                "regulatory": "CKO-REG",
+                "evidence": "HOLD",
+            },
+            "master_data": "CKO-MD",
+            "regulatory": "CKO-REG",
+            "norm": "NIFS-900-03",
+            "evidence": {
+                "status": "HOLD",
+                "no_fact_without_evidence": True,
+                "discovery_is_not_evidence": True,
             },
         },
     )
@@ -233,6 +246,17 @@ def materialize_layer(row: dict) -> dict:
             "twin": "B5",
             "agentic": "B1",
             "nursePalm": "B10",
+            "master_data": "CKO-MD",
+            "regulatory": "CKO-REG",
+            "evidence": "HOLD",
+        },
+        "master_data": "CKO-MD",
+        "regulatory": "CKO-REG",
+        "norm": "NIFS-900-03",
+        "evidence": {
+            "status": "HOLD",
+            "no_fact_without_evidence": True,
+            "discovery_is_not_evidence": True,
         },
         "semantic": {
             "CKO-MD": "master-data",
@@ -262,6 +286,22 @@ def layers_section_html(catalog: dict) -> str:
         )
     ids_list = "".join(f"<li><code>{layer['id']}</code> — {layer['name']}</li>" for layer in catalog["layers"])
     return f"""{MARKER_BEGIN}
+<article class="card hold" id="cko-md-norm-evidence" data-cko-md="CKO-MD" data-cko-reg="CKO-REG" data-cko-norm="NIFS-900-03" data-cko-evidence="HOLD" data-cko-chain="MD / REG / Schema / Engine / Validator / Renderer / Runtime / Frontend">
+  <span class="label">Evidência e norma</span>
+  <h2>Master data → norma → evidência → frontend</h2>
+  <p>A amarração parte de <strong>CKO-MD</strong>
+  (<code>ART-CKO-MASTER-DATA-FINAL-CONTROLLED</code>, 2496 campos classificados)
+  para <strong>CKO-REG</strong> (10913 amarrações normativas classificadas),
+  schema, engine, validator, renderer, runtime e frontend.
+  Cada objeto tem evidência <code>HOLD</code>.
+  <strong>NO_FACT_WITHOUT_EVIDENCE</strong>. Discovery ≠ evidence. PENDING ≠ ACK.
+  Contagens 2496/10913 permanecem classificadas — não materializadas campo a campo.
+  Estado: <strong>HOLD / NOT_RELEASED</strong>.</p>
+  <ol class="list-clean">
+    <li>MD</li><li>REG</li><li>Schema</li><li>Engine</li>
+    <li>Validator</li><li>Renderer</li><li>Runtime</li><li>Frontend</li>
+  </ol>
+</article>
 <article class="card hold" id="cko-governed-runtime" data-cko-graph="js/knowledge-graph.js" data-cko-twin="B5" data-cko-agentic="B1" data-cko-nursepalm="B10">
   <span class="label">Governança</span>
   <h2>Grafo, digital twin, IA agêntica e Nurse-PaLM</h2>
@@ -364,7 +404,11 @@ def generate() -> dict:
             "twin": "B5",
             "agentic": "B1",
             "nursePalm": "B10",
+            "master_data": "CKO-MD",
+            "regulatory": "CKO-REG",
+            "evidence": "HOLD",
         },
+        "master_data_to_frontend": MD_NORM_CHAIN,
         "semantic_controls": {
             "content": "canonical knowledge/content and governed projections",
             "educational": "pedagogical projection engine derived from Content",

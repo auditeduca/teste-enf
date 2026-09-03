@@ -14,6 +14,13 @@ import shutil
 import sys
 from pathlib import Path
 
+from cko_md_norm import (
+    HTML_ATTRS,
+    MD_NORM_CHAIN,
+    bind_md_norm_evidence,
+    stamp_html_file,
+)
+
 GATE = Path(__file__).resolve().parents[1]
 SITE = GATE.parent / "reference-website"
 WAVE2 = GATE / "public"
@@ -98,6 +105,9 @@ GOVERNED_BY = {
     "twin": "B5",
     "agentic": "B1",
     "nursePalm": "B10",
+    "master_data": "CKO-MD",
+    "regulatory": "CKO-REG",
+    "evidence": "HOLD",
 }
 
 
@@ -546,6 +556,7 @@ def build_governance(inventory: dict) -> dict:
             edges.append([f"LAYER-{layer_id}", "SEM-EDU", "instanceOf"])
         if layer_id == "LYR-LEARN-001":
             edges.append([f"LAYER-{layer_id}", "SEM-LEARN", "instanceOf"])
+    bind_md_norm_evidence(nodes, edges)
     return {
         "id": "CKO-CALENF-GOVERNANCE-1.0.0",
         "kind": "calenf-runtime-governance",
@@ -578,6 +589,9 @@ def build_governance(inventory: dict) -> dict:
         "semantic_controls": SEMANTIC_CONTROLS,
         "md_freeze": "FROZEN",
         "reg_freeze": "FROZEN",
+        "master_data": MD_NORM_CHAIN["master_data"],
+        "normative": MD_NORM_CHAIN["regulatory"],
+        "evidence_chain": MD_NORM_CHAIN,
         "schema": "data/schemas/tool.schema.json",
         "graph": "js/knowledge-graph.js",
         "ssg": "scripts/generate_tool_page.py",
@@ -619,6 +633,7 @@ KEEP_DATA = {
     "evidence-index.json",
     "gate-report.json",
     "layers.json",
+    "md-norm-evidence.json",
     "pendencies.json",
     "remediation-plan.json",
     "residual-uncertainty.json",
@@ -679,10 +694,47 @@ def assert_canaries(inventory: dict, governance: dict) -> None:
         missing.append("layerCount")
     if governance.get("pageCount") != 12:
         missing.append("pageCount")
+    if governance.get("evidence_chain", {}).get("id") != "CKO-MD-TO-FRONTEND-1.0.0":
+        missing.append("evidence_chain")
+    if governance.get("master_data", {}).get("layer") != "CKO-MD":
+        missing.append("master_data")
+    if governance.get("normative", {}).get("layer") != "CKO-REG":
+        missing.append("normative")
+    for name in sorted(WAVE2_PAGES):
+        html = (SITE / name).read_text(encoding="utf-8")
+        if 'data-cko-md="CKO-MD"' not in html or 'data-cko-reg="CKO-REG"' not in html or 'data-cko-evidence="HOLD"' not in html:
+            missing.append(f"stamp:{name}")
     if inventory["tools_schema_ok"] < len(TOOL_CANARIES):
         missing.append("tools_schema_ok")
     if missing:
         raise SystemExit("CALENF runtime missing: " + ", ".join(missing[:40]))
+
+
+def stamp_md_norm_evidence_frontend() -> dict:
+    """Stamp MD→REG→evidence data-* attrs onto hosted frontend HTML (not locales, not Drive)."""
+    targets = []
+    for name in sorted(WAVE2_PAGES):
+        targets.append(WAVE2 / name)
+        targets.append(SITE / name)
+    targets.extend(sorted(SITE.glob("*.html")))
+    hubs = SITE / "escalas-de-enfermagem"
+    if hubs.is_dir():
+        targets.extend(sorted(hubs.glob("*/index.html")))
+    conc = SITE / "concurso_publico" / "index.html"
+    if conc.is_file():
+        targets.append(conc)
+    stamped = 0
+    seen = set()
+    for path in targets:
+        resolved = path.resolve()
+        if resolved in seen or not path.is_file():
+            continue
+        seen.add(resolved)
+        if stamp_html_file(path):
+            stamped += 1
+        elif all(f'{k}="{v}"' in path.read_text(encoding="utf-8") for k, v in HTML_ATTRS.items()):
+            stamped += 0
+    return {"stamped_files": len(seen), "attrs": HTML_ATTRS}
 
 
 def materialize_44_layers() -> dict:
@@ -705,6 +757,9 @@ def main() -> None:
     write_json(SITE / "data" / "cko" / "governance.json", governance)
     write_json(WAVE2 / "data" / "tool-library-runtime.json", slim)
     layers = materialize_44_layers()
+    write_json(SITE / "data" / "cko" / "md-norm-evidence.json", MD_NORM_CHAIN)
+    write_json(WAVE2 / "data" / "md-norm-evidence.json", MD_NORM_CHAIN)
+    stamp = stamp_md_norm_evidence_frontend()
     if "--inventory-only" not in sys.argv:
         drop_duplicate_cko_copies()
     assert_canaries(slim, governance)
@@ -726,6 +781,8 @@ def main() -> None:
                 "layers": layers["count"],
                 "layers_present": sum(1 for row in layers["layers"] if row["present"]),
                 "layers_release": layers["release"],
+                "md_norm_chain": MD_NORM_CHAIN["id"],
+                "frontend_stamped": stamp["stamped_files"],
             },
             ensure_ascii=False,
             indent=2,
