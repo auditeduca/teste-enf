@@ -249,7 +249,7 @@ function home() {
   const h = state.home;
   return '<section class="hero"><p class="eye">'+h.eyebrow+'</p><h1>'+h.title+'</h1><p>'+h.lead+'</p>' +
     '<p class="eye" style="margin-top:1.2rem">Escalas por especialidade</p><div class="chips">' +
-    h.chips.map(c => '<button type="button" class="chip" onclick="go(\'#/especialidade/'+c.id+'\')">'+c.label+'</button>').join("") + '</div></section>' +
+    h.chips.map(c => '<a class="chip" href="#/especialidade/'+c.id+'">'+c.label+'</a>').join("") + '</div></section>' +
     '<div class="grid">' +
     state.tools.map(t => '<a class="card" href="#/'+t.id+'"><h3>'+t.title+'</h3><p class="meta">Runtime CALENF · HOLD</p></a>').join("") +
     state.pages.filter(p => p.id!=="home").map(p => '<a class="card" href="#/'+p.id+'"><h3>'+p.label+'</h3><p class="meta">'+p.title+'</p></a>').join("") +

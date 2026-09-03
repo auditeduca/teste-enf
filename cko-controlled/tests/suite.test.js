@@ -888,5 +888,8 @@ describe("HOLD localStorage preview", () => {
     assert.ok(snap.tools.some((t) => t.id === "imc"));
     assert.ok((snap.specialties || []).length >= 12);
     assert.ok(snap.pages.some((p) => p.id === "mapa"));
+    const script = html.split("<script>")[1].split("</script>")[0];
+    assert.match(script, /href="#\/especialidade\/'/);
+    assert.doesNotThrow(() => new Function(script));
   });
 });
