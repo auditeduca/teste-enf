@@ -41,7 +41,7 @@ def inject_tool_config(html_name: str, json_name: str, include_engine: bool = Fa
     if 'id="tool-config"' in html:
         html = re.sub(
             r'<script[^>]*id="tool-config"[^>]*>.*?</script>',
-            tag,
+            lambda _m: tag,
             html,
             count=1,
             flags=re.S,

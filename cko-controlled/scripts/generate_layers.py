@@ -199,6 +199,12 @@ def materialize_layer(row: dict) -> dict:
             "present": len(missing) == 0,
             "operational": "NOT_ASSERTED",
             "published": False,
+            "governed_by": {
+                "graph": "js/knowledge-graph.js",
+                "twin": "B5",
+                "agentic": "B1",
+                "nursePalm": "B10",
+            },
         },
     )
     present = len(missing) == 0 and (dest / "FINAL_MANIFEST.json").is_file()
@@ -222,6 +228,19 @@ def materialize_layer(row: dict) -> dict:
         "zip_verified": zip_verified,
         "extracted_n": len(extracted),
         "missing_runtime": missing,
+        "governed_by": {
+            "graph": "js/knowledge-graph.js",
+            "twin": "B5",
+            "agentic": "B1",
+            "nursePalm": "B10",
+        },
+        "semantic": {
+            "CKO-MD": "master-data",
+            "CKO-REG": "regulatory",
+            "LYR-CONTENT-001": "content",
+            "LYR-EDU-001": "educational",
+            "LYR-LEARN-001": "learning",
+        }.get(layer_id),
     }
 
 
@@ -243,17 +262,34 @@ def layers_section_html(catalog: dict) -> str:
         )
     ids_list = "".join(f"<li><code>{layer['id']}</code> — {layer['name']}</li>" for layer in catalog["layers"])
     return f"""{MARKER_BEGIN}
+<article class="card hold" id="cko-governed-runtime" data-cko-graph="js/knowledge-graph.js" data-cko-twin="B5" data-cko-agentic="B1" data-cko-nursepalm="B10">
+  <span class="label">Governança</span>
+  <h2>Grafo, digital twin, IA agêntica e Nurse-PaLM</h2>
+  <p>Tudo no runtime CALENF é governado por <strong>grafo</strong> (<code>js/knowledge-graph.js</code>),
+  <strong>digital twin</strong> B5 NIFS-600-15, <strong>IA agêntica</strong> B1
+  (Maker ≠ Checker ≠ Auditor) e <strong>Nurse-PaLM</strong> B10.
+  Twin permanece <code>observed:false</code> / <code>deployed:false</code>.
+  Nurse-PaLM e B1 permanecem <strong>NOT_ASSERTED</strong>. Fan-in B9:
+  <strong>HOLD / NOT_RELEASED</strong>.</p>
+  <ul class="list-clean">
+    <li>Content = conhecimento canônico e projeções governadas.</li>
+    <li>Educational = motor pedagógico derivado de Content.</li>
+    <li>Learning = Agent Continuous Learning Engine (o rótulo Flashcards/Quizzes é linhagem).</li>
+    <li>CKO-MD e CKO-REG: freeze FROZEN do fan-in global do PDF.</li>
+    <li>PENDING ≠ ACK. Sem homologação clínica. Sem reexecução das 44 camadas.</li>
+  </ul>
+</article>
 <article class="card hold" id="cko-44-layers" data-cko-layers="44" data-cko-layers-release="HOLD_NOT_RELEASED">
   <span class="label">Camadas horizontais</span>
   <h2>44 camadas classificadas do PDF inicial</h2>
   <p>O site hospeda as <strong>44 camadas horizontais</strong> do artefato
   <code>ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE</code>
   (SHA prefixo <code>{CLOSURE_SHA_PREFIX}</code>). Cobertura <strong>44/44</strong>.
-  Cada camada está ligada ao runtime CALENF correspondente. Estado:
-  <strong>HOLD / NOT_RELEASED</strong>. Nurse-PaLM operacional permanece
+  Cada camada está no grafo, projetada no twin, ligada a B1 e a B10, e faz fan-in a B9.
+  Estado: <strong>HOLD / NOT_RELEASED</strong>. Nurse-PaLM operacional permanece
   <strong>NOT_ASSERTED</strong>. Nenhuma camada está publicada.</p>
   <p class="kpi">44/44</p>
-  <p class="small">Fonte: fechamento técnico controlado. PENDING ≠ ACK. Sem reexecução das 44 camadas. Sem homologação clínica.</p>
+  <p class="small">Fonte: fechamento técnico + global fan-in assurance. Maker ≠ Checker ≠ Auditor.</p>
   <div style="overflow:auto">
   <table class="small" style="width:100%;border-collapse:collapse">
     <thead><tr>
@@ -323,6 +359,24 @@ def generate() -> dict:
         "pending_is_not_ack": True,
         "reexecution": False,
         "page": "ecossistema.html",
+        "governed_by": {
+            "graph": "js/knowledge-graph.js",
+            "twin": "B5",
+            "agentic": "B1",
+            "nursePalm": "B10",
+        },
+        "semantic_controls": {
+            "content": "canonical knowledge/content and governed projections",
+            "educational": "pedagogical projection engine derived from Content",
+            "learning": "Agent Continuous Learning Engine; historical label Flashcards / Questions / Quizzes is lineage only",
+            "l1_l4_char_limits": "NOT_ASSERTED",
+        },
+        "agentic": {
+            "independence": "maker!=checker!=auditor",
+            "operational": "NOT_ASSERTED",
+        },
+        "md_freeze": "FROZEN",
+        "reg_freeze": "FROZEN",
         "layers": layers,
         "zip_verified_n": sum(1 for l in layers if l["zip_verified"]),
     }

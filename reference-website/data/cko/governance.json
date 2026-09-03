@@ -4,6 +4,12 @@
   "root": "policy-as-code",
   "structure": "NIFS-900-03",
   "release": "HOLD / NOT_RELEASED",
+  "governed_by": {
+    "graph": "js/knowledge-graph.js",
+    "twin": "B5",
+    "agentic": "B1",
+    "nursePalm": "B10"
+  },
   "nursePalm": {
     "engine": "js/nurse-palm.js",
     "layers": [
@@ -19,7 +25,8 @@
       "Multi-Agent Council"
     ],
     "operational": "NOT_ASSERTED",
-    "audit": "NURSE_PALM_21_LAYER_COMPLETENESS_AUDIT_v6_4_0"
+    "audit": "NURSE_PALM_21_LAYER_COMPLETENESS_AUDIT_v6_4_0",
+    "horizontal_layers": "44/44"
   },
   "digitalTwin": {
     "nifs": "NIFS-600-15",
@@ -29,10 +36,48 @@
     "classified_nodes": 137,
     "classified_edges": 136
   },
+  "agentic": {
+    "block": "B1",
+    "operational": "NOT_ASSERTED",
+    "independence": "maker!=checker!=auditor",
+    "agents": [
+      {
+        "id": "AGT-ORCH-001",
+        "role": "ORCHESTRATOR"
+      },
+      {
+        "id": "AGT-SP-MAKER",
+        "role": "MAKER"
+      },
+      {
+        "id": "AGT-SP-CHECKER",
+        "role": "CHECKER"
+      },
+      {
+        "id": "AGT-SP-AUDIT-AGENT",
+        "role": "AUDITOR"
+      }
+    ],
+    "outbox_pending_is_not_ack": true
+  },
+  "semantic_controls": {
+    "content": "canonical knowledge/content and governed projections",
+    "educational": "pedagogical projection engine derived from Content",
+    "learning": "Agent Continuous Learning Engine; historical label Flashcards / Questions / Quizzes is lineage only",
+    "l1_l4_char_limits": "NOT_ASSERTED"
+  },
+  "md_freeze": "FROZEN",
+  "reg_freeze": "FROZEN",
   "schema": "data/schemas/tool.schema.json",
   "graph": "js/knowledge-graph.js",
   "ssg": "scripts/generate_tool_page.py",
   "nodes": [
+    {
+      "id": "B1",
+      "type": "AgentJobRuntime",
+      "operational": "NOT_ASSERTED",
+      "independence": "maker!=checker!=auditor"
+    },
     {
       "id": "B5",
       "type": "DigitalTwin",
@@ -47,6 +92,17 @@
     {
       "id": "B6.2",
       "type": "KnowledgeLibraries"
+    },
+    {
+      "id": "B6.3",
+      "type": "ExperiencePublication"
+    },
+    {
+      "id": "B7",
+      "type": "LearningRecertification",
+      "holds": [
+        "recert_FAIL"
+      ]
     },
     {
       "id": "B9",
@@ -82,6 +138,48 @@
       "path": "js/knowledge-graph.js"
     },
     {
+      "id": "SEM-CONTENT",
+      "type": "SemanticControl",
+      "kind": "content",
+      "text": "canonical knowledge/content and governed projections"
+    },
+    {
+      "id": "SEM-EDU",
+      "type": "SemanticControl",
+      "kind": "educational",
+      "text": "pedagogical projection engine derived from Content"
+    },
+    {
+      "id": "SEM-LEARN",
+      "type": "SemanticControl",
+      "kind": "learning",
+      "text": "Agent Continuous Learning Engine; historical label Flashcards / Questions / Quizzes is lineage only"
+    },
+    {
+      "id": "AGT-ORCH-001",
+      "type": "Agent",
+      "role": "ORCHESTRATOR",
+      "operational": "NOT_ASSERTED"
+    },
+    {
+      "id": "AGT-SP-MAKER",
+      "type": "Agent",
+      "role": "MAKER",
+      "operational": "NOT_ASSERTED"
+    },
+    {
+      "id": "AGT-SP-CHECKER",
+      "type": "Agent",
+      "role": "CHECKER",
+      "operational": "NOT_ASSERTED"
+    },
+    {
+      "id": "AGT-SP-AUDIT-AGENT",
+      "type": "Agent",
+      "role": "AUDITOR",
+      "operational": "NOT_ASSERTED"
+    },
+    {
       "id": "TOOL-abcd2",
       "type": "ToolRuntime",
       "slug": "abcd2",
@@ -92,10 +190,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-abcd2",
+      "id": "TWIN-TOOL-abcd2",
       "type": "TwinProjection",
       "of": "TOOL-abcd2",
       "governedBy": "B5",
@@ -114,10 +218,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-adicional-noturno",
+      "id": "TWIN-TOOL-adicional-noturno",
       "type": "TwinProjection",
       "of": "TOOL-adicional-noturno",
       "governedBy": "B5",
@@ -136,10 +246,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-aldrete",
+      "id": "TWIN-TOOL-aldrete",
       "type": "TwinProjection",
       "of": "TOOL-aldrete",
       "governedBy": "B5",
@@ -158,10 +274,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-alvarado",
+      "id": "TWIN-TOOL-alvarado",
       "type": "TwinProjection",
       "of": "TOOL-alvarado",
       "governedBy": "B5",
@@ -180,10 +302,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-apache",
+      "id": "TWIN-TOOL-apache",
       "type": "TwinProjection",
       "of": "TOOL-apache",
       "governedBy": "B5",
@@ -202,10 +330,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-apgar",
+      "id": "TWIN-TOOL-apgar",
       "type": "TwinProjection",
       "of": "TOOL-apgar",
       "governedBy": "B5",
@@ -224,10 +358,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-asa",
+      "id": "TWIN-TOOL-asa",
       "type": "TwinProjection",
       "of": "TOOL-asa",
       "governedBy": "B5",
@@ -246,10 +386,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-balancohidrico",
+      "id": "TWIN-TOOL-balancohidrico",
       "type": "TwinProjection",
       "of": "TOOL-balancohidrico",
       "governedBy": "B5",
@@ -268,10 +414,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-ballard",
+      "id": "TWIN-TOOL-ballard",
       "type": "TwinProjection",
       "of": "TOOL-ballard",
       "governedBy": "B5",
@@ -290,10 +442,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-barthel",
+      "id": "TWIN-TOOL-barthel",
       "type": "TwinProjection",
       "of": "TOOL-barthel",
       "governedBy": "B5",
@@ -312,10 +470,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-berg",
+      "id": "TWIN-TOOL-berg",
       "type": "TwinProjection",
       "of": "TOOL-berg",
       "governedBy": "B5",
@@ -334,10 +498,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-bishop",
+      "id": "TWIN-TOOL-bishop",
       "type": "TwinProjection",
       "of": "TOOL-bishop",
       "governedBy": "B5",
@@ -356,10 +526,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-bps",
+      "id": "TWIN-TOOL-bps",
       "type": "TwinProjection",
       "of": "TOOL-bps",
       "governedBy": "B5",
@@ -378,10 +554,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-calculo-de-ferias",
+      "id": "TWIN-TOOL-calculo-de-ferias",
       "type": "TwinProjection",
       "of": "TOOL-calculo-de-ferias",
       "governedBy": "B5",
@@ -400,10 +582,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-calculo-hora-extra",
+      "id": "TWIN-TOOL-calculo-hora-extra",
       "type": "TwinProjection",
       "of": "TOOL-calculo-hora-extra",
       "governedBy": "B5",
@@ -422,10 +610,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-calculo-rescisao",
+      "id": "TWIN-TOOL-calculo-rescisao",
       "type": "TwinProjection",
       "of": "TOOL-calculo-rescisao",
       "governedBy": "B5",
@@ -444,10 +638,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-cam",
+      "id": "TWIN-TOOL-cam",
       "type": "TwinProjection",
       "of": "TOOL-cam",
       "governedBy": "B5",
@@ -466,10 +666,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-capurro",
+      "id": "TWIN-TOOL-capurro",
       "type": "TwinProjection",
       "of": "TOOL-capurro",
       "governedBy": "B5",
@@ -488,10 +694,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-centor",
+      "id": "TWIN-TOOL-centor",
       "type": "TwinProjection",
       "of": "TOOL-centor",
       "governedBy": "B5",
@@ -510,10 +722,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-cha2ds2vasc",
+      "id": "TWIN-TOOL-cha2ds2vasc",
       "type": "TwinProjection",
       "of": "TOOL-cha2ds2vasc",
       "governedBy": "B5",
@@ -532,10 +750,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-charlson",
+      "id": "TWIN-TOOL-charlson",
       "type": "TwinProjection",
       "of": "TOOL-charlson",
       "governedBy": "B5",
@@ -554,10 +778,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-child-pugh",
+      "id": "TWIN-TOOL-child-pugh",
       "type": "TwinProjection",
       "of": "TOOL-child-pugh",
       "governedBy": "B5",
@@ -576,10 +806,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-cincinnati",
+      "id": "TWIN-TOOL-cincinnati",
       "type": "TwinProjection",
       "of": "TOOL-cincinnati",
       "governedBy": "B5",
@@ -598,10 +834,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-ciwa-ar",
+      "id": "TWIN-TOOL-ciwa-ar",
       "type": "TwinProjection",
       "of": "TOOL-ciwa-ar",
       "governedBy": "B5",
@@ -620,10 +862,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-cornell",
+      "id": "TWIN-TOOL-cornell",
       "type": "TwinProjection",
       "of": "TOOL-cornell",
       "governedBy": "B5",
@@ -642,10 +890,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-cpc",
+      "id": "TWIN-TOOL-cpc",
       "type": "TwinProjection",
       "of": "TOOL-cpc",
       "governedBy": "B5",
@@ -664,10 +918,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-cries",
+      "id": "TWIN-TOOL-cries",
       "type": "TwinProjection",
       "of": "TOOL-cries",
       "governedBy": "B5",
@@ -686,10 +946,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-curb65",
+      "id": "TWIN-TOOL-curb65",
       "type": "TwinProjection",
       "of": "TOOL-curb65",
       "governedBy": "B5",
@@ -708,10 +974,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-dimensionamento",
+      "id": "TWIN-TOOL-dimensionamento",
       "type": "TwinProjection",
       "of": "TOOL-dimensionamento",
       "governedBy": "B5",
@@ -730,10 +1002,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-downes",
+      "id": "TWIN-TOOL-downes",
       "type": "TwinProjection",
       "of": "TOOL-downes",
       "governedBy": "B5",
@@ -752,10 +1030,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-downton",
+      "id": "TWIN-TOOL-downton",
       "type": "TwinProjection",
       "of": "TOOL-downton",
       "governedBy": "B5",
@@ -774,10 +1058,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-ecog",
+      "id": "TWIN-TOOL-ecog",
       "type": "TwinProjection",
       "of": "TOOL-ecog",
       "governedBy": "B5",
@@ -796,10 +1086,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-elpo",
+      "id": "TWIN-TOOL-elpo",
       "type": "TwinProjection",
       "of": "TOOL-elpo",
       "governedBy": "B5",
@@ -818,10 +1114,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-escala-de-braden",
+      "id": "TWIN-TOOL-escala-de-braden",
       "type": "TwinProjection",
       "of": "TOOL-escala-de-braden",
       "governedBy": "B5",
@@ -840,10 +1142,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-escala-de-glasgow",
+      "id": "TWIN-TOOL-escala-de-glasgow",
       "type": "TwinProjection",
       "of": "TOOL-escala-de-glasgow",
       "governedBy": "B5",
@@ -862,10 +1170,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-escala-de-morse",
+      "id": "TWIN-TOOL-escala-de-morse",
       "type": "TwinProjection",
       "of": "TOOL-escala-de-morse",
       "governedBy": "B5",
@@ -884,10 +1198,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-escalanumerica",
+      "id": "TWIN-TOOL-escalanumerica",
       "type": "TwinProjection",
       "of": "TOOL-escalanumerica",
       "governedBy": "B5",
@@ -906,10 +1226,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-fast",
+      "id": "TWIN-TOOL-fast",
       "type": "TwinProjection",
       "of": "TOOL-fast",
       "governedBy": "B5",
@@ -928,10 +1254,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-flacc",
+      "id": "TWIN-TOOL-flacc",
       "type": "TwinProjection",
       "of": "TOOL-flacc",
       "governedBy": "B5",
@@ -950,10 +1282,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-four",
+      "id": "TWIN-TOOL-four",
       "type": "TwinProjection",
       "of": "TOOL-four",
       "governedBy": "B5",
@@ -972,10 +1310,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-fragilidade-edmonton",
+      "id": "TWIN-TOOL-fragilidade-edmonton",
       "type": "TwinProjection",
       "of": "TOOL-fragilidade-edmonton",
       "governedBy": "B5",
@@ -994,10 +1338,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-fugulin",
+      "id": "TWIN-TOOL-fugulin",
       "type": "TwinProjection",
       "of": "TOOL-fugulin",
       "governedBy": "B5",
@@ -1016,10 +1366,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-gad7",
+      "id": "TWIN-TOOL-gad7",
       "type": "TwinProjection",
       "of": "TOOL-gad7",
       "governedBy": "B5",
@@ -1038,10 +1394,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-gds",
+      "id": "TWIN-TOOL-gds",
       "type": "TwinProjection",
       "of": "TOOL-gds",
       "governedBy": "B5",
@@ -1060,10 +1422,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-glasgow-blatchford",
+      "id": "TWIN-TOOL-glasgow-blatchford",
       "type": "TwinProjection",
       "of": "TOOL-glasgow-blatchford",
       "governedBy": "B5",
@@ -1082,10 +1450,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-glasgow-pediatrico",
+      "id": "TWIN-TOOL-glasgow-pediatrico",
       "type": "TwinProjection",
       "of": "TOOL-glasgow-pediatrico",
       "governedBy": "B5",
@@ -1104,10 +1478,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-glasgow-pupilas",
+      "id": "TWIN-TOOL-glasgow-pupilas",
       "type": "TwinProjection",
       "of": "TOOL-glasgow-pupilas",
       "governedBy": "B5",
@@ -1126,10 +1506,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-gosnell",
+      "id": "TWIN-TOOL-gosnell",
       "type": "TwinProjection",
       "of": "TOOL-gosnell",
       "governedBy": "B5",
@@ -1148,10 +1534,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-gotejamento",
+      "id": "TWIN-TOOL-gotejamento",
       "type": "TwinProjection",
       "of": "TOOL-gotejamento",
       "governedBy": "B5",
@@ -1170,10 +1562,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-hamilton",
+      "id": "TWIN-TOOL-hamilton",
       "type": "TwinProjection",
       "of": "TOOL-hamilton",
       "governedBy": "B5",
@@ -1192,10 +1590,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-hasbled",
+      "id": "TWIN-TOOL-hasbled",
       "type": "TwinProjection",
       "of": "TOOL-hasbled",
       "governedBy": "B5",
@@ -1214,10 +1618,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-heart-score",
+      "id": "TWIN-TOOL-heart-score",
       "type": "TwinProjection",
       "of": "TOOL-heart-score",
       "governedBy": "B5",
@@ -1236,10 +1646,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-hendrich",
+      "id": "TWIN-TOOL-hendrich",
       "type": "TwinProjection",
       "of": "TOOL-hendrich",
       "governedBy": "B5",
@@ -1258,10 +1674,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-humpty",
+      "id": "TWIN-TOOL-humpty",
       "type": "TwinProjection",
       "of": "TOOL-humpty",
       "governedBy": "B5",
@@ -1280,10 +1702,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-imc-gestacional",
+      "id": "TWIN-TOOL-imc-gestacional",
       "type": "TwinProjection",
       "of": "TOOL-imc-gestacional",
       "governedBy": "B5",
@@ -1302,10 +1730,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-imc",
+      "id": "TWIN-TOOL-imc",
       "type": "TwinProjection",
       "of": "TOOL-imc",
       "governedBy": "B5",
@@ -1324,10 +1758,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-indice-choque",
+      "id": "TWIN-TOOL-indice-choque",
       "type": "TwinProjection",
       "of": "TOOL-indice-choque",
       "governedBy": "B5",
@@ -1346,10 +1786,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-insulina",
+      "id": "TWIN-TOOL-insulina",
       "type": "TwinProjection",
       "of": "TOOL-insulina",
       "governedBy": "B5",
@@ -1368,10 +1814,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-johns",
+      "id": "TWIN-TOOL-johns",
       "type": "TwinProjection",
       "of": "TOOL-johns",
       "governedBy": "B5",
@@ -1390,10 +1842,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-karnofsky",
+      "id": "TWIN-TOOL-karnofsky",
       "type": "TwinProjection",
       "of": "TOOL-karnofsky",
       "governedBy": "B5",
@@ -1412,10 +1870,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-katz",
+      "id": "TWIN-TOOL-katz",
       "type": "TwinProjection",
       "of": "TOOL-katz",
       "governedBy": "B5",
@@ -1434,10 +1898,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-lanss",
+      "id": "TWIN-TOOL-lanss",
       "type": "TwinProjection",
       "of": "TOOL-lanss",
       "governedBy": "B5",
@@ -1456,10 +1926,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-lawton",
+      "id": "TWIN-TOOL-lawton",
       "type": "TwinProjection",
       "of": "TOOL-lawton",
       "governedBy": "B5",
@@ -1478,10 +1954,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-manchester",
+      "id": "TWIN-TOOL-manchester",
       "type": "TwinProjection",
       "of": "TOOL-manchester",
       "governedBy": "B5",
@@ -1500,10 +1982,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-mascc",
+      "id": "TWIN-TOOL-mascc",
       "type": "TwinProjection",
       "of": "TOOL-mascc",
       "governedBy": "B5",
@@ -1522,10 +2010,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-medicamentos",
+      "id": "TWIN-TOOL-medicamentos",
       "type": "TwinProjection",
       "of": "TOOL-medicamentos",
       "governedBy": "B5",
@@ -1544,10 +2038,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-meem",
+      "id": "TWIN-TOOL-meem",
       "type": "TwinProjection",
       "of": "TOOL-meem",
       "governedBy": "B5",
@@ -1566,10 +2066,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-meows",
+      "id": "TWIN-TOOL-meows",
       "type": "TwinProjection",
       "of": "TOOL-meows",
       "governedBy": "B5",
@@ -1588,10 +2094,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-mews",
+      "id": "TWIN-TOOL-mews",
       "type": "TwinProjection",
       "of": "TOOL-mews",
       "governedBy": "B5",
@@ -1610,10 +2122,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-moca",
+      "id": "TWIN-TOOL-moca",
       "type": "TwinProjection",
       "of": "TOOL-moca",
       "governedBy": "B5",
@@ -1632,10 +2150,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-news2",
+      "id": "TWIN-TOOL-news2",
       "type": "TwinProjection",
       "of": "TOOL-news2",
       "governedBy": "B5",
@@ -1654,10 +2178,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-nihss",
+      "id": "TWIN-TOOL-nihss",
       "type": "TwinProjection",
       "of": "TOOL-nihss",
       "governedBy": "B5",
@@ -1676,10 +2206,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-nips",
+      "id": "TWIN-TOOL-nips",
       "type": "TwinProjection",
       "of": "TOOL-nips",
       "governedBy": "B5",
@@ -1698,10 +2234,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-norton",
+      "id": "TWIN-TOOL-norton",
       "type": "TwinProjection",
       "of": "TOOL-norton",
       "governedBy": "B5",
@@ -1720,10 +2262,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-nrs2002",
+      "id": "TWIN-TOOL-nrs2002",
       "type": "TwinProjection",
       "of": "TOOL-nrs2002",
       "governedBy": "B5",
@@ -1742,10 +2290,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-ofras",
+      "id": "TWIN-TOOL-ofras",
       "type": "TwinProjection",
       "of": "TOOL-ofras",
       "governedBy": "B5",
@@ -1764,10 +2318,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-painad",
+      "id": "TWIN-TOOL-painad",
       "type": "TwinProjection",
       "of": "TOOL-painad",
       "governedBy": "B5",
@@ -1786,10 +2346,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-parkland",
+      "id": "TWIN-TOOL-parkland",
       "type": "TwinProjection",
       "of": "TOOL-parkland",
       "governedBy": "B5",
@@ -1808,10 +2374,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-pews",
+      "id": "TWIN-TOOL-pews",
       "type": "TwinProjection",
       "of": "TOOL-pews",
       "governedBy": "B5",
@@ -1830,10 +2402,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-phq9",
+      "id": "TWIN-TOOL-phq9",
       "type": "TwinProjection",
       "of": "TOOL-phq9",
       "governedBy": "B5",
@@ -1852,10 +2430,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-push",
+      "id": "TWIN-TOOL-push",
       "type": "TwinProjection",
       "of": "TOOL-push",
       "governedBy": "B5",
@@ -1874,10 +2458,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-qsofa",
+      "id": "TWIN-TOOL-qsofa",
       "type": "TwinProjection",
       "of": "TOOL-qsofa",
       "governedBy": "B5",
@@ -1896,10 +2486,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-ramsay",
+      "id": "TWIN-TOOL-ramsay",
       "type": "TwinProjection",
       "of": "TOOL-ramsay",
       "governedBy": "B5",
@@ -1918,10 +2514,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-rancholosamigos",
+      "id": "TWIN-TOOL-rancholosamigos",
       "type": "TwinProjection",
       "of": "TOOL-rancholosamigos",
       "governedBy": "B5",
@@ -1940,10 +2542,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-ranson",
+      "id": "TWIN-TOOL-ranson",
       "type": "TwinProjection",
       "of": "TOOL-ranson",
       "governedBy": "B5",
@@ -1962,10 +2570,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-rass",
+      "id": "TWIN-TOOL-rass",
       "type": "TwinProjection",
       "of": "TOOL-rass",
       "governedBy": "B5",
@@ -1984,10 +2598,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-regra-dos-nove",
+      "id": "TWIN-TOOL-regra-dos-nove",
       "type": "TwinProjection",
       "of": "TOOL-regra-dos-nove",
       "governedBy": "B5",
@@ -2006,10 +2626,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-silverman-andersen",
+      "id": "TWIN-TOOL-silverman-andersen",
       "type": "TwinProjection",
       "of": "TOOL-silverman-andersen",
       "governedBy": "B5",
@@ -2028,10 +2654,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-sofa",
+      "id": "TWIN-TOOL-sofa",
       "type": "TwinProjection",
       "of": "TOOL-sofa",
       "governedBy": "B5",
@@ -2050,10 +2682,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-stop-bang",
+      "id": "TWIN-TOOL-stop-bang",
       "type": "TwinProjection",
       "of": "TOOL-stop-bang",
       "governedBy": "B5",
@@ -2072,10 +2710,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-tinetti",
+      "id": "TWIN-TOOL-tinetti",
       "type": "TwinProjection",
       "of": "TOOL-tinetti",
       "governedBy": "B5",
@@ -2094,10 +2738,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-tug",
+      "id": "TWIN-TOOL-tug",
       "type": "TwinProjection",
       "of": "TOOL-tug",
       "governedBy": "B5",
@@ -2116,10 +2766,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-waterlow",
+      "id": "TWIN-TOOL-waterlow",
       "type": "TwinProjection",
       "of": "TOOL-waterlow",
       "governedBy": "B5",
@@ -2138,10 +2794,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-wells-tep",
+      "id": "TWIN-TOOL-wells-tep",
       "type": "TwinProjection",
       "of": "TOOL-wells-tep",
       "governedBy": "B5",
@@ -2160,10 +2822,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-wells-tvp",
+      "id": "TWIN-TOOL-wells-tvp",
       "type": "TwinProjection",
       "of": "TOOL-wells-tvp",
       "governedBy": "B5",
@@ -2182,10 +2850,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-wong-baker",
+      "id": "TWIN-TOOL-wong-baker",
       "type": "TwinProjection",
       "of": "TOOL-wong-baker",
       "governedBy": "B5",
@@ -2204,10 +2878,16 @@
         "engine": "js/nurse-palm.js",
         "layers": 10,
         "operational": "NOT_ASSERTED"
+      },
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
       }
     },
     {
-      "id": "TWIN-zarit",
+      "id": "TWIN-TOOL-zarit",
       "type": "TwinProjection",
       "of": "TOOL-zarit",
       "governedBy": "B5",
@@ -2219,46 +2899,1514 @@
       "id": "LIB-biblioteca",
       "type": "LibraryRuntime",
       "html": "biblioteca.html",
-      "schema": "js/modules/data/biblioteca.json"
+      "schema": "js/modules/data/biblioteca.json",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LIB-biblioteca",
+      "type": "TwinProjection",
+      "of": "LIB-biblioteca",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
     },
     {
       "id": "LIB-downloads",
       "type": "LibraryRuntime",
       "html": "downloads.html",
-      "schema": "js/modules/data/biblioteca.json"
+      "schema": "js/modules/data/biblioteca.json",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LIB-downloads",
+      "type": "TwinProjection",
+      "of": "LIB-downloads",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
     },
     {
       "id": "LIB-biblioteca-provas",
       "type": "LibraryRuntime",
       "html": "biblioteca-provas.html",
-      "schema": "js/modules/data/biblioteca.json"
+      "schema": "js/modules/data/biblioteca.json",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LIB-biblioteca-provas",
+      "type": "TwinProjection",
+      "of": "LIB-biblioteca-provas",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
     },
     {
       "id": "LIB-biblioteca-cirurgica",
       "type": "LibraryRuntime",
       "html": "biblioteca-cirurgica.html",
-      "schema": "js/modules/data/biblioteca.json"
+      "schema": "js/modules/data/biblioteca.json",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LIB-biblioteca-cirurgica",
+      "type": "TwinProjection",
+      "of": "LIB-biblioteca-cirurgica",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
     },
     {
       "id": "LIB-biblioteca-curativo",
       "type": "LibraryRuntime",
       "html": "biblioteca-curativo.html",
-      "schema": "js/modules/data/biblioteca.json"
+      "schema": "js/modules/data/biblioteca.json",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LIB-biblioteca-curativo",
+      "type": "TwinProjection",
+      "of": "LIB-biblioteca-curativo",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
     },
     {
       "id": "LIB-biblioteca-seringa",
       "type": "LibraryRuntime",
       "html": "biblioteca-seringa.html",
-      "schema": "js/modules/data/biblioteca.json"
+      "schema": "js/modules/data/biblioteca.json",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LIB-biblioteca-seringa",
+      "type": "TwinProjection",
+      "of": "LIB-biblioteca-seringa",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
     },
     {
       "id": "LIB-biblioteca-carinho-de-emergencia",
       "type": "LibraryRuntime",
       "html": "biblioteca-carinho-de-emergencia.html",
-      "schema": "js/modules/data/biblioteca.json"
+      "schema": "js/modules/data/biblioteca.json",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LIB-biblioteca-carinho-de-emergencia",
+      "type": "TwinProjection",
+      "of": "LIB-biblioteca-carinho-de-emergencia",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-acessibilidade",
+      "type": "InstitutionalPage",
+      "html": "acessibilidade.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-acessibilidade",
+      "type": "TwinProjection",
+      "of": "PAGE-acessibilidade",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-ecossistema",
+      "type": "InstitutionalPage",
+      "html": "ecossistema.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-ecossistema",
+      "type": "TwinProjection",
+      "of": "PAGE-ecossistema",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-fale",
+      "type": "InstitutionalPage",
+      "html": "fale.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-fale",
+      "type": "TwinProjection",
+      "of": "PAGE-fale",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-forum-enfermagem",
+      "type": "InstitutionalPage",
+      "html": "forum-enfermagem.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-forum-enfermagem",
+      "type": "TwinProjection",
+      "of": "PAGE-forum-enfermagem",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-index",
+      "type": "InstitutionalPage",
+      "html": "index.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-index",
+      "type": "TwinProjection",
+      "of": "PAGE-index",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-mapa-do-site",
+      "type": "InstitutionalPage",
+      "html": "mapa-do-site.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-mapa-do-site",
+      "type": "TwinProjection",
+      "of": "PAGE-mapa-do-site",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-missao",
+      "type": "InstitutionalPage",
+      "html": "missao.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-missao",
+      "type": "TwinProjection",
+      "of": "PAGE-missao",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-notificacoes-legais",
+      "type": "InstitutionalPage",
+      "html": "notificacoes-legais.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-notificacoes-legais",
+      "type": "TwinProjection",
+      "of": "PAGE-notificacoes-legais",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-objetivo",
+      "type": "InstitutionalPage",
+      "html": "objetivo.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-objetivo",
+      "type": "TwinProjection",
+      "of": "PAGE-objetivo",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-politica-editorial",
+      "type": "InstitutionalPage",
+      "html": "politica-editorial.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-politica-editorial",
+      "type": "TwinProjection",
+      "of": "PAGE-politica-editorial",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-privacidade",
+      "type": "InstitutionalPage",
+      "html": "privacidade.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-privacidade",
+      "type": "TwinProjection",
+      "of": "PAGE-privacidade",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "PAGE-tecnologiaverde",
+      "type": "InstitutionalPage",
+      "html": "tecnologiaverde.html",
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "release": "HOLD / NOT_RELEASED"
+    },
+    {
+      "id": "TWIN-PAGE-tecnologiaverde",
+      "type": "TwinProjection",
+      "of": "PAGE-tecnologiaverde",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-CKO-MD",
+      "type": "LayerRuntime",
+      "layerId": "CKO-MD",
+      "name": "CKO Master Data",
+      "sha256": "ce5642b7f184fcac293b2596a5ac1207511eab3f8c96a7fab5c7fd602ba10f81",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "freeze": "FROZEN"
+    },
+    {
+      "id": "TWIN-LAYER-CKO-MD",
+      "type": "TwinProjection",
+      "of": "LAYER-CKO-MD",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-CKO-REG",
+      "type": "LayerRuntime",
+      "layerId": "CKO-REG",
+      "name": "CKO Regulatory",
+      "sha256": "366a303f9a155695e63bfd1a30fb96671ad5f9a578ab17bdf11babbfa3c262d1",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "freeze": "FROZEN"
+    },
+    {
+      "id": "TWIN-LAYER-CKO-REG",
+      "type": "TwinProjection",
+      "of": "LAYER-CKO-REG",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-CLIN-CALC-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-CLIN-CALC-001",
+      "name": "Clinical Calculators",
+      "sha256": "060fdb3174f946bd54b6470fb1104ff5bd523ce63d986e464b977f568d18aed5",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-CLIN-CALC-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-CLIN-CALC-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-CLIN-SCALE-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-CLIN-SCALE-001",
+      "name": "Scales & Scores",
+      "sha256": "0a3481155a7f9acde96175d66eced708bbc69dd9e00e6887ffafd47f768e2478",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-CLIN-SCALE-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-CLIN-SCALE-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-CLIN-RULE-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-CLIN-RULE-001",
+      "name": "Clinical Rules / Decision Logic",
+      "sha256": "7dc67fb927e8b8753f40b1c3de3cbece470229d541a0582288517b8fd472798f",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-CLIN-RULE-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-CLIN-RULE-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-LIB-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-LIB-001",
+      "name": "Library Objects",
+      "sha256": "b4254ad99571a65e62d780bf81611250dd2cb87f7d96cb41d7d52fe66076b249",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-LIB-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-LIB-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-MED-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-MED-001",
+      "name": "Medications & Solutions",
+      "sha256": "8495ad9fb252112c8ff7ea343120855ce0aa0eb1c6e85a9e5d657a883db84bfb",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-MED-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-MED-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-LAB-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-LAB-001",
+      "name": "Laboratory Exams",
+      "sha256": "b4896f7f73376ca46468416117bf14aaa1bd330dcb7a970eff83dc4acf2c2644",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-LAB-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-LAB-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-ANAT-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-ANAT-001",
+      "name": "Anatomy",
+      "sha256": "9641a169f717f6f134612389a442f1fa7e0f5b510775aed044ae51a1f62c78d0",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-ANAT-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-ANAT-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-COND-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-COND-001",
+      "name": "Diseases / Conditions",
+      "sha256": "872236558a9989f2964f0e9edb93ba67a60453efd0b430b259abc0626491c50f",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-COND-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-COND-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-PROC-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-PROC-001",
+      "name": "Procedures / Protocols",
+      "sha256": "7a4e18daa442476e0dbd8410e7b2977acdb001cb0086b5bd5459e9f2783f39cd",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-PROC-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-PROC-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-TERM-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-TERM-001",
+      "name": "Terminologies",
+      "sha256": "7034b38934a7e35667af015a795c9a7925bcaace8f1cf63d5a49016c249b2e47",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-TERM-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-TERM-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-EDU-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-EDU-001",
+      "name": "Educational / Contest",
+      "sha256": "4665ca75730953048fea879f955d8b07061543151ec49d8e32220dce0f71de36",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "semantic": "educational"
+    },
+    {
+      "id": "TWIN-LAYER-LYR-EDU-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-EDU-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-REF-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-REF-001",
+      "name": "References / Bibliography / Glossary",
+      "sha256": "0bf809db783b4c1c9f0d5c54a6d467b58b23c9cf9908b22e1f08b1c033e0867d",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-REF-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-REF-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-CONTENT-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-CONTENT-001",
+      "name": "Articles / Guides / Summaries",
+      "sha256": "8c801be7168f2a1eebc2bbe4db2576a2d5e5fb26413740456a35aea7811649d6",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "semantic": "content"
+    },
+    {
+      "id": "TWIN-LAYER-LYR-CONTENT-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-CONTENT-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-LEARN-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-LEARN-001",
+      "name": "Flashcards / Questions / Quizzes",
+      "sha256": "681745bd31876987096f47e491a357afcba51862069521294cb5d160e551f233",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      },
+      "semantic": "learning",
+      "note": "Agent Continuous Learning Engine; historical label Flashcards / Questions / Quizzes is lineage only"
+    },
+    {
+      "id": "TWIN-LAYER-LYR-LEARN-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-LEARN-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-PAGE-TPL-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-PAGE-TPL-001",
+      "name": "Page Templates",
+      "sha256": "14bd4d6d1faf1192b2e45e51fd1117b83005a99918bcddfc00f1594e6c471ee3",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-PAGE-TPL-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-PAGE-TPL-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-DOC-TPL-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-DOC-TPL-001",
+      "name": "Document Templates",
+      "sha256": "c78a01e6e5024d8fd31076b710b66d6bdecb63fc9ba89ccb0511beabe9c7859e",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-DOC-TPL-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-DOC-TPL-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-MEDIA-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-MEDIA-001",
+      "name": "Images / Media / Icons",
+      "sha256": "bd84ac03397d156b67cd12bb6c6d2fc32d1409a52760ea322886a9db03f49cc7",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-MEDIA-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-MEDIA-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-DERIVE-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-DERIVE-001",
+      "name": "Asset Derivation",
+      "sha256": "23e374b2c845bc0687f74436deded4d5c482ccfcb2392cb266cacad0a8dc8bf6",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-DERIVE-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-DERIVE-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-HCD-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-HCD-001",
+      "name": "HCD / Usability",
+      "sha256": "2ae82357955c33660e4f09abd62ebe45a4cb2ec779793f16e63a2af66b5b5501",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-HCD-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-HCD-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-A11Y-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-A11Y-001",
+      "name": "Accessibility",
+      "sha256": "f1b6f9a1ef9b40cb3df37f81ef5a3a4ea3979881cb81de22a3832f11405014aa",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-A11Y-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-A11Y-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-DS-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-DS-001",
+      "name": "Design System",
+      "sha256": "59ecb1f46cbde8bdd2a0f4175468a0266bfaa39f2dc46d15c9035f64aee22874",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-DS-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-DS-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-UI-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-UI-001",
+      "name": "UI Components & Interaction",
+      "sha256": "00ae247b59750c4e4c9d52aac0766df69dcd7293af4fb3ac5b2b4a5a025e5811",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-UI-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-UI-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-PRV-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-PRV-001",
+      "name": "Privacy / LGPD",
+      "sha256": "26e16e338f16b91c9f737127a59c4a3008dcfaad485f1622658d25095e77d0ce",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-PRV-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-PRV-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-SEC-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-SEC-001",
+      "name": "Security / Cybersecurity",
+      "sha256": "5e1a45fd7652989a57a85f4dee960de3e7b5a51728f5f42401c8afc8546111d0",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-SEC-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-SEC-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-ROUTE-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-ROUTE-001",
+      "name": "Routes / URLs",
+      "sha256": "9ddab75bdd06f4df771e2a4b6dea31d765f0137951370b09488ce21f10ef4c92",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-ROUTE-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-ROUTE-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-SEO-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-SEO-001",
+      "name": "SEO",
+      "sha256": "7a113e0b0775d7c9358dc6c29b40660c4db292af26ad387fb9f47e3ae6d2cfe3",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-SEO-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-SEO-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-OG-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-OG-001",
+      "name": "Open Graph / Social",
+      "sha256": "fbaae61dedf33f96d7b327141a93e73a15c8b4d7e1624e71ce6a6d4b4cb41407",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-OG-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-OG-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-SEM-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-SEM-001",
+      "name": "Structured Data",
+      "sha256": "f4dab610809d61b0cac07f0e4f4def4b4626810c29667f91d6d956a2830d6cb3",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-SEM-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-SEM-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-I18N-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-I18N-001",
+      "name": "i18n / l10n",
+      "sha256": "b59fc3e3273fdfb4b33af05fd830efc379984184b2b86f6dcabd75df56d80e6b",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-I18N-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-I18N-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-SEARCH-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-SEARCH-001",
+      "name": "Internal Search",
+      "sha256": "23a88bd77eb2c71aa8e600944b2f8a9098b0c41bf05aa0c7141cc130d98d75dc",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-SEARCH-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-SEARCH-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-REC-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-REC-001",
+      "name": "Recommendations",
+      "sha256": "3141866df35b39af85aa377094a5937d1cc4fe3e754f3f195fc80a3d51e9f0b4",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-REC-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-REC-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-USERSTATE-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-USERSTATE-001",
+      "name": "User State / Favorites / Collections",
+      "sha256": "57b833284ad4bf04e601a779ec467c80f302f56a0ff815664842852c6a84be0d",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-USERSTATE-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-USERSTATE-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-ANL-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-ANL-001",
+      "name": "Analytics / Telemetry",
+      "sha256": "d1756fc0b5474fd97e8d2d133958d7649a9cfe28a49dfd83827ba8e5442ed1ed",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-ANL-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-ANL-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-PERF-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-PERF-001",
+      "name": "Performance",
+      "sha256": "fcc39374308b6cfa2136996686d75cbce9a3d05f7c68a720d9d973bd7271e88b",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-PERF-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-PERF-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-REL-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-REL-001",
+      "name": "Reliability / Resilience",
+      "sha256": "10f08e4f71dd67d989d2d3c4da0a1053ec973cba1cb8f0e5b360d24f6f77ec95",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-REL-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-REL-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-OBS-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-OBS-001",
+      "name": "Observability",
+      "sha256": "78ca37974f2ab6b18cbcdd82b3f12bf43daea30d8081811cd31157c85158e932",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-OBS-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-OBS-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-SUS-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-SUS-001",
+      "name": "Sustainability",
+      "sha256": "eb9e53a0f6ddccd2871e01bf7207680c4f5990863705b161d1cf585f28f241d5",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-SUS-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-SUS-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-RND-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-RND-001",
+      "name": "Renderer",
+      "sha256": "b37c1782a72923da08f1b45c0178c9c4bab82a0da16e88ba3cc68f6c5e87b9f9",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-RND-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-RND-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-RUN-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-RUN-001",
+      "name": "Runtime / E2E",
+      "sha256": "2f2e86a1e1e0bd7ebe72bd6cad65fcbd6b4c6d068aad17eb14b8f4d6bbf211d0",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-RUN-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-RUN-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-EXPORT-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-EXPORT-001",
+      "name": "PDF / Export Profiles",
+      "sha256": "a3645e97c610bcd7b7d880bfe5dbc71795fc4c4c5604fe7356d8f321e937b720",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-EXPORT-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-EXPORT-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-PUB-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-PUB-001",
+      "name": "Publication / Release",
+      "sha256": "7fe75bd850de79d09963b03a3d3088ff347210867e14144142581ac26432c3e7",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-PUB-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-PUB-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
+    },
+    {
+      "id": "LAYER-LYR-MON-001",
+      "type": "LayerRuntime",
+      "layerId": "LYR-MON-001",
+      "name": "Monitoring",
+      "sha256": "a0f04a5a1c018b2624a28a740eca558f4d497e38f3345c24413a13e8b319ce2f",
+      "release": "HOLD / NOT_RELEASED",
+      "operational": "NOT_ASSERTED",
+      "published": false,
+      "governed_by": {
+        "graph": "js/knowledge-graph.js",
+        "twin": "B5",
+        "agentic": "B1",
+        "nursePalm": "B10"
+      }
+    },
+    {
+      "id": "TWIN-LAYER-LYR-MON-001",
+      "type": "TwinProjection",
+      "of": "LAYER-LYR-MON-001",
+      "governedBy": "B5",
+      "nifs": "NIFS-600-15",
+      "observed": false,
+      "deployed": false
     }
   ],
   "edges": [
+    [
+      "B1",
+      "B9",
+      "fanIn"
+    ],
     [
       "B5",
       "B9",
@@ -2271,6 +4419,16 @@
     ],
     [
       "B6.2",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "B6.3",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "B7",
       "B9",
       "fanIn"
     ],
@@ -2285,23 +4443,73 @@
       "feeds"
     ],
     [
-      "TOOL-abcd2",
-      "SCHEMA-TOOL",
-      "instanceOf"
+      "B1",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "SEM-EDU",
+      "SEM-CONTENT",
+      "derivedFrom"
+    ],
+    [
+      "SEM-LEARN",
+      "SEM-CONTENT",
+      "derivedFrom"
+    ],
+    [
+      "AGT-SP-MAKER",
+      "AGT-SP-CHECKER",
+      "independentOf"
+    ],
+    [
+      "AGT-SP-CHECKER",
+      "AGT-SP-AUDIT-AGENT",
+      "independentOf"
+    ],
+    [
+      "AGT-SP-MAKER",
+      "AGT-SP-AUDIT-AGENT",
+      "independentOf"
+    ],
+    [
+      "AGT-ORCH-001",
+      "AGT-SP-MAKER",
+      "supervises"
+    ],
+    [
+      "AGT-ORCH-001",
+      "AGT-SP-CHECKER",
+      "supervises"
+    ],
+    [
+      "AGT-ORCH-001",
+      "AGT-SP-AUDIT-AGENT",
+      "supervises"
+    ],
+    [
+      "AGT-ORCH-001",
+      "B1",
+      "boundTo"
     ],
     [
       "TOOL-abcd2",
-      "TWIN-abcd2",
+      "TWIN-TOOL-abcd2",
       "projectedAs"
     ],
     [
-      "TWIN-abcd2",
+      "TWIN-TOOL-abcd2",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-abcd2",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-abcd2",
+      "B1",
       "boundTo"
     ],
     [
@@ -2316,6 +4524,46 @@
     ],
     [
       "TOOL-abcd2",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-abcd2",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-adicional-noturno",
+      "TWIN-TOOL-adicional-noturno",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-adicional-noturno",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-adicional-noturno",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-adicional-noturno",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-adicional-noturno",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-adicional-noturno",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-adicional-noturno",
       "B9",
       "fanIn"
     ],
@@ -2325,53 +4573,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-adicional-noturno",
-      "TWIN-adicional-noturno",
+      "TOOL-aldrete",
+      "TWIN-TOOL-aldrete",
       "projectedAs"
     ],
     [
-      "TWIN-adicional-noturno",
+      "TWIN-TOOL-aldrete",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-adicional-noturno",
+      "TOOL-aldrete",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-adicional-noturno",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-adicional-noturno",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-adicional-noturno",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-aldrete",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-aldrete",
-      "TWIN-aldrete",
-      "projectedAs"
-    ],
-    [
-      "TWIN-aldrete",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-aldrete",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -2390,23 +4608,28 @@
       "fanIn"
     ],
     [
-      "TOOL-alvarado",
+      "TOOL-aldrete",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-alvarado",
-      "TWIN-alvarado",
+      "TWIN-TOOL-alvarado",
       "projectedAs"
     ],
     [
-      "TWIN-alvarado",
+      "TWIN-TOOL-alvarado",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-alvarado",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-alvarado",
+      "B1",
       "boundTo"
     ],
     [
@@ -2421,6 +4644,46 @@
     ],
     [
       "TOOL-alvarado",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-alvarado",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-apache",
+      "TWIN-TOOL-apache",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-apache",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-apache",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-apache",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-apache",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-apache",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-apache",
       "B9",
       "fanIn"
     ],
@@ -2430,53 +4693,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-apache",
-      "TWIN-apache",
+      "TOOL-apgar",
+      "TWIN-TOOL-apgar",
       "projectedAs"
     ],
     [
-      "TWIN-apache",
+      "TWIN-TOOL-apgar",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-apache",
+      "TOOL-apgar",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-apache",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-apache",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-apache",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-apgar",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-apgar",
-      "TWIN-apgar",
-      "projectedAs"
-    ],
-    [
-      "TWIN-apgar",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-apgar",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -2495,23 +4728,28 @@
       "fanIn"
     ],
     [
-      "TOOL-asa",
+      "TOOL-apgar",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-asa",
-      "TWIN-asa",
+      "TWIN-TOOL-asa",
       "projectedAs"
     ],
     [
-      "TWIN-asa",
+      "TWIN-TOOL-asa",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-asa",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-asa",
+      "B1",
       "boundTo"
     ],
     [
@@ -2526,6 +4764,46 @@
     ],
     [
       "TOOL-asa",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-asa",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-balancohidrico",
+      "TWIN-TOOL-balancohidrico",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-balancohidrico",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-balancohidrico",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-balancohidrico",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-balancohidrico",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-balancohidrico",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-balancohidrico",
       "B9",
       "fanIn"
     ],
@@ -2535,53 +4813,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-balancohidrico",
-      "TWIN-balancohidrico",
+      "TOOL-ballard",
+      "TWIN-TOOL-ballard",
       "projectedAs"
     ],
     [
-      "TWIN-balancohidrico",
+      "TWIN-TOOL-ballard",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-balancohidrico",
+      "TOOL-ballard",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-balancohidrico",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-balancohidrico",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-balancohidrico",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-ballard",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-ballard",
-      "TWIN-ballard",
-      "projectedAs"
-    ],
-    [
-      "TWIN-ballard",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-ballard",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -2600,23 +4848,28 @@
       "fanIn"
     ],
     [
-      "TOOL-barthel",
+      "TOOL-ballard",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-barthel",
-      "TWIN-barthel",
+      "TWIN-TOOL-barthel",
       "projectedAs"
     ],
     [
-      "TWIN-barthel",
+      "TWIN-TOOL-barthel",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-barthel",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-barthel",
+      "B1",
       "boundTo"
     ],
     [
@@ -2631,6 +4884,46 @@
     ],
     [
       "TOOL-barthel",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-barthel",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-berg",
+      "TWIN-TOOL-berg",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-berg",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-berg",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-berg",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-berg",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-berg",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-berg",
       "B9",
       "fanIn"
     ],
@@ -2640,53 +4933,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-berg",
-      "TWIN-berg",
+      "TOOL-bishop",
+      "TWIN-TOOL-bishop",
       "projectedAs"
     ],
     [
-      "TWIN-berg",
+      "TWIN-TOOL-bishop",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-berg",
+      "TOOL-bishop",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-berg",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-berg",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-berg",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-bishop",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-bishop",
-      "TWIN-bishop",
-      "projectedAs"
-    ],
-    [
-      "TWIN-bishop",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-bishop",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -2705,23 +4968,28 @@
       "fanIn"
     ],
     [
-      "TOOL-bps",
+      "TOOL-bishop",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-bps",
-      "TWIN-bps",
+      "TWIN-TOOL-bps",
       "projectedAs"
     ],
     [
-      "TWIN-bps",
+      "TWIN-TOOL-bps",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-bps",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-bps",
+      "B1",
       "boundTo"
     ],
     [
@@ -2736,6 +5004,46 @@
     ],
     [
       "TOOL-bps",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-bps",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-calculo-de-ferias",
+      "TWIN-TOOL-calculo-de-ferias",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-calculo-de-ferias",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-calculo-de-ferias",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-calculo-de-ferias",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-calculo-de-ferias",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-calculo-de-ferias",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-calculo-de-ferias",
       "B9",
       "fanIn"
     ],
@@ -2745,53 +5053,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-calculo-de-ferias",
-      "TWIN-calculo-de-ferias",
+      "TOOL-calculo-hora-extra",
+      "TWIN-TOOL-calculo-hora-extra",
       "projectedAs"
     ],
     [
-      "TWIN-calculo-de-ferias",
+      "TWIN-TOOL-calculo-hora-extra",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-calculo-de-ferias",
+      "TOOL-calculo-hora-extra",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-calculo-de-ferias",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-calculo-de-ferias",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-calculo-de-ferias",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-calculo-hora-extra",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-calculo-hora-extra",
-      "TWIN-calculo-hora-extra",
-      "projectedAs"
-    ],
-    [
-      "TWIN-calculo-hora-extra",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-calculo-hora-extra",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -2810,23 +5088,28 @@
       "fanIn"
     ],
     [
-      "TOOL-calculo-rescisao",
+      "TOOL-calculo-hora-extra",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-calculo-rescisao",
-      "TWIN-calculo-rescisao",
+      "TWIN-TOOL-calculo-rescisao",
       "projectedAs"
     ],
     [
-      "TWIN-calculo-rescisao",
+      "TWIN-TOOL-calculo-rescisao",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-calculo-rescisao",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-calculo-rescisao",
+      "B1",
       "boundTo"
     ],
     [
@@ -2841,6 +5124,46 @@
     ],
     [
       "TOOL-calculo-rescisao",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-calculo-rescisao",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-cam",
+      "TWIN-TOOL-cam",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-cam",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-cam",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-cam",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-cam",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-cam",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-cam",
       "B9",
       "fanIn"
     ],
@@ -2850,53 +5173,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-cam",
-      "TWIN-cam",
+      "TOOL-capurro",
+      "TWIN-TOOL-capurro",
       "projectedAs"
     ],
     [
-      "TWIN-cam",
+      "TWIN-TOOL-capurro",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-cam",
+      "TOOL-capurro",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-cam",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-cam",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-cam",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-capurro",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-capurro",
-      "TWIN-capurro",
-      "projectedAs"
-    ],
-    [
-      "TWIN-capurro",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-capurro",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -2915,23 +5208,28 @@
       "fanIn"
     ],
     [
-      "TOOL-centor",
+      "TOOL-capurro",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-centor",
-      "TWIN-centor",
+      "TWIN-TOOL-centor",
       "projectedAs"
     ],
     [
-      "TWIN-centor",
+      "TWIN-TOOL-centor",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-centor",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-centor",
+      "B1",
       "boundTo"
     ],
     [
@@ -2946,6 +5244,46 @@
     ],
     [
       "TOOL-centor",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-centor",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-cha2ds2vasc",
+      "TWIN-TOOL-cha2ds2vasc",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-cha2ds2vasc",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-cha2ds2vasc",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-cha2ds2vasc",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-cha2ds2vasc",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-cha2ds2vasc",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-cha2ds2vasc",
       "B9",
       "fanIn"
     ],
@@ -2955,53 +5293,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-cha2ds2vasc",
-      "TWIN-cha2ds2vasc",
+      "TOOL-charlson",
+      "TWIN-TOOL-charlson",
       "projectedAs"
     ],
     [
-      "TWIN-cha2ds2vasc",
+      "TWIN-TOOL-charlson",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-cha2ds2vasc",
+      "TOOL-charlson",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-cha2ds2vasc",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-cha2ds2vasc",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-cha2ds2vasc",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-charlson",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-charlson",
-      "TWIN-charlson",
-      "projectedAs"
-    ],
-    [
-      "TWIN-charlson",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-charlson",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3020,23 +5328,28 @@
       "fanIn"
     ],
     [
-      "TOOL-child-pugh",
+      "TOOL-charlson",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-child-pugh",
-      "TWIN-child-pugh",
+      "TWIN-TOOL-child-pugh",
       "projectedAs"
     ],
     [
-      "TWIN-child-pugh",
+      "TWIN-TOOL-child-pugh",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-child-pugh",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-child-pugh",
+      "B1",
       "boundTo"
     ],
     [
@@ -3051,6 +5364,46 @@
     ],
     [
       "TOOL-child-pugh",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-child-pugh",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-cincinnati",
+      "TWIN-TOOL-cincinnati",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-cincinnati",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-cincinnati",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-cincinnati",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-cincinnati",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-cincinnati",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-cincinnati",
       "B9",
       "fanIn"
     ],
@@ -3060,53 +5413,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-cincinnati",
-      "TWIN-cincinnati",
+      "TOOL-ciwa-ar",
+      "TWIN-TOOL-ciwa-ar",
       "projectedAs"
     ],
     [
-      "TWIN-cincinnati",
+      "TWIN-TOOL-ciwa-ar",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-cincinnati",
+      "TOOL-ciwa-ar",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-cincinnati",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-cincinnati",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-cincinnati",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-ciwa-ar",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-ciwa-ar",
-      "TWIN-ciwa-ar",
-      "projectedAs"
-    ],
-    [
-      "TWIN-ciwa-ar",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-ciwa-ar",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3125,23 +5448,28 @@
       "fanIn"
     ],
     [
-      "TOOL-cornell",
+      "TOOL-ciwa-ar",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-cornell",
-      "TWIN-cornell",
+      "TWIN-TOOL-cornell",
       "projectedAs"
     ],
     [
-      "TWIN-cornell",
+      "TWIN-TOOL-cornell",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-cornell",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-cornell",
+      "B1",
       "boundTo"
     ],
     [
@@ -3156,6 +5484,46 @@
     ],
     [
       "TOOL-cornell",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-cornell",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-cpc",
+      "TWIN-TOOL-cpc",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-cpc",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-cpc",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-cpc",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-cpc",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-cpc",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-cpc",
       "B9",
       "fanIn"
     ],
@@ -3165,53 +5533,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-cpc",
-      "TWIN-cpc",
+      "TOOL-cries",
+      "TWIN-TOOL-cries",
       "projectedAs"
     ],
     [
-      "TWIN-cpc",
+      "TWIN-TOOL-cries",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-cpc",
+      "TOOL-cries",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-cpc",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-cpc",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-cpc",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-cries",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-cries",
-      "TWIN-cries",
-      "projectedAs"
-    ],
-    [
-      "TWIN-cries",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-cries",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3230,23 +5568,28 @@
       "fanIn"
     ],
     [
-      "TOOL-curb65",
+      "TOOL-cries",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-curb65",
-      "TWIN-curb65",
+      "TWIN-TOOL-curb65",
       "projectedAs"
     ],
     [
-      "TWIN-curb65",
+      "TWIN-TOOL-curb65",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-curb65",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-curb65",
+      "B1",
       "boundTo"
     ],
     [
@@ -3261,6 +5604,46 @@
     ],
     [
       "TOOL-curb65",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-curb65",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-dimensionamento",
+      "TWIN-TOOL-dimensionamento",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-dimensionamento",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-dimensionamento",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-dimensionamento",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-dimensionamento",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-dimensionamento",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-dimensionamento",
       "B9",
       "fanIn"
     ],
@@ -3270,53 +5653,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-dimensionamento",
-      "TWIN-dimensionamento",
+      "TOOL-downes",
+      "TWIN-TOOL-downes",
       "projectedAs"
     ],
     [
-      "TWIN-dimensionamento",
+      "TWIN-TOOL-downes",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-dimensionamento",
+      "TOOL-downes",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-dimensionamento",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-dimensionamento",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-dimensionamento",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-downes",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-downes",
-      "TWIN-downes",
-      "projectedAs"
-    ],
-    [
-      "TWIN-downes",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-downes",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3335,23 +5688,28 @@
       "fanIn"
     ],
     [
-      "TOOL-downton",
+      "TOOL-downes",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-downton",
-      "TWIN-downton",
+      "TWIN-TOOL-downton",
       "projectedAs"
     ],
     [
-      "TWIN-downton",
+      "TWIN-TOOL-downton",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-downton",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-downton",
+      "B1",
       "boundTo"
     ],
     [
@@ -3366,6 +5724,46 @@
     ],
     [
       "TOOL-downton",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-downton",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-ecog",
+      "TWIN-TOOL-ecog",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-ecog",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-ecog",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-ecog",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-ecog",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-ecog",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-ecog",
       "B9",
       "fanIn"
     ],
@@ -3375,53 +5773,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-ecog",
-      "TWIN-ecog",
+      "TOOL-elpo",
+      "TWIN-TOOL-elpo",
       "projectedAs"
     ],
     [
-      "TWIN-ecog",
+      "TWIN-TOOL-elpo",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-ecog",
+      "TOOL-elpo",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-ecog",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-ecog",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-ecog",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-elpo",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-elpo",
-      "TWIN-elpo",
-      "projectedAs"
-    ],
-    [
-      "TWIN-elpo",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-elpo",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3440,23 +5808,28 @@
       "fanIn"
     ],
     [
-      "TOOL-escala-de-braden",
+      "TOOL-elpo",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-escala-de-braden",
-      "TWIN-escala-de-braden",
+      "TWIN-TOOL-escala-de-braden",
       "projectedAs"
     ],
     [
-      "TWIN-escala-de-braden",
+      "TWIN-TOOL-escala-de-braden",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-escala-de-braden",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-escala-de-braden",
+      "B1",
       "boundTo"
     ],
     [
@@ -3471,6 +5844,46 @@
     ],
     [
       "TOOL-escala-de-braden",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-escala-de-braden",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-escala-de-glasgow",
+      "TWIN-TOOL-escala-de-glasgow",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-escala-de-glasgow",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-escala-de-glasgow",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-escala-de-glasgow",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-escala-de-glasgow",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-escala-de-glasgow",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-escala-de-glasgow",
       "B9",
       "fanIn"
     ],
@@ -3480,53 +5893,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-escala-de-glasgow",
-      "TWIN-escala-de-glasgow",
+      "TOOL-escala-de-morse",
+      "TWIN-TOOL-escala-de-morse",
       "projectedAs"
     ],
     [
-      "TWIN-escala-de-glasgow",
+      "TWIN-TOOL-escala-de-morse",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-escala-de-glasgow",
+      "TOOL-escala-de-morse",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-escala-de-glasgow",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-escala-de-glasgow",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-escala-de-glasgow",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-escala-de-morse",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-escala-de-morse",
-      "TWIN-escala-de-morse",
-      "projectedAs"
-    ],
-    [
-      "TWIN-escala-de-morse",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-escala-de-morse",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3545,23 +5928,28 @@
       "fanIn"
     ],
     [
-      "TOOL-escalanumerica",
+      "TOOL-escala-de-morse",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-escalanumerica",
-      "TWIN-escalanumerica",
+      "TWIN-TOOL-escalanumerica",
       "projectedAs"
     ],
     [
-      "TWIN-escalanumerica",
+      "TWIN-TOOL-escalanumerica",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-escalanumerica",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-escalanumerica",
+      "B1",
       "boundTo"
     ],
     [
@@ -3576,6 +5964,46 @@
     ],
     [
       "TOOL-escalanumerica",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-escalanumerica",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-fast",
+      "TWIN-TOOL-fast",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-fast",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-fast",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-fast",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-fast",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-fast",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-fast",
       "B9",
       "fanIn"
     ],
@@ -3585,53 +6013,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-fast",
-      "TWIN-fast",
+      "TOOL-flacc",
+      "TWIN-TOOL-flacc",
       "projectedAs"
     ],
     [
-      "TWIN-fast",
+      "TWIN-TOOL-flacc",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-fast",
+      "TOOL-flacc",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-fast",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-fast",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-fast",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-flacc",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-flacc",
-      "TWIN-flacc",
-      "projectedAs"
-    ],
-    [
-      "TWIN-flacc",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-flacc",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3650,23 +6048,28 @@
       "fanIn"
     ],
     [
-      "TOOL-four",
+      "TOOL-flacc",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-four",
-      "TWIN-four",
+      "TWIN-TOOL-four",
       "projectedAs"
     ],
     [
-      "TWIN-four",
+      "TWIN-TOOL-four",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-four",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-four",
+      "B1",
       "boundTo"
     ],
     [
@@ -3681,6 +6084,46 @@
     ],
     [
       "TOOL-four",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-four",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-fragilidade-edmonton",
+      "TWIN-TOOL-fragilidade-edmonton",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-fragilidade-edmonton",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-fragilidade-edmonton",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-fragilidade-edmonton",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-fragilidade-edmonton",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-fragilidade-edmonton",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-fragilidade-edmonton",
       "B9",
       "fanIn"
     ],
@@ -3690,53 +6133,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-fragilidade-edmonton",
-      "TWIN-fragilidade-edmonton",
+      "TOOL-fugulin",
+      "TWIN-TOOL-fugulin",
       "projectedAs"
     ],
     [
-      "TWIN-fragilidade-edmonton",
+      "TWIN-TOOL-fugulin",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-fragilidade-edmonton",
+      "TOOL-fugulin",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-fragilidade-edmonton",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-fragilidade-edmonton",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-fragilidade-edmonton",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-fugulin",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-fugulin",
-      "TWIN-fugulin",
-      "projectedAs"
-    ],
-    [
-      "TWIN-fugulin",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-fugulin",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3755,23 +6168,28 @@
       "fanIn"
     ],
     [
-      "TOOL-gad7",
+      "TOOL-fugulin",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-gad7",
-      "TWIN-gad7",
+      "TWIN-TOOL-gad7",
       "projectedAs"
     ],
     [
-      "TWIN-gad7",
+      "TWIN-TOOL-gad7",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-gad7",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-gad7",
+      "B1",
       "boundTo"
     ],
     [
@@ -3786,6 +6204,46 @@
     ],
     [
       "TOOL-gad7",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-gad7",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-gds",
+      "TWIN-TOOL-gds",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-gds",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-gds",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-gds",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-gds",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-gds",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-gds",
       "B9",
       "fanIn"
     ],
@@ -3795,53 +6253,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-gds",
-      "TWIN-gds",
+      "TOOL-glasgow-blatchford",
+      "TWIN-TOOL-glasgow-blatchford",
       "projectedAs"
     ],
     [
-      "TWIN-gds",
+      "TWIN-TOOL-glasgow-blatchford",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-gds",
+      "TOOL-glasgow-blatchford",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-gds",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-gds",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-gds",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-glasgow-blatchford",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-glasgow-blatchford",
-      "TWIN-glasgow-blatchford",
-      "projectedAs"
-    ],
-    [
-      "TWIN-glasgow-blatchford",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-glasgow-blatchford",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3860,23 +6288,28 @@
       "fanIn"
     ],
     [
-      "TOOL-glasgow-pediatrico",
+      "TOOL-glasgow-blatchford",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-glasgow-pediatrico",
-      "TWIN-glasgow-pediatrico",
+      "TWIN-TOOL-glasgow-pediatrico",
       "projectedAs"
     ],
     [
-      "TWIN-glasgow-pediatrico",
+      "TWIN-TOOL-glasgow-pediatrico",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-glasgow-pediatrico",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-glasgow-pediatrico",
+      "B1",
       "boundTo"
     ],
     [
@@ -3891,6 +6324,46 @@
     ],
     [
       "TOOL-glasgow-pediatrico",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-glasgow-pediatrico",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-glasgow-pupilas",
+      "TWIN-TOOL-glasgow-pupilas",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-glasgow-pupilas",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-glasgow-pupilas",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-glasgow-pupilas",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-glasgow-pupilas",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-glasgow-pupilas",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-glasgow-pupilas",
       "B9",
       "fanIn"
     ],
@@ -3900,53 +6373,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-glasgow-pupilas",
-      "TWIN-glasgow-pupilas",
+      "TOOL-gosnell",
+      "TWIN-TOOL-gosnell",
       "projectedAs"
     ],
     [
-      "TWIN-glasgow-pupilas",
+      "TWIN-TOOL-gosnell",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-glasgow-pupilas",
+      "TOOL-gosnell",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-glasgow-pupilas",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-glasgow-pupilas",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-glasgow-pupilas",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-gosnell",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-gosnell",
-      "TWIN-gosnell",
-      "projectedAs"
-    ],
-    [
-      "TWIN-gosnell",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-gosnell",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -3965,23 +6408,28 @@
       "fanIn"
     ],
     [
-      "TOOL-gotejamento",
+      "TOOL-gosnell",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-gotejamento",
-      "TWIN-gotejamento",
+      "TWIN-TOOL-gotejamento",
       "projectedAs"
     ],
     [
-      "TWIN-gotejamento",
+      "TWIN-TOOL-gotejamento",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-gotejamento",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-gotejamento",
+      "B1",
       "boundTo"
     ],
     [
@@ -3996,6 +6444,46 @@
     ],
     [
       "TOOL-gotejamento",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-gotejamento",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-hamilton",
+      "TWIN-TOOL-hamilton",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-hamilton",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-hamilton",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-hamilton",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-hamilton",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-hamilton",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-hamilton",
       "B9",
       "fanIn"
     ],
@@ -4005,53 +6493,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-hamilton",
-      "TWIN-hamilton",
+      "TOOL-hasbled",
+      "TWIN-TOOL-hasbled",
       "projectedAs"
     ],
     [
-      "TWIN-hamilton",
+      "TWIN-TOOL-hasbled",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-hamilton",
+      "TOOL-hasbled",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-hamilton",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-hamilton",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-hamilton",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-hasbled",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-hasbled",
-      "TWIN-hasbled",
-      "projectedAs"
-    ],
-    [
-      "TWIN-hasbled",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-hasbled",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4070,23 +6528,28 @@
       "fanIn"
     ],
     [
-      "TOOL-heart-score",
+      "TOOL-hasbled",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-heart-score",
-      "TWIN-heart-score",
+      "TWIN-TOOL-heart-score",
       "projectedAs"
     ],
     [
-      "TWIN-heart-score",
+      "TWIN-TOOL-heart-score",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-heart-score",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-heart-score",
+      "B1",
       "boundTo"
     ],
     [
@@ -4101,6 +6564,46 @@
     ],
     [
       "TOOL-heart-score",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-heart-score",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-hendrich",
+      "TWIN-TOOL-hendrich",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-hendrich",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-hendrich",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-hendrich",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-hendrich",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-hendrich",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-hendrich",
       "B9",
       "fanIn"
     ],
@@ -4110,53 +6613,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-hendrich",
-      "TWIN-hendrich",
+      "TOOL-humpty",
+      "TWIN-TOOL-humpty",
       "projectedAs"
     ],
     [
-      "TWIN-hendrich",
+      "TWIN-TOOL-humpty",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-hendrich",
+      "TOOL-humpty",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-hendrich",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-hendrich",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-hendrich",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-humpty",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-humpty",
-      "TWIN-humpty",
-      "projectedAs"
-    ],
-    [
-      "TWIN-humpty",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-humpty",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4175,23 +6648,28 @@
       "fanIn"
     ],
     [
-      "TOOL-imc-gestacional",
+      "TOOL-humpty",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-imc-gestacional",
-      "TWIN-imc-gestacional",
+      "TWIN-TOOL-imc-gestacional",
       "projectedAs"
     ],
     [
-      "TWIN-imc-gestacional",
+      "TWIN-TOOL-imc-gestacional",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-imc-gestacional",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-imc-gestacional",
+      "B1",
       "boundTo"
     ],
     [
@@ -4206,6 +6684,46 @@
     ],
     [
       "TOOL-imc-gestacional",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-imc-gestacional",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-imc",
+      "TWIN-TOOL-imc",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-imc",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-imc",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-imc",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-imc",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-imc",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-imc",
       "B9",
       "fanIn"
     ],
@@ -4215,53 +6733,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-imc",
-      "TWIN-imc",
+      "TOOL-indice-choque",
+      "TWIN-TOOL-indice-choque",
       "projectedAs"
     ],
     [
-      "TWIN-imc",
+      "TWIN-TOOL-indice-choque",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-imc",
+      "TOOL-indice-choque",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-imc",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-imc",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-imc",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-indice-choque",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-indice-choque",
-      "TWIN-indice-choque",
-      "projectedAs"
-    ],
-    [
-      "TWIN-indice-choque",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-indice-choque",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4280,23 +6768,28 @@
       "fanIn"
     ],
     [
-      "TOOL-insulina",
+      "TOOL-indice-choque",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-insulina",
-      "TWIN-insulina",
+      "TWIN-TOOL-insulina",
       "projectedAs"
     ],
     [
-      "TWIN-insulina",
+      "TWIN-TOOL-insulina",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-insulina",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-insulina",
+      "B1",
       "boundTo"
     ],
     [
@@ -4311,6 +6804,46 @@
     ],
     [
       "TOOL-insulina",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-insulina",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-johns",
+      "TWIN-TOOL-johns",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-johns",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-johns",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-johns",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-johns",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-johns",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-johns",
       "B9",
       "fanIn"
     ],
@@ -4320,53 +6853,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-johns",
-      "TWIN-johns",
+      "TOOL-karnofsky",
+      "TWIN-TOOL-karnofsky",
       "projectedAs"
     ],
     [
-      "TWIN-johns",
+      "TWIN-TOOL-karnofsky",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-johns",
+      "TOOL-karnofsky",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-johns",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-johns",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-johns",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-karnofsky",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-karnofsky",
-      "TWIN-karnofsky",
-      "projectedAs"
-    ],
-    [
-      "TWIN-karnofsky",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-karnofsky",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4385,23 +6888,28 @@
       "fanIn"
     ],
     [
-      "TOOL-katz",
+      "TOOL-karnofsky",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-katz",
-      "TWIN-katz",
+      "TWIN-TOOL-katz",
       "projectedAs"
     ],
     [
-      "TWIN-katz",
+      "TWIN-TOOL-katz",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-katz",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-katz",
+      "B1",
       "boundTo"
     ],
     [
@@ -4416,6 +6924,46 @@
     ],
     [
       "TOOL-katz",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-katz",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-lanss",
+      "TWIN-TOOL-lanss",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-lanss",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-lanss",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-lanss",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-lanss",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-lanss",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-lanss",
       "B9",
       "fanIn"
     ],
@@ -4425,53 +6973,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-lanss",
-      "TWIN-lanss",
+      "TOOL-lawton",
+      "TWIN-TOOL-lawton",
       "projectedAs"
     ],
     [
-      "TWIN-lanss",
+      "TWIN-TOOL-lawton",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-lanss",
+      "TOOL-lawton",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-lanss",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-lanss",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-lanss",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-lawton",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-lawton",
-      "TWIN-lawton",
-      "projectedAs"
-    ],
-    [
-      "TWIN-lawton",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-lawton",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4490,23 +7008,28 @@
       "fanIn"
     ],
     [
-      "TOOL-manchester",
+      "TOOL-lawton",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-manchester",
-      "TWIN-manchester",
+      "TWIN-TOOL-manchester",
       "projectedAs"
     ],
     [
-      "TWIN-manchester",
+      "TWIN-TOOL-manchester",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-manchester",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-manchester",
+      "B1",
       "boundTo"
     ],
     [
@@ -4521,6 +7044,46 @@
     ],
     [
       "TOOL-manchester",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-manchester",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-mascc",
+      "TWIN-TOOL-mascc",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-mascc",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-mascc",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-mascc",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-mascc",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-mascc",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-mascc",
       "B9",
       "fanIn"
     ],
@@ -4530,53 +7093,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-mascc",
-      "TWIN-mascc",
+      "TOOL-medicamentos",
+      "TWIN-TOOL-medicamentos",
       "projectedAs"
     ],
     [
-      "TWIN-mascc",
+      "TWIN-TOOL-medicamentos",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-mascc",
+      "TOOL-medicamentos",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-mascc",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-mascc",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-mascc",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-medicamentos",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-medicamentos",
-      "TWIN-medicamentos",
-      "projectedAs"
-    ],
-    [
-      "TWIN-medicamentos",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-medicamentos",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4595,23 +7128,28 @@
       "fanIn"
     ],
     [
-      "TOOL-meem",
+      "TOOL-medicamentos",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-meem",
-      "TWIN-meem",
+      "TWIN-TOOL-meem",
       "projectedAs"
     ],
     [
-      "TWIN-meem",
+      "TWIN-TOOL-meem",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-meem",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-meem",
+      "B1",
       "boundTo"
     ],
     [
@@ -4626,6 +7164,46 @@
     ],
     [
       "TOOL-meem",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-meem",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-meows",
+      "TWIN-TOOL-meows",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-meows",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-meows",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-meows",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-meows",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-meows",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-meows",
       "B9",
       "fanIn"
     ],
@@ -4635,53 +7213,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-meows",
-      "TWIN-meows",
+      "TOOL-mews",
+      "TWIN-TOOL-mews",
       "projectedAs"
     ],
     [
-      "TWIN-meows",
+      "TWIN-TOOL-mews",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-meows",
+      "TOOL-mews",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-meows",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-meows",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-meows",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-mews",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-mews",
-      "TWIN-mews",
-      "projectedAs"
-    ],
-    [
-      "TWIN-mews",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-mews",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4700,23 +7248,28 @@
       "fanIn"
     ],
     [
-      "TOOL-moca",
+      "TOOL-mews",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-moca",
-      "TWIN-moca",
+      "TWIN-TOOL-moca",
       "projectedAs"
     ],
     [
-      "TWIN-moca",
+      "TWIN-TOOL-moca",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-moca",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-moca",
+      "B1",
       "boundTo"
     ],
     [
@@ -4731,6 +7284,46 @@
     ],
     [
       "TOOL-moca",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-moca",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-news2",
+      "TWIN-TOOL-news2",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-news2",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-news2",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-news2",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-news2",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-news2",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-news2",
       "B9",
       "fanIn"
     ],
@@ -4740,53 +7333,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-news2",
-      "TWIN-news2",
+      "TOOL-nihss",
+      "TWIN-TOOL-nihss",
       "projectedAs"
     ],
     [
-      "TWIN-news2",
+      "TWIN-TOOL-nihss",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-news2",
+      "TOOL-nihss",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-news2",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-news2",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-news2",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-nihss",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-nihss",
-      "TWIN-nihss",
-      "projectedAs"
-    ],
-    [
-      "TWIN-nihss",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-nihss",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4805,23 +7368,28 @@
       "fanIn"
     ],
     [
-      "TOOL-nips",
+      "TOOL-nihss",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-nips",
-      "TWIN-nips",
+      "TWIN-TOOL-nips",
       "projectedAs"
     ],
     [
-      "TWIN-nips",
+      "TWIN-TOOL-nips",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-nips",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-nips",
+      "B1",
       "boundTo"
     ],
     [
@@ -4836,6 +7404,46 @@
     ],
     [
       "TOOL-nips",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-nips",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-norton",
+      "TWIN-TOOL-norton",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-norton",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-norton",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-norton",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-norton",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-norton",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-norton",
       "B9",
       "fanIn"
     ],
@@ -4845,53 +7453,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-norton",
-      "TWIN-norton",
+      "TOOL-nrs2002",
+      "TWIN-TOOL-nrs2002",
       "projectedAs"
     ],
     [
-      "TWIN-norton",
+      "TWIN-TOOL-nrs2002",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-norton",
+      "TOOL-nrs2002",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-norton",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-norton",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-norton",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-nrs2002",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-nrs2002",
-      "TWIN-nrs2002",
-      "projectedAs"
-    ],
-    [
-      "TWIN-nrs2002",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-nrs2002",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -4910,23 +7488,28 @@
       "fanIn"
     ],
     [
-      "TOOL-ofras",
+      "TOOL-nrs2002",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-ofras",
-      "TWIN-ofras",
+      "TWIN-TOOL-ofras",
       "projectedAs"
     ],
     [
-      "TWIN-ofras",
+      "TWIN-TOOL-ofras",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-ofras",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-ofras",
+      "B1",
       "boundTo"
     ],
     [
@@ -4941,6 +7524,46 @@
     ],
     [
       "TOOL-ofras",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-ofras",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-painad",
+      "TWIN-TOOL-painad",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-painad",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-painad",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-painad",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-painad",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-painad",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-painad",
       "B9",
       "fanIn"
     ],
@@ -4950,53 +7573,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-painad",
-      "TWIN-painad",
+      "TOOL-parkland",
+      "TWIN-TOOL-parkland",
       "projectedAs"
     ],
     [
-      "TWIN-painad",
+      "TWIN-TOOL-parkland",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-painad",
+      "TOOL-parkland",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-painad",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-painad",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-painad",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-parkland",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-parkland",
-      "TWIN-parkland",
-      "projectedAs"
-    ],
-    [
-      "TWIN-parkland",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-parkland",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -5015,23 +7608,28 @@
       "fanIn"
     ],
     [
-      "TOOL-pews",
+      "TOOL-parkland",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-pews",
-      "TWIN-pews",
+      "TWIN-TOOL-pews",
       "projectedAs"
     ],
     [
-      "TWIN-pews",
+      "TWIN-TOOL-pews",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-pews",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-pews",
+      "B1",
       "boundTo"
     ],
     [
@@ -5046,6 +7644,46 @@
     ],
     [
       "TOOL-pews",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-pews",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-phq9",
+      "TWIN-TOOL-phq9",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-phq9",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-phq9",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-phq9",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-phq9",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-phq9",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-phq9",
       "B9",
       "fanIn"
     ],
@@ -5055,53 +7693,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-phq9",
-      "TWIN-phq9",
+      "TOOL-push",
+      "TWIN-TOOL-push",
       "projectedAs"
     ],
     [
-      "TWIN-phq9",
+      "TWIN-TOOL-push",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-phq9",
+      "TOOL-push",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-phq9",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-phq9",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-phq9",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-push",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-push",
-      "TWIN-push",
-      "projectedAs"
-    ],
-    [
-      "TWIN-push",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-push",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -5120,23 +7728,28 @@
       "fanIn"
     ],
     [
-      "TOOL-qsofa",
+      "TOOL-push",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-qsofa",
-      "TWIN-qsofa",
+      "TWIN-TOOL-qsofa",
       "projectedAs"
     ],
     [
-      "TWIN-qsofa",
+      "TWIN-TOOL-qsofa",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-qsofa",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-qsofa",
+      "B1",
       "boundTo"
     ],
     [
@@ -5151,6 +7764,46 @@
     ],
     [
       "TOOL-qsofa",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-qsofa",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-ramsay",
+      "TWIN-TOOL-ramsay",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-ramsay",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-ramsay",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-ramsay",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-ramsay",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-ramsay",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-ramsay",
       "B9",
       "fanIn"
     ],
@@ -5160,53 +7813,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-ramsay",
-      "TWIN-ramsay",
+      "TOOL-rancholosamigos",
+      "TWIN-TOOL-rancholosamigos",
       "projectedAs"
     ],
     [
-      "TWIN-ramsay",
+      "TWIN-TOOL-rancholosamigos",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-ramsay",
+      "TOOL-rancholosamigos",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-ramsay",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-ramsay",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-ramsay",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-rancholosamigos",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-rancholosamigos",
-      "TWIN-rancholosamigos",
-      "projectedAs"
-    ],
-    [
-      "TWIN-rancholosamigos",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-rancholosamigos",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -5225,23 +7848,28 @@
       "fanIn"
     ],
     [
-      "TOOL-ranson",
+      "TOOL-rancholosamigos",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-ranson",
-      "TWIN-ranson",
+      "TWIN-TOOL-ranson",
       "projectedAs"
     ],
     [
-      "TWIN-ranson",
+      "TWIN-TOOL-ranson",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-ranson",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-ranson",
+      "B1",
       "boundTo"
     ],
     [
@@ -5256,6 +7884,46 @@
     ],
     [
       "TOOL-ranson",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-ranson",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-rass",
+      "TWIN-TOOL-rass",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-rass",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-rass",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-rass",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-rass",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-rass",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-rass",
       "B9",
       "fanIn"
     ],
@@ -5265,53 +7933,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-rass",
-      "TWIN-rass",
+      "TOOL-regra-dos-nove",
+      "TWIN-TOOL-regra-dos-nove",
       "projectedAs"
     ],
     [
-      "TWIN-rass",
+      "TWIN-TOOL-regra-dos-nove",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-rass",
+      "TOOL-regra-dos-nove",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-rass",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-rass",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-rass",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-regra-dos-nove",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-regra-dos-nove",
-      "TWIN-regra-dos-nove",
-      "projectedAs"
-    ],
-    [
-      "TWIN-regra-dos-nove",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-regra-dos-nove",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -5330,23 +7968,28 @@
       "fanIn"
     ],
     [
-      "TOOL-silverman-andersen",
+      "TOOL-regra-dos-nove",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-silverman-andersen",
-      "TWIN-silverman-andersen",
+      "TWIN-TOOL-silverman-andersen",
       "projectedAs"
     ],
     [
-      "TWIN-silverman-andersen",
+      "TWIN-TOOL-silverman-andersen",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-silverman-andersen",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-silverman-andersen",
+      "B1",
       "boundTo"
     ],
     [
@@ -5361,6 +8004,46 @@
     ],
     [
       "TOOL-silverman-andersen",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-silverman-andersen",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-sofa",
+      "TWIN-TOOL-sofa",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-sofa",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-sofa",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-sofa",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-sofa",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-sofa",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-sofa",
       "B9",
       "fanIn"
     ],
@@ -5370,53 +8053,23 @@
       "instanceOf"
     ],
     [
-      "TOOL-sofa",
-      "TWIN-sofa",
+      "TOOL-stop-bang",
+      "TWIN-TOOL-stop-bang",
       "projectedAs"
     ],
     [
-      "TWIN-sofa",
+      "TWIN-TOOL-stop-bang",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-sofa",
+      "TOOL-stop-bang",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-sofa",
-      "GRAPH-KG",
-      "inGraph"
-    ],
-    [
-      "TOOL-sofa",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-sofa",
-      "B9",
-      "fanIn"
-    ],
-    [
       "TOOL-stop-bang",
-      "SCHEMA-TOOL",
-      "instanceOf"
-    ],
-    [
-      "TOOL-stop-bang",
-      "TWIN-stop-bang",
-      "projectedAs"
-    ],
-    [
-      "TWIN-stop-bang",
-      "B5",
-      "governedBy"
-    ],
-    [
-      "TOOL-stop-bang",
-      "B10",
+      "B1",
       "boundTo"
     ],
     [
@@ -5435,23 +8088,28 @@
       "fanIn"
     ],
     [
-      "TOOL-tinetti",
+      "TOOL-stop-bang",
       "SCHEMA-TOOL",
       "instanceOf"
     ],
     [
       "TOOL-tinetti",
-      "TWIN-tinetti",
+      "TWIN-TOOL-tinetti",
       "projectedAs"
     ],
     [
-      "TWIN-tinetti",
+      "TWIN-TOOL-tinetti",
       "B5",
       "governedBy"
     ],
     [
       "TOOL-tinetti",
       "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-tinetti",
+      "B1",
       "boundTo"
     ],
     [
@@ -5466,6 +8124,46 @@
     ],
     [
       "TOOL-tinetti",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "TOOL-tinetti",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "TOOL-tug",
+      "TWIN-TOOL-tug",
+      "projectedAs"
+    ],
+    [
+      "TWIN-TOOL-tug",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "TOOL-tug",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "TOOL-tug",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-tug",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "TOOL-tug",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "TOOL-tug",
       "B9",
       "fanIn"
     ],
@@ -5475,32 +8173,37 @@
       "instanceOf"
     ],
     [
-      "TOOL-tug",
-      "TWIN-tug",
+      "TOOL-waterlow",
+      "TWIN-TOOL-waterlow",
       "projectedAs"
     ],
     [
-      "TWIN-tug",
+      "TWIN-TOOL-waterlow",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-tug",
+      "TOOL-waterlow",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-tug",
+      "TOOL-waterlow",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-waterlow",
       "GRAPH-KG",
       "inGraph"
     ],
     [
-      "TOOL-tug",
+      "TOOL-waterlow",
       "B6.1",
       "clinicalVertical"
     ],
     [
-      "TOOL-tug",
+      "TOOL-waterlow",
       "B9",
       "fanIn"
     ],
@@ -5510,32 +8213,37 @@
       "instanceOf"
     ],
     [
-      "TOOL-waterlow",
-      "TWIN-waterlow",
+      "TOOL-wells-tep",
+      "TWIN-TOOL-wells-tep",
       "projectedAs"
     ],
     [
-      "TWIN-waterlow",
+      "TWIN-TOOL-wells-tep",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-waterlow",
+      "TOOL-wells-tep",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-waterlow",
+      "TOOL-wells-tep",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-wells-tep",
       "GRAPH-KG",
       "inGraph"
     ],
     [
-      "TOOL-waterlow",
+      "TOOL-wells-tep",
       "B6.1",
       "clinicalVertical"
     ],
     [
-      "TOOL-waterlow",
+      "TOOL-wells-tep",
       "B9",
       "fanIn"
     ],
@@ -5545,32 +8253,37 @@
       "instanceOf"
     ],
     [
-      "TOOL-wells-tep",
-      "TWIN-wells-tep",
+      "TOOL-wells-tvp",
+      "TWIN-TOOL-wells-tvp",
       "projectedAs"
     ],
     [
-      "TWIN-wells-tep",
+      "TWIN-TOOL-wells-tvp",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-wells-tep",
+      "TOOL-wells-tvp",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-wells-tep",
+      "TOOL-wells-tvp",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-wells-tvp",
       "GRAPH-KG",
       "inGraph"
     ],
     [
-      "TOOL-wells-tep",
+      "TOOL-wells-tvp",
       "B6.1",
       "clinicalVertical"
     ],
     [
-      "TOOL-wells-tep",
+      "TOOL-wells-tvp",
       "B9",
       "fanIn"
     ],
@@ -5580,32 +8293,37 @@
       "instanceOf"
     ],
     [
-      "TOOL-wells-tvp",
-      "TWIN-wells-tvp",
+      "TOOL-wong-baker",
+      "TWIN-TOOL-wong-baker",
       "projectedAs"
     ],
     [
-      "TWIN-wells-tvp",
+      "TWIN-TOOL-wong-baker",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-wells-tvp",
+      "TOOL-wong-baker",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-wells-tvp",
+      "TOOL-wong-baker",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-wong-baker",
       "GRAPH-KG",
       "inGraph"
     ],
     [
-      "TOOL-wells-tvp",
+      "TOOL-wong-baker",
       "B6.1",
       "clinicalVertical"
     ],
     [
-      "TOOL-wells-tvp",
+      "TOOL-wong-baker",
       "B9",
       "fanIn"
     ],
@@ -5615,32 +8333,37 @@
       "instanceOf"
     ],
     [
-      "TOOL-wong-baker",
-      "TWIN-wong-baker",
+      "TOOL-zarit",
+      "TWIN-TOOL-zarit",
       "projectedAs"
     ],
     [
-      "TWIN-wong-baker",
+      "TWIN-TOOL-zarit",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-wong-baker",
+      "TOOL-zarit",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-wong-baker",
+      "TOOL-zarit",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "TOOL-zarit",
       "GRAPH-KG",
       "inGraph"
     ],
     [
-      "TOOL-wong-baker",
+      "TOOL-zarit",
       "B6.1",
       "clinicalVertical"
     ],
     [
-      "TOOL-wong-baker",
+      "TOOL-zarit",
       "B9",
       "fanIn"
     ],
@@ -5650,34 +8373,29 @@
       "instanceOf"
     ],
     [
-      "TOOL-zarit",
-      "TWIN-zarit",
+      "LIB-biblioteca",
+      "TWIN-LIB-biblioteca",
       "projectedAs"
     ],
     [
-      "TWIN-zarit",
+      "TWIN-LIB-biblioteca",
       "B5",
       "governedBy"
     ],
     [
-      "TOOL-zarit",
+      "LIB-biblioteca",
       "B10",
       "boundTo"
     ],
     [
-      "TOOL-zarit",
+      "LIB-biblioteca",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LIB-biblioteca",
       "GRAPH-KG",
       "inGraph"
-    ],
-    [
-      "TOOL-zarit",
-      "B6.1",
-      "clinicalVertical"
-    ],
-    [
-      "TOOL-zarit",
-      "B9",
-      "fanIn"
     ],
     [
       "LIB-biblioteca",
@@ -5690,9 +8408,29 @@
       "fanIn"
     ],
     [
-      "LIB-biblioteca",
+      "LIB-downloads",
+      "TWIN-LIB-downloads",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LIB-downloads",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LIB-downloads",
       "B10",
       "boundTo"
+    ],
+    [
+      "LIB-downloads",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LIB-downloads",
+      "GRAPH-KG",
+      "inGraph"
     ],
     [
       "LIB-downloads",
@@ -5705,9 +8443,29 @@
       "fanIn"
     ],
     [
-      "LIB-downloads",
+      "LIB-biblioteca-provas",
+      "TWIN-LIB-biblioteca-provas",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LIB-biblioteca-provas",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LIB-biblioteca-provas",
       "B10",
       "boundTo"
+    ],
+    [
+      "LIB-biblioteca-provas",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LIB-biblioteca-provas",
+      "GRAPH-KG",
+      "inGraph"
     ],
     [
       "LIB-biblioteca-provas",
@@ -5720,9 +8478,29 @@
       "fanIn"
     ],
     [
-      "LIB-biblioteca-provas",
+      "LIB-biblioteca-cirurgica",
+      "TWIN-LIB-biblioteca-cirurgica",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LIB-biblioteca-cirurgica",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LIB-biblioteca-cirurgica",
       "B10",
       "boundTo"
+    ],
+    [
+      "LIB-biblioteca-cirurgica",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LIB-biblioteca-cirurgica",
+      "GRAPH-KG",
+      "inGraph"
     ],
     [
       "LIB-biblioteca-cirurgica",
@@ -5735,9 +8513,29 @@
       "fanIn"
     ],
     [
-      "LIB-biblioteca-cirurgica",
+      "LIB-biblioteca-curativo",
+      "TWIN-LIB-biblioteca-curativo",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LIB-biblioteca-curativo",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LIB-biblioteca-curativo",
       "B10",
       "boundTo"
+    ],
+    [
+      "LIB-biblioteca-curativo",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LIB-biblioteca-curativo",
+      "GRAPH-KG",
+      "inGraph"
     ],
     [
       "LIB-biblioteca-curativo",
@@ -5750,9 +8548,29 @@
       "fanIn"
     ],
     [
-      "LIB-biblioteca-curativo",
+      "LIB-biblioteca-seringa",
+      "TWIN-LIB-biblioteca-seringa",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LIB-biblioteca-seringa",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LIB-biblioteca-seringa",
       "B10",
       "boundTo"
+    ],
+    [
+      "LIB-biblioteca-seringa",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LIB-biblioteca-seringa",
+      "GRAPH-KG",
+      "inGraph"
     ],
     [
       "LIB-biblioteca-seringa",
@@ -5765,9 +8583,29 @@
       "fanIn"
     ],
     [
-      "LIB-biblioteca-seringa",
+      "LIB-biblioteca-carinho-de-emergencia",
+      "TWIN-LIB-biblioteca-carinho-de-emergencia",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LIB-biblioteca-carinho-de-emergencia",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LIB-biblioteca-carinho-de-emergencia",
       "B10",
       "boundTo"
+    ],
+    [
+      "LIB-biblioteca-carinho-de-emergencia",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LIB-biblioteca-carinho-de-emergencia",
+      "GRAPH-KG",
+      "inGraph"
     ],
     [
       "LIB-biblioteca-carinho-de-emergencia",
@@ -5780,13 +8618,1985 @@
       "fanIn"
     ],
     [
-      "LIB-biblioteca-carinho-de-emergencia",
+      "PAGE-acessibilidade",
+      "TWIN-PAGE-acessibilidade",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-acessibilidade",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-acessibilidade",
       "B10",
       "boundTo"
+    ],
+    [
+      "PAGE-acessibilidade",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-acessibilidade",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-acessibilidade",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-acessibilidade",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-ecossistema",
+      "TWIN-PAGE-ecossistema",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-ecossistema",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-ecossistema",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-ecossistema",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-ecossistema",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-ecossistema",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-ecossistema",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-fale",
+      "TWIN-PAGE-fale",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-fale",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-fale",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-fale",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-fale",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-fale",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-fale",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-forum-enfermagem",
+      "TWIN-PAGE-forum-enfermagem",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-forum-enfermagem",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-forum-enfermagem",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-forum-enfermagem",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-forum-enfermagem",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-forum-enfermagem",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-forum-enfermagem",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-index",
+      "TWIN-PAGE-index",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-index",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-index",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-index",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-index",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-index",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-index",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-mapa-do-site",
+      "TWIN-PAGE-mapa-do-site",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-mapa-do-site",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-mapa-do-site",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-mapa-do-site",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-mapa-do-site",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-mapa-do-site",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-mapa-do-site",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-missao",
+      "TWIN-PAGE-missao",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-missao",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-missao",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-missao",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-missao",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-missao",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-missao",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-notificacoes-legais",
+      "TWIN-PAGE-notificacoes-legais",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-notificacoes-legais",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-notificacoes-legais",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-notificacoes-legais",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-notificacoes-legais",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-notificacoes-legais",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-notificacoes-legais",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-objetivo",
+      "TWIN-PAGE-objetivo",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-objetivo",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-objetivo",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-objetivo",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-objetivo",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-objetivo",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-objetivo",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-politica-editorial",
+      "TWIN-PAGE-politica-editorial",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-politica-editorial",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-politica-editorial",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-politica-editorial",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-politica-editorial",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-politica-editorial",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-politica-editorial",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-privacidade",
+      "TWIN-PAGE-privacidade",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-privacidade",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-privacidade",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-privacidade",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-privacidade",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-privacidade",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-privacidade",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "PAGE-tecnologiaverde",
+      "TWIN-PAGE-tecnologiaverde",
+      "projectedAs"
+    ],
+    [
+      "TWIN-PAGE-tecnologiaverde",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "PAGE-tecnologiaverde",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "PAGE-tecnologiaverde",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "PAGE-tecnologiaverde",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "PAGE-tecnologiaverde",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "PAGE-tecnologiaverde",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-CKO-MD",
+      "TWIN-LAYER-CKO-MD",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-CKO-MD",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-CKO-MD",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-CKO-MD",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-CKO-MD",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-CKO-MD",
+      "SCHEMA-TOOL",
+      "instanceOf"
+    ],
+    [
+      "LAYER-CKO-MD",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-CKO-REG",
+      "TWIN-LAYER-CKO-REG",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-CKO-REG",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-CKO-REG",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-CKO-REG",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-CKO-REG",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-CKO-REG",
+      "B6.2",
+      "governedBy"
+    ],
+    [
+      "LAYER-CKO-REG",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-CLIN-CALC-001",
+      "TWIN-LAYER-LYR-CLIN-CALC-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-CLIN-CALC-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-CLIN-CALC-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-CLIN-CALC-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-CLIN-CALC-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-CLIN-CALC-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-CLIN-CALC-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-CLIN-SCALE-001",
+      "TWIN-LAYER-LYR-CLIN-SCALE-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-CLIN-SCALE-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-CLIN-SCALE-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-CLIN-SCALE-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-CLIN-SCALE-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-CLIN-SCALE-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-CLIN-SCALE-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-CLIN-RULE-001",
+      "TWIN-LAYER-LYR-CLIN-RULE-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-CLIN-RULE-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-CLIN-RULE-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-CLIN-RULE-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-CLIN-RULE-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-CLIN-RULE-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-CLIN-RULE-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-LIB-001",
+      "TWIN-LAYER-LYR-LIB-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-LIB-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-LIB-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-LIB-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-LIB-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-LIB-001",
+      "B6.2",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-LIB-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-MED-001",
+      "TWIN-LAYER-LYR-MED-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-MED-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-MED-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-MED-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-MED-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-MED-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-MED-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-LAB-001",
+      "TWIN-LAYER-LYR-LAB-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-LAB-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-LAB-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-LAB-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-LAB-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-LAB-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-LAB-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-ANAT-001",
+      "TWIN-LAYER-LYR-ANAT-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-ANAT-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-ANAT-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-ANAT-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-ANAT-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-ANAT-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-ANAT-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-COND-001",
+      "TWIN-LAYER-LYR-COND-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-COND-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-COND-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-COND-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-COND-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-COND-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-COND-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-PROC-001",
+      "TWIN-LAYER-LYR-PROC-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-PROC-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PROC-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PROC-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PROC-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-PROC-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-PROC-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-TERM-001",
+      "TWIN-LAYER-LYR-TERM-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-TERM-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-TERM-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-TERM-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-TERM-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-TERM-001",
+      "B6.1",
+      "clinicalVertical"
+    ],
+    [
+      "LAYER-LYR-TERM-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-EDU-001",
+      "TWIN-LAYER-LYR-EDU-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-EDU-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-EDU-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-EDU-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-EDU-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-EDU-001",
+      "B6.2",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-EDU-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-EDU-001",
+      "SEM-EDU",
+      "instanceOf"
+    ],
+    [
+      "LAYER-LYR-REF-001",
+      "TWIN-LAYER-LYR-REF-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-REF-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-REF-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-REF-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-REF-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-REF-001",
+      "B6.2",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-REF-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-CONTENT-001",
+      "TWIN-LAYER-LYR-CONTENT-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-CONTENT-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-CONTENT-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-CONTENT-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-CONTENT-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-CONTENT-001",
+      "B6.2",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-CONTENT-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-CONTENT-001",
+      "SEM-CONTENT",
+      "instanceOf"
+    ],
+    [
+      "LAYER-LYR-LEARN-001",
+      "TWIN-LAYER-LYR-LEARN-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-LEARN-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-LEARN-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-LEARN-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-LEARN-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-LEARN-001",
+      "B7",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-LEARN-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-LEARN-001",
+      "SEM-LEARN",
+      "instanceOf"
+    ],
+    [
+      "LAYER-LYR-PAGE-TPL-001",
+      "TWIN-LAYER-LYR-PAGE-TPL-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-PAGE-TPL-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PAGE-TPL-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PAGE-TPL-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PAGE-TPL-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-PAGE-TPL-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PAGE-TPL-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-DOC-TPL-001",
+      "TWIN-LAYER-LYR-DOC-TPL-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-DOC-TPL-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-DOC-TPL-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-DOC-TPL-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-DOC-TPL-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-DOC-TPL-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-DOC-TPL-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-MEDIA-001",
+      "TWIN-LAYER-LYR-MEDIA-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-MEDIA-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-MEDIA-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-MEDIA-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-MEDIA-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-MEDIA-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-MEDIA-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-DERIVE-001",
+      "TWIN-LAYER-LYR-DERIVE-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-DERIVE-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-DERIVE-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-DERIVE-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-DERIVE-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-DERIVE-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-DERIVE-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-HCD-001",
+      "TWIN-LAYER-LYR-HCD-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-HCD-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-HCD-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-HCD-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-HCD-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-HCD-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-HCD-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-A11Y-001",
+      "TWIN-LAYER-LYR-A11Y-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-A11Y-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-A11Y-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-A11Y-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-A11Y-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-A11Y-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-A11Y-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-DS-001",
+      "TWIN-LAYER-LYR-DS-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-DS-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-DS-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-DS-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-DS-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-DS-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-DS-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-UI-001",
+      "TWIN-LAYER-LYR-UI-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-UI-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-UI-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-UI-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-UI-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-UI-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-UI-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-PRV-001",
+      "TWIN-LAYER-LYR-PRV-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-PRV-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PRV-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PRV-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PRV-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-PRV-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PRV-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-SEC-001",
+      "TWIN-LAYER-LYR-SEC-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-SEC-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SEC-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SEC-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SEC-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-SEC-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SEC-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-ROUTE-001",
+      "TWIN-LAYER-LYR-ROUTE-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-ROUTE-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-ROUTE-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-ROUTE-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-ROUTE-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-ROUTE-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-ROUTE-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-SEO-001",
+      "TWIN-LAYER-LYR-SEO-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-SEO-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SEO-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SEO-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SEO-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-SEO-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SEO-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-OG-001",
+      "TWIN-LAYER-LYR-OG-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-OG-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-OG-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-OG-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-OG-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-OG-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-OG-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-SEM-001",
+      "TWIN-LAYER-LYR-SEM-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-SEM-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SEM-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SEM-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SEM-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-SEM-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SEM-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-I18N-001",
+      "TWIN-LAYER-LYR-I18N-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-I18N-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-I18N-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-I18N-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-I18N-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-I18N-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-I18N-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-SEARCH-001",
+      "TWIN-LAYER-LYR-SEARCH-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-SEARCH-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SEARCH-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SEARCH-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SEARCH-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-SEARCH-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SEARCH-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-REC-001",
+      "TWIN-LAYER-LYR-REC-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-REC-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-REC-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-REC-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-REC-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-REC-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-REC-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-USERSTATE-001",
+      "TWIN-LAYER-LYR-USERSTATE-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-USERSTATE-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-USERSTATE-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-USERSTATE-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-USERSTATE-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-USERSTATE-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-USERSTATE-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-ANL-001",
+      "TWIN-LAYER-LYR-ANL-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-ANL-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-ANL-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-ANL-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-ANL-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-ANL-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-ANL-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-PERF-001",
+      "TWIN-LAYER-LYR-PERF-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-PERF-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PERF-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PERF-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PERF-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-PERF-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PERF-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-REL-001",
+      "TWIN-LAYER-LYR-REL-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-REL-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-REL-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-REL-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-REL-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-REL-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-REL-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-OBS-001",
+      "TWIN-LAYER-LYR-OBS-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-OBS-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-OBS-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-OBS-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-OBS-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-OBS-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-OBS-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-SUS-001",
+      "TWIN-LAYER-LYR-SUS-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-SUS-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SUS-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SUS-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-SUS-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-SUS-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-SUS-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-RND-001",
+      "TWIN-LAYER-LYR-RND-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-RND-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-RND-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-RND-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-RND-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-RND-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-RND-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-RUN-001",
+      "TWIN-LAYER-LYR-RUN-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-RUN-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-RUN-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-RUN-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-RUN-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-RUN-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-RUN-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-EXPORT-001",
+      "TWIN-LAYER-LYR-EXPORT-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-EXPORT-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-EXPORT-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-EXPORT-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-EXPORT-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-EXPORT-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-EXPORT-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-PUB-001",
+      "TWIN-LAYER-LYR-PUB-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-PUB-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PUB-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PUB-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-PUB-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-PUB-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-PUB-001",
+      "B9",
+      "fanIn"
+    ],
+    [
+      "LAYER-LYR-MON-001",
+      "TWIN-LAYER-LYR-MON-001",
+      "projectedAs"
+    ],
+    [
+      "TWIN-LAYER-LYR-MON-001",
+      "B5",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-MON-001",
+      "B10",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-MON-001",
+      "B1",
+      "boundTo"
+    ],
+    [
+      "LAYER-LYR-MON-001",
+      "GRAPH-KG",
+      "inGraph"
+    ],
+    [
+      "LAYER-LYR-MON-001",
+      "B6.3",
+      "governedBy"
+    ],
+    [
+      "LAYER-LYR-MON-001",
+      "B9",
+      "fanIn"
     ]
   ],
-  "nodeCount": 208,
-  "edgeCount": 705,
+  "nodeCount": 337,
+  "edgeCount": 1238,
+  "layerCount": 44,
+  "pageCount": 12,
   "tools_schema_ok": 97,
   "tools_n": 97
 }

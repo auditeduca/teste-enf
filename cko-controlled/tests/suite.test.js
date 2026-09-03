@@ -97,6 +97,7 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "GRAPH_GOVERNS_RUNTIME"));
     assert.ok(policy.rules.some((r) => r.id === "TWIN_GOVERNS_RUNTIME"));
     assert.ok(policy.rules.some((r) => r.id === "NURSEPALM_GOVERNS_RUNTIME"));
+    assert.ok(policy.rules.some((r) => r.id === "AGENTIC_GOVERNS_RUNTIME"));
     assert.ok(policy.rules.some((r) => r.id === "PENDENCIES_EXPLICIT"));
     assert.ok(policy.rules.some((r) => r.id === "DRIVE_IMMUTABLE"));
     assert.ok(policy.rules.some((r) => r.id === "LAYERS_44_PRESENT"));
@@ -312,6 +313,11 @@ describe("runtime frontend", () => {
     assert.equal(g.ok, true, JSON.stringify(g.denials));
     assert.equal(platform.governance.nursePalm.operational, "NOT_ASSERTED");
     assert.equal(platform.governance.digitalTwin.observed, false);
+    assert.equal(platform.governance.agentic.operational, "NOT_ASSERTED");
+    assert.equal(platform.governance.agentic.independence, "maker!=checker!=auditor");
+    assert.equal(platform.governance.layerCount, 44);
+    assert.equal(platform.governance.pageCount, 12);
+    assert.ok(platform.governance.nodes.some((n) => n.id === "B1"));
     assert.equal(platform.toolLibrary.structure, "calenf");
   });
   it("materializes every documented PDF and directory pendency without mutating Drive or closing B9", () => {
@@ -436,13 +442,27 @@ describe("platform remediations without Drive mutation", () => {
     }
     const pub = layers.layers.find((l) => l.id === "LYR-PUB-001");
     assert.equal(pub.published, false);
+    assert.equal(layers.governed_by.graph, "js/knowledge-graph.js");
+    assert.equal(layers.governed_by.twin, "B5");
+    assert.equal(layers.governed_by.agentic, "B1");
+    assert.equal(layers.governed_by.nursePalm, "B10");
+    const learn = layers.layers.find((l) => l.id === "LYR-LEARN-001");
+    assert.equal(learn.semantic, "learning");
+    const layerNodes = platform.governance.nodes.filter((n) => n.type === "LayerRuntime");
+    assert.equal(layerNodes.length, 44);
+    assert.ok(platform.governance.edges.some((e) => e[0] === "LAYER-LYR-CLIN-CALC-001" && e[1] === "B9" && e[2] === "fanIn"));
+    assert.ok(platform.governance.edges.some((e) => e[0] === "LAYER-LYR-LEARN-001" && e[1] === "SEM-LEARN" && e[2] === "instanceOf"));
     const eco = platform.files["ecossistema.html"];
     assert.match(eco, /44\/44/);
     assert.match(eco, /HOLD \/ NOT_RELEASED/);
+    assert.match(eco, /IA agêntica/);
+    assert.match(eco, /Nurse-PaLM/);
+    assert.match(eco, /digital twin/i);
     assert.equal(eco.includes('id="graph"'), false);
     const rt = runtimeAssertions(universe, platform);
     assert.ok(rt.asserts.some((a) => a.id === "A-LAYERS-44" && a.ok));
     assert.ok(rt.asserts.some((a) => a.id === "A-LAYER-PUB-HOLD" && a.ok));
+    assert.ok(rt.asserts.some((a) => a.id === "A-CALENF-AGENTIC" && a.ok));
   });
   it("fails at policy-as-code if the 44 layers disappear", async () => {
     const broken = { ...platform, layers: undefined };
@@ -452,5 +472,30 @@ describe("platform remediations without Drive mutation", () => {
     assert.equal(r.cascade[0].status, "FAIL");
     assert.ok(r.policy.inspect.denials.some((d) => d.id === "LAYERS_44_PRESENT"));
     assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
+  });
+  it("fails at policy-as-code if agentic runtime claims operational", async () => {
+    const broken = {
+      ...platform,
+      governance: {
+        ...platform.governance,
+        agentic: { ...platform.governance.agentic, operational: "ASSERTED" },
+      },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].id, "policy-as-code");
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "AGENTIC_GOVERNS_RUNTIME"));
+    assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
+  });
+  it("fails at policy-as-code if graph/twin/agentic/Nurse-PaLM bindings drop", async () => {
+    const broken = {
+      ...platform,
+      layers: { ...layers, governed_by: { graph: "missing" } },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "LAYERS_44_PRESENT"));
   });
 });

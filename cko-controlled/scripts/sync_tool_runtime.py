@@ -81,6 +81,81 @@ NURSE_PALM_V9_LAYERS = [
     "Simulation Engine",
     "Multi-Agent Council",
 ]
+AGENTIC_ROLES = [
+    {"id": "AGT-ORCH-001", "role": "ORCHESTRATOR"},
+    {"id": "AGT-SP-MAKER", "role": "MAKER"},
+    {"id": "AGT-SP-CHECKER", "role": "CHECKER"},
+    {"id": "AGT-SP-AUDIT-AGENT", "role": "AUDITOR"},
+]
+SEMANTIC_CONTROLS = {
+    "content": "canonical knowledge/content and governed projections",
+    "educational": "pedagogical projection engine derived from Content",
+    "learning": "Agent Continuous Learning Engine; historical label Flashcards / Questions / Quizzes is lineage only",
+    "l1_l4_char_limits": "NOT_ASSERTED",
+}
+GOVERNED_BY = {
+    "graph": "js/knowledge-graph.js",
+    "twin": "B5",
+    "agentic": "B1",
+    "nursePalm": "B10",
+}
+
+
+def load_canonical_layers() -> list[dict]:
+    path = Path(__file__).resolve().parent / "cko_44_layers.json"
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    if len(rows) != 44:
+        raise SystemExit(f"canonical 44-layer table invalid: {len(rows)}")
+    return rows
+
+
+def layer_vertical(layer_id: str) -> tuple[str, str]:
+    if layer_id == "CKO-MD":
+        return "SCHEMA-TOOL", "instanceOf"
+    if layer_id == "CKO-REG":
+        return "B6.2", "governedBy"
+    if layer_id.startswith("LYR-CLIN") or layer_id in {
+        "LYR-MED-001",
+        "LYR-LAB-001",
+        "LYR-ANAT-001",
+        "LYR-COND-001",
+        "LYR-PROC-001",
+        "LYR-TERM-001",
+    }:
+        return "B6.1", "clinicalVertical"
+    if layer_id == "LYR-LEARN-001":
+        return "B7", "governedBy"
+    if layer_id in {"LYR-LIB-001", "LYR-CONTENT-001", "LYR-EDU-001", "LYR-REF-001"}:
+        return "B6.2", "governedBy"
+    return "B6.3", "governedBy"
+
+
+def attach_governed(nodes: list, edges: list, node: dict, vertical: str, rel: str) -> None:
+    nid = node["id"]
+    twin_id = f"TWIN-{nid}"
+    nodes.append(node)
+    nodes.append(
+        {
+            "id": twin_id,
+            "type": "TwinProjection",
+            "of": nid,
+            "governedBy": "B5",
+            "nifs": "NIFS-600-15",
+            "observed": False,
+            "deployed": False,
+        }
+    )
+    edges.extend(
+        [
+            [nid, twin_id, "projectedAs"],
+            [twin_id, "B5", "governedBy"],
+            [nid, "B10", "boundTo"],
+            [nid, "B1", "boundTo"],
+            [nid, "GRAPH-KG", "inGraph"],
+            [nid, vertical, rel],
+            [nid, "B9", "fanIn"],
+        ]
+    )
 CALC_MARKERS = (
     "btnCalcular",
     "scoreValor",
@@ -346,72 +421,144 @@ def write_hubs(inventory: dict) -> None:
 
 def build_governance(inventory: dict) -> dict:
     nodes = [
+        {
+            "id": "B1",
+            "type": "AgentJobRuntime",
+            "operational": "NOT_ASSERTED",
+            "independence": "maker!=checker!=auditor",
+        },
         {"id": "B5", "type": "DigitalTwin", "nifs": "NIFS-600-15", "observed": False, "deployed": False},
         {"id": "B6.1", "type": "ClinicalVertical"},
         {"id": "B6.2", "type": "KnowledgeLibraries"},
+        {"id": "B6.3", "type": "ExperiencePublication"},
+        {"id": "B7", "type": "LearningRecertification", "holds": ["recert_FAIL"]},
         {"id": "B9", "type": "ReleaseFanIn", "release": "NOT_RELEASED"},
-        {"id": "B10", "type": "NursePaLM", "operational": "NOT_ASSERTED", "engine": "js/nurse-palm.js", "layers": NURSE_PALM_V9_LAYERS},
+        {
+            "id": "B10",
+            "type": "NursePaLM",
+            "operational": "NOT_ASSERTED",
+            "engine": "js/nurse-palm.js",
+            "layers": NURSE_PALM_V9_LAYERS,
+        },
         {"id": "SCHEMA-TOOL", "type": "Schema", "path": "data/schemas/tool.schema.json"},
         {"id": "GRAPH-KG", "type": "KnowledgeGraph", "path": "js/knowledge-graph.js"},
+        {"id": "SEM-CONTENT", "type": "SemanticControl", "kind": "content", "text": SEMANTIC_CONTROLS["content"]},
+        {"id": "SEM-EDU", "type": "SemanticControl", "kind": "educational", "text": SEMANTIC_CONTROLS["educational"]},
+        {"id": "SEM-LEARN", "type": "SemanticControl", "kind": "learning", "text": SEMANTIC_CONTROLS["learning"]},
     ]
+    for agent in AGENTIC_ROLES:
+        nodes.append({"id": agent["id"], "type": "Agent", "role": agent["role"], "operational": "NOT_ASSERTED"})
     edges = [
+        ["B1", "B9", "fanIn"],
         ["B5", "B9", "fanIn"],
         ["B6.1", "B9", "fanIn"],
         ["B6.2", "B9", "fanIn"],
+        ["B6.3", "B9", "fanIn"],
+        ["B7", "B9", "fanIn"],
         ["B10", "B9", "fanIn"],
         ["B5", "B10", "feeds"],
+        ["B1", "B10", "boundTo"],
+        ["SEM-EDU", "SEM-CONTENT", "derivedFrom"],
+        ["SEM-LEARN", "SEM-CONTENT", "derivedFrom"],
+        ["AGT-SP-MAKER", "AGT-SP-CHECKER", "independentOf"],
+        ["AGT-SP-CHECKER", "AGT-SP-AUDIT-AGENT", "independentOf"],
+        ["AGT-SP-MAKER", "AGT-SP-AUDIT-AGENT", "independentOf"],
+        ["AGT-ORCH-001", "AGT-SP-MAKER", "supervises"],
+        ["AGT-ORCH-001", "AGT-SP-CHECKER", "supervises"],
+        ["AGT-ORCH-001", "AGT-SP-AUDIT-AGENT", "supervises"],
+        ["AGT-ORCH-001", "B1", "boundTo"],
     ]
     for tool in inventory["tools"]:
-        node_id = f"TOOL-{tool['slug']}"
-        twin_id = f"TWIN-{tool['slug']}"
-        nodes.append(
+        attach_governed(
+            nodes,
+            edges,
             {
-                "id": node_id,
+                "id": f"TOOL-{tool['slug']}",
                 "type": "ToolRuntime",
                 "slug": tool["slug"],
                 "schema": "data/schemas/tool.schema.json",
                 "schema_ok": tool["schema_ok"],
                 "html": tool.get("html"),
                 "nursePalm": {"engine": "js/nurse-palm.js", "layers": 10, "operational": "NOT_ASSERTED"},
-            }
+                "governed_by": GOVERNED_BY,
+            },
+            "B6.1",
+            "clinicalVertical",
         )
-        nodes.append(
-            {
-                "id": twin_id,
-                "type": "TwinProjection",
-                "of": node_id,
-                "governedBy": "B5",
-                "nifs": "NIFS-600-15",
-                "observed": False,
-                "deployed": False,
-            }
-        )
-        edges.extend(
-            [
-                [node_id, "SCHEMA-TOOL", "instanceOf"],
-                [node_id, twin_id, "projectedAs"],
-                [twin_id, "B5", "governedBy"],
-                [node_id, "B10", "boundTo"],
-                [node_id, "GRAPH-KG", "inGraph"],
-                [node_id, "B6.1", "clinicalVertical"],
-                [node_id, "B9", "fanIn"],
-            ]
-        )
+        edges.append([f"TOOL-{tool['slug']}", "SCHEMA-TOOL", "instanceOf"])
     for lib in inventory["library_canaries"]:
-        node_id = f"LIB-{Path(lib).stem}"
-        nodes.append({"id": node_id, "type": "LibraryRuntime", "html": lib, "schema": "js/modules/data/biblioteca.json"})
-        edges.extend([[node_id, "B6.2", "governedBy"], [node_id, "B9", "fanIn"], [node_id, "B10", "boundTo"]])
+        attach_governed(
+            nodes,
+            edges,
+            {
+                "id": f"LIB-{Path(lib).stem}",
+                "type": "LibraryRuntime",
+                "html": lib,
+                "schema": "js/modules/data/biblioteca.json",
+                "governed_by": GOVERNED_BY,
+            },
+            "B6.2",
+            "governedBy",
+        )
+    for page in sorted(WAVE2_PAGES):
+        attach_governed(
+            nodes,
+            edges,
+            {
+                "id": f"PAGE-{Path(page).stem}",
+                "type": "InstitutionalPage",
+                "html": page,
+                "governed_by": GOVERNED_BY,
+                "release": "HOLD / NOT_RELEASED",
+            },
+            "B6.3",
+            "governedBy",
+        )
+    for row in load_canonical_layers():
+        layer_id = row["id"]
+        vertical, rel = layer_vertical(layer_id)
+        node = {
+            "id": f"LAYER-{layer_id}",
+            "type": "LayerRuntime",
+            "layerId": layer_id,
+            "name": row["name"],
+            "sha256": row["sha256"],
+            "release": "HOLD / NOT_RELEASED",
+            "operational": "NOT_ASSERTED",
+            "published": False,
+            "governed_by": GOVERNED_BY,
+        }
+        if layer_id == "CKO-MD":
+            node["freeze"] = "FROZEN"
+        if layer_id == "CKO-REG":
+            node["freeze"] = "FROZEN"
+        if layer_id == "LYR-LEARN-001":
+            node["semantic"] = "learning"
+            node["note"] = SEMANTIC_CONTROLS["learning"]
+        if layer_id == "LYR-EDU-001":
+            node["semantic"] = "educational"
+        if layer_id == "LYR-CONTENT-001":
+            node["semantic"] = "content"
+        attach_governed(nodes, edges, node, vertical, rel)
+        if layer_id == "LYR-CONTENT-001":
+            edges.append([f"LAYER-{layer_id}", "SEM-CONTENT", "instanceOf"])
+        if layer_id == "LYR-EDU-001":
+            edges.append([f"LAYER-{layer_id}", "SEM-EDU", "instanceOf"])
+        if layer_id == "LYR-LEARN-001":
+            edges.append([f"LAYER-{layer_id}", "SEM-LEARN", "instanceOf"])
     return {
         "id": "CKO-CALENF-GOVERNANCE-1.0.0",
         "kind": "calenf-runtime-governance",
         "root": "policy-as-code",
         "structure": "NIFS-900-03",
         "release": "HOLD / NOT_RELEASED",
+        "governed_by": GOVERNED_BY,
         "nursePalm": {
             "engine": "js/nurse-palm.js",
             "layers": NURSE_PALM_V9_LAYERS,
             "operational": "NOT_ASSERTED",
             "audit": "NURSE_PALM_21_LAYER_COMPLETENESS_AUDIT_v6_4_0",
+            "horizontal_layers": "44/44",
         },
         "digitalTwin": {
             "nifs": "NIFS-600-15",
@@ -421,6 +568,16 @@ def build_governance(inventory: dict) -> dict:
             "classified_nodes": 137,
             "classified_edges": 136,
         },
+        "agentic": {
+            "block": "B1",
+            "operational": "NOT_ASSERTED",
+            "independence": "maker!=checker!=auditor",
+            "agents": AGENTIC_ROLES,
+            "outbox_pending_is_not_ack": True,
+        },
+        "semantic_controls": SEMANTIC_CONTROLS,
+        "md_freeze": "FROZEN",
+        "reg_freeze": "FROZEN",
         "schema": "data/schemas/tool.schema.json",
         "graph": "js/knowledge-graph.js",
         "ssg": "scripts/generate_tool_page.py",
@@ -428,6 +585,8 @@ def build_governance(inventory: dict) -> dict:
         "edges": edges,
         "nodeCount": len(nodes),
         "edgeCount": len(edges),
+        "layerCount": 44,
+        "pageCount": len(WAVE2_PAGES),
         "tools_schema_ok": inventory["tools_schema_ok"],
         "tools_n": inventory["tools_n"],
     }
@@ -514,6 +673,12 @@ def assert_canaries(inventory: dict, governance: dict) -> None:
         missing.append("nursePalm.operational")
     if governance["digitalTwin"]["observed"] or governance["digitalTwin"]["deployed"]:
         missing.append("digitalTwin.observed/deployed")
+    if governance.get("agentic", {}).get("operational") != "NOT_ASSERTED":
+        missing.append("agentic.operational")
+    if governance.get("layerCount") != 44:
+        missing.append("layerCount")
+    if governance.get("pageCount") != 12:
+        missing.append("pageCount")
     if inventory["tools_schema_ok"] < len(TOOL_CANARIES):
         missing.append("tools_schema_ok")
     if missing:
@@ -555,6 +720,8 @@ def main() -> None:
                 "governance_nodes": governance["nodeCount"],
                 "nursePalm": governance["nursePalm"]["operational"],
                 "digitalTwin_observed": governance["digitalTwin"]["observed"],
+                "agentic": governance["agentic"]["operational"],
+                "graph_layers": governance["layerCount"],
                 "home_missing_hrefs": slim["home_missing_hrefs"],
                 "layers": layers["count"],
                 "layers_present": sum(1 for row in layers["layers"] if row["present"]),

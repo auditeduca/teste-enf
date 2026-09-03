@@ -58,6 +58,10 @@ jobs:
           gov=json.load(open(site/"data/cko/governance.json"))
           assert gov["nursePalm"]["operational"]=="NOT_ASSERTED"
           assert gov["digitalTwin"]["observed"] is False
+          assert gov["agentic"]["operational"]=="NOT_ASSERTED"
+          assert gov["layerCount"]==44
+          assert gov["pageCount"]==12
+          assert any(n.get("id")=="B1" for n in gov["nodes"])
           assert (site/"aldrete.html").read_text(encoding="utf-8").find("btnCalcular")>=0
           assert (site/"js/calc-engine.js").read_text(encoding="utf-8").find("calc-engine")>=0
           assert (site/"js/nurse-palm.js").is_file()
@@ -74,6 +78,14 @@ jobs:
           assert "CKO-MD" in eco
           assert "LYR-MON-001" in eco
           assert "44/44" in eco
+          assert "IA agêntica" in eco
+          assert "Nurse-PaLM" in eco
+          assert "digital twin" in eco.lower()
+          assert 'id="graph"' not in eco
+          assert layers["governed_by"]["graph"]=="js/knowledge-graph.js"
+          assert layers["governed_by"]["twin"]=="B5"
+          assert layers["governed_by"]["agentic"]=="B1"
+          assert layers["governed_by"]["nursePalm"]=="B10"
           p=json.load(open("public/data/pendencies.json"))
           assert p["mutate_drive"] is False
           assert p["closes_b9"] is False

@@ -45,6 +45,7 @@ const INTEGRITY_DENIALS = new Set([
   "GRAPH_GOVERNS_RUNTIME",
   "TWIN_GOVERNS_RUNTIME",
   "NURSEPALM_GOVERNS_RUNTIME",
+  "AGENTIC_GOVERNS_RUNTIME",
   "LAYERS_44_PRESENT",
 ]);
 
@@ -236,6 +237,10 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
   if (layers.operational && layers.operational !== "NOT_ASSERTED") {
     deny("44-layer catalog must not assert operational runtime");
   }
+  const gb = layers.governed_by || {};
+  if (gb.graph !== "js/knowledge-graph.js" || gb.twin !== "B5" || gb.agentic !== "B1" || gb.nursePalm !== "B10") {
+    deny("44 layers must be governed by graph + digital twin + agentic AI + Nurse-PaLM");
+  }
   const ids = (layers.layers || []).map((l) => l.id);
   if (JSON.stringify(ids) !== JSON.stringify(CANONICAL_LAYER_IDS)) {
     deny("layer ids must match ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE");
@@ -251,6 +256,10 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
       deny(`${layer.id} must not claim operational runtime`);
     }
     if (layer.published === true) deny(`${layer.id} must not claim publication`);
+    const lgb = layer.governed_by || layers.governed_by || {};
+    if (lgb.graph !== "js/knowledge-graph.js" || lgb.twin !== "B5" || lgb.agentic !== "B1" || lgb.nursePalm !== "B10") {
+      deny(`${layer.id} missing graph/twin/agentic/Nurse-PaLM governance`);
+    }
   }
   if (ecossistemaHtml) {
     const missingOnPage = CANONICAL_LAYER_IDS.filter((id) => !ecossistemaHtml.includes(id));
@@ -265,29 +274,91 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
 export function inspectCalenfGovernance(governance) {
   const denials = [];
   if (!governance) return { ok: true, skipped: true, denials };
+  const deny = (id, reason) => denials.push({ id, reason });
   if (governance.kind !== "calenf-runtime-governance") {
-    denials.push({ id: "SCHEMA_GOVERNS_RUNTIME", reason: "governance kind must be calenf-runtime-governance" });
+    deny("SCHEMA_GOVERNS_RUNTIME", "governance kind must be calenf-runtime-governance");
   }
   if (governance.schema !== "data/schemas/tool.schema.json") {
-    denials.push({ id: "SCHEMA_GOVERNS_RUNTIME", reason: "tools must instance data/schemas/tool.schema.json" });
+    deny("SCHEMA_GOVERNS_RUNTIME", "tools must instance data/schemas/tool.schema.json");
   }
   if (governance.graph !== "js/knowledge-graph.js") {
-    denials.push({ id: "GRAPH_GOVERNS_RUNTIME", reason: "runtime graph must be js/knowledge-graph.js" });
+    deny("GRAPH_GOVERNS_RUNTIME", "runtime graph must be js/knowledge-graph.js");
   }
   const twin = governance.digitalTwin || {};
   if (twin.nifs !== "NIFS-600-15" || twin.observed === true || twin.deployed === true) {
-    denials.push({ id: "TWIN_GOVERNS_RUNTIME", reason: "digital twin must remain NIFS-600-15 HOLD (not observed/deployed)" });
+    deny("TWIN_GOVERNS_RUNTIME", "digital twin must remain NIFS-600-15 HOLD (not observed/deployed)");
+  }
+  if (twin.classified_nodes !== 137 || twin.classified_edges !== 136) {
+    deny("TWIN_GOVERNS_RUNTIME", "classified digital twin cardinality must remain 137/136");
   }
   const np = governance.nursePalm || {};
   if (np.engine !== "js/nurse-palm.js" || np.operational !== "NOT_ASSERTED" || (np.layers || []).length !== 10) {
-    denials.push({ id: "NURSEPALM_GOVERNS_RUNTIME", reason: "Nurse-PaLM V9 must bind js/nurse-palm.js and stay NOT_ASSERTED" });
+    deny("NURSEPALM_GOVERNS_RUNTIME", "Nurse-PaLM V9 must bind js/nurse-palm.js and stay NOT_ASSERTED");
   }
+  const agentic = governance.agentic || {};
+  if (agentic.block !== "B1" || agentic.operational !== "NOT_ASSERTED") {
+    deny("AGENTIC_GOVERNS_RUNTIME", "B1 agentic runtime must remain NOT_ASSERTED");
+  }
+  if (agentic.independence !== "maker!=checker!=auditor") {
+    deny("AGENTIC_GOVERNS_RUNTIME", "maker/checker/auditor independence missing");
+  }
+  const nodes = governance.nodes || [];
   const edges = governance.edges || [];
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  if (!byId.has("B1") || byId.get("B1")?.operational !== "NOT_ASSERTED") {
+    deny("AGENTIC_GOVERNS_RUNTIME", "B1 AgentJobRuntime missing or operational claimed");
+  }
+  const roles = nodes.filter((n) => n.type === "Agent").map((n) => n.role);
+  if (!["MAKER", "CHECKER", "AUDITOR", "ORCHESTRATOR"].every((r) => roles.includes(r))) {
+    deny("AGENTIC_GOVERNS_RUNTIME", "agentic roles maker/checker/auditor/orchestrator missing");
+  }
+  const hasEdge = (from, to, rel) => edges.some((e) => e[0] === from && e[1] === to && e[2] === rel);
   const hasFanIn = edges.some((e) => String(e[0] || "").startsWith("TOOL-") && e[1] === "B9" && e[2] === "fanIn");
   const hasTwin = edges.some((e) => e[2] === "governedBy" && e[1] === "B5");
   const hasPalm = edges.some((e) => e[2] === "boundTo" && e[1] === "B10");
-  if (!hasFanIn || !hasTwin || !hasPalm) {
-    denials.push({ id: "GRAPH_GOVERNS_RUNTIME", reason: "tools must fan-in to B9 and bind B5 twin + B10 Nurse-PaLM" });
+  const hasAgentic = edges.some((e) => String(e[0] || "").startsWith("TOOL-") && e[1] === "B1" && e[2] === "boundTo");
+  if (!hasFanIn || !hasTwin || !hasPalm || !hasAgentic) {
+    deny("GRAPH_GOVERNS_RUNTIME", "tools must fan-in to B9 and bind graph + B5 twin + B1 agentic + B10 Nurse-PaLM");
+  }
+  const layerNodes = nodes.filter((n) => n.type === "LayerRuntime");
+  if (layerNodes.length !== 44) {
+    deny("GRAPH_GOVERNS_RUNTIME", `layer graph nodes ${layerNodes.length} != 44`);
+  }
+  const missingLayers = CANONICAL_LAYER_IDS.filter((id) => !byId.has(`LAYER-${id}`));
+  if (missingLayers.length) {
+    deny("GRAPH_GOVERNS_RUNTIME", `layers missing from graph: ${missingLayers.slice(0, 8).join(",")}`);
+  }
+  for (const id of CANONICAL_LAYER_IDS) {
+    const nid = `LAYER-${id}`;
+    if (!hasEdge(nid, "B9", "fanIn") || !hasEdge(nid, "B10", "boundTo") || !hasEdge(nid, "B1", "boundTo") || !hasEdge(nid, "GRAPH-KG", "inGraph")) {
+      deny("GRAPH_GOVERNS_RUNTIME", `${nid} is not graph/agentic/Nurse-PaLM/B9 governed`);
+      break;
+    }
+    if (!hasEdge(nid, `TWIN-${nid}`, "projectedAs")) {
+      deny("TWIN_GOVERNS_RUNTIME", `${nid} missing digital twin projection`);
+      break;
+    }
+  }
+  const pageNodes = nodes.filter((n) => n.type === "InstitutionalPage");
+  if (pageNodes.length !== RUNTIME_PAGES.length) {
+    deny("GRAPH_GOVERNS_RUNTIME", `institutional pages in graph ${pageNodes.length} != ${RUNTIME_PAGES.length}`);
+  }
+  for (const page of RUNTIME_PAGES) {
+    const nid = `PAGE-${page.replace(/\.html$/, "")}`;
+    if (!hasEdge(nid, "B9", "fanIn") || !hasEdge(nid, "B10", "boundTo") || !hasEdge(nid, "B1", "boundTo")) {
+      deny("GRAPH_GOVERNS_RUNTIME", `${nid} is not governed by graph/twin/agentic/Nurse-PaLM`);
+      break;
+    }
+  }
+  if (!hasEdge("SEM-EDU", "SEM-CONTENT", "derivedFrom") || !hasEdge("SEM-LEARN", "SEM-CONTENT", "derivedFrom")) {
+    deny("GRAPH_GOVERNS_RUNTIME", "PDF semantic controls Content→Educational/Learning missing");
+  }
+  if (governance.md_freeze !== "FROZEN" || governance.reg_freeze !== "FROZEN") {
+    deny("GRAPH_GOVERNS_RUNTIME", "CKO-MD / CKO-REG freeze from PDF fan-in is missing");
+  }
+  const sc = governance.semantic_controls || {};
+  if (!String(sc.learning || "").includes("Agent Continuous Learning") || !String(sc.educational || "").includes("derived from Content")) {
+    deny("GRAPH_GOVERNS_RUNTIME", "PDF semantic controls not encoded");
   }
   return { ok: denials.length === 0, denials };
 }
@@ -670,6 +741,7 @@ export function runtimeAssertions(universe, platform) {
       check("A-CALENF-GRAPH", g.denials.every((d) => d.id !== "GRAPH_GOVERNS_RUNTIME"), "graph");
       check("A-CALENF-TWIN", g.denials.every((d) => d.id !== "TWIN_GOVERNS_RUNTIME"), "twin");
       check("A-CALENF-NURSEPALM", g.denials.every((d) => d.id !== "NURSEPALM_GOVERNS_RUNTIME"), "nurse-palm");
+      check("A-CALENF-AGENTIC", g.denials.every((d) => d.id !== "AGENTIC_GOVERNS_RUNTIME"), "agentic");
     }
     if (platform.pendencies) {
       const pend = inspectPendencies(platform.pendencies, platform.driveImmutable);
