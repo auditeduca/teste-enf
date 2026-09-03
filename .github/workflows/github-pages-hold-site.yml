@@ -1,0 +1,54 @@
+name: GitHub Pages HOLD site
+
+on:
+  push:
+    branches:
+      - main
+      - cursor/cko-controlled-site-deploy-c36d
+      - cursor/github-pages-site-runtime-c36d
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages-hold-site
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/configure-pages@v5
+        id: pages
+      - name: Stage CALENF runtime for GitHub Pages
+        run: |
+          python3 cko-controlled/scripts/prepare_github_pages.py \
+            --out _site \
+            --base "${{ steps.pages.outputs.base_path }}"
+          test -f _site/index.html
+          test -f _site/aldrete.html
+          test -f _site/.nojekyll
+          grep -q 'data-cko-md="CKO-MD"' _site/index.html
+          grep -q 'PAGE_INSTITUTIONAL_CLUSTER' _site/index.html
+          test ! -f _site/admin.html
+          test ! -d _site/zh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
