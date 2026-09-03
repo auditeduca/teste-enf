@@ -36,6 +36,10 @@ python3 NIFS/governed-execution/run.py twin
 
 # Tests
 python3 -m unittest discover -s NIFS/governed-execution/tests -v
+
+# Desktop console
+python3 NIFS/governed-execution/desktop/server.py
+# http://127.0.0.1:8090/
 ```
 
 ## Object pack
