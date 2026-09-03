@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -109,6 +110,34 @@ TEMPLATES = [
     ("profile", "Estado do utilizador", "Favoritos / coleções"),
 ]
 
+# Catalog remains 21 templates. Implemented = HTML chrome exists; wireframe = moldura only.
+TEMPLATE_RUNTIME = {
+    "home": ("implemented", "templates/home.html"),
+    "tool": ("implemented", "templates/calculator.html"),
+    "scale": ("implemented", "templates/scale.html"),
+    "library": ("implemented", "templates/library.html"),
+    "article": ("implemented", "templates/content.html"),
+    "institutional": ("implemented", "templates/institutional.html"),
+    "legal": ("implemented", "templates/institutional.html"),
+    "a11y": ("implemented", "templates/institutional.html"),
+    "ecosystem": ("implemented", "templates/institutional.html"),
+    "layers": ("implemented", "camadas/index.html"),
+    "layer-detail": ("implemented", "camadas/LYR-DS-001/index.html"),
+    "flashcard": ("wireframe", None),
+    "search": ("wireframe", None),
+    "not-found": ("wireframe", None),
+    "print": ("wireframe", None),
+    "quiz": ("wireframe", None),
+    "protocol": ("wireframe", None),
+    "medication": ("wireframe", None),
+    "exam": ("wireframe", None),
+    "contest": ("wireframe", None),
+    "profile": ("wireframe", None),
+}
+
+SLOT_BEGIN = "/* CKO-SLOT-TOKENS:BEGIN */"
+SLOT_END = "/* CKO-SLOT-TOKENS:END */"
+
 THEMES = [
     ("institutional", "Institucional", "Paleta navy CALENF em fundo claro."),
     ("clinical", "Clínico", "Variação fria para ferramentas."),
@@ -200,7 +229,28 @@ def catalog() -> dict:
         "components": [
             {"id": i, "name": n, "kind": k, "html": html} for i, n, k, html in COMPONENTS
         ],
-        "templates": [{"id": i, "name": n, "note": note} for i, n, note in TEMPLATES],
+        "templates": [
+            {
+                "id": i,
+                "name": n,
+                "note": note,
+                "status": TEMPLATE_RUNTIME[i][0],
+                "html": TEMPLATE_RUNTIME[i][1],
+            }
+            for i, n, note in TEMPLATES
+        ],
+        "templates_implemented_n": sum(1 for i, _, _ in TEMPLATES if TEMPLATE_RUNTIME[i][0] == "implemented"),
+        "templates_wireframe_n": sum(1 for i, _, _ in TEMPLATES if TEMPLATE_RUNTIME[i][0] == "wireframe"),
+        "refinement": "CKO-DS-RUNTIME-1.2.0-HOLD",
+        "identity_manual": {
+            "id": "CKO-DS-IDENTITY-V10",
+            "version": "v10",
+            "status": "INGESTED_HOLD",
+            "html": "cko-identidade.html",
+            "scale_specimen": "escala-padrao.html",
+            "rule": "o manual v10 é linguagem visual; páginas e escalas usam cluster + tokens; HTML solto com <style> próprio fica fora do padrão",
+            "release_allowed": False,
+        },
         "holds": [
             "ADR-DS-002_PROPOSAL_PENDING_APPROVAL",
             "DS_RUNTIME_FIDELITY_AND_CONTROLLED_DEPLOYMENT",
@@ -212,11 +262,57 @@ def catalog() -> dict:
     }
 
 
+def write_slot_tokens(slots: list[dict]) -> None:
+    """Materialize --cko-slot-01…44 and shell aliases into the token sheet."""
+    path = SITE / "css" / "cko-ds-tokens.css"
+    if not path.is_file():
+        raise SystemExit("cko-ds-tokens.css missing")
+    lines = [
+        SLOT_BEGIN,
+        ":root {",
+        "  --cko-navy: var(--cko-navy-900);",
+        "  --cko-navy-mid: var(--cko-navy-700);",
+        "  --navy: var(--cko-navy-900);",
+        "  --navy-light: var(--cko-navy-700);",
+        "  --navy-dark: var(--cko-navy-800);",
+        "  --cko-slate-500: var(--cko-muted-2);",
+        "  --cko-slate-800: var(--cko-ink);",
+        "  --cko-page-tint: var(--cko-bg);",
+        "  --cko-tpl-navy: var(--cko-navy-900);",
+        "  --cko-tpl-navy-mid: var(--cko-navy-700);",
+        "  --cko-tpl-surface: var(--cko-surface);",
+        "  --cko-tpl-tint: var(--cko-bg);",
+        "  --cko-tpl-ink: var(--cko-ink);",
+        "  --cko-tpl-muted: var(--cko-muted-2);",
+    ]
+    for slot in slots:
+        lines.append(f"  {slot['token']}: {slot['color']};")
+    lines.extend(["}", SLOT_END, ""])
+    block = "\n".join(lines)
+    text = path.read_text(encoding="utf-8")
+    if SLOT_BEGIN in text and SLOT_END in text:
+        text = re.sub(
+            re.escape(SLOT_BEGIN) + r".*?" + re.escape(SLOT_END),
+            block.strip(),
+            text,
+            count=1,
+            flags=re.S,
+        )
+        if not text.endswith("\n"):
+            text += "\n"
+    else:
+        text = text.rstrip() + "\n\n" + block
+    path.write_text(text, encoding="utf-8")
+
+
 def generate() -> dict:
     payload = catalog()
+    if payload["templates_implemented_n"] + payload["templates_wireframe_n"] != 21:
+        raise SystemExit("template status must cover 21 catalog templates")
+    write_slot_tokens(payload["theme_slots"])
     write_json(SITE / "data" / "cko" / "design-system.json", payload)
     write_json(GATE / "public" / "data" / "design-system.json", payload)
-    print(json.dumps({"id": payload["id"], "inventory": payload["inventory"]}, ensure_ascii=False))
+    print(json.dumps({"id": payload["id"], "inventory": payload["inventory"], "templates_implemented_n": payload["templates_implemented_n"]}, ensure_ascii=False))
     return payload
 
 

@@ -19,6 +19,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cko_md_norm import MD_NORM_CHAIN
 from generate_design_system import generate as generate_design_system
 from generate_universal_tool import generate as generate_universal_tool
+from generate_policy_master import generate as generate_policy_master
+from generate_visual_assets import generate as generate_visual_assets
 
 GATE = Path(__file__).resolve().parents[1]
 SITE = GATE.parent / "reference-website"
@@ -360,15 +362,27 @@ def write_layer_page(row: dict, runtime_paths: list[str], zip_verified: bool, hr
     runtime_links = "".join(
         f'<li><a href="/{p}">{p}</a></li>' for p in runtime_paths
     )
-    render_mode = {"LYR-DS-001": "catalog", "LYR-UI-001": "states"}.get(row["id"])
+    render_mode = {
+        "LYR-DS-001": ("catalog", "/data/cko/design-system.json"),
+        "LYR-UI-001": ("states", "/data/cko/design-system.json"),
+        "LYR-PAGE-TPL-001": ("templates", "/data/cko/design-system.json"),
+        "LYR-CLIN-CALC-001": ("universal-tool", "/data/cko/universal-tool.json"),
+    }.get(row["id"])
     render_block = ""
     if render_mode:
+        mode, src = render_mode
         render_block = f"""
 <section class="cko-ds-section" aria-label="Catálogo renderizado">
-  <div id="cko-ds-root" data-cko-ds-render="{render_mode}" data-cko-ds-src="/data/cko/design-system.json"></div>
+  <div id="cko-ds-root" data-cko-ds-render="{mode}" data-cko-ds-src="{src}"></div>
 </section>
 <script type="module" src="/js/cko-ds-render.js"></script>
 """
+    identity_link = (
+        '<p><a class="cko-ds-link" href="/cko-identidade.html">Manual de identidade v10 no cluster</a> · '
+        '<a class="cko-ds-link" href="/escala-padrao.html">Espécime de escala</a></p>'
+        if row["id"] == "LYR-DS-001"
+        else ""
+    )
     html = f"""<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -378,10 +392,16 @@ def write_layer_page(row: dict, runtime_paths: list[str], zip_verified: bool, hr
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1A3E74">
 <link rel="stylesheet" href="/global-styles.css">
+<link rel="stylesheet" href="/css/pages/cart-emergencia.css">
+<link rel="stylesheet" href="/css/pages/cko-page-shell.css">
 <link rel="stylesheet" href="/css/cko-ds.css">
+<script src="/global-scripts.js" defer></script>
+<script src="/lang-selector.js" defer></script>
 </head>
-<body class="cko-ds-body" data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layer="{row['id']}" data-cko-release="HOLD_NOT_RELEASED" data-cko-ds="1">
+<body class="cko-ds-body cko-cart-page" data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layer="{row['id']}" data-cko-release="HOLD_NOT_RELEASED" data-cko-ds="1">
 <a class="cko-ds-skip" href="#main-content">Pular para o conteúdo principal</a>
+<div id="global-header-container"></div>
+<div id="language-selector-placeholder"></div>
 <main id="main-content" class="cko-ds-page">
 <nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <a href="/camadas/">Camadas</a> › <span aria-current="page">{row['id']}</span></nav>
 <article class="cko-ds-card cko-ds-card--hold">
@@ -390,10 +410,12 @@ def write_layer_page(row: dict, runtime_paths: list[str], zip_verified: bool, hr
   <p>Pacote classificado do PDF <code>{row['artifact']}</code> convertido para a estrutura final do site. SHA-256 <code>{row['sha256'][:16]}…</code>. Zip verificado: <strong>{'sim' if zip_verified else 'não'}</strong>. Nurse-PaLM operacional: <strong>NOT_ASSERTED</strong>.</p>
   <p>Runtime CALENF (base de implementação, não a estrutura final):</p>
   <ul>{runtime_links}</ul>
+  {identity_link}
   <p><a class="cko-ds-link" href="/data/cko/layers/{row['id']}/package.zip">Pacote original do PDF</a> · <a class="cko-ds-link" href="/data/cko/layers/{row['id']}/package/FINAL_MANIFEST.json">Manifesto original</a></p>
 </article>
 {render_block}
 </main>
+<div id="footer-placeholder"></div>
 </body>
 </html>
 """
@@ -415,10 +437,16 @@ def write_camadas_index(catalog: dict) -> None:
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1A3E74">
 <link rel="stylesheet" href="/global-styles.css">
+<link rel="stylesheet" href="/css/pages/cart-emergencia.css">
+<link rel="stylesheet" href="/css/pages/cko-page-shell.css">
 <link rel="stylesheet" href="/css/cko-ds.css">
+<script src="/global-scripts.js" defer></script>
+<script src="/lang-selector.js" defer></script>
 </head>
-<body class="cko-ds-body" data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layers="44" data-cko-ds="1">
+<body class="cko-ds-body cko-cart-page" data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layers="44" data-cko-ds="1">
 <a class="cko-ds-skip" href="#main-content">Pular para o conteúdo principal</a>
+<div id="global-header-container"></div>
+<div id="language-selector-placeholder"></div>
 <main id="main-content" class="cko-ds-page">
 <nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Camadas</span></nav>
 <div id="cko-ds-root" data-cko-ds-render="layers" data-cko-ds-src="/data/cko/design-system.json" data-cko-layers-src="/data/cko/layers.json"></div>
@@ -428,6 +456,7 @@ def write_camadas_index(catalog: dict) -> None:
 <ol>{items}</ol>
 </noscript>
 </main>
+<div id="footer-placeholder"></div>
 <script type="module" src="/js/cko-ds-render.js"></script>
 </body>
 </html>
@@ -558,6 +587,8 @@ def inject_ecossistema(catalog: dict) -> None:
 def generate() -> dict:
     generate_design_system()
     generate_universal_tool()
+    generate_policy_master()
+    generate_visual_assets()
     if not CLOSURE.is_file():
         raise SystemExit(f"closure HTML missing: {CLOSURE}")
     rows = json.loads(CANON.read_text(encoding="utf-8"))

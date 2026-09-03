@@ -134,6 +134,20 @@ jobs:
           assert ut["evaluation"]["clinical_promotion"]=="DENIED"
           assert ut["starts_at"]=="policy-as-code"
           assert "universal-tool" in (site/"data/cko/cascade/index.html").read_text(encoding="utf-8")
+          master=json.load(open(site/"data/cko/policy-master.json"))
+          assert master["id"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert master["field_count"]==28
+          assert master["status"]=="CONTROLLED_TEMPLATE_HOLD"
+          assert master["active"] is False
+          vas=json.load(open(site/"data/cko/visual-assets.json"))
+          assert vas["id"]=="POL-CKO-VISUAL-ASSET-1.0.0"
+          assert vas["new_architectural_root"] is False
+          assert vas["one_image_per_page"] is False
+          assert len(vas["families"])==3
+          assert vas["document_projections"]["docx"]["files_generated"] is False
+          cascade_html=(site/"data/cko/cascade/index.html").read_text(encoding="utf-8")
+          assert "policy-master" in cascade_html
+          assert "visual-assets" in cascade_html
           assert cascade["rules"]["coverage"].find("100%")>=0
           assert cascade["verification"]["fuzz_n"]==1000
           assert cascade["verification"]["fuzz_false_accept"]==0

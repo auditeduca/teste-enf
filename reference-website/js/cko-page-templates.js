@@ -91,6 +91,22 @@
         });
       }
     }
+    if (tplId === "scale") {
+      if (!document.querySelector("[data-cko-scale-items], .cko-scale-grid")) {
+        issues.push({
+          severity: "warn",
+          code: "scale-items",
+          message: "Área de itens da escala não marcada"
+        });
+      }
+      if (document.querySelector('[class*="-card-navy"] h1, [data-cko-static="hero"], section.hero, .tool-header')) {
+        issues.push({
+          severity: "error",
+          code: "scale-local-hero",
+          message: "Escala fora do padrão: hero local (navy/static) — use o slot hero do shell"
+        });
+      }
+    }
     if (tplId === "home") {
       if (!document.querySelector("[data-cko-home='hero'], .cko-home-hero")) {
         issues.push({
