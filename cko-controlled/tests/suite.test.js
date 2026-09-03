@@ -244,6 +244,7 @@ describe("runtime frontend", () => {
       assert.equal(html.includes('canvas id="graph"'), false, p);
     }
     assert.equal(platform.listing.includes("app.js"), false);
+    assert.equal(platform.listing.includes("cko-relatorio-tecnico-final.html"), false);
   });
   it("fails at policy-as-code if the report dashboard returns, skipping the rest", async () => {
     const poisoned = {

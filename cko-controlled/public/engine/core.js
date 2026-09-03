@@ -78,7 +78,10 @@ export function inspectPlatform(platform) {
   const files = platform?.files || {};
   const listing = platform?.listing || Object.keys(files);
   const index = files["index.html"] || "";
-  if (/id="graph"|Reexecutar cascata|id="orquestrador"|Relat[oó]rio T[eé]cnico Final Controlado/.test(index)) {
+  if (
+    /id="graph"|Reexecutar cascata|id="orquestrador"|Relat[oó]rio T[eé]cnico Final Controlado/.test(index) ||
+    listing.includes("cko-relatorio-tecnico-final.html")
+  ) {
     denials.push({ id: "NO_REPORT_DASHBOARD", reason: "report dashboard must not be the runtime frontend" });
   }
   if (!/Calculadoras de Enfermagem/.test(index) || !/PAGE_INSTITUTIONAL_CLUSTER/.test(index)) {
@@ -132,6 +135,7 @@ export function validateRuntimePlatformSchema(platform) {
   const files = platform.files || {};
   const listing = platform.listing || Object.keys(files);
   if (listing.includes("app.js")) errors.push("schema: control-room app.js is not a runtime platform file");
+  if (listing.includes("cko-relatorio-tecnico-final.html")) errors.push("schema: report bridge page is not a runtime platform file");
   if (RUNTIME_PAGES.length !== 12) errors.push("schema: runtime pages must be exactly 12");
   for (const p of RUNTIME_PAGES) {
     if (!files[p]) errors.push(`schema: missing required page ${p}`);
