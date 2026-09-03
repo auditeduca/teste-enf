@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CAL-IMC-001 · Governed Execution</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #0d1b2e;
+      --panel-2: #12243c;
+      --line: #1e3a5f;
+      --text: #e8eef7;
+      --muted: #9bb0c9;
+      --allow: #3dd68c;
+      --deny: #ff6b7a;
+      --accent: #4da3ff;
+      --warn: #f5c15d;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    body { padding: 24px; }
+    h1 { margin: 0; font-size: 28px; letter-spacing: .02em; }
+    .sub { color: var(--muted); margin-top: 6px; font-size: 15px; }
+    .shell { max-width: 1280px; margin: 0 auto; display: grid; gap: 18px; }
+    header { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; }
+    .badge { background: #123556; border: 1px solid #2b6cb0; color: #d6e8ff; padding: 8px 12px; border-radius: 999px; font-size: 13px; }
+    .chain { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+    .step { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+    .step.on { border-color: var(--allow); color: var(--allow); background: #10291f; }
+    .step.fail { border-color: var(--deny); color: var(--deny); background: #2a1418; }
+    .grid { display: grid; grid-template-columns: 360px 1fr; gap: 18px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    input, select { width: 100%; background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 16px; margin-bottom: 12px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    button { width: 100%; border: 0; border-radius: 12px; padding: 12px 14px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
+    .primary { background: var(--accent); color: #041018; }
+    .ghost { background: #17324f; color: var(--text); }
+    .danger { background: #5a1d27; color: #ffd5da; }
+    .warn { background: #4a3a16; color: #ffe7ad; }
+    .result { min-height: 220px; }
+    .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .decision { font-size: 42px; font-weight: 800; margin: 8px 0 4px; }
+    .decision.ALLOW { color: var(--allow); }
+    .decision.DENY { color: var(--deny); }
+    .bmi { font-size: 34px; margin: 8px 0 16px; }
+    .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 14px; }
+    .meta span { color: var(--muted); }
+    .asserts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .pill { font-size: 12px; border-radius: 999px; padding: 5px 9px; border: 1px solid var(--line); color: var(--muted); }
+    .pill.PASS { color: var(--allow); border-color: #2e7d57; }
+    .pill.FAIL { color: var(--deny); border-color: #8a3140; }
+    pre { background: #081322; border-radius: 12px; padding: 12px; overflow: auto; max-height: 280px; font-size: 12px; color: #c5d7ee; }
+    .footer-note { color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div>
+        <h1>CAL-IMC-001 · Governed Execution</h1>
+        <p class="sub">Policy-as-Code → Schema → Graph → CI → Runtime → Evidence. O modelo propõe. A arquitetura decide se executa.</p>
+      </div>
+      <div class="badge" id="status-badge">carregando…</div>
+    </header>
+
+    <div class="chain" id="chain">
+      <div class="step" data-step="policy">Policy</div>
+      <div class="step" data-step="schema">Schema</div>
+      <div class="step" data-step="graph">Graph</div>
+      <div class="step" data-step="ci">CI Gates</div>
+      <div class="step" data-step="runtime">Runtime</div>
+      <div class="step" data-step="evidence">Evidence</div>
+    </div>
+
+    <div class="grid">
+      <aside class="card">
+        <div class="kicker">Entrada governada</div>
+        <div class="row">
+          <div>
+            <label for="weight">Peso (kg)</label>
+            <input id="weight" type="number" step="0.01" value="70"/>
+          </div>
+          <div>
+            <label for="height">Altura (m)</label>
+            <input id="height" type="number" step="0.001" value="1.75"/>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="actor">Ator</label>
+            <select id="actor">
+              <option value="HUMAN">HUMAN · NURSE-001</option>
+              <option value="AGENT">AGENT · AGENT-NURSE-001</option>
+            </select>
+          </div>
+          <div>
+            <label for="engine">Engine</label>
+            <select id="engine">
+              <option value="DETERMINISTIC_CALC_ENGINE">Determinístico</option>
+              <option value="LLM">LLM (proibido)</option>
+            </select>
+          </div>
+        </div>
+        <button class="primary" id="btn-calc" type="button">Calcular IMC governado</button>
+        <button class="danger" id="btn-zero" type="button">Tentar altura 0</button>
+        <button class="warn" id="btn-llm" type="button">Tentar aritmética LLM</button>
+        <button class="ghost" id="btn-agent" type="button">Agente usa, não altera policy</button>
+        <button class="ghost" id="btn-twin" type="button">Derivar no Digital Twin</button>
+        <button class="ghost" id="btn-ci" type="button">Rodar CI Gates</button>
+        <p class="footer-note">LLM ≠ calculation engine. Tentativa negada também gera evidência.</p>
+      </aside>
+
+      <section class="card result" id="result">
+        <div class="kicker">Aguardando execução</div>
+        <div class="decision">—</div>
+        <p class="sub">Use os botões à esquerda para atravessar a cadeia constitucional.</p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const chain = document.getElementById("chain");
+
+    async function api(path, body) {
+      const opts = body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {};
+      const res = await fetch(path, opts);
+      return res.json();
+    }
+
+    function markChain(data, ci) {
+      const steps = chain.querySelectorAll(".step");
+      steps.forEach((el) => { el.classList.remove("on", "fail"); });
+      const validation = (data.execution && data.execution.validation) || (ci && ci.validation) || {};
+      const map = {
+        policy: validation.policy,
+        schema: validation.schema,
+        graph: validation.graph,
+        runtime: data.status === "EXECUTED" ? "PASS" : (data.status === "DENIED" ? "FAIL" : (ci && ci.status === "DEPLOYABLE" ? "PASS" : null)),
+        evidence: data.evidence && data.evidence.status === "CAPTURED" ? "PASS" : (ci ? "PASS" : null),
+        ci: ci ? (ci.status === "DEPLOYABLE" ? "PASS" : "FAIL") : (data.status ? "PASS" : null)
+      };
+      Object.entries(map).forEach(([key, val]) => {
+        const el = chain.querySelector(`[data-step="${key}"]`);
+        if (!el || !val) return;
+        el.classList.add(val === "FAIL" ? "fail" : "on");
+      });
+    }
+
+    function render(data, title) {
+      const exec = data.execution || {};
+      const decision = data.decision || (data.status === "DEPLOYABLE" ? "ALLOW" : "DENY");
+      const result = exec.result || {};
+      const assertions = (exec.runtime && exec.runtime.assertions) || {};
+      const pills = Object.entries(assertions).map(([k, v]) => `<span class="pill ${v}">${k}: ${v}</span>`).join("");
+      const bmi = result.bmi != null ? Number(result.bmi).toFixed(10).replace(/0+$/, "").replace(/\.$/, "") : "—";
+      $("result").innerHTML = `
+        <div class="kicker">${title}</div>
+        <div class="decision ${decision}">${decision}</div>
+        <div class="bmi">${result.bmi != null ? bmi + " kg/m²" : (data.reason || data.status || "")}</div>
+        <div class="meta">
+          <div><span>Quem</span><br>${(exec.actor && exec.actor.id) || "—"}</div>
+          <div><span>Ferramenta</span><br>${(exec.resource && exec.resource.id) || "CAL-IMC-001"} ${(exec.resource && exec.resource.version) || ""}</div>
+          <div><span>Policy</span><br>${(exec.which_policy) || "POL-CAL-IMC-001"}</div>
+          <div><span>Evidência</span><br>${(data.evidence && data.evidence.event_id) || (exec.evidence && exec.evidence.event_id) || "—"}</div>
+          <div><span>Engine</span><br>${(exec.which_engine) || "—"}</div>
+          <div><span>Motivo</span><br>${data.reason || (exec.authorization && exec.authorization.decision) || data.status || "—"}</div>
+        </div>
+        <div class="asserts">${pills}</div>
+        ${data.twin_event ? `<p class="sub" style="margin-top:14px">Twin ${data.twin_event.twin_id}: ${data.twin_event.derived_observation.concept} = ${data.twin_event.derived_observation.value} (${data.twin_event.derivation.kind})</p>` : ""}
+        ${data.mutation ? `<p class="sub">Agente tentar alterar policy: ${data.mutation.decision} · ${data.mutation.reason}</p>` : ""}
+        ${data.closed ? `<p class="sub">CI ${data.status} · Definition of Done ${data.closed.status}</p>` : ""}
+        <pre>${JSON.stringify(data.evidence || data.gates || data, null, 2)}</pre>
+      `;
+      markChain(data, data.gates ? data : null);
+    }
+
+    function payload() {
+      return {
+        weight_kg: Number($("weight").value),
+        height_m: Number($("height").value),
+        actor_type: $("actor").value,
+        engine: $("engine").value,
+        mission: "Calculate BMI"
+      };
+    }
+
+    $("btn-calc").onclick = async () => render(await api("/api/calculate", payload()), "Cálculo governado");
+    $("btn-zero").onclick = async () => {
+      $("height").value = "0";
+      $("engine").value = "DETERMINISTIC_CALC_ENGINE";
+      render(await api("/api/calculate", payload()), "Schema violation");
+    };
+    $("btn-llm").onclick = async () => {
+      $("height").value = "1.75";
+      $("engine").value = "LLM";
+      render(await api("/api/calculate", payload()), "LLM arithmetic forbidden");
+    };
+    $("btn-agent").onclick = async () => {
+      $("actor").value = "AGENT";
+      $("engine").value = "DETERMINISTIC_CALC_ENGINE";
+      $("height").value = "1.75";
+      render(await api("/api/agent", payload()), "Agente usa a ferramenta");
+    };
+    $("btn-twin").onclick = async () => render(await api("/api/twin", {}), "Digital Twin");
+    $("btn-ci").onclick = async () => render(await api("/api/ci"), "CI Gates");
+
+    api("/api/status").then((s) => {
+      $("status-badge").textContent = s.object_id + " v" + s.version + " · " + s.policy;
+    });
+  </script>
+</body>
+</html>
