@@ -158,7 +158,13 @@ function renderUniversalTool(policy) {
       (f) => `<li><code>${esc(f.id)}</code> <span class="cko-ds-badge">${esc(f.severity)}</span> ${esc(f.text)}</li>`
     )
     .join("");
-  const rows = (policy.controls || [])
+  const chips = (policy.controls || [])
+    .map((c) => `<li><code>${esc(c.id)}</code></li>`)
+    .join("");
+  const preview = (policy.controls || []).slice(0, 8);
+  const last = (policy.controls || []).slice(-1)[0];
+  const rows = [...preview, last]
+    .filter(Boolean)
     .map(
       (c) => `<tr>
         <th scope="row"><code>${esc(c.id)}</code></th>
@@ -188,7 +194,8 @@ function renderUniversalTool(policy) {
     </section>
     <section class="cko-ds-section">
       <h2>UTC-001 … UTC-098</h2>
-      <p class="cko-ds-help">Nenhum controlo está PASS. Esta tabela é a política, não evidência de implementação.</p>
+      <p class="cko-ds-help">98 controlos DOCUMENTADO_HOLD. Nenhum PASS. A grelha identifica o catálogo; o detalhe abre em amostra (UTC-039).</p>
+      <ul class="cko-ds-ut-chips">${chips}</ul>
       <div class="cko-ds-table-wrap"><table class="cko-ds-ut-table">
         <thead><tr><th>ID</th><th>Camada</th><th>Requisito</th><th>Estado</th></tr></thead>
         <tbody>${rows}</tbody>
