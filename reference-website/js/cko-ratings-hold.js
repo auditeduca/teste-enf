@@ -27,4 +27,8 @@
   } else {
     gate();
   }
+  document.addEventListener("partials:ready", gate);
+  if (typeof MutationObserver === "function") {
+    new MutationObserver(gate).observe(document.documentElement, { childList: true, subtree: true });
+  }
 })();

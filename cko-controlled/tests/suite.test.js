@@ -855,6 +855,7 @@ describe("chrome templates", () => {
     assert.equal(existsSync(join(site, "js/cko-ratings-hold.js")), true);
     const gate = readFileSync(join(site, "js/cko-ratings-hold.js"), "utf8");
     assert.match(gate, /HOLD-HUMAN-COPY-RATINGS/);
+    assert.match(readFileSync(join(site, "js/partials-loader.js"), "utf8"), /cko-ratings-hold\.js/);
     const calc = readFileSync(join(site, "camadas/LYR-CLIN-CALC-001/index.html"), "utf8");
     assert.match(calc, /data-cko-ds-render="universal-tool"/);
     const tpl = readFileSync(join(site, "camadas/LYR-PAGE-TPL-001/index.html"), "utf8");
