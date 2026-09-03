@@ -49,13 +49,18 @@ def inject_tool_config(html_name: str, json_name: str, include_engine: bool = Fa
         if include_engine and "js/calc-engine.js" not in html:
             html = html.replace("</body>", engine + "</body>", 1)
     else:
-        if "</body>" not in html:
+        last = html.rfind("</body>")
+        if last < 0:
             raise SystemExit(f"{html_name} missing </body>")
-        html = html.replace("</body>", "\n" + tag + "\n" + engine + "</body>", 1)
+        html = html[:last] + "\n" + tag + "\n" + engine + html[last:]
     assert_not_drive(html_path)
     html_path.write_text(html, encoding="utf-8")
     m = re.search(r'<script[^>]*id="tool-config"[^>]*>(.*?)</script>', html, re.S)
     json.loads(m.group(1).replace("\\u003c", "<"))
+    cfg_at = html.rfind('id="tool-config"')
+    print_close = html.rfind(r"<\/script>")
+    if print_close >= 0 and cfg_at < print_close:
+        raise SystemExit(f"{html_name}: tool-config landed inside a print-template script")
     return html_name
 
 

@@ -382,8 +382,9 @@ describe("platform remediations without Drive mutation", () => {
     const cfg = JSON.parse(match[1].replace(/\\u003c/g, "<"));
     assert.equal(cfg.slug, "asa");
     assert.ok(cfg.calculator && Array.isArray(cfg.calculator.inputs));
-    const byId = Object.fromEntries(pendencies.items.map((i) => [i.id, i]));
-    assert.equal(byId["PEND-DIR-ASA-TOOL-CONFIG"].status, "CREATED_IN_RUNTIME_HOLD");
+    const cfgAt = html.lastIndexOf('id="tool-config"');
+    assert.ok(cfgAt > html.lastIndexOf("renderizarForm()"));
+    assert.match(html, /<\\\/script>\s*<\/body><\/html>`/);
   });
   it("keeps da/uk/zh i18n as HOLD scaffolds off the language selector", () => {
     for (const locale of ["da", "uk", "zh"]) {
