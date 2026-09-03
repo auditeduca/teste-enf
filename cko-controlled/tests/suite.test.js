@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -168,5 +168,35 @@ describe("cascade root", () => {
     assert.equal(r.ok, false);
     const evidence = r.cascade.find((s) => s.id === "automatic-evidence");
     assert.ok(evidence.status === "SKIPPED" || evidence.status === "FAIL");
+  });
+});
+
+describe("runtime frontend", () => {
+  it("ships the platform pages and not the control-room graph UI", () => {
+    const pub = join(root, "../public");
+    const index = readFileSync(join(pub, "index.html"), "utf8");
+    assert.match(index, /Calculadoras de Enfermagem/);
+    assert.equal(index.includes('id="graph"'), false);
+    assert.equal(index.includes("Reexecutar cascata"), false);
+    assert.equal(index.includes("orquestrador"), false);
+    const pages = [
+      "missao.html",
+      "objetivo.html",
+      "ecossistema.html",
+      "acessibilidade.html",
+      "tecnologiaverde.html",
+      "privacidade.html",
+      "politica-editorial.html",
+      "notificacoes-legais.html",
+      "fale.html",
+      "forum-enfermagem.html",
+      "mapa-do-site.html",
+    ];
+    for (const p of pages) {
+      const html = readFileSync(join(pub, p), "utf8");
+      assert.ok(html.includes("<main"), p);
+      assert.equal(html.includes('canvas id="graph"'), false, p);
+    }
+    assert.equal(readdirSync(pub).includes("app.js"), false);
   });
 });

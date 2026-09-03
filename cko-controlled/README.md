@@ -1,13 +1,14 @@
-# CKO / CALENF — Relatório Técnico Final Controlado (Site)
+# CKO / CALENF — Site em runtime + cascata de assurance
 
-Implanta o texto de `CKO_Relatorio_Tecnico_Final_Controlado_v1.0.0` como **Firebase Hosting Site** técnico, fail-closed.
+## Frontend (runtime)
 
-- Baseline: `OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0` · `FINAL_CONTROLLED`
-- Release: **HOLD / NOT_RELEASED**
-- Nurse-PaLM operacional: **NOT_ASSERTED**
-- `robots: noindex`
+O Hosting serve **somente a plataforma** (cluster institucional Wave2):
 
-## Cascata (raiz)
+`/` `missao.html` `objetivo.html` `ecossistema.html` `acessibilidade.html` `tecnologiaverde.html` `privacidade.html` `politica-editorial.html` `notificacoes-legais.html` `fale.html` `forum-enfermagem.html` `mapa-do-site.html`
+
+Não há páginas de grafo, AUD-8L, heatmap, evaluation science ou orquestrador no frontend.
+
+## Cascata (CI / engine — não é UI)
 
 ```
 policy-as-code
@@ -22,8 +23,6 @@ runtime assertions
         ↓
 automatic evidence
 ```
-
-Tudo inicia em `policy-as-code`. Estágio seguinte só entra como PASS se o predecessor passou. Sem evidência automática se a cadeia quebrou.
 
 ```
 coverage = 100% do universo conhecido
