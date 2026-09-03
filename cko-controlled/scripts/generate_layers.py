@@ -22,6 +22,9 @@ from generate_universal_tool import generate as generate_universal_tool
 from generate_policy_master import generate as generate_policy_master
 from generate_visual_assets import generate as generate_visual_assets
 from generate_platform_closure import generate as generate_platform_closure
+from generate_layer_policies import generate as generate_layer_policies
+from generate_extraction import generate as generate_extraction
+from cko_policy_contract import layer_policy_id
 
 GATE = Path(__file__).resolve().parents[1]
 SITE = GATE.parent / "reference-website"
@@ -311,6 +314,9 @@ def materialize_layer(row: dict) -> dict:
             "LYR-EDU-001": "educational",
             "LYR-LEARN-001": "learning",
         }.get(layer_id),
+        "policy_id": layer_policy_id(layer_id),
+        "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "policy_status": "CONTROLLED_LAYER_HOLD",
     }
 
 
@@ -591,6 +597,8 @@ def generate() -> dict:
     generate_policy_master()
     generate_visual_assets()
     generate_platform_closure()
+    generate_layer_policies()
+    generate_extraction()
     if not CLOSURE.is_file():
         raise SystemExit(f"closure HTML missing: {CLOSURE}")
     rows = json.loads(CANON.read_text(encoding="utf-8"))
@@ -650,6 +658,9 @@ def generate() -> dict:
         },
         "md_freeze": "FROZEN",
         "reg_freeze": "FROZEN",
+        "policy": "POL-CKO-LAYER-CATALOG-1.0.0",
+        "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+        "policy_status": "CONTROLLED_LAYER_HOLD",
         "layers": layers,
         "zip_verified_n": sum(1 for l in layers if l["zip_verified"]),
         "snapshot_files": snapshot["file_count"],

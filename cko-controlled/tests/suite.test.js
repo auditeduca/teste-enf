@@ -18,6 +18,14 @@ import {
   inspectTemplateGovernance,
   inspectVisualAssetPolicy,
   inspectPlatformClosure,
+  inspectLayerPolicies,
+  inspectExtractionPolicy,
+  LAYER_CATALOG_ID,
+  LAYER_DOCUMENT_ID,
+  LAYER_POLICY_N,
+  EXTRACTION_POLICY_ID,
+  EXTRACTION_DOCUMENT_ID,
+  EXTRACTION_STREAM_N,
   POLICY_MASTER_FIELDS,
   CLOSURE_POLICY_ID,
   CLOSURE_DOCUMENT_ID,
@@ -79,6 +87,8 @@ const universalToolPolicy = JSON.parse(readFileSync(join(gatePub, "policies/univ
 const policyMaster = JSON.parse(readFileSync(join(gatePub, "policies/policy-master.json"), "utf8"));
 const visualAssetPolicy = JSON.parse(readFileSync(join(gatePub, "policies/visual-assets.json"), "utf8"));
 const platformClosure = JSON.parse(readFileSync(join(gatePub, "policies/platform-closure.json"), "utf8"));
+const layerPolicies = JSON.parse(readFileSync(join(gatePub, "policies/layer-policies.json"), "utf8"));
+const extractionPolicy = JSON.parse(readFileSync(join(gatePub, "policies/extraction.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -99,6 +109,8 @@ const platform = {
   policyMaster,
   visualAssetPolicy,
   platformClosure,
+  layerPolicies,
+  extractionPolicy,
 };
 
 describe("schemas", () => {
@@ -157,6 +169,8 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "POLICY_MASTER_HOLD"));
     assert.ok(policy.rules.some((r) => r.id === "TEMPLATE_POLICY_HOLD"));
     assert.ok(policy.rules.some((r) => r.id === "PLATFORM_CLOSURE_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "LAYER_POLICY_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "EXTRACTION_POLICY_HOLD"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -916,6 +930,63 @@ describe("platform closure hold policies", () => {
   });
 });
 
+describe("layer and extraction hold policies", () => {
+  it("specializes all 44 layers onto POLICY_MASTER_CONTRACT", () => {
+    const r = inspectLayerPolicies(layerPolicies, layers);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(layerPolicies.id, LAYER_CATALOG_ID);
+    assert.equal(layerPolicies.document_id, LAYER_DOCUMENT_ID);
+    assert.equal(layerPolicies.layer_count, LAYER_POLICY_N);
+    assert.equal(layerPolicies.layers.length, LAYER_POLICY_N);
+    assert.equal(layerPolicies.active, false);
+    assert.equal(layerPolicies.release_allowed, false);
+    assert.ok(layerPolicies.layers.every((l) => l.contract.field_count === 28 && l.specializes === POLICY_MASTER_ID && l.active === false));
+    assert.ok(layers.layers.every((l) => l.policy_id && l.specializes === POLICY_MASTER_ID));
+    const calc = layerPolicies.layers.find((l) => l.layer_id === "LYR-CLIN-CALC-001");
+    const scale = layerPolicies.layers.find((l) => l.layer_id === "LYR-CLIN-SCALE-001");
+    assert.equal(calc.clinical_state, "PAUSED");
+    assert.equal(scale.clinical_state, "PAUSED");
+  });
+  it("fails at policy-as-code if a layer policy is marked ACTIVE", async () => {
+    const brokenLayers = layerPolicies.layers.map((l, i) => (i === 0 ? { ...l, active: true, implantado: true } : l));
+    const broken = { ...platform, layerPolicies: { ...layerPolicies, layers: brokenLayers } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "LAYER_POLICY_HOLD"));
+  });
+  it("creates the extraction catalog that did not exist as policy-as-code", () => {
+    const r = inspectExtractionPolicy(extractionPolicy);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(extractionPolicy.id, EXTRACTION_POLICY_ID);
+    assert.equal(extractionPolicy.document_id, EXTRACTION_DOCUMENT_ID);
+    assert.equal(extractionPolicy.stream_count, EXTRACTION_STREAM_N);
+    assert.equal(extractionPolicy.active, false);
+    assert.equal(extractionPolicy.implantado, false);
+    assert.equal(extractionPolicy.assured, false);
+    const corpus = extractionPolicy.streams.find((s) => s.stream_id === "EXT-REG-CORPUS");
+    assert.equal(corpus.count, 0);
+    assert.ok(extractionPolicy.streams.every((s) => s.specializes === POLICY_MASTER_ID && s.contract.field_count === 28));
+  });
+  it("fails at policy-as-code if extraction claims implantado", async () => {
+    const broken = { ...platform, extractionPolicy: { ...extractionPolicy, implantado: true, active: true } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "EXTRACTION_POLICY_HOLD"));
+  });
+  it("renders layer and extraction catalogs on cascade and holds pages", () => {
+    const cascade = readFileSync(join(site, "data/cko/cascade/index.html"), "utf8");
+    const holds = readFileSync(join(site, "cko-holds.html"), "utf8");
+    assert.match(cascade, /data-cko-ds-render="layer-policies"/);
+    assert.match(cascade, /data-cko-ds-render="extraction"/);
+    assert.match(holds, /data-cko-ds-render="layer-policies"/);
+    assert.match(holds, /data-cko-ds-render="extraction"/);
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderLayerPolicies/);
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderExtraction/);
+  });
+});
+
 describe("applied security probes", () => {
   it("denies forged ACK, replay, injection, traversal and prompt injection without a second effect", () => {
     const r = securityOffensive(universe);
@@ -932,6 +1003,9 @@ describe("MD/REG as policy through the frontend", () => {
     assert.equal(mdRegPolicy.id, MD_REG_POLICY_ID);
     assert.deepEqual(mdRegPolicy.chain, MD_REG_CHAIN);
     assert.equal(mdRegPolicy.release_allowed, false);
+    assert.equal(mdRegPolicy.parent, POLICY_MASTER_ID);
+    assert.equal(mdRegPolicy.specializes, POLICY_MASTER_ID);
+    assert.equal(mdRegPolicy.contract.field_count, 28);
   });
   it("keeps human decisions HOLD_HUMAN_NON_BLOCKING without failing inspect", async () => {
     const human = inspectHumanDecisions(humanDecisions);

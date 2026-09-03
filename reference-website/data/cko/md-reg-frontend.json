@@ -3,7 +3,8 @@
   "kind": "policy-as-code",
   "mode": "fail-closed",
   "root": false,
-  "parent": "POL-CKO-FAIL-CLOSED-1.0.0",
+  "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+  "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
   "identity": "MD and REG are the executable policy through the frontend",
   "chain": [
     "MD",
@@ -24,7 +25,10 @@
   "regulatory": {
     "layer": "CKO-REG",
     "bindings_classified": 10913,
-    "nifs": ["NIFS-900-03", "NIFS-600-15"],
+    "nifs": [
+      "NIFS-900-03",
+      "NIFS-600-15"
+    ],
     "freeze": "FROZEN"
   },
   "frontend_stamp": {
@@ -47,5 +51,217 @@
     "duplicate": "deny-at-runtime-dedupe"
   },
   "release": "HOLD / NOT_RELEASED",
-  "release_allowed": false
+  "release_allowed": false,
+  "inherits": [
+    "POL-CKO-FAIL-CLOSED-1.0.0",
+    "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+  ],
+  "starts_at": "policy-as-code",
+  "active": false,
+  "implantado": false,
+  "assured": false,
+  "documentado": true,
+  "contract": {
+    "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+    "status": "SPECIALIZED_HOLD",
+    "implemented": false,
+    "assured": false,
+    "field_count": 28,
+    "fields": {
+      "IDENTITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "policy_id": "POL-CKO-MD-REG-FRONTEND-1.0.0",
+        "policy_name": "MD/REG através do frontend",
+        "policy_type": "FRONTEND",
+        "policy_status": "HOLD / NOT_RELEASED",
+        "document_id": "CKO-MD-REG",
+        "chain_id": "CKO-MD-TO-FRONTEND-1.0.0"
+      },
+      "AUTHORITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "sources": [
+          "CKO-MD",
+          "CKO-REG",
+          "NIFS-900-03",
+          "NIFS-600-15"
+        ]
+      },
+      "INTENT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "objective": "keep_md_reg_executable_through_frontend_without_release",
+        "desired_state": "human_signed_or_explicit_hold",
+        "prohibited_state": "silent_bypass_or_release"
+      },
+      "APPLICABILITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "mode": "REQUIRED"
+      },
+      "SCOPE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "layers": [
+          "CKO-MD",
+          "CKO-REG"
+        ]
+      },
+      "SUBJECT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "actors": [
+          "HUMAN",
+          "AGENT"
+        ],
+        "objects": [
+          "PLATFORM",
+          "RELEASE"
+        ]
+      },
+      "MODALITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "type": "MUST_NOT"
+      },
+      "CONDITIONS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "CONSTRAINTS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "DECISION": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "deny_if": [
+          "release_allowed == true or human_decisions.blocking_inspect == true"
+        ],
+        "allow_if": [
+          "human.signed == true"
+        ]
+      },
+      "OUTCOME": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "on_deny": "HOLD",
+        "on_allow": "HUMAN_REVIEW",
+        "severity": "BLOCKER"
+      },
+      "ENFORCEMENT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "preventive": [
+          "INSPECT",
+          "CI_GATE"
+        ],
+        "detective": [
+          "LEDGER"
+        ]
+      },
+      "CONTRACT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "IMPLEMENTATION": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "TESTS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "CI_GATES": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "RUNTIME_ASSERTIONS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "OBSERVABILITY": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "EVIDENCE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "PROVENANCE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "GOVERNANCE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "owner": "HUMAN",
+        "approval_required": true,
+        "human_boundary": "FINAL_APPROVAL",
+        "blocking_inspect": false,
+        "blocking_release": true
+      },
+      "EXCEPTIONS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "DEPENDENCIES": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "VERSIONING": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "LIFECYCLE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "CHANGE_IMPACT": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false
+      },
+      "READINESS": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "score": "NOT_READY",
+        "active": false
+      },
+      "ASSURANCE": {
+        "status": "SPECIALIZED_HOLD",
+        "implemented": false,
+        "assured": false,
+        "verdict": "HOLD",
+        "release_allowed": false
+      }
+    }
+  }
 }

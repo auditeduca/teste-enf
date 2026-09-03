@@ -66,6 +66,8 @@ EXISTING = [
     {"id": "POL-CKO-MD-REG-FRONTEND-1.0.0", "role": "frontend", "document_id": "CKO-MD-REG"},
     {"id": "POL-CKO-UNIVERSAL-TOOL-1.3.0", "role": "application", "document_id": "CKO-POL-UT-001"},
     {"id": "POL-CKO-VISUAL-ASSET-1.0.0", "role": "designos", "document_id": "CKO-VAS-001"},
+    {"id": "POL-CKO-LAYER-CATALOG-1.0.0", "role": "layers", "document_id": "CKO-POL-LYR-001"},
+    {"id": "POL-CKO-EXTRACTION-1.0.0", "role": "extraction", "document_id": "CKO-POL-EXTRACT-001"},
 ]
 
 HOLDS = [
