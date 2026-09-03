@@ -1,0 +1,516 @@
+{
+  "id": "POL-CKO-VISUAL-ASSET-1.0.0",
+  "kind": "policy-as-code",
+  "mode": "fail-closed",
+  "root": false,
+  "starts_at": "policy-as-code",
+  "parent": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+  "inherits": [
+    "POL-CKO-FAIL-CLOSED-1.0.0",
+    "POL-CKO-UNIVERSAL-TOOL-1.3.0"
+  ],
+  "document_id": "CKO-VAS-001",
+  "document_version": "1.0.0",
+  "cascade": [
+    "policy-as-code",
+    "schemas",
+    "graph-constraints",
+    "CI-gates",
+    "runtime-assertions",
+    "automatic-evidence"
+  ],
+  "release": "HOLD / NOT_RELEASED",
+  "release_allowed": false,
+  "published": false,
+  "operational": "NOT_ASSERTED",
+  "canonical_promotion": false,
+  "documentado": true,
+  "implantado": false,
+  "assured": false,
+  "new_architectural_root": false,
+  "layer_count_must_remain": 44,
+  "primary_layers": [
+    "LYR-DS-001",
+    "LYR-MEDIA-001",
+    "LYR-DERIVE-001",
+    "LYR-OG-001",
+    "LYR-EXPORT-001",
+    "LYR-DOC-TPL-001"
+  ],
+  "library_label": "09. VISUAL ASSET LIBRARY",
+  "library_is_layer": false,
+  "one_image_per_page": false,
+  "principle": "Canonical object → Visual Identity → Web/Social/File projections → Image Registry. Screenshot of the page is not an OG image.",
+  "families": [
+    {
+      "id": "discovery",
+      "name": "Discovery Images",
+      "purpose": "encontrar o conteúdo",
+      "surfaces": [
+        "homepage_card",
+        "library_card",
+        "search_result",
+        "related",
+        "recommendation",
+        "category",
+        "thumbnail"
+      ]
+    },
+    {
+      "id": "share",
+      "name": "Share Images",
+      "purpose": "sair do ecossistema",
+      "surfaces": [
+        "og",
+        "linkedin",
+        "facebook",
+        "x",
+        "whatsapp",
+        "telegram",
+        "instagram",
+        "pinterest",
+        "story"
+      ]
+    },
+    {
+      "id": "content",
+      "name": "Content Images",
+      "purpose": "dentro do conteúdo",
+      "surfaces": [
+        "article_hero",
+        "illustration",
+        "diagram",
+        "table",
+        "infographic",
+        "clinical_image",
+        "pdf_cover",
+        "slide_cover"
+      ]
+    }
+  ],
+  "object_languages": [
+    {
+      "code": "CAL",
+      "object_type": "calculator",
+      "language": "fórmula + instrumento + número",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "SCL",
+      "object_type": "scale",
+      "language": "score + gráfico",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "SCR",
+      "object_type": "screener",
+      "language": "perguntas + checklist",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "ART",
+      "object_type": "article",
+      "language": "editorial",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "CAS",
+      "object_type": "clinical_case",
+      "language": "contexto clínico abstrato; sem paciente real",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "QIZ",
+      "object_type": "quiz",
+      "language": "questão/interação",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "QST",
+      "object_type": "question",
+      "language": "questão",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "FLH",
+      "object_type": "flashcard",
+      "language": "pergunta/resposta",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "SIM",
+      "object_type": "exam_sim",
+      "language": "prova/documento",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "INF",
+      "object_type": "infographic",
+      "language": "dados/visualização",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "PBG",
+      "object_type": "pocket_guide",
+      "language": "referência rápida",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "SLD",
+      "object_type": "slide",
+      "language": "apresentação",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "EBK",
+      "object_type": "ebook",
+      "language": "capa editorial",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "PDF",
+      "object_type": "pdf",
+      "language": "documento",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "DOC",
+      "object_type": "docx",
+      "language": "documento",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "code": "XLS",
+      "object_type": "xlsx",
+      "language": "tabela/dados",
+      "status": "DOCUMENTADO_HOLD"
+    }
+  ],
+  "dimensions": {
+    "og": {
+      "width": 1200,
+      "height": 630,
+      "ratio": "1.91:1"
+    },
+    "linkedin": {
+      "width": 1200,
+      "height": 627,
+      "ratio": "1.91:1",
+      "master": "og"
+    },
+    "social": [
+      "LANDSCAPE",
+      "SQUARE",
+      "PORTRAIT",
+      "STORY"
+    ]
+  },
+  "text_budget": {
+    "thumbnail": "3-7",
+    "og": "5-12",
+    "social": "3-10",
+    "hero": "full_headline_allowed",
+    "infographic": "information_allowed"
+  },
+  "hierarchy": [
+    "CANONICAL_OBJECT",
+    "CONTENT_MODEL",
+    "DESIGN_SYSTEM",
+    "VISUAL_CONTRACT",
+    "ASSET_GENERATOR",
+    "IMAGE_REGISTRY",
+    "PROVENANCE",
+    "EVIDENCE"
+  ],
+  "visual_contract": {
+    "identity_required": true,
+    "discovery_required": [
+      "homepage_card",
+      "library_card",
+      "search_thumbnail"
+    ],
+    "social_required": [
+      "og",
+      "linkedin"
+    ],
+    "accessibility": {
+      "alt_text": "required",
+      "decorative_flag": "required"
+    },
+    "provenance": {
+      "generated_from": "canonical_object_id",
+      "template_version": "required",
+      "asset_version": "required"
+    },
+    "status": "DOCUMENTADO_HOLD"
+  },
+  "image_registry": {
+    "replaces": "ad_hoc_/images_folder_as_truth",
+    "fields": [
+      "asset_id",
+      "object_id",
+      "asset_type",
+      "variant",
+      "dimensions",
+      "format",
+      "template_id",
+      "template_version",
+      "generated_at",
+      "content_hash",
+      "alt_text",
+      "caption",
+      "copyright",
+      "license",
+      "creator",
+      "source",
+      "provenance",
+      "status"
+    ],
+    "status": "DOCUMENTADO_HOLD",
+    "materialized": false
+  },
+  "generator": {
+    "id": "visual_asset_generator",
+    "operational": "NOT_ASSERTED",
+    "may_publish": false,
+    "human_review_required": true
+  },
+  "document_projections": {
+    "pdf_cover": "HOLD",
+    "docx": {
+      "cover": "HOLD",
+      "toc": "HOLD",
+      "identification": "HOLD",
+      "files_generated": false
+    },
+    "pptx": {
+      "title_slide": "HOLD",
+      "files_generated": false
+    },
+    "xlsx": {
+      "banner_not_large_image": true,
+      "governance_sheet": "HOLD"
+    },
+    "ebook_cover": "HOLD",
+    "note": "Word/PPT completos não foram gerados. São projeções do mesmo objeto, não conteúdos paralelos."
+  },
+  "internal_policies": [
+    {
+      "id": "POL-VIS-001",
+      "name": "Identidade visual canônica",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-002",
+      "name": "Assets: nomenclatura, formato, ciclo de vida",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-003",
+      "name": "Templates versionados",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-004",
+      "name": "Evidências visuais",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-005",
+      "name": "Proveniência Object→Content→Template→Generator→Asset→Publication",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-006",
+      "name": "Acessibilidade visual",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-007",
+      "name": "Direitos autorais e licenciamento",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-008",
+      "name": "SEO/GEO/AEO visual",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-009",
+      "name": "Social media assets",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-010",
+      "name": "Document assets PDF/DOCX/XLSX/PPTX/ebook",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-011",
+      "name": "Versionamento independente template/asset/objeto",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-012",
+      "name": "Alteração: sem overwrite silencioso",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-013",
+      "name": "Depreciação ACTIVE→SUPERSEDED→DEPRECATED→ARCHIVED",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-014",
+      "name": "Quality gates",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    },
+    {
+      "id": "POL-VIS-015",
+      "name": "Segurança e integridade",
+      "status": "DOCUMENTADO_HOLD",
+      "active": false,
+      "implemented": false,
+      "inherits_master": true
+    }
+  ],
+  "evidence_templates": [
+    {
+      "id": "EVD-001",
+      "name": "EVD-001 Source Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-002",
+      "name": "EVD-002 Claim Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-003",
+      "name": "EVD-003 Clinical Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-004",
+      "name": "EVD-004 Regulatory Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-005",
+      "name": "EVD-005 Visual Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-006",
+      "name": "EVD-006 Accessibility Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-007",
+      "name": "EVD-007 Copyright Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-008",
+      "name": "EVD-008 Calculation Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-009",
+      "name": "EVD-009 AI Generation Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-010",
+      "name": "EVD-010 Human Review Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-011",
+      "name": "EVD-011 Publication Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-012",
+      "name": "EVD-012 Change Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-013",
+      "name": "EVD-013 Provenance Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-014",
+      "name": "EVD-014 Validation Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "EVD-015",
+      "name": "EVD-015 Audit Evidence",
+      "status": "DOCUMENTADO_HOLD"
+    }
+  ],
+  "utc_bindings": [
+    "UTC-045",
+    "UTC-047",
+    "UTC-053",
+    "UTC-056",
+    "UTC-071"
+  ],
+  "publication_gate": [
+    "GENERATED",
+    "VALIDATED",
+    "EVIDENCED",
+    "REVIEWED",
+    "APPROVED",
+    "PUBLISHED"
+  ],
+  "evaluation": {
+    "verdict": "DOCUMENTADO_HOLD_NOT_IMPLEMENTED",
+    "clinical_promotion": "DENIED",
+    "word_pptx_created": false
+  }
+}

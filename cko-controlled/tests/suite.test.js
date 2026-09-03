@@ -14,12 +14,19 @@ import {
   inspectHumanDecisions,
   inspectDesignSystem,
   inspectUniversalToolPolicy,
+  inspectPolicyMaster,
+  inspectVisualAssetPolicy,
   MD_REG_CHAIN,
   MD_REG_POLICY_ID,
   UT_POLICY_ID,
   UT_DOCUMENT_ID,
   UT_CONTROL_N,
   UT_MD_GATE,
+  POLICY_MASTER_ID,
+  POLICY_MASTER_FIELD_N,
+  VAS_POLICY_ID,
+  VAS_FAMILY_N,
+  VAS_INTERNAL_POLICY_N,
   HOLD_HUMAN_STATUS,
   validatePendenciesSchema,
   evaluatePolicies,
@@ -63,6 +70,8 @@ const mdRegPolicy = JSON.parse(readFileSync(join(gatePub, "policies/md-reg-front
 const humanDecisions = JSON.parse(readFileSync(join(gatePub, "data/human-decisions.json"), "utf8"));
 const designSystem = JSON.parse(readFileSync(join(site, "data/cko/design-system.json"), "utf8"));
 const universalToolPolicy = JSON.parse(readFileSync(join(gatePub, "policies/universal-tool.json"), "utf8"));
+const policyMaster = JSON.parse(readFileSync(join(gatePub, "policies/policy-master.json"), "utf8"));
+const visualAssetPolicy = JSON.parse(readFileSync(join(gatePub, "policies/visual-assets.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -80,6 +89,8 @@ const platform = {
   humanDecisions,
   designSystem,
   universalToolPolicy,
+  policyMaster,
+  visualAssetPolicy,
 };
 
 describe("schemas", () => {
@@ -206,6 +217,8 @@ describe("coverage rules", () => {
     assert.equal(receipts.filter((x) => x.kind === "runtime").length, 12);
     assert.ok(receipts.some((x) => x.subject === "CKO-TOOL-LIBRARY-RUNTIME-1.0.0"));
     assert.ok(receipts.some((x) => x.subject === UT_POLICY_ID));
+    assert.ok(receipts.some((x) => x.subject === POLICY_MASTER_ID));
+    assert.ok(receipts.some((x) => x.subject === VAS_POLICY_ID));
     assert.ok(receipts.every((x) => x.root === "policy-as-code" && x.no_fact_without_evidence === true));
   });
   it("quantifies residual uncertainty X", () => {
@@ -769,6 +782,64 @@ describe("CKO-POL-UT-001 Universal Tool Policy", () => {
   it("renders the evaluation from JSON on the cascade page", () => {
     assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /universal-tool/);
     assert.match(readFileSync(join(site, "data/cko/cascade/index.html"), "utf8"), /data-cko-ds-render="universal-tool"/);
+  });
+});
+
+describe("POLICY_MASTER_CONTRACT", () => {
+  it("freezes 28 fields as a HOLD template not ACTIVE", () => {
+    const r = inspectPolicyMaster(policyMaster);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(policyMaster.id, POLICY_MASTER_ID);
+    assert.equal(policyMaster.field_count, POLICY_MASTER_FIELD_N);
+    assert.equal(policyMaster.fields.length, POLICY_MASTER_FIELD_N);
+    assert.equal(policyMaster.status, "CONTROLLED_TEMPLATE_HOLD");
+    assert.equal(policyMaster.active, false);
+    assert.equal(policyMaster.frozen, true);
+    assert.equal(policyMaster.new_architectural_root, false);
+  });
+  it("fails at policy-as-code if the master is marked ACTIVE", async () => {
+    const broken = { ...platform, policyMaster: { ...policyMaster, active: true, status: "ACTIVE" } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "POLICY_MASTER_HOLD"));
+  });
+});
+
+describe("Visual Asset System", () => {
+  it("binds discovery/share/content to existing layers without a 45th root", () => {
+    const r = inspectVisualAssetPolicy(visualAssetPolicy);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(visualAssetPolicy.id, VAS_POLICY_ID);
+    assert.equal(visualAssetPolicy.families.length, VAS_FAMILY_N);
+    assert.equal(visualAssetPolicy.internal_policies.length, VAS_INTERNAL_POLICY_N);
+    assert.equal(visualAssetPolicy.new_architectural_root, false);
+    assert.equal(visualAssetPolicy.one_image_per_page, false);
+    assert.equal(visualAssetPolicy.generator.operational, "NOT_ASSERTED");
+    assert.equal(visualAssetPolicy.document_projections.docx.files_generated, false);
+    assert.equal(visualAssetPolicy.dimensions.og.width, 1200);
+    assert.equal(visualAssetPolicy.dimensions.og.height, 630);
+    assert.equal(visualAssetPolicy.dimensions.linkedin.height, 627);
+  });
+  it("fails at policy-as-code if VAS claims a 45th layer or generated Word files", async () => {
+    const broken = {
+      ...platform,
+      visualAssetPolicy: {
+        ...visualAssetPolicy,
+        new_architectural_root: true,
+        document_projections: { ...visualAssetPolicy.document_projections, docx: { files_generated: true } },
+      },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "VAS_HOLD"));
+  });
+  it("renders master and VAS from JSON on the cascade page", () => {
+    const html = readFileSync(join(site, "data/cko/cascade/index.html"), "utf8");
+    assert.match(html, /data-cko-ds-render="policy-master"/);
+    assert.match(html, /data-cko-ds-render="visual-assets"/);
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderVisualAssets/);
   });
 });
 

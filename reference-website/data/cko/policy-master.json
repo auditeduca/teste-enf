@@ -1,0 +1,306 @@
+{
+  "id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+  "kind": "policy-as-code",
+  "mode": "fail-closed",
+  "root": false,
+  "starts_at": "policy-as-code",
+  "parent": "POL-CKO-FAIL-CLOSED-1.0.0",
+  "document_id": "POLICY_MASTER_CONTRACT",
+  "document_version": "1.0.0",
+  "status": "CONTROLLED_TEMPLATE_HOLD",
+  "frozen": true,
+  "active": false,
+  "cascade": [
+    "policy-as-code",
+    "schemas",
+    "graph-constraints",
+    "CI-gates",
+    "runtime-assertions",
+    "automatic-evidence"
+  ],
+  "chain": [
+    "AUTHORITY",
+    "NORMATIVE_ATOM",
+    "APPLICABILITY",
+    "CONTROL",
+    "POLICY_SPECIFICATION",
+    "POLICY_CONTRACT",
+    "POLICY_AS_CODE",
+    "TEST",
+    "CI_GATE",
+    "RUNTIME_ENFORCEMENT",
+    "OBSERVABILITY",
+    "EVIDENCE",
+    "ASSURANCE",
+    "HUMAN_GOVERNANCE"
+  ],
+  "release": "HOLD / NOT_RELEASED",
+  "release_allowed": false,
+  "published": false,
+  "operational": "NOT_ASSERTED",
+  "canonical_promotion": false,
+  "documentado": true,
+  "implantado": false,
+  "assured": false,
+  "new_architectural_root": false,
+  "specialization_rule": "Policies specialize this contract by layer + vertical + application + object + field + context. They do not invent a parallel structure.",
+  "golden_rule": "Uma Policy não é completa quando foi escrita. Ela é completa quando autoridade, aplicabilidade, decisão, enforcement, teste, evidência e governança humana são reconstruíveis.",
+  "field_count": 28,
+  "fields": [
+    {
+      "seq": "01",
+      "id": "IDENTITY",
+      "question": "Qual política?",
+      "base_kind": "architectural",
+      "bases": "ISO 27001/9001, NIST CSF, W3C PROV, configuration management",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "02",
+      "id": "AUTHORITY",
+      "question": "Por que existe?",
+      "base_kind": "normative",
+      "bases": "lei, regulamento, standard, WCAG, LGPD, ISO, NIST, OWASP, política interna",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "03",
+      "id": "INTENT",
+      "question": "O que pretende assegurar?",
+      "base_kind": "normative",
+      "bases": "control objectives, WCAG outcomes, NIST, COBIT, requisitos",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "04",
+      "id": "APPLICABILITY",
+      "question": "Quando se aplica?",
+      "base_kind": "normative",
+      "bases": "ISO 27001 scope, NIST context, LGPD, WCAG conteúdo aplicável",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "05",
+      "id": "SCOPE",
+      "question": "Onde se aplica?",
+      "base_kind": "architectural",
+      "bases": "ISO/NIST scope, 44 camadas × verticais × application × object × field",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "06",
+      "id": "SUBJECT",
+      "question": "Quem/o que está sujeito?",
+      "base_kind": "normative",
+      "bases": "IAM, RBAC/ABAC, ISO 27001, least privilege, human governance",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "07",
+      "id": "MODALITY",
+      "question": "Qual a força da obrigação?",
+      "base_kind": "normative",
+      "bases": "RFC 2119, RFC 8174",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "08",
+      "id": "CONDITIONS",
+      "question": "Sob quais condições?",
+      "base_kind": "technical",
+      "bases": "OPA/Rego, SHACL, regra condicional",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "09",
+      "id": "CONSTRAINTS",
+      "question": "Quais propriedades são obrigatórias?",
+      "base_kind": "technical",
+      "bases": "JSON Schema, SHACL, OWL",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "10",
+      "id": "DECISION",
+      "question": "Qual decisão determinística?",
+      "base_kind": "technical",
+      "bases": "OPA/Rego, policy engines, ABAC",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "11",
+      "id": "OUTCOME",
+      "question": "Qual resultado/estado?",
+      "base_kind": "technical",
+      "bases": "state machine, workflow, CI/CD gates",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "12",
+      "id": "ENFORCEMENT",
+      "question": "Como será imposto?",
+      "base_kind": "technical",
+      "bases": "OPA, DevSecOps, NIST, ISO 27001, secure SDLC",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "13",
+      "id": "CONTRACT",
+      "question": "Qual contrato formal?",
+      "base_kind": "technical",
+      "bases": "Design by Contract, JSON Schema, OpenAPI, SHACL",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "14",
+      "id": "IMPLEMENTATION",
+      "question": "Como foi implementado?",
+      "base_kind": "technical",
+      "bases": "policy-as-code, OPA, CI/CD",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "15",
+      "id": "TESTS",
+      "question": "Como provamos que funciona?",
+      "base_kind": "technical",
+      "bases": "OPA tests, ISO 9001/27001, CI",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "16",
+      "id": "CI_GATES",
+      "question": "Pode ser promovido?",
+      "base_kind": "technical",
+      "bases": "NIST SSDF, SLSA, DevSecOps",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "17",
+      "id": "RUNTIME_ASSERTIONS",
+      "question": "Continua válido em produção?",
+      "base_kind": "technical",
+      "bases": "runtime policy, OpenTelemetry, SRE",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "18",
+      "id": "OBSERVABILITY",
+      "question": "Como observamos?",
+      "base_kind": "technical",
+      "bases": "OpenTelemetry, SRE, ISO 27001 auditoria operacional",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "19",
+      "id": "EVIDENCE",
+      "question": "Qual prova existe?",
+      "base_kind": "normative",
+      "bases": "ISO 27001/9001, auditoria, W3C PROV, ALCOA+",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "20",
+      "id": "PROVENANCE",
+      "question": "De onde veio?",
+      "base_kind": "normative",
+      "bases": "W3C PROV, ALCOA+, ISO 27001, lineage",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "21",
+      "id": "GOVERNANCE",
+      "question": "Quem decide?",
+      "base_kind": "normative",
+      "bases": "ISO 27001/38500, NIST, AI governance, Maker≠Checker≠Auditor",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "22",
+      "id": "EXCEPTIONS",
+      "question": "Quando pode haver exceção?",
+      "base_kind": "normative",
+      "bases": "gestão de risco, controles compensatórios, ISO 27001",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "23",
+      "id": "DEPENDENCIES",
+      "question": "Do que depende?",
+      "base_kind": "architectural",
+      "bases": "configuration management, lineage, impact analysis",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "24",
+      "id": "VERSIONING",
+      "question": "Qual versão governa?",
+      "base_kind": "architectural",
+      "bases": "ISO 9001/27001, semantic versioning, imutabilidade de release",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "25",
+      "id": "LIFECYCLE",
+      "question": "Em que estado está?",
+      "base_kind": "architectural",
+      "bases": "lifecycle/change management ISO 9001/27001",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "26",
+      "id": "CHANGE_IMPACT",
+      "question": "O que será afetado?",
+      "base_kind": "architectural",
+      "bases": "change/impact analysis, dependency graph",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "27",
+      "id": "READINESS",
+      "question": "Está pronta?",
+      "base_kind": "architectural",
+      "bases": "assurance, release governance, DevSecOps",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    },
+    {
+      "seq": "28",
+      "id": "ASSURANCE",
+      "question": "Como provamos continuamente?",
+      "base_kind": "normative",
+      "bases": "ISO/NIST, auditoria, continuous assurance",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false
+    }
+  ],
+  "maturity_target": "P6_CONTINUOUSLY_ASSURED",
+  "maturity_current": "P2_GOVERNED_HOLD",
+  "rule": "AUTHORITY → NORMATIVE ATOM → APPLICABILITY → CONTROL → POLICY SPECIFICATION → CONTRACT → POLICY-AS-CODE → TEST → CI GATE → RUNTIME → EVIDENCE → ASSURANCE"
+}

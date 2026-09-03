@@ -250,6 +250,47 @@ function renderUniversalTool(policy) {
     </section>`;
 }
 
+function renderPolicyMaster(policy) {
+  const chips = (policy.fields || [])
+    .map((f) => `<li><code>${esc(f.seq)}</code> ${esc(f.id)}</li>`)
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_TEMPLATE_HOLD")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>Molde congelado. Políticas especializam estes 28 campos. Não é ACTIVE. DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>28 campos</h2>
+      <p class="cko-ds-help">${esc(policy.golden_rule || "")}</p>
+      <ul class="cko-ds-ut-chips">${chips}</ul>
+    </section>`;
+}
+
+function renderVisualAssets(policy) {
+  const fam = (policy.families || [])
+    .map(
+      (f) => `<article class="cko-ds-card"><span class="cko-ds-badge">${esc(f.id)}</span><h3>${esc(f.name)}</h3><p>${esc(f.purpose)}</p></article>`
+    )
+    .join("");
+  const langs = (policy.object_languages || [])
+    .map((o) => `<li><code>${esc(o.code)}</code> ${esc(o.object_type)}</li>`)
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.release || "HOLD / NOT_RELEASED")}</span>
+      <h1>Visual Asset System</h1>
+      <p>Não é uma imagem por página. O objeto canônico gera projeções Web, Social e File. Não é 45ª camada. Gerador ${esc(policy.generator?.operational)}. Word/PPT não gerados.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Três famílias</h2>
+      <div class="cko-ds-theme-row">${fam}</div>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Linguagens de objeto</h2>
+      <ul class="cko-ds-ut-chips">${langs}</ul>
+      <p class="cko-ds-help">OG ${esc(policy.dimensions?.og?.width)}×${esc(policy.dimensions?.og?.height)} · LinkedIn ${esc(policy.dimensions?.linkedin?.width)}×${esc(policy.dimensions?.linkedin?.height)} · uma fonte, múltiplas projeções.</p>
+    </section>`;
+}
+
 function renderIdentityManual(ds) {
   const identity = ds.identity_manual || {};
   const typeRows = (ds.tokens.typography || [])
@@ -390,6 +431,18 @@ async function mount(el) {
       refreshShellToc();
       return;
     }
+    if (mode === "policy-master") {
+      const policy = src.includes("policy-master") ? ds : await loadJson("/data/cko/policy-master.json");
+      el.innerHTML = renderPolicyMaster(policy);
+      refreshShellToc();
+      return;
+    }
+    if (mode === "visual-assets") {
+      const policy = src.includes("visual-assets") ? ds : await loadJson("/data/cko/visual-assets.json");
+      el.innerHTML = renderVisualAssets(policy);
+      refreshShellToc();
+      return;
+    }
     if (mode === "human-holds") {
       const ledger = src.includes("human-decisions") ? ds : await loadJson("/data/cko/human-decisions.json");
       el.innerHTML = renderHumanHolds(ledger);
@@ -431,4 +484,4 @@ if (document.readyState === "loading") {
   boot();
 }
 
-export { mount, renderCatalog, renderUniversalTool };
+export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets };
