@@ -521,7 +521,10 @@ def layers_section_html(catalog: dict) -> str:
   test pass = 100% dos testes definidos; incerteza residual = <code>X</code>;
   universo desconhecido = explicitado. Pacote de evidência em
   <a href="/data/cko/cascade/"><code>/data/cko/cascade/</code></a>.
-  Estado: <strong>HOLD / NOT_RELEASED</strong>. <code>release_allowed: false</code>.</p>
+  Estado: <strong>HOLD / NOT_RELEASED</strong>. <code>release_allowed: false</code>.
+  Policy neste frontend = <strong>CKO-MD</strong> + <strong>CKO-REG</strong> até o stamp
+  (<code>MD → REG → Schema → Engine → Validator → Renderer → Runtime → Frontend</code>).
+  Decisões humanas permanecem <code>HOLD_HUMAN_NON_BLOCKING</code>: não bloqueiam inspect/CI; continuam a negar release.</p>
   <ol class="list-clean">
     <li>RDF/OWL + SHACL, ontologia formal, grafo temporal e de propriedades, constraints e reasoning.</li>
     <li>Verificação: property-based, mutation testing, contract testing, fuzzing, model checking.</li>

@@ -1,0 +1,51 @@
+{
+  "id": "POL-CKO-MD-REG-FRONTEND-1.0.0",
+  "kind": "policy-as-code",
+  "mode": "fail-closed",
+  "root": false,
+  "parent": "POL-CKO-FAIL-CLOSED-1.0.0",
+  "identity": "MD and REG are the executable policy through the frontend",
+  "chain": [
+    "MD",
+    "REG",
+    "Schema",
+    "Engine",
+    "Validator",
+    "Renderer",
+    "Runtime",
+    "Frontend"
+  ],
+  "chain_id": "CKO-MD-TO-FRONTEND-1.0.0",
+  "master_data": {
+    "layer": "CKO-MD",
+    "fields_classified": 2496,
+    "freeze": "FROZEN"
+  },
+  "regulatory": {
+    "layer": "CKO-REG",
+    "bindings_classified": 10913,
+    "nifs": ["NIFS-900-03", "NIFS-600-15"],
+    "freeze": "FROZEN"
+  },
+  "frontend_stamp": {
+    "md": "data-cko-md=\"CKO-MD\"",
+    "reg": "data-cko-reg=\"CKO-REG\"",
+    "norm": "data-cko-norm=\"NIFS-900-03\"",
+    "evidence": "data-cko-evidence=\"HOLD\"",
+    "chain": "data-cko-chain=\"MD / REG / Schema / Engine / Validator / Renderer / Runtime / Frontend\""
+  },
+  "human_decisions": {
+    "status": "HOLD_HUMAN_NON_BLOCKING",
+    "blocking_inspect": false,
+    "blocking_ci": false,
+    "blocking_release": true,
+    "rule": "decisão humana permanece explícita; não falha inspect/CI; continua a negar release"
+  },
+  "chrome": {
+    "breadcrumb": "one",
+    "hero": "one",
+    "duplicate": "deny-at-runtime-dedupe"
+  },
+  "release": "HOLD / NOT_RELEASED",
+  "release_allowed": false
+}

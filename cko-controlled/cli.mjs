@@ -29,8 +29,14 @@ const pendenciesPath = join(gatePub, "data/pendencies.json");
 const pendencies = existsSync(pendenciesPath) ? JSON.parse(readFileSync(pendenciesPath, "utf8")) : undefined;
 const driveImmutablePath = join(gatePub, "data/drive-immutable.json");
 const driveImmutable = existsSync(driveImmutablePath) ? JSON.parse(readFileSync(driveImmutablePath, "utf8")) : undefined;
+const mdRegPolicyPath = join(gatePub, "policies/md-reg-frontend.json");
+const mdRegPolicy = existsSync(mdRegPolicyPath) ? JSON.parse(readFileSync(mdRegPolicyPath, "utf8")) : undefined;
+const humanPath = existsSync(join(site, "data/cko/human-decisions.json"))
+  ? join(site, "data/cko/human-decisions.json")
+  : join(gatePub, "data/human-decisions.json");
+const humanDecisions = existsSync(humanPath) ? JSON.parse(readFileSync(humanPath, "utf8")) : undefined;
 const ontology = existsSync(join(gatePub, "graph/ontology.ttl")) ? readFileSync(join(gatePub, "graph/ontology.ttl"), "utf8") : "";
-const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable };
+const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable, mdRegPolicy, humanDecisions };
 
 const report = await runGates(universe, { action: "inspect", platform, ontology });
 
@@ -137,6 +143,12 @@ writeFileSync(
 );
 copyFileSync(join(gatePub, "graph/ontology.ttl"), join(cascadeDir, "ontology.ttl"));
 copyFileSync(join(gatePub, "graph/shacl.json"), join(cascadeDir, "shacl.json"));
+copyFileSync(join(gatePub, "policies/md-reg-frontend.json"), join(cascadeDir, "md-reg-frontend.json"));
+copyFileSync(join(gatePub, "policies/md-reg-frontend.json"), join(site, "data/cko/md-reg-frontend.json"));
+if (humanDecisions) {
+  writeFileSync(join(cascadeDir, "human-decisions.json"), JSON.stringify(humanDecisions, null, 2) + "\n");
+  writeFileSync(join(site, "data/cko/human-decisions.json"), JSON.stringify(humanDecisions, null, 2) + "\n");
+}
 writeFileSync(
   join(cascadeDir, "index.html"),
   `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>CKO cascade HOLD</title></head><body><main><h1>Assurance cascade</h1><p>HOLD / NOT_RELEASED. <code>release_allowed: false</code>.</p><p><a href="./index.json">index.json</a> · <a href="./gate-report.json">gate-report.json</a></p></main></body></html>\n`

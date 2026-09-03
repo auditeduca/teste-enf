@@ -344,7 +344,7 @@ def build(cfg):
 <main id="main-content">
   <div class="container">
 
-    <nav class="tpl-breadcrumb" aria-label="Breadcrumb">
+    <nav class="tpl-breadcrumb" aria-label="Breadcrumb" data-cko-static="breadcrumb">
       <a href="index.html">Início</a>
       <svg class="sep"><use href="#i-arrow"/></svg>
       <a href="{esc(breadcrumb.get('categoryHref','index.html#calculadoras'))}">Ferramentas</a>
@@ -354,7 +354,7 @@ def build(cfg):
       <span class="current" aria-current="page">{esc(ov['name'])}</span>
     </nav>
 
-    <div class="tool-header">
+    <div class="tool-header" data-cko-static="hero">
       <div class="tool-header-main">
         <div class="tool-icon-badge" aria-hidden="true">
           <svg class="icon"><use href="#{esc(ov.get('icon','i-calculator'))}"/></svg>

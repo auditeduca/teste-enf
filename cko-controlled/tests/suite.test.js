@@ -10,6 +10,11 @@ import {
   inspectPendencies,
   inspectCalenfGovernance,
   inspectLayers,
+  inspectMdRegPolicy,
+  inspectHumanDecisions,
+  MD_REG_CHAIN,
+  MD_REG_POLICY_ID,
+  HOLD_HUMAN_STATUS,
   validatePendenciesSchema,
   evaluatePolicies,
   graphConstraints,
@@ -48,6 +53,8 @@ const governance = JSON.parse(readFileSync(join(site, "data/cko/governance.json"
 const layers = JSON.parse(readFileSync(join(site, "data/cko/layers.json"), "utf8"));
 const pendencies = JSON.parse(readFileSync(join(gatePub, "data/pendencies.json"), "utf8"));
 const driveImmutable = JSON.parse(readFileSync(join(gatePub, "data/drive-immutable.json"), "utf8"));
+const mdRegPolicy = JSON.parse(readFileSync(join(gatePub, "policies/md-reg-frontend.json"), "utf8"));
+const humanDecisions = JSON.parse(readFileSync(join(gatePub, "data/human-decisions.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -61,6 +68,8 @@ const platform = {
   layers,
   pendencies,
   driveImmutable,
+  mdRegPolicy,
+  humanDecisions,
 };
 
 describe("schemas", () => {
@@ -112,6 +121,8 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "LAYERS_44_PRESENT"));
     assert.ok(policy.rules.some((r) => r.id === "MD_NORMS_EVIDENCE_CHAIN"));
     assert.ok(policy.rules.some((r) => r.id === "CASCADE_DECLARED"));
+    assert.ok(policy.rules.some((r) => r.id === "HOLD_HUMAN_NON_BLOCKING"));
+    assert.ok(policy.rules.some((r) => r.id === "MD_REG_IS_POLICY"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -682,5 +693,65 @@ describe("applied security probes", () => {
     assert.equal(r.ok, true, JSON.stringify(r.probes));
     const ids = r.probes.map((p) => p.id);
     assert.deepEqual(ids, ["FORGED_ACK", "REPLAY", "INJECTION", "PATH_TRAVERSAL", "PROMPT_INJECTION"]);
+  });
+});
+
+describe("MD/REG as policy through the frontend", () => {
+  it("treats CKO-MD + CKO-REG as executable policy-as-code", () => {
+    const r = inspectMdRegPolicy(mdRegPolicy);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(mdRegPolicy.id, MD_REG_POLICY_ID);
+    assert.deepEqual(mdRegPolicy.chain, MD_REG_CHAIN);
+    assert.equal(mdRegPolicy.release_allowed, false);
+  });
+  it("keeps human decisions HOLD_HUMAN_NON_BLOCKING without failing inspect", async () => {
+    const human = inspectHumanDecisions(humanDecisions);
+    assert.equal(human.ok, true, JSON.stringify(human.denials));
+    assert.equal(humanDecisions.status, HOLD_HUMAN_STATUS);
+    assert.equal(humanDecisions.blocking_inspect, false);
+    const r = await runGates(universe, { platform });
+    assert.equal(r.ok, true, JSON.stringify(r.failed));
+    assert.equal(r.policy.release_allowed, false);
+    assert.ok(r.runtime.asserts.some((a) => a.id === "A-HOLD-HUMAN-NON-BLOCKING" && a.ok));
+  });
+  it("fails inspect only if a human decision is marked blocking", async () => {
+    const broken = {
+      ...platform,
+      humanDecisions: {
+        ...humanDecisions,
+        items: humanDecisions.items.map((item, i) =>
+          i === 0 ? { ...item, blocking_inspect: true } : item
+        ),
+      },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "HOLD_HUMAN_NON_BLOCKING"));
+  });
+});
+
+describe("chrome templates", () => {
+  it("keeps calculator/tool/institutional templates with slots xor static chrome", () => {
+    for (const name of ["calculator.html", "tool.html", "institutional.html"]) {
+      const html = readFileSync(join(site, "templates", name), "utf8");
+      assert.match(html, /data-cko-slot="chrome"/);
+      assert.match(html, /data-cko-slot="hero"/);
+      assert.equal(html.includes("tpl-breadcrumb"), false, name);
+      assert.equal(/class="crumbs"/.test(html), false, name);
+      assert.equal(/class="hero"/.test(html), false, name);
+      assert.equal(html.includes("tool-header"), false, name);
+    }
+    const gen = readFileSync(join(site, "scripts/generate_tool_page.py"), "utf8");
+    assert.match(gen, /data-cko-static="breadcrumb"/);
+    assert.match(gen, /data-cko-static="hero"/);
+    const shell = readFileSync(join(site, "js/cko-page-shell.js"), "utf8");
+    assert.match(shell, /hasStaticHero/);
+    assert.match(shell, /data-cko-deduped/);
+    const home = readFileSync(join(site, "templates/home.html"), "utf8");
+    assert.match(home, /data-cko-static="hero"/);
+    const calcTpl = readFileSync(join(site, "calculadora-template.html"), "utf8");
+    assert.match(calcTpl, /data-cko-static="breadcrumb"/);
+    assert.match(calcTpl, /data-cko-static="hero"/);
   });
 });

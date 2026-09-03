@@ -49,9 +49,14 @@ const INTEGRITY_DENIALS = new Set([
   "LAYERS_44_PRESENT",
   "MD_NORMS_EVIDENCE_CHAIN",
   "CASCADE_DECLARED",
+  "HOLD_HUMAN_NON_BLOCKING",
+  "MD_REG_IS_POLICY",
 ]);
 
 export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
+export const MD_REG_CHAIN = ["MD", "REG", "Schema", "Engine", "Validator", "Renderer", "Runtime", "Frontend"];
+export const MD_REG_POLICY_ID = "POL-CKO-MD-REG-FRONTEND-1.0.0";
+export const HOLD_HUMAN_STATUS = "HOLD_HUMAN_NON_BLOCKING";
 export const MD_NORM_STAMP = {
   md: 'data-cko-md="CKO-MD"',
   reg: 'data-cko-reg="CKO-REG"',
@@ -223,6 +228,12 @@ export function inspectPlatform(platform) {
     const pend = inspectPendencies(platform.pendencies, platform.driveImmutable);
     denials.push(...pend.denials);
   }
+  if (platform?.mdRegPolicy) {
+    denials.push(...inspectMdRegPolicy(platform.mdRegPolicy).denials);
+  }
+  if (platform?.humanDecisions) {
+    denials.push(...inspectHumanDecisions(platform.humanDecisions).denials);
+  }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
     const stamped = [...RUNTIME_PAGES, ...TOOL_RUNTIME_CANARIES.filter((p) => files[p]), ...LIBRARY_RUNTIME_CANARIES.filter((p) => files[p])];
@@ -311,6 +322,9 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
     }
     if (!/id="cko-assurance-cascade"/.test(ecossistemaHtml) || !/policy-as-code/.test(ecossistemaHtml) || !/\/data\/cko\/cascade\//.test(ecossistemaHtml)) {
       denials.push({ id: "CASCADE_DECLARED", reason: "ecossistema.html must declare the assurance cascade with evidence pack" });
+    }
+    if (!/HOLD_HUMAN_NON_BLOCKING/.test(ecossistemaHtml) || !/CKO-MD/.test(ecossistemaHtml)) {
+      denials.push({ id: "HOLD_HUMAN_NON_BLOCKING", reason: "ecossistema.html must declare HOLD_HUMAN_NON_BLOCKING with MD/REG as policy" });
     }
   }
   if (layers.zip_verified_n !== 44) {
@@ -495,6 +509,61 @@ export function inspectPendencies(pendencies, driveImmutable) {
   return { ok: denials.length === 0, denials };
 }
 
+export function inspectMdRegPolicy(policy) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "MD_REG_IS_POLICY", reason });
+  if (!policy) return { ok: true, skipped: true, denials };
+  if (policy.id !== MD_REG_POLICY_ID || policy.kind !== "policy-as-code") {
+    deny("MD/REG frontend policy identity mismatch");
+  }
+  if (JSON.stringify(policy.chain) !== JSON.stringify(MD_REG_CHAIN)) {
+    deny("MD/REG chain must be MD → REG → Schema → Engine → Validator → Renderer → Runtime → Frontend");
+  }
+  if (policy.chain_id !== MD_NORM_CHAIN_ID) deny("MD/REG chain_id must be CKO-MD-TO-FRONTEND-1.0.0");
+  if (policy.master_data?.layer !== "CKO-MD" || policy.regulatory?.layer !== "CKO-REG") {
+    deny("policy identity must be CKO-MD + CKO-REG");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED")) {
+    deny("MD/REG policy must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.human_decisions?.blocking_inspect !== false || policy.human_decisions?.status !== HOLD_HUMAN_STATUS) {
+    deny("human decisions must stay HOLD_HUMAN_NON_BLOCKING");
+  }
+  if (policy.chrome?.breadcrumb !== "one" || policy.chrome?.hero !== "one") {
+    deny("frontend chrome policy requires exactly one breadcrumb and one hero");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectHumanDecisions(ledger) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "HOLD_HUMAN_NON_BLOCKING", reason });
+  if (!ledger) return { ok: true, skipped: true, denials };
+  if (ledger.status !== HOLD_HUMAN_STATUS || ledger.blocking_inspect !== false || ledger.blocking_ci !== false) {
+    deny("human ledger must not block inspect/CI");
+  }
+  if (ledger.blocking_release !== true || ledger.release_allowed === true) {
+    deny("human ledger must still deny release");
+  }
+  const items = ledger.items || [];
+  if (items.length === 0) deny("human decision ledger empty");
+  for (const item of items) {
+    if (item.blocking_inspect === true || item.blocking_ci === true) {
+      deny(`${item.id} blocks inspect/CI`);
+      break;
+    }
+    if (item.status !== HOLD_HUMAN_STATUS) {
+      deny(`${item.id} is not HOLD_HUMAN_NON_BLOCKING`);
+      break;
+    }
+    if (item.blocking_release !== true) {
+      deny(`${item.id} must keep blocking_release`);
+      break;
+    }
+  }
+  return { ok: denials.length === 0, denials };
+}
+
 export function platformGraphConstraints(platform) {
   const violations = [];
   if (!platform) return { ok: true, violations, skipped: true };
@@ -533,6 +602,13 @@ export function knownUniverseObjects(universe, platform) {
     if (platform.governance?.evidence_chain) push("md-norm-evidence-chain", MD_NORM_CHAIN_ID);
     for (const p of platform.pendencies?.items || []) push("pendency", p.id, { status: p.status });
     if (platform.driveImmutable) push("drive-immutable", "CKO-DRIVE-IMMUTABLE-1.0.0");
+    if (platform.mdRegPolicy) push("md-reg-policy", platform.mdRegPolicy.id || MD_REG_POLICY_ID);
+    if (platform.humanDecisions) {
+      push("hold-human-ledger", platform.humanDecisions.id || "CKO-HOLD-HUMAN-1.0.0");
+      for (const item of platform.humanDecisions.items || []) {
+        push("hold-human", item.id, { status: item.status });
+      }
+    }
   }
   return items;
 }
@@ -844,6 +920,15 @@ export function runtimeAssertions(universe, platform) {
       check("A-PENDENCIES-EXPLICIT", pend.denials.every((d) => d.id !== "PENDENCIES_EXPLICIT"), "ledger");
       check("A-DRIVE-IMMUTABLE", pend.denials.every((d) => d.id !== "DRIVE_IMMUTABLE"), "drive");
       check("A-PENDENCIES-DO-NOT-CLOSE-B9", platform.pendencies.closes_b9 === false, "B9");
+    }
+    if (platform.mdRegPolicy) {
+      const md = inspectMdRegPolicy(platform.mdRegPolicy);
+      check("A-MD-REG-IS-POLICY", md.ok, "MD/REG");
+    }
+    if (platform.humanDecisions) {
+      const human = inspectHumanDecisions(platform.humanDecisions);
+      check("A-HOLD-HUMAN-NON-BLOCKING", human.ok, "human");
+      check("A-HOLD-HUMAN-STILL-DENIES-RELEASE", platform.humanDecisions.blocking_release === true, "release");
     }
     if (platform.layers || Object.keys(platform.files || {}).length) {
       const lyr = inspectLayers(platform.layers, platform.files?.["ecossistema.html"] || "");
@@ -1411,6 +1496,10 @@ export async function automaticEvidence(universe, extras = {}) {
               ? JSON.stringify(extras.platform?.layers || {})
               : obj.kind === "md-norm-evidence-chain"
                 ? JSON.stringify(extras.platform?.governance?.evidence_chain || {})
+                : obj.kind === "md-reg-policy"
+                  ? JSON.stringify(extras.platform?.mdRegPolicy || {})
+                  : obj.kind === "hold-human-ledger" || obj.kind === "hold-human"
+                    ? JSON.stringify(extras.platform?.humanDecisions || {})
               : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
     const sha = await digestSha256(body);
     receipts.push({

@@ -101,6 +101,17 @@ jobs:
           assert "cko-assurance-cascade" in eco
           assert "policy-as-code" in eco
           assert "/data/cko/cascade/" in eco
+          assert "HOLD_HUMAN_NON_BLOCKING" in eco
+          assert (site/"data/cko/human-decisions.json").is_file()
+          human=json.load(open(site/"data/cko/human-decisions.json"))
+          assert human["blocking_inspect"] is False
+          assert human["blocking_release"] is True
+          mdreg=json.load(open(site/"data/cko/md-reg-frontend.json"))
+          assert mdreg["id"]=="POL-CKO-MD-REG-FRONTEND-1.0.0"
+          assert mdreg["chain"]==["MD","REG","Schema","Engine","Validator","Renderer","Runtime","Frontend"]
+          shell=(site/"js/cko-page-shell.js").read_text(encoding="utf-8")
+          assert "hasStaticHero" in shell
+          assert "data-cko-deduped" in shell
           cascade=json.load(open(site/"data/cko/cascade/index.json"))
           assert cascade["release_allowed"] is False
           assert cascade["cascade"]==ids

@@ -759,6 +759,15 @@ def main() -> None:
     write_json(SITE / "data" / "cko" / "governance.json", governance)
     write_json(WAVE2 / "data" / "tool-library-runtime.json", slim)
     layers = materialize_44_layers()
+    from stamp_static_chrome import main as stamp_static_chrome
+    stamp_static_chrome()
+    human_src = GATE / "public" / "data" / "human-decisions.json"
+    if human_src.is_file():
+        write_json(SITE / "data" / "cko" / "human-decisions.json", json.loads(human_src.read_text(encoding="utf-8")))
+        write_json(WAVE2 / "data" / "human-decisions.json", json.loads(human_src.read_text(encoding="utf-8")))
+    mdreg = GATE / "public" / "policies" / "md-reg-frontend.json"
+    if mdreg.is_file():
+        write_json(SITE / "data" / "cko" / "md-reg-frontend.json", json.loads(mdreg.read_text(encoding="utf-8")))
     write_json(SITE / "data" / "cko" / "md-norm-evidence.json", MD_NORM_CHAIN)
     write_json(WAVE2 / "data" / "md-norm-evidence.json", MD_NORM_CHAIN)
     stamp = stamp_md_norm_evidence_frontend()
