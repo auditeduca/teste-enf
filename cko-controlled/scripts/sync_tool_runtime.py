@@ -642,6 +642,7 @@ KEEP_DATA = {
     "universe.json",
     "unknown-universe.json",
     "design-system.json",
+    "human-decisions.json",
 }
 
 
@@ -746,6 +747,18 @@ def materialize_44_layers() -> dict:
     return generate()
 
 
+def restore_human_decisions_ledger() -> None:
+    """Keep the HOLD_HUMAN ledger in overlay data. Tests read cko-controlled/public/data/."""
+    overlay = GATE / "public" / "data" / "human-decisions.json"
+    site_copy = SITE / "data" / "cko" / "human-decisions.json"
+    src = overlay if overlay.is_file() else site_copy
+    if not src.is_file():
+        raise SystemExit("human-decisions.json missing from overlay and CALENF runtime")
+    payload = json.loads(src.read_text(encoding="utf-8"))
+    write_json(site_copy, payload)
+    write_json(overlay, payload)
+
+
 def main() -> None:
     overlay_wave2_into_calenf()
     write_home_aliases()
@@ -761,10 +774,6 @@ def main() -> None:
     layers = materialize_44_layers()
     from stamp_static_chrome import main as stamp_static_chrome
     stamp_static_chrome()
-    human_src = GATE / "public" / "data" / "human-decisions.json"
-    if human_src.is_file():
-        write_json(SITE / "data" / "cko" / "human-decisions.json", json.loads(human_src.read_text(encoding="utf-8")))
-        write_json(WAVE2 / "data" / "human-decisions.json", json.loads(human_src.read_text(encoding="utf-8")))
     mdreg = GATE / "public" / "policies" / "md-reg-frontend.json"
     if mdreg.is_file():
         write_json(SITE / "data" / "cko" / "md-reg-frontend.json", json.loads(mdreg.read_text(encoding="utf-8")))
@@ -773,6 +782,7 @@ def main() -> None:
     stamp = stamp_md_norm_evidence_frontend()
     if "--inventory-only" not in sys.argv:
         drop_duplicate_cko_copies()
+    restore_human_decisions_ledger()
     assert_canaries(slim, governance)
     print(
         json.dumps(

@@ -737,10 +737,9 @@ describe("chrome templates", () => {
       const html = readFileSync(join(site, "templates", name), "utf8");
       assert.match(html, /data-cko-slot="chrome"/);
       assert.match(html, /data-cko-slot="hero"/);
-      assert.equal(html.includes("tpl-breadcrumb"), false, name);
-      assert.equal(/class="crumbs"/.test(html), false, name);
-      assert.equal(/class="hero"/.test(html), false, name);
-      assert.equal(html.includes("tool-header"), false, name);
+      assert.equal(/<nav\b[^>]*(?:tpl-breadcrumb|crumbs)/i.test(html), false, name);
+      assert.equal(/<section\b[^>]*class="[^"]*\bhero\b/i.test(html), false, name);
+      assert.equal(/<(?:div|header)\b[^>]*tool-header/i.test(html), false, name);
     }
     const gen = readFileSync(join(site, "scripts/generate_tool_page.py"), "utf8");
     assert.match(gen, /data-cko-static="breadcrumb"/);
@@ -753,5 +752,16 @@ describe("chrome templates", () => {
     const calcTpl = readFileSync(join(site, "calculadora-template.html"), "utf8");
     assert.match(calcTpl, /data-cko-static="breadcrumb"/);
     assert.match(calcTpl, /data-cko-static="hero"/);
+  });
+  it("keeps Aldrete/IMC with static hero so the shell must skip the slot", () => {
+    for (const name of ["aldrete.html", "imc.html"]) {
+      const html = readFileSync(join(site, name), "utf8");
+      assert.match(html, /data-cko-slot="hero"/);
+      assert.match(html, /<h1\b/);
+    }
+    const missao = readFileSync(join(site, "missao.html"), "utf8");
+    assert.match(missao, /class="crumbs"/);
+    assert.match(missao, /<section class="hero"/);
+    assert.equal(missao.includes("data-cko-slot="), false);
   });
 });
