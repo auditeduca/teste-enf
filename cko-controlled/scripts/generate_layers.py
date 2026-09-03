@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cko_md_norm import MD_NORM_CHAIN
 from generate_design_system import generate as generate_design_system
+from generate_universal_tool import generate as generate_universal_tool
 
 GATE = Path(__file__).resolve().parents[1]
 SITE = GATE.parent / "reference-website"
@@ -556,6 +557,7 @@ def inject_ecossistema(catalog: dict) -> None:
 
 def generate() -> dict:
     generate_design_system()
+    generate_universal_tool()
     if not CLOSURE.is_file():
         raise SystemExit(f"closure HTML missing: {CLOSURE}")
     rows = json.loads(CANON.read_text(encoding="utf-8"))

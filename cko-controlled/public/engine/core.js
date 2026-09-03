@@ -52,11 +52,17 @@ const INTEGRITY_DENIALS = new Set([
   "HOLD_HUMAN_NON_BLOCKING",
   "MD_REG_IS_POLICY",
   "DS_STARTS_AT_POLICY",
+  "UT_POLICY_HOLD",
 ]);
 
 export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
 export const MD_REG_CHAIN = ["MD", "REG", "Schema", "Engine", "Validator", "Renderer", "Runtime", "Frontend"];
 export const MD_REG_POLICY_ID = "POL-CKO-MD-REG-FRONTEND-1.0.0";
+export const UT_POLICY_ID = "POL-CKO-UNIVERSAL-TOOL-1.3.0";
+export const UT_DOCUMENT_ID = "CKO-POL-UT-001";
+export const UT_DOCUMENT_VERSION = "1.3.0";
+export const UT_CONTROL_N = 98;
+export const UT_MD_GATE = "REMEDIATION_REQUIRED_NORMATIVE_GATE";
 export const HOLD_HUMAN_STATUS = "HOLD_HUMAN_NON_BLOCKING";
 export const MD_NORM_STAMP = {
   md: 'data-cko-md="CKO-MD"',
@@ -237,6 +243,7 @@ export function inspectPlatform(platform) {
   }
   if (platform?.layers) {
     denials.push(...inspectDesignSystem(platform.designSystem).denials);
+    denials.push(...inspectUniversalToolPolicy(platform.universalToolPolicy).denials);
   }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
@@ -539,6 +546,70 @@ export function inspectMdRegPolicy(policy) {
   return { ok: denials.length === 0, denials };
 }
 
+export function inspectUniversalToolPolicy(policy) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "UT_POLICY_HOLD", reason });
+  if (!policy) {
+    deny("CKO-POL-UT-001 missing; Universal Tool Policy must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== UT_POLICY_ID || policy.kind !== "policy-as-code") {
+    deny("Universal Tool Policy identity must be POL-CKO-UNIVERSAL-TOOL-1.3.0");
+  }
+  if (policy.document_id !== UT_DOCUMENT_ID || policy.document_version !== UT_DOCUMENT_VERSION) {
+    deny("evaluated document must remain CKO-POL-UT-001 v1.3.0");
+  }
+  if (policy.root === true || policy.starts_at !== "policy-as-code" || policy.parent !== "POL-CKO-FAIL-CLOSED-1.0.0") {
+    deny("Universal Tool Policy must inherit fail-closed and start at policy-as-code");
+  }
+  if (JSON.stringify(policy.cascade) !== JSON.stringify(CASCADE)) {
+    deny("Universal Tool Policy cascade must match the fail-closed cascade");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED") || policy.published === true) {
+    deny("Universal Tool Policy must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.canonical_promotion === true) {
+    deny("DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED; cannot claim implementation or promotion");
+  }
+  if (policy.md_gate !== UT_MD_GATE) {
+    deny("CKO-MD gate must remain REMEDIATION_REQUIRED_NORMATIVE_GATE");
+  }
+  if (policy.clinical_calculators !== "PAUSED" || policy.scales_scores !== "PAUSED") {
+    deny("Clinical Calculators and Scales & Scores must remain PAUSED");
+  }
+  const controls = policy.controls || [];
+  if (policy.control_count !== UT_CONTROL_N || controls.length !== UT_CONTROL_N) {
+    deny(`UTC catalog must be ${UT_CONTROL_N} controls`);
+  }
+  const ids = controls.map((c) => c.id);
+  const expected = Array.from({ length: UT_CONTROL_N }, (_, i) => `UTC-${String(i + 1).padStart(3, "0")}`);
+  if (JSON.stringify(ids) !== JSON.stringify(expected)) {
+    deny("UTC ids must be UTC-001 through UTC-098 in order");
+  }
+  if (controls.some((c) => c.implemented === true || c.assured === true || c.status === "PASS" || c.canonical_promotion === true)) {
+    deny("no UTC control may be marked implemented, assured, PASS, or promoted");
+  }
+  if ((policy.implemented_n || 0) !== 0 || (policy.assured_n || 0) !== 0) {
+    deny("implemented_n/assured_n must remain 0");
+  }
+  if (policy.evaluation?.verdict !== "DOCUMENTADO_HOLD_NOT_IMPLEMENTED" || policy.evaluation?.clinical_promotion !== "DENIED") {
+    deny("evaluation verdict must remain DOCUMENTADO_HOLD_NOT_IMPLEMENTED with clinical promotion denied");
+  }
+  if (policy.version_lineage?.status !== "VERSION_DRIFT_HOLD") {
+    deny("1.3.0 / 1.5.0 / 1.6.0 version drift must remain HOLD");
+  }
+  if (policy.field_authority?.same_set_as_classified === true || policy.field_authority?.materialized_field_bindings === true) {
+    deny("must not equate policy 44/8 field gate with classified 2496/11 or claim bindings materialized");
+  }
+  if (policy.abnt?.nbr_6023?.edition !== "2025" || policy.abnt?.nbr_6023?.clause_level !== "HOLD") {
+    deny("ABNT NBR 6023 must be edition 2025 with clause-level HOLD");
+  }
+  if (policy.inventory_agent?.canonical_promotion === true || policy.inventory_agent?.operational === "ASSERTED") {
+    deny("Inventory Agent cannot promote Master Data or claim operational runtime");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
 export function inspectDesignSystem(ds) {
   const denials = [];
   const deny = (reason) => denials.push({ id: "DS_STARTS_AT_POLICY", reason });
@@ -636,6 +707,7 @@ export function knownUniverseObjects(universe, platform) {
       }
     }
     if (platform.designSystem) push("design-system-catalog", platform.designSystem.id || "CKO-DS-RUNTIME-1.0.0");
+    if (platform.universalToolPolicy) push("universal-tool-policy", platform.universalToolPolicy.id || UT_POLICY_ID);
   }
   return items;
 }
@@ -661,6 +733,40 @@ export function validateRuntimePlatformSchema(platform) {
   errors.push(...validatePendenciesSchema(platform).errors);
   errors.push(...validateLayersSchema(platform).errors);
   errors.push(...validateDesignSystemSchema(platform).errors);
+  errors.push(...validateUniversalToolPolicySchema(platform).errors);
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateUniversalToolPolicySchema(platform) {
+  if (!platform?.layers && !platform?.universalToolPolicy) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.universalToolPolicy;
+  if (!policy) {
+    errors.push("schema: CKO-POL-UT-001 policy-as-code missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== UT_POLICY_ID) errors.push("schema: universal-tool policy id");
+  if (policy.kind !== "policy-as-code") errors.push("schema: universal-tool kind");
+  if (policy.document_id !== UT_DOCUMENT_ID || policy.document_version !== UT_DOCUMENT_VERSION) {
+    errors.push("schema: universal-tool document identity");
+  }
+  if (policy.starts_at !== "policy-as-code" || JSON.stringify(policy.cascade) !== JSON.stringify(CASCADE)) {
+    errors.push("schema: universal-tool must start at policy-as-code");
+  }
+  if (!String(policy.release || "").includes("NOT_RELEASED") || policy.release_allowed === true) {
+    errors.push("schema: universal-tool must remain NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true) {
+    errors.push("schema: universal-tool cannot claim implantado/assured");
+  }
+  if (policy.md_gate !== UT_MD_GATE || policy.clinical_calculators !== "PAUSED") {
+    errors.push("schema: MD gate / calculators must remain HOLD/PAUSED");
+  }
+  if (!Array.isArray(policy.controls) || policy.controls.length !== UT_CONTROL_N || policy.control_count !== UT_CONTROL_N) {
+    errors.push("schema: universal-tool controls != 98");
+  }
   return { ok: errors.length === 0, errors };
 }
 
@@ -884,6 +990,13 @@ export function graphConstraints(universe, platform) {
     if (!ds || ds.root !== "policy-as-code" || JSON.stringify(ds.cascade) !== JSON.stringify(CASCADE)) {
       violations.push("graph: design system cascade must start at policy-as-code");
     }
+    const ut = platform.universalToolPolicy;
+    if (!ut || ut.starts_at !== "policy-as-code" || JSON.stringify(ut.cascade) !== JSON.stringify(CASCADE)) {
+      violations.push("graph: CKO-POL-UT-001 must start at policy-as-code");
+    }
+    if (ut && (ut.clinical_calculators !== "PAUSED" || ut.md_gate !== UT_MD_GATE)) {
+      violations.push("graph: Universal Tool Policy cannot reopen calculators while MD gate is open");
+    }
   }
   return {
     ok: violations.length === 0,
@@ -1000,6 +1113,10 @@ export function runtimeAssertions(universe, platform) {
     if (platform.layers) {
       const ds = inspectDesignSystem(platform.designSystem);
       check("A-DS-CASCADE", ds.ok, "policy-as-code");
+      const ut = inspectUniversalToolPolicy(platform.universalToolPolicy);
+      check("A-UT-POLICY-HOLD", ut.ok, "CKO-POL-UT-001");
+      check("A-UT-CALCULATORS-PAUSED", platform.universalToolPolicy?.clinical_calculators === "PAUSED", "PAUSED");
+      check("A-UT-MD-GATE-OPEN", platform.universalToolPolicy?.md_gate === UT_MD_GATE, "MD");
     }
   }
   const failed = asserts.filter((a) => !a.ok);
@@ -1566,6 +1683,8 @@ export async function automaticEvidence(universe, extras = {}) {
                     ? JSON.stringify(extras.platform?.humanDecisions || {})
                     : obj.kind === "design-system-catalog"
                       ? JSON.stringify(extras.platform?.designSystem || {})
+                      : obj.kind === "universal-tool-policy"
+                        ? JSON.stringify(extras.platform?.universalToolPolicy || {})
               : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
     const sha = await digestSha256(body);
     receipts.push({

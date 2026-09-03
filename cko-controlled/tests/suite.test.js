@@ -13,8 +13,13 @@ import {
   inspectMdRegPolicy,
   inspectHumanDecisions,
   inspectDesignSystem,
+  inspectUniversalToolPolicy,
   MD_REG_CHAIN,
   MD_REG_POLICY_ID,
+  UT_POLICY_ID,
+  UT_DOCUMENT_ID,
+  UT_CONTROL_N,
+  UT_MD_GATE,
   HOLD_HUMAN_STATUS,
   validatePendenciesSchema,
   evaluatePolicies,
@@ -57,6 +62,7 @@ const driveImmutable = JSON.parse(readFileSync(join(gatePub, "data/drive-immutab
 const mdRegPolicy = JSON.parse(readFileSync(join(gatePub, "policies/md-reg-frontend.json"), "utf8"));
 const humanDecisions = JSON.parse(readFileSync(join(gatePub, "data/human-decisions.json"), "utf8"));
 const designSystem = JSON.parse(readFileSync(join(site, "data/cko/design-system.json"), "utf8"));
+const universalToolPolicy = JSON.parse(readFileSync(join(gatePub, "policies/universal-tool.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -73,6 +79,7 @@ const platform = {
   mdRegPolicy,
   humanDecisions,
   designSystem,
+  universalToolPolicy,
 };
 
 describe("schemas", () => {
@@ -126,6 +133,8 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "CASCADE_DECLARED"));
     assert.ok(policy.rules.some((r) => r.id === "HOLD_HUMAN_NON_BLOCKING"));
     assert.ok(policy.rules.some((r) => r.id === "MD_REG_IS_POLICY"));
+    assert.ok(policy.rules.some((r) => r.id === "DS_STARTS_AT_POLICY"));
+    assert.ok(policy.rules.some((r) => r.id === "UT_POLICY_HOLD"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -196,6 +205,7 @@ describe("coverage rules", () => {
     assert.equal(r.ratio, 1);
     assert.equal(receipts.filter((x) => x.kind === "runtime").length, 12);
     assert.ok(receipts.some((x) => x.subject === "CKO-TOOL-LIBRARY-RUNTIME-1.0.0"));
+    assert.ok(receipts.some((x) => x.subject === UT_POLICY_ID));
     assert.ok(receipts.every((x) => x.root === "policy-as-code" && x.no_fact_without_evidence === true));
   });
   it("quantifies residual uncertainty X", () => {
@@ -705,6 +715,49 @@ describe("design system runtime render", () => {
     assert.equal(r.cascade[0].status, "FAIL");
     assert.ok(r.policy.inspect.denials.some((d) => d.id === "DS_STARTS_AT_POLICY"));
     assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
+  });
+});
+
+describe("CKO-POL-UT-001 Universal Tool Policy", () => {
+  it("encodes v1.3.0 as HOLD policy-as-code with 98 UTC controls none implemented", () => {
+    const r = inspectUniversalToolPolicy(universalToolPolicy);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(universalToolPolicy.id, UT_POLICY_ID);
+    assert.equal(universalToolPolicy.document_id, UT_DOCUMENT_ID);
+    assert.equal(universalToolPolicy.control_count, UT_CONTROL_N);
+    assert.equal(universalToolPolicy.controls.length, UT_CONTROL_N);
+    assert.equal(universalToolPolicy.implemented_n, 0);
+    assert.equal(universalToolPolicy.implantado, false);
+    assert.equal(universalToolPolicy.assured, false);
+    assert.equal(universalToolPolicy.md_gate, UT_MD_GATE);
+    assert.equal(universalToolPolicy.clinical_calculators, "PAUSED");
+    assert.equal(universalToolPolicy.scales_scores, "PAUSED");
+    assert.equal(universalToolPolicy.abnt.nbr_6023.edition, "2025");
+    assert.equal(universalToolPolicy.evaluation.verdict, "DOCUMENTADO_HOLD_NOT_IMPLEMENTED");
+    assert.equal(universalToolPolicy.evaluation.clinical_promotion, "DENIED");
+    assert.equal(universalToolPolicy.version_lineage.status, "VERSION_DRIFT_HOLD");
+    assert.equal(universalToolPolicy.starts_at, "policy-as-code");
+    assert.ok(universalToolPolicy.controls.every((c) => c.implemented === false && c.status === "DOCUMENTADO_HOLD"));
+  });
+  it("fails at policy-as-code if calculators are claimed PASS or any UTC is implemented", async () => {
+    const broken = {
+      ...platform,
+      universalToolPolicy: {
+        ...universalToolPolicy,
+        clinical_calculators: "PASS",
+        implantado: true,
+        controls: universalToolPolicy.controls.map((c, i) => (i === 0 ? { ...c, implemented: true, status: "PASS" } : c)),
+      },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "UT_POLICY_HOLD"));
+    assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
+  });
+  it("renders the evaluation from JSON on the cascade page", () => {
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /universal-tool/);
+    assert.match(readFileSync(join(site, "data/cko/cascade/index.html"), "utf8"), /data-cko-ds-render="universal-tool"/);
   });
 });
 

@@ -120,6 +120,20 @@ jobs:
           assert ds["starts_at"]=="policy-as-code"
           assert ds["cascade"]==ids
           assert ds["release_allowed"] is False
+          ut=json.load(open(site/"data/cko/universal-tool.json"))
+          assert ut["id"]=="POL-CKO-UNIVERSAL-TOOL-1.3.0"
+          assert ut["document_id"]=="CKO-POL-UT-001"
+          assert ut["document_version"]=="1.3.0"
+          assert ut["control_count"]==98
+          assert len(ut["controls"])==98
+          assert ut["implemented_n"]==0
+          assert ut["implantado"] is False
+          assert ut["clinical_calculators"]=="PAUSED"
+          assert ut["md_gate"]=="REMEDIATION_REQUIRED_NORMATIVE_GATE"
+          assert ut["abnt"]["nbr_6023"]["edition"]=="2025"
+          assert ut["evaluation"]["clinical_promotion"]=="DENIED"
+          assert ut["starts_at"]=="policy-as-code"
+          assert "universal-tool" in (site/"data/cko/cascade/index.html").read_text(encoding="utf-8")
           assert cascade["rules"]["coverage"].find("100%")>=0
           assert cascade["verification"]["fuzz_n"]==1000
           assert cascade["verification"]["fuzz_false_accept"]==0

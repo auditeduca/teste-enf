@@ -39,8 +39,12 @@ const dsPath = existsSync(join(site, "data/cko/design-system.json"))
   ? join(site, "data/cko/design-system.json")
   : join(gatePub, "data/design-system.json");
 const designSystem = existsSync(dsPath) ? JSON.parse(readFileSync(dsPath, "utf8")) : undefined;
+const utPath = existsSync(join(site, "data/cko/universal-tool.json"))
+  ? join(site, "data/cko/universal-tool.json")
+  : join(gatePub, "policies/universal-tool.json");
+const universalToolPolicy = existsSync(utPath) ? JSON.parse(readFileSync(utPath, "utf8")) : undefined;
 const ontology = existsSync(join(gatePub, "graph/ontology.ttl")) ? readFileSync(join(gatePub, "graph/ontology.ttl"), "utf8") : "";
-const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable, mdRegPolicy, humanDecisions, designSystem };
+const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable, mdRegPolicy, humanDecisions, designSystem, universalToolPolicy };
 
 const report = await runGates(universe, { action: "inspect", platform, ontology });
 
@@ -149,6 +153,10 @@ copyFileSync(join(gatePub, "graph/ontology.ttl"), join(cascadeDir, "ontology.ttl
 copyFileSync(join(gatePub, "graph/shacl.json"), join(cascadeDir, "shacl.json"));
 copyFileSync(join(gatePub, "policies/md-reg-frontend.json"), join(cascadeDir, "md-reg-frontend.json"));
 copyFileSync(join(gatePub, "policies/md-reg-frontend.json"), join(site, "data/cko/md-reg-frontend.json"));
+if (universalToolPolicy) {
+  writeFileSync(join(cascadeDir, "universal-tool.json"), JSON.stringify(universalToolPolicy, null, 2) + "\n");
+  writeFileSync(join(site, "data/cko/universal-tool.json"), JSON.stringify(universalToolPolicy, null, 2) + "\n");
+}
 if (humanDecisions) {
   writeFileSync(join(cascadeDir, "human-decisions.json"), JSON.stringify(humanDecisions, null, 2) + "\n");
   writeFileSync(join(site, "data/cko/human-decisions.json"), JSON.stringify(humanDecisions, null, 2) + "\n");
@@ -170,6 +178,7 @@ writeFileSync(
 <main id="main-content" class="cko-ds-page">
 <nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Cascata</span></nav>
 <div id="cko-ds-root" data-cko-ds-render="cascade" data-cko-ds-src="/data/cko/design-system.json"></div>
+<div data-cko-ds-render="universal-tool" data-cko-ds-src="/data/cko/universal-tool.json"></div>
 <p class="cko-ds-help"><a class="cko-ds-link" href="./index.json">index.json</a> · <a class="cko-ds-link" href="./gate-report.json">gate-report.json</a></p>
 </main>
 <script type="module" src="/js/cko-ds-render.js"></script>

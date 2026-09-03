@@ -152,6 +152,50 @@ function renderCascade(ds) {
   );
 }
 
+function renderUniversalTool(policy) {
+  const findings = (policy.evaluation?.findings || [])
+    .map(
+      (f) => `<li><code>${esc(f.id)}</code> <span class="cko-ds-badge">${esc(f.severity)}</span> ${esc(f.text)}</li>`
+    )
+    .join("");
+  const rows = (policy.controls || [])
+    .map(
+      (c) => `<tr>
+        <th scope="row"><code>${esc(c.id)}</code></th>
+        <td>${esc(c.primary_layer)}</td>
+        <td>${esc(c.requirement)}</td>
+        <td><span class="cko-ds-badge cko-ds-badge--hold">${esc(c.status)}</span></td>
+      </tr>`
+    )
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.release || "HOLD / NOT_RELEASED")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>Política Universal de Ferramentas. Veredito <strong>${esc(policy.evaluation?.verdict)}</strong>. DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED. Calculadoras ${esc(policy.clinical_calculators)}; MD ${esc(policy.md_gate)}.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Gate</h2>
+      <ul class="cko-ds-ut-meta">
+        <li>Controlos ${esc(policy.control_count)} · implementados ${esc(policy.implemented_n)}</li>
+        <li>ABNT NBR 6023:${esc(policy.abnt?.nbr_6023?.edition)} clause ${esc(policy.abnt?.nbr_6023?.clause_level)}</li>
+        <li>Linha de versão ${esc(policy.version_lineage?.status)}</li>
+        <li>Promoção clínica ${esc(policy.evaluation?.clinical_promotion)}</li>
+      </ul>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Achados da avaliação</h2>
+      <ul class="cko-ds-ut-findings">${findings}</ul>
+    </section>
+    <section class="cko-ds-section">
+      <h2>UTC-001 … UTC-098</h2>
+      <p class="cko-ds-help">Nenhum controlo está PASS. Esta tabela é a política, não evidência de implementação.</p>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-ut-table">
+        <thead><tr><th>ID</th><th>Camada</th><th>Requisito</th><th>Estado</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </section>`;
+}
+
 function renderCatalog(ds, mode) {
   const hero = `<section class="cko-ds-hero">
     <span class="cko-ds-badge cko-ds-badge--hold">HOLD / NOT_RELEASED</span>
@@ -207,6 +251,10 @@ async function mount(el) {
       el.innerHTML = renderLayers(ds, layers);
       return;
     }
+    if (mode === "universal-tool") {
+      el.innerHTML = renderUniversalTool(ds);
+      return;
+    }
     el.innerHTML = renderCatalog(ds, mode);
   } catch (err) {
     el.innerHTML = `<article class="cko-ds-card cko-ds-card--warn"><p>Catálogo indisponível. ${esc(err.message)}</p></article>`;
@@ -225,4 +273,4 @@ if (document.readyState === "loading") {
   boot();
 }
 
-export { mount, renderCatalog };
+export { mount, renderCatalog, renderUniversalTool };
