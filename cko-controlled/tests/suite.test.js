@@ -22,6 +22,15 @@ import {
   automaticEvidence,
   runGates,
   knownUniverseObjects,
+  validateShacl,
+  temporalGraph,
+  projectRdf,
+  reasonGraph,
+  contractTest,
+  fuzzRelease,
+  mutationTesting,
+  modelCheckReleaseInvariant,
+  securityOffensive,
   CASCADE,
   RUNTIME_PAGES,
   TOOL_RUNTIME_CANARIES,
@@ -102,6 +111,7 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "DRIVE_IMMUTABLE"));
     assert.ok(policy.rules.some((r) => r.id === "LAYERS_44_PRESENT"));
     assert.ok(policy.rules.some((r) => r.id === "MD_NORMS_EVIDENCE_CHAIN"));
+    assert.ok(policy.rules.some((r) => r.id === "CASCADE_DECLARED"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -210,6 +220,11 @@ describe("evaluation science", () => {
     assert.equal(r.precision, 1);
     assert.equal(r.recall, 1);
     assert.equal(r.adversarial.release_attempt, true);
+    assert.equal(r.inter_rater.kappa, 1);
+    assert.equal(r.drift.psi, 0);
+    assert.equal(r.calibration.brier, 0);
+    assert.equal(r.synthetic, true);
+    assert.equal(r.production_nursepalm, false);
   });
 });
 
@@ -217,6 +232,26 @@ describe("software verification", () => {
   it("property-based: mutations cannot sneak a release", () => {
     const r = propertyBased(universe);
     assert.equal(r.ok, true, JSON.stringify(r.trials.filter((t) => !t.blocked)));
+  });
+  it("contract-testing: valid schema accepted and RELEASED / missing idempotency rejected", () => {
+    const r = contractTest(universe, platform);
+    assert.equal(r.ok, true, JSON.stringify(r.cases.filter((c) => !c.ok)));
+  });
+  it("fuzzing: 1000 release attempts never ACCEPT", () => {
+    const r = fuzzRelease(universe, 1000, 20260903);
+    assert.equal(r.n, 1000);
+    assert.equal(r.false_accept, 0);
+    assert.equal(r.ok, true);
+  });
+  it("mutation-testing: drop-unknown, drop-X, inferred-observed and pending-as-ack are killed", () => {
+    const r = mutationTesting(universe);
+    assert.equal(r.ok, true, JSON.stringify(r.mutants));
+  });
+  it("model-checking: 64-state release invariant never ALLOW", () => {
+    const r = modelCheckReleaseInvariant(universe);
+    assert.equal(r.states, 64);
+    assert.equal(r.allow, 0);
+    assert.equal(r.ok, true);
   });
 });
 
@@ -233,17 +268,33 @@ describe("distributed orchestrator", () => {
     assert.ok(r.dlq >= 2);
     assert.ok(r.log.some((l) => l.result === "duplicate-suppressed"));
     assert.equal(r.saga.release, "compensated");
+    assert.equal(r.retries.max, 3);
+  });
+  it("retries transient work then DLQ after max attempts", () => {
+    const ok = orchestrator(universe, [{ type: "transient.work", payload: { fail_until: 2 }, idempotency_key: "t-ok" }]);
+    assert.equal(ok.acked, 1);
+    assert.ok(ok.log.filter((l) => l.result === "retry").length >= 2);
+    const dead = orchestrator(universe, [{ type: "transient.work", payload: { fail_until: 9 }, idempotency_key: "t-dlq" }]);
+    assert.equal(dead.acked, 0);
+    assert.equal(dead.dlq, 1);
+    assert.ok(dead.log.some((l) => l.result === "dlq-after-retries"));
   });
 });
 
 describe("CI gates", () => {
   it("passes the defined gate set without releasing", async () => {
-    const r = await runGates(universe, { platform });
+    const ontology = readFileSync(join(gatePub, "graph/ontology.ttl"), "utf8");
+    const r = await runGates(universe, { platform, ontology });
     assert.equal(r.ok, true, JSON.stringify(r.failed));
     assert.equal(r.release, "HOLD / NOT_RELEASED");
     assert.equal(r.starts_at, "policy-as-code");
     assert.deepEqual(r.cascade.map((g) => g.id), CASCADE);
     assert.ok(r.gates.every((g) => g.ok && g.status === "PASS"));
+    assert.equal(r.verification.fuzz.n, 1000);
+    assert.equal(r.verification.fuzz.false_accept, 0);
+    assert.equal(r.verification.model.states, 64);
+    assert.equal(r.verification.shacl.ok, true);
+    assert.equal(r.orchestrator.acked >= 2, true);
   });
 });
 
@@ -484,6 +535,9 @@ describe("platform remediations without Drive mutation", () => {
     assert.match(eco, /2496/);
     assert.match(eco, /10913/);
     assert.match(eco, /\/camadas\//);
+    assert.match(eco, /cko-assurance-cascade/);
+    assert.match(eco, /policy-as-code/);
+    assert.match(eco, /\/data\/cko\/cascade\//);
     assert.match(platform.files["index.html"], /data-cko-md="CKO-MD"/);
     assert.match(platform.files["index.html"], /data-cko-reg="CKO-REG"/);
     assert.match(platform.files["aldrete.html"], /data-cko-evidence="HOLD"/);
@@ -546,5 +600,44 @@ describe("platform remediations without Drive mutation", () => {
     const r = await runGates(universe, { platform: broken });
     assert.equal(r.ok, false);
     assert.ok(r.policy.inspect.denials.some((d) => d.id === "MD_NORMS_EVIDENCE_CHAIN"));
+  });
+});
+
+describe("knowledge representation", () => {
+  it("validates SHACL Block/Unknown/Release/RuntimePage shapes", () => {
+    const r = validateShacl(universe, platform);
+    assert.equal(r.ok, true, r.violations.join("; "));
+    const released = structuredClone(universe);
+    released.blocks.find((b) => b.id === "B9").release = "RELEASED";
+    assert.equal(validateShacl(released).ok, false);
+  });
+  it("keeps a temporal graph with B9 open valid_to", () => {
+    const r = temporalGraph(universe);
+    assert.equal(r.ok, true);
+    assert.equal(r.as_of, "2026-09-02");
+    assert.equal(r.b9_open_interval, true);
+  });
+  it("projects RDF triples and requires OWL constructs in the ontology", () => {
+    const ttl = readFileSync(join(gatePub, "graph/ontology.ttl"), "utf8");
+    const r = projectRdf(universe, ttl);
+    assert.equal(r.ok, true);
+    assert.ok(r.tripleCount > 0);
+    assert.equal(r.owlOk, true);
+    assert.match(ttl, /owl:TransitiveProperty/);
+    assert.match(ttl, /owl:inverseOf/);
+  });
+  it("reasons fan-in to HOLD B9 as cannot-release", () => {
+    const r = reasonGraph(universe);
+    assert.equal(r.ok, true);
+    assert.equal(r.inferred_n, 12);
+  });
+});
+
+describe("applied security probes", () => {
+  it("denies forged ACK, replay, injection, traversal and prompt injection without a second effect", () => {
+    const r = securityOffensive(universe);
+    assert.equal(r.ok, true, JSON.stringify(r.probes));
+    const ids = r.probes.map((p) => p.id);
+    assert.deepEqual(ids, ["FORGED_ACK", "REPLAY", "INJECTION", "PATH_TRAVERSAL", "PROMPT_INJECTION"]);
   });
 });

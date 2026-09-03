@@ -1,5 +1,4 @@
 {
-  "ok": true,
   "starts_at": "policy-as-code",
   "cascade": [
     {
@@ -60,6 +59,21 @@
     "test_pass": "100% dos testes definidos",
     "residual_uncertainty": "X",
     "unknown_universe": "explicitado"
+  },
+  "release_allowed": false,
+  "coverage": {
+    "known": 791,
+    "covered": 791,
+    "ratio": 1,
+    "ok": true,
+    "missing": [],
+    "rule": "100% do universo conhecido"
+  },
+  "evidence": {
+    "ok": true,
+    "ratio": 1,
+    "known": 791,
+    "evidenced": 791
   },
   "residual_uncertainty": {
     "id": "X",
@@ -148,470 +162,6 @@
       "statement": "Heatmaps sao instrumentos de priorizacao; evidencia primaria permanece em checkpoints, findings, holds, versions e hashes."
     }
   ],
-  "schema": {
-    "ok": true,
-    "errors": []
-  },
-  "policy": {
-    "ok": true,
-    "mode": "fail-closed",
-    "root": "policy-as-code",
-    "integrity_denials": [],
-    "release_denials": [
-      {
-        "id": "RELEASE_FAIL_CLOSED",
-        "reason": "baseline is HOLD / NOT_RELEASED"
-      },
-      {
-        "id": "B9_HOLD_BLOCKS_RELEASE",
-        "reason": "B9 remains NOT_RELEASED"
-      },
-      {
-        "id": "RECERT_FAIL_BLOCKS_RELEASE",
-        "reason": "B7 recert FAIL"
-      },
-      {
-        "id": "RIGHTS_CHAIN_REQUIRED_TO_PUBLISH",
-        "reason": "13 rights holds"
-      },
-      {
-        "id": "NURSEPALM_NOT_ASSERTED",
-        "reason": "operational runtime not asserted"
-      }
-    ],
-    "release_allowed": false,
-    "inspect": {
-      "ok": true,
-      "mode": "fail-closed",
-      "denials": [],
-      "release_allowed": false
-    },
-    "release": {
-      "ok": false,
-      "mode": "fail-closed",
-      "denials": [
-        {
-          "id": "RELEASE_FAIL_CLOSED",
-          "reason": "baseline is HOLD / NOT_RELEASED"
-        },
-        {
-          "id": "B9_HOLD_BLOCKS_RELEASE",
-          "reason": "B9 remains NOT_RELEASED"
-        },
-        {
-          "id": "RECERT_FAIL_BLOCKS_RELEASE",
-          "reason": "B7 recert FAIL"
-        },
-        {
-          "id": "RIGHTS_CHAIN_REQUIRED_TO_PUBLISH",
-          "reason": "13 rights holds"
-        },
-        {
-          "id": "NURSEPALM_NOT_ASSERTED",
-          "reason": "operational runtime not asserted"
-        }
-      ],
-      "release_allowed": false
-    }
-  },
-  "graph": {
-    "ok": true,
-    "nodes": 13,
-    "edges": 14,
-    "violations": [],
-    "pages": 12,
-    "temporal": {
-      "as_of": "2026-09-02",
-      "type": "snapshot-graph"
-    }
-  },
-  "coverage": {
-    "known": 791,
-    "covered": 791,
-    "ratio": 1,
-    "ok": true,
-    "missing": [],
-    "rule": "100% do universo conhecido"
-  },
-  "evidence": {
-    "known": 791,
-    "evidenced": 791,
-    "ratio": 1,
-    "ok": true,
-    "missing": [],
-    "rule": "100%"
-  },
-  "runtime": {
-    "ok": true,
-    "asserts": [
-      {
-        "id": "A-RELEASE-HOLD",
-        "ok": true,
-        "detail": "HOLD / NOT_RELEASED"
-      },
-      {
-        "id": "A-B9-HOLD",
-        "ok": true,
-        "detail": "B9"
-      },
-      {
-        "id": "A-B10-NOT-ASSERTED",
-        "ok": true,
-        "detail": "B10"
-      },
-      {
-        "id": "A-PENDING-NE-ACK",
-        "ok": true,
-        "detail": "outbox"
-      },
-      {
-        "id": "A-NO-PROD",
-        "ok": true,
-        "detail": "publication"
-      },
-      {
-        "id": "A-X-BOUNDED",
-        "ok": true,
-        "detail": "X"
-      },
-      {
-        "id": "A-UNKNOWN-EXPLICIT",
-        "ok": true,
-        "detail": 12
-      },
-      {
-        "id": "A-HASH-GLOBAL",
-        "ok": true,
-        "detail": "global hash"
-      },
-      {
-        "id": "A-NO-REPORT-DASHBOARD",
-        "ok": true,
-        "detail": "frontend"
-      },
-      {
-        "id": "A-DRIVE-PLATFORM",
-        "ok": true,
-        "detail": "wave2"
-      },
-      {
-        "id": "A-NO-APP-JS",
-        "ok": true,
-        "detail": "app.js"
-      },
-      {
-        "id": "A-PAGE-index.html",
-        "ok": true,
-        "detail": "index.html"
-      },
-      {
-        "id": "A-PAGE-missao.html",
-        "ok": true,
-        "detail": "missao.html"
-      },
-      {
-        "id": "A-PAGE-objetivo.html",
-        "ok": true,
-        "detail": "objetivo.html"
-      },
-      {
-        "id": "A-PAGE-ecossistema.html",
-        "ok": true,
-        "detail": "ecossistema.html"
-      },
-      {
-        "id": "A-PAGE-acessibilidade.html",
-        "ok": true,
-        "detail": "acessibilidade.html"
-      },
-      {
-        "id": "A-PAGE-tecnologiaverde.html",
-        "ok": true,
-        "detail": "tecnologiaverde.html"
-      },
-      {
-        "id": "A-PAGE-privacidade.html",
-        "ok": true,
-        "detail": "privacidade.html"
-      },
-      {
-        "id": "A-PAGE-politica-editorial.html",
-        "ok": true,
-        "detail": "politica-editorial.html"
-      },
-      {
-        "id": "A-PAGE-notificacoes-legais.html",
-        "ok": true,
-        "detail": "notificacoes-legais.html"
-      },
-      {
-        "id": "A-PAGE-fale.html",
-        "ok": true,
-        "detail": "fale.html"
-      },
-      {
-        "id": "A-PAGE-forum-enfermagem.html",
-        "ok": true,
-        "detail": "forum-enfermagem.html"
-      },
-      {
-        "id": "A-PAGE-mapa-do-site.html",
-        "ok": true,
-        "detail": "mapa-do-site.html"
-      },
-      {
-        "id": "A-TOOL-RUNTIME",
-        "ok": true,
-        "detail": "tools"
-      },
-      {
-        "id": "A-LIBRARY-RUNTIME",
-        "ok": true,
-        "detail": "libraries"
-      },
-      {
-        "id": "A-TOOL-LIBS",
-        "ok": true,
-        "detail": "engines"
-      },
-      {
-        "id": "A-ALDRETE-CALC",
-        "ok": true,
-        "detail": "aldrete"
-      },
-      {
-        "id": "A-CALENF-SCHEMA",
-        "ok": true,
-        "detail": "schema"
-      },
-      {
-        "id": "A-CALENF-GRAPH",
-        "ok": true,
-        "detail": "graph"
-      },
-      {
-        "id": "A-CALENF-TWIN",
-        "ok": true,
-        "detail": "twin"
-      },
-      {
-        "id": "A-CALENF-NURSEPALM",
-        "ok": true,
-        "detail": "nurse-palm"
-      },
-      {
-        "id": "A-CALENF-AGENTIC",
-        "ok": true,
-        "detail": "agentic"
-      },
-      {
-        "id": "A-MD-NORM-EVIDENCE",
-        "ok": true,
-        "detail": "md-norm"
-      },
-      {
-        "id": "A-PENDENCIES-EXPLICIT",
-        "ok": true,
-        "detail": "ledger"
-      },
-      {
-        "id": "A-DRIVE-IMMUTABLE",
-        "ok": true,
-        "detail": "drive"
-      },
-      {
-        "id": "A-PENDENCIES-DO-NOT-CLOSE-B9",
-        "ok": true,
-        "detail": "B9"
-      },
-      {
-        "id": "A-LAYERS-44",
-        "ok": true,
-        "detail": "44/44"
-      },
-      {
-        "id": "A-LAYERS-HOLD",
-        "ok": true,
-        "detail": "HOLD"
-      },
-      {
-        "id": "A-LAYER-PUB-HOLD",
-        "ok": true,
-        "detail": "LYR-PUB-001"
-      }
-    ],
-    "failed": []
-  },
-  "evaluation": {
-    "golden_n": 12,
-    "precision": 1,
-    "recall": 1,
-    "f1": 1,
-    "confusion": {
-      "tp": 12,
-      "fp": 0,
-      "fn": 0,
-      "tn": 0
-    },
-    "calibration_ece": 0.2974,
-    "adversarial": {
-      "release_attempt": true
-    },
-    "drift": {
-      "baseline_sha256": "460128914264512dfd17161ba3c73ceeadd8da36775327e818f3c3ee3ab25d5a",
-      "detect": "hash mismatch vs OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0 is drift",
-      "psi": 0
-    },
-    "inter_rater": {
-      "lenses": 8,
-      "agreement": 1,
-      "kappa": 1,
-      "note": "8/8 AUD-8L lenses closed on the same classified denominator; Cohen kappa is synthetic, not production Nurse-PaLM"
-    },
-    "calibration": {
-      "ece": 0.2974,
-      "brier": 0,
-      "note": "P(release_allowed)=0 against observed HOLD; not a production model score"
-    },
-    "synthetic": true,
-    "production_nursepalm": false,
-    "rows": [
-      {
-        "id": "g-state",
-        "pred": "FINAL_CONTROLLED",
-        "gold": "FINAL_CONTROLLED",
-        "match": true
-      },
-      {
-        "id": "g-rel",
-        "pred": "HOLD / NOT_RELEASED",
-        "gold": "HOLD / NOT_RELEASED",
-        "match": true
-      },
-      {
-        "id": "g-b9",
-        "pred": "NOT_RELEASED",
-        "gold": "NOT_RELEASED",
-        "match": true
-      },
-      {
-        "id": "g-b10",
-        "pred": "NOT_ASSERTED",
-        "gold": "NOT_ASSERTED",
-        "match": true
-      },
-      {
-        "id": "g-files",
-        "pred": 449,
-        "gold": 449,
-        "match": true
-      },
-      {
-        "id": "g-aud",
-        "pred": "104/104",
-        "gold": "104/104",
-        "match": true
-      },
-      {
-        "id": "g-layers",
-        "pred": "44/44",
-        "gold": "44/44",
-        "match": true
-      },
-      {
-        "id": "g-agents",
-        "pred": "89/89",
-        "gold": "89/89",
-        "match": true
-      },
-      {
-        "id": "g-holds",
-        "pred": 211,
-        "gold": 211,
-        "match": true
-      },
-      {
-        "id": "g-reperf",
-        "pred": 201,
-        "gold": 201,
-        "match": true
-      },
-      {
-        "id": "g-outbox",
-        "pred": 296,
-        "gold": 296,
-        "match": true
-      },
-      {
-        "id": "g-recert",
-        "pred": true,
-        "gold": true,
-        "match": true
-      }
-    ],
-    "ok": true
-  },
-  "properties": {
-    "ok": true,
-    "trials": [
-      {
-        "mut": "release-B1",
-        "blocked": true
-      },
-      {
-        "mut": "release-B2",
-        "blocked": true
-      },
-      {
-        "mut": "release-B3",
-        "blocked": true
-      },
-      {
-        "mut": "release-B4",
-        "blocked": true
-      },
-      {
-        "mut": "release-B5",
-        "blocked": true
-      },
-      {
-        "mut": "release-B6.1",
-        "blocked": true
-      },
-      {
-        "mut": "release-B6.2",
-        "blocked": true
-      },
-      {
-        "mut": "release-B6.3",
-        "blocked": true
-      },
-      {
-        "mut": "release-B6.4",
-        "blocked": true
-      },
-      {
-        "mut": "release-B7",
-        "blocked": true
-      },
-      {
-        "mut": "release-B8",
-        "blocked": true
-      },
-      {
-        "mut": "release-B9",
-        "blocked": true
-      },
-      {
-        "mut": "release-B10",
-        "blocked": true
-      },
-      {
-        "mut": "drop-unknown",
-        "blocked": true
-      }
-    ]
-  },
   "verification": {
     "shacl": {
       "ok": true,
@@ -951,6 +501,40 @@
       "note": "synthetic probes against the fail-closed engine; not a live pentest of production"
     }
   },
+  "evaluation": {
+    "golden_n": 12,
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "confusion": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0
+    },
+    "inter_rater": {
+      "lenses": 8,
+      "agreement": 1,
+      "kappa": 1,
+      "note": "8/8 AUD-8L lenses closed on the same classified denominator; Cohen kappa is synthetic, not production Nurse-PaLM"
+    },
+    "calibration": {
+      "ece": 0.2974,
+      "brier": 0,
+      "note": "P(release_allowed)=0 against observed HOLD; not a production model score"
+    },
+    "adversarial": {
+      "release_attempt": true
+    },
+    "drift": {
+      "baseline_sha256": "460128914264512dfd17161ba3c73ceeadd8da36775327e818f3c3ee3ab25d5a",
+      "detect": "hash mismatch vs OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0 is drift",
+      "psi": 0
+    },
+    "synthetic": true,
+    "production_nursepalm": false,
+    "ok": true
+  },
   "orchestrator": {
     "pattern": "EVENT → CHECKPOINT → ORCHESTRATOR",
     "semantics": "at-least-once with idempotency; exactly-once not claimed",
@@ -958,146 +542,11 @@
       "max": 3,
       "then": "DLQ"
     },
-    "pending_is_not_ack": true,
-    "outbox_report_pending": 296,
-    "processed": 5,
     "acked": 2,
     "dlq": 3,
-    "checkpoints": [
-      {
-        "id": "CP-RUNTIME-1",
-        "event": "EVT-1",
-        "type": "site.materialize",
-        "result": "PASS_WITH_SCOPED_HOLDS"
-      },
-      {
-        "id": "CP-RUNTIME-2",
-        "event": "EVT-4",
-        "type": "transient.work",
-        "result": "PASS_WITH_SCOPED_HOLDS"
-      }
-    ],
-    "log": [
-      {
-        "event": "site.materialize",
-        "result": "checkpointed",
-        "checkpoint": "CP-RUNTIME-1"
-      },
-      {
-        "event": "site.materialize",
-        "result": "duplicate-suppressed",
-        "semantics": "at-least-once + idempotency"
-      },
-      {
-        "event": "release.request",
-        "result": "saga-compensate",
-        "reason": "fail-closed"
-      },
-      {
-        "event": "ack.claim",
-        "result": "rejected",
-        "reason": "PENDING != ACK"
-      },
-      {
-        "event": "transient.work",
-        "result": "retry",
-        "attempt": 1,
-        "semantics": "at-least-once"
-      },
-      {
-        "event": "transient.work",
-        "result": "retry",
-        "attempt": 2,
-        "semantics": "at-least-once"
-      },
-      {
-        "event": "transient.work",
-        "result": "checkpointed",
-        "checkpoint": "CP-RUNTIME-2"
-      },
-      {
-        "event": "transient.work",
-        "result": "retry",
-        "attempt": 1,
-        "semantics": "at-least-once"
-      },
-      {
-        "event": "transient.work",
-        "result": "retry",
-        "attempt": 2,
-        "semantics": "at-least-once"
-      },
-      {
-        "event": "transient.work",
-        "result": "retry",
-        "attempt": 3,
-        "semantics": "at-least-once"
-      },
-      {
-        "event": "transient.work",
-        "result": "dlq-after-retries",
-        "attempts": 3
-      }
-    ],
     "saga": {
       "release": "compensated",
       "note": "Release saga aborts and compensates while B9 is NOT_RELEASED"
     }
-  },
-  "gates": [
-    {
-      "id": "policy-as-code",
-      "ok": true,
-      "status": "PASS",
-      "predecessor": null,
-      "root": "policy-as-code",
-      "release_denied": true
-    },
-    {
-      "id": "schemas",
-      "ok": true,
-      "status": "PASS",
-      "predecessor": "policy-as-code",
-      "root": "policy-as-code",
-      "errors": []
-    },
-    {
-      "id": "graph-constraints",
-      "ok": true,
-      "status": "PASS",
-      "predecessor": "schemas",
-      "root": "policy-as-code",
-      "violations": []
-    },
-    {
-      "id": "CI-gates",
-      "ok": true,
-      "status": "PASS",
-      "predecessor": "graph-constraints",
-      "root": "policy-as-code",
-      "coverage": 1,
-      "evaluation": true,
-      "verification_ok": true
-    },
-    {
-      "id": "runtime-assertions",
-      "ok": true,
-      "status": "PASS",
-      "predecessor": "CI-gates",
-      "root": "policy-as-code",
-      "failed": []
-    },
-    {
-      "id": "automatic-evidence",
-      "ok": true,
-      "status": "PASS",
-      "predecessor": "runtime-assertions",
-      "root": "policy-as-code",
-      "receipts_n": 791,
-      "ratio": 1
-    }
-  ],
-  "failed": [],
-  "receipts_n": 791,
-  "release": "HOLD / NOT_RELEASED"
+  }
 }

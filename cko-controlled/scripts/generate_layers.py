@@ -480,6 +480,23 @@ def layers_section_html(catalog: dict) -> str:
   <h3>Identificadores canônicos</h3>
   <ol class="list-clean">{ids_list}</ol>
 </article>
+<article class="card hold" id="cko-assurance-cascade" data-cko-cascade="policy-as-code" data-cko-release="HOLD_NOT_RELEASED">
+  <span class="label">Cascata de garantia</span>
+  <h2>policy-as-code → schemas → graph constraints → CI gates → runtime assertions → automatic evidence</h2>
+  <p>Tudo inicia em <strong>policy-as-code</strong>. O estágio seguinte só corre se o predecessor PASS.
+  Regras: cobertura = 100% do universo conhecido; evidence coverage = 100%;
+  test pass = 100% dos testes definidos; incerteza residual = <code>X</code>;
+  universo desconhecido = explicitado. Pacote de evidência em
+  <a href="/data/cko/cascade/"><code>/data/cko/cascade/</code></a>.
+  Estado: <strong>HOLD / NOT_RELEASED</strong>. <code>release_allowed: false</code>.</p>
+  <ol class="list-clean">
+    <li>RDF/OWL + SHACL, ontologia formal, grafo temporal e de propriedades, constraints e reasoning.</li>
+    <li>Verificação: property-based, mutation testing, contract testing, fuzzing, model checking.</li>
+    <li>Evaluation science: golden set, precisão/recall, calibração, matriz de confusão, kappa, adversarial, drift (PSI).</li>
+    <li>Sistemas distribuídos: EVENT → CHECKPOINT → ORQUESTRADOR, filas, idempotência, retries, DLQ, sagas, at-least-once.</li>
+  </ol>
+  <p class="small">Nurse-PaLM operacional permanece NOT_ASSERTED. Métricas sintéticas não são homologação clínica. Exactly-once não é afirmado.</p>
+</article>
 {MARKER_END}
 """
 

@@ -115,7 +115,25 @@ a{color:var(--cko-link);text-decoration-thickness:.12em;text-underline-offset:.1
   <h3>Identificadores canônicos</h3>
   <ol class="list-clean"><li><code>CKO-MD</code> — CKO Master Data</li><li><code>CKO-REG</code> — CKO Regulatory</li><li><code>LYR-CLIN-CALC-001</code> — Clinical Calculators</li><li><code>LYR-CLIN-SCALE-001</code> — Scales & Scores</li><li><code>LYR-CLIN-RULE-001</code> — Clinical Rules / Decision Logic</li><li><code>LYR-LIB-001</code> — Library Objects</li><li><code>LYR-MED-001</code> — Medications & Solutions</li><li><code>LYR-LAB-001</code> — Laboratory Exams</li><li><code>LYR-ANAT-001</code> — Anatomy</li><li><code>LYR-COND-001</code> — Diseases / Conditions</li><li><code>LYR-PROC-001</code> — Procedures / Protocols</li><li><code>LYR-TERM-001</code> — Terminologies</li><li><code>LYR-EDU-001</code> — Educational / Contest</li><li><code>LYR-REF-001</code> — References / Bibliography / Glossary</li><li><code>LYR-CONTENT-001</code> — Articles / Guides / Summaries</li><li><code>LYR-LEARN-001</code> — Flashcards / Questions / Quizzes</li><li><code>LYR-PAGE-TPL-001</code> — Page Templates</li><li><code>LYR-DOC-TPL-001</code> — Document Templates</li><li><code>LYR-MEDIA-001</code> — Images / Media / Icons</li><li><code>LYR-DERIVE-001</code> — Asset Derivation</li><li><code>LYR-HCD-001</code> — HCD / Usability</li><li><code>LYR-A11Y-001</code> — Accessibility</li><li><code>LYR-DS-001</code> — Design System</li><li><code>LYR-UI-001</code> — UI Components & Interaction</li><li><code>LYR-PRV-001</code> — Privacy / LGPD</li><li><code>LYR-SEC-001</code> — Security / Cybersecurity</li><li><code>LYR-ROUTE-001</code> — Routes / URLs</li><li><code>LYR-SEO-001</code> — SEO</li><li><code>LYR-OG-001</code> — Open Graph / Social</li><li><code>LYR-SEM-001</code> — Structured Data</li><li><code>LYR-I18N-001</code> — i18n / l10n</li><li><code>LYR-SEARCH-001</code> — Internal Search</li><li><code>LYR-REC-001</code> — Recommendations</li><li><code>LYR-USERSTATE-001</code> — User State / Favorites / Collections</li><li><code>LYR-ANL-001</code> — Analytics / Telemetry</li><li><code>LYR-PERF-001</code> — Performance</li><li><code>LYR-REL-001</code> — Reliability / Resilience</li><li><code>LYR-OBS-001</code> — Observability</li><li><code>LYR-SUS-001</code> — Sustainability</li><li><code>LYR-RND-001</code> — Renderer</li><li><code>LYR-RUN-001</code> — Runtime / E2E</li><li><code>LYR-EXPORT-001</code> — PDF / Export Profiles</li><li><code>LYR-PUB-001</code> — Publication / Release</li><li><code>LYR-MON-001</code> — Monitoring</li></ol>
 </article>
+<article class="card hold" id="cko-assurance-cascade" data-cko-cascade="policy-as-code" data-cko-release="HOLD_NOT_RELEASED">
+  <span class="label">Cascata de garantia</span>
+  <h2>policy-as-code → schemas → graph constraints → CI gates → runtime assertions → automatic evidence</h2>
+  <p>Tudo inicia em <strong>policy-as-code</strong>. O estágio seguinte só corre se o predecessor PASS.
+  Regras: cobertura = 100% do universo conhecido; evidence coverage = 100%;
+  test pass = 100% dos testes definidos; incerteza residual = <code>X</code>;
+  universo desconhecido = explicitado. Pacote de evidência em
+  <a href="/data/cko/cascade/"><code>/data/cko/cascade/</code></a>.
+  Estado: <strong>HOLD / NOT_RELEASED</strong>. <code>release_allowed: false</code>.</p>
+  <ol class="list-clean">
+    <li>RDF/OWL + SHACL, ontologia formal, grafo temporal e de propriedades, constraints e reasoning.</li>
+    <li>Verificação: property-based, mutation testing, contract testing, fuzzing, model checking.</li>
+    <li>Evaluation science: golden set, precisão/recall, calibração, matriz de confusão, kappa, adversarial, drift (PSI).</li>
+    <li>Sistemas distribuídos: EVENT → CHECKPOINT → ORQUESTRADOR, filas, idempotência, retries, DLQ, sagas, at-least-once.</li>
+  </ol>
+  <p class="small">Nurse-PaLM operacional permanece NOT_ASSERTED. Métricas sintéticas não são homologação clínica. Exactly-once não é afirmado.</p>
+</article>
 <!-- CKO-44-LAYERS:END -->
+
 
 
 

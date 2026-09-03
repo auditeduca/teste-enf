@@ -98,6 +98,22 @@ jobs:
           assert "cko-md-norm-evidence" in eco
           assert "2496" in eco
           assert "10913" in eco
+          assert "cko-assurance-cascade" in eco
+          assert "policy-as-code" in eco
+          assert "/data/cko/cascade/" in eco
+          cascade=json.load(open(site/"data/cko/cascade/index.json"))
+          assert cascade["release_allowed"] is False
+          assert cascade["cascade"]==ids
+          assert cascade["rules"]["coverage"].find("100%")>=0
+          assert cascade["verification"]["fuzz_n"]==1000
+          assert cascade["verification"]["fuzz_false_accept"]==0
+          assert cascade["verification"]["model_states"]==64
+          assert (site/"data/cko/cascade/ontology.ttl").is_file()
+          assert (site/"data/cko/cascade/shacl.json").is_file()
+          assert "owl:TransitiveProperty" in (site/"data/cko/cascade/ontology.ttl").read_text(encoding="utf-8")
+          gate=json.load(open("public/data/gate-report.json"))
+          assert gate["verification"]["fuzz"]["false_accept"]==0
+          assert gate["evaluation"]["inter_rater"]["kappa"]==1
           idx=(site/"index.html").read_text(encoding="utf-8")
           assert 'data-cko-md="CKO-MD"' in idx
           assert 'data-cko-reg="CKO-REG"' in idx

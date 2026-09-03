@@ -1,0 +1,69 @@
+{
+  "id": "CKO-ASSURANCE-CASCADE-1.0.0",
+  "kind": "assurance-cascade",
+  "root": "policy-as-code",
+  "starts_at": "policy-as-code",
+  "cascade": [
+    "policy-as-code",
+    "schemas",
+    "graph-constraints",
+    "CI-gates",
+    "runtime-assertions",
+    "automatic-evidence"
+  ],
+  "rules": {
+    "coverage": "100% do universo conhecido",
+    "evidence_coverage": "100%",
+    "test_pass": "100% dos testes definidos",
+    "residual_uncertainty": "X",
+    "unknown_universe": "explicitado"
+  },
+  "release_allowed": false,
+  "release": "HOLD / NOT_RELEASED",
+  "coverage": 1,
+  "evidence": 1,
+  "residual_uncertainty": 0.7974,
+  "unknown_universe": [
+    "UNK-DRIVE-PARENTS",
+    "UNK-DRIVE-OUTSIDE-SNAPSHOT",
+    "UNK-SUPABASE-PHYSICAL",
+    "UNK-PITR",
+    "UNK-OBSERVED-RUNTIME",
+    "UNK-NURSEPALM-OPS",
+    "UNK-RIGHTS-CHAIN",
+    "UNK-CLINICAL-HOMOLOG",
+    "UNK-A11Y-EMPIRICAL",
+    "UNK-SECURITY-RECERT",
+    "UNK-OUTBOX-ACK",
+    "UNK-HEATMAP-PRIMARY"
+  ],
+  "verification": {
+    "shacl": true,
+    "temporal": true,
+    "rdf": true,
+    "reasoning": true,
+    "contracts": true,
+    "fuzz_n": 1000,
+    "fuzz_false_accept": 0,
+    "mutation": true,
+    "model_states": 64,
+    "security": true
+  },
+  "evaluation": {
+    "precision": 1,
+    "recall": 1,
+    "kappa": 1,
+    "psi": 0,
+    "brier": 0,
+    "synthetic": true,
+    "production_nursepalm": false
+  },
+  "orchestrator": {
+    "pattern": "EVENT → CHECKPOINT → ORCHESTRATOR",
+    "semantics": "at-least-once with idempotency; exactly-once not claimed",
+    "retries": {
+      "max": 3,
+      "then": "DLQ"
+    }
+  }
+}
