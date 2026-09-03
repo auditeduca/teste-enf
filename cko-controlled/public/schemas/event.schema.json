@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/event.schema.json",
+  "title": "Outbox Event",
+  "type": "object",
+  "required": ["id", "type", "payload", "idempotency_key", "state", "attempts"],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "type": "string" },
+    "payload": { "type": "object" },
+    "idempotency_key": { "type": "string", "minLength": 8 },
+    "state": { "enum": ["PENDING", "ACK", "DLQ", "COMPENSATED"] },
+    "attempts": { "type": "integer", "minimum": 0 },
+    "ack_is_not_pending": { "const": true }
+  }
+}

@@ -1,0 +1,36 @@
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix cko:  <https://cko.local/ont#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+cko:Ontology a owl:Ontology ;
+  rdfs:label "CKO Controlled Baseline Ontology" ;
+  owl:versionInfo "1.0.0" .
+
+cko:ControlledObject a owl:Class .
+cko:Block a owl:Class ; rdfs:subClassOf cko:ControlledObject .
+cko:Artifact a owl:Class ; rdfs:subClassOf cko:ControlledObject .
+cko:Checkpoint a owl:Class ; rdfs:subClassOf cko:ControlledObject .
+cko:Lens a owl:Class ; rdfs:subClassOf cko:ControlledObject .
+cko:Hold a owl:Class ; rdfs:subClassOf cko:ControlledObject .
+cko:UnknownItem a owl:Class ; rdfs:subClassOf cko:ControlledObject .
+cko:Evidence a owl:Class .
+cko:Event a owl:Class .
+cko:ReleaseDecision a owl:Class .
+
+cko:hasArtifact a owl:ObjectProperty ; rdfs:domain cko:Block ; rdfs:range cko:Artifact .
+cko:hasCheckpoint a owl:ObjectProperty ; rdfs:domain cko:Block ; rdfs:range cko:Checkpoint .
+cko:auditedBy a owl:ObjectProperty ; rdfs:domain cko:Block ; rdfs:range cko:Lens .
+cko:dependsOn a owl:ObjectProperty ; rdfs:domain cko:Block ; rdfs:range cko:Block .
+cko:hasEvidence a owl:ObjectProperty ; rdfs:domain cko:ControlledObject ; rdfs:range cko:Evidence .
+cko:hasSha256 a owl:DatatypeProperty ; rdfs:range xsd:string .
+cko:hasState a owl:DatatypeProperty ; rdfs:range xsd:string .
+cko:atTime a owl:DatatypeProperty ; rdfs:range xsd:date .
+
+cko:B9 rdfs:subClassOf [
+  a owl:Restriction ;
+  owl:onProperty cko:hasState ;
+  owl:hasValue "HOLD_NOT_RELEASED"
+] .

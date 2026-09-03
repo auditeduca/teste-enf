@@ -1,0 +1,59 @@
+{
+  "id": "POL-CKO-FAIL-CLOSED-1.0.0",
+  "kind": "policy-as-code",
+  "mode": "fail-closed",
+  "rules": [
+    {
+      "id": "NO_FACT_WITHOUT_EVIDENCE",
+      "deny_if": "fact && !evidence"
+    },
+    {
+      "id": "DISCOVERY_IS_NOT_EVIDENCE",
+      "deny_if": "evidence_kind == 'discovery'"
+    },
+    {
+      "id": "PENDING_IS_NOT_ACK",
+      "deny_if": "event.state == 'PENDING' && claimed_ack == true"
+    },
+    {
+      "id": "RUNTIME_OBSERVED_NOT_INFERRED",
+      "deny_if": "runtime_claim == 'observed' && runtime_source != 'observed'"
+    },
+    {
+      "id": "RELEASE_FAIL_CLOSED",
+      "deny_if": "action == 'release' && (baseline.release includes 'NOT_RELEASED' || recert == 'FAIL' || rights_holds > 0 || nurse_palm == 'NOT_ASSERTED')"
+    },
+    {
+      "id": "B9_HOLD_BLOCKS_RELEASE",
+      "deny_if": "block.B9.release == 'NOT_RELEASED' && action == 'release'"
+    },
+    {
+      "id": "RIGHTS_CHAIN_REQUIRED_TO_PUBLISH",
+      "deny_if": "action == 'publish_clinical_content' && rights_holds > 0"
+    },
+    {
+      "id": "NO_CLINICAL_CLAIM_FROM_CLASSIFICATION",
+      "deny_if": "claim == 'clinical_operational' && source == 'technical_classification'"
+    },
+    {
+      "id": "COVERAGE_100_KNOWN",
+      "deny_if": "coverage.known < 1"
+    },
+    {
+      "id": "EVIDENCE_COVERAGE_100",
+      "deny_if": "coverage.evidence < 1"
+    },
+    {
+      "id": "TEST_PASS_100_DEFINED",
+      "deny_if": "tests.failed > 0 || tests.defined == 0"
+    },
+    {
+      "id": "RESIDUAL_X_REQUIRED",
+      "deny_if": "residual_uncertainty.value == null"
+    },
+    {
+      "id": "UNKNOWN_UNIVERSE_EXPLICIT",
+      "deny_if": "unknown_universe.length == 0"
+    }
+  ]
+}

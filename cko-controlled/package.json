@@ -1,0 +1,14 @@
+{
+  "name": "cko-controlled-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CKO/CALENF Relatório Técnico Final Controlado — site + assurance engine",
+  "scripts": {
+    "generate": "python3 scripts/generate_universe.py",
+    "gate": "node cli.mjs",
+    "test": "node --test tests/suite.test.js",
+    "ci": "python3 scripts/generate_universe.py && node --test tests/suite.test.js && node cli.mjs",
+    "serve": "python3 -m http.server 4173 --directory public"
+  }
+}

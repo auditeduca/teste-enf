@@ -1,0 +1,440 @@
+{
+  "ok": true,
+  "rules": {
+    "coverage": "100% do universo conhecido",
+    "evidence_coverage": "100%",
+    "test_pass": "100% dos testes definidos",
+    "residual_uncertainty": "X",
+    "unknown_universe": "explicitado"
+  },
+  "residual_uncertainty": {
+    "id": "X",
+    "value": 0.7974,
+    "scale": "0=nenhuma incerteza residual operacional; 1=gap total",
+    "formula": "sum(component_i * weight_i)",
+    "interpretation": "Classificacao B1-B10 esta fechada (control_gap=0). X e dominado por NOT_RELEASED, recert FAIL, reperformance pendente, rights e outbox PENDING≠ACK.",
+    "components": {
+      "control_gap": 0,
+      "release_gap": 1,
+      "recert_gap": 1,
+      "reperf_gap": 0.598214,
+      "outbox_gap": 1,
+      "rights_gap": 1,
+      "findings_weight": 0.313,
+      "identity_gap": 0.142857
+    },
+    "weights": {
+      "release_gap": 0.28,
+      "recert_gap": 0.18,
+      "reperf_gap": 0.14,
+      "outbox_gap": 0.1,
+      "rights_gap": 0.12,
+      "findings_weight": 0.08,
+      "identity_gap": 0.06,
+      "control_gap": 0.04
+    },
+    "open_counts": {
+      "holds": 211,
+      "findings_open": 313,
+      "pending_reperformance": 201,
+      "outbox_pending": 296,
+      "rights_holds": 13,
+      "unresolved_identities": 12,
+      "classified_blocks": 13,
+      "released_blocks": 0
+    }
+  },
+  "unknown_universe": [
+    {
+      "id": "UNK-DRIVE-PARENTS",
+      "statement": "Pasta pai de alguns itens Google Drive nao foi exposta pelo conector; localizacao e Drive ID, sem fabricar pasta."
+    },
+    {
+      "id": "UNK-DRIVE-OUTSIDE-SNAPSHOT",
+      "statement": "O inventario de 449 arquivos e o snapshot materializado do manifesto 2026-09-02, nao o Drive inteiro do usuario."
+    },
+    {
+      "id": "UNK-SUPABASE-PHYSICAL",
+      "statement": "IDs Supabase sao localizacoes logicas controladas; nao sao arquivos fisicos isolados."
+    },
+    {
+      "id": "UNK-PITR",
+      "statement": "Backup materializado e baseline governada nao equivalem automaticamente a pg_dump/PITR full-restorable com restore test."
+    },
+    {
+      "id": "UNK-OBSERVED-RUNTIME",
+      "statement": "Deployment observado, browser/mobile empirico e performance observado permanecem HOLD."
+    },
+    {
+      "id": "UNK-NURSEPALM-OPS",
+      "statement": "Runtime operacional Nurse-PaLM nao foi afirmado (NOT_ASSERTED)."
+    },
+    {
+      "id": "UNK-RIGHTS-CHAIN",
+      "statement": "Cadeia de direitos de publicacao nao esta fechada (13 holds RIGHTS_PROVENANCE)."
+    },
+    {
+      "id": "UNK-CLINICAL-HOMOLOG",
+      "statement": "Homologacao clinica operacional nao foi convertida a partir da classificacao tecnica."
+    },
+    {
+      "id": "UNK-A11Y-EMPIRICAL",
+      "statement": "Acessibilidade empirica (B6.3) permanece em hold."
+    },
+    {
+      "id": "UNK-SECURITY-RECERT",
+      "statement": "1 recertificacao FAIL; SECURITY DEFINER exige hardening + reperformance."
+    },
+    {
+      "id": "UNK-OUTBOX-ACK",
+      "statement": "296 eventos PENDING no outbox; PENDING nao e ACK."
+    },
+    {
+      "id": "UNK-HEATMAP-PRIMARY",
+      "statement": "Heatmaps sao instrumentos de priorizacao; evidencia primaria permanece em checkpoints, findings, holds, versions e hashes."
+    }
+  ],
+  "schema": {
+    "ok": true,
+    "errors": []
+  },
+  "policy": {
+    "ok": true,
+    "mode": "fail-closed",
+    "denials": [],
+    "release_allowed": false
+  },
+  "graph": {
+    "ok": true,
+    "nodes": 13,
+    "edges": 14,
+    "violations": [],
+    "temporal": {
+      "as_of": "2026-09-02",
+      "type": "snapshot-graph"
+    }
+  },
+  "coverage": {
+    "known": 176,
+    "covered": 176,
+    "ratio": 1,
+    "ok": true,
+    "missing": [],
+    "rule": "100% do universo conhecido"
+  },
+  "evidence": {
+    "known": 176,
+    "evidenced": 176,
+    "ratio": 1,
+    "ok": true,
+    "missing": [],
+    "rule": "100%"
+  },
+  "runtime": {
+    "ok": true,
+    "asserts": [
+      {
+        "id": "A-RELEASE-HOLD",
+        "ok": true,
+        "detail": "HOLD / NOT_RELEASED"
+      },
+      {
+        "id": "A-B9-HOLD",
+        "ok": true,
+        "detail": "B9"
+      },
+      {
+        "id": "A-B10-NOT-ASSERTED",
+        "ok": true,
+        "detail": "B10"
+      },
+      {
+        "id": "A-PENDING-NE-ACK",
+        "ok": true,
+        "detail": "outbox"
+      },
+      {
+        "id": "A-NO-PROD",
+        "ok": true,
+        "detail": "publication"
+      },
+      {
+        "id": "A-X-BOUNDED",
+        "ok": true,
+        "detail": "X"
+      },
+      {
+        "id": "A-UNKNOWN-EXPLICIT",
+        "ok": true,
+        "detail": 12
+      },
+      {
+        "id": "A-HASH-GLOBAL",
+        "ok": true,
+        "detail": "global hash"
+      }
+    ],
+    "failed": []
+  },
+  "evaluation": {
+    "golden_n": 12,
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "confusion": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0
+    },
+    "calibration_ece": 0.2974,
+    "inter_rater": {
+      "lenses": 8,
+      "agreement": 1,
+      "note": "8/8 AUD-8L lenses closed on the same classified denominator"
+    },
+    "adversarial": {
+      "release_attempt": true
+    },
+    "drift": {
+      "baseline_sha256": "460128914264512dfd17161ba3c73ceeadd8da36775327e818f3c3ee3ab25d5a",
+      "detect": "hash mismatch vs OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0 is drift"
+    },
+    "rows": [
+      {
+        "id": "g-state",
+        "pred": "FINAL_CONTROLLED",
+        "gold": "FINAL_CONTROLLED",
+        "match": true
+      },
+      {
+        "id": "g-rel",
+        "pred": "HOLD / NOT_RELEASED",
+        "gold": "HOLD / NOT_RELEASED",
+        "match": true
+      },
+      {
+        "id": "g-b9",
+        "pred": "NOT_RELEASED",
+        "gold": "NOT_RELEASED",
+        "match": true
+      },
+      {
+        "id": "g-b10",
+        "pred": "NOT_ASSERTED",
+        "gold": "NOT_ASSERTED",
+        "match": true
+      },
+      {
+        "id": "g-files",
+        "pred": 449,
+        "gold": 449,
+        "match": true
+      },
+      {
+        "id": "g-aud",
+        "pred": "104/104",
+        "gold": "104/104",
+        "match": true
+      },
+      {
+        "id": "g-layers",
+        "pred": "44/44",
+        "gold": "44/44",
+        "match": true
+      },
+      {
+        "id": "g-agents",
+        "pred": "89/89",
+        "gold": "89/89",
+        "match": true
+      },
+      {
+        "id": "g-holds",
+        "pred": 211,
+        "gold": 211,
+        "match": true
+      },
+      {
+        "id": "g-reperf",
+        "pred": 201,
+        "gold": 201,
+        "match": true
+      },
+      {
+        "id": "g-outbox",
+        "pred": 296,
+        "gold": 296,
+        "match": true
+      },
+      {
+        "id": "g-recert",
+        "pred": true,
+        "gold": true,
+        "match": true
+      }
+    ],
+    "ok": true
+  },
+  "properties": {
+    "ok": true,
+    "trials": [
+      {
+        "mut": "release-B1",
+        "blocked": true
+      },
+      {
+        "mut": "release-B2",
+        "blocked": true
+      },
+      {
+        "mut": "release-B3",
+        "blocked": true
+      },
+      {
+        "mut": "release-B4",
+        "blocked": true
+      },
+      {
+        "mut": "release-B5",
+        "blocked": true
+      },
+      {
+        "mut": "release-B6.1",
+        "blocked": true
+      },
+      {
+        "mut": "release-B6.2",
+        "blocked": true
+      },
+      {
+        "mut": "release-B6.3",
+        "blocked": true
+      },
+      {
+        "mut": "release-B6.4",
+        "blocked": true
+      },
+      {
+        "mut": "release-B7",
+        "blocked": true
+      },
+      {
+        "mut": "release-B8",
+        "blocked": true
+      },
+      {
+        "mut": "release-B9",
+        "blocked": true
+      },
+      {
+        "mut": "release-B10",
+        "blocked": true
+      },
+      {
+        "mut": "drop-unknown",
+        "blocked": true
+      }
+    ]
+  },
+  "orchestrator": {
+    "pattern": "EVENT → CHECKPOINT → ORCHESTRATOR",
+    "semantics": "at-least-once with idempotency; exactly-once not claimed",
+    "pending_is_not_ack": true,
+    "outbox_report_pending": 296,
+    "processed": 3,
+    "acked": 1,
+    "dlq": 2,
+    "checkpoints": [
+      {
+        "id": "CP-RUNTIME-1",
+        "event": "EVT-1",
+        "type": "site.materialize",
+        "result": "PASS_WITH_SCOPED_HOLDS"
+      }
+    ],
+    "log": [
+      {
+        "event": "site.materialize",
+        "result": "checkpointed",
+        "checkpoint": "CP-RUNTIME-1"
+      },
+      {
+        "event": "site.materialize",
+        "result": "duplicate-suppressed",
+        "semantics": "at-least-once + idempotency"
+      },
+      {
+        "event": "release.request",
+        "result": "saga-compensate",
+        "reason": "fail-closed"
+      },
+      {
+        "event": "ack.claim",
+        "result": "rejected",
+        "reason": "PENDING != ACK"
+      }
+    ],
+    "saga": {
+      "release": "compensated",
+      "note": "Release saga aborts and compensates while B9 is NOT_RELEASED"
+    }
+  },
+  "gates": [
+    {
+      "id": "policy-as-code",
+      "ok": true
+    },
+    {
+      "id": "schemas",
+      "ok": true
+    },
+    {
+      "id": "graph-constraints",
+      "ok": true
+    },
+    {
+      "id": "CI-gates",
+      "ok": true
+    },
+    {
+      "id": "runtime-assertions",
+      "ok": true
+    },
+    {
+      "id": "automatic-evidence",
+      "ok": true
+    },
+    {
+      "id": "coverage-100-known",
+      "ok": true
+    },
+    {
+      "id": "evidence-coverage-100",
+      "ok": true
+    },
+    {
+      "id": "residual-X-quantified",
+      "ok": true
+    },
+    {
+      "id": "unknown-explicit",
+      "ok": true
+    },
+    {
+      "id": "evaluation-science",
+      "ok": true
+    },
+    {
+      "id": "property-based",
+      "ok": true
+    },
+    {
+      "id": "orchestrator",
+      "ok": true
+    }
+  ],
+  "failed": [],
+  "receipts_n": 176,
+  "release": "HOLD / NOT_RELEASED"
+}

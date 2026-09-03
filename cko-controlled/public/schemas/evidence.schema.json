@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/evidence.schema.json",
+  "title": "Automatic Evidence Receipt",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "subject",
+    "sha256",
+    "created_at",
+    "status",
+    "gate",
+    "no_fact_without_evidence"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 8 },
+    "kind": { "enum": ["checkpoint", "test", "policy", "schema", "graph", "runtime", "coverage", "orchestrator"] },
+    "subject": { "type": "string" },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "created_at": { "type": "string" },
+    "status": { "enum": ["PASS", "PASS_WITH_SCOPED_HOLDS", "HOLD", "FAIL"] },
+    "gate": { "type": "string" },
+    "no_fact_without_evidence": { "const": true }
+  }
+}

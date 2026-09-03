@@ -1,0 +1,41 @@
+{
+  "@context": {
+    "sh": "http://www.w3.org/ns/shacl#",
+    "cko": "https://cko.local/ont#"
+  },
+  "shapes": [
+    {
+      "id": "BlockShape",
+      "targetClass": "cko:Block",
+      "closed": false,
+      "properties": [
+        { "path": "id", "minCount": 1, "pattern": "^B([1-9]|10|6\\.[1-4])$" },
+        { "path": "artifact_id", "minCount": 1, "pattern": "^ART-CKO-" },
+        { "path": "version_id", "minCount": 1, "pattern": "^OV-CKO-" },
+        { "path": "sha256", "minCount": 1, "pattern": "^[a-f0-9]{64}$" },
+        { "path": "checkpoint_id", "minCount": 1, "pattern": "^CP-CKO-" },
+        { "path": "state", "minCount": 1 }
+      ]
+    },
+    {
+      "id": "ReleaseShape",
+      "target": "B9",
+      "sparql": "IF B9.release != NOT_RELEASED THEN FAIL unless recert PASS and rights_holds=0 and observed_runtime=true"
+    },
+    {
+      "id": "UnknownShape",
+      "targetClass": "cko:UnknownItem",
+      "properties": [
+        { "path": "id", "minCount": 1, "pattern": "^UNK-" },
+        { "path": "statement", "minCount": 1, "minLength": 12 }
+      ]
+    },
+    {
+      "id": "EvidenceShape",
+      "message": "NO_FACT_WITHOUT_EVIDENCE",
+      "properties": [
+        { "path": "hasEvidence", "minCount": 1 }
+      ]
+    }
+  ]
+}

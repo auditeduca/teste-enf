@@ -1,0 +1,36 @@
+name: CKO Controlled Assurance Gate
+
+on:
+  pull_request:
+  push:
+    paths:
+      - "cko-controlled/**"
+      - "firebase.json"
+      - ".github/workflows/cko-controlled-gate.yml"
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Materialize universe + test + evidence
+        run: |
+          cd cko-controlled
+          python3 scripts/generate_universe.py
+          node --test tests/suite.test.js
+          node cli.mjs
+      - name: Fail-closed release invariant
+        run: |
+          python3 - <<'PY'
+          import json
+          u=json.load(open("cko-controlled/public/data/universe.json"))
+          assert u["baseline"]["release"].find("NOT_RELEASED")>=0
+          assert u["document"]["not_production_release"] is True
+          print("release remains HOLD / NOT_RELEASED")
+          PY
