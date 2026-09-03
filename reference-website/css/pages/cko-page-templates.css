@@ -1,18 +1,20 @@
-/* CKO page templates — identidade por tipo */
+/* CKO page templates — identidade por tipo. Tokens = LYR-DS-001. */
 :root {
-  --cko-tpl-navy: #1a3e74;
-  --cko-tpl-navy-mid: #1e4d8c;
-  --cko-tpl-surface: #ffffff;
-  --cko-tpl-tint: #f8fafc;
-  --cko-tpl-ink: #1e293b;
-  --cko-tpl-muted: #64748b;
+  --cko-tpl-navy: var(--cko-navy-900, #1a3e74);
+  --cko-tpl-navy-mid: var(--cko-navy-700, #1e4d8c);
+  --cko-tpl-surface: var(--cko-surface, #ffffff);
+  --cko-tpl-tint: var(--cko-bg, #f8fafc);
+  --cko-tpl-ink: var(--cko-ink, #1e293b);
+  --cko-tpl-muted: var(--cko-muted-2, #64748b);
 }
 
 body.cko-tpl-home,
 body.cko-tpl-institutional,
 body.cko-tpl-calculator,
 body.cko-tpl-tool,
-body.cko-tpl-content {
+body.cko-tpl-content,
+body.cko-tpl-scale,
+body.cko-tpl-library {
   background: var(--cko-tpl-tint);
 }
 
@@ -29,7 +31,7 @@ body.cko-tpl-home main.cko-tpl-main {
   position: relative;
   overflow: hidden;
   border-radius: 1rem;
-  background: linear-gradient(135deg, #1a3e74 0%, #1e4d8c 60%, #163269 100%);
+  background: linear-gradient(135deg, var(--cko-navy-900, #1a3e74) 0%, var(--cko-navy-700, #1e4d8c) 60%, var(--cko-navy-800, #163269) 100%);
   color: #fff;
   padding: 2rem 1.75rem;
 }

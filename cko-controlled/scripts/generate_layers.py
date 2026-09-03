@@ -360,12 +360,18 @@ def write_layer_page(row: dict, runtime_paths: list[str], zip_verified: bool, hr
     runtime_links = "".join(
         f'<li><a href="/{p}">{p}</a></li>' for p in runtime_paths
     )
-    render_mode = {"LYR-DS-001": "catalog", "LYR-UI-001": "states"}.get(row["id"])
+    render_mode = {
+        "LYR-DS-001": ("catalog", "/data/cko/design-system.json"),
+        "LYR-UI-001": ("states", "/data/cko/design-system.json"),
+        "LYR-PAGE-TPL-001": ("templates", "/data/cko/design-system.json"),
+        "LYR-CLIN-CALC-001": ("universal-tool", "/data/cko/universal-tool.json"),
+    }.get(row["id"])
     render_block = ""
     if render_mode:
+        mode, src = render_mode
         render_block = f"""
 <section class="cko-ds-section" aria-label="Catálogo renderizado">
-  <div id="cko-ds-root" data-cko-ds-render="{render_mode}" data-cko-ds-src="/data/cko/design-system.json"></div>
+  <div id="cko-ds-root" data-cko-ds-render="{mode}" data-cko-ds-src="{src}"></div>
 </section>
 <script type="module" src="/js/cko-ds-render.js"></script>
 """
