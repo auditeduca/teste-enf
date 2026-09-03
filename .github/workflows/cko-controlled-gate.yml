@@ -163,6 +163,23 @@ jobs:
           assert "policy-master" in cascade_html
           assert "visual-assets" in cascade_html
           assert "platform-closure" in cascade_html
+          layers_pol=json.load(open(site/"data/cko/layer-policies.json"))
+          assert layers_pol["id"]=="POL-CKO-LAYER-CATALOG-1.0.0"
+          assert layers_pol["layer_count"]==44
+          assert layers_pol["active"] is False
+          assert all(l["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0" for l in layers_pol["layers"])
+          assert all(l["clinical_state"]=="PAUSED" for l in layers_pol["layers"] if l["layer_id"] in ("LYR-CLIN-CALC-001","LYR-CLIN-SCALE-001"))
+          ext=json.load(open(site/"data/cko/extraction.json"))
+          assert ext["id"]=="POL-CKO-EXTRACTION-1.0.0"
+          assert ext["document_id"]=="CKO-POL-EXTRACT-001"
+          assert ext["stream_count"]==8
+          assert ext["active"] is False
+          assert ext["implantado"] is False
+          mdreg=json.load(open("public/policies/md-reg-frontend.json"))
+          assert mdreg["parent"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert mdreg["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert "layer-policies" in cascade_html
+          assert "extraction" in cascade_html
           assert cascade["rules"]["coverage"].find("100%")>=0
           assert cascade["verification"]["fuzz_n"]==1000
           assert cascade["verification"]["fuzz_false_accept"]==0

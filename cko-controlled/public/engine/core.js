@@ -57,6 +57,8 @@ const INTEGRITY_DENIALS = new Set([
   "VAS_HOLD",
   "TEMPLATE_POLICY_HOLD",
   "PLATFORM_CLOSURE_HOLD",
+  "LAYER_POLICY_HOLD",
+  "EXTRACTION_POLICY_HOLD",
 ]);
 
 export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
@@ -105,6 +107,30 @@ export const VAS_INTERNAL_POLICY_N = 15;
 export const CLOSURE_POLICY_ID = "POL-CKO-PLATFORM-CLOSURE-1.0.0";
 export const CLOSURE_DOCUMENT_ID = "CKO-POL-CLOSURE-001";
 export const HOLD_POLICY_N = 9;
+export const LAYER_CATALOG_ID = "POL-CKO-LAYER-CATALOG-1.0.0";
+export const LAYER_DOCUMENT_ID = "CKO-POL-LYR-001";
+export const LAYER_POLICY_N = 44;
+export const EXTRACTION_POLICY_ID = "POL-CKO-EXTRACTION-1.0.0";
+export const EXTRACTION_DOCUMENT_ID = "CKO-POL-EXTRACT-001";
+export const EXTRACTION_STREAM_N = 8;
+export const EXTRACTION_STREAM_IDS = [
+  "EXT-LAYER-ZIP",
+  "EXT-PDF-PACK",
+  "EXT-DRIVE-SNAPSHOT",
+  "EXT-REG-CORPUS",
+  "EXT-ABNT-CLAUSE",
+  "EXT-MD-FIELDS",
+  "EXT-REG-BINDINGS",
+  "EXT-LOCALE",
+];
+
+export function layerPolicyId(layerId) {
+  if (String(layerId).startsWith("CKO-")) return `POL-CKO-LYR-${layerId.slice(4)}-1.0.0`;
+  if (String(layerId).startsWith("LYR-") && String(layerId).endsWith("-001")) {
+    return `POL-CKO-LYR-${layerId.slice(4, -4)}-1.0.0`;
+  }
+  return "";
+}
 export const HOLD_HUMAN_STATUS = "HOLD_HUMAN_NON_BLOCKING";
 export const MD_NORM_STAMP = {
   md: 'data-cko-md="CKO-MD"',
@@ -290,6 +316,8 @@ export function inspectPlatform(platform) {
     denials.push(...inspectVisualAssetPolicy(platform.visualAssetPolicy).denials);
     denials.push(...inspectTemplateGovernance(platform.designSystem, platform.universalToolPolicy).denials);
     denials.push(...inspectPlatformClosure(platform.platformClosure, platform.humanDecisions).denials);
+    denials.push(...inspectLayerPolicies(platform.layerPolicies, platform.layers).denials);
+    denials.push(...inspectExtractionPolicy(platform.extractionPolicy).denials);
   }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
@@ -363,6 +391,9 @@ export function inspectLayers(layers, ecossistemaHtml = "") {
     }
     if (layer.master_data !== "CKO-MD" || layer.regulatory !== "CKO-REG" || layer.evidence?.no_fact_without_evidence !== true) {
       deny(`${layer.id} missing master-data / norm / evidence amarração`);
+    }
+    if (layer.policy_id !== layerPolicyId(layer.id) || layer.specializes !== POLICY_MASTER_ID) {
+      deny(`${layer.id} must bind POL-CKO-LYR-* specializing POLICY_MASTER_CONTRACT`);
     }
   }
   if (ecossistemaHtml) {
@@ -588,6 +619,19 @@ export function inspectMdRegPolicy(policy) {
   }
   if (policy.chrome?.breadcrumb !== "one" || policy.chrome?.hero !== "one") {
     deny("frontend chrome policy requires exactly one breadcrumb and one hero");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    deny("MD/REG frontend policy must specialize POLICY_MASTER_CONTRACT");
+  }
+  const fields = policy.contract?.fields || {};
+  if (policy.contract?.contract_id !== POLICY_MASTER_ID || Object.keys(fields).length !== POLICY_MASTER_FIELD_N) {
+    deny("MD/REG must specialize all 28 POLICY_MASTER_CONTRACT fields");
+  }
+  if (JSON.stringify(Object.keys(fields)) !== JSON.stringify(POLICY_MASTER_FIELDS)) {
+    deny("MD/REG contract fields must remain in canonical 28-field order");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.active === true) {
+    deny("MD/REG cannot claim implantado, assured, or ACTIVE");
   }
   return { ok: denials.length === 0, denials };
 }
@@ -852,6 +896,136 @@ export function inspectPlatformClosure(policy, ledger) {
   return { ok: denials.length === 0, denials };
 }
 
+export function inspectLayerPolicies(policy, layersCatalog) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "LAYER_POLICY_HOLD", reason });
+  if (!policy) {
+    deny("layer policy catalog missing; 44 layers must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== LAYER_CATALOG_ID || policy.kind !== "policy-as-code") {
+    deny("identity must be POL-CKO-LAYER-CATALOG-1.0.0");
+  }
+  if (policy.document_id !== LAYER_DOCUMENT_ID || policy.document_version !== "1.0.0") {
+    deny("frozen layer catalog identity must remain CKO-POL-LYR-001 v1.0.0");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    deny("layer catalog must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (policy.starts_at !== "policy-as-code") {
+    deny("layer catalog must start at policy-as-code");
+  }
+  if (policy.active === true || policy.status !== "CONTROLLED_LAYER_HOLD") {
+    deny("layer catalog is a HOLD catalog; it is not ACTIVE");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED")) {
+    deny("layer catalog must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.new_architectural_root === true) {
+    deny("layer catalog cannot claim implementation or a new architectural root");
+  }
+  const rows = policy.layers || [];
+  if (policy.layer_count !== LAYER_POLICY_N || rows.length !== LAYER_POLICY_N) {
+    deny(`layer catalog must declare ${LAYER_POLICY_N} layer policies`);
+  }
+  const ids = rows.map((row) => row.layer_id);
+  if (JSON.stringify(ids) !== JSON.stringify(CANONICAL_LAYER_IDS)) {
+    deny("layer policies must remain the 44 canonical layers in order");
+  }
+  for (const row of rows) {
+    if (row.active === true || row.implantado === true || row.assured === true || row.published === true) {
+      deny(`${row.id} cannot be ACTIVE/implantado/assured/published`);
+    }
+    if (row.parent !== POLICY_MASTER_ID || row.specializes !== POLICY_MASTER_ID || row.id !== layerPolicyId(row.layer_id)) {
+      deny(`${row.layer_id} must specialize POLICY_MASTER_CONTRACT with canonical policy id`);
+    }
+    if (row.release_allowed === true || row.blocking_release !== true) {
+      deny(`${row.id} must keep blocking release`);
+    }
+    const fields = row.contract?.fields || {};
+    if (row.contract?.field_count !== POLICY_MASTER_FIELD_N || Object.keys(fields).length !== POLICY_MASTER_FIELD_N) {
+      deny(`${row.id} must specialize all 28 master fields`);
+    }
+    if (JSON.stringify(Object.keys(fields)) !== JSON.stringify(POLICY_MASTER_FIELDS)) {
+      deny(`${row.id} contract fields must remain in canonical order`);
+    }
+    if ((row.layer_id === "LYR-CLIN-CALC-001" || row.layer_id === "LYR-CLIN-SCALE-001") && row.clinical_state !== "PAUSED") {
+      deny(`${row.layer_id} must remain PAUSED`);
+    }
+  }
+  if (layersCatalog?.layers) {
+    for (const layer of layersCatalog.layers) {
+      const row = rows.find((item) => item.layer_id === layer.id);
+      if (!row || row.id !== layer.policy_id) {
+        deny(`${layer.id} site catalog must bind its layer policy`);
+      }
+    }
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectExtractionPolicy(policy) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "EXTRACTION_POLICY_HOLD", reason });
+  if (!policy) {
+    deny("extraction catalog missing; zip/readback/corpus must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== EXTRACTION_POLICY_ID || policy.kind !== "policy-as-code") {
+    deny("identity must be POL-CKO-EXTRACTION-1.0.0");
+  }
+  if (policy.document_id !== EXTRACTION_DOCUMENT_ID || policy.document_version !== "1.0.0") {
+    deny("frozen extraction identity must remain CKO-POL-EXTRACT-001 v1.0.0");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    deny("extraction catalog must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (policy.starts_at !== "policy-as-code") {
+    deny("extraction catalog must start at policy-as-code");
+  }
+  if (policy.active === true || policy.status !== "CONTROLLED_EXTRACTION_HOLD") {
+    deny("extraction catalog is a HOLD catalog; it is not ACTIVE");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED")) {
+    deny("extraction catalog must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.new_architectural_root === true) {
+    deny("extraction catalog cannot claim implementation or a new architectural root");
+  }
+  const streams = policy.streams || [];
+  if (policy.stream_count !== EXTRACTION_STREAM_N || streams.length !== EXTRACTION_STREAM_N) {
+    deny(`extraction catalog must declare ${EXTRACTION_STREAM_N} streams`);
+  }
+  const ids = streams.map((s) => s.stream_id);
+  if (JSON.stringify(ids) !== JSON.stringify(EXTRACTION_STREAM_IDS)) {
+    deny("extraction streams must remain the eight canonical streams in order");
+  }
+  for (const stream of streams) {
+    if (stream.active === true || stream.implantado === true || stream.assured === true) {
+      deny(`${stream.id} cannot be ACTIVE/implantado/assured`);
+    }
+    if (stream.parent !== POLICY_MASTER_ID || stream.specializes !== POLICY_MASTER_ID) {
+      deny(`${stream.id} must specialize POLICY_MASTER_CONTRACT`);
+    }
+    const fields = stream.contract?.fields || {};
+    if (stream.contract?.field_count !== POLICY_MASTER_FIELD_N || Object.keys(fields).length !== POLICY_MASTER_FIELD_N) {
+      deny(`${stream.id} must specialize all 28 master fields`);
+    }
+    if (JSON.stringify(Object.keys(fields)) !== JSON.stringify(POLICY_MASTER_FIELDS)) {
+      deny(`${stream.id} contract fields must remain in canonical order`);
+    }
+  }
+  const corpus = streams.find((s) => s.stream_id === "EXT-REG-CORPUS");
+  if (corpus && corpus.count !== 0) {
+    deny("H03 regulatory corpus denominator must remain 0");
+  }
+  const abnt = streams.find((s) => s.stream_id === "EXT-ABNT-CLAUSE");
+  if (abnt && abnt.status !== "CONTROLLED_EXTRACTION_HOLD") {
+    deny("ABNT clause-level extraction must remain HOLD");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
 export function inspectVisualAssetPolicy(policy) {
   const denials = [];
   const deny = (reason) => denials.push({ id: "VAS_HOLD", reason });
@@ -1025,6 +1199,8 @@ export function knownUniverseObjects(universe, platform) {
     if (platform.policyMaster) push("policy-master-contract", platform.policyMaster.id || POLICY_MASTER_ID);
     if (platform.visualAssetPolicy) push("visual-asset-policy", platform.visualAssetPolicy.id || VAS_POLICY_ID);
     if (platform.platformClosure) push("platform-closure-policy", platform.platformClosure.id || CLOSURE_POLICY_ID);
+    if (platform.layerPolicies) push("layer-policy-catalog", platform.layerPolicies.id || LAYER_CATALOG_ID);
+    if (platform.extractionPolicy) push("extraction-policy", platform.extractionPolicy.id || EXTRACTION_POLICY_ID);
   }
   return items;
 }
@@ -1054,6 +1230,8 @@ export function validateRuntimePlatformSchema(platform) {
   errors.push(...validatePolicyMasterSchema(platform).errors);
   errors.push(...validateVisualAssetSchema(platform).errors);
   errors.push(...validatePlatformClosureSchema(platform).errors);
+  errors.push(...validateLayerPoliciesSchema(platform).errors);
+  errors.push(...validateExtractionSchema(platform).errors);
   return { ok: errors.length === 0, errors };
 }
 
@@ -1074,6 +1252,48 @@ export function validatePlatformClosureSchema(platform) {
   }
   if (!Array.isArray(policy.holds) || policy.holds.length !== HOLD_POLICY_N || policy.hold_count !== HOLD_POLICY_N) {
     errors.push("schema: platform-closure holds != 9");
+  }
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateLayerPoliciesSchema(platform) {
+  if (!platform?.layers && !platform?.layerPolicies) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.layerPolicies;
+  if (!policy) {
+    errors.push("schema: layer policy catalog missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== LAYER_CATALOG_ID) errors.push("schema: layer-policies id");
+  if (policy.status !== "CONTROLLED_LAYER_HOLD" || policy.active === true) errors.push("schema: layer-policies is not ACTIVE");
+  if (policy.starts_at !== "policy-as-code" || policy.specializes !== POLICY_MASTER_ID) {
+    errors.push("schema: layer-policies must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (!Array.isArray(policy.layers) || policy.layers.length !== LAYER_POLICY_N || policy.layer_count !== LAYER_POLICY_N) {
+    errors.push("schema: layer-policies != 44");
+  }
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateExtractionSchema(platform) {
+  if (!platform?.layers && !platform?.extractionPolicy) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.extractionPolicy;
+  if (!policy) {
+    errors.push("schema: extraction catalog missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== EXTRACTION_POLICY_ID) errors.push("schema: extraction id");
+  if (policy.status !== "CONTROLLED_EXTRACTION_HOLD" || policy.active === true) errors.push("schema: extraction is not ACTIVE");
+  if (policy.starts_at !== "policy-as-code" || policy.specializes !== POLICY_MASTER_ID) {
+    errors.push("schema: extraction must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (!Array.isArray(policy.streams) || policy.streams.length !== EXTRACTION_STREAM_N || policy.stream_count !== EXTRACTION_STREAM_N) {
+    errors.push("schema: extraction streams != 8");
   }
   return { ok: errors.length === 0, errors };
 }
@@ -1406,6 +1626,17 @@ export function graphConstraints(universe, platform) {
     if (!closure.ok) {
       violations.push("graph: platform closure holds must specialize POLICY_MASTER_CONTRACT");
     }
+    const lyrPol = inspectLayerPolicies(platform.layerPolicies, platform.layers);
+    if (!lyrPol.ok) {
+      violations.push("graph: 44 layers must specialize POLICY_MASTER_CONTRACT");
+    }
+    const ext = inspectExtractionPolicy(platform.extractionPolicy);
+    if (!ext.ok) {
+      violations.push("graph: extraction streams must specialize POLICY_MASTER_CONTRACT");
+    }
+    if (platform.mdRegPolicy && (platform.mdRegPolicy.parent !== POLICY_MASTER_ID || platform.mdRegPolicy.specializes !== POLICY_MASTER_ID)) {
+      violations.push("graph: MD/REG must specialize POLICY_MASTER_CONTRACT");
+    }
   }
   return {
     ok: violations.length === 0,
@@ -1535,6 +1766,10 @@ export function runtimeAssertions(universe, platform) {
       check("A-TEMPLATE-POLICY-HOLD", tpl.ok, "templates");
       const closure = inspectPlatformClosure(platform.platformClosure, platform.humanDecisions);
       check("A-PLATFORM-CLOSURE-HOLD", closure.ok, "CKO-POL-CLOSURE-001");
+      const lyrPol = inspectLayerPolicies(platform.layerPolicies, platform.layers);
+      check("A-LAYER-POLICY-HOLD", lyrPol.ok, "CKO-POL-LYR-001");
+      const ext = inspectExtractionPolicy(platform.extractionPolicy);
+      check("A-EXTRACTION-POLICY-HOLD", ext.ok, "CKO-POL-EXTRACT-001");
     }
   }
   const failed = asserts.filter((a) => !a.ok);

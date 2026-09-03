@@ -241,6 +241,64 @@ function renderPlatformClosure(policy) {
     </section>`;
 }
 
+function renderLayerPolicies(policy) {
+  const rows = (policy.layers || [])
+    .map(
+      (l) => `<tr>
+        <th scope="row"><code>${esc(l.layer_id)}</code></th>
+        <td><code>${esc(l.id)}</code></td>
+        <td>${esc(l.name)}</td>
+        <td>${esc(l.clinical_state)}</td>
+        <td><span class="cko-ds-badge cko-ds-badge--hold">${esc(l.status)}</span></td>
+      </tr>`
+    )
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_LAYER_HOLD")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>${esc(policy.rule || "")} DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED. Não é ACTIVE.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>44 camadas como policy-as-code</h2>
+      <p class="cko-ds-help">Cada camada especializa os 28 campos do POLICY_MASTER_CONTRACT. Calculadoras/escalas PAUSED.</p>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Camada</th><th>Política</th><th>Nome</th><th>Clínica</th><th>Estado</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </section>`;
+}
+
+function renderExtraction(policy) {
+  const rows = (policy.streams || [])
+    .map(
+      (s) => `<tr>
+        <th scope="row"><code>${esc(s.stream_id)}</code></th>
+        <td><code>${esc(s.id)}</code></td>
+        <td>${esc(s.extraction_kind)}</td>
+        <td>${esc(s.count)}</td>
+        <td><span class="cko-ds-badge cko-ds-badge--hold">${esc(s.status)}</span></td>
+      </tr>`
+    )
+    .join("");
+  const findings = (policy.evaluation?.findings || [])
+    .map((f) => `<li><code>${esc(f.id)}</code> ${esc(f.text)}</li>`)
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_EXTRACTION_HOLD")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>${esc(policy.rule || "")} DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED. Não é ACTIVE.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>8 fluxos de extração</h2>
+      <p class="cko-ds-help">ZIP/readback/classificação não é corpus normativo extraído nem clause-level ABNT PASS.</p>
+      <ul class="cko-ds-ut-findings">${findings}</ul>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Fluxo</th><th>Política</th><th>Tipo</th><th>N</th><th>Estado</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </section>`;
+}
+
 function renderUniversalTool(policy) {
   const findings = (policy.evaluation?.findings || [])
     .map(
@@ -451,7 +509,7 @@ function renderLayers(ds, layers) {
       return `<a class="cko-ds-slot" href="${esc(layer.href)}" style="background:${esc(color)}">
         <span>${esc(layer.seq)} · <code>${esc(layer.id)}</code></span>
         <strong>${esc(layer.name)}</strong>
-        <small>${esc(layer.release)} · holds ${esc(layer.holds_n)}</small>
+        <small>${esc(layer.release)} · ${esc(layer.policy_id || "UNBOUND")} · holds ${esc(layer.holds_n)}</small>
       </a>`;
     })
     .join("");
@@ -521,6 +579,18 @@ async function mount(el) {
       refreshShellToc();
       return;
     }
+    if (mode === "layer-policies" || ds.document_id === "CKO-POL-LYR-001") {
+      const policy = src.includes("layer-policies") || ds.document_id === "CKO-POL-LYR-001" ? ds : await loadJson("/data/cko/layer-policies.json");
+      el.innerHTML = renderLayerPolicies(policy);
+      refreshShellToc();
+      return;
+    }
+    if (mode === "extraction" || ds.document_id === "CKO-POL-EXTRACT-001") {
+      const policy = src.includes("extraction") || ds.document_id === "CKO-POL-EXTRACT-001" ? ds : await loadJson("/data/cko/extraction.json");
+      el.innerHTML = renderExtraction(policy);
+      refreshShellToc();
+      return;
+    }
     if (mode === "manual") {
       el.innerHTML = renderIdentityManual(ds);
       refreshShellToc();
@@ -556,4 +626,4 @@ if (document.readyState === "loading") {
   boot();
 }
 
-export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets, renderPlatformClosure };
+export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets, renderPlatformClosure, renderLayerPolicies, renderExtraction };
