@@ -1,0 +1,107 @@
+{
+  "id": "POL-CAL-IMC-001",
+  "version": "1.0.0",
+  "status": "ACTIVE",
+  "applies_to": {
+    "object_type": "CALCULATOR",
+    "object_id": "CAL-IMC-001"
+  },
+  "purpose": [
+    "guarantee_input_integrity",
+    "guarantee_deterministic_calculation",
+    "guarantee_traceability",
+    "prevent_unsafe_execution"
+  ],
+  "rules": [
+    {
+      "id": "POL-IMC-001",
+      "name": "required_weight",
+      "type": "obligation",
+      "condition": {
+        "field": "weight_kg",
+        "required": true
+      },
+      "enforcement": {
+        "schema": true,
+        "runtime": true
+      }
+    },
+    {
+      "id": "POL-IMC-002",
+      "name": "required_height",
+      "type": "obligation",
+      "condition": {
+        "field": "height_m",
+        "required": true
+      },
+      "enforcement": {
+        "schema": true,
+        "runtime": true
+      }
+    },
+    {
+      "id": "POL-IMC-003",
+      "name": "positive_weight",
+      "type": "prohibition",
+      "condition": {
+        "expression": "weight_kg <= 0"
+      },
+      "action": {
+        "deny": true
+      }
+    },
+    {
+      "id": "POL-IMC-004",
+      "name": "positive_height",
+      "type": "prohibition",
+      "condition": {
+        "expression": "height_m <= 0"
+      },
+      "action": {
+        "deny": true
+      }
+    },
+    {
+      "id": "POL-IMC-006",
+      "name": "no_llm_arithmetic",
+      "type": "prohibition",
+      "condition": {
+        "calculation_engine": "LLM"
+      },
+      "action": {
+        "deny": true
+      }
+    },
+    {
+      "id": "POL-IMC-005",
+      "name": "deterministic_formula",
+      "type": "obligation",
+      "requirement": {
+        "formula": "weight_kg / (height_m * height_m)",
+        "deterministic": true
+      }
+    },
+    {
+      "id": "POL-IMC-007",
+      "name": "evidence_required",
+      "type": "obligation",
+      "requirement": {
+        "evidence_event": "CALCULATION_EXECUTED"
+      }
+    },
+    {
+      "id": "POL-IMC-008",
+      "name": "provenance_required",
+      "type": "obligation",
+      "requirement": {
+        "fields": [
+          "calculation_version",
+          "policy_version",
+          "input_hash",
+          "output_hash",
+          "execution_timestamp"
+        ]
+      }
+    }
+  ]
+}

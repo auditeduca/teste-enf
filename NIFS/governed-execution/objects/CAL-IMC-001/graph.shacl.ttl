@@ -1,0 +1,19 @@
+@prefix cko: <https://cko.calculadorasdeenfermagem.com.br/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+cko:CalculatorShape
+    a sh:NodeShape ;
+    sh:targetClass cko:ClinicalCalculator ;
+    sh:property [
+        sh:path cko:hasInput ;
+        sh:minCount 2 ;
+    ] ;
+    sh:property [
+        sh:path cko:hasOutput ;
+        sh:minCount 1 ;
+    ] .
+
+cko:IMCInputShape
+    a sh:NodeShape ;
+    sh:targetClass cko:ClinicalCalculator ;
+    sh:message "IMC calculator must have body weight and body height inputs." .

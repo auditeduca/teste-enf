@@ -265,6 +265,7 @@
 | NIFS-1100-08 | [Change Requests](1100-GOVERNANCE/1100-08-change-requests.md) | Draft |
 | NIFS-1100-09 | [Deprecation](1100-GOVERNANCE/1100-09-deprecation.md) | Draft |
 | NIFS-1100-10 | [Release Management](1100-GOVERNANCE/1100-10-release-management.md) | Draft |
+| NIFS-1100-11 | [Executable Governance](1100-GOVERNANCE/1100-11-executable-governance.md) | Active |
 
 ## 1200 — Quality
 
@@ -335,7 +336,7 @@
 | NIFS-APP-E | [Evidence Matrix](APPENDIX/E-evidence-matrix.md) | Draft |
 | NIFS-APP-F | [Mathematical Models](APPENDIX/F-mathematical-models.md) | Draft |
 | NIFS-APP-G | [Algorithms](APPENDIX/G-algorithms.md) | Draft |
-| NIFS-APP-H | [Examples](APPENDIX/H-examples.md) | Draft |
+| NIFS-APP-H | [Examples](APPENDIX/H-examples.md) | Active |
 | NIFS-APP-I | [Clinical Cases](APPENDIX/I-clinical-cases.md) | Draft |
 | NIFS-APP-J | [JSON Schemas](APPENDIX/J-json-schemas.md) | Draft |
 | NIFS-APP-K | [SQL Templates](APPENDIX/K-sql-templates.md) | Draft |

@@ -1,0 +1,21 @@
+{
+  "constraints": [
+    {
+      "id": "GRAPH-CAL-IMC-001",
+      "target_class": "cko:ClinicalCalculator",
+      "properties": [
+        {
+          "path": "cko:hasInput",
+          "minCount": 2,
+          "required_objects": ["cko:BodyWeight", "cko:BodyHeight"]
+        },
+        {
+          "path": "cko:hasOutput",
+          "minCount": 1,
+          "required_objects": ["cko:BodyMassIndex"]
+        }
+      ],
+      "forbidden_input_objects": ["cko:BodyTemperature"]
+    }
+  ]
+}

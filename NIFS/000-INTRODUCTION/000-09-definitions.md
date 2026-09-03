@@ -21,7 +21,12 @@ Provide canonical definitions for all key terms used across the specification.
 
 | Term | Definition |
 |------|-----------|
-| —    | —         |
+| Governed Execution | POLICY + SCHEMA + GRAPH + CI + RUNTIME + EVIDENCE |
+| Policy-as-Code | Regras executáveis de permissão, proibição e obrigação |
+| Runtime Assertion | Revalidação de autorização no momento da execução |
+| Automatic Evidence | Prova gerada como subproduto da execução, inclusive de negações |
+| Derived Observation | Valor produzido por um objeto governado a partir de observações, com proveniência |
+| Knowledge Licensing Registry | Registro de fontes cujo uso comercial exige licença (ex.: NANDA/INKA) |
 
 ## 4. Specification
 
