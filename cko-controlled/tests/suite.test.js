@@ -862,8 +862,31 @@ describe("GitHub Pages CALENF runtime", () => {
       const mapa = readFileSync(join(site, "mapa-do-site.html"), "utf8");
       assert.match(mapa, /href="\/camadas\/"/);
       assert.match(mapa, /href="\/aldrete\.html"/);
+      assert.match(mapa, /href="\/cko-hold-preview\.html"/);
+      assert.equal(existsSync(join(out, "cko-hold-preview.html")), true);
     } finally {
       rmSync(out, { recursive: true, force: true });
     }
+  });
+});
+
+describe("HOLD localStorage preview", () => {
+  it("ships a single-file CALENF preview seeded into CKO_HOLD_PREVIEW_V1", () => {
+    const html = readFileSync(join(site, "cko-hold-preview.html"), "utf8");
+    const snap = JSON.parse(readFileSync(join(site, "data/cko/hold-preview.json"), "utf8"));
+    assert.match(html, /CKO_HOLD_PREVIEW_V1/);
+    assert.match(html, /Calculadoras de Enfermagem/);
+    assert.match(html, /localStorage/);
+    assert.match(html, /Não autoriza deploy|Não é deploy/);
+    assert.equal(snap.id, "CKO-HOLD-PREVIEW-1.0.0");
+    assert.equal(snap.layer_count, 44);
+    assert.equal(snap.layers.length, 44);
+    assert.equal(snap.release_allowed, false);
+    assert.equal(snap.deploy, false);
+    assert.equal(snap.home.title, "Calculadoras de Enfermagem");
+    assert.ok(snap.tools.some((t) => t.id === "aldrete"));
+    assert.ok(snap.tools.some((t) => t.id === "imc"));
+    assert.ok((snap.specialties || []).length >= 12);
+    assert.ok(snap.pages.some((p) => p.id === "mapa"));
   });
 });
