@@ -11,10 +11,13 @@ import hashlib
 import json
 import re
 import shutil
+import sys
 import zipfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from cko_md_norm import MD_NORM_CHAIN
+from generate_design_system import generate as generate_design_system
 
 GATE = Path(__file__).resolve().parents[1]
 SITE = GATE.parent / "reference-website"
@@ -71,8 +74,20 @@ BINDINGS: dict[str, list[str]] = {
     "LYR-DERIVE-001": ["scripts/generate_tool_page.py"],
     "LYR-HCD-001": ["partials/header.html"],
     "LYR-A11Y-001": ["acessibilidade.html"],
-    "LYR-DS-001": ["global-styles.css", "public/output.css"],
-    "LYR-UI-001": ["partials/header.html", "js/partials-loader.js"],
+    "LYR-DS-001": [
+        "global-styles.css",
+        "public/output.css",
+        "css/cko-ds-tokens.css",
+        "css/cko-ds.css",
+        "js/cko-ds-render.js",
+        "data/cko/design-system.json",
+    ],
+    "LYR-UI-001": [
+        "partials/header.html",
+        "js/partials-loader.js",
+        "css/cko-ds.css",
+        "js/cko-ds-render.js",
+    ],
     "LYR-PRV-001": ["privacidade.html"],
     "LYR-SEC-001": ["firebase.json"],
     "LYR-ROUTE-001": ["index.html", "sitemap.xml"],
@@ -344,6 +359,15 @@ def write_layer_page(row: dict, runtime_paths: list[str], zip_verified: bool, hr
     runtime_links = "".join(
         f'<li><a href="/{p}">{p}</a></li>' for p in runtime_paths
     )
+    render_mode = {"LYR-DS-001": "catalog", "LYR-UI-001": "states"}.get(row["id"])
+    render_block = ""
+    if render_mode:
+        render_block = f"""
+<section class="cko-ds-section" aria-label="Catálogo renderizado">
+  <div id="cko-ds-root" data-cko-ds-render="{render_mode}" data-cko-ds-src="/data/cko/design-system.json"></div>
+</section>
+<script type="module" src="/js/cko-ds-render.js"></script>
+"""
     html = f"""<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -353,19 +377,21 @@ def write_layer_page(row: dict, runtime_paths: list[str], zip_verified: bool, hr
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1A3E74">
 <link rel="stylesheet" href="/global-styles.css">
+<link rel="stylesheet" href="/css/cko-ds.css">
 </head>
-<body data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layer="{row['id']}" data-cko-release="HOLD_NOT_RELEASED">
-<a class="skip" href="#main-content">Pular para o conteúdo principal</a>
-<main id="main-content" class="shell" style="width:min(960px,calc(100% - 2rem));margin:2rem auto;font-family:Inter,system-ui,sans-serif">
-<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <a href="/camadas/">Camadas</a> › <span aria-current="page">{row['id']}</span></nav>
-<article>
-  <p class="label">Camada {row['seq']} · HOLD / NOT_RELEASED</p>
-  <h1>{row['name']}</h1>
+<body class="cko-ds-body" data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layer="{row['id']}" data-cko-release="HOLD_NOT_RELEASED" data-cko-ds="1">
+<a class="cko-ds-skip" href="#main-content">Pular para o conteúdo principal</a>
+<main id="main-content" class="cko-ds-page">
+<nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <a href="/camadas/">Camadas</a> › <span aria-current="page">{row['id']}</span></nav>
+<article class="cko-ds-card cko-ds-card--hold">
+  <p class="cko-ds-badge cko-ds-badge--hold">Camada {row['seq']} · HOLD / NOT_RELEASED</p>
+  <h1 class="cko-ds-title">{row['name']}</h1>
   <p>Pacote classificado do PDF <code>{row['artifact']}</code> convertido para a estrutura final do site. SHA-256 <code>{row['sha256'][:16]}…</code>. Zip verificado: <strong>{'sim' if zip_verified else 'não'}</strong>. Nurse-PaLM operacional: <strong>NOT_ASSERTED</strong>.</p>
   <p>Runtime CALENF (base de implementação, não a estrutura final):</p>
   <ul>{runtime_links}</ul>
-  <p><a href="/data/cko/layers/{row['id']}/package.zip">Pacote original do PDF</a> · <a href="/data/cko/layers/{row['id']}/package/FINAL_MANIFEST.json">Manifesto original</a></p>
+  <p><a class="cko-ds-link" href="/data/cko/layers/{row['id']}/package.zip">Pacote original do PDF</a> · <a class="cko-ds-link" href="/data/cko/layers/{row['id']}/package/FINAL_MANIFEST.json">Manifesto original</a></p>
 </article>
+{render_block}
 </main>
 </body>
 </html>
@@ -386,15 +412,22 @@ def write_camadas_index(catalog: dict) -> None:
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>44 camadas do PDF | Calculadoras de Enfermagem</title>
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1A3E74">
 <link rel="stylesheet" href="/global-styles.css">
+<link rel="stylesheet" href="/css/cko-ds.css">
 </head>
-<body data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layers="44">
-<main id="main-content" style="width:min(960px,calc(100% - 2rem));margin:2rem auto;font-family:Inter,system-ui,sans-serif">
-<nav><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Camadas</span></nav>
+<body class="cko-ds-body" data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-layers="44" data-cko-ds="1">
+<a class="cko-ds-skip" href="#main-content">Pular para o conteúdo principal</a>
+<main id="main-content" class="cko-ds-page">
+<nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Camadas</span></nav>
+<div id="cko-ds-root" data-cko-ds-render="layers" data-cko-ds-src="/data/cko/design-system.json" data-cko-layers-src="/data/cko/layers.json"></div>
+<noscript>
 <h1>44 camadas classificadas do PDF</h1>
 <p>Estrutura final convertida dos pacotes do relatório técnico. Cobertura <strong>44/44</strong>. Estado: <strong>HOLD / NOT_RELEASED</strong>.</p>
 <ol>{items}</ol>
+</noscript>
 </main>
+<script type="module" src="/js/cko-ds-render.js"></script>
 </body>
 </html>
 """
@@ -519,6 +552,7 @@ def inject_ecossistema(catalog: dict) -> None:
 
 
 def generate() -> dict:
+    generate_design_system()
     if not CLOSURE.is_file():
         raise SystemExit(f"closure HTML missing: {CLOSURE}")
     rows = json.loads(CANON.read_text(encoding="utf-8"))

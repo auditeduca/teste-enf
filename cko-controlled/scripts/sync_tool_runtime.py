@@ -641,6 +641,7 @@ KEEP_DATA = {
     "tool-library-runtime.json",
     "universe.json",
     "unknown-universe.json",
+    "design-system.json",
 }
 
 

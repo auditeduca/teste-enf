@@ -633,6 +633,49 @@ describe("knowledge representation", () => {
   });
 });
 
+describe("design system runtime render", () => {
+  const dsPath = join(site, "data/cko/design-system.json");
+  it("ships a fail-closed catalog with 37 components, 21 templates, 4 themes and 44 slots", () => {
+    assert.equal(existsSync(dsPath), true);
+    const ds = JSON.parse(readFileSync(dsPath, "utf8"));
+    assert.equal(ds.id, "CKO-DS-RUNTIME-1.0.0");
+    assert.equal(ds.layer, "LYR-DS-001");
+    assert.match(ds.release, /NOT_RELEASED/);
+    assert.equal(ds.published, false);
+    assert.equal(ds.operational, "NOT_ASSERTED");
+    assert.equal(ds.inventory.components, 37);
+    assert.equal(ds.inventory.templates, 21);
+    assert.equal(ds.inventory.themes, 4);
+    assert.equal(ds.inventory.theme_slots, 44);
+    assert.equal(ds.components.length, 37);
+    assert.equal(ds.templates.length, 21);
+    assert.equal(ds.themes.length, 4);
+    assert.equal(ds.theme_slots.length, 44);
+    assert.equal(ds.accepted_authority, "ADR-DS-001");
+    assert.equal(ds.holds.length, 4);
+    assert.equal(existsSync(join(site, "css/cko-ds.css")), true);
+    assert.equal(existsSync(join(site, "css/cko-ds-tokens.css")), true);
+    assert.equal(existsSync(join(site, "js/cko-ds-render.js")), true);
+    const tokens = readFileSync(join(site, "css/cko-ds-tokens.css"), "utf8");
+    assert.match(tokens, /--cko-navy-900:\s*#1a3e74/i);
+    const renderer = readFileSync(join(site, "js/cko-ds-render.js"), "utf8");
+    assert.match(renderer, /data-cko-ds-render/);
+    assert.match(renderer, /NOT_ASSERTED/);
+    const dsLayer = layers.layers.find((l) => l.id === "LYR-DS-001");
+    assert.ok(dsLayer.runtime_paths.includes("css/cko-ds.css"));
+    assert.ok(dsLayer.runtime_paths.includes("js/cko-ds-render.js"));
+    assert.ok(dsLayer.runtime_paths.includes("data/cko/design-system.json"));
+    const dsPage = readFileSync(join(site, "camadas/LYR-DS-001/index.html"), "utf8");
+    assert.match(dsPage, /data-cko-ds-render="catalog"/);
+    assert.match(dsPage, /cko-ds-render\.js/);
+    const uiPage = readFileSync(join(site, "camadas/LYR-UI-001/index.html"), "utf8");
+    assert.match(uiPage, /data-cko-ds-render="states"/);
+    const hub = readFileSync(join(site, "camadas/index.html"), "utf8");
+    assert.match(hub, /data-cko-ds-render="layers"/);
+    assert.match(readFileSync(join(site, "global-styles.css"), "utf8"), /cko-ds-tokens\.css/);
+  });
+});
+
 describe("applied security probes", () => {
   it("denies forged ACK, replay, injection, traversal and prompt injection without a second effect", () => {
     const r = securityOffensive(universe);
