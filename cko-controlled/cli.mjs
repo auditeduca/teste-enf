@@ -43,8 +43,16 @@ const utPath = existsSync(join(site, "data/cko/universal-tool.json"))
   ? join(site, "data/cko/universal-tool.json")
   : join(gatePub, "policies/universal-tool.json");
 const universalToolPolicy = existsSync(utPath) ? JSON.parse(readFileSync(utPath, "utf8")) : undefined;
+const masterPath = existsSync(join(site, "data/cko/policy-master.json"))
+  ? join(site, "data/cko/policy-master.json")
+  : join(gatePub, "policies/policy-master.json");
+const policyMaster = existsSync(masterPath) ? JSON.parse(readFileSync(masterPath, "utf8")) : undefined;
+const vasPath = existsSync(join(site, "data/cko/visual-assets.json"))
+  ? join(site, "data/cko/visual-assets.json")
+  : join(gatePub, "policies/visual-assets.json");
+const visualAssetPolicy = existsSync(vasPath) ? JSON.parse(readFileSync(vasPath, "utf8")) : undefined;
 const ontology = existsSync(join(gatePub, "graph/ontology.ttl")) ? readFileSync(join(gatePub, "graph/ontology.ttl"), "utf8") : "";
-const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable, mdRegPolicy, humanDecisions, designSystem, universalToolPolicy };
+const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable, mdRegPolicy, humanDecisions, designSystem, universalToolPolicy, policyMaster, visualAssetPolicy };
 
 const report = await runGates(universe, { action: "inspect", platform, ontology });
 
@@ -157,6 +165,14 @@ if (universalToolPolicy) {
   writeFileSync(join(cascadeDir, "universal-tool.json"), JSON.stringify(universalToolPolicy, null, 2) + "\n");
   writeFileSync(join(site, "data/cko/universal-tool.json"), JSON.stringify(universalToolPolicy, null, 2) + "\n");
 }
+if (policyMaster) {
+  writeFileSync(join(cascadeDir, "policy-master.json"), JSON.stringify(policyMaster, null, 2) + "\n");
+  writeFileSync(join(site, "data/cko/policy-master.json"), JSON.stringify(policyMaster, null, 2) + "\n");
+}
+if (visualAssetPolicy) {
+  writeFileSync(join(cascadeDir, "visual-assets.json"), JSON.stringify(visualAssetPolicy, null, 2) + "\n");
+  writeFileSync(join(site, "data/cko/visual-assets.json"), JSON.stringify(visualAssetPolicy, null, 2) + "\n");
+}
 if (humanDecisions) {
   writeFileSync(join(cascadeDir, "human-decisions.json"), JSON.stringify(humanDecisions, null, 2) + "\n");
   writeFileSync(join(site, "data/cko/human-decisions.json"), JSON.stringify(humanDecisions, null, 2) + "\n");
@@ -179,6 +195,8 @@ writeFileSync(
 <nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Cascata</span></nav>
 <div id="cko-ds-root" data-cko-ds-render="cascade" data-cko-ds-src="/data/cko/design-system.json"></div>
 <div data-cko-ds-render="universal-tool" data-cko-ds-src="/data/cko/universal-tool.json"></div>
+<div data-cko-ds-render="policy-master" data-cko-ds-src="/data/cko/policy-master.json"></div>
+<div data-cko-ds-render="visual-assets" data-cko-ds-src="/data/cko/visual-assets.json"></div>
 <p class="cko-ds-help"><a class="cko-ds-link" href="./index.json">index.json</a> · <a class="cko-ds-link" href="./gate-report.json">gate-report.json</a></p>
 </main>
 <script type="module" src="/js/cko-ds-render.js"></script>

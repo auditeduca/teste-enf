@@ -26,7 +26,9 @@
     "js/mega-menu.js",
     "js/i18n-loader.js",
     "js/lang-selector.js",
-    "js/site-widgets.js"
+    "js/site-widgets.js",
+    "js/cko-ratings-hold.js",
+    "js/cko-scale-standard.js"
   ];
 
   function fetchPartial(item) {

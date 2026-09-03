@@ -307,13 +307,7 @@ def build(cfg):
     sae_tab_btn = '<button class="tab" data-tab="sae" type="button">SAE</button>' if has_sae else ""
     sae_tab_panel = f'<div class="tab-panel" data-tab-panel="sae">{sae_html}</div>' if has_sae else ""
 
-    rating = ov.get("rating", 4.8)
-    rating_count = ov.get("ratingCount", 0)
-    full_stars = round(rating)
-    stars_html = "".join(
-        f'<button type="button" class="{"on" if i < full_stars else ""}" tabindex="-1" aria-hidden="true"><svg class="icon icon-sm"><use href="#i-star"/></svg></button>'
-        for i in range(5)
-    )
+    # HOLD-HUMAN-COPY-RATINGS: do not emit star/rating copy.
 
     tool_config_json = json.dumps(cfg, ensure_ascii=False)
 
@@ -333,6 +327,8 @@ def build(cfg):
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="css/site-styles.css">
 <link rel="stylesheet" href="css/calc-tool.css">
+<link rel="stylesheet" href="css/pages/cko-page-shell.css">
+<script src="js/cko-ratings-hold.js" defer></script>
 </head>
 <body data-page="{esc(cfg['slug'])}">
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -363,10 +359,7 @@ def build(cfg):
           <span class="tool-category-badge">{esc(ov.get('categoryBadge',''))}</span>
           <h1>{esc(ov['name'])}</h1>
           <p class="tool-subtitle">{esc(ov.get('objective',''))}</p>
-          <div class="tool-rating" aria-label="Avaliação desta calculadora">
-            <div class="stars" role="img" aria-label="{rating} de 5 estrelas">{stars_html}</div>
-            <span>{rating} · {rating_count} avaliações</span>
-          </div>
+          <p class="cko-ratings-hold" data-cko-hold="HOLD-HUMAN-COPY-RATINGS">Avaliações e estrelas em HOLD — texto não autorizado.</p>
         </div>
       </div>
       <div class="tool-actions">

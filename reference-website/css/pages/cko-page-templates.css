@@ -1,18 +1,20 @@
-/* CKO page templates — identidade por tipo */
+/* CKO page templates — identidade por tipo. Tokens = LYR-DS-001. */
 :root {
-  --cko-tpl-navy: #1a3e74;
-  --cko-tpl-navy-mid: #1e4d8c;
-  --cko-tpl-surface: #ffffff;
-  --cko-tpl-tint: #f8fafc;
-  --cko-tpl-ink: #1e293b;
-  --cko-tpl-muted: #64748b;
+  --cko-tpl-navy: var(--cko-navy-900, #1a3e74);
+  --cko-tpl-navy-mid: var(--cko-navy-700, #1e4d8c);
+  --cko-tpl-surface: var(--cko-surface, #ffffff);
+  --cko-tpl-tint: var(--cko-bg, #f8fafc);
+  --cko-tpl-ink: var(--cko-ink, #1e293b);
+  --cko-tpl-muted: var(--cko-muted-2, #64748b);
 }
 
 body.cko-tpl-home,
 body.cko-tpl-institutional,
 body.cko-tpl-calculator,
 body.cko-tpl-tool,
-body.cko-tpl-content {
+body.cko-tpl-content,
+body.cko-tpl-scale,
+body.cko-tpl-library {
   background: var(--cko-tpl-tint);
 }
 
@@ -29,7 +31,7 @@ body.cko-tpl-home main.cko-tpl-main {
   position: relative;
   overflow: hidden;
   border-radius: 1rem;
-  background: linear-gradient(135deg, #1a3e74 0%, #1e4d8c 60%, #163269 100%);
+  background: linear-gradient(135deg, var(--cko-navy-900, #1a3e74) 0%, var(--cko-navy-700, #1e4d8c) 60%, var(--cko-navy-800, #163269) 100%);
   color: #fff;
   padding: 2rem 1.75rem;
 }
@@ -176,6 +178,125 @@ body.cko-tpl-tool .cko-layout__main {
   border: 1px solid #cbd5e1;
   border-radius: 14px;
   padding: 1rem 1.15rem;
+}
+
+/* —— ESCALA (identity v10 + cluster PADRAO) —— */
+.cko-scale-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.cko-scale-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  background: var(--cko-tpl-surface);
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.05rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.cko-scale-item__badge {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cko-tpl-navy);
+  background: var(--cko-blue-50, #eff6ff);
+  border: 1px solid var(--cko-blue-100, #dbeafe);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+.cko-scale-item__title {
+  margin: 0;
+  font-family: "Nunito Sans", "Inter", system-ui, sans-serif;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--cko-tpl-navy);
+}
+
+.cko-scale-item select,
+.cko-scale-item .cko-ds-select {
+  width: 100%;
+  min-height: 44px;
+  margin-top: auto;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--cko-tpl-ink);
+  background: #fff;
+}
+
+.cko-scale-item:focus-within {
+  border-color: var(--cko-tpl-navy);
+  box-shadow: 0 0 0 3px rgba(26, 62, 116, 0.16);
+}
+
+.cko-scale-patient {
+  background: var(--cko-tpl-surface);
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cko-scale-patient__toggle {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.95rem 1.1rem;
+  border: 0;
+  background: #fff;
+  color: var(--cko-tpl-navy);
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cko-scale-patient__toggle small {
+  font-weight: 600;
+  color: var(--cko-tpl-muted);
+}
+
+.cko-scale-patient__body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.85rem;
+  padding: 0 1.1rem 1.1rem;
+}
+
+.cko-calc-result .cko-scale-score__label {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #bfdbfe;
+}
+
+.cko-calc-result .cko-scale-score__value {
+  margin: 0.35rem 0 0.65rem;
+  font-family: "Nunito Sans", "Inter", system-ui, sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-cko-legacy-hero] {
+  display: none !important;
+}
+
+body.cko-tpl-scale .cko-layout__side .cko-side-card__title {
+  letter-spacing: 0.05em;
 }
 
 /* Badge de template (dev / debug) */
