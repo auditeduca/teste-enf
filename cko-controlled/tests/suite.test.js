@@ -15,7 +15,9 @@ import {
   inspectDesignSystem,
   inspectUniversalToolPolicy,
   inspectPolicyMaster,
+  inspectTemplateGovernance,
   inspectVisualAssetPolicy,
+  POLICY_MASTER_FIELDS,
   MD_REG_CHAIN,
   MD_REG_POLICY_ID,
   UT_POLICY_ID,
@@ -146,6 +148,8 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "MD_REG_IS_POLICY"));
     assert.ok(policy.rules.some((r) => r.id === "DS_STARTS_AT_POLICY"));
     assert.ok(policy.rules.some((r) => r.id === "UT_POLICY_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "POLICY_MASTER_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "TEMPLATE_POLICY_HOLD"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -700,6 +704,12 @@ describe("design system runtime render", () => {
     assert.equal(ds.templates_implemented_n, 11);
     assert.equal(ds.templates.filter((t) => t.status === "implemented").length, 11);
     assert.ok(ds.templates.every((t) => t.status === "implemented" || t.status === "wireframe"));
+    assert.ok(ds.templates.every((t) => t.governed_by?.contract === "POLICY_MASTER_CONTRACT"));
+    assert.equal(ds.templates.find((t) => t.id === "tool").governed_by.policy, "CKO-POL-UT-001");
+    assert.equal(ds.templates.find((t) => t.id === "scale").governed_by.policy, "CKO-POL-UT-001");
+    assert.equal(ds.template_governance.status, "BOUND_HOLD");
+    const tplGov = inspectTemplateGovernance(ds, universalToolPolicy);
+    assert.equal(tplGov.ok, true, JSON.stringify(tplGov.denials));
     assert.match(ds.refinement, /1\.2\.0-HOLD/);
     assert.equal(ds.identity_manual.version, "v10");
     assert.equal(ds.identity_manual.release_allowed, false);
@@ -761,6 +771,13 @@ describe("CKO-POL-UT-001 Universal Tool Policy", () => {
     assert.equal(universalToolPolicy.evaluation.clinical_promotion, "DENIED");
     assert.equal(universalToolPolicy.version_lineage.status, "VERSION_DRIFT_HOLD");
     assert.equal(universalToolPolicy.starts_at, "policy-as-code");
+    assert.equal(universalToolPolicy.parent, POLICY_MASTER_ID);
+    assert.equal(universalToolPolicy.specializes, POLICY_MASTER_ID);
+    assert.equal(universalToolPolicy.contract.field_count, 28);
+    assert.deepEqual(Object.keys(universalToolPolicy.contract.fields), POLICY_MASTER_FIELDS);
+    assert.equal(universalToolPolicy.template_governance.status, "BOUND_HOLD");
+    assert.equal(universalToolPolicy.template_governance.implantado, false);
+    assert.ok(["tool", "calculator", "scale"].every((id) => universalToolPolicy.template_governance.templates.some((t) => t.id === id)));
     assert.ok(universalToolPolicy.controls.every((c) => c.implemented === false && c.status === "DOCUMENTADO_HOLD"));
   });
   it("fails at policy-as-code if calculators are claimed PASS or any UTC is implemented", async () => {
@@ -783,6 +800,21 @@ describe("CKO-POL-UT-001 Universal Tool Policy", () => {
     assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /universal-tool/);
     assert.match(readFileSync(join(site, "data/cko/cascade/index.html"), "utf8"), /data-cko-ds-render="universal-tool"/);
   });
+  it("fails at policy-as-code if UT skips POLICY_MASTER_CONTRACT", async () => {
+    const broken = {
+      ...platform,
+      universalToolPolicy: {
+        ...universalToolPolicy,
+        parent: "POL-CKO-FAIL-CLOSED-1.0.0",
+        specializes: undefined,
+        template_governance: { ...universalToolPolicy.template_governance, status: "UNBOUND" },
+      },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "UT_POLICY_HOLD" || d.id === "TEMPLATE_POLICY_HOLD"));
+  });
 });
 
 describe("POLICY_MASTER_CONTRACT", () => {
@@ -792,6 +824,10 @@ describe("POLICY_MASTER_CONTRACT", () => {
     assert.equal(policyMaster.id, POLICY_MASTER_ID);
     assert.equal(policyMaster.field_count, POLICY_MASTER_FIELD_N);
     assert.equal(policyMaster.fields.length, POLICY_MASTER_FIELD_N);
+    assert.deepEqual(policyMaster.fields.map((f) => f.id), POLICY_MASTER_FIELDS);
+    assert.ok(policyMaster.fields.every((f) => f.meaning && f.question && f.base_kind && f.implemented === false));
+    assert.equal(policyMaster.principles.length, 20);
+    assert.equal(policyMaster.evaluation.verdict, "ACCEPTED_FROZEN_HOLD");
     assert.equal(policyMaster.status, "CONTROLLED_TEMPLATE_HOLD");
     assert.equal(policyMaster.active, false);
     assert.equal(policyMaster.frozen, true);
@@ -925,6 +961,35 @@ describe("chrome templates", () => {
     assert.match(missao, /class="crumbs"/);
     assert.match(missao, /<section class="hero"/);
     assert.equal(missao.includes("data-cko-slot="), false);
+  });
+  it("binds tool/calculator/scale HTML to CKO-POL-UT-001 and POLICY_MASTER_CONTRACT", () => {
+    for (const name of ["calculator.html", "tool.html", "scale.html"]) {
+      const html = readFileSync(join(site, "templates", name), "utf8");
+      assert.match(html, /data-cko-policy="CKO-POL-UT-001"/);
+      assert.match(html, /data-cko-contract="POLICY_MASTER_CONTRACT"/);
+      assert.match(html, /data-cko-utc="UTC-013 UTC-046"/);
+    }
+    const specimen = readFileSync(join(site, "escala-padrao.html"), "utf8");
+    assert.match(specimen, /data-cko-policy="CKO-POL-UT-001"/);
+    assert.match(specimen, /data-cko-contract="POLICY_MASTER_CONTRACT"/);
+    for (const name of ["home.html", "institutional.html", "library.html", "content.html"]) {
+      const html = readFileSync(join(site, "templates", name), "utf8");
+      assert.match(html, /data-cko-contract="POLICY_MASTER_CONTRACT"/);
+    }
+    const renderer = readFileSync(join(site, "js/cko-ds-render.js"), "utf8");
+    assert.match(renderer, /governed_by/);
+    assert.match(renderer, /Base normativa/);
+  });
+  it("fails at policy-as-code if catalog templates lose policy binding", async () => {
+    const unbound = designSystem.templates.map((t) => ({ ...t, governed_by: undefined }));
+    const broken = {
+      ...platform,
+      designSystem: { ...designSystem, templates: unbound, template_governance: { contract: "NONE" } },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "TEMPLATE_POLICY_HOLD"));
   });
   it("ships refined scale/library/content templates and gates rating copy", () => {
     for (const name of ["scale.html", "library.html", "content.html"]) {

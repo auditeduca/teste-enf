@@ -135,18 +135,25 @@ function renderTemplates(ds) {
       const link = t.html
         ? `<p class="cko-ds-help">HTML: <a class="cko-ds-link" href="/${esc(t.html)}">${esc(t.html)}</a></p>`
         : `<p class="cko-ds-help">Moldura apenas. Sem chrome HTML.</p>`;
-      return `<article class="cko-ds-comp" data-cko-template="${esc(t.id)}" data-cko-template-status="${esc(status)}">
+      const gov = t.governed_by || {};
+      const policyChip = gov.policy
+        ? `<span class="cko-ds-badge cko-ds-badge--hold">${esc(gov.policy)}</span>`
+        : `<span class="cko-ds-badge">${esc(gov.contract || "POLICY_MASTER_CONTRACT")}</span>`;
+      return `<article class="cko-ds-comp" data-cko-template="${esc(t.id)}" data-cko-template-status="${esc(status)}" data-cko-governed-by="${esc(gov.policy || gov.contract || "")}">
         <div class="cko-ds-comp-head"><h3>${esc(t.name)}</h3><span>${esc(t.id)}</span></div>
         <span class="cko-ds-badge ${status === "implemented" ? "" : "cko-ds-badge--hold"}">${esc(status)}</span>
+        ${policyChip}
         <div class="cko-ds-wire" aria-hidden="true"><b></b><i></i><em></em></div>
         <p class="cko-ds-help">${esc(t.note)}</p>
+        <p class="cko-ds-help">Contrato ${esc(gov.contract || "—")} · ${esc((gov.utc || []).join(" ") || "UTC-046")} · ${esc(gov.status || "UNBOUND")}</p>
         ${link}
       </article>`;
     })
     .join("");
+  const govRule = ds.template_governance?.rule || "Templates especializam POLICY_MASTER_CONTRACT. tool/scale também CKO-POL-UT-001.";
   return section(
     "21 templates",
-    `${implemented} com chrome HTML. Restantes em wireframe. Renderer LYR-RND-001 permanece NOT_ASSERTED como motor clínico.`,
+    `${implemented} com chrome HTML. Restantes em wireframe. ${govRule} Renderer LYR-RND-001 permanece NOT_ASSERTED como motor clínico.`,
     `<div class="cko-ds-tpl-grid">${cards}</div>`
   );
 }
@@ -230,6 +237,8 @@ function renderUniversalTool(policy) {
       <h2>Gate</h2>
       <ul class="cko-ds-ut-meta">
         <li>Controlos ${esc(policy.control_count)} · implementados ${esc(policy.implemented_n)}</li>
+        <li>Especializa <code>${esc(policy.specializes || policy.parent || "")}</code></li>
+        <li>Templates ${esc(policy.template_governance?.status || "UNBOUND")} · ${esc((policy.template_governance?.templates || []).map((t) => t.id).join(", "))}</li>
         <li>ABNT NBR 6023:${esc(policy.abnt?.nbr_6023?.edition)} clause ${esc(policy.abnt?.nbr_6023?.clause_level)}</li>
         <li>Linha de versão ${esc(policy.version_lineage?.status)}</li>
         <li>Promoção clínica ${esc(policy.evaluation?.clinical_promotion)}</li>
@@ -254,6 +263,19 @@ function renderPolicyMaster(policy) {
   const chips = (policy.fields || [])
     .map((f) => `<li><code>${esc(f.seq)}</code> ${esc(f.id)}</li>`)
     .join("");
+  const rows = (policy.fields || [])
+    .map(
+      (f) => `<tr>
+        <th scope="row"><code>${esc(f.seq)}</code> ${esc(f.id)}</th>
+        <td>${esc(f.question)}</td>
+        <td>${esc(f.meaning)}</td>
+        <td><span class="cko-ds-badge">${esc(f.base_kind)}</span> ${esc(f.bases)}</td>
+      </tr>`
+    )
+    .join("");
+  const principles = (policy.principles || [])
+    .map((p) => `<li><code>${esc(p.id)}</code> ${esc(p.name)}</li>`)
+    .join("");
   return `<section class="cko-ds-hero">
       <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_TEMPLATE_HOLD")}</span>
       <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
@@ -263,6 +285,15 @@ function renderPolicyMaster(policy) {
       <h2>28 campos</h2>
       <p class="cko-ds-help">${esc(policy.golden_rule || "")}</p>
       <ul class="cko-ds-ut-chips">${chips}</ul>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Campo</th><th>Pergunta</th><th>O que é</th><th>Base normativa</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </section>
+    <section class="cko-ds-section">
+      <h2>P01–P20</h2>
+      <ul class="cko-ds-ut-chips">${principles}</ul>
+      <p class="cko-ds-help">${esc(policy.template_governance_rule || "")}</p>
     </section>`;
 }
 

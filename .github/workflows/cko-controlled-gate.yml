@@ -133,6 +133,10 @@ jobs:
           assert ut["abnt"]["nbr_6023"]["edition"]=="2025"
           assert ut["evaluation"]["clinical_promotion"]=="DENIED"
           assert ut["starts_at"]=="policy-as-code"
+          assert ut["parent"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert ut["specializes"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
+          assert ut["template_governance"]["status"]=="BOUND_HOLD"
+          assert ut["contract"]["field_count"]==28
           assert "universal-tool" in (site/"data/cko/cascade/index.html").read_text(encoding="utf-8")
           master=json.load(open(site/"data/cko/policy-master.json"))
           assert master["id"]=="POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"

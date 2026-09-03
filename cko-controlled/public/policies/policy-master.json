@@ -45,12 +45,15 @@
   "new_architectural_root": false,
   "specialization_rule": "Policies specialize this contract by layer + vertical + application + object + field + context. They do not invent a parallel structure.",
   "golden_rule": "Uma Policy não é completa quando foi escrita. Ela é completa quando autoridade, aplicabilidade, decisão, enforcement, teste, evidência e governança humana são reconstruíveis.",
+  "formula": "POLICY = AUTHORITY + APPLICABILITY + INTENT + SCOPE + SUBJECT + MODALITY + CONDITIONS + CONSTRAINTS + DECISION + OUTCOME + ENFORCEMENT + CONTRACT + IMPLEMENTATION + TESTS + CI + RUNTIME + OBSERVABILITY + EVIDENCE + PROVENANCE + GOVERNANCE + EXCEPTIONS + DEPENDENCIES + VERSIONING + LIFECYCLE + CHANGE IMPACT + READINESS + ASSURANCE",
+  "architectural_principle": "POLICY IS NOT DOCUMENTATION. POLICY IS A GOVERNED EXECUTABLE CONTRACT.",
   "field_count": 28,
   "fields": [
     {
       "seq": "01",
       "id": "IDENTITY",
       "question": "Qual política?",
+      "meaning": "Identifica inequivocamente a política (policy_id, version, name, type, status). IDs no formato POL-{DOMAIN}-{CATEGORY}-{SEQUENCE} nunca se reutilizam.",
       "base_kind": "architectural",
       "bases": "ISO 27001/9001, NIST CSF, W3C PROV, configuration management",
       "status": "DOCUMENTADO_HOLD",
@@ -60,6 +63,7 @@
       "seq": "02",
       "id": "AUTHORITY",
       "question": "Por que existe?",
+      "meaning": "Origem legítima da obrigação: fonte autoritativa → átomo normativo → requisito → controlo. A política não inventa a norma.",
       "base_kind": "normative",
       "bases": "lei, regulamento, standard, WCAG, LGPD, ISO, NIST, OWASP, política interna",
       "status": "DOCUMENTADO_HOLD",
@@ -69,6 +73,7 @@
       "seq": "03",
       "id": "INTENT",
       "question": "O que pretende assegurar?",
+      "meaning": "Intenção normativa (objective, problem, desired_state, prohibited_state). INTENT ≠ IMPLEMENTATION.",
       "base_kind": "normative",
       "bases": "control objectives, WCAG outcomes, NIST, COBIT, requisitos",
       "status": "DOCUMENTADO_HOLD",
@@ -78,6 +83,7 @@
       "seq": "04",
       "id": "APPLICABILITY",
       "question": "Quando se aplica?",
+      "meaning": "Determina quando a política realmente se aplica (REQUIRED | CONDITIONAL | NOT_APPLICABLE). Requisitos existentes ≠ requisitos aplicáveis.",
       "base_kind": "normative",
       "bases": "ISO 27001 scope, NIST context, LGPD, WCAG conteúdo aplicável",
       "status": "DOCUMENTADO_HOLD",
@@ -87,6 +93,7 @@
       "seq": "05",
       "id": "SCOPE",
       "question": "Onde se aplica?",
+      "meaning": "Onde a política atua: layer → vertical → application → module → object → field → environment.",
       "base_kind": "architectural",
       "bases": "ISO/NIST scope, 44 camadas × verticais × application × object × field",
       "status": "DOCUMENTADO_HOLD",
@@ -96,6 +103,7 @@
       "seq": "06",
       "id": "SUBJECT",
       "question": "Quem/o que está sujeito?",
+      "meaning": "Actores, papéis e objectos submetidos. Liga o Human Governance Boundary (agente detecta; humano aprova).",
       "base_kind": "normative",
       "bases": "IAM, RBAC/ABAC, ISO 27001, least privilege, human governance",
       "status": "DOCUMENTADO_HOLD",
@@ -105,6 +113,7 @@
       "seq": "07",
       "id": "MODALITY",
       "question": "Qual a força da obrigação?",
+      "meaning": "Força normativa: MUST, MUST_NOT, SHOULD, SHOULD_NOT, MAY.",
       "base_kind": "normative",
       "bases": "RFC 2119, RFC 8174",
       "status": "DOCUMENTADO_HOLD",
@@ -114,6 +123,7 @@
       "seq": "08",
       "id": "CONDITIONS",
       "question": "Sob quais condições?",
+      "meaning": "Condições determinísticas (all / any / none) que disparam a política.",
       "base_kind": "technical",
       "bases": "OPA/Rego, SHACL, regra condicional",
       "status": "DOCUMENTADO_HOLD",
@@ -123,6 +133,7 @@
       "seq": "09",
       "id": "CONSTRAINTS",
       "question": "Quais propriedades são obrigatórias?",
+      "meaning": "Restrições estruturais: required, datatype, cardinality, nullability, pattern, allowed/forbidden values.",
       "base_kind": "technical",
       "bases": "JSON Schema, SHACL, OWL",
       "status": "DOCUMENTADO_HOLD",
@@ -132,6 +143,7 @@
       "seq": "10",
       "id": "DECISION",
       "question": "Qual decisão determinística?",
+      "meaning": "Decisão allow_if / deny_if / require_if / escalate_if. Coração do policy-as-code.",
       "base_kind": "technical",
       "bases": "OPA/Rego, policy engines, ABAC",
       "status": "DOCUMENTADO_HOLD",
@@ -141,6 +153,7 @@
       "seq": "11",
       "id": "OUTCOME",
       "question": "Qual resultado/estado?",
+      "meaning": "Resultado canónico (ALLOW, DENY, BLOCK, REQUIRE, WARN, ESCALATE, REVIEW, DEFER) e transição de estado.",
       "base_kind": "technical",
       "bases": "state machine, workflow, CI/CD gates",
       "status": "DOCUMENTADO_HOLD",
@@ -150,6 +163,7 @@
       "seq": "12",
       "id": "ENFORCEMENT",
       "question": "Como será imposto?",
+      "meaning": "Como a decisão é imposta (PREVENTIVE / DETECTIVE / CORRECTIVE / COMPENSATING) e em que modo (pre_commit, ci, pre_publish, runtime).",
       "base_kind": "technical",
       "bases": "OPA, DevSecOps, NIST, ISO 27001, secure SDLC",
       "status": "DOCUMENTADO_HOLD",
@@ -159,6 +173,7 @@
       "seq": "13",
       "id": "CONTRACT",
       "question": "Qual contrato formal?",
+      "meaning": "Contrato de input/output/decision/error/evidence. Implementação que o viola é inválida.",
       "base_kind": "technical",
       "bases": "Design by Contract, JSON Schema, OpenAPI, SHACL",
       "status": "DOCUMENTADO_HOLD",
@@ -168,6 +183,7 @@
       "seq": "14",
       "id": "IMPLEMENTATION",
       "question": "Como foi implementado?",
+      "meaning": "Onde e como a especificação vira código (engine, language, artifact). Código não precede a política.",
       "base_kind": "technical",
       "bases": "policy-as-code, OPA, CI/CD",
       "status": "DOCUMENTADO_HOLD",
@@ -177,6 +193,7 @@
       "seq": "15",
       "id": "TESTS",
       "question": "Como provamos que funciona?",
+      "meaning": "Provas positivas, negativas, de fronteira, de excepção, de conflito, adversariais e de regressão.",
       "base_kind": "technical",
       "bases": "OPA tests, ISO 9001/27001, CI",
       "status": "DOCUMENTADO_HOLD",
@@ -186,6 +203,7 @@
       "seq": "16",
       "id": "CI_GATES",
       "question": "Pode ser promovido?",
+      "meaning": "Gates obrigatórios (syntax, schema, semantic, policy, security, regression, coverage, evidence, approval) antes de ACTIVE.",
       "base_kind": "technical",
       "bases": "NIST SSDF, SLSA, DevSecOps",
       "status": "DOCUMENTADO_HOLD",
@@ -195,6 +213,7 @@
       "seq": "17",
       "id": "RUNTIME_ASSERTIONS",
       "question": "Continua válido em produção?",
+      "meaning": "Asserções contínuas após publicação. Um PASS de CI ontem não autoriza drift hoje.",
       "base_kind": "technical",
       "bases": "runtime policy, OpenTelemetry, SRE",
       "status": "DOCUMENTADO_HOLD",
@@ -204,6 +223,7 @@
       "seq": "18",
       "id": "OBSERVABILITY",
       "question": "Como observamos?",
+      "meaning": "Métricas, logs, traces e alertas das avaliações e violações.",
       "base_kind": "technical",
       "bases": "OpenTelemetry, SRE, ISO 27001 auditoria operacional",
       "status": "DOCUMENTADO_HOLD",
@@ -213,6 +233,7 @@
       "seq": "19",
       "id": "EVIDENCE",
       "question": "Qual prova existe?",
+      "meaning": "Prova automática, com integridade (hash) e proveniência, de decisão, teste, asserção e telemetria.",
       "base_kind": "normative",
       "bases": "ISO 27001/9001, auditoria, W3C PROV, ALCOA+",
       "status": "DOCUMENTADO_HOLD",
@@ -222,6 +243,7 @@
       "seq": "20",
       "id": "PROVENANCE",
       "question": "De onde veio?",
+      "meaning": "WHO / WHAT / WHEN / WHERE / WHY / HOW / WITH_WHICH_VERSION / USING_WHICH_INPUT / POLICY / ENGINE.",
       "base_kind": "normative",
       "bases": "W3C PROV, ALCOA+, ISO 27001, lineage",
       "status": "DOCUMENTADO_HOLD",
@@ -231,6 +253,7 @@
       "seq": "21",
       "id": "GOVERNANCE",
       "question": "Quem decide?",
+      "meaning": "Owner, steward, approver e fronteira humana. Agente pode descobrir/propor; não aprova nem publica.",
       "base_kind": "normative",
       "bases": "ISO 27001/38500, NIST, AI governance, Maker≠Checker≠Auditor",
       "status": "DOCUMENTADO_HOLD",
@@ -240,6 +263,7 @@
       "seq": "22",
       "id": "EXCEPTIONS",
       "question": "Quando pode haver exceção?",
+      "meaning": "Desvio governado (prazo, justificação, compensação, aprovação humana). Nunca bypass informal.",
       "base_kind": "normative",
       "bases": "gestão de risco, controles compensatórios, ISO 27001",
       "status": "DOCUMENTADO_HOLD",
@@ -249,6 +273,7 @@
       "seq": "23",
       "id": "DEPENDENCIES",
       "question": "Do que depende?",
+      "meaning": "Políticas, controlos, schemas, vocabulários, standards, serviços e tecnologias de que depende.",
       "base_kind": "architectural",
       "bases": "configuration management, lineage, impact analysis",
       "status": "DOCUMENTADO_HOLD",
@@ -258,6 +283,7 @@
       "seq": "24",
       "id": "VERSIONING",
       "question": "Qual versão governa?",
+      "meaning": "MAJOR.MINOR.PATCH. Versão publicada não se muta retroactivamente (P12).",
       "base_kind": "architectural",
       "bases": "ISO 9001/27001, semantic versioning, imutabilidade de release",
       "status": "DOCUMENTADO_HOLD",
@@ -267,6 +293,7 @@
       "seq": "25",
       "id": "LIFECYCLE",
       "question": "Em que estado está?",
+      "meaning": "DRAFT → IN_REVIEW → VALIDATED → APPROVED → ACTIVE → DEPRECATED → RETIRED (também SUSPENDED, SUPERSEDED). ACTIVE exige gates.",
       "base_kind": "architectural",
       "bases": "lifecycle/change management ISO 9001/27001",
       "status": "DOCUMENTADO_HOLD",
@@ -276,6 +303,7 @@
       "seq": "26",
       "id": "CHANGE_IMPACT",
       "question": "O que será afetado?",
+      "meaning": "Se a política mudar, o que quebra: control, schema, object, field, component, vertical, application.",
       "base_kind": "architectural",
       "bases": "change/impact analysis, dependency graph",
       "status": "DOCUMENTADO_HOLD",
@@ -285,6 +313,7 @@
       "seq": "27",
       "id": "READINESS",
       "question": "Está pronta?",
+      "meaning": "NOT_READY | READY_FOR_REVIEW | READY_FOR_APPROVAL | RELEASE_READY | ACTIVE. Soma identidade…governação.",
       "base_kind": "architectural",
       "bases": "assurance, release governance, DevSecOps",
       "status": "DOCUMENTADO_HOLD",
@@ -294,13 +323,242 @@
       "seq": "28",
       "id": "ASSURANCE",
       "question": "Como provamos continuamente?",
+      "meaning": "Cadeia requirement → control → policy → implementation → test → gate → runtime → evidence → audit.",
       "base_kind": "normative",
       "bases": "ISO/NIST, auditoria, continuous assurance",
       "status": "DOCUMENTADO_HOLD",
       "implemented": false
     }
   ],
+  "principles": [
+    {
+      "id": "P01",
+      "name": "Canonical Identity",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P02",
+      "name": "Explicit Authority",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P03",
+      "name": "Explicit Scope",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P04",
+      "name": "Explicit Applicability",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P05",
+      "name": "Deterministic Decision",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P06",
+      "name": "Explicit Constraints",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P07",
+      "name": "Explicit Enforcement",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P08",
+      "name": "Testability",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P09",
+      "name": "Evidence Generation",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P10",
+      "name": "Provenance",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P11",
+      "name": "Versionability",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P12",
+      "name": "Immutability of Released Versions",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P13",
+      "name": "Conflict Detection",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P14",
+      "name": "Exception Governance",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P15",
+      "name": "Human Governance",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P16",
+      "name": "Least Privilege",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P17",
+      "name": "Fail-Safe",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P18",
+      "name": "Traceability",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P19",
+      "name": "Observability",
+      "status": "DOCUMENTADO_HOLD"
+    },
+    {
+      "id": "P20",
+      "name": "Continuous Assurance",
+      "status": "DOCUMENTADO_HOLD"
+    }
+  ],
+  "policy_types": [
+    "FOUNDATIONAL",
+    "GOVERNANCE",
+    "SECURITY",
+    "PRIVACY",
+    "DATA",
+    "INTEGRITY",
+    "IDENTITY",
+    "ACCESS",
+    "MASTER_DATA",
+    "SOURCE",
+    "NORMATIVE",
+    "SEMANTIC",
+    "CONTRACT",
+    "API",
+    "EVENT",
+    "CONTENT",
+    "ACCESSIBILITY",
+    "SEO",
+    "AGENT",
+    "AI",
+    "RUNTIME",
+    "RELEASE",
+    "ASSURANCE",
+    "VERTICAL",
+    "APPLICATION",
+    "MODULE",
+    "OBJECT",
+    "FIELD"
+  ],
+  "policy_statuses": [
+    "DRAFT",
+    "IN_REVIEW",
+    "VALIDATED",
+    "APPROVED",
+    "ACTIVE",
+    "SUSPENDED",
+    "DEPRECATED",
+    "RETIRED",
+    "SUPERSEDED"
+  ],
+  "modalities": [
+    "MUST",
+    "MUST_NOT",
+    "SHOULD",
+    "SHOULD_NOT",
+    "MAY"
+  ],
+  "outcomes": [
+    "ALLOW",
+    "DENY",
+    "BLOCK",
+    "REQUIRE",
+    "WARN",
+    "ESCALATE",
+    "REVIEW",
+    "DEFER"
+  ],
+  "severities": [
+    "INFO",
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+    "CRITICAL",
+    "BLOCKER"
+  ],
+  "conflict_precedence": [
+    "CONSTITUTIONAL_FOUNDATION",
+    "SECURITY_SAFETY",
+    "LEGAL_REGULATORY",
+    "NORMATIVE",
+    "HORIZONTAL",
+    "VERTICAL",
+    "APPLICATION",
+    "MODULE",
+    "OBJECT",
+    "FIELD"
+  ],
+  "conflict_rule": "Uma Policy de menor precedência não pode silenciosamente neutralizar uma Policy de maior precedência. Conflitos produzem POLICY_CONFLICT.",
+  "readiness_gates": [
+    "IDENTITY",
+    "AUTHORITY",
+    "NORMATIVE_MAPPING",
+    "APPLICABILITY",
+    "CONTROL",
+    "SCOPE",
+    "CONTRACT",
+    "SCHEMA",
+    "DECISION_LOGIC",
+    "ENFORCEMENT",
+    "TESTS",
+    "CI_GATES",
+    "EVIDENCE",
+    "PROVENANCE",
+    "GOVERNANCE",
+    "VERSIONING"
+  ],
   "maturity_target": "P6_CONTINUOUSLY_ASSURED",
   "maturity_current": "P2_GOVERNED_HOLD",
+  "maturity_model": [
+    "P0_INFORMAL",
+    "P1_DOCUMENTED",
+    "P2_GOVERNED",
+    "P3_TESTABLE",
+    "P4_EXECUTABLE",
+    "P5_EVIDENCED",
+    "P6_CONTINUOUSLY_ASSURED"
+  ],
+  "template_governance_rule": "Nenhum template HTML (tool, scale, calculator, page) pode existir fora deste contrato. CKO-POL-UT-001 especializa o molde e liga UTC-013/UTC-046 aos templates. Binding ≠ implantado ≠ ACTIVE.",
+  "evaluation": {
+    "verdict": "ACCEPTED_FROZEN_HOLD",
+    "documentado": true,
+    "implantado": false,
+    "assured": false,
+    "active": false,
+    "findings": [
+      {
+        "id": "PMC-F-COMPOSITE-AUTHORITY",
+        "severity": "NOTE",
+        "text": "Os 28 campos são estrutura composta (ISO/NIST/W3C/RFC/OPA/SHACL). A autoridade de cada especialização vem de fora — lei, norma, standard — não destes campos."
+      },
+      {
+        "id": "PMC-F-TEMPLATE-MUST-SPECIALIZE",
+        "severity": "HOLD",
+        "text": "Templates tool/scale/calculator devem especializar este contrato via CKO-POL-UT-001. Sem binding o HTML é chrome não governado."
+      }
+    ]
+  },
   "rule": "AUTHORITY → NORMATIVE ATOM → APPLICABILITY → CONTROL → POLICY SPECIFICATION → CONTRACT → POLICY-AS-CODE → TEST → CI GATE → RUNTIME → EVIDENCE → ASSURANCE"
 }

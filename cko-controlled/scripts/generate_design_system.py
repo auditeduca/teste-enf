@@ -236,9 +236,24 @@ def catalog() -> dict:
                 "note": note,
                 "status": TEMPLATE_RUNTIME[i][0],
                 "html": TEMPLATE_RUNTIME[i][1],
+                "governed_by": {
+                    "contract": "POLICY_MASTER_CONTRACT",
+                    "contract_id": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+                    "policy": "CKO-POL-UT-001" if i in ("tool", "scale") else None,
+                    "utc": ["UTC-013", "UTC-046"] if i in ("tool", "scale") else ["UTC-046"],
+                    "status": "BOUND_HOLD",
+                },
             }
             for i, n, note in TEMPLATES
         ],
+        "template_governance": {
+            "contract": "POLICY_MASTER_CONTRACT",
+            "universal_tool_policy": "CKO-POL-UT-001",
+            "status": "BOUND_HOLD",
+            "implantado": False,
+            "required_bindings": ["tool", "scale"],
+            "rule": "Todo template do catálogo especializa POLICY_MASTER_CONTRACT. tool/scale também CKO-POL-UT-001.",
+        },
         "templates_implemented_n": sum(1 for i, _, _ in TEMPLATES if TEMPLATE_RUNTIME[i][0] == "implemented"),
         "templates_wireframe_n": sum(1 for i, _, _ in TEMPLATES if TEMPLATE_RUNTIME[i][0] == "wireframe"),
         "refinement": "CKO-DS-RUNTIME-1.2.0-HOLD",
