@@ -27,6 +27,8 @@ jobs:
           python-version: "3.12"
       - uses: actions/configure-pages@v5
         id: pages
+        with:
+          enablement: true
       - name: Stage CALENF runtime for GitHub Pages
         run: |
           python3 cko-controlled/scripts/prepare_github_pages.py \
@@ -46,6 +48,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
