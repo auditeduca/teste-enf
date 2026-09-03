@@ -8,6 +8,8 @@ O Hosting serve **somente a plataforma** do Drive (cluster institucional Wave2):
 
 A cascata é o contrato do projeto no CI/engine — não é UI. Tudo inicia em policy-as-code. Estágio seguinte só entra se o predecessor PASS. Voltar o dashboard do relatório no frontend falha em policy-as-code e não emite evidência.
 
+Pendências do PDF e do diretório são materializadas em `public/data/pendencies.json` **sem alterar** `public/drive/` nem `control-plane/drive-html/`. Criar pendência não fecha B9.
+
 ## Cascata (CI / engine — não é UI)
 
 ```
@@ -39,6 +41,7 @@ Stack: policy-as-code → schemas → graph constraints → CI gates → runtime
 ```bash
 cd cko-controlled
 python3 scripts/generate_universe.py
+python3 scripts/generate_pendencies.py
 node --test tests/suite.test.js
 node cli.mjs
 python3 -m http.server 4173 --directory public

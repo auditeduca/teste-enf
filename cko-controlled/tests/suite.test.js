@@ -1,11 +1,14 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   validateSchema,
   validateRuntimePlatformSchema,
+  validateToolLibrarySchema,
+  inspectPendencies,
+  validatePendenciesSchema,
   evaluatePolicies,
   graphConstraints,
   coverageReport,
@@ -19,14 +22,28 @@ import {
   knownUniverseObjects,
   CASCADE,
   RUNTIME_PAGES,
+  TOOL_RUNTIME_CANARIES,
+  LIBRARY_RUNTIME_CANARIES,
+  TOOL_ENGINE_LIBS,
 } from "../public/engine/core.js";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const pub = join(root, "../public");
 const universe = JSON.parse(readFileSync(join(pub, "data/universe.json"), "utf8"));
+const toolLibrary = JSON.parse(readFileSync(join(pub, "data/tool-library-runtime.json"), "utf8"));
+const pendencies = JSON.parse(readFileSync(join(pub, "data/pendencies.json"), "utf8"));
+const driveImmutable = JSON.parse(readFileSync(join(pub, "data/drive-immutable.json"), "utf8"));
 const platform = {
   listing: readdirSync(pub),
-  files: Object.fromEntries(RUNTIME_PAGES.map((p) => [p, readFileSync(join(pub, p), "utf8")])),
+  files: Object.fromEntries(
+    [...RUNTIME_PAGES, "aldrete.html", "imc.html", "gotejamento.html", "biblioteca.html"].map((p) => [
+      p,
+      readFileSync(join(pub, p), "utf8"),
+    ])
+  ),
+  toolLibrary,
+  pendencies,
+  driveImmutable,
 };
 
 describe("schemas", () => {
@@ -65,6 +82,11 @@ describe("policy-as-code", () => {
     assert.deepEqual(schema.properties.pages.items.enum, RUNTIME_PAGES);
     assert.ok(policy.rules.some((r) => r.id === "NO_REPORT_DASHBOARD"));
     assert.ok(policy.rules.some((r) => r.id === "RUNTIME_IS_DRIVE_PLATFORM"));
+    assert.ok(policy.rules.some((r) => r.id === "TOOL_RUNTIME_PRESENT"));
+    assert.ok(policy.rules.some((r) => r.id === "LIBRARY_RUNTIME_PRESENT"));
+    assert.ok(policy.rules.some((r) => r.id === "TOOL_LIBRARIES_PRESENT"));
+    assert.ok(policy.rules.some((r) => r.id === "PENDENCIES_EXPLICIT"));
+    assert.ok(policy.rules.some((r) => r.id === "DRIVE_IMMUTABLE"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -134,6 +156,7 @@ describe("coverage rules", () => {
     assert.equal(r.ok, true, r.missing.slice(0, 8).join(","));
     assert.equal(r.ratio, 1);
     assert.equal(receipts.filter((x) => x.kind === "runtime").length, 12);
+    assert.ok(receipts.some((x) => x.subject === "CKO-TOOL-LIBRARY-RUNTIME-1.0.0"));
     assert.ok(receipts.every((x) => x.root === "policy-as-code" && x.no_fact_without_evidence === true));
   });
   it("quantifies residual uncertainty X", () => {
@@ -245,6 +268,74 @@ describe("runtime frontend", () => {
     }
     assert.equal(platform.listing.includes("app.js"), false);
     assert.equal(platform.listing.includes("cko-relatorio-tecnico-final.html"), false);
+  });
+  it("ships calculator and library runtimes plus JS engines", () => {
+    const plat = validateToolLibrarySchema(platform);
+    assert.equal(plat.ok, true, plat.errors.join("; "));
+    for (const p of TOOL_RUNTIME_CANARIES) {
+      assert.ok(platform.toolLibrary.tool_canaries.includes(p), p);
+    }
+    for (const p of LIBRARY_RUNTIME_CANARIES) {
+      assert.ok(platform.toolLibrary.library_canaries.includes(p), p);
+    }
+    for (const p of TOOL_ENGINE_LIBS) {
+      assert.ok(platform.toolLibrary.engine_libraries.includes(p), p);
+    }
+    const aldrete = platform.files["aldrete.html"];
+    assert.match(aldrete, /btnCalcular/);
+    assert.match(aldrete, /scoreValor/);
+    assert.match(platform.files["imc.html"], /calcularIMC/);
+    assert.match(platform.files["gotejamento.html"], /calcularGotejamento/);
+    assert.match(platform.files["biblioteca.html"], /biblioteca/i);
+    assert.ok(platform.toolLibrary.biblioteca_articles_n >= 1);
+    const r = runtimeAssertions(universe, platform);
+    assert.equal(r.ok, true, JSON.stringify(r.failed));
+    assert.ok(r.asserts.some((a) => a.id === "A-TOOL-RUNTIME" && a.ok));
+    assert.ok(r.asserts.some((a) => a.id === "A-LIBRARY-RUNTIME" && a.ok));
+  });
+  it("materializes every documented PDF and directory pendency without mutating Drive or closing B9", () => {
+    const r = inspectPendencies(pendencies, driveImmutable);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    const schema = validatePendenciesSchema(platform);
+    assert.equal(schema.ok, true, schema.errors.join("; "));
+    assert.equal(pendencies.mutate_drive, false);
+    assert.equal(pendencies.closes_b9, false);
+    assert.equal(pendencies.items.filter((i) => i.kind === "locale-cell").length, 360);
+    const byId = Object.fromEntries(pendencies.items.map((i) => [i.id, i]));
+    assert.equal(byId["PEND-PDF-HOLDS-BUCKET"].count, 211);
+    assert.equal(byId["PEND-PDF-FINDINGS-BUCKET"].count, 313);
+    assert.equal(byId["PEND-PDF-REPERF-BUCKET"].count, 201);
+    assert.equal(byId["PEND-PDF-OUTBOX-BUCKET"].count, 296);
+    assert.equal(byId["PEND-PDF-RIGHTS-BUCKET"].count, 13);
+    assert.ok(byId["PEND-BLOCK-B9"]);
+    assert.ok(byId["PEND-DIR-SITEMAP"]);
+    assert.ok(driveImmutable.files.length >= 10);
+    assert.equal(existsSync(join(pub, "sitemap.xml")), true);
+    assert.equal(existsSync(join(pub, "escala-de-braden.html")), true);
+    assert.equal(existsSync(join(pub, "berg.html")), true);
+    const rt = runtimeAssertions(universe, platform);
+    assert.ok(rt.asserts.some((a) => a.id === "A-PENDENCIES-EXPLICIT" && a.ok));
+    assert.ok(rt.asserts.some((a) => a.id === "A-DRIVE-IMMUTABLE" && a.ok));
+  });
+  it("fails at policy-as-code if the pendency ledger is dropped", async () => {
+    const broken = { ...platform, pendencies: { root: "policy-as-code", mutate_drive: false, closes_b9: false, items: [] } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "PENDENCIES_EXPLICIT"));
+    assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
+  });
+  it("fails at policy-as-code if tool runtimes disappear", async () => {
+    const broken = {
+      ...platform,
+      toolLibrary: { ...platform.toolLibrary, tool_canaries: [], library_canaries: [], engine_libraries: [] },
+    };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].id, "policy-as-code");
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "TOOL_RUNTIME_PRESENT"));
+    assert.ok(r.cascade.slice(1).every((s) => s.status === "SKIPPED"));
   });
   it("fails at policy-as-code if the report dashboard returns, skipping the rest", async () => {
     const poisoned = {

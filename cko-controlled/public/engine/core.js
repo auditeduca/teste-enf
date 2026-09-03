@@ -36,7 +36,38 @@ const INTEGRITY_DENIALS = new Set([
   "NO_REPORT_DASHBOARD",
   "RUNTIME_IS_DRIVE_PLATFORM",
   "NO_CONTROL_ROOM_APP",
+  "TOOL_RUNTIME_PRESENT",
+  "LIBRARY_RUNTIME_PRESENT",
+  "TOOL_LIBRARIES_PRESENT",
+  "PENDENCIES_EXPLICIT",
+  "DRIVE_IMMUTABLE",
 ]);
+
+export const TOOL_RUNTIME_CANARIES = [
+  "aldrete.html",
+  "imc.html",
+  "gotejamento.html",
+  "braden.html",
+  "news.html",
+  "gasometria.html",
+];
+
+export const LIBRARY_RUNTIME_CANARIES = [
+  "biblioteca.html",
+  "downloads.html",
+  "biblioteca-provas.html",
+  "biblioteca-cirurgica.html",
+  "biblioteca-curativo.html",
+  "biblioteca-seringa.html",
+  "biblioteca-carinho-de-emergencia.html",
+];
+
+export const TOOL_ENGINE_LIBS = [
+  "js/calc-engine.js",
+  "js/calc-engine-v2.js",
+  "js/ce-calculadora-padrao.js",
+  "js/modules/data/biblioteca.json",
+];
 
 export const RUNTIME_PAGES = [
   "index.html",
@@ -90,6 +121,65 @@ export function inspectPlatform(platform) {
   if (listing.includes("app.js")) {
     denials.push({ id: "NO_CONTROL_ROOM_APP", reason: "public/app.js is control-room UI" });
   }
+  const tl = platform?.toolLibrary;
+  if (tl) {
+    const tools = new Set(tl.tool_canaries || []);
+    const libs = new Set(tl.library_canaries || []);
+    const engines = new Set(tl.engine_libraries || []);
+    if (TOOL_RUNTIME_CANARIES.some((p) => !tools.has(p))) {
+      denials.push({ id: "TOOL_RUNTIME_PRESENT", reason: "tool calculator runtimes are missing from the hosted site" });
+    }
+    if (LIBRARY_RUNTIME_CANARIES.some((p) => !libs.has(p))) {
+      denials.push({ id: "LIBRARY_RUNTIME_PRESENT", reason: "library runtimes are missing from the hosted site" });
+    }
+    if (TOOL_ENGINE_LIBS.some((p) => !engines.has(p))) {
+      denials.push({ id: "TOOL_LIBRARIES_PRESENT", reason: "calculator/library JS engines are missing" });
+    }
+  }
+  if (platform?.pendencies) {
+    const pend = inspectPendencies(platform.pendencies, platform.driveImmutable);
+    denials.push(...pend.denials);
+  }
+  return { ok: denials.length === 0, denials };
+}
+
+export function inspectPendencies(pendencies, driveImmutable) {
+  const denials = [];
+  const deny = (id, reason) => denials.push({ id, reason });
+  const items = pendencies?.items || [];
+  const byId = new Map(items.map((i) => [i.id, i]));
+  if (!pendencies || items.length === 0) deny("PENDENCIES_EXPLICIT", "pendency ledger empty");
+  if (pendencies?.root !== "policy-as-code") deny("PENDENCIES_EXPLICIT", "pendencies must start at policy-as-code");
+  if (pendencies?.mutate_drive !== false || pendencies?.closes_b9 !== false) {
+    deny("DRIVE_IMMUTABLE", "pendency ledger must not mutate Drive or close B9");
+  }
+  const required = [
+    ["PEND-PDF-HOLDS-BUCKET", 211],
+    ["PEND-PDF-FINDINGS-BUCKET", 313],
+    ["PEND-PDF-REPERF-BUCKET", 201],
+    ["PEND-PDF-OUTBOX-BUCKET", 296],
+    ["PEND-PDF-RIGHTS-BUCKET", 13],
+    ["PEND-PDF-UNRESOLVED-ID-BUCKET", 12],
+  ];
+  for (const [id, count] of required) {
+    const row = byId.get(id);
+    if (!row || row.count !== count) deny("PENDENCIES_EXPLICIT", `${id} missing or count != ${count}`);
+  }
+  if (!byId.has("PEND-BLOCK-B9") || !byId.has("PEND-BLOCK-B10")) {
+    deny("PENDENCIES_EXPLICIT", "B9/B10 pendencies missing");
+  }
+  if (!byId.has("PEND-W2-FORUM-CRITICAL")) deny("PENDENCIES_EXPLICIT", "Wave2 forum HOLD missing");
+  const locales = items.filter((i) => i.kind === "locale-cell").length;
+  if (locales !== 360) deny("PENDENCIES_EXPLICIT", `Wave2 locale cells ${locales} != 360`);
+  if (items.some((i) => i.mutate_drive === true || i.closes_b9 === true)) {
+    deny("DRIVE_IMMUTABLE", "a pendency claims Drive mutation or B9 close");
+  }
+  if (driveImmutable) {
+    if (driveImmutable.rule !== "DO_NOT_ALTER_DRIVE_FILE") deny("DRIVE_IMMUTABLE", "drive freeze rule missing");
+    if (!Array.isArray(driveImmutable.files) || driveImmutable.files.length === 0) {
+      deny("DRIVE_IMMUTABLE", "drive freeze empty");
+    }
+  }
   return { ok: denials.length === 0, denials };
 }
 
@@ -125,6 +215,9 @@ export function knownUniverseObjects(universe, platform) {
   push("residual", "X", { value: universe.residual_uncertainty.value });
   if (platform) {
     for (const p of RUNTIME_PAGES) push("runtime-page", p);
+    if (platform.toolLibrary) push("tool-library-runtime", "CKO-TOOL-LIBRARY-RUNTIME-1.0.0");
+    for (const p of platform.pendencies?.items || []) push("pendency", p.id, { status: p.status });
+    if (platform.driveImmutable) push("drive-immutable", "CKO-DRIVE-IMMUTABLE-1.0.0");
   }
   return items;
 }
@@ -147,6 +240,44 @@ export function validateRuntimePlatformSchema(platform) {
   if (index && (!/Calculadoras de Enfermagem/.test(index) || !/PAGE_INSTITUTIONAL_CLUSTER/.test(index))) {
     errors.push("schema: home is not Drive Wave2 PAGE_INSTITUTIONAL_CLUSTER");
   }
+  errors.push(...validateToolLibrarySchema(platform).errors);
+  errors.push(...validatePendenciesSchema(platform).errors);
+  return { ok: errors.length === 0, errors };
+}
+
+export function validatePendenciesSchema(platform) {
+  if (!platform?.pendencies) return { ok: true, skipped: true, errors: [] };
+  const errors = [];
+  const p = platform.pendencies;
+  if (p.id !== "CKO-PENDENCIES-1.0.0") errors.push("schema: pendencies id");
+  if (p.root !== "policy-as-code") errors.push("schema: pendencies root must be policy-as-code");
+  if (p.mutate_drive !== false) errors.push("schema: pendencies must not mutate Drive");
+  if (p.closes_b9 !== false) errors.push("schema: pendencies must not close B9");
+  if (!Array.isArray(p.items) || p.items.length < 200) errors.push("schema: pendency ledger too small");
+  const locales = (p.items || []).filter((i) => i.kind === "locale-cell").length;
+  if (locales !== 360) errors.push("schema: 360 Wave2 locale cells required");
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateToolLibrarySchema(platform) {
+  if (!platform?.toolLibrary) return { ok: true, skipped: true, errors: [] };
+  const errors = [];
+  const tl = platform.toolLibrary;
+  if (tl.kind !== "tool-library-runtime") errors.push("schema: tool library kind must be tool-library-runtime");
+  if (tl.release && !String(tl.release).includes("NOT_RELEASED")) errors.push("schema: tool library must remain NOT_RELEASED");
+  for (const p of TOOL_RUNTIME_CANARIES) {
+    if (!(tl.tool_canaries || []).includes(p)) errors.push(`schema: missing tool runtime ${p}`);
+  }
+  for (const p of LIBRARY_RUNTIME_CANARIES) {
+    if (!(tl.library_canaries || []).includes(p)) errors.push(`schema: missing library runtime ${p}`);
+  }
+  for (const p of TOOL_ENGINE_LIBS) {
+    if (!(tl.engine_libraries || []).includes(p)) errors.push(`schema: missing engine library ${p}`);
+  }
+  if ((tl.tools_with_calc_runtime || 0) < TOOL_RUNTIME_CANARIES.length) {
+    errors.push("schema: calculator runtimes must cover the known tool canaries");
+  }
+  if ((tl.biblioteca_articles_n || 0) < 1) errors.push("schema: biblioteca article runtime is empty");
   return { ok: errors.length === 0, errors };
 }
 
@@ -256,6 +387,11 @@ export function graphConstraints(universe, platform) {
   if ((universe.lenses || []).length !== 8) violations.push("AUD-8L cardinality");
   const plat = platformGraphConstraints(platform);
   violations.push(...plat.violations);
+  if (platform?.pendencies) {
+    const locales = (platform.pendencies.items || []).filter((i) => i.kind === "locale-cell").length;
+    if (locales !== 360) violations.push("graph: Wave2 locale cells must remain 360 classified holds");
+    if (platform.pendencies.closes_b9 !== false) violations.push("graph: pendencies cannot close B9");
+  }
   return {
     ok: violations.length === 0,
     nodes: nodes.length,
@@ -328,6 +464,20 @@ export function runtimeAssertions(universe, platform) {
     for (const p of RUNTIME_PAGES) {
       const html = platform.files?.[p] || "";
       check(`A-PAGE-${p}`, html.includes("<main"), p);
+    }
+    if (platform.toolLibrary) {
+      const tl = platform.toolLibrary;
+      check("A-TOOL-RUNTIME", TOOL_RUNTIME_CANARIES.every((p) => (tl.tool_canaries || []).includes(p)), "tools");
+      check("A-LIBRARY-RUNTIME", LIBRARY_RUNTIME_CANARIES.every((p) => (tl.library_canaries || []).includes(p)), "libraries");
+      check("A-TOOL-LIBS", TOOL_ENGINE_LIBS.every((p) => (tl.engine_libraries || []).includes(p)), "engines");
+      const aldrete = platform.files?.["aldrete.html"] || "";
+      check("A-ALDRETE-CALC", /btnCalcular/.test(aldrete) && /scoreValor/.test(aldrete), "aldrete");
+    }
+    if (platform.pendencies) {
+      const pend = inspectPendencies(platform.pendencies, platform.driveImmutable);
+      check("A-PENDENCIES-EXPLICIT", pend.denials.every((d) => d.id !== "PENDENCIES_EXPLICIT"), "ledger");
+      check("A-DRIVE-IMMUTABLE", pend.denials.every((d) => d.id !== "DRIVE_IMMUTABLE"), "drive");
+      check("A-PENDENCIES-DO-NOT-CLOSE-B9", platform.pendencies.closes_b9 === false, "B9");
     }
   }
   const failed = asserts.filter((a) => !a.ok);
@@ -537,7 +687,12 @@ export async function automaticEvidence(universe, extras = {}) {
   const receipts = [];
   const files = extras.platform?.files || {};
   for (const obj of objects) {
-    const body = obj.kind === "runtime-page" ? files[obj.id] || "" : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
+    const body =
+      obj.kind === "runtime-page"
+        ? files[obj.id] || ""
+        : obj.kind === "tool-library-runtime"
+          ? JSON.stringify(extras.platform?.toolLibrary || {})
+          : `${obj.kind}:${obj.id}:${obj.sha256 || obj.text || obj.statement || ""}`;
     const sha = await digestSha256(body);
     receipts.push({
       id: `EVD-${obj.kind}-${obj.id}`.replace(/[^A-Za-z0-9-]/g, "-"),

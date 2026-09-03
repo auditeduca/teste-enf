@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CASCADE, runGates, RUNTIME_PAGES } from "./public/engine/core.js";
@@ -13,8 +13,16 @@ if (!policy.root || policy.kind !== "policy-as-code" || JSON.stringify(policy.ca
 }
 const universe = JSON.parse(readFileSync(join(pub, "data/universe.json"), "utf8"));
 const listing = readdirSync(pub);
-const files = Object.fromEntries(RUNTIME_PAGES.map((p) => [p, readFileSync(join(pub, p), "utf8")]));
-const platform = { listing, files };
+const files = Object.fromEntries(
+  [...RUNTIME_PAGES, "aldrete.html"].filter((p) => existsSync(join(pub, p))).map((p) => [p, readFileSync(join(pub, p), "utf8")])
+);
+const toolLibraryPath = join(pub, "data/tool-library-runtime.json");
+const toolLibrary = existsSync(toolLibraryPath) ? JSON.parse(readFileSync(toolLibraryPath, "utf8")) : undefined;
+const pendenciesPath = join(pub, "data/pendencies.json");
+const pendencies = existsSync(pendenciesPath) ? JSON.parse(readFileSync(pendenciesPath, "utf8")) : undefined;
+const driveImmutablePath = join(pub, "data/drive-immutable.json");
+const driveImmutable = existsSync(driveImmutablePath) ? JSON.parse(readFileSync(driveImmutablePath, "utf8")) : undefined;
+const platform = { listing, files, toolLibrary, pendencies, driveImmutable };
 
 const report = await runGates(universe, { action: "inspect", platform });
 

@@ -23,10 +23,13 @@ jobs:
         run: |
           cd cko-controlled
           python3 scripts/generate_universe.py
+          python3 scripts/sync_tool_runtime.py
+          python3 scripts/generate_pendencies.py
           node --test tests/suite.test.js
           node cli.mjs
           python3 - <<'PY'
-          import json
+          import json, hashlib
+          from pathlib import Path
           r=json.load(open("public/data/gate-report.json"))
           assert r["starts_at"]=="policy-as-code"
           ids=[s["id"] for s in r["cascade"]]
@@ -39,7 +42,23 @@ jobs:
           idx=open("public/index.html",encoding="utf-8").read()
           assert "PAGE_INSTITUTIONAL_CLUSTER" in idx
           assert 'id="graph"' not in idx
-          print("cascade root policy-as-code OK; runtime is Drive platform")
+          inv=json.load(open("public/data/tool-library-runtime.json"))
+          for p in ["aldrete.html","imc.html","gotejamento.html","biblioteca.html"]:
+              assert p in inv["tool_canaries"] or p in inv["library_canaries"]
+          assert (open("public/aldrete.html",encoding="utf-8").read()).find("btnCalcular")>=0
+          assert (open("public/js/calc-engine.js",encoding="utf-8").read()).find("calc-engine")>=0
+          p=json.load(open("public/data/pendencies.json"))
+          assert p["mutate_drive"] is False
+          assert p["closes_b9"] is False
+          assert p["items"]
+          assert sum(1 for i in p["items"] if i["kind"]=="locale-cell")==360
+          freeze=json.load(open("public/data/drive-immutable.json"))
+          for f in freeze["files"]:
+              raw=Path(f["path"]).read_bytes()
+              assert hashlib.sha256(raw).hexdigest()==f["sha256"], f["path"]
+          assert Path("public/sitemap.xml").is_file()
+          assert Path("public/berg.html").is_file()
+          print("cascade root policy-as-code OK; pendencies explicit; Drive immutable")
           PY
       - name: Fail-closed release invariant
         run: |
