@@ -1282,6 +1282,10 @@ describe("CI inspect preserves Drive HOLD index and policy packs", () => {
     assert.match(src, /attach_drive_hold_index/);
     assert.match(src, /publication_release_recovery/);
     assert.match(src, /calc_lote_002/);
+    assert.match(src, /calc_lote_001/);
+    assert.match(src, /scale_lote_001/);
+    assert.match(src, /scale_lote_002/);
+    assert.match(src, /camada03_over_9mb/);
     assert.match(src, /clinical_rules_recovery/);
   });
 });
@@ -1550,6 +1554,138 @@ describe("Camada 43 Publication-Release Drive HOLD", () => {
     assert.match(html, /release_authority_asserted: false/);
     assert.equal(html.includes("release_allowed: true"), false);
     assert.equal(html.includes("current_release_ingested: true"), false);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("Clinical scale lote 001 successor HOLD", () => {
+  it("catalogs seven successor zips without ingesting them or replacing HORIZONTAL scales", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-SCALE-LOTE-001-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.zip_ingested, false);
+    assert.equal(stamp.clinical_promotion, "DENIED");
+    assert.equal(stamp.calculators_scales, "PAUSED");
+    assert.equal(stamp.canonical_layer_replaced, false);
+    assert.equal(stamp.dump.files_n, 7);
+    assert.equal(stamp.dump.over_9mb, 0);
+    assert.equal(stamp.files.length, 7);
+    assert.deepEqual(
+      stamp.files.map((f) => f.scale),
+      ["APGAR", "CAPURRO", "CRIES", "DOWNES", "NIPS", "PEWS", "SILVERMAN"]
+    );
+    assert.equal(stamp.drive.folder_id, "1zfqznK5Lc4iCtKsHCnDNzGPg-LiVFvu4");
+    assert.equal(stamp.canonical.drive_id, "1UM29WGMSQwZPPtpAIMpMoZ4mj04kcGLE");
+    assert.equal(layers.scale_lote_001.zip_ingested, false);
+    assert.equal(gateLayers.scale_lote_001.files_n, 7);
+    const scale = gateLayers.layers.find((l) => l.id === "LYR-CLIN-SCALE-001");
+    assert.equal(scale.drive_id, "1UM29WGMSQwZPPtpAIMpMoZ4mj04kcGLE");
+    assert.equal(scale.bytes, 3779);
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1zfqznK5Lc4iCtKsHCnDNzGPg-LiVFvu4"));
+    assert.equal(catalog.items.find((i) => i.id === "1RkTDEX_QIUtx5z1glEUxQJE9E7aJRsay").deployed, false);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /Scales lote 001/);
+    assert.match(html, /7 zips/);
+    assert.match(html, /zip_ingested: false/);
+    assert.equal(html.includes("zip_ingested: true"), false);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("Clinical scale lote 002 successor HOLD", () => {
+  it("catalogs Aldrete closure, BALLARD and FLACC without unpausing scales", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-SCALE-LOTE-002-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.zip_ingested, false);
+    assert.equal(stamp.clinical_promotion, "DENIED");
+    assert.equal(stamp.calculators_scales, "PAUSED");
+    assert.equal(stamp.dump.files_n, 3);
+    assert.equal(stamp.dump.over_9mb, 0);
+    assert.equal(stamp.files.map((f) => f.scale).join(","), "ALDRETE,BALLARD,FLACC");
+    assert.equal(stamp.drive.folder_id, "1P9WTDv-qFfaWwTMfco4amwx6_gJNfcyL");
+    assert.equal(stamp.canonical.drive_id, "1UM29WGMSQwZPPtpAIMpMoZ4mj04kcGLE");
+    assert.equal(layers.scale_lote_002.zip_ingested, false);
+    assert.equal(gateLayers.scale_lote_002.files_n, 3);
+    const scale = gateLayers.layers.find((l) => l.id === "LYR-CLIN-SCALE-001");
+    assert.equal(scale.drive_id, "1UM29WGMSQwZPPtpAIMpMoZ4mj04kcGLE");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1P9WTDv-qFfaWwTMfco4amwx6_gJNfcyL"));
+    assert.equal(catalog.items.find((i) => i.id === "105dT6306E-0C08oesD6TzWsNxrbPYy5e").deployed, false);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /Scales lote 002/);
+    assert.match(html, /3 zips/);
+    assert.equal(html.includes("zip_ingested: true"), false);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("Clinical calculator lote 001 HTML dump HOLD", () => {
+  it("catalogs four live HTML dumps without ingesting them or unpausing calculators", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-CALC-LOTE-001-HTML-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.html_ingested, false);
+    assert.equal(stamp.clinical_promotion, "DENIED");
+    assert.equal(stamp.calculators_scales, "PAUSED");
+    assert.equal(stamp.dump.files_n, 4);
+    assert.equal(stamp.dump.over_9mb, 0);
+    assert.equal(stamp.files.length, 4);
+    assert.equal(stamp.files.filter((f) => f.lang === "uk-UA").length, 3);
+    assert.equal(stamp.files.find((f) => f.name === "medicamentos.html").lang, "pt-BR");
+    assert.ok(stamp.files.every((f) => f.already_on_site === true));
+    assert.equal(stamp.drive.folder_id, "1J99J7iUjIMy6W1Wjgt1eyH0fOxl1aoYs");
+    assert.equal(existsSync(join(site, "gotejamento.html")), true);
+    assert.equal(existsSync(join(site, "imc.html")), true);
+    assert.equal(layers.calc_lote_001.html_ingested, false);
+    assert.equal(gateLayers.calc_lote_001.files_n, 4);
+    const calc = gateLayers.layers.find((l) => l.id === "LYR-CLIN-CALC-001");
+    assert.equal(calc.drive_id, "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1J99J7iUjIMy6W1Wjgt1eyH0fOxl1aoYs"));
+    assert.equal(catalog.items.find((i) => i.id === "15WXacNuLMp0VeBZOilTU0j8PrY5m4Srg").deployed, false);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /lote 001/i);
+    assert.match(html, /4 HTML/);
+    assert.match(html, /html_ingested: false/);
+    assert.equal(html.includes("html_ingested: true"), false);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("Camada 03 over-9MB remainder HOLD", () => {
+  it("catalogs three zips over 9 MB without downloading Fugulin or replacing HORIZONTAL", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-CAMADA03-OVER-9MB-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.downloaded, false);
+    assert.equal(stamp.zip_ingested, false);
+    assert.equal(stamp.dump.files_n, 3);
+    assert.equal(stamp.dump.over_9mb, 3);
+    assert.equal(stamp.files.length, 3);
+    assert.ok(stamp.files.every((f) => f.bytes > 9 * 1024 * 1024));
+    assert.equal(stamp.files.find((f) => f.name.startsWith("CKO-Fugulin")).bytes, 24867768);
+    assert.equal(stamp.canonical.drive_id, "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
+    assert.equal(layers.camada03_over_9mb.downloaded, false);
+    assert.equal(gateLayers.camada03_over_9mb.over_9mb, 3);
+    const calc = gateLayers.layers.find((l) => l.id === "LYR-CLIN-CALC-001");
+    assert.equal(calc.drive_id, "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
+    assert.equal(catalog.itemCount, 99);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1yrnPRO-WIGGEn-Z04s3QFGc235lzSTp3"));
+    assert.equal(catalog.items.find((i) => i.id === "1yrnPRO-WIGGEn-Z04s3QFGc235lzSTp3").deployed, false);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /Fugulin/);
+    assert.match(html, /downloaded: false/);
+    assert.equal(html.includes("downloaded: true"), false);
     assert.equal(html.includes("md_reg_complete: true"), false);
   });
 });
