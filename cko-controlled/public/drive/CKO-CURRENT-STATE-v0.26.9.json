@@ -1,0 +1,159 @@
+{
+  "project": "Calculadoras de Enfermagem",
+  "technical_namespace": "CKO",
+  "as_of": "2026-08-21",
+  "checkpoint_version": "0.26.9",
+  "baseline": {
+    "version": "0.26.7",
+    "file": "Calculadoras-de-Enfermagem-CKO-Consolidado-v0.26.7.zip",
+    "sha256": "a8c173c12cb6c747631263f829113906662778dd4f75cab9c92b6a15a672731f",
+    "rule": "Do not reopen pre-v0.26.7 historical files for normal work."
+  },
+  "deltas": [
+    {
+      "version": "0.26.8",
+      "file": "CKO-HCD-Document-Control-Delta-v0.26.8.zip",
+      "scope": "HCD/document control and governance hardening"
+    },
+    {
+      "version": "0.26.9",
+      "file": "CKO-Live-Closure-Delta-v0.26.9.zip",
+      "scope": "live Supabase closure, regulatory monitor execution, legal-status qualification, runtime HCD evidence and release-binding reperformance"
+    }
+  ],
+  "supabase": {
+    "project_ref": "pgsybzggewhinaniybiy",
+    "status": "ACTIVE_HEALTHY",
+    "region": "sa-east-1",
+    "canonical_schemas": [
+      "cko_master",
+      "cko_regulatory",
+      "cko_evidence",
+      "cko_flow",
+      "cko_validation",
+      "cko_governance"
+    ]
+  },
+  "closed_this_checkpoint": [
+    {
+      "audit_ref": "AUD-SEC-003",
+      "status": "CLOSED",
+      "evidence": "DEC-SEC-RLS-PRIVATE-SCHEMAS-20260821",
+      "result": "Canonical schemas remain private; anon/authenticated have no schema USAGE; RLS becomes mandatory on exposure."
+    },
+    {
+      "audit_ref": "AUD-SEC-001",
+      "status": "CLOSED",
+      "evidence": [
+        "DEC-SEC-FETCH-SOURCE-HARDENING-20260821",
+        "VR-SEC-FETCH-20260821",
+        "PG_NET_RESPONSE_282"
+      ],
+      "result": "source-acquire v4 is internal-service only, HTTPS/443 only, official-host allowlist, per-hop redirect revalidation, 20s timeout, 25 MiB cap."
+    },
+    {
+      "audit_ref": "AUD-OPS-002",
+      "status": "CLOSED",
+      "evidence": [
+        "DEC-OPS-REGMON-PROCESSOR-20260821",
+        "VR-OPS-REGMON-20260821"
+      ],
+      "result": "Daily enqueue + worker + diff + lineage + fail-closed alert path emplemented and reperformed."
+    },
+    {
+      "audit_ref": "AUD-REG-001",
+      "status": "CLOSED_QUALIFIED",
+      "evidence": [
+        "DEC-REG-CURRENT-STATUS-20260821",
+        "VR-REG4-STATUS-LEI7498-20260821",
+        "VR-REG4-STATUS-DEC94406-20260821"
+      ],
+      "result": "Lei 7.498/1986 and Decreto 94.406/1987 use controlled legal-status value NO_EXPRESS_REVOCATION_RECORDED, not an unconditional validity claim."
+    }
+  ],
+  "regulatory_monitor": {
+    "enqueue_cron": {
+      "jobid": 1,
+      "name": "cko_regulatory_daily_change_monitor",
+      "schedule_utc": "0 9 * * *",
+      "sao_paulo_time": "06:00",
+      "active": true
+    },
+    "worker_cron": {
+      "jobid": 2,
+      "name": "cko_regulatory_monitor_worker",
+      "schedule_utc": "10 9 * * *",
+      "sao_paulo_time": "06:10",
+      "active": true
+    },
+    "worker_version": "2.0.0",
+    "normalization": "ARTICLE_FIRST_HTML",
+    "canonical_auto_promotion": false,
+    "reperformance": {
+      "items": 9,
+      "initial_outcomes": {
+        "NO_CHANGE": 6,
+        "CHANGE_DETECTED": 3
+      },
+      "cofen_alert_reassessment": {
+        "count": 3,
+        "classification": "NON_NORMATIVE_SITE_CHROME_CHANGE",
+        "resolved": 3,
+        "open_change_events": 0
+      }
+    }
+  },
+  "legal_status": {
+    "REGINST-BR-FED-LEI-7498-1986": {
+      "controlled_status": "NO_EXPRESS_REVOCATION_RECORDED",
+      "effective_from": "1986-06-26",
+      "status_evidence_snapshot": "SNAP-CAMARA-STATUS-LEI7498-20260821",
+      "status_evidence_sha256": "a2f2409c5591a128301a8a2f95c35d9e0197a492c03c785d8c7e2a544c6210b4"
+    },
+    "REGINST-BR-FED-DEC-94406-1987": {
+      "controlled_status": "NO_EXPRESS_REVOCATION_RECORDED",
+      "effective_from": "1987-06-09",
+      "status_evidence_snapshot": "SNAP-CAMARA-STATUS-DEC94406-20260821",
+      "status_evidence_sha256": "5c202c4bfd41d09f28f9a828bf17c92b70e54febe3ad9cb818f1e441da544fa7"
+    }
+  },
+  "open_findings": [
+    {
+      "finding_id": "FIND-HCD-LIVE-RUNTIME-20260821",
+      "severity": "P0",
+      "maps_to": "AUD-HCD-001",
+      "status": "OPEN",
+      "blocker": "Public runtime diverges from governed baseline: Braden pre-calculation state and NANDA/raciocínio message; Gotejamento pre-calculation 0 gotas/min. Independent HCD/accessibility assessment is also not yet evidenced."
+    },
+    {
+      "finding_id": "FIND-AI-001",
+      "severity": "P1",
+      "status": "OPEN_HOLD",
+      "blocker": "DEEPSEEK_API_KEY is not available to Edge Function runtime; AI extraction remains fail-closed/HOLD."
+    },
+    {
+      "finding_id": "FIND-REL-VERCEL-BINDING-20260821",
+      "severity": "P1",
+      "maps_to": "AUD-REL-001",
+      "status": "OPEN_EXTERNAL_BLOCK",
+      "blocker": "Connected Vercel team has zero projects and connected GitHub has zero accessible repositories; controlled runtime deploy binding cannot be completed from this control plane."
+    }
+  ],
+  "claims": {
+    "iso_certification": false,
+    "hcd_conformance": false,
+    "wcag_full_conformance": false,
+    "clinical_production_approval": false,
+    "governed_production_deployment": false,
+    "legacy_public_site_reachable": true
+  },
+  "future_source_order": [
+    "active baseline v0.26.7",
+    "controlled deltas v0.26.8+",
+    "live Supabase canonical state/evidence",
+    "official external APIs/registries",
+    "archive only for explicit historical audit"
+  ],
+  "no_reopen_default": true,
+  "generated_at": "2026-08-21T20:46:00-03:00"
+}
