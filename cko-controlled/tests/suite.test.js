@@ -1257,6 +1257,35 @@ describe("chrome templates", () => {
   });
 });
 
+describe("CI inspect preserves Drive HOLD index and policy packs", () => {
+  it("cli inspect loads the five HOLD policy packs the suite already gates", () => {
+    const cli = readFileSync(join(root, "../cli.mjs"), "utf8");
+    for (const pack of [
+      "platform-closure.json",
+      "layer-policies.json",
+      "extraction.json",
+      "api-catalog.json",
+      "governed-fabric.json",
+    ]) {
+      assert.match(cli, new RegExp(pack.replaceAll(".", "\\.")));
+    }
+    assert.match(cli, /platformClosure/);
+    assert.match(cli, /layerPolicies/);
+    assert.match(cli, /extractionPolicy/);
+    assert.match(cli, /apiCatalog/);
+    assert.match(cli, /governedFabric/);
+    assert.match(cli, /data-cko-ds-render="governed-fabric"/);
+  });
+  it("generate_layers keeps Drive HOLD extra keys including Camada 43", () => {
+    const src = readFileSync(join(root, "../scripts/generate_layers.py"), "utf8");
+    assert.match(src, /DRIVE_HOLD_INDEX_KEYS/);
+    assert.match(src, /attach_drive_hold_index/);
+    assert.match(src, /publication_release_recovery/);
+    assert.match(src, /calc_lote_002/);
+    assert.match(src, /clinical_rules_recovery/);
+  });
+});
+
 describe("unpublished platform status page", () => {
   it("ships a Portuguese HOLD status page without claiming ACTIVE or adding a 13th runtime page", () => {
     assert.equal(RUNTIME_PAGES.length, 12);
@@ -1469,6 +1498,58 @@ describe("Clinical calculator lote 002 HTML dump HOLD", () => {
     assert.match(html, /8 HTML/);
     assert.match(html, /html_ingested: false/);
     assert.equal(html.includes("html_ingested: true"), false);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("Camada 43 Publication-Release Drive HOLD", () => {
+  it("catalogs MOD-19 and recovery without asserting a release or retargeting LYR-PUB-001", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-PUBLICATION-RELEASE-LAYER43-HOLD.json"), "utf8"));
+    const manifest = JSON.parse(readFileSync(join(gatePub, "drive/RELEASE_RECOVERY_MANIFEST.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.published, false);
+    assert.equal(stamp.release_authority_asserted, false);
+    assert.equal(stamp.current_release_ingested, false);
+    assert.equal(stamp.canonical_layer_replaced, false);
+    assert.equal(stamp.mod19.implementation, "FROZEN / NOT AUTHORIZED");
+    assert.equal(stamp.mod19.production, "NO_PRODUCTION_PASS");
+    assert.equal(stamp.mod19.screen_count, 16);
+    assert.equal(stamp.mod19.screens_implemented, 0);
+    assert.equal(stamp.screens.length, 16);
+    assert.equal(stamp.screen_implementation, "NOT_IMPLEMENTED");
+    assert.equal(stamp.recovery.member_count, 26);
+    assert.match(stamp.recovery.note, /No new release authority is asserted/);
+    assert.equal(stamp.drive.folder_id, "1uUavRf5hrDeJc_VTjBS9EoiiT4xt8pxs");
+    assert.equal(stamp.canonical.drive_id, "1c3o8yuNMnjyzZI84kLdDqLwCGSJtRb-W");
+    assert.equal(stamp.wrapper_copy.bytes, 3489);
+    assert.equal(stamp.wrapper_copy.retargeted, false);
+    assert.equal(manifest.member_count, 26);
+    assert.equal(manifest.members.length, 26);
+    assert.ok(manifest.members.includes("CURRENT_RELEASE.json"));
+    assert.match(manifest.selection_rule, /No new release authority is asserted/);
+    assert.equal(layers.publication_release_recovery.release_authority_asserted, false);
+    assert.equal(gateLayers.publication_release_recovery.screens_n, 16);
+    assert.equal(gateLayers.publication_release_recovery.recovery_members_n, 26);
+    const pub = gateLayers.layers.find((l) => l.id === "LYR-PUB-001");
+    assert.equal(pub.drive_id, "1c3o8yuNMnjyzZI84kLdDqLwCGSJtRb-W");
+    assert.equal(pub.published, false);
+    assert.equal(pub.bytes, 3489);
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1uUavRf5hrDeJc_VTjBS9EoiiT4xt8pxs"));
+    assert.ok(catalog.items.some((i) => i.id === "1Kzedd3rQujwpQ7sDFUL_ioFvfDx81yMc"));
+    assert.equal(catalog.items.find((i) => i.id === "1LJOX500QPVhsJh7uHJG3DfvwcEddtPcm").deployed, false);
+    assert.equal(catalog.items.find((i) => i.id === "1slfEFZXqC08NML8F9mqdZerHRC_YF8Hz").deployed, false);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /Camada 43/);
+    assert.match(html, /16 ecrãs/);
+    assert.match(html, /26 membros/);
+    assert.match(html, /ainda não existe/);
+    assert.match(html, /release_authority_asserted: false/);
+    assert.equal(html.includes("release_allowed: true"), false);
+    assert.equal(html.includes("current_release_ingested: true"), false);
     assert.equal(html.includes("md_reg_complete: true"), false);
   });
 });

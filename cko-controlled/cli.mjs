@@ -51,8 +51,32 @@ const vasPath = existsSync(join(site, "data/cko/visual-assets.json"))
   ? join(site, "data/cko/visual-assets.json")
   : join(gatePub, "policies/visual-assets.json");
 const visualAssetPolicy = existsSync(vasPath) ? JSON.parse(readFileSync(vasPath, "utf8")) : undefined;
+const platformClosure = JSON.parse(readFileSync(join(gatePub, "policies/platform-closure.json"), "utf8"));
+const layerPolicies = JSON.parse(readFileSync(join(gatePub, "policies/layer-policies.json"), "utf8"));
+const extractionPolicy = JSON.parse(readFileSync(join(gatePub, "policies/extraction.json"), "utf8"));
+const apiCatalog = JSON.parse(readFileSync(join(gatePub, "policies/api-catalog.json"), "utf8"));
+const governedFabric = JSON.parse(readFileSync(join(gatePub, "policies/governed-fabric.json"), "utf8"));
 const ontology = existsSync(join(gatePub, "graph/ontology.ttl")) ? readFileSync(join(gatePub, "graph/ontology.ttl"), "utf8") : "";
-const platform = { listing, files, toolLibrary, governance, layers, pendencies, driveImmutable, mdRegPolicy, humanDecisions, designSystem, universalToolPolicy, policyMaster, visualAssetPolicy };
+const platform = {
+  listing,
+  files,
+  toolLibrary,
+  governance,
+  layers,
+  pendencies,
+  driveImmutable,
+  mdRegPolicy,
+  humanDecisions,
+  designSystem,
+  universalToolPolicy,
+  policyMaster,
+  visualAssetPolicy,
+  platformClosure,
+  layerPolicies,
+  extractionPolicy,
+  apiCatalog,
+  governedFabric,
+};
 
 const report = await runGates(universe, { action: "inspect", platform, ontology });
 
@@ -177,6 +201,17 @@ if (humanDecisions) {
   writeFileSync(join(cascadeDir, "human-decisions.json"), JSON.stringify(humanDecisions, null, 2) + "\n");
   writeFileSync(join(site, "data/cko/human-decisions.json"), JSON.stringify(humanDecisions, null, 2) + "\n");
 }
+const holdPacks = [
+  ["platform-closure.json", platformClosure],
+  ["layer-policies.json", layerPolicies],
+  ["extraction.json", extractionPolicy],
+  ["api-catalog.json", apiCatalog],
+  ["governed-fabric.json", governedFabric],
+];
+for (const [name, payload] of holdPacks) {
+  writeFileSync(join(cascadeDir, name), JSON.stringify(payload, null, 2) + "\n");
+  writeFileSync(join(site, "data/cko", name), JSON.stringify(payload, null, 2) + "\n");
+}
 writeFileSync(
   join(cascadeDir, "index.html"),
   `<!doctype html>
@@ -192,14 +227,19 @@ writeFileSync(
 <body class="cko-ds-body" data-cko-status="CANDIDATE_HOLD_RELEASE" data-cko-cascade="policy-as-code" data-cko-release="HOLD_NOT_RELEASED">
 <a class="cko-ds-skip" href="#main-content">Pular para o conteúdo principal</a>
 <main id="main-content" class="cko-ds-page">
-<nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Cascata</span></nav>
+<nav class="cko-ds-crumbs" aria-label="Breadcrumb"><a href="/">Início</a> › <a href="/cko-estado.html">Como está a plataforma</a> › <a href="/ecossistema.html">Ecossistema</a> › <span>Cascata</span></nav>
 <div id="cko-ds-root" data-cko-ds-render="cascade" data-cko-ds-src="/data/cko/design-system.json"></div>
 <div data-cko-ds-render="universal-tool" data-cko-ds-src="/data/cko/universal-tool.json"></div>
 <div data-cko-ds-render="policy-master" data-cko-ds-src="/data/cko/policy-master.json"></div>
 <div data-cko-ds-render="visual-assets" data-cko-ds-src="/data/cko/visual-assets.json"></div>
+<div data-cko-ds-render="platform-closure" data-cko-ds-src="/data/cko/platform-closure.json"></div>
+<div data-cko-ds-render="layer-policies" data-cko-ds-src="/data/cko/layer-policies.json"></div>
+<div data-cko-ds-render="extraction" data-cko-ds-src="/data/cko/extraction.json"></div>
+<div data-cko-ds-render="api-catalog" data-cko-ds-src="/data/cko/api-catalog.json"></div>
+<div data-cko-ds-render="governed-fabric" data-cko-ds-src="/data/cko/governed-fabric.json"></div>
 <p class="cko-ds-help"><a class="cko-ds-link" href="./index.json">index.json</a> · <a class="cko-ds-link" href="./gate-report.json">gate-report.json</a></p>
 </main>
-<script type="module" src="/js/cko-ds-render.js"></script>
+<script type="module" src="/js/cko-ds-render.js?v=pmc-5"></script>
 </body>
 </html>
 `

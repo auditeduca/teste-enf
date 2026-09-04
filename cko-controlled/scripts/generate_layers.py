@@ -41,6 +41,15 @@ ZIP_CANDIDATES = [
     GATE / "control-plane" / "layer-zips",
 ]
 CLOSURE_SHA_PREFIX = "3dd61cd50883"
+DRIVE_HOLD_INDEX_KEYS = (
+    "reference_universe_successor",
+    "field_universe_reconciliation",
+    "content_of_truth_backup",
+    "nurse_palm_split",
+    "clinical_rules_recovery",
+    "calc_lote_002",
+    "publication_release_recovery",
+)
 MARKER_BEGIN = "<!-- CKO-44-LAYERS:BEGIN -->"
 MARKER_END = "<!-- CKO-44-LAYERS:END -->"
 SNAPSHOT_RULES = (
@@ -593,6 +602,27 @@ def inject_ecossistema(catalog: dict) -> None:
     shutil.copy2(src, SITE / "ecossistema.html")
 
 
+def attach_drive_hold_index(catalog: dict) -> None:
+    """Keep Drive HOLD stamps when CI regenerates layers.json."""
+    sources = [
+        SITE / "data" / "cko" / "layers.json",
+        WAVE2 / "data" / "layers.json",
+    ]
+    existing: dict = {}
+    for path in sources:
+        if not path.is_file():
+            continue
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if any(key in payload for key in DRIVE_HOLD_INDEX_KEYS):
+            existing = payload
+            break
+    missing = [key for key in DRIVE_HOLD_INDEX_KEYS if key not in existing]
+    if missing:
+        raise SystemExit("drive HOLD index missing from layers.json: " + ",".join(missing))
+    for key in DRIVE_HOLD_INDEX_KEYS:
+        catalog[key] = existing[key]
+
+
 def generate() -> dict:
     generate_design_system()
     generate_universal_tool()
@@ -662,13 +692,18 @@ def generate() -> dict:
         },
         "md_freeze": "FROZEN",
         "reg_freeze": "FROZEN",
-        "policy": "POL-CKO-LAYER-CATALOG-1.0.0",
-        "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
-        "policy_status": "CONTROLLED_LAYER_HOLD",
-        "layers": layers,
-        "zip_verified_n": sum(1 for l in layers if l["zip_verified"]),
-        "snapshot_files": snapshot["file_count"],
     }
+    attach_drive_hold_index(catalog)
+    catalog.update(
+        {
+            "policy": "POL-CKO-LAYER-CATALOG-1.0.0",
+            "specializes": "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0",
+            "policy_status": "CONTROLLED_LAYER_HOLD",
+            "layers": layers,
+            "zip_verified_n": sum(1 for l in layers if l["zip_verified"]),
+            "snapshot_files": snapshot["file_count"],
+        }
+    )
     write_json(SITE / "data" / "cko" / "layers.json", catalog)
     write_json(WAVE2 / "data" / "layers.json", catalog)
     write_camadas_index(catalog)
