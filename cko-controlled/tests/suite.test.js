@@ -684,6 +684,11 @@ describe("design system runtime render", () => {
     assert.equal(existsSync(join(site, "js/cko-ds-render.js")), true);
     const tokens = readFileSync(join(site, "css/cko-ds-tokens.css"), "utf8");
     assert.match(tokens, /--cko-navy-900:\s*#1a3e74/i);
+    assert.match(tokens, /--cko-slot-01:/);
+    assert.match(tokens, /--cko-slot-44:/);
+    assert.equal(ds.templates_implemented_n, 11);
+    assert.equal(ds.templates.filter((t) => t.status === "implemented").length, 11);
+    assert.ok(ds.templates.every((t) => t.status === "implemented" || t.status === "wireframe"));
     const renderer = readFileSync(join(site, "js/cko-ds-render.js"), "utf8");
     assert.match(renderer, /data-cko-ds-render/);
     assert.match(renderer, /NOT_ASSERTED/);
@@ -839,6 +844,28 @@ describe("chrome templates", () => {
     assert.match(missao, /class="crumbs"/);
     assert.match(missao, /<section class="hero"/);
     assert.equal(missao.includes("data-cko-slot="), false);
+  });
+  it("ships refined scale/library/content templates and gates rating copy", () => {
+    for (const name of ["scale.html", "library.html", "content.html"]) {
+      const html = readFileSync(join(site, "templates", name), "utf8");
+      assert.match(html, /data-cko-slot="chrome"/);
+      assert.match(html, /data-cko-slot="hero"/);
+    }
+    const gen = readFileSync(join(site, "scripts/generate_tool_page.py"), "utf8");
+    assert.match(gen, /HOLD-HUMAN-COPY-RATINGS/);
+    assert.equal(gen.includes("de 5 estrelas"), false);
+    assert.equal(existsSync(join(site, "js/cko-ratings-hold.js")), true);
+    const gate = readFileSync(join(site, "js/cko-ratings-hold.js"), "utf8");
+    assert.match(gate, /HOLD-HUMAN-COPY-RATINGS/);
+    assert.match(readFileSync(join(site, "js/partials-loader.js"), "utf8"), /cko-ratings-hold\.js/);
+    const calc = readFileSync(join(site, "camadas/LYR-CLIN-CALC-001/index.html"), "utf8");
+    assert.match(calc, /data-cko-ds-render="universal-tool"/);
+    const tpl = readFileSync(join(site, "camadas/LYR-PAGE-TPL-001/index.html"), "utf8");
+    assert.match(tpl, /data-cko-ds-render="templates"/);
+    const holds = readFileSync(join(site, "cko-holds.html"), "utf8");
+    assert.match(holds, /data-cko-ds-render="human-holds"/);
+    assert.ok(humanDecisions.items.every((item) => item.code_progress && item.next_human));
+    assert.ok(humanDecisions.items.every((item) => item.status === "HOLD_HUMAN_NON_BLOCKING"));
   });
 });
 

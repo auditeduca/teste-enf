@@ -59,6 +59,12 @@ function renderTokens(ds) {
 }
 
 function renderThemes(ds) {
+  const switcher = (ds.themes || [])
+    .map(
+      (t) =>
+        `<button type="button" class="cko-ds-btn cko-ds-btn--secondary" data-cko-theme-set="${esc(t.id)}">${esc(t.name)}</button>`
+    )
+    .join("");
   const themes = ds.themes
     .map(
       (t) => `<article class="cko-ds-card" data-cko-theme="${esc(t.id)}">
@@ -72,7 +78,11 @@ function renderThemes(ds) {
       </article>`
     )
     .join("");
-  return section("Temas (4)", "Troca visual via data-cko-theme. Não altera o estado de release.", `<div class="cko-ds-theme-row">${themes}</div>`);
+  return section(
+    "Temas (4)",
+    "Troca visual via data-cko-theme. Não altera o estado de release.",
+    `<div class="cko-ds-theme-switch" role="group" aria-label="Pré-visualizar tema">${switcher}</div><div class="cko-ds-theme-row">${themes}</div>`
+  );
 }
 
 function renderSlots(ds) {
@@ -111,16 +121,27 @@ function renderComponents(ds, mode) {
 }
 
 function renderTemplates(ds) {
+  const implemented = ds.templates_implemented_n ?? ds.templates.filter((t) => t.status === "implemented").length;
   const cards = ds.templates
-    .map(
-      (t) => `<article class="cko-ds-comp" data-cko-template="${esc(t.id)}">
+    .map((t) => {
+      const status = t.status || "wireframe";
+      const link = t.html
+        ? `<p class="cko-ds-help">HTML: <a class="cko-ds-link" href="/${esc(t.html)}">${esc(t.html)}</a></p>`
+        : `<p class="cko-ds-help">Moldura apenas. Sem chrome HTML.</p>`;
+      return `<article class="cko-ds-comp" data-cko-template="${esc(t.id)}" data-cko-template-status="${esc(status)}">
         <div class="cko-ds-comp-head"><h3>${esc(t.name)}</h3><span>${esc(t.id)}</span></div>
+        <span class="cko-ds-badge ${status === "implemented" ? "" : "cko-ds-badge--hold"}">${esc(status)}</span>
         <div class="cko-ds-wire" aria-hidden="true"><b></b><i></i><em></em></div>
         <p class="cko-ds-help">${esc(t.note)}</p>
-      </article>`
-    )
+        ${link}
+      </article>`;
+    })
     .join("");
-  return section("21 templates", "Molduras de página. Renderer LYR-RND-001 permanece NOT_ASSERTED como motor clínico.", `<div class="cko-ds-tpl-grid">${cards}</div>`);
+  return section(
+    "21 templates",
+    `${implemented} com chrome HTML. Restantes em wireframe. Renderer LYR-RND-001 permanece NOT_ASSERTED como motor clínico.`,
+    `<div class="cko-ds-tpl-grid">${cards}</div>`
+  );
 }
 
 function renderHolds(ds) {
@@ -150,6 +171,25 @@ function renderCascade(ds) {
     ds.rule || "tudo inicia em policy-as-code; estágio seguinte só corre se o predecessor PASS",
     `<ol class="cko-ds-cascade" data-cko-cascade-root="${esc(ds.root || "policy-as-code")}">${items}</ol>`
   );
+}
+
+function renderHumanHolds(ledger) {
+  const items = (ledger.items || [])
+    .map(
+      (item) => `<article class="cko-ds-card cko-ds-card--hold" data-cko-hold="${esc(item.id)}">
+        <span class="cko-ds-badge cko-ds-badge--hold">${esc(item.status)}</span>
+        <h3>${esc(item.id)}</h3>
+        <p>${esc(item.decision)}</p>
+        <p class="cko-ds-help">Código: ${esc(item.code_progress || "nenhum avanço automático")}. Humano: ${esc(item.next_human || "decisão pendente")}.</p>
+      </article>`
+    )
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(ledger.release || "HOLD / NOT_RELEASED")}</span>
+      <h1>Holds humanos</h1>
+      <p>${esc(ledger.rule)}. Não bloqueiam inspect/CI. Continuam a negar release. B9 permanece NOT_RELEASED.</p>
+    </section>
+    <div class="cko-ds-comp-grid">${items}</div>`;
 }
 
 function renderUniversalTool(policy) {
@@ -214,6 +254,9 @@ function renderCatalog(ds, mode) {
   if (mode === "states") {
     return hero + spine + renderComponents(ds, "states") + renderThemes(ds);
   }
+  if (mode === "templates") {
+    return hero + spine + renderTemplates(ds);
+  }
   return hero + spine + renderTokens(ds) + renderThemes(ds) + renderSlots(ds) + renderComponents(ds, mode) + renderTemplates(ds) + renderHolds(ds);
 }
 
@@ -259,7 +302,13 @@ async function mount(el) {
       return;
     }
     if (mode === "universal-tool") {
-      el.innerHTML = renderUniversalTool(ds);
+      const policy = src.includes("universal-tool") ? ds : await loadJson("/data/cko/universal-tool.json");
+      el.innerHTML = renderUniversalTool(policy);
+      return;
+    }
+    if (mode === "human-holds") {
+      const ledger = src.includes("human-decisions") ? ds : await loadJson("/data/cko/human-decisions.json");
+      el.innerHTML = renderHumanHolds(ledger);
       return;
     }
     el.innerHTML = renderCatalog(ds, mode);
@@ -268,7 +317,18 @@ async function mount(el) {
   }
 }
 
+function bindThemeSwitch() {
+  document.addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-cko-theme-set]");
+    if (!btn) return;
+    const theme = btn.getAttribute("data-cko-theme-set");
+    document.documentElement.setAttribute("data-cko-theme", theme);
+    document.body.setAttribute("data-cko-theme", theme);
+  });
+}
+
 function boot() {
+  bindThemeSwitch();
   document.querySelectorAll("[data-cko-ds-render]").forEach((node) => {
     mount(node);
   });

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FERRAMENTA | Calculadoras de Enfermagem</title>
-<meta name="description" content="DESCRIÇÃO"/>
+<title>Biblioteca | Calculadoras de Enfermagem</title>
+<meta name="description" content="Listagem da biblioteca de enfermagem."/>
 <link href="/public/output.css" rel="stylesheet">
 <link href="/global-styles.css" rel="stylesheet">
 <link href="/css/pages/cart-emergencia.css" rel="stylesheet">
@@ -15,26 +15,25 @@
 <script src="/js/cko-page-shell.js" defer></script>
 <script src="/js/cko-page-templates.js" defer></script>
 </head>
-<body class="cko-cart-page" data-cko-template="tool" data-cko-theme="clinical">
+<body class="cko-cart-page" data-cko-template="library" data-cko-theme="institutional">
 <a class="cko-ds-skip" href="#main-content">Ir para o conteúdo</a>
 <div id="global-header-container"></div>
 <div id="language-selector-placeholder"></div>
 <main id="main-content" class="flex-grow p-4 sm:p-8 max-w-7xl mx-auto w-full">
-  <!-- POL-CKO-MD-REG-FRONTEND: chrome.breadcrumb=one, chrome.hero=one.
-       Do not add nav.crumbs / nav.tpl-breadcrumb / section.hero / .tool-header here.
-       The shell fills these slots; static chrome on a page is xor with the slot. -->
   <div data-cko-page="PAGE_ID" data-cko-slot="chrome"></div>
   <div data-cko-page="PAGE_ID" data-cko-slot="hero"></div>
   <div class="cko-layout">
     <div class="cko-layout__main">
-      <div class="cko-tool-toolbar">
-        <a class="cko-btn cko-btn--primary" href="/">Início</a>
-      </div>
-      <section class="cko-tool-panel">
-        <!-- UI da ferramenta -->
-      </section>
+      <form class="cko-lib-filters" role="search">
+        <label class="cko-ds-field"><span class="cko-ds-label">Filtrar</span>
+          <input class="cko-ds-input" type="search" name="q" placeholder="Título ou tema">
+        </label>
+      </form>
+      <ul class="cko-lib-list">
+        <li><a href="/biblioteca.html">Artigo — evidência HOLD</a></li>
+      </ul>
     </div>
-    <aside class="cko-layout__side" data-cko-page="PAGE_ID" data-cko-slot="sidebar" aria-label="Recursos da página"></aside>
+    <aside class="cko-layout__side" data-cko-page="PAGE_ID" data-cko-slot="sidebar" aria-label="Coleções"></aside>
   </div>
 </main>
 <div id="footer-placeholder"></div>
