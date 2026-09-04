@@ -56,6 +56,9 @@ DRIVE_HOLD_INDEX_KEYS = (
     "layer_readback_100",
     "dump_remainder",
     "ds_central_backup",
+    "dump_camada_census",
+    "horizontal_nested_census",
+    "backups_census",
 )
 MARKER_BEGIN = "<!-- CKO-44-LAYERS:BEGIN -->"
 MARKER_END = "<!-- CKO-44-LAYERS:END -->"

@@ -144,6 +144,24 @@ th,td{text-align:left;padding:.45rem .3rem;border-bottom:1px solid #e5e7eb;verti
 </article>
 
 <article class="card hold">
+  <h2>Censo dump 9 MB — pastas 00–05 e 43; camadas 06–42 sem dump</h2>
+  <p>Listagem ao vivo em 2026-09-04: a pasta <code>Calculadoras-Enf-Camadas-9MB-20260903</code> tem <strong>16</strong> filhos — <strong>8</strong> pastas e <strong>8</strong> zips soltos. Há dump só para as camadas <strong>00, 01, 02, 03, 04, 05, 43</strong> e o fracionado Nurse-PaLM. As camadas <strong>06–42</strong> (<strong>37</strong>) <strong>não</strong> têm pasta de dump; a classificação delas continua no wrapper HORIZONTAL. Camada 01 só tem o zip P01 já carimbado; camada 02 só tem o sucessor de referências v1.2.1 já carimbado. <code>md_reg_complete</code> continua falso. Nenhuma pasta nova de dump apareceu.</p>
+  <p class="small">Stamp: <code>CKO-DUMP-CAMADA-CENSUS-HOLD.json</code>. <code>classified_pct: 100</code>. <code>camadas_without_dump_n: 37</code>.</p>
+</article>
+
+<article class="card hold">
+  <h2>Censo HORIZONTAL aninhado — 16 pastas, só wrappers canónicos</h2>
+  <p>HORIZONTAL tem <strong>46</strong> filhos: <strong>16</strong> pastas e <strong>30</strong> zips. Quinze pastas aninhadas (DESIGN_SYSTEM, REFERENCES, CLINICAL_CALCULATORS, PUBLICATION_RELEASE, …) têm <strong>exactamente um</strong> wrapper canónico. <code>GLOBAL_FANIN</code> tem dois Google Docs — <strong>não</strong> são publicação e <strong>não</strong> mudam B9. O único extra continua a ser a cópia solta de 4508 B das calculadoras; o <code>drive_id</code> de <code>LYR-CLIN-CALC-001</code> <strong>não</strong> muda. <code>90_FINAL_CONTROLLED</code> tem exactamente três filhos: HORIZONTAL, dump 9 MB, backup CONTENT-OF-TRUTH.</p>
+  <p class="small">Stamp: <code>CKO-HORIZONTAL-NESTED-CENSUS-HOLD.json</code>. <code>wrapper_only_folders_n: 15</code>. <code>canonical_layer_replaced: false</code>.</p>
+</article>
+
+<article class="card hold">
+  <h2>Censo CKO Backups — 63 filhos, 9 &gt; 9 MB, não é raiz nova</h2>
+  <p>A pasta <code>CKO Backups</code> tem <strong>63</strong> filhos classificados em HOLD. <strong>9</strong> zips acima de 9 MB (Vila 34–221 MB, conversa 34,3 MB) <strong>não</strong> foram descarregados. Oito manifestos/handoffs pequenos foram copiados byte-a-byte. O snapshot Supabase de 2026-09-01 <strong>não</strong> é Supabase ao vivo e <strong>não</strong> fecha MD/REG (1206/1137 ≠ 2496/10913). O backup DS de 2026-09-04 continua a <strong>não</strong> ser 45.ª camada. Cópias v1.2.1 em Backups <strong>não</strong> substituem o freeze <code>LYR-REF</code> v1.1.1.</p>
+  <p class="small">Stamp: <code>CKO-BACKUPS-CENSUS-HOLD.json</code>. <code>downloaded: false</code> nos zips &gt; 9 MB. <code>live_supabase: false</code>. <code>new_architectural_root: false</code>.</p>
+</article>
+
+<article class="card hold">
   <h2>Backup DS central 2026-09-04 — 4 partes, não é 45.ª camada</h2>
   <p>A pasta <code>CKO-DS-CENTRAL-BACKUP-20260904-0445</code> (em CKO Backups) tem 4 zips &lt; 9 MB, manifesto e somas. É backup de recuperação do Design System / visual / builder. <strong>Não</strong> é raiz arquitectónica nova. O <code>drive_id</code> de <code>LYR-DS-001</code> continua <code>19r00SWxXMXzYgMabxvWnCE7RUbKgiqv4</code> (5573 B). O <code>RUN_STATE.json</code> do backup traz <code>ACTIVE_CANONICAL</code> como rótulo da fonte — isso <strong>não</strong> é runtime ACTIVE nem implantado. Partes <strong>não</strong> ingeridas.</p>
   <p class="small">Stamp: <code>CKO-DS-CENTRAL-BACKUP-20260904-HOLD.json</code>. <code>new_architectural_root: false</code>. <code>parts_ingested: false</code>.</p>
@@ -194,6 +212,9 @@ th,td{text-align:left;padding:.45rem .3rem;border-bottom:1px solid #e5e7eb;verti
       <tr><td>Scales lote 002</td><td>3 zips</td><td>HOLD</td><td>Aldrete fecho + BALLARD + FLACC; Camada 04 9 MB completa</td></tr>
       <tr><td>Resto dump 9 MB</td><td>11 ficheiros / 6 &gt; 9 MB</td><td>HOLD</td><td>Policy v0.2.0 + assurance listados, não runtime; zips grandes downloaded: false</td></tr>
       <tr><td>Backup DS central</td><td>4 partes</td><td>HOLD</td><td>Não é 45.ª camada; parts_ingested: false; ACTIVE_CANONICAL da fonte ≠ runtime</td></tr>
+      <tr><td>Censo dump 9 MB</td><td>8 pastas / 37 sem dump</td><td>HOLD</td><td>Camadas 00–05+43+Nurse-PaLM; 06–42 só wrapper HORIZONTAL; 100% classificado</td></tr>
+      <tr><td>Censo HORIZONTAL aninhado</td><td>16 pastas / 46 filhos</td><td>HOLD</td><td>15 pastas = 1 wrapper; GLOBAL_FANIN não é publicação; calc solto não retarget</td></tr>
+      <tr><td>Censo CKO Backups</td><td>63 filhos / 9 &gt; 9 MB</td><td>HOLD</td><td>Não é raiz nova; live_supabase: false; 8 manifestos copiados; Vila não descarregada</td></tr>
       <tr><td>Camada 43 Publication / Release</td><td>16 ecrãs / 26 membros</td><td>NOT_RELEASED</td><td>Pasta encontrada; MOD-19 NOT_IMPLEMENTED; recovery sem autoridade nova; wrapper 3489 B é cópia, não canónico</td></tr>
       <tr><td>Nurse-PaLM</td><td>12 partes</td><td>NOT_ASSERTED</td><td>Fracionado &lt; 9 MB catalogado; partes não ingeridas; não operacional</td></tr>
       <tr><td>B9 / release</td><td>—</td><td>NOT_RELEASED</td><td>Ainda não existe; não foi publicado. <code>release_allowed: false</code></td></tr>
