@@ -1289,6 +1289,9 @@ describe("CI inspect preserves Drive HOLD index and policy packs", () => {
     assert.match(src, /layer_readback_100/);
     assert.match(src, /dump_remainder/);
     assert.match(src, /ds_central_backup/);
+    assert.match(src, /dump_camada_census/);
+    assert.match(src, /horizontal_nested_census/);
+    assert.match(src, /backups_census/);
     assert.match(src, /clinical_rules_recovery/);
   });
 });
@@ -1789,6 +1792,108 @@ describe("DS central backup 2026-09-04 HOLD", () => {
     assert.match(html, /não é 45/);
     assert.match(html, /new_architectural_root: false/);
     assert.match(html, /parts_ingested: false/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+    assert.equal(html.includes("implantado: true"), false);
+  });
+});
+
+describe("9 MB dump camada census HOLD", () => {
+  it("records dump folders only for camadas 00-05/43 plus Nurse-PaLM and keeps 06-42 on HORIZONTAL wrappers", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-DUMP-CAMADA-CENSUS-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.classified_pct, 100);
+    assert.equal(stamp.published, false);
+    assert.equal(stamp.canonical_layer_replaced, false);
+    assert.equal(stamp.md_reg_complete, false);
+    assert.equal(stamp.summary.dump_folders_n, 8);
+    assert.equal(stamp.summary.dump_children_n, 16);
+    assert.equal(stamp.summary.camadas_without_dump_n, 37);
+    assert.equal(stamp.missing_dump_folders.n, 37);
+    assert.equal(stamp.summary.new_dump_folders, 0);
+    assert.equal(stamp.folders.length, 8);
+    assert.equal(stamp.folders.find((f) => f.seq === 1).child.file_id, "1kcYqtqHAGNfmM507TQ0QSQL7d4-V5ekK");
+    assert.equal(stamp.folders.find((f) => f.seq === 2).freeze_replaced, false);
+    assert.equal(stamp.folders.find((f) => f.seq === 43).retargeted, false);
+    assert.equal(stamp.folders.find((f) => f.seq === 43).canonical_pub_id, "1c3o8yuNMnjyzZI84kLdDqLwCGSJtRb-W");
+    assert.equal(gateLayers.dump_camada_census.camadas_without_dump_n, 37);
+    assert.equal(gateLayers.dump_camada_census.classified_pct, 100);
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.href === "./CKO-DUMP-CAMADA-CENSUS-HOLD.json"));
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /camadas 06–42 sem dump/);
+    assert.match(html, /camadas_without_dump_n: 37/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("HORIZONTAL nested census HOLD", () => {
+  it("records 15 wrapper-only nested folders and does not treat GLOBAL_FANIN docs as publication", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-HORIZONTAL-NESTED-CENSUS-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.classified_pct, 100);
+    assert.equal(stamp.canonical_layer_replaced, false);
+    assert.equal(stamp.summary.horizontal_children_n, 46);
+    assert.equal(stamp.summary.nested_folders_n, 16);
+    assert.equal(stamp.summary.wrapper_only_folders_n, 15);
+    assert.equal(stamp.nested_folders.length, 16);
+    const wrapperFolders = stamp.nested_folders.filter((f) => f.layer);
+    assert.equal(wrapperFolders.length, 15);
+    assert.ok(wrapperFolders.every((f) => f.children_n === 1));
+    assert.equal(stamp.nested_folders.find((f) => f.name === "GLOBAL_FANIN").publication, false);
+    assert.equal(stamp.nested_folders.find((f) => f.name === "GLOBAL_FANIN").docs.length, 2);
+    assert.equal(stamp.extra.retargeted, false);
+    assert.equal(stamp.canonical["LYR-CLIN-CALC-001"], "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
+    assert.equal(stamp.canonical["LYR-PUB-001"], "1c3o8yuNMnjyzZI84kLdDqLwCGSJtRb-W");
+    assert.equal(gateLayers.horizontal_nested_census.wrapper_only_folders_n, 15);
+    const calc = gateLayers.layers.find((l) => l.id === "LYR-CLIN-CALC-001");
+    assert.equal(calc.drive_id, "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /só wrappers canónicos/);
+    assert.match(html, /wrapper_only_folders_n: 15/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("CKO Backups census HOLD", () => {
+  it("catalogs 63 backup children without downloading over-9MB zips or asserting live Supabase", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-BACKUPS-CENSUS-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    const snapshot = JSON.parse(readFileSync(join(gatePub, "drive/SUPABASE-CURRENT-STATE-SNAPSHOT-20260901-2212.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.downloaded, false);
+    assert.equal(stamp.zip_ingested, false);
+    assert.equal(stamp.live_supabase, false);
+    assert.equal(stamp.new_architectural_root, false);
+    assert.equal(stamp.summary.children_n, 63);
+    assert.equal(stamp.summary.over_9mb, 9);
+    assert.equal(stamp.over_9mb.length, 9);
+    assert.ok(stamp.over_9mb.every((f) => f.bytes > 9 * 1024 * 1024));
+    assert.equal(stamp.hosted_small.length, 8);
+    assert.equal(stamp.hosted_small.find((f) => f.id === "1Hl9P2PtNbD0Wb-UMixorzXax3qAxIyr-").live_supabase, false);
+    assert.equal(stamp.handoff_snapshot.md_reg_complete, false);
+    assert.equal(snapshot.readback.field_catalog_tool_fields, 1137);
+    assert.equal(existsSync(join(gatePub, "drive/TRANSFER_MANIFEST.json")), true);
+    assert.equal(gateLayers.backups_census.over_9mb, 9);
+    assert.equal(gateLayers.backups_census.live_supabase, false);
+    assert.equal(gateLayers.backups_census.new_architectural_root, false);
+    const ds = gateLayers.layers.find((l) => l.id === "LYR-DS-001");
+    assert.equal(ds.drive_id, "19r00SWxXMXzYgMabxvWnCE7RUbKgiqv4");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.equal(catalog.items.find((i) => i.id === "1dNr-w0Iuip7dDWhhbyeP59l4xNx03iis").deployed, false);
+    assert.equal(catalog.items.find((i) => i.id === "12V0ZXMXb8HqFccqePMlSzWGXTHG6nA8I").deployed, true);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /não é raiz nova/);
+    assert.match(html, /live_supabase: false/);
+    assert.equal(html.includes("downloaded: true"), false);
     assert.equal(html.includes("md_reg_complete: true"), false);
     assert.equal(html.includes("implantado: true"), false);
   });
