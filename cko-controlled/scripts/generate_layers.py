@@ -59,6 +59,7 @@ DRIVE_HOLD_INDEX_KEYS = (
     "dump_camada_census",
     "horizontal_nested_census",
     "backups_census",
+    "drive_keep_folders_census",
 )
 MARKER_BEGIN = "<!-- CKO-44-LAYERS:BEGIN -->"
 MARKER_END = "<!-- CKO-44-LAYERS:END -->"

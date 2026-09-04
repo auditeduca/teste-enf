@@ -1,0 +1,62 @@
+{
+  "snapshotId": "CKO-SUPABASE-SNAPSHOT-2026-08-28-WAVE5",
+  "capturedAt": "2026-08-28T17:40:00-03:00",
+  "project": {
+    "id": "pgsybzggewhinaniybiy",
+    "name": "Calculadoras-Smart",
+    "region": "sa-east-1",
+    "status": "ACTIVE_HEALTHY",
+    "postgresVersion": "17.6.1.155",
+    "postgresEngine": "17"
+  },
+  "database": {
+    "databaseSizeBytes": 105163923,
+    "inventoriedTables": 76,
+    "publicTables": 44,
+    "authTables": 23,
+    "storageTables": 8,
+    "supabaseMigrationTables": 1,
+    "publicViews": 0,
+    "publicFunctions": 57,
+    "publicTriggers": 15,
+    "publicPolicies": 45,
+    "publicIndexes": 109,
+    "migrationRows": 147,
+    "installedExtensions": 7
+  },
+  "storage": {
+    "bucketCount": 3,
+    "objectMetadataCount": 151,
+    "metadataReportedObjectBytes": 46608521,
+    "objectBytesExportedInThisCheckpoint": false
+  },
+  "auth": {
+    "userCount": 1,
+    "secretsIncluded": false
+  },
+  "edgeFunctions": {
+    "managementInventoryQueried": true,
+    "sourceBundlesExportedInThisCheckpoint": false,
+    "notes": [
+      "Management metadata was inspected through the connected Supabase tool.",
+      "Bulk Edge Function source export is not exposed by the current connector in one operation.",
+      "A fully restorable backup requires exporting function source and dependency files separately."
+    ]
+  },
+  "restoreClass": "INVENTORY_AND_STATE_SNAPSHOT_NOT_FULL_RESTORABLE_BACKUP",
+  "limitations": [
+    "No roles.sql/schema.sql/data.sql logical dump was produced because the current connector does not expose an authenticated pg_dump/db dump file export.",
+    "Supabase database backups do not include Storage object bytes; only Storage metadata is in Postgres.",
+    "Storage object bytes were not bulk-exported in this checkpoint.",
+    "Edge Function source bundles/import maps/deno.json were not bulk-exported.",
+    "Auth provider/project configuration outside the database was not exported.",
+    "Secrets and credentials are intentionally excluded."
+  ],
+  "officialRestoreProcedure": {
+    "roles": "supabase db dump --db-url [CONNECTION_STRING] -f roles.sql --role-only",
+    "schema": "supabase db dump --db-url [CONNECTION_STRING] -f schema.sql",
+    "data": "supabase db dump --db-url [CONNECTION_STRING] -f data.sql --use-copy --data-only -x \"storage.buckets_vectors\" -x \"storage.vector_indexes\"",
+    "storage": "Export Storage objects separately using Supabase Storage CLI/S3-compatible client or migration tooling.",
+    "edgeFunctions": "Export/download each Edge Function and preserve deno.json/import-map/dependencies separately."
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "id": "CKO-RUNTIME-REMEDIATION-v0.26.9",
+  "generated_at": "2026-08-21T20:46:00-03:00",
+  "source": "Empirical public-runtime validation against active HCD/governance baseline",
+  "status": "READY_FOR_IMPLEMENTATION_BUT_RELEASE_CHANNEL_UNBOUND",
+  "items": [
+    {
+      "route": "https://www.calculadorasdeenfermagem.com.br/braden.html",
+      "severity": "P0",
+      "required_changes": [
+        "Initial state must be NOT_EVALUATED; do not render 0/23 as an assessment result before required inputs are complete.",
+        "Do not render a risk classification before governed calculation completion.",
+        "Remove patient-specific/automated claim “Diagnósticos NANDA Sugeridos / Processando raciocínio clínico...”. Replace with governed static related-content language only where evidence and licensing permit.",
+        "Result/export/print actions must remain disabled until CALCULATED and validation gates pass."
+      ],
+      "acceptance": [
+        "No clinical score/classification visible before calculation",
+        "No automated NANDA/patient-specific diagnostic implication",
+        "Keyboard/accessible-name/error-recovery checks executed",
+        "Regression evidence stored"
+      ]
+    },
+    {
+      "route": "https://www.calculadorasdeenfermagem.com.br/gotejamento.html",
+      "severity": "P0",
+      "required_changes": [
+        "Initial state must be NOT_EVALUATED; hide 0 gotas/min before Calculate.",
+        "Clear/reset returns to NOT_EVALUATED rather than a clinically interpretable zero result.",
+        "Result/export/print actions only after valid inputs and successful calculation."
+      ],
+      "acceptance": [
+        "No result before calculation",
+        "Invalid/empty inputs cannot create a numeric clinical output",
+        "Clear/reset is safe and unambiguous",
+        "Keyboard/accessible-name/error-recovery checks executed"
+      ]
+    },
+    {
+      "route": "https://www.calculadorasdeenfermagem.com.br/insulina.html",
+      "severity": "P1_OBSERVATION",
+      "required_changes": [
+        "Preserve skip links/accessibility shortcuts observed in parsed runtime.",
+        "Run browser-level keyboard, focus, error-message, contrast and responsive checks before any HCD/WCAG claim."
+      ],
+      "acceptance": [
+        "Empirical browser report exists",
+        "No claim of full WCAG/HCD conformance without independent evidence"
+      ]
+    }
+  ],
+  "release_block": "No connected Vercel project or GitHub repository is available; remediation cannot be promoted to the live public host from the connected release plane."
+}
