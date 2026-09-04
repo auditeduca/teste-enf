@@ -1,6 +1,8 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { execSync } from "node:child_process";
+import { mkdtempSync, readFileSync, readdirSync, existsSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -1293,6 +1295,7 @@ describe("CI inspect preserves Drive HOLD index and policy packs", () => {
     assert.match(src, /horizontal_nested_census/);
     assert.match(src, /backups_census/);
     assert.match(src, /drive_keep_folders_census/);
+    assert.match(src, /chatgpt_mestre_nested_census/);
     assert.match(src, /clinical_rules_recovery/);
   });
 });
@@ -1955,3 +1958,99 @@ describe("documented Drive KEEP folders census HOLD", () => {
   });
 });
 
+describe("ChatGPT Arquivo Mestre nested census HOLD", () => {
+  it("names nested KEEP children without closing B9, freeze, MD/REG or ingesting zips", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-CHATGPT-MESTRE-NESTED-CENSUS-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    const sourceRegistry = JSON.parse(readFileSync(join(gatePub, "drive/SOURCE_REGISTRY.json"), "utf8"));
+    const legislacao = JSON.parse(readFileSync(join(gatePub, "drive/CKO-MODULO-LEGISLACAO-VERSION-MANIFEST.json"), "utf8"));
+    const vila = JSON.parse(readFileSync(join(gatePub, "drive/00.00-root-meta-schema.json"), "utf8"));
+    const reconstruction = JSON.parse(readFileSync(join(gatePub, "drive/RECONSTRUCTION_MANIFEST__vigilancia_blog_templates.json"), "utf8"));
+    const wave6 = readFileSync(join(gatePub, "drive/NEXT_CONVERSATION_INSTRUCTION_WAVE6.md"), "utf8");
+    const memoria = readFileSync(join(gatePub, "drive/CKO-MODULO-LEGISLACAO-MEMORIA-v4.md"), "utf8");
+    const statusV31 = readFileSync(join(gatePub, "drive/STATUS-v3.1.md"), "utf8");
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.closes_b9, false);
+    assert.equal(stamp.md_reg_complete, false);
+    assert.equal(stamp.live_supabase, false);
+    assert.equal(stamp.universal_freeze, "NOT_FROZEN");
+    assert.equal(stamp.freeze_gate, "DENY");
+    assert.equal(stamp.zip_ingested, false);
+    assert.equal(stamp.html_ingested, false);
+    assert.equal(stamp.canonical_layer_replaced, false);
+    assert.equal(stamp.new_architectural_root, false);
+    assert.equal(stamp.summary.hosted_small_n, 13);
+    assert.equal(stamp.hosted_small.length, 13);
+    assert.equal(stamp.summary.over_9mb, 19);
+    assert.equal(stamp.over_9mb_ids.length, 19);
+    assert.equal(stamp.folders.find((f) => f.id === "1OSB5sQpewzvbFbRa3XMqEVY7z9RXtdFi").children_n, 18);
+    assert.equal(stamp.folders.find((f) => f.id === "17CYEwCMjztBYx040s4NwmeuGGkLFZ-rA").children_n, 14);
+    assert.equal(stamp.folders.find((f) => f.id === "1ntbjUMDYbnPZbO0g6CRRPscSaL51SHxk").children_n, 22);
+    assert.equal(stamp.folders.find((f) => f.id === "1ntbjUMDYbnPZbO0g6CRRPscSaL51SHxk").deployed, false);
+    assert.equal(stamp.wave5_artifacts.zips.length, 6);
+    assert.equal(stamp.wave5_artifacts.zip_ingested, false);
+    assert.equal(stamp.legislacao_modulo.current_version, "ROLLBACK-v4");
+    assert.equal(stamp.legislacao_modulo.md_reg_complete, false);
+    assert.equal(stamp.chatgpt_generated_documentation.date_folder.folder_name_06_WAVE_CLOSURES_is_not_a_close, true);
+    assert.equal(sourceRegistry.production_status, "HOLD");
+    assert.equal(sourceRegistry.default_ai_processing_permission, "DENY");
+    assert.equal(sourceRegistry.records.find((r) => r.source_id === "SRC-REF-0001").rights_status, "mixed_unknown");
+    assert.equal(legislacao.current_version, "ROLLBACK-v4");
+    assert.equal(vila.architectural_closure.layer_15_allowed, false);
+    assert.equal(vila.scope, "Vila do Cuidado standalone");
+    assert.equal(reconstruction.files.find((f) => f.original_name === "vigilancia.zip").size_bytes, 451512933);
+    assert.match(wave6, /Universal Freeze Gate = `DENY`/);
+    assert.equal(wave6.includes("dENY"), false);
+    assert.match(wave6, /CLOSED != FROZEN/);
+    assert.match(memoria, /didático/);
+    assert.match(statusV31, /Audit Review/);
+    assert.equal(stamp.folders.find((f) => f.id === "1OSB5sQpewzvbFbRa3XMqEVY7z9RXtdFi").status_v31_unresolved_title.not_pdf_b3_unresolved_identities_12, true);
+    assert.equal(gateLayers.chatgpt_mestre_nested_census.over_9mb, 19);
+    assert.equal(gateLayers.chatgpt_mestre_nested_census.freeze_gate, "DENY");
+    assert.equal(gateLayers.chatgpt_mestre_nested_census.closes_b9, false);
+    assert.equal(gateLayers.chatgpt_mestre_nested_census.md_reg_complete, false);
+    const ds = gateLayers.layers.find((l) => l.id === "LYR-DS-001");
+    assert.equal(ds.drive_id, "19r00SWxXMXzYgMabxvWnCE7RUbKgiqv4");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.equal(catalog.itemCount, 182);
+    assert.equal(catalog.deployedCount, 77);
+    assert.equal(catalog.items.find((i) => i.id === "1ntbjUMDYbnPZbO0g6CRRPscSaL51SHxk").deployed, false);
+    assert.equal(catalog.items.find((i) => i.id === "1H897GKVG3fJ3qA_CzFin641ECCVbZfL7").deployed, true);
+    assert.equal(catalog.items.find((i) => i.id === "1_15DiWNO4PHuPVBhOK6525HadZJ6nhik").deployed, false);
+    assert.equal(existsSync(join(gatePub, "drive/NEXT_CONVERSATION_INSTRUCTION_WAVE6.md")), true);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /Censo aninhado ChatGPT Arquivo Mestre/);
+    assert.match(html, /ROLLBACK-v4/);
+    assert.match(html, /hosted_small_n: 13/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+    assert.equal(html.includes("implantado: true"), false);
+  });
+});
+
+describe("GitHub Pages CALENF runtime", () => {
+  it("stages reference-website with project-site base and site-pattern canaries", () => {
+    const out = mkdtempSync(join(tmpdir(), "cko-pages-"));
+    try {
+      execSync(`python3 scripts/prepare_github_pages.py --out ${out} --base /teste-enf`, {
+        cwd: join(root, ".."),
+        encoding: "utf8",
+      });
+      const index = readFileSync(join(out, "index.html"), "utf8");
+      assert.match(index, /PAGE_INSTITUTIONAL_CLUSTER/);
+      assert.match(index, /<base href="\/teste-enf\/">/);
+      assert.match(index, /href="\/teste-enf\/public\/output\.css"/);
+      assert.equal(existsSync(join(out, "aldrete.html")), true);
+      assert.equal(existsSync(join(out, "camadas", "index.html")), true);
+      assert.equal(existsSync(join(out, ".nojekyll")), true);
+      assert.equal(existsSync(join(out, "admin.html")), false);
+      assert.equal(existsSync(join(out, "zh")), false);
+      const mapa = readFileSync(join(site, "mapa-do-site.html"), "utf8");
+      assert.match(mapa, /href="\/camadas\/"/);
+      assert.match(mapa, /href="\/aldrete\.html"/);
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
+  });
+});

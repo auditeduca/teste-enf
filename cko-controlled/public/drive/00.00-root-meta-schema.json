@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:vdc:architecture:root-meta-schema:2.0.0",
+  "title": "Vila do Cuidado — Root Meta Schema",
+  "version": "2.0.0",
+  "status": "DRAFT_ARCHITECTURE_FOR_APPROVAL",
+  "scope": "Vila do Cuidado standalone",
+  "purpose": "Definir formalmente os tipos arquiteturais, relações, invariantes e regras de composição das camadas 00–14.",
+  "architectural_closure": {
+    "lowest_layer": "00",
+    "highest_layer": "14",
+    "layer_15_allowed": false,
+    "root_meta_schema_position": "00.00",
+    "rule": "Novas capacidades após 14 devem ser instâncias, extensões, plugins, implementações ou especializações — não novas camadas estruturais."
+  },
+  "allowed_element_types": [
+    "layer",
+    "module",
+    "capability",
+    "service",
+    "artifact",
+    "registry",
+    "schema",
+    "contract",
+    "policy",
+    "workflow",
+    "agent",
+    "experience",
+    "knowledge_entity",
+    "evidence",
+    "decision",
+    "event",
+    "metric",
+    "debt_item",
+    "migration",
+    "extension",
+    "plugin"
+  ],
+  "required_fields": [
+    "id",
+    "type",
+    "name",
+    "version",
+    "status",
+    "layer",
+    "provenance",
+    "dependencies",
+    "contracts",
+    "invariants",
+    "lifecycle"
+  ],
+  "status_enum": [
+    "draft",
+    "in_review",
+    "approved",
+    "active",
+    "pending_external_action",
+    "deprecated",
+    "retired",
+    "blocked"
+  ],
+  "global_rules": [
+    "IDs must be globally unique inside namespace vdc.",
+    "No active artifact may contain an unresolved permissive placeholder.",
+    "Cross-layer interactions require an explicit contract.",
+    "All child-facing publication remains subject to the approved VDC content DAG.",
+    "Autonomous systems may propose evolution but may not bypass human/specialist gates.",
+    "Nurse-PaLM is out of scope and cannot become a technical dependency.",
+    "Calculadoras de Enfermagem remains institutional endorsement, not technical inheritance."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "manifest_id": "CKO-ARCHIVE-CUTOVER-20260821-001",
+  "project": "Calculadoras de Enfermagem",
+  "namespace": "CKO",
+  "cutover_at": "2026-08-21T19:44:00-03:00",
+  "purpose": "Eliminar ambiguidade operacional: todo conteúdo histórico previamente analisado passa a arquivo morto; somente a baseline consolidada e este manifesto permanecem ativos.",
+  "active_baseline": {
+    "version": "v0.26.7",
+    "file": "Calculadoras-de-Enfermagem-CKO-Consolidado-v0.26.7.zip",
+    "sha256": "a8c173c12cb6c747631263f829113906662778dd4f75cab9c92b6a15a672731f",
+    "contained_files": 471,
+    "uncompressed_bytes": 51989876,
+    "status": "CANONICAL_WORKING_BASELINE"
+  },
+  "library_archive": {
+    "source_path": "/Calculadoras de Enfermagem",
+    "inventory_count": 224,
+    "inventory_method": "Full recursive Library listing; pagination exhausted before move.",
+    "destination_path": "/Arquivo Morto/Calculadoras de Enfermagem - Historico pre-v0.26.7",
+    "classification": "ANALYZED_AND_SUPERSEDED",
+    "usage_policy": "DO_NOT_USE_AS_CURRENT_SOURCE",
+    "allowed_reopen_conditions": [
+      "explicit historical audit",
+      "forensic reperformance",
+      "rollback evidence check"
+    ],
+    "preservation": "retain; do not delete or silently modify"
+  },
+  "analysis_attestation": {
+    "status": "ANALYZED",
+    "statement": "Os artefatos históricos foram considerados na reconstrução documental, reconciliação de políticas, supersession e Auditoria 360 que resultaram na baseline v0.26.7. Não é necessário reabrir individualmente esses arquivos para tarefas ordinárias futuras.",
+    "scope_includes": [
+      "architecture",
+      "master data",
+      "regulatory core",
+      "governance policies",
+      "audit/assurance",
+      "validators",
+      "engine/runtime/renderer",
+      "evidence/provenance",
+      "conversation inventories where recoverable",
+      "historical patches and deltas"
+    ],
+    "limitations": [
+      "Arquivo morto continua sendo evidência histórica e pode ser reaberto apenas para auditoria, reperformance ou rollback.",
+      "O inventário de conversas previamente existente não prova enumeração de 100% das conversas da plataforma."
+    ]
+  },
+  "vercel": {
+    "team_slug": "leivisml-7739s-projects",
+    "team_id": "team_DYBNuYQyhhw6GKeDZhNwW7fP",
+    "projects_visible": 0,
+    "projects_deleted": 0,
+    "status": "NO_ACCESSIBLE_PROJECTS_TO_DELETE",
+    "action": "Historical Vercel references are archived with old files; no live project exists in the connected team listing.",
+    "connector_removed": false
+  },
+  "future_source_order": [
+    "active baseline v0.26.7",
+    "live Supabase canonical state/evidence when task requires runtime verification",
+    "official external APIs when acquisition/update is required",
+    "archive only for explicit historical audit"
+  ],
+  "supersession_rule": "Any artifact in the archive is superseded for normal work by v0.26.7 unless a newer controlled changeset explicitly promotes it.",
+  "no_reopen_default": true
+}
