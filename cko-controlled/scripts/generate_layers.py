@@ -53,6 +53,9 @@ DRIVE_HOLD_INDEX_KEYS = (
     "scale_lote_002",
     "calc_lote_001",
     "camada03_over_9mb",
+    "layer_readback_100",
+    "dump_remainder",
+    "ds_central_backup",
 )
 MARKER_BEGIN = "<!-- CKO-44-LAYERS:BEGIN -->"
 MARKER_END = "<!-- CKO-44-LAYERS:END -->"

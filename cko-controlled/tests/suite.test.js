@@ -1286,6 +1286,9 @@ describe("CI inspect preserves Drive HOLD index and policy packs", () => {
     assert.match(src, /scale_lote_001/);
     assert.match(src, /scale_lote_002/);
     assert.match(src, /camada03_over_9mb/);
+    assert.match(src, /layer_readback_100/);
+    assert.match(src, /dump_remainder/);
+    assert.match(src, /ds_central_backup/);
     assert.match(src, /clinical_rules_recovery/);
   });
 });
@@ -1678,7 +1681,7 @@ describe("Camada 03 over-9MB remainder HOLD", () => {
     assert.equal(gateLayers.camada03_over_9mb.over_9mb, 3);
     const calc = gateLayers.layers.find((l) => l.id === "LYR-CLIN-CALC-001");
     assert.equal(calc.drive_id, "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
-    assert.equal(catalog.itemCount, 99);
+    assert.equal(catalog.itemCount, catalog.items.length);
     assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
     assert.ok(catalog.items.some((i) => i.id === "1yrnPRO-WIGGEn-Z04s3QFGc235lzSTp3"));
     assert.equal(catalog.items.find((i) => i.id === "1yrnPRO-WIGGEn-Z04s3QFGc235lzSTp3").deployed, false);
@@ -1687,6 +1690,107 @@ describe("Camada 03 over-9MB remainder HOLD", () => {
     assert.match(html, /downloaded: false/);
     assert.equal(html.includes("downloaded: true"), false);
     assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("44-layer live readback HOLD", () => {
+  it("records 44/44 classified at HOLD with zero published and no drive_id retarget", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-44-LAYER-READBACK-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.classified_pct, 100);
+    assert.equal(stamp.published_pct, 0);
+    assert.equal(stamp.architecture_concluded, false);
+    assert.equal(stamp.canonical_layer_replaced, false);
+    assert.equal(stamp.summary.layers_n, 44);
+    assert.equal(stamp.summary.present_n, 44);
+    assert.equal(stamp.summary.bytes_match_n, 44);
+    assert.equal(stamp.summary.published_n, 0);
+    assert.equal(stamp.layers.length, 44);
+    assert.ok(stamp.layers.every((row) => row.present && row.bytes_match && row.published === false && row.classified_pct === 100));
+    assert.equal(stamp.duplicates[0].canonical_id, "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
+    assert.equal(stamp.duplicates[0].loose_horizontal_id, "1fd3VOWHrGn5dSc-KI8j0QubSIBjU5m5l");
+    assert.equal(stamp.duplicates[0].retargeted, false);
+    assert.equal(stamp.canonical["LYR-PUB-001"], "1c3o8yuNMnjyzZI84kLdDqLwCGSJtRb-W");
+    assert.equal(stamp.canonical["LYR-DS-001"], "19r00SWxXMXzYgMabxvWnCE7RUbKgiqv4");
+    assert.equal(gateLayers.layer_readback_100.classified_pct, 100);
+    assert.equal(gateLayers.layer_readback_100.published_n, 0);
+    const calc = gateLayers.layers.find((l) => l.id === "LYR-CLIN-CALC-001");
+    assert.equal(calc.drive_id, "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1U38TaIimt61pwSJNvFBhb4NkR-EfCOJv"));
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /100% classificadas/);
+    assert.match(html, /0% publicadas/);
+    assert.match(html, /P2_GOVERNED_HOLD/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("9 MB dump remainder HOLD", () => {
+  it("catalogs leftover dump zips without downloading over-9MB files or installing policy v0.2.0 as runtime", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-DUMP-REMAINDER-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.downloaded, false);
+    assert.equal(stamp.zip_ingested, false);
+    assert.equal(stamp.live_runtime_implemented, false);
+    assert.equal(stamp.dump.files_n, 11);
+    assert.equal(stamp.dump.over_9mb, 6);
+    assert.equal(stamp.files.length, 11);
+    assert.equal(stamp.files.filter((f) => f.bytes > 9 * 1024 * 1024).length, 6);
+    assert.equal(stamp.policy_as_code_v020.members_n, 69);
+    assert.equal(stamp.policy_as_code_v020.live_runtime_implemented, false);
+    assert.equal(stamp.files.find((f) => f.id === "1zEMpUxXaesnX9IcOLx2KqIN7xpLcRsyM").members_n, 69);
+    assert.equal(gateLayers.dump_remainder.over_9mb, 6);
+    assert.equal(gateLayers.dump_remainder.downloaded, false);
+    assert.equal(catalog.items.find((i) => i.id === "1zEMpUxXaesnX9IcOLx2KqIN7xpLcRsyM").deployed, false);
+    assert.equal(catalog.items.find((i) => i.id === "1O9qTMweyZNP0o4mcfG4cc8S0cF9dZ1W5").deployed, false);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /Resto do dump 9 MB/);
+    assert.match(html, /live_runtime_implemented: false/);
+    assert.equal(html.includes("downloaded: true"), false);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
+describe("DS central backup 2026-09-04 HOLD", () => {
+  it("catalogs four DS backup parts without adding a 45th layer or replacing LYR-DS-001", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-DS-CENTRAL-BACKUP-20260904-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    const manifest = JSON.parse(readFileSync(join(gatePub, "drive/CKO-DS-CENTRAL-BACKUP-20260904-ZIP_PARTS_MANIFEST.json"), "utf8"));
+    const runState = JSON.parse(readFileSync(join(gatePub, "drive/CKO-DS-CENTRAL-BACKUP-20260904-RUN_STATE.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.new_architectural_root, false);
+    assert.equal(stamp.parts_ingested, false);
+    assert.equal(stamp.canonical_layer_replaced, false);
+    assert.equal(stamp.parts.length, 4);
+    assert.ok(stamp.parts.every((p) => p.bytes < 9 * 1024 * 1024));
+    assert.equal(stamp.canonical.drive_id, "19r00SWxXMXzYgMabxvWnCE7RUbKgiqv4");
+    assert.equal(stamp.canonical.bytes, 5573);
+    assert.equal(manifest.length, 4);
+    assert.equal(manifest[0].file_count, 5);
+    assert.equal(runState.canonical_design_system.status, "ACTIVE_CANONICAL");
+    assert.equal(stamp.backup_active_canonical_is_not_runtime_active, true);
+    assert.equal(gateLayers.ds_central_backup.parts_n, 4);
+    assert.equal(gateLayers.ds_central_backup.new_architectural_root, false);
+    const ds = gateLayers.layers.find((l) => l.id === "LYR-DS-001");
+    assert.equal(ds.drive_id, "19r00SWxXMXzYgMabxvWnCE7RUbKgiqv4");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1rAibQLBl0SQsnuBIkiVL82rWYe2OO8rt"));
+    assert.equal(catalog.items.find((i) => i.id === "14gdrsE4K8joSJP5Apz70uvGt6asy4a_D").deployed, false);
+    assert.equal(existsSync(join(gatePub, "drive/CKO-DS-CENTRAL-BACKUP-20260904-README.md")), true);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /não é 45/);
+    assert.match(html, /new_architectural_root: false/);
+    assert.match(html, /parts_ingested: false/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+    assert.equal(html.includes("implantado: true"), false);
   });
 });
 
