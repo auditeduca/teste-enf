@@ -132,6 +132,24 @@ th,td{text-align:left;padding:.45rem .3rem;border-bottom:1px solid #e5e7eb;verti
 </article>
 
 <article class="card hold">
+  <h2>44 camadas — 100% classificadas, 0% publicadas</h2>
+  <p>Readback ao vivo em 2026-09-04: os <strong>44</strong> wrappers canónicos continuam presentes, com bytes iguais ao freeze e <code>zip_verified</code>. Classificação por camada: <strong>100%</strong>. Publicados: <strong>0</strong>. Teto continua <code>HOLD / NOT_RELEASED</code>. Maturidade média dos 13 blocos: <strong>50%</strong>. B9: <strong>0%</strong>. Núcleo: <code>P2_GOVERNED_HOLD</code>. Isto <strong>não</strong> conclui arquitetura nem promove P6. Há uma segunda cópia de 4508 B do wrapper de calculadoras solta em HORIZONTAL; o <code>drive_id</code> canónico de <code>LYR-CLIN-CALC-001</code> <strong>não</strong> muda.</p>
+  <p class="small">Stamp: <code>CKO-44-LAYER-READBACK-HOLD.json</code>. <code>classified_pct: 100</code>. <code>published_n: 0</code>. <code>canonical_layer_replaced: false</code>.</p>
+</article>
+
+<article class="card hold">
+  <h2>Resto do dump 9 MB — policy, assurance, backups &gt; 9 MB</h2>
+  <p>O que restava em <code>Calculadoras-Enf-Camadas-9MB-20260903</code> depois das camadas 01–05/43: Policy-as-code v0.2.0 (69 membros), Assurance Control Plane (22 membros), snapshot Supabase (7 membros), screenshots de 9 ferramentas, e <strong>6</strong> zips acima de 9 MB (imagens, hero, universo, Nurse-PaLM RC, conversa 34,3 MB, CALENF 38,3 MB). Zips grandes <strong>não</strong> descarregados. Policy/assurance <strong>não</strong> viraram runtime OPA/TLA+/Playwright. Screenshots <strong>não</strong> são evidência de publicação.</p>
+  <p class="small">Stamp: <code>CKO-DUMP-REMAINDER-HOLD.json</code>. <code>downloaded: false</code> nos zips &gt; 9 MB. <code>live_runtime_implemented: false</code>.</p>
+</article>
+
+<article class="card hold">
+  <h2>Backup DS central 2026-09-04 — 4 partes, não é 45.ª camada</h2>
+  <p>A pasta <code>CKO-DS-CENTRAL-BACKUP-20260904-0445</code> (em CKO Backups) tem 4 zips &lt; 9 MB, manifesto e somas. É backup de recuperação do Design System / visual / builder. <strong>Não</strong> é raiz arquitectónica nova. O <code>drive_id</code> de <code>LYR-DS-001</code> continua <code>19r00SWxXMXzYgMabxvWnCE7RUbKgiqv4</code> (5573 B). O <code>RUN_STATE.json</code> do backup traz <code>ACTIVE_CANONICAL</code> como rótulo da fonte — isso <strong>não</strong> é runtime ACTIVE nem implantado. Partes <strong>não</strong> ingeridas.</p>
+  <p class="small">Stamp: <code>CKO-DS-CENTRAL-BACKUP-20260904-HOLD.json</code>. <code>new_architectural_root: false</code>. <code>parts_ingested: false</code>.</p>
+</article>
+
+<article class="card hold">
   <h2>Camada 43 Publication / Release — pasta encontrada, publicação ainda não existe</h2>
   <p>A pasta <code>Calculadoras-Enf-Camada-43-Publication-Release</code> tem 4 ficheiros. MOD-19 (Release &amp; Publication Center) está <code>FROZEN / NOT AUTHORIZED</code>, produção <code>NO_PRODUCTION_PASS</code>, <strong>16</strong> ecrãs <code>NOT_IMPLEMENTED</code>. O zip de recovery (518 KB, 26 membros, inclui <code>CURRENT_RELEASE.json</code>) declara: <strong>nenhuma autoridade nova de release é afirmada</strong>. O wrapper <code>PUBLICATION-RELEASE-FINAL-CONTROLLED-v1.0.0.zip</code> tem <strong>3489</strong> B (cópia Drive-to-Drive); o <code>drive_id</code> canónico de <code>LYR-PUB-001</code> <strong>não</strong> muda. <code>NOT_RELEASED</code> continua a significar: a publicação <strong>ainda não existe</strong> / o release <strong>não foi publicado</strong>.</p>
   <p class="small">Stamp: <code>CKO-PUBLICATION-RELEASE-LAYER43-HOLD.json</code>. <code>release_allowed: false</code>. <code>release_authority_asserted: false</code>. <code>current_release_ingested: false</code>.</p>
@@ -161,7 +179,7 @@ th,td{text-align:left;padding:.45rem .3rem;border-bottom:1px solid #e5e7eb;verti
     <thead><tr><th>Peça</th><th>N</th><th>Estado</th><th>Significa</th></tr></thead>
     <tbody>
       <tr><td>Páginas institucionais Wave2</td><td>12</td><td>HOLD</td><td>Existem no runtime; não são publicação</td></tr>
-      <tr><td>Camadas do PDF</td><td>44/44</td><td>HOLD</td><td>Classificadas e ligadas; calc/escala PAUSED</td></tr>
+      <tr><td>Camadas do PDF</td><td>44/44</td><td>HOLD</td><td>100% classificadas no readback 2026-09-04; 0 publicadas; teto HOLD; calc/escala PAUSED</td></tr>
       <tr><td>Catálogo de APIs</td><td>9 famílias / 222</td><td>HOLD</td><td>Extraídas; nenhuma operacional canónica</td></tr>
       <tr><td>Fabric (conversa compartilhada)</td><td>8 famílias / 48</td><td>HOLD</td><td>OPA/SHACL/TLA/OTel e APIs de aquisição ligadas, não implantadas</td></tr>
       <tr><td>Holds humanos</td><td>9</td><td>HOLD</td><td>Não bloqueiam inspect; bloqueiam release</td></tr>
@@ -174,6 +192,8 @@ th,td{text-align:left;padding:.45rem .3rem;border-bottom:1px solid #e5e7eb;verti
       <tr><td>Camada 03 resto &gt; 9 MB</td><td>3 zips</td><td>HOLD</td><td>Fugulin + 2 closures 17–28 MB; downloaded: false</td></tr>
       <tr><td>Scales lote 001</td><td>7 zips</td><td>HOLD</td><td>Sucessores APGAR…SILVERMAN; zip_ingested: false; PAUSED</td></tr>
       <tr><td>Scales lote 002</td><td>3 zips</td><td>HOLD</td><td>Aldrete fecho + BALLARD + FLACC; Camada 04 9 MB completa</td></tr>
+      <tr><td>Resto dump 9 MB</td><td>11 ficheiros / 6 &gt; 9 MB</td><td>HOLD</td><td>Policy v0.2.0 + assurance listados, não runtime; zips grandes downloaded: false</td></tr>
+      <tr><td>Backup DS central</td><td>4 partes</td><td>HOLD</td><td>Não é 45.ª camada; parts_ingested: false; ACTIVE_CANONICAL da fonte ≠ runtime</td></tr>
       <tr><td>Camada 43 Publication / Release</td><td>16 ecrãs / 26 membros</td><td>NOT_RELEASED</td><td>Pasta encontrada; MOD-19 NOT_IMPLEMENTED; recovery sem autoridade nova; wrapper 3489 B é cópia, não canónico</td></tr>
       <tr><td>Nurse-PaLM</td><td>12 partes</td><td>NOT_ASSERTED</td><td>Fracionado &lt; 9 MB catalogado; partes não ingeridas; não operacional</td></tr>
       <tr><td>B9 / release</td><td>—</td><td>NOT_RELEASED</td><td>Ainda não existe; não foi publicado. <code>release_allowed: false</code></td></tr>
