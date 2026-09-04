@@ -60,6 +60,7 @@ DRIVE_HOLD_INDEX_KEYS = (
     "horizontal_nested_census",
     "backups_census",
     "drive_keep_folders_census",
+    "chatgpt_mestre_nested_census",
 )
 MARKER_BEGIN = "<!-- CKO-44-LAYERS:BEGIN -->"
 MARKER_END = "<!-- CKO-44-LAYERS:END -->"

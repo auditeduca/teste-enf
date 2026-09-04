@@ -22,9 +22,9 @@ Wave 5:
 - 27 testes;
 - 27 PASS;
 - 0 FAIL;
-- Universal Freeze Gate = `dENY`.
+- Universal Freeze Gate = `DENY`.
 
-`dENY` é esperado porque há blockers arquiteturais e falta assurance universal.
+`DENY` é esperado porque há blockers arquiteturais e falta assurance universal.
 
 ## Blockers obrigatórios
 
