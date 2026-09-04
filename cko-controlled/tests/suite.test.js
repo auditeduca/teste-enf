@@ -1257,6 +1257,35 @@ describe("chrome templates", () => {
   });
 });
 
+describe("CI inspect preserves Drive HOLD index and policy packs", () => {
+  it("cli inspect loads the five HOLD policy packs the suite already gates", () => {
+    const cli = readFileSync(join(root, "../cli.mjs"), "utf8");
+    for (const pack of [
+      "platform-closure.json",
+      "layer-policies.json",
+      "extraction.json",
+      "api-catalog.json",
+      "governed-fabric.json",
+    ]) {
+      assert.match(cli, new RegExp(pack.replaceAll(".", "\\.")));
+    }
+    assert.match(cli, /platformClosure/);
+    assert.match(cli, /layerPolicies/);
+    assert.match(cli, /extractionPolicy/);
+    assert.match(cli, /apiCatalog/);
+    assert.match(cli, /governedFabric/);
+    assert.match(cli, /data-cko-ds-render="governed-fabric"/);
+  });
+  it("generate_layers keeps Drive HOLD extra keys including Camada 43", () => {
+    const src = readFileSync(join(root, "../scripts/generate_layers.py"), "utf8");
+    assert.match(src, /DRIVE_HOLD_INDEX_KEYS/);
+    assert.match(src, /attach_drive_hold_index/);
+    assert.match(src, /publication_release_recovery/);
+    assert.match(src, /calc_lote_002/);
+    assert.match(src, /clinical_rules_recovery/);
+  });
+});
+
 describe("unpublished platform status page", () => {
   it("ships a Portuguese HOLD status page without claiming ACTIVE or adding a 13th runtime page", () => {
     assert.equal(RUNTIME_PAGES.length, 12);
