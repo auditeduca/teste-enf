@@ -1441,3 +1441,35 @@ describe("Clinical Rules live recovery HOLD", () => {
   });
 });
 
+describe("Clinical calculator lote 002 HTML dump HOLD", () => {
+  it("catalogs eight live HTML dumps without ingesting them or unpausing calculators", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-CALC-LOTE-002-HTML-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.html_ingested, false);
+    assert.equal(stamp.clinical_promotion, "DENIED");
+    assert.equal(stamp.calculators_scales, "PAUSED");
+    assert.equal(stamp.dump.files_n, 8);
+    assert.equal(stamp.dump.over_9mb, 0);
+    assert.equal(stamp.files.length, 8);
+    assert.equal(stamp.files.filter((f) => f.lang === "uk-UA").length, 6);
+    assert.equal(stamp.files.find((f) => f.name === "heparina.html").already_on_site, false);
+    assert.equal(stamp.drive.folder_id, "1UlCrRv653sBgnA5sjc6PpF8TCiNN5nj5");
+    assert.equal(existsSync(join(site, "heparina.html")), false);
+    assert.equal(layers.calc_lote_002.html_ingested, false);
+    assert.equal(gateLayers.calc_lote_002.files_n, 8);
+    const calc = gateLayers.layers.find((l) => l.id === "LYR-CLIN-CALC-001");
+    assert.equal(calc.drive_id, "1Oxb_DGzeNlS070s-_f4nuFGAchaXGHAg");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1UlCrRv653sBgnA5sjc6PpF8TCiNN5nj5"));
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /lote 002/i);
+    assert.match(html, /8 HTML/);
+    assert.match(html, /html_ingested: false/);
+    assert.equal(html.includes("html_ingested: true"), false);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
