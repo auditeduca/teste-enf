@@ -1279,3 +1279,40 @@ describe("unpublished platform status page", () => {
     assert.match(readFileSync(join(site, "footer.html"), "utf8"), /cko-estado\.html/);
   });
 });
+
+describe("REG universe v1.2.1 Drive successor HOLD", () => {
+  const stampPath = join(gatePub, "drive/CKO-REFERENCE-STANDARDS-UNIVERSE-v1.2.1-HOLD.json");
+  const freezePath = join(site, "data/cko/layers/LYR-REF-001/package/FINAL_MANIFEST.json");
+
+  it("catalogs the Drive zip without replacing the v1.1.1 freeze or completing MD/REG", () => {
+    const stamp = JSON.parse(readFileSync(stampPath, "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const freeze = JSON.parse(readFileSync(freezePath, "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.freeze_replaced, false);
+    assert.equal(stamp.md_reg_complete, false);
+    assert.equal(stamp.corpus_extracted, false);
+    assert.equal(stamp.successor.reference_count, 139);
+    assert.equal(stamp.freeze.references, 113);
+    assert.equal(stamp.freeze.version_ref, "OVR-CKO-REFERENCE-STANDARDS-UNIVERSE-v1.1.1-20260829");
+    assert.equal(stamp.drive.file_id, "1PCPgLrdg5N_ZlBo6kEh0NjR1ydfUzwRn");
+    assert.equal(stamp.successor.declared_vs_drive_sha256, "MISMATCH_HOLD");
+    assert.equal(stamp.successor.licensed_fulltext, "HOLD_RIGHTS_UNLESS_LICENSED");
+    assert.equal(freeze.reference_universe.version_ref, "OVR-CKO-REFERENCE-STANDARDS-UNIVERSE-v1.1.1-20260829");
+    assert.equal(freeze.reference_universe.references, 113);
+    assert.equal(layers.reference_universe_successor.freeze_replaced, false);
+    assert.equal(layers.reference_universe_successor.md_reg_complete, false);
+    assert.equal(gateLayers.reference_universe_successor.drive_id, "1PCPgLrdg5N_ZlBo6kEh0NjR1ydfUzwRn");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1PCPgLrdg5N_ZlBo6kEh0NjR1ydfUzwRn"));
+    assert.ok(catalog.items.some((i) => i.id === "1-DCkD2_Lmxe5XTxgLTUc2GgU6qML-5Oe"));
+    assert.equal(extractionPolicy.streams.find((s) => s.stream_id === "EXT-REG-CORPUS").count, 0);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /v1\.2\.1/);
+    assert.match(html, /v1\.1\.1/);
+    assert.match(html, /139/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
