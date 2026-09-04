@@ -8,6 +8,7 @@ on:
       - "reference-website/**"
       - "firebase.json"
       - ".github/workflows/cko-controlled-gate.yml"
+      - ".github/workflows/github-pages-hold-site.yml"
 
 jobs:
   gate:
@@ -239,6 +240,10 @@ jobs:
               assert body["_meta"]["status"]=="HOLD_TRANSLATION_REQUIRED"
           inv=json.load(open("public/data/tool-library-runtime.json"))
           assert inv["tools_with_calc_runtime"]==inv["tools_n"]
+          mapa=(site/"mapa-do-site.html").read_text(encoding="utf-8")
+          assert "/camadas/" in mapa
+          assert "/aldrete.html" in mapa
+          assert (Path("../.github/workflows/github-pages-hold-site.yml")).is_file()
           print("cascade root policy-as-code OK; CALENF site; pendencies explicit; Drive immutable")
           PY
       - name: Fail-closed release invariant

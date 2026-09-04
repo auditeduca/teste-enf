@@ -1,6 +1,8 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { execSync } from "node:child_process";
+import { mkdtempSync, readFileSync, readdirSync, existsSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -2027,3 +2029,28 @@ describe("ChatGPT Arquivo Mestre nested census HOLD", () => {
   });
 });
 
+describe("GitHub Pages CALENF runtime", () => {
+  it("stages reference-website with project-site base and site-pattern canaries", () => {
+    const out = mkdtempSync(join(tmpdir(), "cko-pages-"));
+    try {
+      execSync(`python3 scripts/prepare_github_pages.py --out ${out} --base /teste-enf`, {
+        cwd: join(root, ".."),
+        encoding: "utf8",
+      });
+      const index = readFileSync(join(out, "index.html"), "utf8");
+      assert.match(index, /PAGE_INSTITUTIONAL_CLUSTER/);
+      assert.match(index, /<base href="\/teste-enf\/">/);
+      assert.match(index, /href="\/teste-enf\/public\/output\.css"/);
+      assert.equal(existsSync(join(out, "aldrete.html")), true);
+      assert.equal(existsSync(join(out, "camadas", "index.html")), true);
+      assert.equal(existsSync(join(out, ".nojekyll")), true);
+      assert.equal(existsSync(join(out, "admin.html")), false);
+      assert.equal(existsSync(join(out, "zh")), false);
+      const mapa = readFileSync(join(site, "mapa-do-site.html"), "utf8");
+      assert.match(mapa, /href="\/camadas\/"/);
+      assert.match(mapa, /href="\/aldrete\.html"/);
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
+  });
+});
