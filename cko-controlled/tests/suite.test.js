@@ -1316,3 +1316,36 @@ describe("REG universe v1.2.1 Drive successor HOLD", () => {
     assert.equal(html.includes("md_reg_complete: true"), false);
   });
 });
+
+describe("MD field universe P01 Drive HOLD", () => {
+  it("catalogs P01 reconciliation without claiming classified 2496/10913 materialized", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-RUN-FIELD-UNIVERSE-RECONCILIATION-P01-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.md_reg_complete, false);
+    assert.equal(stamp.bindings_materialized, false);
+    assert.equal(stamp.run.decision, "PASS_WITH_FINDINGS");
+    assert.equal(stamp.run.governed_field_catalog, 1200);
+    assert.equal(stamp.run.normative_bindings, 6111);
+    assert.equal(stamp.classified.fields_classified, 2496);
+    assert.equal(stamp.classified.bindings_classified, 10913);
+    assert.equal(stamp.drive.file_id, "1kcYqtqHAGNfmM507TQ0QSQL7d4-V5ekK");
+    assert.equal(stamp.run.h08_hold, 48);
+    assert.equal(layers.field_universe_reconciliation.bindings_materialized, false);
+    assert.equal(layers.field_universe_reconciliation.md_reg_complete, false);
+    assert.equal(gateLayers.field_universe_reconciliation.drive_id, "1kcYqtqHAGNfmM507TQ0QSQL7d4-V5ekK");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1kcYqtqHAGNfmM507TQ0QSQL7d4-V5ekK"));
+    assert.equal(extractionPolicy.streams.find((s) => s.stream_id === "EXT-MD-FIELDS").count, 2496);
+    assert.equal(layers.master_data_to_frontend.materialized_field_bindings, false);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /P01/);
+    assert.match(html, /1200/);
+    assert.match(html, /6111/);
+    assert.match(html, /2496/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+    assert.equal(html.includes("bindings_materialized: true"), false);
+  });
+});
