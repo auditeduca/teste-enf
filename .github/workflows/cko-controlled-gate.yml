@@ -190,6 +190,17 @@ jobs:
           assert apis["md_reg_complete"] is False
           assert apis["md_reg_next_task"] is True
           assert "api-catalog" in cascade_html
+          fabric=json.load(open(site/"data/cko/governed-fabric.json"))
+          assert fabric["id"]=="POL-CKO-GOVERNED-FABRIC-1.0.0"
+          assert fabric["document_id"]=="CKO-POL-FABRIC-001"
+          assert fabric["family_count"]==8
+          assert fabric["item_total"]==48
+          assert fabric["active"] is False
+          assert fabric["implantado"] is False
+          assert fabric["md_reg_complete"] is False
+          assert fabric["md_reg_next_task"] is True
+          assert fabric["source"]["not"]=="cko-deepseek-blackboard"
+          assert "governed-fabric" in cascade_html
           assert cascade["rules"]["coverage"].find("100%")>=0
           assert cascade["verification"]["fuzz_n"]==1000
           assert cascade["verification"]["fuzz_false_accept"]==0

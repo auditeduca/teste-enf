@@ -21,6 +21,7 @@ import {
   inspectLayerPolicies,
   inspectExtractionPolicy,
   inspectApiCatalog,
+  inspectGovernedFabric,
   LAYER_CATALOG_ID,
   LAYER_DOCUMENT_ID,
   LAYER_POLICY_N,
@@ -31,6 +32,12 @@ import {
   API_DOCUMENT_ID,
   API_FAMILY_N,
   API_ENDPOINT_TOTAL,
+  FABRIC_POLICY_ID,
+  FABRIC_DOCUMENT_ID,
+  FABRIC_FAMILY_N,
+  FABRIC_ITEM_TOTAL,
+  ASSURE_TECH_IDS,
+  AGENT_TOOL_IDS,
   POLICY_MASTER_FIELDS,
   CLOSURE_POLICY_ID,
   CLOSURE_DOCUMENT_ID,
@@ -95,6 +102,7 @@ const platformClosure = JSON.parse(readFileSync(join(gatePub, "policies/platform
 const layerPolicies = JSON.parse(readFileSync(join(gatePub, "policies/layer-policies.json"), "utf8"));
 const extractionPolicy = JSON.parse(readFileSync(join(gatePub, "policies/extraction.json"), "utf8"));
 const apiCatalog = JSON.parse(readFileSync(join(gatePub, "policies/api-catalog.json"), "utf8"));
+const governedFabric = JSON.parse(readFileSync(join(gatePub, "policies/governed-fabric.json"), "utf8"));
 const platform = {
   listing: readdirSync(site),
   files: Object.fromEntries(
@@ -118,6 +126,7 @@ const platform = {
   layerPolicies,
   extractionPolicy,
   apiCatalog,
+  governedFabric,
 };
 
 describe("schemas", () => {
@@ -179,6 +188,7 @@ describe("policy-as-code", () => {
     assert.ok(policy.rules.some((r) => r.id === "LAYER_POLICY_HOLD"));
     assert.ok(policy.rules.some((r) => r.id === "EXTRACTION_POLICY_HOLD"));
     assert.ok(policy.rules.some((r) => r.id === "API_CATALOG_HOLD"));
+    assert.ok(policy.rules.some((r) => r.id === "GOVERNED_FABRIC_HOLD"));
   });
   it("is fail-closed on inspect", () => {
     const r = evaluatePolicies(universe, { action: "inspect" });
@@ -1035,6 +1045,46 @@ describe("API catalog hold", () => {
     assert.match(cascade, /data-cko-ds-render="api-catalog"/);
     assert.match(holds, /data-cko-ds-render="api-catalog"/);
     assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderApiCatalog/);
+  });
+});
+
+describe("governed fabric hold", () => {
+  it("binds the shared-conversation assurance stack and acquisition APIs", () => {
+    const r = inspectGovernedFabric(governedFabric);
+    assert.equal(r.ok, true, JSON.stringify(r.denials));
+    assert.equal(governedFabric.id, FABRIC_POLICY_ID);
+    assert.equal(governedFabric.document_id, FABRIC_DOCUMENT_ID);
+    assert.equal(governedFabric.family_count, FABRIC_FAMILY_N);
+    assert.equal(governedFabric.families.length, FABRIC_FAMILY_N);
+    assert.equal(governedFabric.item_total, FABRIC_ITEM_TOTAL);
+    assert.equal(governedFabric.active, false);
+    assert.equal(governedFabric.release_allowed, false);
+    assert.equal(governedFabric.implantado, false);
+    assert.equal(governedFabric.assured, false);
+    assert.equal(governedFabric.md_reg_complete, false);
+    assert.equal(governedFabric.md_reg_next_task, true);
+    assert.equal(governedFabric.source.not, "cko-deepseek-blackboard");
+    assert.ok(governedFabric.families.every((f) => f.contract.field_count === 28 && f.specializes === POLICY_MASTER_ID && f.active === false));
+    const assure = governedFabric.families.find((f) => f.family_id === "FAB-ASSURE");
+    assert.deepEqual((assure.items || []).map((i) => i.id), ASSURE_TECH_IDS);
+    const tools = governedFabric.families.find((f) => f.family_id === "FAB-AGENT-TOOL");
+    assert.deepEqual((tools.items || []).map((i) => i.id), AGENT_TOOL_IDS);
+    const next = governedFabric.families.find((f) => f.family_id === "FAB-MD-REG-NEXT");
+    assert.equal(next.md_reg_complete, false);
+  });
+  it("fails at policy-as-code if the fabric is marked ACTIVE or MD/REG complete", async () => {
+    const broken = { ...platform, governedFabric: { ...governedFabric, active: true, implantado: true, md_reg_complete: true } };
+    const r = await runGates(universe, { platform: broken });
+    assert.equal(r.ok, false);
+    assert.equal(r.cascade[0].status, "FAIL");
+    assert.ok(r.policy.inspect.denials.some((d) => d.id === "GOVERNED_FABRIC_HOLD"));
+  });
+  it("renders the fabric on cascade and holds pages", () => {
+    const cascade = readFileSync(join(site, "data/cko/cascade/index.html"), "utf8");
+    const holds = readFileSync(join(site, "cko-holds.html"), "utf8");
+    assert.match(cascade, /data-cko-ds-render="governed-fabric"/);
+    assert.match(holds, /data-cko-ds-render="governed-fabric"/);
+    assert.match(readFileSync(join(site, "js/cko-ds-render.js"), "utf8"), /renderGovernedFabric/);
   });
 });
 

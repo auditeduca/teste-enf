@@ -60,6 +60,7 @@ const INTEGRITY_DENIALS = new Set([
   "LAYER_POLICY_HOLD",
   "EXTRACTION_POLICY_HOLD",
   "API_CATALOG_HOLD",
+  "GOVERNED_FABRIC_HOLD",
 ]);
 
 export const MD_NORM_CHAIN_ID = "CKO-MD-TO-FRONTEND-1.0.0";
@@ -128,6 +129,36 @@ export const API_FAMILY_IDS = [
   "API-NKP-ADMIN",
   "API-SITE-ADMIN",
   "API-MD-REG-NEXT",
+];
+export const FABRIC_POLICY_ID = "POL-CKO-GOVERNED-FABRIC-1.0.0";
+export const FABRIC_DOCUMENT_ID = "CKO-POL-FABRIC-001";
+export const FABRIC_FAMILY_N = 8;
+export const FABRIC_ITEM_TOTAL = 48;
+export const FABRIC_FAMILY_IDS = [
+  "FAB-ASSURE",
+  "FAB-ACQ-METHOD",
+  "FAB-ACQ-EXTRACTOR",
+  "FAB-AGENT-TOOL",
+  "FAB-REGISTRY",
+  "FAB-CONTENT",
+  "FAB-FRONT",
+  "FAB-MD-REG-NEXT",
+];
+export const ASSURE_TECH_IDS = ["OPA", "SHACL", "EVENT", "OTEL", "PROV", "EVAL", "GSN", "TLA"];
+export const AGENT_TOOL_IDS = [
+  "fetch_url",
+  "open_browser",
+  "inspect_dom",
+  "inspect_a11y",
+  "inspect_network",
+  "extract_jsonld",
+  "extract_table",
+  "extract_content",
+  "call_api",
+  "save_artifact",
+  "create_content",
+  "validate_object",
+  "request_approval",
 ];
 export const EXTRACTION_STREAM_IDS = [
   "EXT-LAYER-ZIP",
@@ -335,6 +366,7 @@ export function inspectPlatform(platform) {
     denials.push(...inspectLayerPolicies(platform.layerPolicies, platform.layers).denials);
     denials.push(...inspectExtractionPolicy(platform.extractionPolicy).denials);
     denials.push(...inspectApiCatalog(platform.apiCatalog).denials);
+    denials.push(...inspectGovernedFabric(platform.governedFabric).denials);
   }
   if (Object.keys(files).length) {
     denials.push(...inspectLayers(platform.layers, files["ecossistema.html"] || "").denials);
@@ -1114,6 +1146,77 @@ export function inspectApiCatalog(policy) {
   return { ok: denials.length === 0, denials };
 }
 
+export function inspectGovernedFabric(policy) {
+  const denials = [];
+  const deny = (reason) => denials.push({ id: "GOVERNED_FABRIC_HOLD", reason });
+  if (!policy) {
+    deny("governed fabric missing; shared-conversation APIs must start at policy-as-code");
+    return { ok: false, denials };
+  }
+  if (policy.id !== FABRIC_POLICY_ID || policy.kind !== "policy-as-code") {
+    deny("identity must be POL-CKO-GOVERNED-FABRIC-1.0.0");
+  }
+  if (policy.document_id !== FABRIC_DOCUMENT_ID || policy.document_version !== "1.0.0") {
+    deny("frozen fabric identity must remain CKO-POL-FABRIC-001 v1.0.0");
+  }
+  if (policy.parent !== POLICY_MASTER_ID || policy.specializes !== POLICY_MASTER_ID) {
+    deny("governed fabric must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (policy.starts_at !== "policy-as-code") {
+    deny("governed fabric must start at policy-as-code");
+  }
+  if (policy.active === true || policy.status !== "CONTROLLED_FABRIC_HOLD") {
+    deny("governed fabric is a HOLD catalog; it is not ACTIVE");
+  }
+  if (policy.release_allowed === true || !String(policy.release || "").includes("NOT_RELEASED")) {
+    deny("governed fabric must remain HOLD / NOT_RELEASED");
+  }
+  if (policy.implantado === true || policy.assured === true || policy.operational === "ASSERTED") {
+    deny("governed fabric cannot claim implantado, assured, or operational");
+  }
+  if (policy.md_reg_complete === true || policy.md_reg_next_task !== true) {
+    deny("MD/REG completion must remain the next task");
+  }
+  const families = policy.families || [];
+  if (policy.family_count !== FABRIC_FAMILY_N || families.length !== FABRIC_FAMILY_N) {
+    deny(`governed fabric must declare ${FABRIC_FAMILY_N} families`);
+  }
+  const ids = families.map((f) => f.family_id);
+  if (JSON.stringify(ids) !== JSON.stringify(FABRIC_FAMILY_IDS)) {
+    deny("fabric families must remain the eight canonical families in order");
+  }
+  if (policy.item_total !== FABRIC_ITEM_TOTAL) {
+    deny(`fabric item_total must remain ${FABRIC_ITEM_TOTAL}`);
+  }
+  for (const fam of families) {
+    if (fam.active === true || fam.implantado === true || fam.assured === true) {
+      deny(`${fam.id} cannot be ACTIVE/implantado/assured`);
+    }
+    if (fam.parent !== POLICY_MASTER_ID || fam.specializes !== POLICY_MASTER_ID) {
+      deny(`${fam.id} must specialize POLICY_MASTER_CONTRACT`);
+    }
+    const fields = fam.contract?.fields || {};
+    if (fam.contract?.field_count !== POLICY_MASTER_FIELD_N || Object.keys(fields).length !== POLICY_MASTER_FIELD_N) {
+      deny(`${fam.id} must specialize all 28 master fields`);
+    }
+  }
+  const assure = families.find((f) => f.family_id === "FAB-ASSURE");
+  const techs = (assure?.items || []).map((i) => i.id);
+  if (JSON.stringify(techs) !== JSON.stringify(ASSURE_TECH_IDS)) {
+    deny("assurance stack must bind OPA SHACL EVENT OTEL PROV EVAL GSN TLA");
+  }
+  const tools = families.find((f) => f.family_id === "FAB-AGENT-TOOL");
+  const toolIds = (tools?.items || []).map((i) => i.id);
+  if (JSON.stringify(toolIds) !== JSON.stringify(AGENT_TOOL_IDS)) {
+    deny("agent extraction APIs must remain the thirteen specialized tools");
+  }
+  const next = families.find((f) => f.family_id === "FAB-MD-REG-NEXT");
+  if (next?.md_reg_complete === true) {
+    deny("FAB-MD-REG-NEXT cannot claim MD/REG complete");
+  }
+  return { ok: denials.length === 0, denials };
+}
+
 export function inspectVisualAssetPolicy(policy) {
   const denials = [];
   const deny = (reason) => denials.push({ id: "VAS_HOLD", reason });
@@ -1290,6 +1393,7 @@ export function knownUniverseObjects(universe, platform) {
     if (platform.layerPolicies) push("layer-policy-catalog", platform.layerPolicies.id || LAYER_CATALOG_ID);
     if (platform.extractionPolicy) push("extraction-policy", platform.extractionPolicy.id || EXTRACTION_POLICY_ID);
     if (platform.apiCatalog) push("api-catalog-policy", platform.apiCatalog.id || API_CATALOG_ID);
+    if (platform.governedFabric) push("governed-fabric-policy", platform.governedFabric.id || FABRIC_POLICY_ID);
   }
   return items;
 }
@@ -1322,6 +1426,7 @@ export function validateRuntimePlatformSchema(platform) {
   errors.push(...validateLayerPoliciesSchema(platform).errors);
   errors.push(...validateExtractionSchema(platform).errors);
   errors.push(...validateApiCatalogSchema(platform).errors);
+  errors.push(...validateGovernedFabricSchema(platform).errors);
   return { ok: errors.length === 0, errors };
 }
 
@@ -1407,6 +1512,29 @@ export function validateApiCatalogSchema(platform) {
     errors.push("schema: api families != 9");
   }
   if (policy.endpoint_total !== API_ENDPOINT_TOTAL) errors.push("schema: api endpoint_total");
+  if (policy.md_reg_complete === true) errors.push("schema: MD/REG must remain next task");
+  return { ok: errors.length === 0, errors };
+}
+
+export function validateGovernedFabricSchema(platform) {
+  if (!platform?.layers && !platform?.governedFabric) {
+    return { ok: true, skipped: true, errors: [] };
+  }
+  const errors = [];
+  const policy = platform.governedFabric;
+  if (!policy) {
+    errors.push("schema: governed fabric missing");
+    return { ok: false, errors };
+  }
+  if (policy.id !== FABRIC_POLICY_ID) errors.push("schema: governed-fabric id");
+  if (policy.status !== "CONTROLLED_FABRIC_HOLD" || policy.active === true) errors.push("schema: governed-fabric is not ACTIVE");
+  if (policy.starts_at !== "policy-as-code" || policy.specializes !== POLICY_MASTER_ID) {
+    errors.push("schema: governed-fabric must specialize POLICY_MASTER_CONTRACT");
+  }
+  if (!Array.isArray(policy.families) || policy.families.length !== FABRIC_FAMILY_N || policy.family_count !== FABRIC_FAMILY_N) {
+    errors.push("schema: fabric families != 8");
+  }
+  if (policy.item_total !== FABRIC_ITEM_TOTAL) errors.push("schema: fabric item_total");
   if (policy.md_reg_complete === true) errors.push("schema: MD/REG must remain next task");
   return { ok: errors.length === 0, errors };
 }
@@ -1751,6 +1879,10 @@ export function graphConstraints(universe, platform) {
     if (!apis.ok) {
       violations.push("graph: API catalog must specialize POLICY_MASTER_CONTRACT");
     }
+    const fabric = inspectGovernedFabric(platform.governedFabric);
+    if (!fabric.ok) {
+      violations.push("graph: governed fabric must specialize POLICY_MASTER_CONTRACT");
+    }
     if (platform.mdRegPolicy && (platform.mdRegPolicy.parent !== POLICY_MASTER_ID || platform.mdRegPolicy.specializes !== POLICY_MASTER_ID)) {
       violations.push("graph: MD/REG must specialize POLICY_MASTER_CONTRACT");
     }
@@ -1889,6 +2021,8 @@ export function runtimeAssertions(universe, platform) {
       check("A-EXTRACTION-POLICY-HOLD", ext.ok, "CKO-POL-EXTRACT-001");
       const apis = inspectApiCatalog(platform.apiCatalog);
       check("A-API-CATALOG-HOLD", apis.ok, "CKO-POL-API-001");
+      const fabric = inspectGovernedFabric(platform.governedFabric);
+      check("A-GOVERNED-FABRIC-HOLD", fabric.ok, "CKO-POL-FABRIC-001");
     }
   }
   const failed = asserts.filter((a) => !a.ok);

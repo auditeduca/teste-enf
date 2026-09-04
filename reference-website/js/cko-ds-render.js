@@ -268,6 +268,56 @@ function renderLayerPolicies(policy) {
     </section>`;
 }
 
+function renderGovernedFabric(policy) {
+  const families = (policy.families || [])
+    .map(
+      (f) => `<tr>
+        <th scope="row"><code>${esc(f.family_id)}</code></th>
+        <td>${esc(f.name)}</td>
+        <td>${esc(f.item_count)}</td>
+        <td><span class="cko-ds-badge cko-ds-badge--hold">${esc(f.status)}</span></td>
+      </tr>`
+    )
+    .join("");
+  const assure = (policy.families || []).find((f) => f.family_id === "FAB-ASSURE");
+  const techs = (assure?.items || [])
+    .map((t) => `<li><code>${esc(t.id)}</code> ${esc(t.name)} · ${esc(t.question)}</li>`)
+    .join("");
+  const tools = (policy.families || []).find((f) => f.family_id === "FAB-AGENT-TOOL");
+  const apis = (tools?.items || []).map((t) => `<li><code>${esc(t.name || t.id)}</code> ${esc(t.role || "")}</li>`).join("");
+  const findings = (policy.evaluation?.findings || [])
+    .map((f) => `<li><code>${esc(f.id)}</code> ${esc(f.text)}</li>`)
+    .join("");
+  return `<section class="cko-ds-hero">
+      <span class="cko-ds-badge cko-ds-badge--hold">${esc(policy.status || "CONTROLLED_FABRIC_HOLD")}</span>
+      <h1>${esc(policy.document_id)} v${esc(policy.document_version)}</h1>
+      <p>${esc(policy.rule || "")} DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED. Não é ACTIVE. MD/REG completa na próxima tarefa.</p>
+    </section>
+    <section class="cko-ds-section">
+      <h2>8 famílias · ${esc(policy.item_total)} itens</h2>
+      <p class="cko-ds-help">Conversa compartilhada: stack de garantia + APIs de aquisição front/API/conteúdo. Tecnologia ligada ≠ operacional. Pipeline ${esc((policy.pipeline || []).join(" → "))}.</p>
+      <ul class="cko-ds-ut-findings">${findings}</ul>
+      <div class="cko-ds-table-wrap"><table class="cko-ds-table">
+        <thead><tr><th>Família</th><th>Nome</th><th>N</th><th>Estado</th></tr></thead>
+        <tbody>${families}</tbody>
+      </table></div>
+    </section>
+    <section class="cko-ds-section">
+      <h2>Oito perguntas de garantia</h2>
+      <p class="cko-ds-help">OPA → SHACL → Event Sourcing → OpenTelemetry → PROV → Agent Evaluation → GSN → TLA+. SHACL já tem binding pré-existente no grafo; os outros não estão implantados.</p>
+      <ul class="cko-ds-ut-chips">${techs}</ul>
+    </section>
+    <section class="cko-ds-section">
+      <h2>APIs do agente (extração via front)</h2>
+      <p class="cko-ds-help">Ferramentas especializadas. Sem browser gigante. Sem HTML→LLM→base. Precedência API → structured → DOM → HTML → browser.</p>
+      <ul class="cko-ds-ut-chips">${apis}</ul>
+    </section>
+    <section class="cko-ds-section">
+      <h2>MD/REG — próxima tarefa</h2>
+      <p class="cko-ds-help"><code>md_reg_complete=${esc(policy.md_reg_complete)}</code> · próxima tarefa ${esc(policy.md_reg_next_task)}. Classificado ≠ extraído clause-level ≠ implantado.</p>
+    </section>`;
+}
+
 function renderApiCatalog(policy) {
   const families = (policy.families || [])
     .map(
@@ -643,6 +693,12 @@ async function mount(el) {
       refreshShellToc();
       return;
     }
+    if (mode === "governed-fabric" || ds.document_id === "CKO-POL-FABRIC-001") {
+      const policy = src.includes("governed-fabric") || ds.document_id === "CKO-POL-FABRIC-001" ? ds : await loadJson("/data/cko/governed-fabric.json");
+      el.innerHTML = renderGovernedFabric(policy);
+      refreshShellToc();
+      return;
+    }
     if (mode === "manual") {
       el.innerHTML = renderIdentityManual(ds);
       refreshShellToc();
@@ -678,4 +734,4 @@ if (document.readyState === "loading") {
   boot();
 }
 
-export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets, renderPlatformClosure, renderLayerPolicies, renderExtraction, renderApiCatalog };
+export { mount, renderCatalog, renderUniversalTool, renderPolicyMaster, renderVisualAssets, renderPlatformClosure, renderLayerPolicies, renderExtraction, renderApiCatalog, renderGovernedFabric };
