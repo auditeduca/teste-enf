@@ -49,6 +49,10 @@ DRIVE_HOLD_INDEX_KEYS = (
     "clinical_rules_recovery",
     "calc_lote_002",
     "publication_release_recovery",
+    "scale_lote_001",
+    "scale_lote_002",
+    "calc_lote_001",
+    "camada03_over_9mb",
 )
 MARKER_BEGIN = "<!-- CKO-44-LAYERS:BEGIN -->"
 MARKER_END = "<!-- CKO-44-LAYERS:END -->"
