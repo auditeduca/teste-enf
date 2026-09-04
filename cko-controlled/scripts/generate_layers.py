@@ -25,6 +25,7 @@ from generate_platform_closure import generate as generate_platform_closure
 from generate_layer_policies import generate as generate_layer_policies
 from generate_extraction import generate as generate_extraction
 from generate_api_catalog import generate as generate_api_catalog
+from generate_governed_fabric import generate as generate_governed_fabric
 from cko_policy_contract import layer_policy_id
 
 GATE = Path(__file__).resolve().parents[1]
@@ -601,6 +602,7 @@ def generate() -> dict:
     generate_layer_policies()
     generate_extraction()
     generate_api_catalog()
+    generate_governed_fabric()
     if not CLOSURE.is_file():
         raise SystemExit(f"closure HTML missing: {CLOSURE}")
     rows = json.loads(CANON.read_text(encoding="utf-8"))
