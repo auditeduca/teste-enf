@@ -1266,6 +1266,8 @@ describe("unpublished platform status page", () => {
     assert.match(html, /HOLD \/ NOT_RELEASED/);
     assert.match(html, /DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED ≠ PUBLICADO/);
     assert.match(html, /release_allowed: false/);
+    assert.match(html, /ainda não existe/i);
+    assert.match(html, /não foi publicado/i);
     assert.match(html, /NOT_ASSERTED/);
     assert.equal(/status["']:\s*["']ACTIVE["']/.test(html), false);
     assert.equal(html.includes("implantado: true"), false);
@@ -1376,3 +1378,66 @@ describe("CONTENT-OF-TRUTH backup recovery HOLD", () => {
     assert.equal(html.includes("md_reg_complete: true"), false);
   });
 });
+
+describe("Nurse-PaLM RC v6.5.1 R5 split HOLD", () => {
+  it("catalogs the 12-part split without ingesting parts or asserting operational Nurse-PaLM", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-NURSE-PALM-RC-v6_5_1_R5-SPLIT-HOLD.json"), "utf8"));
+    const manifest = JSON.parse(readFileSync(join(gatePub, "drive/CKO-NURSE-PALM-RC-v6_5_1_R5-SPLIT_MANIFEST.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.operational, "NOT_ASSERTED");
+    assert.equal(stamp.parts_ingested, false);
+    assert.equal(stamp.images_ingested, false);
+    assert.equal(stamp.split.parts_n, 12);
+    assert.equal(stamp.split.parts_over_9mb, 0);
+    assert.equal(stamp.drive.folder_id, "1ogT26MeBxfKC_B2tMsHQuiNTPVvPXZc4");
+    assert.equal(manifest.parts.length, 12);
+    assert.equal(manifest.member_count, 5692);
+    assert.ok(manifest.parts.every((p) => p.bytes < 9000000));
+    assert.equal(layers.nurse_palm_split.parts_ingested, false);
+    assert.equal(layers.nurse_palm_split.operational, "NOT_ASSERTED");
+    assert.equal(gateLayers.nurse_palm_split.folder_id, "1ogT26MeBxfKC_B2tMsHQuiNTPVvPXZc4");
+    assert.equal(catalog.nursePalmOperational, "NOT_ASSERTED");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1ogT26MeBxfKC_B2tMsHQuiNTPVvPXZc4"));
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /12 partes/);
+    assert.match(html, /NOT_ASSERTED/);
+    assert.equal(html.includes("operational: true"), false);
+    assert.equal(html.includes("parts_ingested: true"), false);
+  });
+});
+
+describe("Clinical Rules live recovery HOLD", () => {
+  it("catalogs seven recovered packs without promoting clinical ACTIVE or replacing HORIZONTAL", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-CLINICAL-RULES-LIVE-RECOVERY-20260904-HOLD.json"), "utf8"));
+    const manifest = JSON.parse(readFileSync(join(gatePub, "drive/CKO-CLINICAL-RULES-LIVE-RECOVERY-20260904-MANIFEST.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.active, false);
+    assert.equal(stamp.clinical_promotion, "DENIED");
+    assert.equal(stamp.calculators_scales, "PAUSED");
+    assert.equal(stamp.canonical_layer_replaced, false);
+    assert.equal(stamp.recovery.packs_n, 7);
+    assert.equal(stamp.drive.folder_id, "1zu-8feEdPN4P7N5izQaqYml7JkGAm4D2");
+    assert.equal(manifest.count, 7);
+    assert.equal(manifest.entries.filter((e) => e.source_status === "ACTIVE").length, 2);
+    assert.equal(layers.clinical_rules_recovery.clinical_promotion, "DENIED");
+    assert.equal(gateLayers.clinical_rules_recovery.packs_n, 7);
+    const clin = gateLayers.layers.find((l) => l.id === "LYR-CLIN-RULE-001");
+    assert.equal(clin.drive_id, "1gZ_HQ74arWMRNN2yYElnmYzRWZXL76oo");
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1zu-8feEdPN4P7N5izQaqYml7JkGAm4D2"));
+    assert.ok(catalog.items.some((i) => i.id === "15xhAeuHqgC2BUJiUJ4gTASz4svxz7rj8"));
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /7 packs/);
+    assert.match(html, /DENIED/);
+    assert.equal(html.includes("clinical_promotion: true"), false);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
+
