@@ -60,8 +60,8 @@ th,td{text-align:left;padding:.45rem .3rem;border-bottom:1px solid #e5e7eb;verti
   </article>
   <article class="card warn">
     <span class="label">Ainda não</span>
-    <h2>Não é release</h2>
-    <p><code>release_allowed: false</code>. MD/REG completa é a próxima tarefa (2496/10913 classificados). Calculadoras clínicas permanecem PAUSED para promoção. REG v1.2.1 no Drive é sucessor HOLD, não freeze novo.</p>
+    <h2>Release ainda não existe</h2>
+    <p><code>NOT_RELEASED</code> significa que a publicação <strong>ainda não existe</strong>: o release <strong>não foi publicado</strong>. <code>release_allowed: false</code>. MD/REG completa é a próxima tarefa (2496/10913 classificados). Calculadoras clínicas permanecem PAUSED para promoção. REG v1.2.1 no Drive é sucessor HOLD, não freeze novo.</p>
   </article>
 </div>
 
@@ -87,6 +87,18 @@ th,td{text-align:left;padding:.45rem .3rem;border-bottom:1px solid #e5e7eb;verti
   <h2>Backup CONTENT-OF-TRUTH — reconstrução, não ZIP original</h2>
   <p>A pasta <code>CKO-CONTENT-OF-TRUTH-BACKUP-20260903</code> estava vazia; em 2026-09-04 foi reconstruída. Relatório: 01 Supabase 24 KB; 02 wrappers <strong>44/44</strong> (cópias Drive-to-Drive); 03 árvore física materializada (handoff + snapshot Aldrete); 04 evidências (screenshots 1,3 MB, policy v0.2.0, closure). ZIP consolidado original <strong>não localizado</strong>. Não é restauração bit-a-bit. Canónico continua <code>HORIZONTAL</code>.</p>
   <p class="small">Stamp: <code>CKO-CONTENT-OF-TRUTH-BACKUP-20260903-HOLD.json</code>. ZIP &gt; 9 MB adicionados nesta recuperação: <strong>0</strong>. <code>md_reg_complete</code> continua falso.</p>
+</article>
+
+<article class="card hold">
+  <h2>Nurse-PaLM v6.5.1 R5 — 12 partes, não operacional</h2>
+  <p>A pasta <code>Nurse-PaLM-RC-v6_5_1_R5-fracionado-ate-9MB</code> parte o zip-fonte de <strong>97 608 051</strong> bytes em <strong>12</strong> zips, todos abaixo de 9 MB (maior: 8,66 MB). 5692 membros. Fracionar não torna Nurse-PaLM operacional. Partes, imagens e fontes <strong>não</strong> foram ingeridas no git.</p>
+  <p class="small">Stamp: <code>CKO-NURSE-PALM-RC-v6_5_1_R5-SPLIT-HOLD.json</code>. <code>operational: NOT_ASSERTED</code>. <code>parts_ingested: false</code>.</p>
+</article>
+
+<article class="card hold">
+  <h2>Camada 05 Clinical Rules — 7 packs, promoção negada</h2>
+  <p>A pasta <code>Calculadoras-Enf-Camada-05-Clinical-Rules</code> estava vazia; em 2026-09-04 recebeu exportação viva de <strong>7</strong> rule packs (Aldrete, Ballard, Capurro, CRIES, Downes, NIPS, Silverman). Dois packs trazem <code>source_status: ACTIVE</code> (CRIES, NIPS): isso é o estado no Supabase, <strong>não</strong> runtime ACTIVE. Promoção clínica continua <strong>DENIED</strong>. Canónico da camada continua o zip HORIZONTAL.</p>
+  <p class="small">Stamp: <code>CKO-CLINICAL-RULES-LIVE-RECOVERY-20260904-HOLD.json</code>. Calculadoras/escalas <code>PAUSED</code>. <code>md_reg_complete</code> continua falso.</p>
 </article>
 
 <article class="card">
@@ -120,8 +132,9 @@ th,td{text-align:left;padding:.45rem .3rem;border-bottom:1px solid #e5e7eb;verti
       <tr><td>MD / REG</td><td>2496 / 10913</td><td>próxima tarefa</td><td>Classificado ≠ extraído. P01 no Drive reconcilia 1200/6111, não fecha o classificado</td></tr>
       <tr><td>Universo de referências</td><td>113 freeze → 139 sucessor</td><td>HOLD</td><td>Freeze LYR-REF continua v1.1.1. Zip v1.2.1 catalogado; não substitui freeze nem fecha MD/REG</td></tr>
       <tr><td>Backup CONTENT-OF-TRUTH</td><td>44/44 wrappers</td><td>HOLD</td><td>Reconstrução 2026-09-04; ZIP original não localizado; não substitui HORIZONTAL</td></tr>
-      <tr><td>Nurse-PaLM</td><td>—</td><td>NOT_ASSERTED</td><td>Não afirmar operacional</td></tr>
-      <tr><td>B9 / release</td><td>—</td><td>NOT_RELEASED</td><td><code>release_allowed: false</code></td></tr>
+      <tr><td>Clinical Rules (camada 05)</td><td>7 packs</td><td>HOLD</td><td>Recuperação 2026-09-04; source_status ACTIVE ≠ implantado; promoção DENIED</td></tr>
+      <tr><td>Nurse-PaLM</td><td>12 partes</td><td>NOT_ASSERTED</td><td>Fracionado &lt; 9 MB catalogado; partes não ingeridas; não operacional</td></tr>
+      <tr><td>B9 / release</td><td>—</td><td>NOT_RELEASED</td><td>Ainda não existe; não foi publicado. <code>release_allowed: false</code></td></tr>
     </tbody>
   </table>
 </article>
