@@ -1256,3 +1256,26 @@ describe("chrome templates", () => {
     assert.match(dsLayer, /cko-identidade\.html/);
   });
 });
+
+describe("unpublished platform status page", () => {
+  it("ships a Portuguese HOLD status page without claiming ACTIVE or adding a 13th runtime page", () => {
+    assert.equal(RUNTIME_PAGES.length, 12);
+    assert.equal(RUNTIME_PAGES.includes("cko-estado.html"), false);
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /não foi publicada/i);
+    assert.match(html, /HOLD \/ NOT_RELEASED/);
+    assert.match(html, /DOCUMENTADO ≠ IMPLANTADO ≠ ASSURED ≠ PUBLICADO/);
+    assert.match(html, /release_allowed: false/);
+    assert.match(html, /NOT_ASSERTED/);
+    assert.equal(/status["']:\s*["']ACTIVE["']/.test(html), false);
+    assert.equal(html.includes("implantado: true"), false);
+    const home = readFileSync(join(site, "index.html"), "utf8");
+    assert.match(home, /cko-estado\.html/);
+    assert.match(home, /não publicada/);
+    assert.match(readFileSync(join(site, "mapa-do-site.html"), "utf8"), /cko-estado\.html/);
+    assert.match(readFileSync(join(site, "ecossistema.html"), "utf8"), /cko-estado\.html/);
+    assert.match(readFileSync(join(site, "cko-holds.html"), "utf8"), /cko-estado\.html/);
+    assert.match(readFileSync(join(site, "menu-global.html"), "utf8"), /cko-estado\.html/);
+    assert.match(readFileSync(join(site, "footer.html"), "utf8"), /cko-estado\.html/);
+  });
+});
