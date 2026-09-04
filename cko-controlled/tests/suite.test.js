@@ -1349,3 +1349,30 @@ describe("MD field universe P01 Drive HOLD", () => {
     assert.equal(html.includes("bindings_materialized: true"), false);
   });
 });
+
+describe("CONTENT-OF-TRUTH backup recovery HOLD", () => {
+  it("catalogs the 2026-09-04 reconstruction without claiming bit-identical restore or replacing HORIZONTAL", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "drive/CKO-CONTENT-OF-TRUTH-BACKUP-20260903-HOLD.json"), "utf8"));
+    const catalog = JSON.parse(readFileSync(join(gatePub, "drive/catalog.json"), "utf8"));
+    const gateLayers = JSON.parse(readFileSync(join(gatePub, "data/layers.json"), "utf8"));
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.md_reg_complete, false);
+    assert.equal(stamp.bit_identical_restore, false);
+    assert.equal(stamp.canonical_horizontal_replaced, false);
+    assert.equal(stamp.drive.folder_id, "1TZfs0xilYoHMP34nqnnIk8DXdwiEIESd");
+    assert.equal(stamp.layers["02_FINAL_CONTROL_WRAPPERS"].wrappers_n, 44);
+    assert.equal(stamp.layers["04_RUNTIME_EVIDENCE"].zip_over_9mb_added, 0);
+    assert.equal(layers.content_of_truth_backup.bit_identical_restore, false);
+    assert.equal(gateLayers.content_of_truth_backup.wrappers_n, 44);
+    assert.equal(catalog.itemCount, catalog.items.length);
+    assert.equal(catalog.deployedCount, catalog.items.filter((i) => i.deployed === true).length);
+    assert.ok(catalog.items.some((i) => i.id === "1TZfs0xilYoHMP34nqnnIk8DXdwiEIESd"));
+    assert.ok(catalog.items.some((i) => i.id === "1brLvOSQ7ygwlSZaZeFz4ozBNF-3sl4kXnrNu2pEaRmU"));
+    const md = gateLayers.layers.find((l) => l.id === "CKO-MD");
+    assert.equal(md.drive_id, "18yyBskfiiKNAduwNmnp8vHO_09Qg_n-0");
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.match(html, /CONTENT-OF-TRUTH/);
+    assert.match(html, /bit-a-bit|bit-identical|não localizado/i);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+  });
+});
