@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/pendency.schema.json",
+  "title": "CKO documented pendency ledger",
+  "type": "object",
+  "required": ["id", "root", "release", "mutate_drive", "closes_b9", "items"],
+  "properties": {
+    "id": { "const": "CKO-PENDENCIES-1.0.0" },
+    "root": { "const": "policy-as-code" },
+    "release": { "const": "HOLD / NOT_RELEASED" },
+    "mutate_drive": { "const": false },
+    "closes_b9": { "const": false },
+    "items": {
+      "type": "array",
+      "minItems": 200,
+      "items": {
+        "type": "object",
+        "required": ["id", "source", "kind", "status", "mutate_drive", "closes_b9"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^PEND-" },
+          "mutate_drive": { "const": false },
+          "closes_b9": { "const": false }
+        }
+      }
+    }
+  }
+}

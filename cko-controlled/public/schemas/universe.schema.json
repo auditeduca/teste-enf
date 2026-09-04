@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cko.local/schemas/universe.schema.json",
+  "title": "CKO Controlled Universe",
+  "type": "object",
+  "required": [
+    "document",
+    "baseline",
+    "kpis",
+    "blocks",
+    "lenses",
+    "checkpoints",
+    "priorities",
+    "unknown_universe",
+    "residual_uncertainty",
+    "coverage_rules",
+    "principles"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": ["title", "version", "classification", "not_production_release"],
+      "properties": {
+        "title": { "type": "string", "minLength": 8 },
+        "version": { "type": "string" },
+        "classification": { "const": "CONTROLLED" },
+        "not_production_release": { "const": true },
+        "robots": { "type": "string" }
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "required": ["global_id", "sha256", "state", "release"],
+      "properties": {
+        "global_id": { "type": "string", "pattern": "^OV-CKO-" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "state": { "const": "FINAL_CONTROLLED" },
+        "release": { "type": "string", "pattern": "NOT_RELEASED" }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "artifact_id", "version_id", "sha256", "checkpoint_id", "state"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^B([1-9]|10|6\\.[1-4])$" },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "maturity": { "type": "integer", "minimum": 0, "maximum": 100 }
+        }
+      }
+    },
+    "lenses": { "type": "array", "minItems": 8, "maxItems": 8 },
+    "unknown_universe": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^UNK-" },
+          "statement": { "type": "string", "minLength": 12 }
+        }
+      }
+    },
+    "residual_uncertainty": {
+      "type": "object",
+      "required": ["id", "value", "formula", "components"],
+      "properties": {
+        "id": { "const": "X" },
+        "value": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "coverage_rules": {
+      "type": "object",
+      "required": ["coverage", "evidence_coverage", "test_pass", "residual_uncertainty", "unknown_universe"]
+    }
+  }
+}

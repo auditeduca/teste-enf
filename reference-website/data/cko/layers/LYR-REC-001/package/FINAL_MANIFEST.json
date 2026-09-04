@@ -1,0 +1,77 @@
+{
+  "final_artifact_id": "ART-RECOMMENDATIONS-FINAL-CONTROLLED",
+  "final_version": "1.0.0",
+  "object_ref": "LYR-REC-001",
+  "source_layer_version_id": "OVR-E45FEAC2D5AE250EEB327CC7",
+  "source_layer_hash": "ed28ff30e8e7b4cce3d715b56a8f9a4342e3a6aa6261ab8e133f77ae5c5c819e",
+  "control_profile_ref": "ART-REC-CONTROL-V1",
+  "control_profile_version": "OV-ART-REC-CONTROL-V1",
+  "control_profile_hash": "377639f2ab91f59917c105f92e4ac46cb6eb04c82cc9222b30b517e344fcd010",
+  "validator_ref": "VAL-REC-001",
+  "validator_version": "OV-VAL-REC-001",
+  "validator_hash": "ab61343f421db65392f4b519d94cef28e6c642238d51142e82d0a0cb415ce483",
+  "technical_status": "FINAL_TECHNICAL_WITH_SCOPED_HOLDS",
+  "release_status": "NOT_RELEASED",
+  "recovery_state": "RECOVERY_COMPLETE",
+  "operating_mode": "FAIL_CLOSED",
+  "autonomous_recommendation_execution": "DISABLED",
+  "own_audit": {
+    "required_lenses": 8,
+    "passed_lenses": 8,
+    "status": "OWN_AUDIT_PASS_WITH_SCOPED_HOLDS"
+  },
+  "risk_denominator": {
+    "findings": 7,
+    "critical": 5,
+    "high": 2,
+    "all_open": true
+  },
+  "assurance": {
+    "caat": "TR-REC-CONTROL-20260902-001 PASS 9/9",
+    "ipe": "IPE-EVAL-REC-CONTROL-20260902-001 PASS",
+    "validation_run": "AR-REC-RECOVERY-20260902-001 PASS_WITH_SCOPED_HOLDS"
+  },
+  "rules": [
+    "SCORE_ALONE_MUST_NOT_AUTHORIZE_TREATMENT_OR_ESCALATION",
+    "RECOMMENDATION_REQUIRES_VERSIONED_CLINICAL_RELATION_OR_PROTOCOL",
+    "MATERIAL_RECOMMENDATION_REQUIRES_EVIDENCE_BINDING",
+    "AI_OUTPUT_IS_CANDIDATE_ONLY",
+    "MISSING_AUTHORITY_IS_MISSING_NOT_INFERRED",
+    "LEGACY_SCORE_DRIVEN_CONDUCT_REMAINS_BLOCKED_UNTIL_EFFECTIVE_SUCCESSOR_RUNTIME"
+  ],
+  "holds": [
+    "SH-REC-AUTONOMOUS-EXECUTION-DISABLED-20260902",
+    "SH-REC-LEGACY-RUNTIME-REPLACEMENT-20260902",
+    "SH-REC-INDEPENDENT-CLINICAL-VALIDATION-20260902"
+  ],
+  "findings": [
+    "FND-REC-AUTONOMOUS-EXECUTION-BLOCKED-20260902",
+    "FND-REC-LEGACY-RISK-DENOMINATOR-20260902"
+  ],
+  "underlying_material_findings": [
+    "FND-APGAR-REG-NANDA-HEURISTIC-20260901",
+    "FND-BALLARD-CARE-HOURS-AUTO-20260902",
+    "FND-CRIES-TREATMENT-BANDS-20260902",
+    "FND-FLACC-TREATMENT-DERIVATION-20260902",
+    "FND-GLASGOW-SCORE-DRIVEN-CONDUCT-20260902",
+    "FND-SILVERMAN-AUTOMATIC-TREATMENT-20260902",
+    "FND-NIPS-AUTO-ANALGESIA-20260902"
+  ],
+  "framework_ref": "FWK-AI-001",
+  "framework_version": "OVR-05B1838E69867646377B0C48",
+  "framework_hash": "5c439a667c1d9d1275debf45b9572798a77590ad4dcf8bf007237fbc7e833712",
+  "composed_validators": [
+    "VAL-AI-001",
+    "VAL-CLM-001",
+    "VAL-REC-001"
+  ],
+  "knowledge_pack_id": "KPACK-BE7F94AC1FB74825E3A5918E",
+  "master_data_version_ref": "OVR-4704776818261630E163EA30",
+  "mask_version_ref": "OVR-D3D2A8A98E55C0AC307CB890",
+  "maker": "AGT-SP-DOMAIN-MAKER",
+  "checker": "AGT-SP-DOMAIN-VALIDATOR",
+  "auditor": "AGT-SP-AUDIT-AGENT",
+  "orchestrator": "AGT-ORCH-001",
+  "promotion_rule": "Clean technical final in fail-closed mode. This package does not enable autonomous clinical recommendations; legacy score-driven conduct remains blocked pending effective successor runtime proof and independently validated versioned clinical relation/protocol contracts.",
+  "created_at": "2026-09-02"
+}

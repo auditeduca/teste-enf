@@ -325,6 +325,38 @@
     return "";
   }
 
+  function isInsideSlot(el, mount) {
+    if (!el) return false;
+    if (mount && (el === mount || mount.contains(el))) return true;
+    return Boolean(el.closest("[data-cko-slot]"));
+  }
+
+  function hasStaticBreadcrumb(mount) {
+    var nodes = document.querySelectorAll(
+      '[data-cko-static="breadcrumb"], nav.tpl-breadcrumb, nav.crumbs, nav[aria-label="Breadcrumb"]'
+    );
+    for (var i = 0; i < nodes.length; i += 1) {
+      if (!isInsideSlot(nodes[i], mount)) return true;
+    }
+    return false;
+  }
+
+  function hasStaticHero(mount) {
+    var marked = document.querySelectorAll(
+      '[data-cko-static="hero"], .tool-header, section.hero, .cko-home-hero, [class*="-card-navy"]'
+    );
+    for (var i = 0; i < marked.length; i += 1) {
+      if (!isInsideSlot(marked[i], mount)) return true;
+    }
+    var main = document.getElementById("main-content") || document.querySelector("main");
+    if (!main) return false;
+    var titles = main.querySelectorAll("h1");
+    for (var j = 0; j < titles.length; j += 1) {
+      if (!isInsideSlot(titles[j], mount)) return true;
+    }
+    return false;
+  }
+
   function fillMounts(catalog) {
     var mounts = document.querySelectorAll("[data-cko-page]");
     Array.prototype.forEach.call(mounts, function (el) {
@@ -336,6 +368,31 @@
           '<p class="cko-shell-error">Shell: página desconhecida (' +
           escapeHtml(id) +
           ").</p>";
+        return;
+      }
+      var skipBreadcrumb = slot === "chrome" || slot === "breadcrumb" || slot === "full" ? hasStaticBreadcrumb(el) : false;
+      var skipHero = slot === "hero" || slot === "full" ? hasStaticHero(el) : false;
+      if ((slot === "hero" && skipHero) || (slot === "breadcrumb" && skipBreadcrumb)) {
+        el.innerHTML = "";
+        el.setAttribute("data-cko-deduped", slot);
+        el.setAttribute("data-cko-ready", "1");
+        return;
+      }
+      if (slot === "chrome" && skipBreadcrumb) {
+        var rest = renderNavSet(catalog, page) + renderActions(page.actions);
+        el.innerHTML = rest;
+        if (!rest) el.setAttribute("data-cko-deduped", "breadcrumb");
+        el.setAttribute("data-cko-ready", "1");
+        return;
+      }
+      if (slot === "full" && (skipBreadcrumb || skipHero)) {
+        el.innerHTML =
+          (skipBreadcrumb ? "" : renderBreadcrumb(page.breadcrumb)) +
+          renderNavSet(catalog, page) +
+          renderActions(page.actions) +
+          (skipHero ? "" : renderHero(page.hero));
+        el.setAttribute("data-cko-deduped", [skipBreadcrumb ? "breadcrumb" : "", skipHero ? "hero" : ""].filter(Boolean).join(","));
+        el.setAttribute("data-cko-ready", "1");
         return;
       }
       el.innerHTML = renderSlot(catalog, page, slot);

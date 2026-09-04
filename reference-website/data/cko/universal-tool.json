@@ -1,0 +1,1125 @@
+{
+  "id": "POL-CKO-UNIVERSAL-TOOL-1.3.0",
+  "kind": "policy-as-code",
+  "mode": "fail-closed",
+  "root": false,
+  "starts_at": "policy-as-code",
+  "parent": "POL-CKO-FAIL-CLOSED-1.0.0",
+  "document_id": "CKO-POL-UT-001",
+  "document_version": "1.3.0",
+  "document_date": "2026-08-22",
+  "document_status": "POLITICA_CONTROLADA",
+  "cascade": [
+    "policy-as-code",
+    "schemas",
+    "graph-constraints",
+    "CI-gates",
+    "runtime-assertions",
+    "automatic-evidence"
+  ],
+  "release": "HOLD / NOT_RELEASED",
+  "release_allowed": false,
+  "published": false,
+  "operational": "NOT_ASSERTED",
+  "canonical_promotion": false,
+  "control_count": 98,
+  "implemented_n": 0,
+  "assured_n": 0,
+  "documentado": true,
+  "implantado": false,
+  "assured": false,
+  "md_gate": "REMEDIATION_REQUIRED_NORMATIVE_GATE",
+  "clinical_calculators": "PAUSED",
+  "scales_scores": "PAUSED",
+  "field_authority": {
+    "policy_bound": 44,
+    "policy_hold": 8,
+    "classified_md_holds_n": 11,
+    "classified_fields": 2496,
+    "materialized_field_bindings": false,
+    "same_set_as_classified": false,
+    "note": "44 BOUND / 8 HOLD é o claim da política v1.3.0; CKO-MD classificado tem holds_n=11 e bindings não materializados. Não unificar."
+  },
+  "abnt": {
+    "nbr_6023": {
+      "edition": "2025",
+      "supersedes": "2018",
+      "clause_level": "HOLD"
+    },
+    "nbr_10520": {
+      "edition": "2023",
+      "clause_level": "HOLD"
+    },
+    "nbr_5891": {
+      "edition": "2014",
+      "clause_level": "HOLD",
+      "role": "rounding_baseline"
+    }
+  },
+  "inventory_agent": {
+    "id": "AGENT-INVENTORY-001",
+    "authorized": true,
+    "present": false,
+    "operational": "NOT_ASSERTED",
+    "canonical_promotion": false
+  },
+  "disclaimer_profile": {
+    "id": "DISCLAIMER-CLINICAL-EDU-001",
+    "present_as_governed_object": false,
+    "compact_required": "Esta ferramenta tem finalidade educacional e de apoio à prática. Não substitui avaliação clínica, julgamento profissional, protocolos institucionais nem atos privativos de profissional legalmente habilitado."
+  },
+  "privacy": {
+    "principle": "NO_SENSITIVE_CAPTURE",
+    "present_as_governed_object": false
+  },
+  "version_lineage": {
+    "status": "VERSION_DRIFT_HOLD",
+    "evaluated": "1.3.0",
+    "export_lineage": "OV-CKO-POL-UT-001-1.5.0",
+    "snapshot_delta": "CKO-POL-UT-001-v1.6.0-Tool-Resource-Profile-delta.json",
+    "note": "Não unificar 1.3.0 / 1.5.0 / 1.6.0. Drift permanece HOLD."
+  },
+  "evaluation": {
+    "date": "2026-09-03",
+    "verdict": "DOCUMENTADO_HOLD_NOT_IMPLEMENTED",
+    "documentado": true,
+    "implantado": false,
+    "assured": false,
+    "clinical_promotion": "DENIED",
+    "findings": [
+      {
+        "id": "UT-F-VERSION-DRIFT",
+        "severity": "HOLD",
+        "text": "Texto avaliado é v1.3.0; snapshot mapeia delta v1.6.0 em LYR-CLIN-CALC-001; lineage de export cita 1.5.0."
+      },
+      {
+        "id": "UT-F-NO-UTC-CATALOG",
+        "severity": "HOLD",
+        "text": "UTC-001…UTC-098 não existiam como policy-as-code executável antes desta materialização HOLD."
+      },
+      {
+        "id": "UT-F-INLINE-CLINICAL",
+        "severity": "HOLD",
+        "text": "UTC-003 violado no overlay CALENF: fórmulas, escores, interpretações e canonical SEO estão em HTML/tool-config; status published contradiz PAUSED."
+      },
+      {
+        "id": "UT-F-MD-GATE",
+        "severity": "HOLD",
+        "text": "CKO-MD permanece REMEDIATION_REQUIRED_NORMATIVE_GATE. Field bindings não materializados. Calculators/Scales herdam o bloqueio."
+      },
+      {
+        "id": "UT-F-FIELD-COUNT-MISMATCH",
+        "severity": "HOLD",
+        "text": "Política declara 44 BOUND / 8 HOLD; snapshot classificado declara 2496 campos e 11 holds em CKO-MD. Conjuntos distintos."
+      },
+      {
+        "id": "UT-F-INVENTORY-AGENT-ABSENT",
+        "severity": "HOLD",
+        "text": "AGENT-INVENTORY-001 autorizado pela política mas ausente no runtime/governança operacional."
+      },
+      {
+        "id": "UT-F-DISCLAIMER-DRIFT",
+        "severity": "HOLD",
+        "text": "Ferramentas têm disclaimer semelhante, não o perfil DISCLAIMER-CLINICAL-EDU-001 nem o texto compacto obrigatório."
+      },
+      {
+        "id": "UT-F-ABNT-CLAUSE-HOLD",
+        "severity": "HOLD",
+        "text": "Cutover 6023:2025 registado; extração clause-level de 6023/10520/5891 permanece HOLD até exemplar autorizado."
+      },
+      {
+        "id": "UT-F-DS-PARTIAL",
+        "severity": "NOTE",
+        "text": "UTC-045 tem correspondência parcial: catálogo DS vivo via render, HOLD / NOT_RELEASED, raiz em policy-as-code. Não fecha o contrato universal da ferramenta."
+      },
+      {
+        "id": "UT-F-AGENTS-DECLARED",
+        "severity": "NOTE",
+        "text": "UTC-006 está declarado (maker!=checker!=auditor) com operational NOT_ASSERTED. Não é evidência de segregação em runtime."
+      }
+    ]
+  },
+  "controls": [
+    {
+      "id": "UTC-001",
+      "domain": "Governance",
+      "primary_layer": "CKO-REG",
+      "requirement": "Norma/fonte autoritativa precede requisito, MD e ferramenta",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-002",
+      "domain": "Governance",
+      "primary_layer": "CKO-MD",
+      "requirement": "Binding governado em nível de campo",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-003",
+      "domain": "Governance",
+      "primary_layer": "CKO-MD",
+      "requirement": "Proibição de verdade clínica inline em HTML/JS/template",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-004",
+      "domain": "Identity",
+      "primary_layer": "CKO-MD",
+      "requirement": "canonical_id estável, UUIDv7, business key, version_ref",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-005",
+      "domain": "Versioning",
+      "primary_layer": "CKO-REG",
+      "requirement": "Version-on-change sem overwrite silencioso",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-006",
+      "domain": "Agents",
+      "primary_layer": "CKO-REG",
+      "requirement": "Maker ≠ Checker ≠ Auditor",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-007",
+      "domain": "Assurance",
+      "primary_layer": "CKO-REG",
+      "requirement": "CAAT, IPE e AUD-8L por camada",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-008",
+      "domain": "Source acquisition",
+      "primary_layer": "CKO-REG",
+      "requirement": "Official/API-first",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-009",
+      "domain": "Libraries",
+      "primary_layer": "LYR-LIB-001",
+      "requirement": "Bibliotecas como objetos canônicos",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-010",
+      "domain": "Medication master data",
+      "primary_layer": "LYR-MED-001",
+      "requirement": "Medicamento separado em objetos/relações",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-011",
+      "domain": "Device master data",
+      "primary_layer": "LYR-LIB-001",
+      "requirement": "Dispositivos com classificação e relações",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-012",
+      "domain": "Terminologies",
+      "primary_layer": "LYR-TERM-001",
+      "requirement": "Code systems com release, rights e mappings",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-013",
+      "domain": "Tool anatomy",
+      "primary_layer": "LYR-CLIN-CALC-001",
+      "requirement": "Universal Tool Contract",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-014",
+      "domain": "About tool",
+      "primary_layer": "LYR-CLIN-CALC-001",
+      "requirement": "Sobre a ferramenta declara escopo e limitações",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-015",
+      "domain": "Population",
+      "primary_layer": "CKO-MD",
+      "requirement": "Population/applicability é objeto do MD",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-016",
+      "domain": "Patient context",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Contexto mínimo; observations de runtime",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-017",
+      "domain": "Vital signs",
+      "primary_layer": "CKO-MD",
+      "requirement": "Sinais vitais canônicos no MD",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-018",
+      "domain": "Inputs",
+      "primary_layer": "LYR-CLIN-CALC-001",
+      "requirement": "Input Contract",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-019",
+      "domain": "Required fields",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Obrigatoriedade declarativa",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-020",
+      "domain": "Parsing",
+      "primary_layer": "LYR-I18N-001",
+      "requirement": "Parser numérico locale-aware",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-021",
+      "domain": "Measure conversion",
+      "primary_layer": "CKO-MD",
+      "requirement": "Conversão dimensional fail-closed",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-022",
+      "domain": "Anomalies",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Bloqueadores de anomalia",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-023",
+      "domain": "State machine",
+      "primary_layer": "LYR-CLIN-CALC-001",
+      "requirement": "Estados NOT_EVALUATED…ERROR",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-024",
+      "domain": "Formula engine",
+      "primary_layer": "LYR-CLIN-CALC-001",
+      "requirement": "Fórmula determinística versionada",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-025",
+      "domain": "Rule engine",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Regras declarativas source-backed",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-026",
+      "domain": "Inference",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Inferência classificada com allowed_use",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-027",
+      "domain": "AI",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "IA não altera fórmula/threshold/dose/norma",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-028",
+      "domain": "Result",
+      "primary_layer": "LYR-CLIN-CALC-001",
+      "requirement": "Result Contract",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-029",
+      "domain": "Interpretation",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Interpretação separada do cálculo bruto",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-030",
+      "domain": "Calculation memory",
+      "primary_layer": "LYR-CLIN-CALC-001",
+      "requirement": "Memória de cálculo com replay hash",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-031",
+      "domain": "SAE",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "SAE orquestra evidência; NANDA só homologado",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-032",
+      "domain": "Medication safety",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Certos de medicamentos versionados",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-033",
+      "domain": "Patient safety goals",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Metas de segurança como objetos",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-034",
+      "domain": "Tips",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Dicas governadas com source binding",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-035",
+      "domain": "Common errors",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Erros comuns com condition/recovery",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-036",
+      "domain": "Related tools",
+      "primary_layer": "LYR-REC-001",
+      "requirement": "Relações tipadas, nunca lista aleatória",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-037",
+      "domain": "Related libraries",
+      "primary_layer": "LYR-REC-001",
+      "requirement": "Bibliotecas resolvidas pelo grafo",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-038",
+      "domain": "Tool handoff",
+      "primary_layer": "LYR-REC-001",
+      "requirement": "ToolHandoffContract",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-039",
+      "domain": "Visibility",
+      "primary_layer": "LYR-UI-001",
+      "requirement": "Progressive disclosure",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-040",
+      "domain": "Feedback",
+      "primary_layer": "LYR-UI-001",
+      "requirement": "FeedbackEvent reutilizável",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-041",
+      "domain": "Tooltips",
+      "primary_layer": "LYR-UI-001",
+      "requirement": "Crítico não existe só no tooltip",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-042",
+      "domain": "Tour",
+      "primary_layer": "LYR-UI-001",
+      "requirement": "Tour versionado e acessível",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-043",
+      "domain": "Progress",
+      "primary_layer": "LYR-UI-001",
+      "requirement": "Progresso real; sem percentual fictício",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-044",
+      "domain": "Responsive",
+      "primary_layer": "LYR-DS-001",
+      "requirement": "Mobile-first; verdade clínica invariante",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-045",
+      "domain": "Design system",
+      "primary_layer": "LYR-DS-001",
+      "requirement": "DS oficial; sem CSS por página",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-046",
+      "domain": "Page template",
+      "primary_layer": "LYR-PAGE-TPL-001",
+      "requirement": "Anatomia declarativa",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-047",
+      "domain": "Document/PDF template",
+      "primary_layer": "LYR-DOC-TPL-001",
+      "requirement": "Export profile; não imprime o DOM",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-048",
+      "domain": "Bibliography",
+      "primary_layer": "LYR-REF-001",
+      "requirement": "Referências visíveis; audit bindings ocultos",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-049",
+      "domain": "Evidence level",
+      "primary_layer": "LYR-REF-001",
+      "requirement": "Framework declarado; sem badge A/B arbitrário",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-050",
+      "domain": "Regulatory change badge",
+      "primary_layer": "LYR-MON-001",
+      "requirement": "Badge humano de mudança normativa",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-051",
+      "domain": "Routes",
+      "primary_layer": "LYR-ROUTE-001",
+      "requirement": "Canonical do Route Registry",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-052",
+      "domain": "SEO",
+      "primary_layer": "LYR-SEO-001",
+      "requirement": "SEO derivado de objetos canônicos",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-053",
+      "domain": "Open Graph",
+      "primary_layer": "LYR-OG-001",
+      "requirement": "OG derivado de objeto + route + locale",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-054",
+      "domain": "Structured data",
+      "primary_layer": "LYR-SEM-001",
+      "requirement": "JSON-LD derivado do tipo canônico",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-055",
+      "domain": "i18n",
+      "primary_layer": "LYR-I18N-001",
+      "requirement": "IDs invariáveis; labels localizados",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-056",
+      "domain": "Media",
+      "primary_layer": "LYR-MEDIA-001",
+      "requirement": "Assets com ID, rights, alt e hash",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-057",
+      "domain": "Charts",
+      "primary_layer": "LYR-UI-001",
+      "requirement": "VisualizationContract",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-058",
+      "domain": "Favorites",
+      "primary_layer": "LYR-USERSTATE-001",
+      "requirement": "User State referencia canonical IDs",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-059",
+      "domain": "Persistence",
+      "primary_layer": "LYR-PRV-001",
+      "requirement": "Persistência por campo",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-060",
+      "domain": "Clinical data privacy",
+      "primary_layer": "LYR-PRV-001",
+      "requirement": "Observations fora de analytics/ads",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-061",
+      "domain": "Share",
+      "primary_layer": "LYR-UI-001",
+      "requirement": "Sharebar distingue ferramenta vs resultado",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-062",
+      "domain": "Security",
+      "primary_layer": "LYR-SEC-001",
+      "requirement": "Escaping, injection, source trust",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-063",
+      "domain": "Advertising",
+      "primary_layer": "LYR-ANL-001",
+      "requirement": "Advertising Intelligence governada",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-064",
+      "domain": "Advertising safety",
+      "primary_layer": "LYR-PRV-001",
+      "requirement": "Ads nunca usam valores clínicos",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-065",
+      "domain": "Analytics",
+      "primary_layer": "LYR-ANL-001",
+      "requirement": "Allowlist; sem valor clínico bruto",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-066",
+      "domain": "Funnels",
+      "primary_layer": "LYR-ANL-001",
+      "requirement": "Funis de jornada sem dado sensível",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-067",
+      "domain": "Observability",
+      "primary_layer": "LYR-OBS-001",
+      "requirement": "Trace técnico separado de product analytics",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-068",
+      "domain": "Performance",
+      "primary_layer": "LYR-PERF-001",
+      "requirement": "Budgets de runtime/PDF/ads",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-069",
+      "domain": "Reliability",
+      "primary_layer": "LYR-REL-001",
+      "requirement": "Retries/cancel/idempotency governados",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-070",
+      "domain": "Sustainability",
+      "primary_layer": "LYR-SUS-001",
+      "requirement": "Reuso de assets e lógica",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-071",
+      "domain": "Renderer",
+      "primary_layer": "LYR-RND-001",
+      "requirement": "Renderer não contém fórmula clínica",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-072",
+      "domain": "Runtime",
+      "primary_layer": "LYR-RUN-001",
+      "requirement": "E2E dos comportamentos essenciais",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-073",
+      "domain": "PDF export",
+      "primary_layer": "LYR-EXPORT-001",
+      "requirement": "PDF só com campos permitidos",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-074",
+      "domain": "Publication",
+      "primary_layer": "LYR-PUB-001",
+      "requirement": "Release gate bloqueia HOLD a montante",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-075",
+      "domain": "Monitoring",
+      "primary_layer": "LYR-MON-001",
+      "requirement": "Monitoramento normativo pós-release",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-076",
+      "domain": "Privacy",
+      "primary_layer": "LYR-PRV-001",
+      "requirement": "NO_SENSITIVE_CAPTURE",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-077",
+      "domain": "Privacy",
+      "primary_layer": "LYR-PRV-001",
+      "requirement": "Contexto clínico efêmero e não identificável",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-078",
+      "domain": "Analytics",
+      "primary_layer": "LYR-ANL-001",
+      "requirement": "Valores clínicos fora de analytics/ads/logs",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-079",
+      "domain": "References",
+      "primary_layer": "LYR-REF-001",
+      "requirement": "URL direta à fonte primária",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-080",
+      "domain": "References",
+      "primary_layer": "LYR-REF-001",
+      "requirement": "ABNT NBR 6023:2025 como baseline",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-081",
+      "domain": "Citations",
+      "primary_layer": "LYR-REF-001",
+      "requirement": "ABNT NBR 10520:2023",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-082",
+      "domain": "Citations",
+      "primary_layer": "CKO-REG",
+      "requirement": "Pinpoint locator legal/técnico",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-083",
+      "domain": "IP",
+      "primary_layer": "CKO-REG",
+      "requirement": "Antiplágio Lei 9.610/1998, CP art. 184, Lei 9.609/1998",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-084",
+      "domain": "IP",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Fórmulas não são exclusividade autoral; provenance obrigatória",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-085",
+      "domain": "IP",
+      "primary_layer": "CKO-REG",
+      "requirement": "Expressão protegida não pode ser copiada sem base",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-086",
+      "domain": "Software IP",
+      "primary_layer": "LYR-SEC-001",
+      "requirement": "Código/deps com origem, versão e licença",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-087",
+      "domain": "Official Sources",
+      "primary_layer": "CKO-REG",
+      "requirement": "Atos oficiais com fonte, vigência e snapshot",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-088",
+      "domain": "Rounding",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "ABNT NBR 5891:2014 baseline",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-089",
+      "domain": "Rounding",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "calculation_precision ≠ display_precision",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-090",
+      "domain": "Rounding",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Regra da fonte prevalece sobre baseline",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-091",
+      "domain": "i18n/Citation",
+      "primary_layer": "LYR-I18N-001",
+      "requirement": "Citação traduzida preserva fonte e idioma",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-092",
+      "domain": "AI/References",
+      "primary_layer": "LYR-CONTENT-001",
+      "requirement": "IA não substitui referência primária",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-093",
+      "domain": "Disclaimer",
+      "primary_layer": "CKO-REG",
+      "requirement": "Aviso educacional/apoio profissional",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-094",
+      "domain": "Disclaimer",
+      "primary_layer": "CKO-REG",
+      "requirement": "Uso educacional não autoriza ato privativo",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-095",
+      "domain": "Disclaimer",
+      "primary_layer": "CKO-REG",
+      "requirement": "Disclaimer não é waiver genérico",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-096",
+      "domain": "Disclaimer visibility",
+      "primary_layer": "LYR-UI-001",
+      "requirement": "Versão curta sempre visível",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-097",
+      "domain": "Disclaimer emergency",
+      "primary_layer": "LYR-CLIN-RULE-001",
+      "requirement": "Aviso de urgência condicional",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    },
+    {
+      "id": "UTC-098",
+      "domain": "Disclaimer versioning/export",
+      "primary_layer": "LYR-EXPORT-001",
+      "requirement": "Perfil de disclaimer versionado no PDF",
+      "status": "DOCUMENTADO_HOLD",
+      "implemented": false,
+      "assured": false,
+      "canonical_promotion": false
+    }
+  ],
+  "rule": "Fonte/Norma → Requisito → CKO-REG → CKO-MD → Tool Contract → Engines → Safety/SAE → Renderer → Assurance → Release. Nenhum UTC PASS enquanto md_gate for REMEDIATION_REQUIRED_NORMATIVE_GATE."
+}

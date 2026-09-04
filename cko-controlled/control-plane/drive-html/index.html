@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drive paths do PDF · CKO controlado</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="banner"><span><strong>DRIVE READBACK</strong> · caminhos do PDF §10 + HORIZONTAL 44 camadas · leivis.melo@gmail.com</span></div>
+  <header class="top">
+    <div class="kicker">My Drive root 0AFNnC8Uinv0BUk9PVA</div>
+    <h1>Caminhos do PDF que estão no Drive</h1>
+    <p>
+      Pasta pai comprovada: Calculadoras-de-Enfermagem → 90_FINAL_CONTROLLED → HORIZONTAL.
+      Páginas institucionais Wave2 em <a href="../institucional/CKO-PAGE-INSTITUTIONAL-WAVE2-v0.2.0/index.html" style="color:#bfdbfe">/institucional/</a>.
+      Zips de 38MB e 93MB permanecem no Drive. B9 = HOLD / NOT_RELEASED. Nurse-PaLM operacional = NOT_ASSERTED.
+    </p>
+    <p id="counts" class="muted"></p>
+  </header>
+  <main>
+    <p><a href="../index.html">← Relatório técnico</a></p>
+    <div id="tbl"></div>
+  </main>
+  <script type="module">
+    const cat = await (await fetch('./catalog.json')).json();
+    document.getElementById('counts').textContent =
+      `${cat.deployedCount}/${cat.itemCount} caminhos copiados para o Site · release ${cat.release} · checkpoint ${cat.checkpoint}`;
+    const rows = cat.items.map((i) => {
+      const loc = i.deployed && i.href
+        ? `<a href="${i.href}">no Site</a>`
+        : (i.viewUrl ? `<a href="${i.viewUrl}">Drive</a>` : '');
+      return `<tr><td>${i.deployed ? 'SIM' : (i.kind || 'link')}</td><td>${i.name}</td><td><code>${i.path}</code></td><td><code>${i.id}</code></td><td>${loc}</td></tr>`;
+    });
+    document.getElementById('tbl').innerHTML = `<table><thead><tr><th>Deploy</th><th>Nome</th><th>Caminho comprovado</th><th>ID</th><th>Abrir</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+  </script>
+</body>
+</html>

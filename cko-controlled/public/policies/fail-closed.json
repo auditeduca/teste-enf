@@ -1,0 +1,149 @@
+{
+  "id": "POL-CKO-FAIL-CLOSED-1.0.0",
+  "kind": "policy-as-code",
+  "mode": "fail-closed",
+  "root": true,
+  "cascade": [
+    "policy-as-code",
+    "schemas",
+    "graph-constraints",
+    "CI-gates",
+    "runtime-assertions",
+    "automatic-evidence"
+  ],
+  "rule": "tudo inicia em policy-as-code; estágio seguinte só corre se o predecessor PASS",
+  "rules": [
+    {
+      "id": "NO_FACT_WITHOUT_EVIDENCE",
+      "deny_if": "fact && !evidence"
+    },
+    {
+      "id": "DISCOVERY_IS_NOT_EVIDENCE",
+      "deny_if": "evidence_kind == 'discovery'"
+    },
+    {
+      "id": "PENDING_IS_NOT_ACK",
+      "deny_if": "event.state == 'PENDING' && claimed_ack == true"
+    },
+    {
+      "id": "RUNTIME_OBSERVED_NOT_INFERRED",
+      "deny_if": "runtime_claim == 'observed' && runtime_source != 'observed'"
+    },
+    {
+      "id": "RELEASE_FAIL_CLOSED",
+      "deny_if": "action == 'release' && (baseline.release includes 'NOT_RELEASED' || recert == 'FAIL' || rights_holds > 0 || nurse_palm == 'NOT_ASSERTED')"
+    },
+    {
+      "id": "B9_HOLD_BLOCKS_RELEASE",
+      "deny_if": "block.B9.release == 'NOT_RELEASED' && action == 'release'"
+    },
+    {
+      "id": "RIGHTS_CHAIN_REQUIRED_TO_PUBLISH",
+      "deny_if": "action == 'publish_clinical_content' && rights_holds > 0"
+    },
+    {
+      "id": "NO_CLINICAL_CLAIM_FROM_CLASSIFICATION",
+      "deny_if": "claim == 'clinical_operational' && source == 'technical_classification'"
+    },
+    {
+      "id": "COVERAGE_100_KNOWN",
+      "deny_if": "coverage.known < 1"
+    },
+    {
+      "id": "EVIDENCE_COVERAGE_100",
+      "deny_if": "coverage.evidence < 1"
+    },
+    {
+      "id": "TEST_PASS_100_DEFINED",
+      "deny_if": "tests.failed > 0 || tests.defined == 0"
+    },
+    {
+      "id": "RESIDUAL_X_REQUIRED",
+      "deny_if": "residual_uncertainty.value == null"
+    },
+    {
+      "id": "UNKNOWN_UNIVERSE_EXPLICIT",
+      "deny_if": "unknown_universe.length == 0"
+    },
+    {
+      "id": "NO_REPORT_DASHBOARD",
+      "deny_if": "frontend.index contains report graph canvas or Relatorio Tecnico dashboard"
+    },
+    {
+      "id": "RUNTIME_IS_DRIVE_PLATFORM",
+      "deny_if": "frontend is not Wave2/Drive platform pages"
+    },
+    {
+      "id": "NO_CONTROL_ROOM_APP",
+      "deny_if": "public/app.js exists"
+    },
+    {
+      "id": "TOOL_RUNTIME_PRESENT",
+      "deny_if": "hosted site is missing calculator tool HTML/JS runtimes linked from home"
+    },
+    {
+      "id": "LIBRARY_RUNTIME_PRESENT",
+      "deny_if": "hosted site is missing biblioteca/downloads library runtimes"
+    },
+    {
+      "id": "TOOL_LIBRARIES_PRESENT",
+      "deny_if": "js/calc-engine.js or biblioteca JSON engines are missing"
+    },
+    {
+      "id": "SCHEMA_GOVERNS_RUNTIME",
+      "deny_if": "CALENF data/tools are not instances of data/schemas/tool.schema.json"
+    },
+    {
+      "id": "GRAPH_GOVERNS_RUNTIME",
+      "deny_if": "tools are not bound in js/knowledge-graph.js with fan-in to B9/B5/B10"
+    },
+    {
+      "id": "TWIN_GOVERNS_RUNTIME",
+      "deny_if": "digital twin is not NIFS-600-15 HOLD (observed/deployed claimed)"
+    },
+    {
+      "id": "NURSEPALM_GOVERNS_RUNTIME",
+      "deny_if": "Nurse-PaLM V9 engine missing or operational claimed"
+    },
+    {
+      "id": "AGENTIC_GOVERNS_RUNTIME",
+      "deny_if": "B1 agent job runtime missing, independence broken, or operational claimed"
+    },
+    {
+      "id": "PENDENCIES_EXPLICIT",
+      "deny_if": "documented PDF/directory/Wave2 pendencies are missing or incomplete"
+    },
+    {
+      "id": "DRIVE_IMMUTABLE",
+      "deny_if": "Drive copies were mutated or a pendency sets mutate_drive"
+    },
+    {
+      "id": "LAYERS_44_PRESENT",
+      "deny_if": "hosted site is missing any of the 44 classified horizontal layers from ART-CKO-44-LAYER-FINAL-TECHNICAL-CLOSURE"
+    },
+    {
+      "id": "MD_NORMS_EVIDENCE_CHAIN",
+      "deny_if": "runtime objects lack master-data, regulatory-norm binding, evidence HOLD, or frontend MD→Frontend stamp"
+    },
+    {
+      "id": "CASCADE_DECLARED",
+      "deny_if": "ecossistema.html missing policy-as-code → schemas → graph → CI → runtime → evidence declaration"
+    },
+    {
+      "id": "HOLD_HUMAN_NON_BLOCKING",
+      "deny_if": "a human decision blocks inspect/CI instead of remaining HOLD_HUMAN_NON_BLOCKING"
+    },
+    {
+      "id": "MD_REG_IS_POLICY",
+      "deny_if": "MD/REG chain is not the executable policy through the frontend"
+    },
+    {
+      "id": "DS_STARTS_AT_POLICY",
+      "deny_if": "design-system catalog does not start at policy-as-code or skips a cascade predecessor"
+    },
+    {
+      "id": "UT_POLICY_HOLD",
+      "deny_if": "CKO-POL-UT-001 claims implementation, reopens Clinical Calculators/Scales, closes the MD gate, or skips policy-as-code"
+    }
+  ]
+}

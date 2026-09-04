@@ -1,0 +1,185 @@
+name: CKO Controlled Assurance Gate
+
+on:
+  pull_request:
+  push:
+    paths:
+      - "cko-controlled/**"
+      - "reference-website/**"
+      - "firebase.json"
+      - ".github/workflows/cko-controlled-gate.yml"
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cascade policy-as-code → schemas → graph → CI → runtime → evidence
+        run: |
+          cd cko-controlled
+          python3 scripts/generate_universe.py
+          python3 scripts/sync_tool_runtime.py
+          python3 scripts/remediate_platform_now.py
+          python3 scripts/generate_pendencies.py
+          python3 scripts/report_pendency_progress.py
+          node --test tests/suite.test.js
+          node cli.mjs
+          python3 - <<'PY'
+          import json, hashlib
+          from pathlib import Path
+          r=json.load(open("public/data/gate-report.json"))
+          assert r["starts_at"]=="policy-as-code"
+          ids=[s["id"] for s in r["cascade"]]
+          assert ids==["policy-as-code","schemas","graph-constraints","CI-gates","runtime-assertions","automatic-evidence"]
+          assert all(s["status"]=="PASS" for s in r["cascade"])
+          pol=json.load(open("public/policies/fail-closed.json"))
+          assert pol["root"] is True
+          assert pol["kind"]=="policy-as-code"
+          assert pol["cascade"]==ids
+          site=Path("../reference-website")
+          idx=(site/"index.html").read_text(encoding="utf-8")
+          assert "PAGE_INSTITUTIONAL_CLUSTER" in idx
+          assert 'id="graph"' not in idx
+          firebase=json.load(open("../firebase.json"))
+          assert firebase["hosting"]["public"]=="reference-website"
+          ignore=set(firebase["hosting"]["ignore"])
+          assert "cko-relatorio-tecnico-final.html" in ignore
+          assert "grafo-clinico.html" in ignore
+          inv=json.load(open("public/data/tool-library-runtime.json"))
+          for p in ["aldrete.html","imc.html","gotejamento.html","biblioteca.html"]:
+              assert p in inv["tool_canaries"] or p in inv["library_canaries"]
+          assert inv["structure"]=="calenf"
+          gov=json.load(open(site/"data/cko/governance.json"))
+          assert gov["nursePalm"]["operational"]=="NOT_ASSERTED"
+          assert gov["digitalTwin"]["observed"] is False
+          assert gov["agentic"]["operational"]=="NOT_ASSERTED"
+          assert gov["layerCount"]==44
+          assert gov["pageCount"]==12
+          assert gov["evidence_chain"]["id"]=="CKO-MD-TO-FRONTEND-1.0.0"
+          assert gov["master_data"]["fields_classified"]==2496
+          assert gov["normative"]["bindings_classified"]==10913
+          assert gov["evidence_chain"]["no_fact_without_evidence"] is True
+          assert gov["evidence_chain"]["materialized_field_bindings"] is False
+          assert any(n.get("id")=="B1" for n in gov["nodes"])
+          assert (site/"aldrete.html").read_text(encoding="utf-8").find("btnCalcular")>=0
+          assert (site/"js/calc-engine.js").read_text(encoding="utf-8").find("calc-engine")>=0
+          assert (site/"js/nurse-palm.js").is_file()
+          assert (site/"js/knowledge-graph.js").is_file()
+          assert (site/"data/schemas/tool.schema.json").is_file()
+          layers=json.load(open(site/"data/cko/layers.json"))
+          assert layers["count"]==44
+          assert layers["id"]=="CKO-44-LAYER-SITE-1.0.0"
+          assert layers["release"].find("NOT_RELEASED")>=0
+          assert layers["published"] is False
+          assert all(row["present"] for row in layers["layers"])
+          eco=(site/"ecossistema.html").read_text(encoding="utf-8")
+          assert "LYR-CLIN-CALC-001" in eco
+          assert "CKO-MD" in eco
+          assert "LYR-MON-001" in eco
+          assert "44/44" in eco
+          assert "IA agêntica" in eco
+          assert "Nurse-PaLM" in eco
+          assert "digital twin" in eco.lower()
+          assert 'id="graph"' not in eco
+          assert layers["governed_by"]["graph"]=="js/knowledge-graph.js"
+          assert layers["governed_by"]["twin"]=="B5"
+          assert layers["governed_by"]["agentic"]=="B1"
+          assert layers["governed_by"]["nursePalm"]=="B10"
+          assert layers["governed_by"]["master_data"]=="CKO-MD"
+          assert layers["governed_by"]["regulatory"]=="CKO-REG"
+          assert layers["master_data_to_frontend"]["id"]=="CKO-MD-TO-FRONTEND-1.0.0"
+          assert layers["master_data_to_frontend"]["no_fact_without_evidence"] is True
+          assert "cko-md-norm-evidence" in eco
+          assert "2496" in eco
+          assert "10913" in eco
+          assert "cko-assurance-cascade" in eco
+          assert "policy-as-code" in eco
+          assert "/data/cko/cascade/" in eco
+          assert "HOLD_HUMAN_NON_BLOCKING" in eco
+          assert (site/"data/cko/human-decisions.json").is_file()
+          human=json.load(open(site/"data/cko/human-decisions.json"))
+          assert human["blocking_inspect"] is False
+          assert human["blocking_release"] is True
+          mdreg=json.load(open(site/"data/cko/md-reg-frontend.json"))
+          assert mdreg["id"]=="POL-CKO-MD-REG-FRONTEND-1.0.0"
+          assert mdreg["chain"]==["MD","REG","Schema","Engine","Validator","Renderer","Runtime","Frontend"]
+          shell=(site/"js/cko-page-shell.js").read_text(encoding="utf-8")
+          assert "hasStaticHero" in shell
+          assert "data-cko-deduped" in shell
+          cascade=json.load(open(site/"data/cko/cascade/index.json"))
+          assert cascade["release_allowed"] is False
+          assert cascade["cascade"]==ids
+          ds=json.load(open(site/"data/cko/design-system.json"))
+          assert ds["root"]=="policy-as-code"
+          assert ds["starts_at"]=="policy-as-code"
+          assert ds["cascade"]==ids
+          assert ds["release_allowed"] is False
+          ut=json.load(open(site/"data/cko/universal-tool.json"))
+          assert ut["id"]=="POL-CKO-UNIVERSAL-TOOL-1.3.0"
+          assert ut["document_id"]=="CKO-POL-UT-001"
+          assert ut["document_version"]=="1.3.0"
+          assert ut["control_count"]==98
+          assert len(ut["controls"])==98
+          assert ut["implemented_n"]==0
+          assert ut["implantado"] is False
+          assert ut["clinical_calculators"]=="PAUSED"
+          assert ut["md_gate"]=="REMEDIATION_REQUIRED_NORMATIVE_GATE"
+          assert ut["abnt"]["nbr_6023"]["edition"]=="2025"
+          assert ut["evaluation"]["clinical_promotion"]=="DENIED"
+          assert ut["starts_at"]=="policy-as-code"
+          assert "universal-tool" in (site/"data/cko/cascade/index.html").read_text(encoding="utf-8")
+          assert cascade["rules"]["coverage"].find("100%")>=0
+          assert cascade["verification"]["fuzz_n"]==1000
+          assert cascade["verification"]["fuzz_false_accept"]==0
+          assert cascade["verification"]["model_states"]==64
+          assert (site/"data/cko/cascade/ontology.ttl").is_file()
+          assert (site/"data/cko/cascade/shacl.json").is_file()
+          assert "owl:TransitiveProperty" in (site/"data/cko/cascade/ontology.ttl").read_text(encoding="utf-8")
+          gate=json.load(open("public/data/gate-report.json"))
+          assert gate["verification"]["fuzz"]["false_accept"]==0
+          assert gate["evaluation"]["inter_rater"]["kappa"]==1
+          idx=(site/"index.html").read_text(encoding="utf-8")
+          assert 'data-cko-md="CKO-MD"' in idx
+          assert 'data-cko-reg="CKO-REG"' in idx
+          assert 'data-cko-evidence="HOLD"' in idx
+          assert 'data-cko-chain="MD / REG / Schema / Engine / Validator / Renderer / Runtime / Frontend"' in idx
+          assert (site/"data/cko/md-norm-evidence.json").is_file()
+          p=json.load(open("public/data/pendencies.json"))
+          assert p["mutate_drive"] is False
+          assert p["closes_b9"] is False
+          assert p["items"]
+          assert sum(1 for i in p["items"] if i["kind"]=="locale-cell")==360
+          freeze=json.load(open("public/data/drive-immutable.json"))
+          for f in freeze["files"]:
+              raw=Path(f["path"]).read_bytes()
+              assert hashlib.sha256(raw).hexdigest()==f["sha256"], f["path"]
+          assert (site/"sitemap.xml").is_file()
+          assert (site/"berg.html").is_file()
+          import json as _json, re
+          asa=(site/"asa.html").read_text(encoding="utf-8")
+          m=re.search(r'<script[^>]*id="tool-config"[^>]*>(.*?)</script>', asa, re.S)
+          assert m, "asa.html missing tool-config"
+          _json.loads(m.group(1).replace("\\u003c","<"))
+          for loc in ("da","uk","zh"):
+              body=_json.loads((site/"i18n"/f"{loc}.json").read_text(encoding="utf-8"))
+              assert body["_meta"]["activate_in_selector"] is False
+              assert body["_meta"]["status"]=="HOLD_TRANSLATION_REQUIRED"
+          inv=json.load(open("public/data/tool-library-runtime.json"))
+          assert inv["tools_with_calc_runtime"]==inv["tools_n"]
+          print("cascade root policy-as-code OK; CALENF site; pendencies explicit; Drive immutable")
+          PY
+      - name: Fail-closed release invariant
+        run: |
+          python3 - <<'PY'
+          import json
+          u=json.load(open("cko-controlled/public/data/universe.json"))
+          assert u["baseline"]["release"].find("NOT_RELEASED")>=0
+          assert u["document"]["not_production_release"] is True
+          print("release remains HOLD / NOT_RELEASED")
+          PY

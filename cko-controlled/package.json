@@ -1,0 +1,16 @@
+{
+  "name": "cko-controlled-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CKO/CALENF Drive runtime platform gated by policy-as-code cascade",
+  "scripts": {
+    "generate": "python3 scripts/generate_universe.py",
+    "inventory": "python3 scripts/sync_tool_runtime.py --inventory-only",
+    "sync-runtime": "python3 scripts/sync_tool_runtime.py",
+    "gate": "node cli.mjs",
+    "test": "node --test tests/suite.test.js",
+    "ci": "python3 scripts/generate_universe.py && python3 scripts/sync_tool_runtime.py && python3 scripts/generate_pendencies.py && node --test tests/suite.test.js && node cli.mjs",
+    "serve": "python3 -m http.server 4173 --directory ../reference-website"
+  }
+}

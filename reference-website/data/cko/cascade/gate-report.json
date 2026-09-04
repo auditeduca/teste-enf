@@ -1,0 +1,552 @@
+{
+  "starts_at": "policy-as-code",
+  "cascade": [
+    {
+      "id": "policy-as-code",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": null,
+      "root": "policy-as-code",
+      "release_denied": true
+    },
+    {
+      "id": "schemas",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "policy-as-code",
+      "root": "policy-as-code",
+      "errors": []
+    },
+    {
+      "id": "graph-constraints",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "schemas",
+      "root": "policy-as-code",
+      "violations": []
+    },
+    {
+      "id": "CI-gates",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "graph-constraints",
+      "root": "policy-as-code",
+      "coverage": 1,
+      "evaluation": true,
+      "verification_ok": true
+    },
+    {
+      "id": "runtime-assertions",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "CI-gates",
+      "root": "policy-as-code",
+      "failed": []
+    },
+    {
+      "id": "automatic-evidence",
+      "ok": true,
+      "status": "PASS",
+      "predecessor": "runtime-assertions",
+      "root": "policy-as-code",
+      "receipts_n": 804,
+      "ratio": 1
+    }
+  ],
+  "rules": {
+    "coverage": "100% do universo conhecido",
+    "evidence_coverage": "100%",
+    "test_pass": "100% dos testes definidos",
+    "residual_uncertainty": "X",
+    "unknown_universe": "explicitado"
+  },
+  "release_allowed": false,
+  "coverage": {
+    "known": 804,
+    "covered": 804,
+    "ratio": 1,
+    "ok": true,
+    "missing": [],
+    "rule": "100% do universo conhecido"
+  },
+  "evidence": {
+    "ok": true,
+    "ratio": 1,
+    "known": 804,
+    "evidenced": 804
+  },
+  "residual_uncertainty": {
+    "id": "X",
+    "value": 0.7974,
+    "scale": "0=nenhuma incerteza residual operacional; 1=gap total",
+    "formula": "sum(component_i * weight_i)",
+    "interpretation": "Classificacao B1-B10 esta fechada (control_gap=0). X e dominado por NOT_RELEASED, recert FAIL, reperformance pendente, rights e outbox PENDING≠ACK.",
+    "components": {
+      "control_gap": 0,
+      "release_gap": 1,
+      "recert_gap": 1,
+      "reperf_gap": 0.598214,
+      "outbox_gap": 1,
+      "rights_gap": 1,
+      "findings_weight": 0.313,
+      "identity_gap": 0.142857
+    },
+    "weights": {
+      "release_gap": 0.28,
+      "recert_gap": 0.18,
+      "reperf_gap": 0.14,
+      "outbox_gap": 0.1,
+      "rights_gap": 0.12,
+      "findings_weight": 0.08,
+      "identity_gap": 0.06,
+      "control_gap": 0.04
+    },
+    "open_counts": {
+      "holds": 211,
+      "findings_open": 313,
+      "pending_reperformance": 201,
+      "outbox_pending": 296,
+      "rights_holds": 13,
+      "unresolved_identities": 12,
+      "classified_blocks": 13,
+      "released_blocks": 0
+    }
+  },
+  "unknown_universe": [
+    {
+      "id": "UNK-DRIVE-PARENTS",
+      "statement": "Pasta pai de alguns itens Google Drive nao foi exposta pelo conector; localizacao e Drive ID, sem fabricar pasta."
+    },
+    {
+      "id": "UNK-DRIVE-OUTSIDE-SNAPSHOT",
+      "statement": "O inventario de 449 arquivos e o snapshot materializado do manifesto 2026-09-02, nao o Drive inteiro do usuario."
+    },
+    {
+      "id": "UNK-SUPABASE-PHYSICAL",
+      "statement": "IDs Supabase sao localizacoes logicas controladas; nao sao arquivos fisicos isolados."
+    },
+    {
+      "id": "UNK-PITR",
+      "statement": "Backup materializado e baseline governada nao equivalem automaticamente a pg_dump/PITR full-restorable com restore test."
+    },
+    {
+      "id": "UNK-OBSERVED-RUNTIME",
+      "statement": "Deployment observado, browser/mobile empirico e performance observado permanecem HOLD."
+    },
+    {
+      "id": "UNK-NURSEPALM-OPS",
+      "statement": "Runtime operacional Nurse-PaLM nao foi afirmado (NOT_ASSERTED)."
+    },
+    {
+      "id": "UNK-RIGHTS-CHAIN",
+      "statement": "Cadeia de direitos de publicacao nao esta fechada (13 holds RIGHTS_PROVENANCE)."
+    },
+    {
+      "id": "UNK-CLINICAL-HOMOLOG",
+      "statement": "Homologacao clinica operacional nao foi convertida a partir da classificacao tecnica."
+    },
+    {
+      "id": "UNK-A11Y-EMPIRICAL",
+      "statement": "Acessibilidade empirica (B6.3) permanece em hold."
+    },
+    {
+      "id": "UNK-SECURITY-RECERT",
+      "statement": "1 recertificacao FAIL; SECURITY DEFINER exige hardening + reperformance."
+    },
+    {
+      "id": "UNK-OUTBOX-ACK",
+      "statement": "296 eventos PENDING no outbox; PENDING nao e ACK."
+    },
+    {
+      "id": "UNK-HEATMAP-PRIMARY",
+      "statement": "Heatmaps sao instrumentos de priorizacao; evidencia primaria permanece em checkpoints, findings, holds, versions e hashes."
+    }
+  ],
+  "verification": {
+    "shacl": {
+      "ok": true,
+      "violations": [],
+      "shapes": [
+        "BlockShape",
+        "ReleaseShape",
+        "UnknownShape",
+        "RuntimePageShape",
+        "EvidenceShape"
+      ],
+      "kind": "shacl"
+    },
+    "temporal": {
+      "ok": true,
+      "as_of": "2026-09-02",
+      "type": "temporal-property-graph",
+      "b9_open_interval": true,
+      "intervals": [
+        {
+          "id": "B1",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B2",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B3",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B4",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B5",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B6.1",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B6.2",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B6.3",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B6.4",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B7",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B8",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        },
+        {
+          "id": "B9",
+          "valid_from": "2026-09-02",
+          "valid_to": null,
+          "open": true
+        },
+        {
+          "id": "B10",
+          "valid_from": "2026-09-02",
+          "valid_to": "2026-09-02",
+          "open": false
+        }
+      ]
+    },
+    "rdf": {
+      "ok": true,
+      "tripleCount": 155,
+      "nodeCount": 60,
+      "owlOk": true,
+      "requiredOwl": [
+        "owl:TransitiveProperty",
+        "owl:inverseOf",
+        "cko:validFrom",
+        "cko:validTo",
+        "cko:precedes",
+        "cko:fanIn"
+      ],
+      "kind": "rdf-owl-projection",
+      "triples": [
+        {
+          "s": "cko:B1",
+          "p": "cko:fanIn",
+          "o": "cko:GLOBAL"
+        },
+        {
+          "s": "cko:B1",
+          "p": "cko:hasArtifact",
+          "o": "cko:ART-CKO-B1-AUD8L-FINAL-20260902"
+        },
+        {
+          "s": "cko:B1",
+          "p": "cko:hasCheckpoint",
+          "o": "cko:CP-CKO-B1-AUD8L-FINAL-20260902-001"
+        },
+        {
+          "s": "cko:B2",
+          "p": "cko:fanIn",
+          "o": "cko:GLOBAL"
+        },
+        {
+          "s": "cko:B2",
+          "p": "cko:hasArtifact",
+          "o": "cko:ART-CKO-B2-AUD8L-FINAL-20260902"
+        },
+        {
+          "s": "cko:B2",
+          "p": "cko:hasCheckpoint",
+          "o": "cko:CP-CKO-B2-AUD8L-FINAL-20260902-001"
+        },
+        {
+          "s": "cko:B3",
+          "p": "cko:fanIn",
+          "o": "cko:GLOBAL"
+        },
+        {
+          "s": "cko:B3",
+          "p": "cko:hasArtifact",
+          "o": "cko:ART-CKO-B3-AUD8L-FINAL-20260902"
+        },
+        {
+          "s": "cko:B3",
+          "p": "cko:hasCheckpoint",
+          "o": "cko:CP-CKO-B3-AUD8L-FINAL-20260902-001"
+        },
+        {
+          "s": "cko:B4",
+          "p": "cko:fanIn",
+          "o": "cko:GLOBAL"
+        },
+        {
+          "s": "cko:B4",
+          "p": "cko:hasArtifact",
+          "o": "cko:ART-CKO-B4-AUD8L-FINAL-20260902"
+        },
+        {
+          "s": "cko:B4",
+          "p": "cko:hasCheckpoint",
+          "o": "cko:CP-CKO-B4-AUD8L-FINAL-20260902-001"
+        },
+        {
+          "s": "cko:B5",
+          "p": "cko:fanIn",
+          "o": "cko:GLOBAL"
+        },
+        {
+          "s": "cko:B5",
+          "p": "cko:hasArtifact",
+          "o": "cko:ART-CKO-B5-DIGITAL-TWIN-CANONICAL-20260902"
+        },
+        {
+          "s": "cko:B5",
+          "p": "cko:hasCheckpoint",
+          "o": "cko:CP-CKO-B5-AUD8L-FINAL-20260902-001"
+        },
+        {
+          "s": "cko:B6.1",
+          "p": "cko:fanIn",
+          "o": "cko:GLOBAL"
+        },
+        {
+          "s": "cko:B6.1",
+          "p": "cko:hasArtifact",
+          "o": "cko:ART-CKO-B6C-AUD8L-FINAL-20260902"
+        },
+        {
+          "s": "cko:B6.1",
+          "p": "cko:hasCheckpoint",
+          "o": "cko:CP-CKO-B6C-AUD8L-FINAL-20260902-001"
+        },
+        {
+          "s": "cko:B6.2",
+          "p": "cko:fanIn",
+          "o": "cko:GLOBAL"
+        },
+        {
+          "s": "cko:B6.2",
+          "p": "cko:hasArtifact",
+          "o": "cko:ART-CKO-B6K-AUD8L-FINAL-20260902"
+        },
+        {
+          "s": "cko:B6.2",
+          "p": "cko:hasCheckpoint",
+          "o": "cko:CP-CKO-B6K-AUD8L-FINAL-20260902-001"
+        },
+        {
+          "s": "cko:B6.3",
+          "p": "cko:fanIn",
+          "o": "cko:GLOBAL"
+        },
+        {
+          "s": "cko:B6.3",
+          "p": "cko:hasArtifact",
+          "o": "cko:ART-CKO-B6E-AUD8L-FINAL-20260902"
+        },
+        {
+          "s": "cko:B6.3",
+          "p": "cko:hasCheckpoint",
+          "o": "cko:CP-CKO-B6E-AUD8L-FINAL-20260902-001"
+        }
+      ]
+    },
+    "reasoning": {
+      "ok": true,
+      "inferred_n": 12,
+      "kind": "owl-reasoning",
+      "note": "fan-in to HOLD B9 entails no block can be RELEASED"
+    },
+    "contracts": {
+      "ok": true,
+      "cases": [
+        {
+          "name": "provider-valid-universe",
+          "ok": true
+        },
+        {
+          "name": "consumer-released-baseline-rejected",
+          "ok": true
+        },
+        {
+          "name": "event-missing-idempotency-rejected",
+          "ok": true
+        },
+        {
+          "name": "event-valid-accepted",
+          "ok": true
+        },
+        {
+          "name": "pending-is-not-ack",
+          "ok": true
+        }
+      ],
+      "kind": "contract-testing"
+    },
+    "fuzz": {
+      "ok": true,
+      "n": 1000,
+      "false_accept": 0,
+      "seed": 20260903,
+      "samples": [],
+      "kind": "fuzzing"
+    },
+    "mutations": {
+      "ok": true,
+      "mutants": [
+        {
+          "mut": "drop-unknown",
+          "killed": true
+        },
+        {
+          "mut": "drop-X",
+          "killed": true
+        },
+        {
+          "mut": "inferred-observed",
+          "killed": true
+        },
+        {
+          "mut": "pending-as-ack",
+          "killed": true
+        }
+      ],
+      "kind": "mutation-testing"
+    },
+    "model": {
+      "ok": true,
+      "states": 64,
+      "allow": 0,
+      "live_deny": true,
+      "kind": "model-checking",
+      "invariant": "release ⇒ all flags; this universe never ALLOW"
+    },
+    "security": {
+      "ok": true,
+      "probes": [
+        {
+          "id": "FORGED_ACK",
+          "denied": true,
+          "second_effect": false
+        },
+        {
+          "id": "REPLAY",
+          "denied": true,
+          "second_effect": false
+        },
+        {
+          "id": "INJECTION",
+          "denied": true,
+          "second_effect": false
+        },
+        {
+          "id": "PATH_TRAVERSAL",
+          "denied": true,
+          "second_effect": false
+        },
+        {
+          "id": "PROMPT_INJECTION",
+          "denied": true,
+          "second_effect": false
+        }
+      ],
+      "kind": "offensive-security",
+      "note": "synthetic probes against the fail-closed engine; not a live pentest of production"
+    }
+  },
+  "evaluation": {
+    "golden_n": 12,
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "confusion": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0
+    },
+    "inter_rater": {
+      "lenses": 8,
+      "agreement": 1,
+      "kappa": 1,
+      "note": "8/8 AUD-8L lenses closed on the same classified denominator; Cohen kappa is synthetic, not production Nurse-PaLM"
+    },
+    "calibration": {
+      "ece": 0.2974,
+      "brier": 0,
+      "note": "P(release_allowed)=0 against observed HOLD; not a production model score"
+    },
+    "adversarial": {
+      "release_attempt": true
+    },
+    "drift": {
+      "baseline_sha256": "460128914264512dfd17161ba3c73ceeadd8da36775327e818f3c3ee3ab25d5a",
+      "detect": "hash mismatch vs OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0 is drift",
+      "psi": 0
+    },
+    "synthetic": true,
+    "production_nursepalm": false,
+    "ok": true
+  },
+  "orchestrator": {
+    "pattern": "EVENT → CHECKPOINT → ORCHESTRATOR",
+    "semantics": "at-least-once with idempotency; exactly-once not claimed",
+    "retries": {
+      "max": 3,
+      "then": "DLQ"
+    },
+    "acked": 2,
+    "dlq": 3,
+    "saga": {
+      "release": "compensated",
+      "note": "Release saga aborts and compensates while B9 is NOT_RELEASED"
+    }
+  }
+}
