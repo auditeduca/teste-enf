@@ -1,0 +1,25 @@
+name: Governed Execution
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    paths:
+      - "NIFS/governed-execution/**"
+      - ".github/workflows/governed-execution.yml"
+
+jobs:
+  cal-imc-001:
+    name: CAL-IMC-001 constitutional chain
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit and scenario tests
+        run: python3 -m unittest discover -s NIFS/governed-execution/tests -v
+      - name: CI gates
+        run: python3 NIFS/governed-execution/run.py ci
+      - name: End-to-end scenario
+        run: python3 NIFS/governed-execution/run.py scenario

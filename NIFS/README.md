@@ -29,6 +29,14 @@ Generated Artifacts (SQL, OpenAPI, GraphQL, FHIR, Neo4j, TypeScript, Python)
 Runtime Platform (PostgreSQL, API Server, AI Engine, Frontend)
 ```
 
+Governança executável (NIFS-1100-11):
+
+```
+POLICY + SCHEMA + GRAPH + CI + RUNTIME + EVIDENCE = GOVERNED EXECUTION
+```
+
+O primeiro objeto fechado é `CAL-IMC-001` em `governed-execution/`. Ver [NIFS-APP-H](APPENDIX/H-examples.md).
+
 O Excel nunca é consumido diretamente pela aplicação. Ele é a especificação que alimenta geradores automáticos.
 
 ## Estrutura
@@ -46,13 +54,13 @@ O Excel nunca é consumido diretamente pela aplicação. Ele é a especificaçã
 | [800](800-INTEROPERABILITY/) | Interoperability | 14 |
 | [900](900-PLATFORM/) | Platform | 16 |
 | [1000](1000-SECURITY/) | Security | 15 |
-| [1100](1100-GOVERNANCE/) | Governance | 10 |
+| [1100](1100-GOVERNANCE/) | Governance | 11 |
 | [1200](1200-QUALITY/) | Quality | 10 |
 | [1300](1300-DEVELOPER-GUIDE/) | Developer Guide | 11 |
 | [1400](1400-DEPLOYMENT/) | Deployment | 10 |
 | [1500](1500-ROADMAP/) | Roadmap | 7 |
 | [APPENDIX](APPENDIX/) | Appendix | 19 |
-| **Total** | | **261** |
+| **Total** | | **262** |
 
 ## Documentos Pré-Desenvolvimento (Obrigatórios)
 

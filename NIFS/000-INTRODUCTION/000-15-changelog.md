@@ -15,6 +15,22 @@ Track all changes to the NIFS specification across versions. Este é o históric
 
 ## 2. Changes
 
+### v2.1.0 — 2026-09-03 — Executable Governance (CAL-IMC-001)
+
+| Documento | Mudança |
+|-----------|---------|
+| NIFS-1100-11 | **Novo** — Policy-as-Code → Schema → Graph → CI → Runtime → Evidence |
+| NIFS-APP-H | Exemplo ponta a ponta `CAL-IMC-001` |
+| NIFS-100-01 | P11 No Requirement Without Enforcement |
+| Runtime | Kernel executável em `NIFS/governed-execution/` |
+
+**Resumo da versão:**
+- A calculadora de IMC deixa de ser uma página com fórmula e passa a ser um objeto governado
+- Agentes podem usar a ferramenta; não podem alterar policy/runtime
+- Tentativas negadas também emitem evidência
+- Digital Twin deriva observação com proveniência; não calcula por conta própria
+- Knowledge Licensing Registry registra que NANDA/NIC/NOC exigem licença comercial
+
 ### v2.0.0 — 2026-07-05 — UI Integration & Fluxo Cognitivo Vertical
 
 | Documento | Mudança |

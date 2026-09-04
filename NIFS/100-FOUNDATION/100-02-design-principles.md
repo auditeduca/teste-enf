@@ -30,3 +30,5 @@ Definir os princípios de design que guiam toda decisão técnica do NIS.
 | 12 | Idempotent | Mesma entrada → mesma saída |
 | 13 | Fail-Safe | Em erro, escalar para humano, nunca silenciar |
 | 14 | Versionado | Todo conhecimento e código é versionado |
+| 15 | No-Requirement-Without-Enforcement | Exigência sem policy/schema/CI/runtime/evidence é só documentação |
+| 16 | LLM-Is-Not-The-Engine | LLM não calcula, não autoriza, não é fonte da verdade nem repositório de evidência |

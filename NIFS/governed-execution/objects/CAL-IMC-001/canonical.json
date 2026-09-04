@@ -1,0 +1,70 @@
+{
+  "object_type": "CALCULATOR",
+  "canonical_id": "CAL-IMC-001",
+  "version": "1.0.0",
+  "status": "ACTIVE",
+  "schema_id": "SCHEMA-CAL-IMC-001",
+  "identity": {
+    "name": "Calculadora de Índice de Massa Corporal",
+    "domain": "NURSING",
+    "category": "CLINICAL_CALCULATOR",
+    "website_code": "CALC-IMC-001",
+    "slug": "imc"
+  },
+  "purpose": {
+    "description": "Calcula o índice de massa corporal a partir de peso e altura."
+  },
+  "inputs": [
+    {
+      "id": "weight_kg",
+      "type": "number",
+      "unit": "kg",
+      "required": true
+    },
+    {
+      "id": "height_m",
+      "type": "number",
+      "unit": "m",
+      "required": true
+    }
+  ],
+  "formula": {
+    "expression": "weight_kg / (height_m * height_m)",
+    "deterministic": true
+  },
+  "outputs": [
+    {
+      "id": "bmi",
+      "type": "number",
+      "unit": "kg/m2"
+    }
+  ],
+  "presentation": {
+    "decimals": 1,
+    "note": "Presentation rounding must not replace the canonical value."
+  },
+  "governance": {
+    "policy_id": "POL-CAL-IMC-001",
+    "policy_version": "1.0.0",
+    "security": {
+      "llm_arithmetic": false,
+      "agent_may_use": true,
+      "agent_may_modify": false
+    },
+    "privacy": {
+      "stores_phi": false,
+      "input_hashed_in_evidence": true
+    },
+    "accessibility": {
+      "wcag": "AA",
+      "renderer_contract": "RTC-CALCULATOR-001"
+    },
+    "recovery": {
+      "replay_from_evidence": true
+    }
+  },
+  "evidence": {
+    "required": true,
+    "contract": "EVC-CALCULATION-001"
+  }
+}

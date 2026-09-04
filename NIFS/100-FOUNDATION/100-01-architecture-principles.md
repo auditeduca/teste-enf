@@ -59,6 +59,34 @@ Nenhuma decisão clínica complexa é tomada por um único agente. O Conselho Mu
 
 A IA propõe. O enfermeiro decide. Toda recomendação pode ser aceita, modificada, rejeitada ou escalada. O feedback humano alimenta o aprendizado.
 
+### P11. No Requirement Without Enforcement
+
+Toda exigência deve chegar até enforcement. Policy é código. Schema é enforcement estrutural. Graph constraint é enforcement semântico. CI gate é enforcement de promoção. Runtime assertion é enforcement operacional. Evidence é subproduto automático da execução.
+
+```
+NO REQUIREMENT WITHOUT POLICY
+NO POLICY WITHOUT ENFORCEMENT
+NO OBJECT WITHOUT SCHEMA
+NO RELATION WITHOUT GRAPH CONSTRAINT
+NO RELEASE WITHOUT CI GATE
+NO ACTION WITHOUT RUNTIME ASSERTION
+NO EXECUTION WITHOUT EVIDENCE
+NO EVIDENCE WITHOUT PROVENANCE
+NO GOVERNED SYSTEM WITHOUT AUDIT
+```
+
+O modelo pode propor. A arquitetura decide se pode executar.
+
+```
+LLM ≠ SOURCE OF TRUTH
+LLM ≠ CALCULATION ENGINE
+LLM ≠ POLICY ENGINE
+LLM ≠ AUTHORIZATION ENGINE
+LLM ≠ EVIDENCE STORE
+```
+
+Referência: [NIFS-1100-11](../1100-GOVERNANCE/1100-11-executable-governance.md). Exemplo fechado: `CAL-IMC-001` em `governed-execution/`.
+
 ## 3. Architectural Patterns
 
 ### 3.1 Layered Architecture
@@ -132,3 +160,4 @@ Quando houver conflito entre princípios, a precedência é:
 | Version | Date | Change | Author |
 |---------|------|--------|--------|
 | 1.0.0 | 2026-07-05 | Initial draft | Leivis Melo |
+| 1.1.0 | 2026-09-03 | P11 No Requirement Without Enforcement | Leivis Melo |
