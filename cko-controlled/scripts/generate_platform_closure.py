@@ -79,14 +79,21 @@ HOLDS = [
         "policy_type": "RELEASE",
         "name": "Homologação clínica operacional",
         "decision": "Homologação clínica operacional",
-        "next_human": "Assinar homologação clínica operacional",
-        "code_progress": "CKO-POL-UT-001 especializa o molde; templates BOUND_HOLD; calculadoras PAUSED; promoção DENIED",
+        "next_human": "Homologação clínica operacional permanece DENIED (2026-09-05); nova assinatura só se reabrir",
+        "code_progress": "Humano 2026-09-05: DENIED. CKO-POL-UT-001 especializa o molde; templates BOUND_HOLD; calculadoras PAUSED; promoção DENIED",
         "modality": "MUST_NOT",
         "objective": "block_clinical_promotion_until_human_homologation",
         "deny_if": "clinical_promotion != DENIED or calculators != PAUSED",
         "layers": ["LYR-CLIN-CALC-001", "CKO-MD", "CKO-REG"],
         "authority": ["CKO-REG", "CKO-MD", "CKO-POL-UT-001"],
         "count": None,
+        "recorded_human": {
+            "verdict": "DENIED",
+            "recorded_at": "2026-09-05T20:21:00Z",
+            "source": "user_message",
+            "unpauses_calc_scales": False,
+            "closes_b9": False,
+        },
     },
     {
         "hold_id": "HOLD-HUMAN-RIGHTS-CHAIN",
@@ -95,7 +102,7 @@ HOLDS = [
         "name": "Cadeia de direitos de publicação",
         "decision": "Cadeia de direitos de publicação (13 holds)",
         "next_human": "Clearance jurídico da cadeia de direitos",
-        "code_progress": "13 rights holds explícitos em pendencies; sem assets novos",
+        "code_progress": "13 rights holds explícitos em pendencies; títulos individuais NÃO extraídos do PDF; sem assets novos",
         "modality": "MUST_NOT",
         "objective": "block_publication_while_rights_holds_open",
         "deny_if": "rights_holds > 0 and action == publish",
@@ -260,7 +267,7 @@ def specialize(hold: dict) -> dict:
 
 
 def hold_policy(hold: dict) -> dict:
-    return {
+    policy = {
         "id": hold["policy_id"],
         "kind": "policy-as-code",
         "hold_id": hold["hold_id"],
@@ -288,6 +295,9 @@ def hold_policy(hold: dict) -> dict:
         "count": hold["count"],
         "contract": specialize(hold),
     }
+    if hold.get("recorded_human"):
+        policy["recorded_human"] = hold["recorded_human"]
+    return policy
 
 
 def ledger() -> dict:
@@ -309,6 +319,8 @@ def ledger() -> dict:
         }
         if hold["count"] is not None:
             item["count"] = hold["count"]
+        if hold.get("recorded_human"):
+            item["recorded_human"] = hold["recorded_human"]
         items.append(item)
     return {
         "id": "CKO-HOLD-HUMAN-1.0.0",
