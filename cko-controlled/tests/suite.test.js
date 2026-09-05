@@ -2134,6 +2134,39 @@ describe("ChatGPT Wave0 nested census HOLD", () => {
   });
 });
 
+describe("Rights decision form HOLD", () => {
+  it("keeps 13 RIGHTS_PROVENANCE slots untitled and records clinical DENIED", () => {
+    const stamp = JSON.parse(readFileSync(join(gatePub, "data/CKO-RIGHTS-DECISION-FORM-HOLD.json"), "utf8"));
+    const human = JSON.parse(readFileSync(join(gatePub, "data/human-decisions.json"), "utf8"));
+    const html = readFileSync(join(site, "cko-estado.html"), "utf8");
+    assert.equal(stamp.release_allowed, false);
+    assert.equal(stamp.closes_b9, false);
+    assert.equal(stamp.titles_invented, false);
+    assert.equal(stamp.bucket.count, 13);
+    assert.equal(stamp.bucket.titles_in_ledger, false);
+    assert.equal(stamp.unnamed_slots.length, 13);
+    assert.ok(stamp.unnamed_slots.every((s) => s.title === null && s.title_in_ledger === false));
+    assert.equal(stamp.recorded_human["HOLD-HUMAN-CLINICAL-HOMOLOG"].verdict, "DENIED");
+    assert.equal(stamp.clinical_promotion, "DENIED");
+    assert.equal(stamp.calculators_scales, "PAUSED");
+    assert.equal(stamp.named_rights_adjacent_not_the_13_titles.length, 6);
+    const clinical = human.items.find((i) => i.id === "HOLD-HUMAN-CLINICAL-HOMOLOG");
+    assert.equal(clinical.recorded_human.verdict, "DENIED");
+    assert.equal(clinical.recorded_human.unpauses_calc_scales, false);
+    assert.equal(clinical.recorded_human.closes_b9, false);
+    const rights = human.items.find((i) => i.id === "HOLD-HUMAN-RIGHTS-CHAIN");
+    assert.equal(rights.count, 13);
+    assert.match(rights.code_progress, /NÃO extraídos/);
+    assert.match(html, /13 RIGHTS_PROVENANCE/);
+    assert.match(html, /títulos não estão no ledger/);
+    assert.match(html, /RIGHTS-PROVENANCE-SLOT-01/);
+    assert.match(html, /titles_in_ledger: false/);
+    assert.match(html, /clinical_promotion: DENIED/);
+    assert.equal(html.includes("md_reg_complete: true"), false);
+    assert.equal(html.includes("implantado: true"), false);
+  });
+});
+
 describe("GitHub Pages CALENF runtime", () => {
   it("stages reference-website with project-site base and site-pattern canaries", () => {
     const out = mkdtempSync(join(tmpdir(), "cko-pages-"));

@@ -18,6 +18,8 @@ OUT_CASCADE = SITE / "data" / "cko" / "cascade" / "platform-closure.json"
 OUT_LEDGER = GATE / "public" / "data" / "human-decisions.json"
 OUT_LEDGER_SITE = SITE / "data" / "cko" / "human-decisions.json"
 OUT_LEDGER_CASCADE = SITE / "data" / "cko" / "cascade" / "human-decisions.json"
+OUT_RIGHTS_FORM = GATE / "public" / "data" / "CKO-RIGHTS-DECISION-FORM-HOLD.json"
+OUT_RIGHTS_FORM_SITE = SITE / "data" / "cko" / "CKO-RIGHTS-DECISION-FORM-HOLD.json"
 
 POLICY_MASTER_ID = "POL-CKO-POLICY-MASTER-CONTRACT-1.0.0"
 FAIL_CLOSED_ID = "POL-CKO-FAIL-CLOSED-1.0.0"
@@ -79,14 +81,21 @@ HOLDS = [
         "policy_type": "RELEASE",
         "name": "Homologação clínica operacional",
         "decision": "Homologação clínica operacional",
-        "next_human": "Assinar homologação clínica operacional",
-        "code_progress": "CKO-POL-UT-001 especializa o molde; templates BOUND_HOLD; calculadoras PAUSED; promoção DENIED",
+        "next_human": "Homologação clínica operacional permanece DENIED (2026-09-05); nova assinatura só se reabrir",
+        "code_progress": "Humano 2026-09-05: DENIED. CKO-POL-UT-001 especializa o molde; templates BOUND_HOLD; calculadoras PAUSED; promoção DENIED",
         "modality": "MUST_NOT",
         "objective": "block_clinical_promotion_until_human_homologation",
         "deny_if": "clinical_promotion != DENIED or calculators != PAUSED",
         "layers": ["LYR-CLIN-CALC-001", "CKO-MD", "CKO-REG"],
         "authority": ["CKO-REG", "CKO-MD", "CKO-POL-UT-001"],
         "count": None,
+        "recorded_human": {
+            "verdict": "DENIED",
+            "recorded_at": "2026-09-05T20:21:00Z",
+            "source": "user_message",
+            "unpauses_calc_scales": False,
+            "closes_b9": False,
+        },
     },
     {
         "hold_id": "HOLD-HUMAN-RIGHTS-CHAIN",
@@ -95,7 +104,7 @@ HOLDS = [
         "name": "Cadeia de direitos de publicação",
         "decision": "Cadeia de direitos de publicação (13 holds)",
         "next_human": "Clearance jurídico da cadeia de direitos",
-        "code_progress": "13 rights holds explícitos em pendencies; sem assets novos",
+        "code_progress": "13 rights holds explícitos em pendencies; títulos individuais NÃO extraídos do PDF; sem assets novos",
         "modality": "MUST_NOT",
         "objective": "block_publication_while_rights_holds_open",
         "deny_if": "rights_holds > 0 and action == publish",
@@ -260,7 +269,7 @@ def specialize(hold: dict) -> dict:
 
 
 def hold_policy(hold: dict) -> dict:
-    return {
+    policy = {
         "id": hold["policy_id"],
         "kind": "policy-as-code",
         "hold_id": hold["hold_id"],
@@ -288,6 +297,9 @@ def hold_policy(hold: dict) -> dict:
         "count": hold["count"],
         "contract": specialize(hold),
     }
+    if hold.get("recorded_human"):
+        policy["recorded_human"] = hold["recorded_human"]
+    return policy
 
 
 def ledger() -> dict:
@@ -309,6 +321,8 @@ def ledger() -> dict:
         }
         if hold["count"] is not None:
             item["count"] = hold["count"]
+        if hold.get("recorded_human"):
+            item["recorded_human"] = hold["recorded_human"]
         items.append(item)
     return {
         "id": "CKO-HOLD-HUMAN-1.0.0",
@@ -390,13 +404,148 @@ def write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def unnamed_slot(n: int) -> dict:
+    return {
+        "slot": n,
+        "id": f"RIGHTS-PROVENANCE-SLOT-{n:02d}",
+        "title": None,
+        "title_in_ledger": False,
+        "awaiting": "CLEAR | HOLD | DENY",
+        "initials": None,
+        "date": None,
+        "notes": None,
+    }
+
+
+def rights_decision_form() -> dict:
+    """13 untitled slots. Do not invent PDF titles. Clinical DENIED is recorded."""
+    return {
+        "id": "CKO-RIGHTS-DECISION-FORM-HOLD-1.0.0",
+        "title": "Formulário de decisão — 13 RIGHTS_PROVENANCE sem títulos no ledger",
+        "kind": "rights-decision-form-hold",
+        "root": "policy-as-code",
+        "status": "HOLD_HUMAN_NON_BLOCKING",
+        "active": False,
+        "implantado": False,
+        "assured": False,
+        "release": "HOLD / NOT_RELEASED",
+        "release_allowed": False,
+        "published": False,
+        "operational": "NOT_ASSERTED",
+        "md_reg_complete": False,
+        "clinical_promotion": "DENIED",
+        "calculators_scales": "PAUSED",
+        "closes_b9": False,
+        "mutate_drive": False,
+        "do_not_alter_drive_file": True,
+        "titles_invented": False,
+        "canonical_navy": "#1A3E74",
+        "canonical_navy_token": "--cko-navy-900",
+        "readback": "2026-09-05T20:21:00Z",
+        "rule": "O Relatório Técnico OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0 deixa a contagem rights_holds=13. O ledger não extrai 13 títulos. SLOT-01..13 não são nomes do PDF. Decisão humana não fecha B9.",
+        "recorded_human": {
+            "HOLD-HUMAN-CLINICAL-HOMOLOG": {
+                "verdict": "DENIED",
+                "recorded_at": "2026-09-05T20:21:00Z",
+                "source": "user_message",
+                "text": "1 - continua denied",
+                "unpauses_calc_scales": False,
+                "clinical_promotion": "DENIED",
+                "closes_b9": False,
+            }
+        },
+        "bucket": {
+            "id": "HOLD-HUMAN-RIGHTS-CHAIN",
+            "also": [
+                "PEND-PDF-RIGHTS-BUCKET",
+                "PEND-P1-RIGHTS",
+                "UNK-RIGHTS-CHAIN",
+                "P1-RIGHTS",
+            ],
+            "count": 13,
+            "kind": "RIGHTS_PROVENANCE",
+            "source_document": "OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0",
+            "titles_in_ledger": False,
+            "next_action": "CLOSE_RIGHTS_CHAIN_BEFORE_PUBLISH",
+            "awaiting": "CLEAR | HOLD | DENY",
+            "initials": None,
+            "date": None,
+            "notes": None,
+        },
+        "unnamed_slots": [unnamed_slot(n) for n in range(1, 14)],
+        "named_rights_adjacent_not_the_13_titles": [
+            {
+                "id": "HOLD-HUMAN-HERO-MEDIA-RIGHTS",
+                "what": "Mídia de hero (camada 7) e direitos de imagem",
+                "status": "HOLD_HUMAN_NON_BLOCKING",
+                "awaiting": "CLEAR | HOLD | DENY",
+                "initials": None,
+                "date": None,
+            },
+            {
+                "id": "PEND-HOLD-B6.1-rights",
+                "what": "Rights no bloco B6.1 Clinical Vertical",
+                "status": "HOLD",
+                "awaiting": "CLEAR | HOLD | DENY",
+                "initials": None,
+                "date": None,
+            },
+            {
+                "id": "PEND-HOLD-B6.2-rights",
+                "what": "Rights no bloco B6.2 Knowledge/Libraries",
+                "status": "HOLD",
+                "awaiting": "CLEAR | HOLD | DENY",
+                "initials": None,
+                "date": None,
+            },
+            {
+                "id": "PEND-HOLD-B6.3-rights",
+                "what": "Rights no bloco B6.3 Experience/Publication",
+                "status": "HOLD",
+                "awaiting": "CLEAR | HOLD | DENY",
+                "initials": None,
+                "date": None,
+            },
+            {
+                "id": "PEND-W2-H10",
+                "what": "H10 Rights / Licensing / Copyright (Wave2)",
+                "status": "HOLD_SCOPED",
+                "awaiting": "CLEAR | HOLD | DENY",
+                "initials": None,
+                "date": None,
+            },
+            {
+                "id": "SRC-REF-0001",
+                "what": "Visual Reference Asset Registry — rights_status mixed_unknown; ai_processing_permission DENY. Histórico 2026-08-05. Não fecha o bucket de 13.",
+                "status": "HOLD",
+                "awaiting": "CLEAR | HOLD | DENY",
+                "initials": None,
+                "date": None,
+            },
+        ],
+        "how_to_reply": {
+            "choices": ["CLEAR", "HOLD", "DENY"],
+            "required": ["initials", "date"],
+            "optional": ["title_if_known_from_pdf", "notes"],
+            "bucket_decision_is_enough": True,
+            "slot_decisions_optional": True,
+            "named_adjacent_optional": True,
+            "does_not_close_b9": True,
+            "does_not_publish": True,
+        },
+    }
+
+
 def generate() -> dict:
     closure = build()
     human = ledger()
+    rights = rights_decision_form()
     for dest in (OUT_POLICY, OUT_SITE, OUT_CASCADE):
         write_json(dest, closure)
     for dest in (OUT_LEDGER, OUT_LEDGER_SITE, OUT_LEDGER_CASCADE):
         write_json(dest, human)
+    for dest in (OUT_RIGHTS_FORM, OUT_RIGHTS_FORM_SITE):
+        write_json(dest, rights)
     return closure
 
 
