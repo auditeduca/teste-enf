@@ -20,8 +20,8 @@
   "titles_invented": false,
   "canonical_navy": "#1A3E74",
   "canonical_navy_token": "--cko-navy-900",
-  "readback": "2026-09-05T20:21:00Z",
-  "rule": "O Relatório Técnico OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0 deixa a contagem rights_holds=13. O ledger não extrai 13 títulos. SLOT-01..13 não são nomes do PDF. Decisão humana não fecha B9.",
+  "readback": "2026-09-05T20:58:00Z",
+  "rule": "O Relatório Técnico OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0 deixa a contagem rights_holds=13. O ledger não extrai 13 títulos. SLOT-01..13 não são nomes do PDF. Aprovação humana do bucket não zera a contagem, não é proveniência por mídia/marca e não fecha B9.",
   "recorded_human": {
     "HOLD-HUMAN-CLINICAL-HOMOLOG": {
       "verdict": "DENIED",
@@ -31,8 +31,21 @@
       "unpauses_calc_scales": false,
       "clinical_promotion": "DENIED",
       "closes_b9": false
+    },
+    "HOLD-HUMAN-RIGHTS-CHAIN": {
+      "verdict": "APPROVED",
+      "mapped_choice": "CLEAR",
+      "recorded_at": "2026-09-05T20:58:00Z",
+      "source": "user_message",
+      "text": "aprovado",
+      "scope": "bucket_and_named_adjacent",
+      "closes_rights_count_13": false,
+      "provenance_per_media": false,
+      "closes_b9": false
     }
   },
+  "closes_rights_count_13": false,
+  "provenance_per_media": false,
   "bucket": {
     "id": "HOLD-HUMAN-RIGHTS-CHAIN",
     "also": [
@@ -45,11 +58,13 @@
     "kind": "RIGHTS_PROVENANCE",
     "source_document": "OV-CKO-GLOBAL-FINAL-AUD8L-1.0.0",
     "titles_in_ledger": false,
-    "next_action": "CLOSE_RIGHTS_CHAIN_BEFORE_PUBLISH",
-    "awaiting": "CLEAR | HOLD | DENY",
+    "next_action": "KEEP_RIGHTS_COUNT_13_UNTIL_PER_MEDIA_PROVENANCE",
+    "awaiting": null,
+    "verdict": "APPROVED",
+    "mapped_choice": "CLEAR",
     "initials": null,
-    "date": null,
-    "notes": null
+    "date": "2026-09-05",
+    "notes": "user_message: aprovado. Bucket only. Slots remain untitled."
   },
   "unnamed_slots": [
     {
@@ -188,49 +203,57 @@
       "id": "HOLD-HUMAN-HERO-MEDIA-RIGHTS",
       "what": "Mídia de hero (camada 7) e direitos de imagem",
       "status": "HOLD_HUMAN_NON_BLOCKING",
-      "awaiting": "CLEAR | HOLD | DENY",
+      "verdict": "APPROVED",
+      "mapped_choice": "CLEAR",
+      "publishes_hero_layer_7": false,
       "initials": null,
-      "date": null
+      "date": "2026-09-05"
     },
     {
       "id": "PEND-HOLD-B6.1-rights",
       "what": "Rights no bloco B6.1 Clinical Vertical",
       "status": "HOLD",
-      "awaiting": "CLEAR | HOLD | DENY",
+      "verdict": "APPROVED",
+      "mapped_choice": "CLEAR",
       "initials": null,
-      "date": null
+      "date": "2026-09-05"
     },
     {
       "id": "PEND-HOLD-B6.2-rights",
       "what": "Rights no bloco B6.2 Knowledge/Libraries",
       "status": "HOLD",
-      "awaiting": "CLEAR | HOLD | DENY",
+      "verdict": "APPROVED",
+      "mapped_choice": "CLEAR",
       "initials": null,
-      "date": null
+      "date": "2026-09-05"
     },
     {
       "id": "PEND-HOLD-B6.3-rights",
       "what": "Rights no bloco B6.3 Experience/Publication",
       "status": "HOLD",
-      "awaiting": "CLEAR | HOLD | DENY",
+      "verdict": "APPROVED",
+      "mapped_choice": "CLEAR",
       "initials": null,
-      "date": null
+      "date": "2026-09-05"
     },
     {
       "id": "PEND-W2-H10",
       "what": "H10 Rights / Licensing / Copyright (Wave2)",
       "status": "HOLD_SCOPED",
-      "awaiting": "CLEAR | HOLD | DENY",
+      "verdict": "APPROVED",
+      "mapped_choice": "CLEAR",
       "initials": null,
-      "date": null
+      "date": "2026-09-05"
     },
     {
       "id": "SRC-REF-0001",
       "what": "Visual Reference Asset Registry — rights_status mixed_unknown; ai_processing_permission DENY. Histórico 2026-08-05. Não fecha o bucket de 13.",
       "status": "HOLD",
-      "awaiting": "CLEAR | HOLD | DENY",
+      "verdict": "APPROVED",
+      "mapped_choice": "CLEAR",
+      "closes_rights_count_13": false,
       "initials": null,
-      "date": null
+      "date": "2026-09-05"
     }
   ],
   "how_to_reply": {
@@ -239,18 +262,12 @@
       "HOLD",
       "DENY"
     ],
-    "required": [
-      "initials",
-      "date"
-    ],
-    "optional": [
-      "title_if_known_from_pdf",
-      "notes"
-    ],
+    "received": "aprovado",
+    "mapped_choice": "CLEAR",
     "bucket_decision_is_enough": true,
-    "slot_decisions_optional": true,
-    "named_adjacent_optional": true,
+    "slots_remain_untitled": true,
     "does_not_close_b9": true,
-    "does_not_publish": true
+    "does_not_publish": true,
+    "does_not_zero_rights_holds": true
   }
 }
