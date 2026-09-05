@@ -643,6 +643,7 @@ KEEP_DATA = {
     "unknown-universe.json",
     "design-system.json",
     "human-decisions.json",
+    "CKO-RIGHTS-DECISION-FORM-HOLD.json",
 }
 
 
@@ -759,6 +760,18 @@ def restore_human_decisions_ledger() -> None:
     write_json(overlay, payload)
 
 
+def restore_rights_decision_form() -> None:
+    """Keep the untitled 13-slot rights form. drop_duplicate would otherwise delete it."""
+    overlay = GATE / "public" / "data" / "CKO-RIGHTS-DECISION-FORM-HOLD.json"
+    site_copy = SITE / "data" / "cko" / "CKO-RIGHTS-DECISION-FORM-HOLD.json"
+    src = overlay if overlay.is_file() else site_copy
+    if not src.is_file():
+        raise SystemExit("CKO-RIGHTS-DECISION-FORM-HOLD.json missing from overlay and CALENF runtime")
+    payload = json.loads(src.read_text(encoding="utf-8"))
+    write_json(site_copy, payload)
+    write_json(overlay, payload)
+
+
 def main() -> None:
     overlay_wave2_into_calenf()
     write_home_aliases()
@@ -783,6 +796,7 @@ def main() -> None:
     if "--inventory-only" not in sys.argv:
         drop_duplicate_cko_copies()
     restore_human_decisions_ledger()
+    restore_rights_decision_form()
     assert_canaries(slim, governance)
     print(
         json.dumps(
