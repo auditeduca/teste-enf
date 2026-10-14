@@ -4,7 +4,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "public" / "data"
@@ -559,7 +562,7 @@ def universe() -> dict:
         "supabase": {
             "project_ref": "pgsybzggewhinaniybiy",
             "logical_root": "supabase://pgsybzggewhinaniybiy/cko_governance/controlled_artifacts/",
-            "note": "Localizacao logica controlada; nao e arquivo fisico isolado.",
+            "note": "Localizacao logica controlada; nao e arquivo fisico isolado. Readback 2026-10-14 em CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json.",
         },
         "limitations": [
             "O PDF documenta a baseline tecnica/controlada do programa. Nao declara release de producao.",
@@ -630,8 +633,12 @@ def main() -> None:
         DATA / "residual-uncertainty.json",
         uni["residual_uncertainty"],
     )
+    from generate_truth_index import generate as generate_truth_index
+
+    truth = generate_truth_index()
     print("universe sha256", uni["materialization"]["sha256"])
     print("known objects", uni["materialization"]["known_object_count"])
+    print("truth_index", truth["id"], truth["materialization"]["sha256"])
 
 
 if __name__ == "__main__":

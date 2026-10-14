@@ -805,6 +805,64 @@ describe("MD/REG as policy through the frontend", () => {
   });
 });
 
+describe("Drive × Supabase observed truth index HOLD", () => {
+  const stampName = "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json";
+  const overlay = JSON.parse(readFileSync(join(gatePub, "data", stampName), "utf8"));
+  const hosted = JSON.parse(readFileSync(join(site, "data/cko", stampName), "utf8"));
+  const page = readFileSync(join(site, "cko-verdade.html"), "utf8");
+
+  it("keeps one observed catalog that does not replace CKO-MD or CKO-REG", () => {
+    assert.deepEqual(overlay, hosted);
+    assert.equal(overlay.id, "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD");
+    assert.equal(overlay.kind, "observed_catalog");
+    assert.equal(overlay.new_architectural_root, false);
+    assert.equal(overlay.replaces_cko_md, false);
+    assert.equal(overlay.replaces_cko_reg, false);
+    assert.equal(overlay.replaces_source_registry, false);
+    assert.equal(overlay.replaces_universe_supabase_ref, false);
+    assert.deepEqual(overlay.authority.canonical_ids, ["CKO-MD", "CKO-REG"]);
+  });
+
+  it("stays fail-closed and does not close B9 or clinical promotion", () => {
+    assert.equal(overlay.release, "HOLD / NOT_RELEASED");
+    assert.equal(overlay.b9, "HOLD / NOT_RELEASED");
+    assert.equal(overlay.release_allowed, false);
+    assert.equal(overlay.closes_b9, false);
+    assert.equal(overlay.nursePalmOperational, "NOT_ASSERTED");
+    assert.equal(overlay.clinical_promotion, "DENIED");
+    assert.equal(overlay.calculators, "PAUSED");
+    assert.equal(overlay.scales, "PAUSED");
+    assert.equal(overlay.md_reg_complete, false);
+    assert.equal(overlay.observed_runtime, false);
+    assert.equal(overlay.drive.do_not_alter, true);
+    assert.equal(overlay.connector.drive_writes, 0);
+    assert.equal(overlay.connector.supabase_ddl, 0);
+  });
+
+  it("records the live MCP conflict without inventing a single physical Supabase", () => {
+    assert.equal(overlay.supabase.documented_logical_ref.project_ref, "pgsybzggewhinaniybiy");
+    assert.equal(overlay.supabase.documented_logical_ref.in_mcp_project_list, false);
+    assert.equal(overlay.supabase.site_forum_ref.in_mcp_project_list, false);
+    assert.equal(overlay.supabase.live_readable.project_id, "aevqrmkdhffmursdtcmo");
+    assert.equal(overlay.supabase.live_readable.cko_governance_schema, false);
+    assert.equal(overlay.supabase.live_readable.tables["cko_editorial.resources"].rows, 80);
+    assert.equal(overlay.supabase.live_readable.tables["cko_editorial.resources"].by_status.inventory, 80);
+    assert.equal(overlay.supabase.live_readable.tables["cko_atlas_lab.canonical_atoms"].publication_allowed_true, 0);
+    assert.equal(overlay.supabase.live_readable.tables["regulatory.instruments"].rows, 0);
+    assert.equal(universe.supabase.project_ref, "pgsybzggewhinaniybiy");
+  });
+
+  it("renders the Portuguese HOLD page without claiming release", () => {
+    assert.match(page, /data-cko-evidence="HOLD"/);
+    assert.match(page, /Uma base observada, não uma nova raiz/);
+    assert.match(page, /HOLD \/ NOT_RELEASED/);
+    assert.match(page, /CKO-MD/);
+    assert.match(page, /CKO-REG/);
+    assert.equal(page.includes("RELEASED_TO_PRODUCTION"), false);
+    assert.equal(page.includes("ACTIVE operacional"), false);
+  });
+});
+
 describe("chrome templates", () => {
   it("keeps calculator/tool/institutional templates with slots xor static chrome", () => {
     for (const name of ["calculator.html", "tool.html", "institutional.html"]) {

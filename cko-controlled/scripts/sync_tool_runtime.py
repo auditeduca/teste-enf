@@ -627,6 +627,7 @@ KEEP_OVERLAY = {
     "global-scripts.js",
     "global-styles.css",
     "lang-selector.js",
+    "cko-verdade.html",
 } | set(WAVE2_PAGES)
 KEEP_DATA = {
     "drive-immutable.json",
@@ -643,6 +644,7 @@ KEEP_DATA = {
     "unknown-universe.json",
     "design-system.json",
     "human-decisions.json",
+    "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json",
 }
 
 
@@ -759,6 +761,22 @@ def restore_human_decisions_ledger() -> None:
     write_json(overlay, payload)
 
 
+def restore_truth_index() -> None:
+    """Keep the observed Drive×Supabase catalog. drop_duplicate would otherwise delete it."""
+    overlay = GATE / "public" / "data" / "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json"
+    site_copy = SITE / "data" / "cko" / "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json"
+    src = overlay if overlay.is_file() else site_copy
+    if not src.is_file():
+        raise SystemExit("CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json missing from overlay and CALENF runtime")
+    payload = json.loads(src.read_text(encoding="utf-8"))
+    write_json(site_copy, payload)
+    write_json(overlay, payload)
+    page = GATE / "public" / "cko-verdade.html"
+    if not page.is_file():
+        raise SystemExit("cko-verdade.html missing from overlay")
+    shutil.copy2(page, SITE / "cko-verdade.html")
+
+
 def main() -> None:
     overlay_wave2_into_calenf()
     write_home_aliases()
@@ -783,6 +801,7 @@ def main() -> None:
     if "--inventory-only" not in sys.argv:
         drop_duplicate_cko_copies()
     restore_human_decisions_ledger()
+    restore_truth_index()
     assert_canaries(slim, governance)
     print(
         json.dumps(
