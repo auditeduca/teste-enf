@@ -629,6 +629,7 @@ KEEP_OVERLAY = {
     "lang-selector.js",
     "cko-verdade.html",
     "cko-governanca.html",
+    "cko-norma.html",
 } | set(WAVE2_PAGES)
 KEEP_DATA = {
     "drive-immutable.json",
@@ -647,6 +648,7 @@ KEEP_DATA = {
     "human-decisions.json",
     "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json",
     "CKO-DIRECTORY-GOVERNANCE-HOLD.json",
+    "norms",
 }
 
 
@@ -795,6 +797,25 @@ def restore_directory_governance() -> None:
     shutil.copy2(page, SITE / "cko-governanca.html")
 
 
+def restore_norm_instrument() -> None:
+    """Keep the first HOLD instrument. Not a 13th runtime page. drop_duplicate would drop the HTML."""
+    name = "BR_FED_COFEN_NOTATEC_2025_N_00006.json"
+    overlay = GATE / "public" / "data" / "norms" / name
+    site_dir = SITE / "data" / "cko" / "norms"
+    site_copy = site_dir / name
+    src = overlay if overlay.is_file() else site_copy
+    if not src.is_file():
+        raise SystemExit("norm instrument JSON missing from overlay and CALENF runtime")
+    payload = json.loads(src.read_text(encoding="utf-8"))
+    site_dir.mkdir(parents=True, exist_ok=True)
+    write_json(site_copy, payload)
+    write_json(overlay, payload)
+    page = GATE / "public" / "cko-norma.html"
+    if not page.is_file():
+        raise SystemExit("cko-norma.html missing from overlay")
+    shutil.copy2(page, SITE / "cko-norma.html")
+
+
 def main() -> None:
     overlay_wave2_into_calenf()
     write_home_aliases()
@@ -821,6 +842,7 @@ def main() -> None:
     restore_human_decisions_ledger()
     restore_truth_index()
     restore_directory_governance()
+    restore_norm_instrument()
     assert_canaries(slim, governance)
     print(
         json.dumps(

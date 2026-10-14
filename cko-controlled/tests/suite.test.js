@@ -930,6 +930,66 @@ describe("Directory governance decision register HOLD", () => {
   });
 });
 
+describe("Normative instrument HOLD — start with normas", () => {
+  const name = "BR_FED_COFEN_NOTATEC_2025_N_00006.json";
+  const overlay = JSON.parse(readFileSync(join(gatePub, "data/norms", name), "utf8"));
+  const hosted = JSON.parse(readFileSync(join(site, "data/cko/norms", name), "utf8"));
+  const page = readFileSync(join(site, "cko-norma.html"), "utf8");
+  const schema = JSON.parse(readFileSync(join(gatePub, "schemas/norm-instrument.schema.json"), "utf8"));
+
+  it("keeps one instrument, 19 atoms, one template, and does not invent vigência", () => {
+    assert.deepEqual(overlay, hosted);
+    assert.equal(overlay.id, "BR_FED_COFEN_NOTATEC_2025_N_00006");
+    assert.equal(overlay.kind, "normative_instrument");
+    assert.equal(overlay.template_id, "norm-instrument");
+    assert.equal(overlay.status, "VERIFY_PENDING");
+    assert.equal(overlay.release_allowed, false);
+    assert.equal(overlay.assigns_vigencia, false);
+    assert.equal(overlay.clinical_promotion, "DENIED");
+    assert.equal(overlay.drive_writes, 0);
+    assert.equal(overlay.supabase_ddl, 0);
+    assert.equal(overlay.fechamento.apto, false);
+    assert.deepEqual(overlay.fechamento.findings, ["C001", "C002"]);
+    assert.equal(overlay.atoms.length, 19);
+    assert.equal(overlay.materialization.pages_from_atoms, 1);
+    assert.equal(overlay.materialization.html_files_per_atom, 0);
+    assert.equal(overlay.atoms.every((atom) => atom.status === "VERIFY_PENDING"), true);
+    assert.equal(overlay.atoms.some((atom) => atom.status === "Vigente"), false);
+    assert.equal(schema.properties.status.enum.includes("Vigente"), false);
+    assert.equal(platform.governance.pageCount, 12);
+  });
+
+  it("renders one Portuguese HOLD page from the atoms, not the 446KB Cofen scrape", () => {
+    assert.match(page, /data-cko-template="norm-instrument"/);
+    assert.match(page, /data-cko-evidence="HOLD"/);
+    assert.match(page, /19 átomos/);
+    assert.match(page, /VERIFY_PENDING/);
+    assert.match(page, /BR_FED_COFEN_NOTATEC_2025_N_00006_EPIGRAFE_001/);
+    assert.match(page, /NOTA TÉCNICA Nº 6\/2025\/PLENÁRIO/);
+    assert.equal(page.includes("RELEASED_TO_PRODUCTION"), false);
+    assert.equal(page.includes("Vigente"), false);
+    assert.ok(page.length < 80_000);
+    assert.equal(page.includes("wp-content/themes/cofen"), false);
+  });
+
+  it("fails closed on empty corpus and on automatic Vigente", () => {
+    const py = [
+      "import json,sys",
+      "sys.path.insert(0,'scripts')",
+      "from generate_norm_instrument import payload",
+      "from norm_kernel import validate_instrument",
+      "empty=payload(); empty['atoms']=[]",
+      "vigent=payload(); vigent['status']='Vigente'; vigent['atoms'][0]['status']='Vigente'",
+      "print(json.dumps({'empty':validate_instrument(empty),'vigente':validate_instrument(vigent)}))",
+    ].join(";");
+    const out = JSON.parse(
+      execSync(`python3 -c ${JSON.stringify(py)}`, { cwd: join(root, ".."), encoding: "utf8" })
+    );
+    assert.ok(out.empty.some((row) => /empty corpus is FAIL/.test(row)));
+    assert.ok(out.vigente.some((row) => /VERIFY_PENDING|Vigente/.test(row)));
+  });
+});
+
 describe("chrome templates", () => {
   it("keeps calculator/tool/institutional templates with slots xor static chrome", () => {
     for (const name of ["calculator.html", "tool.html", "institutional.html"]) {

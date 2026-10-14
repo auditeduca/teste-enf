@@ -572,6 +572,7 @@ def universe() -> dict:
             "Backup materializado e baseline governada nao equivalem automaticamente a pg_dump/PITR full-restorable com restore test.",
             "Heatmaps sao instrumentos de priorizacao derivados dos estados governados; a evidencia primaria permanece nos checkpoints, findings, holds, versions e hashes.",
             "CKO-DIRECTORY-GOVERNANCE-HOLD e um registo de decisoes deste directorio; nao aprova politica, nao atribui vigencia e nao inclui IndiciumFIN.",
+            "O trabalho de normas comeca por atomos VERIFY_PENDING do instrumento BR_FED_COFEN_NOTATEC_2025_N_00006; um template gera uma pagina HOLD; corpus vazio e vigência automatica sao FAIL.",
         ],
         "unknown_universe": UNKNOWN,
         "residual_uncertainty": residual_uncertainty(),
@@ -636,13 +637,16 @@ def main() -> None:
     )
     from generate_truth_index import generate as generate_truth_index
     from generate_directory_governance import generate as generate_directory_governance
+    from generate_norm_instrument import generate as generate_norm_instrument
 
     truth = generate_truth_index()
     gov = generate_directory_governance()
+    norma = generate_norm_instrument()
     print("universe sha256", uni["materialization"]["sha256"])
     print("known objects", uni["materialization"]["known_object_count"])
     print("truth_index", truth["id"], truth["materialization"]["sha256"])
     print("directory_governance", gov["id"], gov["materialization"]["sha256"])
+    print("norm_instrument", norma["id"], len(norma["atoms"]))
 
 
 if __name__ == "__main__":
