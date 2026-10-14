@@ -865,6 +865,71 @@ describe("Drive × Supabase observed truth index HOLD", () => {
   });
 });
 
+describe("Directory governance decision register HOLD", () => {
+  const stampName = "CKO-DIRECTORY-GOVERNANCE-HOLD.json";
+  const overlay = JSON.parse(readFileSync(join(gatePub, "data", stampName), "utf8"));
+  const hosted = JSON.parse(readFileSync(join(site, "data/cko", stampName), "utf8"));
+  const page = readFileSync(join(site, "cko-governanca.html"), "utf8");
+  const keepIds = overlay.decisions.filter((d) => d.disposition === "KEEP").map((d) => d.id);
+  const hist024 = overlay.decisions.find((d) => d.id === "HIST-024");
+
+  it("keeps one directory register that does not replace CKO-MD, CKO-REG or fail-closed", () => {
+    assert.deepEqual(overlay, hosted);
+    assert.equal(overlay.id, "CKO-DIRECTORY-GOVERNANCE-HOLD");
+    assert.equal(overlay.kind, "historical_decision_register");
+    assert.equal(overlay.scope, "this_directory_only");
+    assert.equal(overlay.new_architectural_root, false);
+    assert.equal(overlay.replaces_cko_md, false);
+    assert.equal(overlay.replaces_cko_reg, false);
+    assert.equal(overlay.replaces_fail_closed, false);
+    assert.equal(overlay.promotes_policy, false);
+    assert.equal(overlay.assigns_vigencia, false);
+    assert.deepEqual(overlay.authority.canonical_ids, ["CKO-MD", "CKO-REG"]);
+  });
+
+  it("stays fail-closed, excludes IndiciumFIN, and does not invent vigência", () => {
+    assert.equal(overlay.release, "HOLD / NOT_RELEASED");
+    assert.equal(overlay.b9, "HOLD / NOT_RELEASED");
+    assert.equal(overlay.release_allowed, false);
+    assert.equal(overlay.closes_b9, false);
+    assert.equal(overlay.nursePalmOperational, "NOT_ASSERTED");
+    assert.equal(overlay.clinical_promotion, "DENIED");
+    assert.equal(overlay.calculators, "PAUSED");
+    assert.equal(overlay.scales, "PAUSED");
+    assert.equal(overlay.drive_writes, 0);
+    assert.equal(overlay.supabase_ddl, 0);
+    assert.ok(overlay.excludes.some((item) => String(item).includes("IndiciumFIN")));
+    assert.equal(overlay.decisions.every((d) => d.assigns_vigencia === false), true);
+    assert.equal(overlay.incident_packages.v0_1_incident_impact.present_in_this_directory, false);
+    assert.equal(overlay.incident_packages.v0_2_incident_continuity.disposition, "REFERENCE_ONLY");
+    assert.equal(overlay.directory_working_set.this_page_is_not_a_13th_runtime_page, true);
+    assert.equal(overlay.directory_working_set.runtime_pages_n, 12);
+  });
+
+  it("keeps the error-and-image principle without promoting a new policy", () => {
+    assert.ok(keepIds.includes("HIST-024"));
+    assert.equal(hist024.disposition, "KEEP");
+    assert.equal(hist024.documentary_status, "recovered_not_objected");
+    assert.match(hist024.text, /confiança institucional/);
+    assert.match(hist024.note, /NÃO é política aprovada/);
+    const ids = overlay.executable_here.map((row) => row.id);
+    assert.ok(ids.includes("POL-CKO-FAIL-CLOSED-1.0.0"));
+    assert.ok(ids.includes("POL-CKO-UNIVERSAL-TOOL-1.3.0"));
+    assert.ok(ids.includes("POL-CKO-MD-REG-FRONTEND-1.0.0"));
+    assert.ok(ids.includes("CKO-HOLD-HUMAN-1.0.0"));
+  });
+
+  it("renders the Portuguese HOLD page without claiming release or IndiciumFIN remediations", () => {
+    assert.match(page, /data-cko-evidence="HOLD"/);
+    assert.match(page, /Governação daqui, sem vigência automática/);
+    assert.match(page, /HOLD \/ NOT_RELEASED/);
+    assert.match(page, /HIST-024/);
+    assert.match(page, /IndiciumFIN/);
+    assert.equal(page.includes("RELEASED_TO_PRODUCTION"), false);
+    assert.equal(page.includes("política nova aprovada"), false);
+  });
+});
+
 describe("chrome templates", () => {
   it("keeps calculator/tool/institutional templates with slots xor static chrome", () => {
     for (const name of ["calculator.html", "tool.html", "institutional.html"]) {

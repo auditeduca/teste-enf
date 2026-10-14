@@ -571,6 +571,7 @@ def universe() -> dict:
             "O conector Google Drive nem sempre expos parent_ids; nesses casos o documento usa Drive ID/URL como localizacao, sem fabricar pasta.",
             "Backup materializado e baseline governada nao equivalem automaticamente a pg_dump/PITR full-restorable com restore test.",
             "Heatmaps sao instrumentos de priorizacao derivados dos estados governados; a evidencia primaria permanece nos checkpoints, findings, holds, versions e hashes.",
+            "CKO-DIRECTORY-GOVERNANCE-HOLD e um registo de decisoes deste directorio; nao aprova politica, nao atribui vigencia e nao inclui IndiciumFIN.",
         ],
         "unknown_universe": UNKNOWN,
         "residual_uncertainty": residual_uncertainty(),
@@ -634,11 +635,14 @@ def main() -> None:
         uni["residual_uncertainty"],
     )
     from generate_truth_index import generate as generate_truth_index
+    from generate_directory_governance import generate as generate_directory_governance
 
     truth = generate_truth_index()
+    gov = generate_directory_governance()
     print("universe sha256", uni["materialization"]["sha256"])
     print("known objects", uni["materialization"]["known_object_count"])
     print("truth_index", truth["id"], truth["materialization"]["sha256"])
+    print("directory_governance", gov["id"], gov["materialization"]["sha256"])
 
 
 if __name__ == "__main__":

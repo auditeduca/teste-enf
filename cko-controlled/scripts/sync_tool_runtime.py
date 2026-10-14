@@ -628,6 +628,7 @@ KEEP_OVERLAY = {
     "global-styles.css",
     "lang-selector.js",
     "cko-verdade.html",
+    "cko-governanca.html",
 } | set(WAVE2_PAGES)
 KEEP_DATA = {
     "drive-immutable.json",
@@ -645,6 +646,7 @@ KEEP_DATA = {
     "design-system.json",
     "human-decisions.json",
     "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json",
+    "CKO-DIRECTORY-GOVERNANCE-HOLD.json",
 }
 
 
@@ -777,6 +779,22 @@ def restore_truth_index() -> None:
     shutil.copy2(page, SITE / "cko-verdade.html")
 
 
+def restore_directory_governance() -> None:
+    """Keep the directory decision register. drop_duplicate would otherwise delete it."""
+    overlay = GATE / "public" / "data" / "CKO-DIRECTORY-GOVERNANCE-HOLD.json"
+    site_copy = SITE / "data" / "cko" / "CKO-DIRECTORY-GOVERNANCE-HOLD.json"
+    src = overlay if overlay.is_file() else site_copy
+    if not src.is_file():
+        raise SystemExit("CKO-DIRECTORY-GOVERNANCE-HOLD.json missing from overlay and CALENF runtime")
+    payload = json.loads(src.read_text(encoding="utf-8"))
+    write_json(site_copy, payload)
+    write_json(overlay, payload)
+    page = GATE / "public" / "cko-governanca.html"
+    if not page.is_file():
+        raise SystemExit("cko-governanca.html missing from overlay")
+    shutil.copy2(page, SITE / "cko-governanca.html")
+
+
 def main() -> None:
     overlay_wave2_into_calenf()
     write_home_aliases()
@@ -802,6 +820,7 @@ def main() -> None:
         drop_duplicate_cko_copies()
     restore_human_decisions_ledger()
     restore_truth_index()
+    restore_directory_governance()
     assert_canaries(slim, governance)
     print(
         json.dumps(
