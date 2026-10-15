@@ -1,0 +1,187 @@
+{
+  "id": "CKO-KANBAN-HOLD",
+  "title": "Quadro Kanban do estado observado",
+  "kind": "observed_kanban",
+  "version": "0.1.0",
+  "recorded_at": "2026-10-14T23:55:00Z",
+  "new_architectural_root": false,
+  "replaces_cko_md": false,
+  "replaces_cko_reg": false,
+  "replaces_fail_closed": false,
+  "replaces_source_registry": false,
+  "replaces_linear": false,
+  "promotes_policy": false,
+  "assigns_vigencia": false,
+  "release": "HOLD / NOT_RELEASED",
+  "b9": "HOLD / NOT_RELEASED",
+  "release_allowed": false,
+  "nursePalmOperational": "NOT_ASSERTED",
+  "clinical_promotion": "DENIED",
+  "calculators": "PAUSED",
+  "scales": "PAUSED",
+  "md_reg_complete": false,
+  "observed_runtime": false,
+  "closes_b9": false,
+  "closes_rights_holds": false,
+  "closes_clinical_homolog": false,
+  "documentado_nao_e_implantado": true,
+  "drive_writes": 0,
+  "supabase_ddl": 0,
+  "this_page_is_not_a_13th_runtime_page": true,
+  "runtime_pages_n": 12,
+  "authority": {
+    "note": "Identidade canónica continua em CKO-MD e CKO-REG. Este quadro só ordena o estado já observado.",
+    "canonical_ids": [
+      "CKO-MD",
+      "CKO-REG"
+    ]
+  },
+  "refresh": {
+    "mechanism": "stamp_reread",
+    "page_poll_seconds": 30,
+    "agent_timer_seconds": 600,
+    "agent_ci": true,
+    "websocket": false,
+    "drive_websocket": false,
+    "supabase_realtime": false,
+    "linear_authenticated": false,
+    "note": "A página relê este JSON. O canvas não faz rede. Linear continua needsAuth. Não há websocket ao Drive nem ao Supabase."
+  },
+  "observed": {
+    "universe_release": "HOLD / NOT_RELEASED",
+    "human_items_n": 9,
+    "human_ids": [
+      "HOLD-HUMAN-CLINICAL-HOMOLOG",
+      "HOLD-HUMAN-RIGHTS-CHAIN",
+      "HOLD-HUMAN-A11Y-EMPIRICAL",
+      "HOLD-HUMAN-NURSEPALM-OPS",
+      "HOLD-HUMAN-LOCALE-ACTIVATE",
+      "HOLD-HUMAN-HERO-MEDIA-RIGHTS",
+      "HOLD-HUMAN-OBSERVED-RUNTIME",
+      "HOLD-HUMAN-RECERT-B7",
+      "HOLD-HUMAN-COPY-RATINGS"
+    ],
+    "truth_index_id": "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD",
+    "governance_id": "CKO-DIRECTORY-GOVERNANCE-HOLD",
+    "supabase_live_ref": "aevqrmkdhffmursdtcmo",
+    "editorial_inventory": 80,
+    "atlas_atoms": 65200,
+    "atlas_publication_allowed_true": 0
+  },
+  "columns": [
+    {
+      "id": "blocked",
+      "title": "Bloqueado",
+      "hint": "Não avança sem evidência nova ou decisão humana.",
+      "items": [
+        {
+          "id": "B9",
+          "title": "B9 / release",
+          "note": "HOLD / NOT_RELEASED. release_allowed = false. CI PASS não fecha B9.",
+          "evidence": "universe.json · fail-closed.json"
+        },
+        {
+          "id": "CLIN",
+          "title": "Promoção clínica",
+          "note": "DENIED. Calculadoras e escalas PAUSED. 0 UTC implementados.",
+          "evidence": "CKO-POL-UT-001 · universal-tool.json"
+        },
+        {
+          "id": "NP",
+          "title": "Nurse-PaLM operacional",
+          "note": "NOT_ASSERTED. Digital twin observed = false.",
+          "evidence": "governance.json · HOLD-HUMAN-NURSEPALM-OPS"
+        },
+        {
+          "id": "MDREG",
+          "title": "2496 MD × 10913 REG",
+          "note": "Universos classificados. Bindings não materializados. md_reg_complete = false.",
+          "evidence": "md-reg-frontend.json"
+        }
+      ]
+    },
+    {
+      "id": "doing",
+      "title": "Em curso",
+      "hint": "Trabalho actual. Documentado ≠ implantado.",
+      "items": [
+        {
+          "id": "KANBAN",
+          "title": "Quadro de planeamento HOLD",
+          "note": "Este carimbo e a página cko-kanban.html. A página relê o JSON a cada 30 s. O canvas é reescrito no CI ou no timer de 10 min.",
+          "evidence": "CKO-KANBAN-HOLD.json"
+        }
+      ]
+    },
+    {
+      "id": "cataloged",
+      "title": "Catalogado HOLD",
+      "hint": "Feito como catálogo. Não é ACTIVE nem RELEASE.",
+      "items": [
+        {
+          "id": "SOT",
+          "title": "Índice observado Drive × Supabase",
+          "note": "Uma base observada, não uma raiz nova. CKO-MD e CKO-REG intactos.",
+          "evidence": "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD"
+        },
+        {
+          "id": "GOV",
+          "title": "Registo de governação do diretório",
+          "note": "Escopo só deste diretório. Sem vigência automática. Sem IndiciumFIN.",
+          "evidence": "CKO-DIRECTORY-GOVERNANCE-HOLD"
+        },
+        {
+          "id": "PAGES",
+          "title": "GitHub Pages HOLD",
+          "note": "prepare_github_pages.py e canários /camadas/ + Aldrete no mapa. pageCount continua 12.",
+          "evidence": "github-pages-hold-site.yml"
+        }
+      ]
+    },
+    {
+      "id": "human",
+      "title": "Decisão humana",
+      "hint": "O agente não fecha sozinho.",
+      "items": [
+        {
+          "id": "RIGHTS",
+          "title": "13 RIGHTS_PROVENANCE",
+          "note": "Cadeia de direitos de publicação (13 holds)",
+          "evidence": "HOLD-HUMAN-RIGHTS-CHAIN · UNK-RIGHTS-CHAIN"
+        },
+        {
+          "id": "HOMOLOG",
+          "title": "Homologação clínica",
+          "note": "Continua DENIED. Classificação ≠ homologação operacional.",
+          "evidence": "HOLD-HUMAN-CLINICAL-HOMOLOG"
+        },
+        {
+          "id": "RLS",
+          "title": "RLS do cko_atlas_lab",
+          "note": "3 tabelas sem RLS. Átomos publication_allowed=false. Sem ALTER TABLE neste HOLD.",
+          "evidence": "FND-ATLAS-RLS-DISABLED"
+        },
+        {
+          "id": "LIN",
+          "title": "Linear como quadro vivo",
+          "note": "MCP Linear precisa de autenticação. Até lá o quadro é este carimbo + canvas.",
+          "evidence": "namespaceStatus=needsAuth"
+        }
+      ]
+    }
+  ],
+  "single_base": {
+    "what_this_is": "Um único quadro HOLD do planeamento observado, com releitura do carimbo. Não é Linear autenticado.",
+    "what_this_is_not": [
+      "Websocket ao Drive ou ao Supabase",
+      "Quadro Linear autenticado",
+      "13.ª página institucional",
+      "Release, ACTIVE operacional ou fecho de B9",
+      "Promoção clínica ou Nurse-PaLM operacional"
+    ]
+  },
+  "materialization": {
+    "sha256": "bfb7d5e0e07f574875e3d84bd3b747b76df8f6a95e15c66023a64487fdc78652",
+    "generated_by": "cko-controlled/scripts/generate_kanban.py"
+  }
+}

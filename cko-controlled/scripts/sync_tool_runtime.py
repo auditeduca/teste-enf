@@ -629,6 +629,7 @@ KEEP_OVERLAY = {
     "lang-selector.js",
     "cko-verdade.html",
     "cko-governanca.html",
+    "cko-kanban.html",
 } | set(WAVE2_PAGES)
 KEEP_DATA = {
     "drive-immutable.json",
@@ -647,6 +648,7 @@ KEEP_DATA = {
     "human-decisions.json",
     "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json",
     "CKO-DIRECTORY-GOVERNANCE-HOLD.json",
+    "CKO-KANBAN-HOLD.json",
 }
 
 
@@ -795,6 +797,22 @@ def restore_directory_governance() -> None:
     shutil.copy2(page, SITE / "cko-governanca.html")
 
 
+def restore_kanban() -> None:
+    """Keep the observed Kanban HOLD. drop_duplicate would otherwise delete it."""
+    overlay = GATE / "public" / "data" / "CKO-KANBAN-HOLD.json"
+    site_copy = SITE / "data" / "cko" / "CKO-KANBAN-HOLD.json"
+    src = overlay if overlay.is_file() else site_copy
+    if not src.is_file():
+        raise SystemExit("CKO-KANBAN-HOLD.json missing from overlay and CALENF runtime")
+    payload = json.loads(src.read_text(encoding="utf-8"))
+    write_json(site_copy, payload)
+    write_json(overlay, payload)
+    page = GATE / "public" / "cko-kanban.html"
+    if not page.is_file():
+        raise SystemExit("cko-kanban.html missing from overlay")
+    shutil.copy2(page, SITE / "cko-kanban.html")
+
+
 def main() -> None:
     overlay_wave2_into_calenf()
     write_home_aliases()
@@ -821,6 +839,7 @@ def main() -> None:
     restore_human_decisions_ledger()
     restore_truth_index()
     restore_directory_governance()
+    restore_kanban()
     assert_canaries(slim, governance)
     print(
         json.dumps(

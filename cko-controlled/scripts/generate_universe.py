@@ -572,6 +572,7 @@ def universe() -> dict:
             "Backup materializado e baseline governada nao equivalem automaticamente a pg_dump/PITR full-restorable com restore test.",
             "Heatmaps sao instrumentos de priorizacao derivados dos estados governados; a evidencia primaria permanece nos checkpoints, findings, holds, versions e hashes.",
             "CKO-DIRECTORY-GOVERNANCE-HOLD e um registo de decisoes deste directorio; nao aprova politica, nao atribui vigencia e nao inclui IndiciumFIN.",
+            "CKO-KANBAN-HOLD e um quadro de planeamento observado; a pagina rele o carimbo. Nao e websocket ao Drive/Supabase, nao e Linear autenticado, nao e a 13.a pagina institucional.",
         ],
         "unknown_universe": UNKNOWN,
         "residual_uncertainty": residual_uncertainty(),
@@ -636,13 +637,16 @@ def main() -> None:
     )
     from generate_truth_index import generate as generate_truth_index
     from generate_directory_governance import generate as generate_directory_governance
+    from generate_kanban import generate as generate_kanban
 
     truth = generate_truth_index()
     gov = generate_directory_governance()
+    kanban = generate_kanban()
     print("universe sha256", uni["materialization"]["sha256"])
     print("known objects", uni["materialization"]["known_object_count"])
     print("truth_index", truth["id"], truth["materialization"]["sha256"])
     print("directory_governance", gov["id"], gov["materialization"]["sha256"])
+    print("kanban", kanban["id"], kanban["materialization"]["sha256"])
 
 
 if __name__ == "__main__":

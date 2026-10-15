@@ -930,6 +930,64 @@ describe("Directory governance decision register HOLD", () => {
   });
 });
 
+describe("Observed Kanban HOLD", () => {
+  const stampName = "CKO-KANBAN-HOLD.json";
+  const overlay = JSON.parse(readFileSync(join(gatePub, "data", stampName), "utf8"));
+  const hosted = JSON.parse(readFileSync(join(site, "data/cko", stampName), "utf8"));
+  const page = readFileSync(join(site, "cko-kanban.html"), "utf8");
+  const columnIds = overlay.columns.map((col) => col.id);
+  const cardCount = overlay.columns.reduce((n, col) => n + col.items.length, 0);
+
+  it("keeps one observed board that does not replace CKO-MD, CKO-REG or Linear", () => {
+    assert.deepEqual(overlay, hosted);
+    assert.equal(overlay.id, "CKO-KANBAN-HOLD");
+    assert.equal(overlay.kind, "observed_kanban");
+    assert.equal(overlay.new_architectural_root, false);
+    assert.equal(overlay.replaces_cko_md, false);
+    assert.equal(overlay.replaces_cko_reg, false);
+    assert.equal(overlay.replaces_fail_closed, false);
+    assert.equal(overlay.replaces_linear, false);
+    assert.equal(overlay.promotes_policy, false);
+    assert.deepEqual(overlay.authority.canonical_ids, ["CKO-MD", "CKO-REG"]);
+  });
+
+  it("stays fail-closed and does not pretend websocket or Linear auth", () => {
+    assert.equal(overlay.release, "HOLD / NOT_RELEASED");
+    assert.equal(overlay.b9, "HOLD / NOT_RELEASED");
+    assert.equal(overlay.release_allowed, false);
+    assert.equal(overlay.closes_b9, false);
+    assert.equal(overlay.nursePalmOperational, "NOT_ASSERTED");
+    assert.equal(overlay.clinical_promotion, "DENIED");
+    assert.equal(overlay.calculators, "PAUSED");
+    assert.equal(overlay.scales, "PAUSED");
+    assert.equal(overlay.drive_writes, 0);
+    assert.equal(overlay.supabase_ddl, 0);
+    assert.equal(overlay.this_page_is_not_a_13th_runtime_page, true);
+    assert.equal(overlay.runtime_pages_n, 12);
+    assert.equal(overlay.refresh.websocket, false);
+    assert.equal(overlay.refresh.drive_websocket, false);
+    assert.equal(overlay.refresh.supabase_realtime, false);
+    assert.equal(overlay.refresh.linear_authenticated, false);
+    assert.equal(overlay.refresh.page_poll_seconds, 30);
+    assert.deepEqual(columnIds, ["blocked", "doing", "cataloged", "human"]);
+    assert.ok(cardCount >= 12);
+    assert.equal(platform.governance.pageCount, 12);
+  });
+
+  it("renders the Portuguese Kanban page without claiming release or live Linear", () => {
+    assert.match(page, /data-cko-evidence="HOLD"/);
+    assert.match(page, /Kanban do que está observado, não do que está liberado/);
+    assert.match(page, /HOLD \/ NOT_RELEASED|release=HOLD/);
+    assert.match(page, /CKO-KANBAN-HOLD\.json/);
+    assert.match(page, /pageCount permanece 12/);
+    assert.match(page, /setInterval/);
+    assert.equal(page.includes("RELEASED_TO_PRODUCTION"), false);
+    assert.equal(page.includes("ACTIVE operacional"), false);
+    assert.equal(page.includes("WebSocket"), false);
+    assert.match(page, /Linear continua sem autenticação/);
+  });
+});
+
 describe("chrome templates", () => {
   it("keeps calculator/tool/institutional templates with slots xor static chrome", () => {
     for (const name of ["calculator.html", "tool.html", "institutional.html"]) {
@@ -985,6 +1043,7 @@ describe("GitHub Pages CALENF runtime", () => {
       const mapa = readFileSync(join(site, "mapa-do-site.html"), "utf8");
       assert.match(mapa, /href="\/camadas\/"/);
       assert.match(mapa, /href="\/aldrete\.html"/);
+      assert.match(mapa, /href="\/cko-kanban\.html"/);
     } finally {
       rmSync(out, { recursive: true, force: true });
     }
