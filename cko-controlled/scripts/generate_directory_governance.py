@@ -399,6 +399,20 @@ def payload() -> dict:
                 note="Achado P0 histórico 04/09 (alcance/estatísticas). Não recontado neste registo.",
             ),
             decision(
+                "HIST-029",
+                text="Normas, ferramentas (calculadoras, escalas) e bibliotecas são objectos canónicos. O HTML é projecção de um template por kind. Canonical não é published, não é Vigente e não é release.",
+                disposition="KEEP",
+                domain="MD",
+                observed_in=[
+                    "cko-controlled/scripts/generate_canonical_catalog.py",
+                    "cko-controlled/scripts/generate_norm_instrument.py",
+                    "reference-website/data/tools",
+                    "reference-website/biblioteca",
+                ],
+                status="registered_and_projected",
+                note="Famílias etc. (protocolo, checklist, simulado, diretriz, template) são o mesmo contrato. UT implemented_n=0. Sem promoção.",
+            ),
+            decision(
                 "HIST-028",
                 text="Publicação não encerra responsabilidade. Monitorização posterior e reavaliação continuam.",
                 disposition="KEEP",
@@ -445,6 +459,7 @@ def payload() -> dict:
             "human": "CKO-HOLD-HUMAN-1.0.0",
             "observed_catalog": "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD",
             "this_register": "CKO-DIRECTORY-GOVERNANCE-HOLD",
+            "canonical_catalog": "CKO-CANONICAL-OBJECTS-HOLD",
             "runtime_pages_n": 12,
             "institutional_page_count_locked": True,
             "this_page_is_not_a_13th_runtime_page": True,

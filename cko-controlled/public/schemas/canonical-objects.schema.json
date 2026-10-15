@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CKO canonical objects HOLD",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "kind",
+    "canonical_kinds",
+    "status",
+    "release_allowed",
+    "assigns_vigencia",
+    "families"
+  ],
+  "properties": {
+    "id": { "const": "CKO-CANONICAL-OBJECTS-HOLD" },
+    "kind": { "const": "canonical_object_catalog" },
+    "title": { "type": "string" },
+    "status": { "enum": ["HOLD", "VERIFY_PENDING", "QUARANTINE"] },
+    "release": { "const": "HOLD / NOT_RELEASED" },
+    "release_allowed": { "const": false },
+    "assigns_vigencia": { "const": false },
+    "canonical_promotion": { "const": false },
+    "clinical_promotion": { "const": "DENIED" },
+    "b9": { "const": "HOLD / NOT_RELEASED" },
+    "drive_writes": { "const": 0 },
+    "supabase_ddl": { "const": 0 },
+    "invariant": { "type": "string" },
+    "canonical_kinds": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "string",
+        "enum": [
+          "normative_instrument",
+          "tool",
+          "library_article",
+          "simulado",
+          "protocol",
+          "checklist",
+          "guideline",
+          "template"
+        ]
+      }
+    },
+    "families": { "type": "array", "minItems": 3 },
+    "findings": { "type": "array" },
+    "materialization": { "type": "object" }
+  }
+}

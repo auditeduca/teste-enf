@@ -630,6 +630,7 @@ KEEP_OVERLAY = {
     "cko-verdade.html",
     "cko-governanca.html",
     "cko-norma.html",
+    "cko-canonico.html",
 } | set(WAVE2_PAGES)
 KEEP_DATA = {
     "drive-immutable.json",
@@ -648,6 +649,7 @@ KEEP_DATA = {
     "human-decisions.json",
     "CKO-DRIVE-SUPABASE-TRUTH-INDEX-HOLD.json",
     "CKO-DIRECTORY-GOVERNANCE-HOLD.json",
+    "CKO-CANONICAL-OBJECTS-HOLD.json",
     "norms",
 }
 
@@ -797,6 +799,23 @@ def restore_directory_governance() -> None:
     shutil.copy2(page, SITE / "cko-governanca.html")
 
 
+def restore_canonical_catalog() -> None:
+    """Keep the canonical families catalog. Not a 13th runtime page."""
+    name = "CKO-CANONICAL-OBJECTS-HOLD.json"
+    overlay = GATE / "public" / "data" / name
+    site_copy = SITE / "data" / "cko" / name
+    src = overlay if overlay.is_file() else site_copy
+    if not src.is_file():
+        raise SystemExit("CKO-CANONICAL-OBJECTS-HOLD.json missing from overlay and CALENF runtime")
+    payload = json.loads(src.read_text(encoding="utf-8"))
+    write_json(site_copy, payload)
+    write_json(overlay, payload)
+    page = GATE / "public" / "cko-canonico.html"
+    if not page.is_file():
+        raise SystemExit("cko-canonico.html missing from overlay")
+    shutil.copy2(page, SITE / "cko-canonico.html")
+
+
 def restore_norm_instrument() -> None:
     """Keep the first HOLD instrument. Not a 13th runtime page. drop_duplicate would drop the HTML."""
     name = "BR_FED_COFEN_NOTATEC_2025_N_00006.json"
@@ -843,6 +862,7 @@ def main() -> None:
     restore_truth_index()
     restore_directory_governance()
     restore_norm_instrument()
+    restore_canonical_catalog()
     assert_canaries(slim, governance)
     print(
         json.dumps(

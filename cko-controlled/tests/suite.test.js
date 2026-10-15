@@ -908,6 +908,7 @@ describe("Directory governance decision register HOLD", () => {
 
   it("keeps the error-and-image principle without promoting a new policy", () => {
     assert.ok(keepIds.includes("HIST-024"));
+    assert.ok(keepIds.includes("HIST-029"));
     assert.equal(hist024.disposition, "KEEP");
     assert.equal(hist024.documentary_status, "recovered_not_objected");
     assert.match(hist024.text, /confiança institucional/);
@@ -987,6 +988,73 @@ describe("Normative instrument HOLD — start with normas", () => {
     );
     assert.ok(out.empty.some((row) => /empty corpus is FAIL/.test(row)));
     assert.ok(out.vigente.some((row) => /VERIFY_PENDING|Vigente/.test(row)));
+  });
+});
+
+describe("Canonical objects HOLD — norms, tools, libraries", () => {
+  const stampName = "CKO-CANONICAL-OBJECTS-HOLD.json";
+  const overlay = JSON.parse(readFileSync(join(gatePub, "data", stampName), "utf8"));
+  const hosted = JSON.parse(readFileSync(join(site, "data/cko", stampName), "utf8"));
+  const page = readFileSync(join(site, "cko-canonico.html"), "utf8");
+  const byId = Object.fromEntries(overlay.families.map((row) => [row.id, row]));
+
+  it("treats norms, tools and libraries as canonical families without promoting published or Vigente", () => {
+    assert.deepEqual(overlay, hosted);
+    assert.equal(overlay.id, "CKO-CANONICAL-OBJECTS-HOLD");
+    assert.equal(overlay.kind, "canonical_object_catalog");
+    assert.equal(overlay.release_allowed, false);
+    assert.equal(overlay.assigns_vigencia, false);
+    assert.equal(overlay.canonical_promotion, false);
+    assert.equal(overlay.clinical_promotion, "DENIED");
+    assert.ok(overlay.canonical_kinds.includes("normative_instrument"));
+    assert.ok(overlay.canonical_kinds.includes("tool"));
+    assert.ok(overlay.canonical_kinds.includes("library_article"));
+    assert.equal(byId.normative_instrument.canonical, true);
+    assert.equal(byId.tool.canonical, true);
+    assert.equal(byId.library_article.canonical, true);
+    assert.equal(byId.normative_instrument.template_id, "norm-instrument");
+    assert.equal(byId.tool.template_id, "tool");
+    assert.equal(byId.library_article.template_id, "library-article");
+    assert.equal(byId.normative_instrument.objects_n, 1);
+    assert.equal(byId.tool.objects_n, 97);
+    assert.ok(byId.library_article.objects_n >= 1);
+    assert.equal(byId.tool.governed_status, "HOLD");
+    assert.equal(byId.tool.observed_payload_status_published_n, 97);
+    assert.equal(byId.library_article.atomized_n, 0);
+    assert.equal(overlay.materialization.tool_index.length, 97);
+    assert.equal(overlay.materialization.this_page_is_not_a_13th_runtime_page, true);
+    assert.equal(platform.governance.pageCount, 12);
+    assert.equal(universalToolPolicy.implemented_n, 0);
+  });
+
+  it("renders one Portuguese catalog page from the families, not one HTML per object", () => {
+    assert.match(page, /data-cko-template="canonical-catalog"/);
+    assert.match(page, /data-cko-evidence="HOLD"/);
+    assert.match(page, /O original é o objecto/);
+    assert.match(page, /normative_instrument/);
+    assert.match(page, /library-article/);
+    assert.match(page, /aldrete/);
+    assert.equal(page.includes("RELEASED_TO_PRODUCTION"), false);
+    assert.match(page, /não é Vigente/);
+    assert.equal(page.includes(">Vigente<"), false);
+    assert.match(page, /Não gerámos 1332 HTML novos/);
+  });
+
+  it("fails closed if a canonical family is empty or governed as published/Vigente", () => {
+    const py = [
+      "import json,sys",
+      "sys.path.insert(0,'scripts')",
+      "from generate_canonical_catalog import payload",
+      "from canonical_kernel import validate_catalog",
+      "empty=payload(); [row.update({'objects_n':0}) for row in empty['families'] if row['id']=='tool']",
+      "pub=payload(); [row.update({'governed_status':'published'}) for row in pub['families'] if row['id']=='tool']",
+      "print(json.dumps({'empty':validate_catalog(empty),'published':validate_catalog(pub)}))",
+    ].join(";");
+    const out = JSON.parse(
+      execSync(`python3 -c ${JSON.stringify(py)}`, { cwd: join(root, ".."), encoding: "utf8" })
+    );
+    assert.ok(out.empty.some((row) => /empty family is FAIL/.test(row)));
+    assert.ok(out.published.some((row) => /governed_status forbidden|published/.test(row)));
   });
 });
 
